@@ -52,6 +52,8 @@ public class DialogueEditor : BaseResourceEditor<Dialogue>
 					choicesSheet.Add( choiceSheet );
 				}
 				nodeSheet.Add( choicesSheet );
+			} else {
+				nodeSheet.Add( new Label( "Unknown node type" ) );
 			}
 			
 			sheet.Add( nodeSheet );
