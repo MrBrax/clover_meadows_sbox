@@ -2,14 +2,14 @@
   "Nodes": [
     {
       "Speaker": "bot",
-      "Text": "hello first test",
+      "Text": "you want to buy that?",
       "Choices": [
         {
           "Label": "Yes",
           "OnSelect": {
             "__version": 8,
             "__guid": "e1c32701-5f17-4121-af83-aa4b3c445284",
-            "__changeId": 67,
+            "__changeId": 77,
             "UserData": {
               "Title": "On Select",
               "ReferencedComponentTypes": []
@@ -44,7 +44,7 @@
                   "_type": "Sandbox.DialogueWindow"
                 },
                 "UserData": {
-                  "Position": "48,84"
+                  "Position": "60,84"
                 }
               },
               {
@@ -107,12 +107,6 @@
               },
               {
                 "SrcId": 0,
-                "SrcName": "_signal",
-                "DstId": 4,
-                "DstName": "_signal"
-              },
-              {
-                "SrcId": 0,
                 "SrcName": "window",
                 "DstId": 4,
                 "DstName": "_target"
@@ -122,12 +116,6 @@
                 "Value": "money",
                 "DstId": 4,
                 "DstName": "key"
-              },
-              {
-                "SrcId": 0,
-                "SrcName": "_signal",
-                "DstId": 13,
-                "DstName": "_signal"
               },
               {
                 "SrcId": 0,
@@ -154,7 +142,7 @@
                 "DstName": "b"
               },
               {
-                "SrcId": 4,
+                "SrcId": 0,
                 "SrcName": "_signal",
                 "DstId": 20,
                 "DstName": "_signal"
@@ -195,7 +183,7 @@
             {
               "Id": "failed",
               "Speaker": "Bot",
-              "Text": "you don\u0027t have enough cash",
+              "Text": "you only have {{money}} but need {{price}}",
               "Choices": []
             }
           ]

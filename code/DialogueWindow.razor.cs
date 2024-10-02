@@ -25,15 +25,11 @@ public partial class DialogueWindow
 	protected override void OnStart()
 	{
 		base.OnStart();
-		
-		Data = new Dictionary<string, object>
-		{
-			{ "test", 123 },
-			{ "money", 100 },
-			{ "price", 200 },
-		};
+
+		Data = new Dictionary<string, object> { { "test", 123 }, { "money", 100 }, { "price", 200 }, };
 
 		CurrentNode = Dialogue.Nodes[0];
+		CurrentNode.OnEnter?.Invoke( this, Data, null, null, CurrentNode, null );
 		Read();
 	}
 
@@ -75,13 +71,39 @@ public partial class DialogueWindow
 		return 0;
 	}
 
+	/// <summary>
+	///  Searches for a node with the given id recursively and sets it as the current node.
+	/// </summary>
+	/// <param name="id"></param>
 	public void JumpToId( string id )
 	{
-		var node = Dialogue.Nodes.Find( x => x.Id == id );
+		Dialogue.DialogueNode FindNode( List<Dialogue.DialogueNode> nodes )
+		{
+			foreach ( var node in nodes )
+			{
+				if ( node.Id == id )
+					return node;
+
+				if ( node.Choices.Count > 0 )
+				{
+					foreach ( var choice in node.Choices )
+					{
+						var found = FindNode( choice.Nodes );
+						if ( found != null )
+							return found;
+					}
+				}
+			}
+
+			return null;
+		}
+
+		var node = FindNode( Dialogue.Nodes );
 		if ( node != null )
 		{
-			Log.Info( $"Jumping to {id}" );
+			CurrentNode?.OnExit?.Invoke( this, Data, null, null, CurrentNode, null );
 			CurrentNode = node;
+			CurrentNode.OnEnter?.Invoke( this, Data, null, null, CurrentNode, null );
 			Read();
 		}
 		else
@@ -95,7 +117,20 @@ public partial class DialogueWindow
 		Log.Info( $"Reading {CurrentNode}" );
 		Text = "";
 		_textIndex = 0;
-		_textTarget = CurrentNode.Text;
+		_textTarget = ParseVariables( CurrentNode.Text );
+	}
+
+	private string ParseVariables( string text )
+	{
+		var result = text;
+
+		foreach ( var key in Data.Keys )
+		{
+			Log.Info( $"Replacing {{{{key}}}} with {Data[key]}" );
+			result = result.Replace( "{{" + key + "}}", Data[key].ToString() );
+		}
+
+		return result;
 	}
 
 	protected override void OnFixedUpdate()
@@ -141,8 +176,17 @@ public partial class DialogueWindow
 		else
 		{
 			CurrentChoice = choice;
+			CurrentNode.OnExit?.Invoke( this, Data, null, null, CurrentNode, null );
 			CurrentNode = choice.Nodes.FirstOrDefault();
-			Read();
+			if ( CurrentNode != null )
+			{
+				CurrentNode.OnEnter?.Invoke( this, Data, null, null, CurrentNode, null );
+				Read();
+			}
+			else
+			{
+				Log.Error( "No nodes found for choice" );
+			}
 		}
 	}
 
