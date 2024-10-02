@@ -204,59 +204,34 @@ tags:
 			choice.TargetIndex = _currentLine + 1;
 			((ChoiceNode)line.Node).Choices.Add( choice );
 			
-			// find next option
-			while ( _currentLine < _lines.Length )
+			// find the rest of the options
+			var lineSearch = _currentLine + 1;
+			while ( true )
 			{
-				_currentLine++;
-				activeLine = _lines.ElementAtOrDefault( _currentLine );
-				if ( activeLine == null )
+				var nextLine = _lines.ElementAtOrDefault( lineSearch );
+				if ( nextLine == null )
 					break;
 				
-				// check for indent
-				var indent = 0;
-				while ( activeLine[indent] == ' ' )
-				{
-					indent++;
-				}
-				
-				if ( indent <= _currentIndent )
-				{
-					_currentLine--;
+				var nextIndent = GetIndent( nextLine );
+				if ( nextIndent == _currentIndent )
 					break;
+				
+				if ( nextIndent == _currentIndent + 1 )
+				{
+					// add option
+					_currentSymbolIndex = nextIndent;
+					var nextText = GetString( nextLine, _currentSymbolIndex, nextLine.Length - _currentSymbolIndex );
+					_currentSymbolIndex += nextText.Length;
+					
+					var nextChoice = new Choice();
+					nextChoice.Text = nextText.Trim();
+					nextChoice.TargetIndex = lineSearch + 1;
+					((ChoiceNode)line.Node).Choices.Add( nextChoice );
 				}
 				
-				// add option
-				_currentSymbolIndex = indent;
-				text = "";
-				while ( activeLine[_currentSymbolIndex] != '\n' && _currentSymbolIndex < activeLine.Length )
-				{
-					text += activeLine[_currentSymbolIndex];
-					_currentSymbolIndex++;
-				}
-				choice = new Choice();
-				choice.Text = text.Trim();
-				((ChoiceNode)line.Node).Choices.Add( choice );
+				lineSearch++;
 			}
-		}
-		else
-		{
-			// find speaker
-			var speaker = "";
-			while ( activeLine[_currentSymbolIndex] != ':' && _currentSymbolIndex < activeLine.Length )
-			{
-				speaker += activeLine[_currentSymbolIndex];
-				_currentSymbolIndex++;
-			}
-			line.Speaker = speaker.Trim();
-			_currentSymbolIndex++;
 			
-			// find text
-			while ( _currentSymbolIndex < activeLine.Length )
-			{
-				line.Text += activeLine[_currentSymbolIndex];
-				_currentSymbolIndex++;
-			}
-		}
 		
 		
 		
