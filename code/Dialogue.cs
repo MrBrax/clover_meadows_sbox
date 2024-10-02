@@ -1,39 +1,52 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Sandbox;
 
 [GameResource("Dialogue", "dlg", "dialogue")]
 public class Dialogue : GameResource
 {
-	
-	[Property] public int TestValue { get; set; }
-	
-	public class BaseNode
+
+	/*public class DialogueAction
 	{
-		[Property, ReadOnly, JsonIgnore] public string Type => GetType().Name;
+		[Property, ActionGraphInclude] public GameObject Player { get; set; }
+		[Property] public List<GameObject> Targets { get; set; }
+		[Property] public DialogueNode Node { get; set; }
+		[Property] public DialogueChoice Choice { get; set; }
+	}*/
+	
+	public delegate void DialogueAction( GameObject player, List<GameObject> targets, DialogueNode node, DialogueChoice choice );
+	
+	public class DialogueChoice
+	{
 		[Property] public string Label { get; set; }
+		// [Property] public string Id { get; set; }
+		// [Property] public string IdTarget { get; set; }
+		[Property] public DialogueAction OnSelect { get; set; }
+		[Property] public List<DialogueNode> Nodes { get; set; } = new();
+		
+		public override string ToString()
+		{
+			return Label + " -> " + Nodes.Count;
+		}
+	}
+
+	public class DialogueNode
+	{
+		[Property] public string Id { get; set; }
 		[Property] public string Speaker { get; set; }
+		[Property, TextArea] public string Text { get; set; }
+		// [Property] public List<string> Choices { get; set; } = new();
+		[Property] public List<DialogueChoice> Choices { get; set; } = new();
+		[Property] public DialogueAction OnEnter { get; set; }
+		[Property] public DialogueAction OnExit { get; set; }
+
+		public override string ToString()
+		{
+			return $"{Id} - {Speaker}: {Text}";
+		}
 	}
 	
-	public class TextNode : BaseNode
-	{
-		[Property, TextArea] public string Body { get; set; }
-	}
-	
-	public class ChoiceNode : BaseNode
-	{
-		[Property] public string Text { get; set; }
-		[Property] public List<Choice> Choices { get; set; }
-	}
-	
-	
-	public class Choice
-	{
-		[Property] public string Text { get; set; }
-		[Property] public string Target { get; set; }
-	}
-	
-	
-	[Property, InlineEditor] public List<BaseNode> Nodes { get; set; } = new();
+	[Property, InlineEditor] public List<DialogueNode> Nodes { get; set; } = new();
 	
 }

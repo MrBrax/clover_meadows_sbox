@@ -1,7 +1,25 @@
 {
-  "TestValue": 2,
   "Nodes": [
-    {}
+    {
+      "Speaker": "bot",
+      "Text": "hello first test",
+      "Choices": [
+        {
+          "Label": "Yes",
+          "Nodes": [
+            {
+              "Speaker": "Bot",
+              "Text": "you selected the yes option",
+              "Choices": []
+            }
+          ]
+        },
+        {
+          "Label": "No",
+          "Nodes": []
+        }
+      ]
+    }
   ],
   "__references": [],
   "IsValid": true,

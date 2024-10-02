@@ -1,0 +1,26 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	<div class="dialogue-window" @onclick=@OnClick>
+		<div class="name">
+			@Name
+		</div>
+		<div class="text">
+			@Text
+		</div>
+		@if ( CurrentNode != null && CurrentNode.Choices.Count > 0 )
+		{
+			<div class="choices">
+				@foreach ( var button in CurrentNode.Choices )
+				{
+					<button @onclick=@( () => OnChoice( button ) )>
+						@button.Label
+					</button>
+				}
+			</div>
+		}
+	</div>
+</root>
