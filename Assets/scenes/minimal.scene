@@ -314,7 +314,22 @@
       "Components": [
         {
           "__type": "Sandbox.DialogueParser",
-          "__guid": "6fd58cbb-d13f-4843-a0c1-12d203cdbff3"
+          "__guid": "17538c72-5935-40f1-996d-8ec463d10c66",
+          "__enabled": false
+        },
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "2d53e91d-dea5-4e4a-96fd-adadeb8d3e43",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "ZIndex": 100
+        },
+        {
+          "__type": "Sandbox.DialogueWindow",
+          "__guid": "e4381c2f-796e-44b0-81a2-d666d662876e",
+          "Dialogue": "test.dlg"
         }
       ]
     }
