@@ -69,101 +69,162 @@ tags:
 	}
 
 	private string _text;
-	private int _currentIndex;
+	private int _currentSymbolIndex;
 	private int _currentLine;
+	private Dictionary<string, string> _meta = new();
+	
+	public Dictionary<string, object> Variables { get; set; } = new();
 
 	public void Load( string text )
 	{
 		_text = text;
-		_currentIndex = 0;
+		_currentSymbolIndex = 0;
 		ParseMeta();
 	}
 	
-	
+	private void ParseMeta()
+	{
+		var meta = _text.Split( "---" );
+		if ( meta.Length > 1 )
+		{
+			var metaLines = meta[0].Split( '\n' );
+			foreach ( var line in metaLines )
+			{
+				var parts = line.Split( ':' );
+				if ( parts.Length == 2 )
+				{
+					_meta[parts[0].Trim()] = parts[1].Trim();
+					Log.Info( $"Meta: {parts[0].Trim()} = {parts[1].Trim()}" );
+				}
+			}
+			_currentSymbolIndex = meta[0].Length + 3;
+		}
+	}
 	
 	public DialogueLine Next()
 	{
-		if ( _currentIndex >= _text.Length )
+		if ( _currentSymbolIndex >= _text.Length )
 			return null;
 
 		var line = new DialogueLine();
-		line.Index = _currentIndex;
-
-		// Parse speaker
-		if ( _text[_currentIndex] == '$' )
+		line.Index = _currentLine;
+		line.Speaker = "Narrator";
+		line.Text = "";
+		line.Node = new BaseNode();
+		
+		while ( _currentSymbolIndex < _text.Length )
 		{
-			_currentIndex++;
-			var speaker = "";
-			while ( _text[_currentIndex] != ':' )
+			var symbol = _text[_currentSymbolIndex];
+			if ( symbol == '\n' )
 			{
-				speaker += _text[_currentIndex];
-				_currentIndex++;
+				_currentSymbolIndex++;
+				break;
 			}
-			line.Speaker = speaker;
-			_currentIndex++;
-		}
 
-		// Parse text
-		var text = "";
-		while ( _text[_currentIndex] != '\n' )
-		{
-			text += _text[_currentIndex];
-			_currentIndex++;
-		}
-		line.Text = text;
-		_currentIndex++;
-
-		// Parse node
-		if ( _text[_currentIndex] == '-' )
-		{
-			_currentIndex += 2;
-			var node = new BaseNode();
-			while ( _text[_currentIndex] != '\n' )
+			if ( symbol == '{' )
 			{
-				// Parse label
-				if ( _text[_currentIndex] == '[' )
+				var end = _text.IndexOf( '}', _currentSymbolIndex );
+				if ( end == -1 )
 				{
-					_currentIndex++;
-					var label = "";
-					while ( _text[_currentIndex] != ']' )
-					{
-						label += _text[_currentIndex];
-						_currentIndex++;
-					}
-					node.Label = label;
-					_currentIndex++;
+					Log.Error( $"DialogueParser: Missing '}}' at {_currentSymbolIndex}" );
+					break;
 				}
-
-				// Parse speaker
-				if ( _text[_currentIndex] == '$' )
+				
+				var variable = _text.Substring( _currentSymbolIndex + 2, end - _currentSymbolIndex - 3 );
+				
+				if ( Variables.TryGetValue( variable, out var value ) )
 				{
-					_currentIndex++;
-					var speaker = "";
-					while ( _text[_currentIndex] != ':' )
-					{
-						speaker += _text[_currentIndex];
-						_currentIndex++;
-					}
-					node.Speaker = speaker;
-					_currentIndex++;
+					line.Text += value.ToString();
 				}
-
-				// Parse body
-				if ( _text[_currentIndex] == '{' )
+				else
 				{
-					_currentIndex++;
-					var body = "";
-					while ( _text[_currentIndex] != '}' )
+					Log.Error( $"DialogueParser: Variable '{variable}' not found" );
+				}
+				
+				_currentSymbolIndex = end + 1;
+				
+			}
+			// skip logic for now
+			/*else if ( symbol == '[' )
+			{
+				var end = _text.IndexOf( ']', _currentSymbolIndex );
+				if ( end == -1 )
+				{
+					Log.Error( $"DialogueParser: Missing ']' at {_currentSymbolIndex}" );
+					break;
+				}
+				
+				var color = _text.Substring( _currentSymbolIndex + 1, end - _currentSymbolIndex - 1 );
+				line.Text += $"<color={color}>";
+				_currentSymbolIndex = end + 1;
+			}
+			
+			else if ( symbol == '<' && _text[_currentSymbolIndex + 1] == '<' )
+			{
+				var end = _text.IndexOf( ">>", _currentSymbolIndex );
+				if ( end == -1 )
+				{
+					Log.Error( $"DialogueParser: Missing '>>' at {_currentSymbolIndex}" );
+					break;
+				}
+				
+				var command = _text.Substring( _currentSymbolIndex + 2, end - _currentSymbolIndex - 2 );
+				var parts = command.Split( ' ' );
+				if ( parts.Length == 1 )
+				{
+					line.Text += $"[{command}]";
+				}
+				else
+				{
+					switch ( parts[0] )
 					{
-						body += _text[_currentIndex];
-						_currentIndex++;
+						case "if":
+							if ( Variables.TryGetValue( parts[1], out var value ) )
+							{
+								if ( (bool)value )
+								{
+									_currentSymbolIndex = end + 2;
+								}
+								else
+								{
+									_currentSymbolIndex = _text.IndexOf( "<<endif>>", end );
+									if ( _currentSymbolIndex == -1 )
+									{
+										Log.Error( $"DialogueParser: Missing <<endif>> after {command}" );
+										break;
+									}
+									_currentSymbolIndex += 9;
+								}
+							}
+							else
+							{
+								Log.Error( $"DialogueParser: Variable '{parts[1]}' not found" );
+							}
+							break;
+						case "endif":
+							_currentSymbolIndex = end + 9;
+							break;
+						default:
+							Log.Error( $"DialogueParser: Unknown command '{parts[0]}'" );
+							break;
 					}
-					_currentIndex++;
 				}
 			}
-			line.Node = node;
+			
+			else
+			{
+				line.Text += symbol;
+				_currentSymbolIndex++;
+			}*/
+			
+			else
+			{
+				line.Text += symbol;
+				_currentSymbolIndex++;
+			}
 		}
-
+		
+		_currentLine++;
 		return line;
 	}
 	
@@ -171,13 +232,13 @@ tags:
 	public void Test()
 	{
 		Load( SampleDialogue );
-		/*while ( true )
-		{*/
+		while ( true )
+		{
 			var line = Next();
-			/*if ( line == null )
-				break;*/
+			if ( line == null )
+				break;
 			Log.Info( $"[{line.Speaker}] {line.Text}" );
-		/*}*/
+		}
 	}
 	
 }
