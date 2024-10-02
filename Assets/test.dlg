@@ -1,5 +1,8 @@
 {
-  "Nodes": null,
+  "TestValue": 2,
+  "Nodes": [
+    {}
+  ],
   "__references": [],
   "IsValid": true,
   "__version": 0

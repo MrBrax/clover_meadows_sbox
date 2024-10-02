@@ -21,21 +21,72 @@ public class DialogueEditor : BaseResourceEditor<Dialogue>
 	{
 		Layout.Clear( true );
 		
-		Object = resource.GetSerialized();
+		// Object = resource.GetSerialized();
 		
 		var sheet = new ControlSheet();
-		sheet.AddObject( Object );
+		// sheet.AddProperty( resource, x => x.TestValue );
+		
+		var so = resource.GetSerialized();
+		// sheet.AddRow( so.GetProperty( nameof( resource.TestValue ) ) );
+		
+		foreach ( var node in resource.Nodes )
+		{
+			var nodeSheet = new ControlSheet();
+			nodeSheet.AddProperty( node, x => x.Label );
+			nodeSheet.AddProperty( node, x => x.Speaker );
+			
+			if ( node is Dialogue.TextNode textNode )
+			{
+				nodeSheet.AddProperty( textNode, x => x.Body );
+			}
+			else if ( node is Dialogue.ChoiceNode choiceNode )
+			{
+				nodeSheet.AddProperty( choiceNode, x => x.Text );
+				
+				var choicesSheet = new ControlSheet();
+				foreach ( var choice in choiceNode.Choices )
+				{
+					var choiceSheet = new ControlSheet();
+					choiceSheet.AddProperty( choice, x => x.Text );
+					choiceSheet.AddProperty( choice, x => x.Target );
+					choicesSheet.Add( choiceSheet );
+				}
+				nodeSheet.Add( choicesSheet );
+			}
+			
+			sheet.Add( nodeSheet );
+		}
+		
+		var addButton = new Button( "Add Node" );
+		addButton.Pressed += () =>
+		{
+			var node = new Dialogue.TextNode();
+			node.Label = "New Text Node";
+			resource.Nodes.Add( node );
+			// Initialize( asset, resource );
+			NoteChanged();
+		};
+		
 		Layout.Add( sheet );
 		
+		so.OnPropertyChanged += ( p ) =>
+		{
+			NoteChanged( p );
+		};
 		
-		var button = Layout.Add( new Button( "Add text node" ) );
+		/*Object.OnPropertyChanged += ( p ) =>
+		{
+			NoteChanged( p );
+		};*/
+		
+		/*var button = Layout.Add( new Button( "Add text node" ) );
 		button.Pressed +=  () =>
 		{
 			var node = new Dialogue.TextNode();
 			node.Label = "New Text Node";
 			resource.Nodes.Add( node );
 			Initialize( asset, resource );
-		};
+		};*/
 		
 		
 	}

@@ -6,7 +6,7 @@ namespace Sandbox;
 public class Dialogue : GameResource
 {
 	
-	
+	[Property] public int TestValue { get; set; }
 	
 	public class BaseNode
 	{
