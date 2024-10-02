@@ -38,6 +38,7 @@ tags:
 	
 	public class BaseNode
 	{
+		public int Indent { get; set; }
 		public string Label { get; set; }
 		public string Speaker { get; set; }
 	}
@@ -50,14 +51,15 @@ tags:
 	public class ChoiceNode : BaseNode
 	{
 		public string Text { get; set; }
-		public List<Choice> Choices { get; set; }
+		public List<Choice> Choices { get; set; } = new();
 	}
 
 
 	public class Choice
 	{
 		public string Text { get; set; }
-		public string Target { get; set; }
+		public int TargetIndex { get; set; }
+		public string TargetLabel { get; set; }
 	}
 	
 	public class DialogueLine
@@ -69,8 +71,10 @@ tags:
 	}
 
 	private string _text;
+	private string[] _lines;
 	private int _currentSymbolIndex;
 	private int _currentLine;
+	private int _currentIndent;
 	private Dictionary<string, string> _meta = new();
 	
 	public Dictionary<string, object> Variables { get; set; } = new();
@@ -78,6 +82,7 @@ tags:
 	public void Load( string text )
 	{
 		_text = text;
+		_lines = _text.Split( '\n' );
 		_currentSymbolIndex = 0;
 		ParseMeta();
 	}
@@ -103,8 +108,7 @@ tags:
 	
 	public DialogueLine Next()
 	{
-		if ( _currentSymbolIndex >= _text.Length )
-			return null;
+		_currentSymbolIndex = 0;
 
 		var line = new DialogueLine();
 		line.Index = _currentLine;
@@ -112,120 +116,172 @@ tags:
 		line.Text = "";
 		line.Node = new BaseNode();
 		
-		while ( _currentSymbolIndex < _text.Length )
+		var hasCheckedIndent = false;
+		var indent = 0;
+		
+		
+		/*while ( _currentSymbolIndex < _text.Length )
 		{
 			var symbol = _text[_currentSymbolIndex];
+			
+			// end of line
 			if ( symbol == '\n' )
 			{
 				_currentSymbolIndex++;
 				break;
 			}
+			
+			// check for indent
+			if ( !hasCheckedIndent )
+			{
+				if ( symbol == ' ' )
+				{
+					indent++;
+					_currentSymbolIndex++;
+					continue;
+				}
+				else
+				{
+					hasCheckedIndent = true;
+				}
+			}
+			
+			// check for choices
+			if ( symbol == '-' && _text[_currentSymbolIndex + 1] == '>' )
+			{
+				line.Node = new ChoiceNode();
+				line.Node.Indent = indent;
+				_currentSymbolIndex += 2;
+				
+				// add first option
+				var text = "";
+				while ( _text[_currentSymbolIndex] != '\n' && _currentSymbolIndex < _text.Length )
+				{
+					text += _text[_currentSymbolIndex];
+					_currentSymbolIndex++;
+				}
+				var choice = new Choice();
+				choice.Text = text.Trim();
+				((ChoiceNode)line.Node).Choices.Add( choice );
+				
+				// find next option
+				
+				
+				
+			}
+			
+			
 
-			if ( symbol == '{' )
-			{
-				var end = _text.IndexOf( '}', _currentSymbolIndex );
-				if ( end == -1 )
-				{
-					Log.Error( $"DialogueParser: Missing '}}' at {_currentSymbolIndex}" );
-					break;
-				}
-				
-				var variable = _text.Substring( _currentSymbolIndex + 2, end - _currentSymbolIndex - 3 );
-				
-				if ( Variables.TryGetValue( variable, out var value ) )
-				{
-					line.Text += value.ToString();
-				}
-				else
-				{
-					Log.Error( $"DialogueParser: Variable '{variable}' not found" );
-				}
-				
-				_currentSymbolIndex = end + 1;
-				
-			}
-			// skip logic for now
-			/*else if ( symbol == '[' )
-			{
-				var end = _text.IndexOf( ']', _currentSymbolIndex );
-				if ( end == -1 )
-				{
-					Log.Error( $"DialogueParser: Missing ']' at {_currentSymbolIndex}" );
-					break;
-				}
-				
-				var color = _text.Substring( _currentSymbolIndex + 1, end - _currentSymbolIndex - 1 );
-				line.Text += $"<color={color}>";
-				_currentSymbolIndex = end + 1;
-			}
 			
-			else if ( symbol == '<' && _text[_currentSymbolIndex + 1] == '<' )
-			{
-				var end = _text.IndexOf( ">>", _currentSymbolIndex );
-				if ( end == -1 )
-				{
-					Log.Error( $"DialogueParser: Missing '>>' at {_currentSymbolIndex}" );
-					break;
-				}
-				
-				var command = _text.Substring( _currentSymbolIndex + 2, end - _currentSymbolIndex - 2 );
-				var parts = command.Split( ' ' );
-				if ( parts.Length == 1 )
-				{
-					line.Text += $"[{command}]";
-				}
-				else
-				{
-					switch ( parts[0] )
-					{
-						case "if":
-							if ( Variables.TryGetValue( parts[1], out var value ) )
-							{
-								if ( (bool)value )
-								{
-									_currentSymbolIndex = end + 2;
-								}
-								else
-								{
-									_currentSymbolIndex = _text.IndexOf( "<<endif>>", end );
-									if ( _currentSymbolIndex == -1 )
-									{
-										Log.Error( $"DialogueParser: Missing <<endif>> after {command}" );
-										break;
-									}
-									_currentSymbolIndex += 9;
-								}
-							}
-							else
-							{
-								Log.Error( $"DialogueParser: Variable '{parts[1]}' not found" );
-							}
-							break;
-						case "endif":
-							_currentSymbolIndex = end + 9;
-							break;
-						default:
-							Log.Error( $"DialogueParser: Unknown command '{parts[0]}'" );
-							break;
-					}
-				}
-			}
+		}*/
+		
+		var activeLine = _lines.ElementAtOrDefault( _currentLine );
+		if ( activeLine == null )
+			return null;
+		
+		// check for indent
+		_currentIndent = GetIndent( activeLine );
+		
+		// check for choices
+		if ( activeLine[_currentIndent] == '-' && activeLine[_currentIndent + 1] == '>' )
+		{
+			line.Node = new ChoiceNode();
+			line.Node.Indent = _currentIndent;
+			_currentSymbolIndex += 2;
 			
-			else
+			// add first option
+			/*var text = "";
+			while ( activeLine[_currentSymbolIndex] != '\n' && _currentSymbolIndex < activeLine.Length )
 			{
-				line.Text += symbol;
+				text += activeLine[_currentSymbolIndex];
 				_currentSymbolIndex++;
 			}*/
+			var text = GetString( activeLine, _currentSymbolIndex, activeLine.Length - _currentSymbolIndex );
+			_currentSymbolIndex += text.Length;
 			
-			else
+			var choice = new Choice();
+			choice.Text = text.Trim();
+			choice.TargetIndex = _currentLine + 1;
+			((ChoiceNode)line.Node).Choices.Add( choice );
+			
+			// find next option
+			while ( _currentLine < _lines.Length )
 			{
-				line.Text += symbol;
+				_currentLine++;
+				activeLine = _lines.ElementAtOrDefault( _currentLine );
+				if ( activeLine == null )
+					break;
+				
+				// check for indent
+				var indent = 0;
+				while ( activeLine[indent] == ' ' )
+				{
+					indent++;
+				}
+				
+				if ( indent <= _currentIndent )
+				{
+					_currentLine--;
+					break;
+				}
+				
+				// add option
+				_currentSymbolIndex = indent;
+				text = "";
+				while ( activeLine[_currentSymbolIndex] != '\n' && _currentSymbolIndex < activeLine.Length )
+				{
+					text += activeLine[_currentSymbolIndex];
+					_currentSymbolIndex++;
+				}
+				choice = new Choice();
+				choice.Text = text.Trim();
+				((ChoiceNode)line.Node).Choices.Add( choice );
+			}
+		}
+		else
+		{
+			// find speaker
+			var speaker = "";
+			while ( activeLine[_currentSymbolIndex] != ':' && _currentSymbolIndex < activeLine.Length )
+			{
+				speaker += activeLine[_currentSymbolIndex];
+				_currentSymbolIndex++;
+			}
+			line.Speaker = speaker.Trim();
+			_currentSymbolIndex++;
+			
+			// find text
+			while ( _currentSymbolIndex < activeLine.Length )
+			{
+				line.Text += activeLine[_currentSymbolIndex];
 				_currentSymbolIndex++;
 			}
 		}
 		
+		
+		
 		_currentLine++;
 		return line;
+	}
+	
+	private int GetIndent( string line )
+	{
+		var indent = 0;
+		while ( line[indent] == ' ' )
+		{
+			indent++;
+		}
+		return indent;
+	}
+	
+	private string GetString( string line, int start, int length )
+	{
+		var str = "";
+		for ( var i = start; i < start + length; i++ )
+		{
+			str += line[i];
+		}
+		return str;
 	}
 	
 	[Button("Test")]
