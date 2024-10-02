@@ -43,7 +43,7 @@ tags:
 		public int Indent { get; set; }
 		public string Label { get; set; }
 		public string Speaker { get; set; }
-		
+
 		public BaseNode( DialogueLine line )
 		{
 			Line = line;
@@ -54,7 +54,7 @@ tags:
 	{
 		public string Body { get; set; }
 
-		public TextNode(DialogueLine line) : base(line)
+		public TextNode( DialogueLine line ) : base( line )
 		{
 		}
 	}
@@ -64,15 +64,95 @@ tags:
 		public string Text { get; set; }
 		public List<Choice> Choices { get; set; } = new();
 
-		public ChoiceNode(DialogueLine line) : base(line)
+		public ChoiceNode( DialogueLine line ) : base( line )
 		{
 		}
 	}
 
 	public class LogicNode : BaseNode
 	{
-		// public string Logic { get; set; }
-		public List<string> Logic { get; set; } = new();
+		/// <summary>
+		///  Line index and logic string.
+		///  If the logic is true, jump to the line index, otherwise continue to the next logic line
+		/// </summary>
+		public Dictionary<int, string> Logic { get; set; } = new();
+
+		public enum LogicType
+		{
+			If,
+			Else,
+			ElseIf,
+			EndIf
+		}
+
+		public enum ComparisonOperator
+		{
+			Equal,
+			NotEqual,
+			GreaterThan,
+			LessThan,
+			GreaterThanOrEqual,
+			LessThanOrEqual
+		}
+
+		public class Statement
+		{
+			public virtual bool Evaluate( Dictionary<string, object> variables )
+			{
+				return false;
+			}
+		}
+
+		public class IfStatement : Statement
+		{
+			public string Variable1 { get; set; }
+			public string Variable2 { get; set; }
+			public ComparisonOperator Operator { get; set; }
+			
+			public override bool Evaluate( Dictionary<string, object> variables )
+			{
+				if ( !variables.ContainsKey( Variable1 ) || !variables.ContainsKey( Variable2 ) )
+				{
+					Log.Error( $"Variable not found: {Variable1} or {Variable2}" );
+					return false;
+				}
+
+				var value1 = (int)variables[Variable1];
+				var value2 = (int)variables[Variable2];
+
+				switch ( Operator )
+				{
+					case ComparisonOperator.Equal:
+						return value1 == value2;
+					case ComparisonOperator.NotEqual:
+						return value1 != value2;
+					case ComparisonOperator.GreaterThan:
+						return value1 > value2;
+					case ComparisonOperator.LessThan:
+						return value1 < value2;
+					case ComparisonOperator.GreaterThanOrEqual:
+						return value1 >= value2;
+					case ComparisonOperator.LessThanOrEqual:
+						return value1 <= value2;
+					default:
+						return false;
+				}
+			}
+		}
+
+		public class ElseStatement : Statement
+		{
+		}
+
+		public class ElseIfStatement : IfStatement
+		{
+		}
+
+		public class EndIfStatement : Statement
+		{
+		}
+
+		public List<Statement> Statements { get; set; } = new();
 
 		/// <summary>
 		///  Run the logic and return the line index to jump to
@@ -80,76 +160,172 @@ tags:
 		/// <returns></returns>
 		public int Run()
 		{
-			var result = 0;
+			ParseLogic();
 			
+			var currentStatement = 0;
+			var currentLine = Line.Index;
+			while ( currentStatement < Statements.Count )
+			{
+				var statement = Statements[currentStatement];
+				if ( statement is IfStatement ifStatement )
+				{
+					if ( ifStatement.Evaluate( Line.Parser.Variables ) )
+					{
+						currentStatement++;
+					}
+					else
+					{
+						// find the next elseif or else
+						var found = false;
+						for ( var i = currentStatement + 1; i < Statements.Count; i++ )
+						{
+							if ( Statements[i] is ElseIfStatement || Statements[i] is ElseStatement )
+							{
+								currentStatement = i;
+								found = true;
+								break;
+							}
+						}
+
+						if ( !found )
+						{
+							// find the next endif
+							for ( var i = currentStatement + 1; i < Statements.Count; i++ )
+							{
+								if ( Statements[i] is EndIfStatement )
+								{
+									currentStatement = i + 1;
+									break;
+								}
+							}
+						}
+					}
+				}
+				else if ( statement is ElseStatement )
+				{
+					// find the next endif
+					var found = false;
+					for ( var i = currentStatement + 1; i < Statements.Count; i++ )
+					{
+						if ( Statements[i] is EndIfStatement )
+						{
+							currentStatement = i + 1;
+							found = true;
+							break;
+						}
+					}
+
+					if ( !found )
+					{
+						Log.Error( $"Missing endif statement" );
+						break;
+					}
+				}
+				else if ( statement is ElseIfStatement )
+				{
+					// find the next endif
+					var found = false;
+					for ( var i = currentStatement + 1; i < Statements.Count; i++ )
+					{
+						if ( Statements[i] is EndIfStatement )
+						{
+							currentStatement = i + 1;
+							found = true;
+							break;
+						}
+					}
+
+					if ( !found )
+					{
+						Log.Error( $"Missing endif statement" );
+						break;
+					}
+				}
+				else if ( statement is EndIfStatement )
+				{
+					break;
+				}
+						    
+						    
+						    
+		private void ParseLogic()
+		{
 			foreach ( var logic in Logic )
 			{
-				var parts = logic.Split( ' ' );
-				if ( parts.Length < 3 )
+				if ( logic.Value.StartsWith( "if " ) )
 				{
-					Log.Error( $"Invalid logic: {logic}" );
-					continue;
+					var parts = logic.Value.Split( ' ' );
+					if ( parts.Length != 4 )
+					{
+						Log.Error( $"Invalid if statement: {logic.Value}" );
+						continue;
+					}
+
+					var variable1 = parts[1];
+					var op = parts[2];
+					var variable2 = parts[3];
+
+					Statements.Add( new IfStatement
+					{
+						Variable1 = variable1, Operator = ParseOperator( op ), Variable2 = variable2
+					} );
 				}
-
-				var variable = parts[1].Substring( 1 );
-				var value = parts[2];
-				var comparison = parts[0];
-
-				if ( !Line.Parser.Variables.ContainsKey( variable ) )
+				else if ( logic.Value == "else" )
 				{
-					Log.Error( $"Variable not found: {variable}" );
-					continue;
+					Statements.Add( new ElseStatement() );
 				}
-
-				var variableValue = Line.Parser.Variables[variable];
-				var compareValue = Convert.ChangeType( value, variableValue.GetType() );
-
-				switch ( comparison )
+				else if ( logic.Value.StartsWith( "elseif " ) )
 				{
-					case "==":
-						if ( variableValue.Equals( compareValue ) )
-						{
-							result = int.Parse( parts[3] );
-						}
-						break;
-					case "!=":
-						if ( !variableValue.Equals( compareValue ) )
-						{
-							result = int.Parse( parts[3] );
-						}
-						break;
-					case ">":
-						if ( (int)variableValue > (int)compareValue )
-						{
-							result = int.Parse( parts[3] );
-						}
-						break;
-					case "<":
-						if ( (int)variableValue < (int)compareValue )
-						{
-							result = int.Parse( parts[3] );
-						}
-						break;
-					case ">=":
-						if ( (int)variableValue >= (int)compareValue )
-						{
-							result = int.Parse( parts[3] );
-						}
-						break;
-					case "<=":
-						if ( (int)variableValue <= (int)compareValue )
-						{
-							result = int.Parse( parts[3] );
-						}
-						break;
+					var parts = logic.Value.Split( ' ' );
+					if ( parts.Length != 4 )
+					{
+						Log.Error( $"Invalid elseif statement: {logic.Value}" );
+						continue;
+					}
+
+					var variable1 = parts[1];
+					var op = parts[2];
+					var variable2 = parts[3];
+
+					Statements.Add( new ElseIfStatement
+					{
+						Variable1 = variable1, Operator = ParseOperator( op ), Variable2 = variable2
+					} );
+				}
+				else if ( logic.Value == "endif" )
+				{
+					Statements.Add( new EndIfStatement() );
+				}
+				else
+				{
+					Log.Error( $"Unknown logic statement: {logic.Value}" );
 				}
 			}
-			
-			return result;
-			
 		}
 
-		public LogicNode(DialogueLine line) : base(line)
+		private ComparisonOperator ParseOperator( string op )
+		{
+			switch ( op )
+			{
+				case "==":
+					return ComparisonOperator.Equal;
+				case "!=":
+					return ComparisonOperator.NotEqual;
+				case ">":
+					return ComparisonOperator.GreaterThan;
+				case "<":
+					return ComparisonOperator.LessThan;
+				case ">=":
+					return ComparisonOperator.GreaterThanOrEqual;
+				case "<=":
+					return ComparisonOperator.LessThanOrEqual;
+				default:
+					Log.Error( $"Unknown operator: {op}" );
+					return ComparisonOperator.Equal;
+			}
+		}
+
+		public LogicNode( DialogueLine line ) : base( line )
 		{
 		}
 	}
@@ -165,21 +341,22 @@ tags:
 	public class DialogueLine
 	{
 		public DialogueParser Parser { get; set; }
+
 		public int Index { get; set; }
+
 		// public string Speaker { get; set; }
 		// public string Text { get; set; }
 		public BaseNode Node { get; set; }
-		
+
 		public DialogueLine()
 		{
-			
 		}
-		
+
 		public DialogueLine( DialogueParser parser )
 		{
 			Parser = parser;
 		}
-		
+
 		public DialogueLine( DialogueParser parser, BaseNode node )
 		{
 			Parser = parser;
@@ -251,7 +428,7 @@ tags:
 		_meta = meta;
 		_currentLine = i + 1;
 	}
-	
+
 	public DialogueLine JumpTo( int index )
 	{
 		Log.Info( $"Jumping to line {index}" );
@@ -335,7 +512,7 @@ tags:
 
 		// check for indent
 		_currentIndent = GetIndent( activeLine );
-		
+
 		activeLine = activeLine.Substring( _currentIndent );
 
 		// check for choices
@@ -353,7 +530,8 @@ tags:
 				text += activeLine[_currentSymbolIndex];
 				_currentSymbolIndex++;
 			}*/
-			var text = GetInterpolatedString( activeLine, _currentSymbolIndex, activeLine.Length - _currentSymbolIndex );
+			var text = GetInterpolatedString( activeLine, _currentSymbolIndex,
+				activeLine.Length - _currentSymbolIndex );
 			_currentSymbolIndex += text.Length;
 
 			var choice = new Choice();
@@ -387,7 +565,7 @@ tags:
 				choice.TargetIndex = lineSearch + 1;
 				((ChoiceNode)line.Node).Choices.Add( choice );
 			}*/
-			
+
 			// find next line with same indent
 			var searchLine = _currentLine + 1;
 			while ( true )
@@ -401,17 +579,18 @@ tags:
 					break;
 
 				_currentSymbolIndex = _currentIndent + 2;
-				text = GetInterpolatedString( nextLineText, _currentSymbolIndex, nextLineText.Length - _currentSymbolIndex );
+				text = GetInterpolatedString( nextLineText, _currentSymbolIndex,
+					nextLineText.Length - _currentSymbolIndex );
 				_currentSymbolIndex += text.Length;
 
 				choice = new Choice();
 				choice.Text = text.Trim();
 				choice.TargetIndex = nextLine + 1;
 				((ChoiceNode)line.Node).Choices.Add( choice );
-				
+
 				searchLine = nextLine + 1;
 			}
-			
+
 			foreach ( var c in ((ChoiceNode)line.Node).Choices )
 			{
 				Log.Info( $"Parsed choice: {c.Text} -> {c.TargetIndex}" );
@@ -426,7 +605,7 @@ tags:
 		{
 			Log.Info( $"Checking for logic at line {_currentLine} with indent {_currentIndent}" );
 			_currentSymbolIndex += 2;
-			
+
 			// find the end of the logic comparison
 			var logic = "";
 			while ( GetString( activeLine, _currentSymbolIndex, 2 ) != ">>" )
@@ -436,16 +615,16 @@ tags:
 			}
 
 			_currentSymbolIndex += 2;
-			
+
 			Log.Info( $"Found logic: {logic}" );
 
 			line.Node = new LogicNode( line );
-			((LogicNode)line.Node).Logic.Add( logic.Trim() ); // parse later
-			
+			((LogicNode)line.Node).Logic.Add( _currentLine, logic.Trim() );
+
 			if ( logic.Trim().StartsWith( "if " ) )
 			{
 				Log.Info( $"Found if statement: {logic}" );
-				
+
 				var searchLine = _currentLine + 1;
 				while ( true )
 				{
@@ -467,7 +646,7 @@ tags:
 						}
 
 						_currentSymbolIndex += 2;
-						((LogicNode)line.Node).Logic.Add( nestedLogic.Trim() );
+						((LogicNode)line.Node).Logic.Add( nextLine, nestedLogic.Trim() );
 					}
 					else
 					{
@@ -476,25 +655,24 @@ tags:
 
 					searchLine = nextLine + 1;
 				}
-				
 			}
 			else
 			{
 				Log.Error( $"Unknown logic statement: {logic}" );
 			}
-			
+
 			foreach ( var l in ((LogicNode)line.Node).Logic )
 			{
 				Log.Info( $"Parsed logic: {l}" );
 			}
 
 			var result = ((LogicNode)line.Node).Run();
-			
+
 			JumpTo( result );
-			
+
 			return line;
 		}
-		
+
 		line.Node = new TextNode( line );
 
 		// check for speaker
@@ -505,6 +683,7 @@ tags:
 			speaker += activeLine[_currentSymbolIndex];
 			_currentSymbolIndex++;
 		}
+
 		Log.Info( $"Found speaker: {speaker}" );
 
 		_currentSymbolIndex++; // skip ':'
@@ -559,7 +738,7 @@ tags:
 	{
 		return new string( line.Skip( start ).Take( length ).ToArray() );
 	}
-	
+
 	private string GetInterpolatedString( string line, int start, int length )
 	{
 		var str = new string( line.Skip( start ).Take( length ).ToArray() );
@@ -572,13 +751,13 @@ tags:
 		{
 			text = text.Replace( "{$" + variable.Key + "}", variable.Value.ToString() );
 		}
-		
+
 		// warn for missing variables
 		if ( text.Contains( "{$" ) )
 		{
 			Log.Warning( $"Missing variables in text: {text}" );
 		}
-		
+
 		return text;
 	}
 
@@ -596,18 +775,17 @@ tags:
 				break;
 			Log.Info( $"[{line.Speaker}] {line.Text}" );
 		}*/
-		
+
 		var line = Next();
 		Log.Info( $"Result1: {line.Print()}" );
-		
+
 		var line2 = Next();
 		Log.Info( $"Result2: {line2.Print()}" );
-		
+
 		var choice = ((ChoiceNode)line2.Node).Choices[0];
 		Log.Info( $"Choice: {choice.Text} -> {choice.TargetIndex}" );
-		
+
 		var line3 = JumpTo( choice.TargetIndex );
 		Log.Info( $"Result3: {line3.Print()}" );
-		
 	}
 }
