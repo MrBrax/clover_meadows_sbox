@@ -310,7 +310,13 @@
       "Flags": 0,
       "Name": "Object",
       "Position": "-126.4292,-187.5311,115.5769",
-      "Enabled": true
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.DialogueParser",
+          "__guid": "6fd58cbb-d13f-4843-a0c1-12d203cdbff3"
+        }
+      ]
     }
   ],
   "SceneProperties": {
