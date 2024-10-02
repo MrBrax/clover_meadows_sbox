@@ -108,7 +108,7 @@ tags:
 			public string Variable1 { get; set; }
 			public string Variable2 { get; set; }
 			public ComparisonOperator Operator { get; set; }
-			
+
 			public override bool Evaluate( Dictionary<string, object> variables )
 			{
 				if ( !variables.ContainsKey( Variable1 ) || !variables.ContainsKey( Variable2 ) )
@@ -161,93 +161,49 @@ tags:
 		public int Run()
 		{
 			ParseLogic();
-			
+
 			var currentStatement = 0;
 			var currentLine = Line.Index;
+			var variables = Line.Parser.Variables;
 			while ( currentStatement < Statements.Count )
 			{
 				var statement = Statements[currentStatement];
-				if ( statement is IfStatement ifStatement )
+				if ( statement is ElseIfStatement elseIfStatement )
 				{
-					if ( ifStatement.Evaluate( Line.Parser.Variables ) )
+					if ( elseIfStatement.Evaluate( variables ) )
 					{
 						currentStatement++;
-					}
-					else
-					{
-						// find the next elseif or else
-						var found = false;
-						for ( var i = currentStatement + 1; i < Statements.Count; i++ )
-						{
-							if ( Statements[i] is ElseIfStatement || Statements[i] is ElseStatement )
-							{
-								currentStatement = i;
-								found = true;
-								break;
-							}
-						}
-
-						if ( !found )
-						{
-							// find the next endif
-							for ( var i = currentStatement + 1; i < Statements.Count; i++ )
-							{
-								if ( Statements[i] is EndIfStatement )
-								{
-									currentStatement = i + 1;
-									break;
-								}
-							}
-						}
+						continue;
 					}
 				}
 				else if ( statement is ElseStatement )
 				{
-					// find the next endif
-					var found = false;
-					for ( var i = currentStatement + 1; i < Statements.Count; i++ )
+					// jump to endif
+					while ( !(Statements[currentStatement] is EndIfStatement) )
 					{
-						if ( Statements[i] is EndIfStatement )
-						{
-							currentStatement = i + 1;
-							found = true;
-							break;
-						}
-					}
-
-					if ( !found )
-					{
-						Log.Error( $"Missing endif statement" );
-						break;
-					}
-				}
-				else if ( statement is ElseIfStatement )
-				{
-					// find the next endif
-					var found = false;
-					for ( var i = currentStatement + 1; i < Statements.Count; i++ )
-					{
-						if ( Statements[i] is EndIfStatement )
-						{
-							currentStatement = i + 1;
-							found = true;
-							break;
-						}
-					}
-
-					if ( !found )
-					{
-						Log.Error( $"Missing endif statement" );
-						break;
+						currentStatement++;
 					}
 				}
 				else if ( statement is EndIfStatement )
 				{
+					// done
 					break;
 				}
-						    
-						    
-						    
+				else if ( statement is IfStatement ifStatement )
+				{
+					if ( ifStatement.Evaluate( variables ) )
+					{
+						currentStatement++;
+						continue;
+					}
+				}
+
+				currentStatement++;
+			}
+
+			return currentLine;
+		}
+
 		private void ParseLogic()
 		{
 			foreach ( var logic in Logic )
