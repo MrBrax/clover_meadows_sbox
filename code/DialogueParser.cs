@@ -2,7 +2,7 @@
 
 /*
 Dialogue format, yarn-like:
- 
+
 title: BuyItem
 tags:
 ---
@@ -18,110 +18,166 @@ tags:
     {$NpcName}: Alright, let me know if you change your mind.
 */
 
-public class DialogueParser
+public class DialogueParser : Component
 {
+
+	public const string SampleDialogue = @"title: BuyItem
+tags:
+---
+{$NpcName}: That is a [blue]{$ItemName}[/blue]. It costs [green]{$ItemPrice}[/green] clovers. Do you want to buy it?
+-> Yes
+    <<if $PlayerClovers >= $ItemPrice>>
+        <<DoBuyItem>>
+        {$NpcName}: Thank you for your purchase!
+    <<else>>
+        {$NpcName}: Oh... You don't seem to have enough clovers to buy that. See anything else you like?
+    <<endif>>
+-> No
+    {$NpcName}: Alright, let me know if you change your mind.";
+
 	
-	Dialogue dialogue = new();
-
-	private string[] lines;
-	private int lineIndex;
-	private int currentIndentLevel;
-	private int previousIndentLevel;
-	// private Dialogue.BaseNode currentNode;
-	private Stack<Dialogue.BaseNode> nodeStack = new();
-
-	public Dialogue Parse( string text )
+	public class BaseNode
 	{
-		
-		dialogue = new();
-		
-		lines = text.Split( '\n' );
-		
-		lineIndex = 0;
-		
-		foreach ( var line in lines )
-		{
-			ParseLine( line );
-			lineIndex++;
-		}
-		
-		return dialogue;
-		
+		public string Label { get; set; }
+		public string Speaker { get; set; }
 	}
 
-	private void ParseLine( string line )
+	public class TextNode : BaseNode
 	{
-		// Skip empty lines
-		if ( string.IsNullOrWhiteSpace( line ) )
-			return;
-		
-		// Skip comments
-		if ( line.StartsWith( "//" ) )
-			return;
-		
-		// Indent level
-		currentIndentLevel = 0;
-		while ( line[currentIndentLevel] == ' ' )
-			currentIndentLevel++;
-		
-		// Remove indentation
-		line = line.TrimStart();
-		
-		// Check if we are in a node
-		if ( nodeStack.Count > 0 )
-		{
-			// Check if we are still in the same node
-			if ( currentIndentLevel > previousIndentLevel )
-			{
-				// Still in the same node
-				ParseNodeLine( line );
-			}
-			else
-			{
-				// End of node
-				nodeStack.Pop();
-			}
-		}
-		else
-		{
-			// Check if we are starting a new node
-			if ( currentIndentLevel == 0 )
-			{
-				// Start a new node
-				ParseNodeLine( line );
-			}
-		}
-		
+		public string Body { get; set; }
 	}
 
-	private void ParseNodeLine( string line )
+	public class ChoiceNode : BaseNode
 	{
-		// Check if we are starting a new node
-		if ( line.StartsWith( "->" ) )
-		{
-			// Create a new node
-			var node = new Dialogue.TextNode();
-			node.Label = line.Substring( 2 ).Trim();
-			nodeStack.Push( node );
-			dialogue.Nodes.Add( node );
-		}
-		else if ( line.StartsWith( ">>" ) )
-		{
-			// Create a new node
-			var node = new Dialogue.ChoiceNode();
-			node.Text = line.Substring( 2 ).Trim();
-			nodeStack.Push( node );
-			dialogue.Nodes.Add( node );
-		}
-		else
-		{
-			// Add line to current node
-			var node = nodeStack.Peek();
-			if ( node is Dialogue.TextNode textNode )
-			{
-				textNode.Body += line + "\n";
-			}
-		}
+		public string Text { get; set; }
+		public List<Choice> Choices { get; set; }
 	}
-		
+
+
+	public class Choice
+	{
+		public string Text { get; set; }
+		public string Target { get; set; }
+	}
+	
+	public class DialogueLine
+	{
+		public int Index { get; set; }
+		public string Speaker { get; set; }
+		public string Text { get; set; }
+		public BaseNode Node { get; set; }
+	}
+
+	private string _text;
+	private int _currentIndex;
+	private int _currentLine;
+
+	public void Load( string text )
+	{
+		_text = text;
+		_currentIndex = 0;
+		ParseMeta();
+	}
+	
+	
+	
+	public DialogueLine Next()
+	{
+		if ( _currentIndex >= _text.Length )
+			return null;
+
+		var line = new DialogueLine();
+		line.Index = _currentIndex;
+
+		// Parse speaker
+		if ( _text[_currentIndex] == '$' )
+		{
+			_currentIndex++;
+			var speaker = "";
+			while ( _text[_currentIndex] != ':' )
+			{
+				speaker += _text[_currentIndex];
+				_currentIndex++;
+			}
+			line.Speaker = speaker;
+			_currentIndex++;
+		}
+
+		// Parse text
+		var text = "";
+		while ( _text[_currentIndex] != '\n' )
+		{
+			text += _text[_currentIndex];
+			_currentIndex++;
+		}
+		line.Text = text;
+		_currentIndex++;
+
+		// Parse node
+		if ( _text[_currentIndex] == '-' )
+		{
+			_currentIndex += 2;
+			var node = new BaseNode();
+			while ( _text[_currentIndex] != '\n' )
+			{
+				// Parse label
+				if ( _text[_currentIndex] == '[' )
+				{
+					_currentIndex++;
+					var label = "";
+					while ( _text[_currentIndex] != ']' )
+					{
+						label += _text[_currentIndex];
+						_currentIndex++;
+					}
+					node.Label = label;
+					_currentIndex++;
+				}
+
+				// Parse speaker
+				if ( _text[_currentIndex] == '$' )
+				{
+					_currentIndex++;
+					var speaker = "";
+					while ( _text[_currentIndex] != ':' )
+					{
+						speaker += _text[_currentIndex];
+						_currentIndex++;
+					}
+					node.Speaker = speaker;
+					_currentIndex++;
+				}
+
+				// Parse body
+				if ( _text[_currentIndex] == '{' )
+				{
+					_currentIndex++;
+					var body = "";
+					while ( _text[_currentIndex] != '}' )
+					{
+						body += _text[_currentIndex];
+						_currentIndex++;
+					}
+					_currentIndex++;
+				}
+			}
+			line.Node = node;
+		}
+
+		return line;
+	}
+	
+	[Button("Test")]
+	public void Test()
+	{
+		Load( SampleDialogue );
+		/*while ( true )
+		{*/
+			var line = Next();
+			/*if ( line == null )
+				break;*/
+			Log.Info( $"[{line.Speaker}] {line.Text}" );
+		/*}*/
+	}
+	
 }
