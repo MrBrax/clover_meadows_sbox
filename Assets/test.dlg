@@ -6,10 +6,196 @@
       "Choices": [
         {
           "Label": "Yes",
+          "OnSelect": {
+            "__version": 8,
+            "__guid": "e1c32701-5f17-4121-af83-aa4b3c445284",
+            "__changeId": 67,
+            "UserData": {
+              "Title": "On Select",
+              "ReferencedComponentTypes": []
+            },
+            "Variables": [],
+            "Nodes": [
+              {
+                "Id": 0,
+                "Type": "input",
+                "UserData": {
+                  "Position": "-288,0"
+                }
+              },
+              {
+                "Id": 3,
+                "Type": "call",
+                "Properties": {
+                  "_isStatic": false,
+                  "_name": "JumpToId",
+                  "_type": "Sandbox.DialogueWindow"
+                },
+                "UserData": {
+                  "Position": "672,12"
+                }
+              },
+              {
+                "Id": 4,
+                "Type": "call",
+                "Properties": {
+                  "_isStatic": false,
+                  "_name": "GetDataInt",
+                  "_type": "Sandbox.DialogueWindow"
+                },
+                "UserData": {
+                  "Position": "48,84"
+                }
+              },
+              {
+                "Id": 13,
+                "Type": "call",
+                "Properties": {
+                  "_isStatic": false,
+                  "_name": "GetDataInt",
+                  "_type": "Sandbox.DialogueWindow"
+                },
+                "UserData": {
+                  "Position": "48,168"
+                }
+              },
+              {
+                "Id": 19,
+                "Type": "op.greaterthanorequal",
+                "UserData": {
+                  "Position": "372,132"
+                }
+              },
+              {
+                "Id": 20,
+                "Type": "if",
+                "UserData": {
+                  "Position": "492,108"
+                }
+              },
+              {
+                "Id": 29,
+                "Type": "call",
+                "Properties": {
+                  "_isStatic": false,
+                  "_name": "JumpToId",
+                  "_type": "Sandbox.DialogueWindow"
+                },
+                "UserData": {
+                  "Position": "672,180"
+                }
+              }
+            ],
+            "Links": [
+              {
+                "SrcId": 20,
+                "SrcName": "true",
+                "DstId": 3,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 0,
+                "SrcName": "window",
+                "DstId": 3,
+                "DstName": "_target"
+              },
+              {
+                "Id": 42,
+                "Value": "bought",
+                "DstId": 3,
+                "DstName": "id"
+              },
+              {
+                "SrcId": 0,
+                "SrcName": "_signal",
+                "DstId": 4,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 0,
+                "SrcName": "window",
+                "DstId": 4,
+                "DstName": "_target"
+              },
+              {
+                "Id": 43,
+                "Value": "money",
+                "DstId": 4,
+                "DstName": "key"
+              },
+              {
+                "SrcId": 0,
+                "SrcName": "_signal",
+                "DstId": 13,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 0,
+                "SrcName": "window",
+                "DstId": 13,
+                "DstName": "_target"
+              },
+              {
+                "Id": 44,
+                "Value": "price",
+                "DstId": 13,
+                "DstName": "key"
+              },
+              {
+                "SrcId": 4,
+                "SrcName": "_result",
+                "DstId": 19,
+                "DstName": "a"
+              },
+              {
+                "SrcId": 13,
+                "SrcName": "_result",
+                "DstId": 19,
+                "DstName": "b"
+              },
+              {
+                "SrcId": 4,
+                "SrcName": "_signal",
+                "DstId": 20,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 19,
+                "SrcName": "_result",
+                "DstId": 20,
+                "DstName": "condition"
+              },
+              {
+                "SrcId": 20,
+                "SrcName": "false",
+                "DstId": 29,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 0,
+                "SrcName": "window",
+                "DstId": 29,
+                "DstName": "_target"
+              },
+              {
+                "Id": 45,
+                "Value": "failed",
+                "DstId": 29,
+                "DstName": "id"
+              }
+            ]
+          },
           "Nodes": [
             {
+              "Id": "bought",
               "Speaker": "Bot",
-              "Text": "you selected the yes option",
+              "Text": "thank you for the purchase",
+              "Choices": []
+            },
+            {
+              "Id": "failed",
+              "Speaker": "Bot",
+              "Text": "you don\u0027t have enough cash",
               "Choices": []
             }
           ]

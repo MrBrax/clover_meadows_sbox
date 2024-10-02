@@ -15,7 +15,14 @@ public class Dialogue : GameResource
 		[Property] public DialogueChoice Choice { get; set; }
 	}*/
 	
-	public delegate void DialogueAction( GameObject player, List<GameObject> targets, DialogueNode node, DialogueChoice choice );
+	public delegate void DialogueAction( 
+		DialogueWindow window,
+		Dictionary<string, object> data,
+		GameObject player,
+		List<GameObject> targets,
+		DialogueNode node,
+		DialogueChoice choice
+		);
 	
 	public class DialogueChoice
 	{
@@ -43,7 +50,12 @@ public class Dialogue : GameResource
 
 		public override string ToString()
 		{
-			return $"{Id} - {Speaker}: {Text}";
+			if ( !string.IsNullOrEmpty( Id ) )
+			{
+				return $"#{Id} - {Speaker}: {Text}";
+			}
+			
+			return $"{Speaker}: {Text}";
 		}
 	}
 	
