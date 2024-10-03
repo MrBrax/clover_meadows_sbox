@@ -237,7 +237,7 @@ public partial class WorldManager : Component
 
 		player.WorldLayerObject.SetLayer( worldIndex, true );
 
-		player.Transform.Position = entrance.Transform.Position;
+		player.WorldPosition = entrance.WorldPosition;
 		player.GetComponent<CameraController>().SnapCamera();
 	}
 

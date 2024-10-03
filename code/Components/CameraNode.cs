@@ -25,6 +25,6 @@ public sealed class CameraNode : Component
 	{
 		var camera = Scene.GetAllComponents<CameraMan>().FirstOrDefault();
 		if ( !camera.IsValid() ) return;
-		camera.SnapTo( Transform.Position, Transform.Rotation );
+		camera.SnapTo( WorldPosition, WorldRotation );
 	}
 }

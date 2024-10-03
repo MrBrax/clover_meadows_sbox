@@ -20,11 +20,11 @@ public sealed class WorldLayerObject : Component
 	public void SetLayerWithTransform( int layer )
 	{
 		var currentLayer = Layer;
-		var currentHeight = Transform.Position.z;
+		var currentHeight = WorldPosition.z;
 		var layerHeight = WorldManager.WorldOffset;
 		
 		Layer = layer;
-		Transform.Position = new Vector3( Transform.Position.x, Transform.Position.y, currentHeight + ( layerHeight * ( layer - currentLayer ) ) );
+		WorldPosition = new Vector3( WorldPosition.x, WorldPosition.y, currentHeight + ( layerHeight * ( layer - currentLayer ) ) );
 
 	}
 

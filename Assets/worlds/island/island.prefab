@@ -120,7 +120,7 @@
         "__guid": "ad737830-b14b-447c-bb77-01ba3a70d202",
         "Flags": 0,
         "Name": "HouseTrigger",
-        "Position": "1296,528,16",
+        "Position": "1264,528,16",
         "Tags": "trigger",
         "Enabled": true,
         "Components": [

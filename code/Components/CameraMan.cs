@@ -20,8 +20,8 @@ public sealed class CameraMan : Component
 
 		if ( MainCameraNode.IsValid() )
 		{
-			_positionLerp = MainCameraNode.Transform.Position;
-			_rotationLerp = MainCameraNode.Transform.Rotation;
+			_positionLerp = MainCameraNode.WorldPosition;
+			_rotationLerp = MainCameraNode.WorldRotation;
 			_fovLerp = MainCameraNode.FieldOfView;
 		}
 	}
@@ -30,12 +30,12 @@ public sealed class CameraMan : Component
 	{
 		if ( !MainCameraNode.IsValid() ) return;
 
-		_positionLerp = Vector3.Lerp( _positionLerp, MainCameraNode.Transform.Position, Time.Delta * LerpSpeed );
-		_rotationLerp = Rotation.Lerp( _rotationLerp, MainCameraNode.Transform.Rotation, Time.Delta * LerpSpeed );
+		_positionLerp = Vector3.Lerp( _positionLerp, MainCameraNode.WorldPosition, Time.Delta * LerpSpeed );
+		_rotationLerp = Rotation.Lerp( _rotationLerp, MainCameraNode.WorldRotation, Time.Delta * LerpSpeed );
 		_fovLerp = _fovLerp.LerpTo( MainCameraNode.FieldOfView, Time.Delta * LerpSpeed );
 
-		Transform.Position = _positionLerp;
-		Transform.Rotation = _rotationLerp;
+		WorldPosition = _positionLerp;
+		WorldRotation = _rotationLerp;
 		CameraComponent.FieldOfView = _fovLerp;
 	}
 
