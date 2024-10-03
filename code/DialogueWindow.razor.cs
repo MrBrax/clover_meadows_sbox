@@ -22,7 +22,7 @@ public partial class DialogueWindow
 		get => CurrentNodeList[CurrentNodeIndex];
 		// set => CurrentNodeIndex = Dialogue.Nodes.IndexOf( value );
 	}
-	
+
 	public bool IsOnLastNode => CurrentNodeIndex == CurrentNodeList.Count - 1;
 
 	public string Text { get; set; } = "";
@@ -42,7 +42,7 @@ public partial class DialogueWindow
 
 		CurrentNodeList = Dialogue.Nodes;
 		CurrentNodeIndex = 0;
-		CurrentNode.OnEnter?.Invoke( this, Data, null, null, CurrentNode, null );
+		CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
 		Read();
 	}
 
@@ -150,13 +150,13 @@ public partial class DialogueWindow
 
 		if ( node != null )
 		{
-			CurrentNode?.OnExit?.Invoke( this, Data, null, null, CurrentNode, null );
+			CurrentNode?.OnExit?.Invoke( this, null, null, CurrentNode, null );
 			CurrentNodeList = list;
 			CurrentNodeIndex = list.IndexOf( node );
 			Log.Info( $"Jumped to node {node.Id}, index {CurrentNodeIndex}/{list.Count}" );
 			if ( CurrentNode != null )
 			{
-				CurrentNode.OnEnter?.Invoke( this, Data, null, null, CurrentNode, null );
+				CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
 				Read();
 			}
 			else
@@ -213,10 +213,9 @@ public partial class DialogueWindow
 			}
 		}
 	}
-	
+
 	private void OnLetterTyped( char letter )
 	{
-		
 		switch ( letter )
 		{
 			case '1':
@@ -252,16 +251,15 @@ public partial class DialogueWindow
 		}
 
 		var s = SoundFile.Load( "sounds/speech/alphabet/" + letter.ToString().ToUpper() + ".wav" );
-		
+
 		var h = Sound.PlayFile( s );
 		h.Pitch = Random.Shared.Float( 1.9f, 2.1f );
-
 	}
 
 	private void OnClick()
 	{
 		if ( _textIndex < 2 ) return;
-		
+
 		// If we're still typing, finish the text
 		if ( Text.Length < _textTarget.Length )
 		{
@@ -288,7 +286,7 @@ public partial class DialogueWindow
 		if ( choice.OnSelect != null )
 		{
 			Log.Info( $"Running custom action for {choice.Label}" );
-			choice.OnSelect( this, Data, null, null, CurrentNode, choice );
+			choice.OnSelect( this, null, null, CurrentNode, choice );
 		}
 		else
 		{
@@ -297,15 +295,15 @@ public partial class DialogueWindow
 				Log.Warning( "No nodes found for choice" );
 				return;
 			}
-			
-			CurrentNode.OnExit?.Invoke( this, Data, null, null, CurrentNode, null );
+
+			CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );
 			CurrentNodeList = choice.Nodes;
 			CurrentNodeIndex = 0;
 			// CurrentChoice = choice;
-				
+
 			if ( CurrentNode != null )
 			{
-				CurrentNode.OnEnter?.Invoke( this, Data, null, null, CurrentNode, null );
+				CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
 				Read();
 			}
 			else
