@@ -217,45 +217,15 @@
       "Enabled": true
     },
     {
-      "__guid": "424e9a5b-9dd5-4ceb-ad4a-4d16f3612af2",
-      "Flags": 0,
-      "Name": "Object",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "14b6e515-9dc7-40cf-b5f2-b4850bd47ec1",
-          "BodyGroups": 18446744073709551615,
-          "Model": "models/island/world.vmdl",
-          "RenderOptions": {
-            "GameLayer": true,
-            "OverlayLayer": false,
-            "BloomLayer": false,
-            "AfterUILayer": false
-          },
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "Sandbox.ModelPhysics",
-          "__guid": "2ec50803-0f41-42f2-aa06-1a281f544883",
-          "Locking": {},
-          "Model": "models/island/world.vmdl",
-          "MotionEnabled": false,
-          "RigidbodyFlags": 0
-        }
-      ]
-    },
-    {
       "__guid": "e96ab869-6df6-41f9-935b-da17e151c718",
       "Flags": 0,
-      "Name": "World",
-      "Position": "2478.242,-532.3354,983.7478",
+      "Name": "WorldManager",
       "Enabled": true,
       "Components": [
         {
-          "__type": "WorldManager",
-          "__guid": "3a689dbf-4ea0-4c66-aaad-20b00295a614"
+          "__type": "Clover.WorldManager",
+          "__guid": "7effb95a-4f76-4128-8ab5-547848dfc5ab",
+          "Worlds": []
         }
       ]
     },
@@ -278,6 +248,13 @@
           "Shadows": true
         }
       ]
+    },
+    {
+      "__guid": "99e24ccb-5a06-411e-a1f4-a4ff468472f7",
+      "Flags": 0,
+      "Name": "NodeManager",
+      "Position": "-126.4292,-187.5311,115.5769",
+      "Enabled": true
     }
   ],
   "SceneProperties": {

@@ -1,0 +1,10 @@
+{
+  "Title": "Island",
+  "Prefab": {
+    "_type": "gameobject",
+    "prefab": "worlds/island/island.prefab"
+  },
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}

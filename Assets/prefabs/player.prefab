@@ -95,7 +95,7 @@
           {
             "__type": "CameraNode",
             "__guid": "2fb1ce16-d463-4554-980e-59a3a3a2e355",
-            "FieldOfView": 80,
+            "FieldOfView": 90,
             "Priority": 1
           }
         ]

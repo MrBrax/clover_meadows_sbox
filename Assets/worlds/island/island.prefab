@@ -1,0 +1,56 @@
+{
+  "RootObject": {
+    "__guid": "fca1b967-78c0-43b3-82ba-9701ac45ec2b",
+    "Flags": 0,
+    "Name": "island",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.World",
+        "__guid": "181dd86a-fc80-4432-a6f0-c7604e89f6f0",
+        "Data": "worlds/island/island.world"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "424e9a5b-9dd5-4ceb-ad4a-4d16f3612af2",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "14b6e515-9dc7-40cf-b5f2-b4850bd47ec1",
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/island/world.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "Sandbox.ModelPhysics",
+            "__guid": "2ec50803-0f41-42f2-aa06-1a281f544883",
+            "Locking": {},
+            "Model": "models/island/world.vmdl",
+            "MotionEnabled": false,
+            "RigidbodyFlags": 0
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}
