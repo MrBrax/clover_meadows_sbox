@@ -1,8 +1,8 @@
 {
   "Title": "Clover Meadows",
   "Type": "game",
-  "Org": "local",
-  "Ident": "clover_meadows",
+  "Org": "brax",
+  "Ident": "clovermeadows",
   "Schema": 1,
   "IncludeSourceFiles": false,
   "Resources": null,
