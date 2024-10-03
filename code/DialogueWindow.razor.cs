@@ -10,11 +10,11 @@ public partial class DialogueWindow
 	public Dictionary<string, object> Data { get; set; } =
 		new() { { "test", 123 }, { "money", 100 }, { "price", 200 }, };
 
-	public List<Dialogue.DialogueNode> CurrentNodeList;
+	[Property, ReadOnly] public List<Dialogue.DialogueNode> CurrentNodeList { get; set; }
 
-	public Dialogue.DialogueChoice CurrentChoice;
+	[Property, ReadOnly] public Dialogue.DialogueChoice CurrentChoice { get; set; }
+	[Property, ReadOnly] public List<GameObject> CurrentTargets { get; set; } = new();
 
-	// public Dialogue.DialogueNode CurrentNode { get; set; }
 	public int CurrentNodeIndex;
 
 	public Dialogue.DialogueNode CurrentNode
@@ -26,7 +26,7 @@ public partial class DialogueWindow
 	public bool IsOnLastNode => CurrentNodeIndex == CurrentNodeList.Count - 1;
 
 	public string Text { get; set; } = "";
-	public string Name => CurrentNode?.Speaker;
+	public string Name { get; set; } = "";
 
 	private int _textIndex;
 	private string _textTarget;
@@ -38,8 +38,19 @@ public partial class DialogueWindow
 	{
 		base.OnStart();
 
-		Data = new Dictionary<string, object> { { "test", 123 }, { "money", 100 }, { "price", 200 }, };
+		/*Data = new Dictionary<string, object> { { "test", 123 }, { "money", 100 }, { "price", 200 }, };
 
+		CurrentNodeList = Dialogue.Nodes;
+		CurrentNodeIndex = 0;
+		CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
+		Read();*/
+
+		LoadDialogue( ResourceLibrary.GetAll<Dialogue>().First() );
+	}
+
+	public void LoadDialogue( Dialogue dialogue )
+	{
+		Dialogue = dialogue;
 		CurrentNodeList = Dialogue.Nodes;
 		CurrentNodeIndex = 0;
 		CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
@@ -82,6 +93,49 @@ public partial class DialogueWindow
 		}
 
 		return 0;
+	}
+
+	[Pure]
+	public bool GetDataBool( string key )
+	{
+		if ( Data.TryGetValue( key, out var value ) )
+		{
+			if ( value is bool b )
+				return b;
+		}
+
+		return false;
+	}
+
+	[Pure]
+	public void SetData( string key, object value )
+	{
+		Data[key] = value;
+	}
+
+	public void AddTarget( GameObject target )
+	{
+		CurrentTargets ??= new List<GameObject>();
+		CurrentTargets.Add( target );
+	}
+
+	public void SetTarget( int index, GameObject target )
+	{
+		CurrentTargets ??= new List<GameObject>();
+
+		if ( index >= CurrentTargets.Count )
+		{
+			CurrentTargets.Add( target );
+		}
+		else
+		{
+			CurrentTargets[index] = target;
+		}
+	}
+
+	public void ClearTargets()
+	{
+		CurrentTargets.Clear();
 	}
 
 	/// <summary>
@@ -176,6 +230,21 @@ public partial class DialogueWindow
 		Text = "";
 		_textIndex = 0;
 		_textTarget = ParseVariables( CurrentNode.Text );
+
+		if ( CurrentNode.IsPlayer )
+		{
+			Name = "Player";
+		}
+		else if ( CurrentTargets.Count > 0 )
+		{
+			var speaker = CurrentTargets.ElementAtOrDefault( CurrentNode.Speaker );
+			Name = speaker?.Name ?? "Unknown";
+		}
+		else
+		{
+			Log.Error( "No targets found" );
+		}
+
 		// _skipped = false;
 		// Panel.FlashClass( "noclick", 0.1f );
 	}
@@ -214,6 +283,8 @@ public partial class DialogueWindow
 		}
 	}
 
+	private char[] _letters = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+
 	private void OnLetterTyped( char letter )
 	{
 		switch ( letter )
@@ -250,7 +321,9 @@ public partial class DialogueWindow
 				break;
 		}
 
-		var s = SoundFile.Load( "sounds/speech/alphabet/" + letter.ToString().ToUpper() + ".wav" );
+		if ( !char.IsLetter( letter ) ) return;
+
+		var s = SoundFile.Load( "sounds/speech/alphabet/" + letter.ToString().ToUpper() + ".vsnd" );
 
 		var h = Sound.PlayFile( s );
 		h.Pitch = Random.Shared.Float( 1.9f, 2.1f );
@@ -274,9 +347,15 @@ public partial class DialogueWindow
 		if ( IsOnLastNode && CurrentNode.Choices.Count == 0 )
 		{
 			Log.Info( "Closing window" );
-			Enabled = false;
+			End();
 			return;
 		}
+	}
+
+	private void End()
+	{
+		Enabled = false;
+		CurrentTargets.Clear();
 	}
 
 	private void OnChoice( Dialogue.DialogueChoice choice )
@@ -295,6 +374,7 @@ public partial class DialogueWindow
 				Log.Warning( "No nodes found for choice" );
 				return;
 			}
+
 
 			CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );
 			CurrentNodeList = choice.Nodes;

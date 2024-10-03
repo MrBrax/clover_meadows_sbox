@@ -57,7 +57,7 @@ public class Dialogue : GameResource
 
 		
 		[Property, HideIf( nameof(IsPlayer), true )]
-		public string Speaker { get; set; }
+		public int Speaker { get; set; }
 
 		[Property, TextArea] public string Text { get; set; }
 
