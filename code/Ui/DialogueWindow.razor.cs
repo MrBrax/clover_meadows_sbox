@@ -45,7 +45,7 @@ public partial class DialogueWindow
 		CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
 		Read();*/
 
-		LoadDialogue( ResourceLibrary.GetAll<Dialogue>().First() );
+		// LoadDialogue( ResourceLibrary.GetAll<Dialogue>().First() );
 	}
 
 	public void LoadDialogue( Dialogue dialogue )

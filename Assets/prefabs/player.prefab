@@ -1,0 +1,130 @@
+{
+  "RootObject": {
+    "__guid": "b2ef76ac-04c7-4b6f-8b0c-342879964579",
+    "Flags": 0,
+    "Name": "player",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.CharacterController",
+        "__guid": "a60e2404-be98-4446-ae82-c576784a0b4a",
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 64,
+        "IgnoreLayers": "",
+        "Radius": 16,
+        "StepHeight": 18,
+        "UseCollisionRules": false
+      },
+      {
+        "__type": "PlayerController",
+        "__guid": "99aba71e-aa75-4bc3-9014-e2be7fa4f4fd",
+        "Gravity": "0,0,800",
+        "Model": {
+          "_type": "gameobject",
+          "go": "b3d17063-df2e-4889-b970-77faaeea7b6d"
+        }
+      },
+      {
+        "__type": "Sandbox.Rigidbody",
+        "__guid": "b9f54df4-9257-45a1-a718-3bb8875d3af6",
+        "AngularDamping": 0,
+        "Gravity": false,
+        "LinearDamping": 0,
+        "Locking": {},
+        "MassCenterOverride": "0,0,0",
+        "MassOverride": 200,
+        "MotionEnabled": true,
+        "OverrideMassCenter": false,
+        "RigidbodyFlags": 0,
+        "StartAsleep": false
+      },
+      {
+        "__type": "CameraController",
+        "__guid": "325fe11a-c69d-4bc4-b107-0822cff14d19",
+        "MainCameraNode": {
+          "_type": "component",
+          "component_id": "2fb1ce16-d463-4554-980e-59a3a3a2e355",
+          "go": "57783f78-e71a-47e8-a8be-840fba4ba7e9",
+          "component_type": "CameraNode"
+        },
+        "SkyCameraNode": {
+          "_type": "component",
+          "component_id": "4bfeaf52-03a5-4eb5-8679-5b0183a6aad9",
+          "go": "5b40fa63-b198-426b-a53e-e3841791e7af",
+          "component_type": "CameraNode"
+        }
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "b3d17063-df2e-4889-b970-77faaeea7b6d",
+        "Flags": 0,
+        "Name": "Model",
+        "Rotation": "0,0,1,-0.00000004371139",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "d75a67a1-43f1-40da-9705-25901f0fad4a",
+            "BodyGroups": 18446744073709551615,
+            "CreateBoneObjects": false,
+            "Model": "models/player/placeholder.vmdl",
+            "Morphs": {},
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "0.83256,0.08906,0.08906,1",
+            "UseAnimGraph": true
+          }
+        ]
+      },
+      {
+        "__guid": "57783f78-e71a-47e8-a8be-840fba4ba7e9",
+        "Flags": 0,
+        "Name": "Camera",
+        "Position": "168.897,0,181.5938",
+        "Rotation": "-0.3826835,-0.00000001672763,0.9238795,-0.00000004038406",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "CameraNode",
+            "__guid": "2fb1ce16-d463-4554-980e-59a3a3a2e355",
+            "FieldOfView": 80,
+            "Priority": 1
+          }
+        ]
+      },
+      {
+        "__guid": "5b40fa63-b198-426b-a53e-e3841791e7af",
+        "Flags": 0,
+        "Name": "Camera (1)",
+        "Position": "168.897,0,34.77294",
+        "Rotation": "0.000000000000000000000219619,0.000000000000005024296,-1,-0.00000004371139",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "CameraNode",
+            "__guid": "4bfeaf52-03a5-4eb5-8679-5b0183a6aad9",
+            "FieldOfView": 90,
+            "Priority": 0
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

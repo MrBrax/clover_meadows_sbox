@@ -164,19 +164,24 @@ public class PlayerController : Component
 
 	public void BuildWishVelocity()
 	{
-		var rot = Model.LocalRotation;
+		var input = Input.AnalogMove;
 
-		WishVelocity = rot * Input.AnalogMove;
-		WishVelocity = WishVelocity.WithZ( 0 );
-
-		if ( !WishVelocity.IsNearZeroLength )
+		if ( input.Length > 0 /*&& !Player.ShouldDisableMovement()*/ )
 		{
-			WishVelocity = WishVelocity.Normal;
+			Model.Transform.Rotation = Rotation.Lerp( Model.Transform.Rotation, Rotation.LookAt( input, Vector3.Up ),
+				Time.Delta * 10.0f );
+			// WishedRotation = Rotation.LookAt( input, Vector3.Up );
+			var forward = Model.Transform.Rotation.Backward;
+			WishVelocity = forward.Normal;
+		}
+		else
+		{
+			WishVelocity = Vector3.Zero;
 		}
 
 		if ( Input.Down( "Run" ) )
 		{
-			WishVelocity *= 320.0f;
+			WishVelocity *= 180.0f;
 		}
 		else
 		{
