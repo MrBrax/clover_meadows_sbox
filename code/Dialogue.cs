@@ -17,7 +17,14 @@ public class Dialogue : GameResource
 	
 	public delegate void DialogueAction( 
 		DialogueWindow window,
-		Dictionary<string, object> data,
+		GameObject player,
+		List<GameObject> targets,
+		DialogueNode node,
+		DialogueChoice choice
+		);
+	
+	public delegate bool DialogueCondition( 
+		DialogueWindow window,
 		GameObject player,
 		List<GameObject> targets,
 		DialogueNode node,
@@ -30,7 +37,10 @@ public class Dialogue : GameResource
 		// [Property] public string Id { get; set; }
 		// [Property] public string IdTarget { get; set; }
 		[Property] public DialogueAction OnSelect { get; set; }
-		[Property] public List<DialogueNode> Nodes { get; set; } = new();
+		
+		[Property, Description("Will only show if OnSelect is null")]
+		
+		public List<DialogueNode> Nodes { get; set; } = new();
 		
 		public override string ToString()
 		{
@@ -47,6 +57,8 @@ public class Dialogue : GameResource
 		[Property] public List<DialogueChoice> Choices { get; set; } = new();
 		[Property] public DialogueAction OnEnter { get; set; }
 		[Property] public DialogueAction OnExit { get; set; }
+		
+		[Property] public bool IsHidden { get; set; }
 
 		public override string ToString()
 		{
