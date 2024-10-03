@@ -5,7 +5,7 @@ namespace Clover;
 public sealed class WorldLayerObject : Component
 {
 	
-	[Property] public int Layer { get; private set; }
+	[Property, Sync] public int Layer { get; private set; }
 	
 	public void SetLayer( int layer, bool rebuildVisibility = false )
 	{

@@ -25,6 +25,8 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 
 	void ITriggerListener.OnTriggerEnter( Collider other )
 	{
+		if ( IsProxy ) return;
+		
 		var player = other.GetComponent<PlayerCharacter>();
 		if ( !player.IsValid() )
 		{
@@ -38,7 +40,7 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 
 		if ( entrance.IsValid() )
 		{
-			player.WorldPosition = entrance.WorldPosition;
+			/*player.WorldPosition = entrance.WorldPosition;
 			player.ModelLookAt( entrance.WorldPosition + entrance.WorldRotation.Forward );
 			player.Transform.ClearInterpolation();
 			player.WorldLayerObject.SetLayer( entrance.WorldLayerObject.Layer );
@@ -48,7 +50,16 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			if ( UnloadPreviousWorld )
 			{
 				WorldManager.Instance.UnloadWorld( WorldManager.Instance.GetWorld( WorldLayerObject.Layer ) );
+			}*/
+			
+			player.TeleportTo( entrance.WorldPosition, entrance.WorldRotation );
+			player.SetLayer( entrance.WorldLayerObject.Layer );
+			
+			if ( UnloadPreviousWorld && WorldManager.Instance.GetWorld( WorldLayerObject.Layer ).ShouldUnloadOnExit )
+			{
+				WorldManager.Instance.UnloadWorld( WorldManager.Instance.GetWorld( WorldLayerObject.Layer ) );
 			}
+			
 		}
 		else
 		{

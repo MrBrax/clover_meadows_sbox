@@ -100,7 +100,7 @@
         "__guid": "e1aced0c-48bc-4b75-8f9a-5fd165fa5e02",
         "Flags": 0,
         "Name": "Entrance",
-        "Position": "1360,528.0001,-0.0000684095",
+        "Position": "1328,528.0001,-0.0000684095",
         "Rotation": "0,0,0.0000001509958,-1",
         "Enabled": true,
         "Components": [
@@ -136,45 +136,13 @@
             "__guid": "8404f1c7-43d4-49b2-8c70-d4fc0b31fcd7",
             "Center": "0,0,0",
             "IsTrigger": true,
-            "OnTriggerEnter": {
-              "__version": 8,
-              "__guid": "9d152fd6-8936-4a4d-8fad-057f21bac510",
-              "__changeId": 8,
-              "UserData": {
-                "Title": "On Trigger Enter",
-                "ReferencedComponentTypes": []
-              },
-              "Variables": [],
-              "Nodes": [
-                {
-                  "Id": 0,
-                  "Type": "input"
-                },
-                {
-                  "Id": 1,
-                  "Type": "log.info",
-                  "UserData": {
-                    "Position": "288,36"
-                  }
-                }
-              ],
-              "Links": [
-                {
-                  "SrcId": 0,
-                  "SrcName": "_signal",
-                  "DstId": 1,
-                  "DstName": "_signal"
-                },
-                {
-                  "Id": 3,
-                  "Value": "asdf",
-                  "DstId": 1,
-                  "DstName": "format"
-                }
-              ]
-            },
             "Scale": "50,50,50",
             "Static": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "28d46897-f5af-41b6-b28d-5e28368ff23d",
+            "Layer": 0
           }
         ]
       },

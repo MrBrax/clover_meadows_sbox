@@ -7,7 +7,7 @@ public partial class WorldManager : Component
 	public static WorldManager Instance { get; private set; }
 
 	// [Property] public List<World> Worlds { get; set; } = new();
-	[Property] public Dictionary<int, World> Worlds { get; set; } = new();
+	[Property, Sync, Change] public NetDictionary<int, World> Worlds { get; set; } = new();
 
 	[Property] public int ActiveWorldIndex { get; set; }
 	[Property] public World ActiveWorld => GetWorld( ActiveWorldIndex );
@@ -37,6 +37,12 @@ public partial class WorldManager : Component
 		base.OnAwake();
 		Instance = this;
 	}
+	
+	public void OnWorldsChanged()
+	{
+		Log.Info( "Worlds changed." );
+		RebuildVisibility();
+	}
 
 	public World GetWorld( string id )
 	{
@@ -46,7 +52,8 @@ public partial class WorldManager : Component
 
 	public World GetWorld( int index )
 	{
-		return CollectionExtensions.GetValueOrDefault( Worlds, index );
+		// return CollectionExtensions.GetValueOrDefault( Worlds, index );
+		return Worlds.TryGetValue( index, out var world ) ? world : null;
 	}
 
 	public void SetActiveWorld( int index )
@@ -64,6 +71,8 @@ public partial class WorldManager : Component
 			Log.Warning( "No worlds to rebuild visibility for." );
 			return;
 		}
+		
+		Log.Info( "Rebuilding world visibility..." );
 		
 		// rebuild world visibility
 		for ( var i = 0; i < Worlds.Count; i++ )
@@ -142,6 +151,7 @@ public partial class WorldManager : Component
 
 		var world = gameObject.GetComponent<World>();
 		world.Data = data; // already set
+		world.Layer = index;
 
 		gameObject.WorldPosition = new Vector3( new Vector3( 0, 0, index * WorldOffset ) );
 		gameObject.Transform.ClearInterpolation();
@@ -150,9 +160,11 @@ public partial class WorldManager : Component
 		gameObject.Tags.Add( "dworld" );
 		gameObject.Tags.Add( $"dworldlayer_{index}" );
 
+		gameObject.NetworkMode = NetworkMode.Object;
+		gameObject.NetworkSpawn();
+		
 		Worlds[index] = world;
 
-		world.Layer = index;
 		world.Setup();
 
 		Log.Info( $"Loaded world: {data.ResourceName}, now has {Worlds.Count} worlds." );
@@ -160,6 +172,8 @@ public partial class WorldManager : Component
 		RebuildVisibility();
 
 		// ActiveWorldChanged?.Invoke( world );
+		
+		OnWorldLoadedRpc( data.ResourceName );
 
 		return world;
 
@@ -170,6 +184,33 @@ public partial class WorldManager : Component
 	{
 		var world = GetWorld( data.ResourceName );
 		return world.IsValid() ? world : LoadWorld( data );
+	}
+	
+	[Authority]
+	public void RequestLoadWorld( string id )
+	{
+		var worldData = ResourceLibrary.GetAll<Data.World>().FirstOrDefault( w => w.ResourceName == id );
+		if ( worldData != null )
+		{
+			LoadWorld( worldData );
+		}
+		else
+		{
+			Log.Warning( $"Could not find world with id: {id}" );
+		}
+	}
+
+	[Broadcast( NetPermission.HostOnly )]
+	public void OnWorldLoadedRpc( string id )
+	{
+		Log.Info( $"World loaded: {id}" );
+		WorldLoaded?.Invoke( GetWorld( id ) );
+
+		foreach ( var world in Worlds )
+		{
+			Log.Info( $"World #{world.Key}: {world.Value.Data.ResourceName}" );
+		}
+		
 	}
 
 

@@ -25,4 +25,21 @@ public sealed class PlayerCharacter : Component
 	{
 		Gizmo.Draw.Arrow( WorldPosition + Vector3.Up * 16f, WorldPosition + Vector3.Up * 16 + Model.WorldRotation.Forward * 32f );
 	}*/
+	
+	[Authority]
+	public void TeleportTo( Vector3 pos, Rotation rot )
+	{
+		WorldPosition = pos;
+		// WorldRotation = rot;
+		Transform.ClearInterpolation();
+		ModelLookAt( pos + rot.Forward );
+		GetComponent<CameraController>().SnapCamera();
+	}
+
+	[Authority]
+	public void SetLayer( int layer )
+	{
+		WorldLayerObject.SetLayer( layer, true );
+		WorldManager.Instance.SetActiveWorld( layer );
+	}
 }
