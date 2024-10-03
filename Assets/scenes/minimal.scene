@@ -105,7 +105,7 @@
           "Orthographic": false,
           "OrthographicHeight": 1204,
           "Priority": 1,
-          "RenderExcludeTags": "",
+          "RenderExcludeTags": "worldlayer_invisible",
           "RenderTags": "",
           "TargetEye": "None",
           "Viewport": "0,0,1,1",
@@ -169,7 +169,6 @@
       "__guid": "24e70066-371c-4c2e-8ccf-d4da82d1aef9",
       "Flags": 0,
       "Name": "Object",
-      "Position": "-126.4292,-187.5311,115.5769",
       "Enabled": true,
       "Components": [
         {
@@ -213,7 +212,6 @@
       "__guid": "3b77553c-7af8-47fe-b4ab-1db0324421ac",
       "Flags": 0,
       "Name": "CameraManager",
-      "Position": "-56.18481,-84.91145,58.5853",
       "Enabled": true
     },
     {
@@ -225,6 +223,7 @@
         {
           "__type": "Clover.WorldManager",
           "__guid": "7effb95a-4f76-4128-8ab5-547848dfc5ab",
+          "ActiveWorldIndex": 0,
           "Worlds": []
         }
       ]

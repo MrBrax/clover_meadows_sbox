@@ -20,4 +20,11 @@ public sealed class CameraNode : Component
 		Gizmo.Draw.Model( "models/editor/camera.vmdl", new Transform() );
 		Gizmo.Draw.Arrow( Vector3.Zero, Vector3.Forward * 64f );
 	}
+
+	public void SnapTo()
+	{
+		var camera = Scene.GetAllComponents<CameraMan>().FirstOrDefault();
+		if ( !camera.IsValid() ) return;
+		camera.SnapTo( Transform.Position, Transform.Rotation );
+	}
 }

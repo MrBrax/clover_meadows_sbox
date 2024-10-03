@@ -38,4 +38,10 @@ public sealed class CameraMan : Component
 		Transform.Rotation = _rotationLerp;
 		CameraComponent.FieldOfView = _fovLerp;
 	}
+
+	public void SnapTo( Vector3 transformPosition, Rotation transformRotation )
+	{
+		_positionLerp = transformPosition;
+		_rotationLerp = transformRotation;
+	}
 }

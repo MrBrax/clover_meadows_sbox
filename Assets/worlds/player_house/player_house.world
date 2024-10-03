@@ -1,0 +1,10 @@
+{
+  "Title": "Player house",
+  "Prefab": {
+    "_type": "gameobject",
+    "prefab": "worlds/player_house/player_house.prefab"
+  },
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}

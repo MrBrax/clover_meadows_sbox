@@ -1,3 +1,4 @@
+using Clover.Player;
 using Sandbox;
 
 namespace Clover;
@@ -22,6 +23,6 @@ public sealed class NodeManager : Component
 	public static WeatherManager WeatherManager => Instance.GetNode<WeatherManager>( "/root/Main/WeatherManager" );*/
 	
 	public static WorldManager WorldManager => Game.ActiveScene.GetAllComponents<WorldManager>().FirstOrDefault();
-	public static PlayerController Player => Game.ActiveScene.GetAllComponents<PlayerController>().FirstOrDefault();
+	public static PlayerCharacter Player => Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault();
 	
 }

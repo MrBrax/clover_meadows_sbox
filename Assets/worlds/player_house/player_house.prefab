@@ -1,0 +1,97 @@
+{
+  "RootObject": {
+    "__guid": "9b1cae4f-13ce-4e12-b22b-b2968a6f2a64",
+    "Flags": 0,
+    "Name": "player_house",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.World",
+        "__guid": "dec42c94-ff70-4841-9faa-7d71bff4953f",
+        "Data": "worlds/player_house/player_house.world"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "709a0c4e-9150-4acf-a1ca-0e18bf91ef8e",
+        "Flags": 0,
+        "Name": "Model",
+        "Tags": "solid",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "5e5a89d3-8241-46c8-89f3-c94bdc85fd7c",
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/player_house/house.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "Sandbox.ModelPhysics",
+            "__guid": "e0daec7f-4fc5-471d-9f26-cf20ab67ee98",
+            "Locking": {},
+            "Model": "models/player_house/house.vmdl",
+            "MotionEnabled": false,
+            "RigidbodyFlags": 0
+          }
+        ]
+      },
+      {
+        "__guid": "ab750cae-1285-469e-9352-779c93e502cc",
+        "Flags": 0,
+        "Name": "Point Light",
+        "Position": "348.2321,318.6885,73.56631",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "01b8ee28-979e-44c8-b4f5-988225d7415b",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 400,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "f88734aa-50ac-49fa-80bb-f44c691d96c0",
+        "Flags": 0,
+        "Name": "Entrance",
+        "Position": "512,320,8",
+        "Rotation": "0,0,1,-0.00000004371139",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldEntrance",
+            "__guid": "b17ae1b2-333f-4aca-b8b6-662a6dc69411",
+            "EntranceId": "entry"
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "14161e64-6242-4e3b-9bad-a5a4281aa15b",
+            "Layer": 0
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

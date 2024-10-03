@@ -10,4 +10,10 @@ public sealed class CameraController : Component
 		
 		SkyCameraNode.Priority = Input.Down("Jump") ? 10 : 0;
 	}
+
+	public void SnapCamera()
+	{
+		MainCameraNode.SnapTo();
+	}
+	
 }
