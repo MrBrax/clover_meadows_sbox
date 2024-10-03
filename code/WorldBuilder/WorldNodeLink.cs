@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
+using Clover.Components;
+using Clover.Data;
 
 namespace Clover;
 
@@ -18,12 +21,29 @@ public class WorldNodeLink
 	
 	public string ItemId;
 
+	public ItemData ItemData
+	{
+		get => ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == ItemId );
+	}
+
 	public WorldNodeLink( World world, GameObject item )
 	{
 		World = world;
 		Node = item;
 		// GetData( node );
 		// LoadItemData();
+	}
+	
+	public IList<Vector2Int> GetGridPositions( bool global = false )
+	{
+		var itemData = ItemData;
+
+		if ( itemData == null )
+		{
+			throw new Exception( $"Item data not found on {this}" );
+		}
+
+		return itemData.GetGridPositions( GridRotation, GridPosition );
 	}
 
 	public bool ShouldBeSaved()
@@ -40,5 +60,19 @@ public class WorldNodeLink
 	public void DestroyNode()
 	{
 		Node.Destroy();
+	}
+
+
+	public string GetName()
+	{
+		return ItemData.Name;
+	}
+	
+	// public IList<PlaceableNode> GetPlaceableNodes() => Node.GetNodesOfType<PlaceableNode>();
+	public IEnumerable<PlaceableNode> GetPlaceableNodes() => Node.Components.GetAll<PlaceableNode>( FindMode.EverythingInDescendants );
+
+	public PlaceableNode GetPlaceableNodeAtGridPosition( Vector2Int position )
+	{
+		return GetPlaceableNodes().FirstOrDefault( n => GridPosition == World.WorldToItemGrid( n.WorldPosition ) );
 	}
 }

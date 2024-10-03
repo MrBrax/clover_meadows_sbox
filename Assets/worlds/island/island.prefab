@@ -175,15 +175,6 @@
             "Static": false
           }
         ]
-      },
-      {
-        "__guid": "55c6ec85-3f1b-4fb8-9bfe-4434569dd10b",
-        "Flags": 0,
-        "Name": "test",
-        "Position": "1456,336,0",
-        "Enabled": true,
-        "__Prefab": "items/test/test.prefab",
-        "__PrefabVariables": {}
       }
     ],
     "__variables": []

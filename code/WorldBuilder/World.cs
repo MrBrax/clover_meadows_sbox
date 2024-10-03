@@ -191,6 +191,99 @@ public sealed class World : Component
 			_ => 0
 		};
 	}
+	
+	/// <summary>
+	/// Retrieves the WorldNodeLinks at the specified grid position.
+	/// This method will return items that are intersecting the grid position as well, if they are larger than 1x1.
+	/// <br />Use <see cref="WorldNodeLink.Node"/> to get the actual node.
+	/// </summary>
+	/// <param name="gridPos">The grid position to retrieve items from.</param>
+	/// <returns>An enumerable collection of WorldNodeLink items at the specified grid position.</returns>
+	public IEnumerable<WorldNodeLink> GetItems( Vector2Int gridPos )
+	{
+		if ( IsOutsideGrid( gridPos ) )
+		{
+			throw new Exception( $"Position {gridPos} is outside the grid" );
+		}
+
+		if ( Items == null )
+		{
+			throw new Exception( "Items is null" );
+		}
+
+		HashSet<WorldNodeLink> foundItems = new();
+
+		// var gridPosString = Vector2IToString( gridPos );
+
+		// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + Vector3.Up * 5f, new Color( 1, 1, 1 ), 3f );
+
+		// get items at exact grid position
+		if ( Items.TryGetValue( gridPos, out var dict ) )
+		{
+			foreach ( var item in dict.Values )
+			{
+				yield return item;
+				foundItems.Add( item );
+			}
+		}
+
+		// get items that are intersecting this grid position
+		foreach ( var item in Items.Values.SelectMany( d => d.Values ) )
+		{
+			/*if ( item.GridSize.X == 1 && item.GridSize.Y == 1 )
+			{
+				// Logger.Info( "GetItems", $"Item {item} is 1x1" );
+				continue;
+			}*/
+
+			var itemGridPositions = item.GetGridPositions( true );
+
+			/* foreach ( var pos in itemGridPositions )
+			{
+				Logger.Info( "GetItems", $" - Item {item} has grid position {pos}" );
+			} */
+
+			if ( itemGridPositions.Contains( gridPos ) )
+			{
+				if ( foundItems.Contains( item ) )
+				{
+					// Logger.Info( "GetItems", $"Item {item} is already found" );
+					continue;
+				}
+				yield return item;
+				foundItems.Add( item );
+			}
+
+			/*var positions = item.GetGridPositions( true );
+			if ( positions.Contains( gridPos ) )
+			{
+				yield return item;
+			}*/
+		}
+	}
+	
+	/// <summary>
+	///  Get a node link at a specific grid position and placement.
+	///  Use <see cref="WorldNodeLink.Node"/> to get the node.
+	/// </summary>
+	/// <param name="gridPos"></param>
+	/// <param name="placement"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
+	/// <exception cref="ArgumentOutOfRangeException"></exception>
+	public WorldNodeLink GetItem( Vector2Int gridPos, ItemPlacement placement )
+	{
+
+		foreach ( var item in GetItems( gridPos ) )
+		{
+			if ( item.GridPlacement == placement )
+			{
+				return item;
+			}
+		}
+
+		return null;
+	}
 
 	/// <summary>
 	///  Checks if an item can be placed at the specified position and rotation.
@@ -346,6 +439,47 @@ public sealed class World : Component
 		return true;
 	}
 
+	
+	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector2Int position, ItemRotation rotation, ItemPlacement placement )
+	{
+		if ( IsOutsideGrid( position ) )
+		{
+			throw new Exception( $"Position {position} is outside the grid" );
+		}
+		
+		if ( !itemData.Placements.HasFlag( placement ) )
+		{
+			throw new Exception( $"Item {itemData.Name} does not support placement {placement}" );
+		}
+		
+		if ( !CanPlaceItem( itemData, position, rotation, placement ) )
+		{
+			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
+		}
+		
+		if ( itemData.PlaceScene == null )
+		{
+			throw new Exception( $"Item {itemData.Name} has no place scene" );
+		}
+
+		var gameObject = itemData.PlaceScene.Clone();
+		
+		var nodeLink = AddItem( position, rotation, placement, gameObject );
+
+		nodeLink.ItemId = itemData.ResourceName;
+		nodeLink.PlacementType = ItemPlacementType.Placed;
+
+		return nodeLink;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/// <summary>
 	///  Adds an item to the world at the specified position and placement. It does not check if the item can be placed at the specified position.
 	/// </summary>
@@ -383,7 +517,87 @@ public sealed class World : Component
 
 		OnItemAdded?.Invoke( nodeLink );
 
+		UpdateTransform( nodeLink );
+
 		return nodeLink;
+	}
+
+	private void UpdateTransform( WorldNodeLink nodeLink )
+	{
+		
+		var position = nodeLink.GridPosition;
+		var placement = nodeLink.GridPlacement;
+
+		var newPosition = ItemGridToWorld( position );
+		var newRotation = GetRotation( nodeLink.GridRotation );
+
+		Vector3 offset = Vector3.Zero;
+
+		var itemData = nodeLink.ItemData;
+		if ( itemData != null )
+		{
+
+			var itemWidth = itemData.Width - 1;
+			var itemHeight = itemData.Height - 1;
+
+			// "rotate" the offset based on the item's rotation
+			if ( nodeLink.GridRotation == ItemRotation.North )
+			{
+				offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
+			}
+			else if ( nodeLink.GridRotation == ItemRotation.East )
+			{
+				offset = new Vector3( itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
+			}
+			else if ( nodeLink.GridRotation == ItemRotation.South )
+			{
+				offset = new Vector3( itemWidth * GridSizeCenter, 0, -itemHeight * GridSizeCenter );
+			}
+			else if ( nodeLink.GridRotation == ItemRotation.West )
+			{
+				offset = new Vector3( -itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
+			}
+
+		}
+		else
+		{
+			Log.Warning( $"No item data for {nodeLink.GetName()}" );
+		}
+
+		if ( placement == ItemPlacement.Underground )
+		{
+			// newPosition = new Vector3( newPosition.X, -50, newPosition.Z );
+			newPosition = new Vector3( newPosition.x, newPosition.y, -50 );
+		}
+		else if ( placement == ItemPlacement.OnTop )
+		{
+			var floorNodeLink = GetItem( position, ItemPlacement.Floor );
+			if ( floorNodeLink == null )
+			{
+				Log.Warning( $"No floor item at {position}" );
+				return;
+			}
+
+			var onTopNode = floorNodeLink.GetPlaceableNodeAtGridPosition( position );
+			if ( onTopNode == null )
+			{
+				Log.Warning( $"No on top node at {position}" );
+				return;
+			}
+
+			Log.Info( $"Updating transform of {nodeLink.GetName()} to be on top of {onTopNode}" );
+			// newPosition = onTopNode.GlobalTransform.Origin;
+			newPosition = onTopNode.WorldPosition;
+		}
+
+		newPosition += offset;
+
+		// nodeLink.Node.GlobalTransform = new Transform3D( new Basis( newRotation ), newPosition );
+		nodeLink.Node.WorldPosition = newPosition;
+		nodeLink.Node.WorldRotation = newRotation;
+
+		Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
+		
 	}
 
 	/// <summary>
