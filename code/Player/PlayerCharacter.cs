@@ -34,6 +34,7 @@ public sealed class PlayerCharacter : Component
 		Transform.ClearInterpolation();
 		ModelLookAt( pos + rot.Forward );
 		GetComponent<CameraController>().SnapCamera();
+		GetComponent<CharacterController>().Velocity = Vector3.Zero;
 	}
 
 	[Authority]
