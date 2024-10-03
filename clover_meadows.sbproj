@@ -22,7 +22,7 @@
     "PerMapRanking": false,
     "LeaderboardType": "None",
     "CsProjName": "",
-    "StartupScene": "scenes/minimal.scene",
+    "StartupScene": "scenes/clover.scene",
     "Compiler": {
       "RootNamespace": "Clover",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",
@@ -32,6 +32,7 @@
       "AssemblyReferences": [],
       "IgnoreFolders": [],
       "DistinctAssemblyReferences": []
-    }
+    },
+    "LaunchMode": "Normal"
   }
 }
