@@ -155,7 +155,8 @@
             "__type": "Clover.AreaTrigger",
             "__guid": "950e5c0a-111d-41be-a019-f34412e29a25",
             "DestinationEntranceId": "player_house_exit",
-            "DestinationWorld": "worlds/island/island.world"
+            "DestinationWorldData": "worlds/island/island.world",
+            "UnloadPreviousWorld": true
           },
           {
             "__type": "Sandbox.BoxCollider",
@@ -192,7 +193,7 @@
                   "DstName": "_signal"
                 },
                 {
-                  "Id": 2,
+                  "Id": 3,
                   "Value": "asdf",
                   "DstId": 1,
                   "DstName": "format"
@@ -201,6 +202,11 @@
             },
             "Scale": "21.13332,76.00003,50",
             "Static": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "363c6364-0e0c-4cdc-9d96-d381cb537bf0",
+            "Layer": 0
           }
         ]
       }

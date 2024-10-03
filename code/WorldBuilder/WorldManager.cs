@@ -1,4 +1,5 @@
 using System;
+using Sandbox.Diagnostics;
 
 namespace Clover;
 
@@ -182,6 +183,7 @@ public partial class WorldManager : Component
 
 	public World GetWorldOrLoad( Data.WorldData data )
 	{
+		Assert.NotNull( data, "World data is null." );
 		var world = GetWorld( data.ResourceName );
 		return world.IsValid() ? world : LoadWorld( data );
 	}

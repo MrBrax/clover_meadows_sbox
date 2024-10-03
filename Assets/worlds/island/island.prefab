@@ -128,6 +128,7 @@
             "__type": "Clover.AreaTrigger",
             "__guid": "37f7a268-98c4-42b0-b862-eae43eadc3cc",
             "DestinationEntranceId": "entry",
+            "DestinationWorldData": "worlds/player_house/player_house.world",
             "UnloadPreviousWorld": false
           },
           {

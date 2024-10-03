@@ -1,5 +1,8 @@
 using System;
+using System.Text.Json;
 using Clover.Data;
+using Clover.Items;
+using Clover.Persistence;
 using Clover.Player;
 using Sandbox;
 
@@ -345,6 +348,38 @@ public sealed class World : Component
 
 	}
 	
+	public WorldNodeLink AddItem( Vector2Int position, ItemRotation rotation, ItemPlacement placement, GameObject item )
+	{
+		if ( IsOutsideGrid( position ) )
+		{
+			throw new Exception( $"Position {position} is outside the grid" );
+		}
+
+		var nodeLink = new WorldNodeLink( this, item );
+		
+		if ( Items.TryGetValue( position, out var dict ) )
+		{
+			dict[placement] = nodeLink;
+		}
+		else
+		{
+			Items[position] = new Dictionary<ItemPlacement, WorldNodeLink>() { { placement, nodeLink } };
+		}
+		
+		nodeLink.GridPosition = position;
+		nodeLink.GridPlacement = placement;
+		nodeLink.GridRotation = rotation;
+		
+		_nodeLinkMap[item] = nodeLink;
+		
+		item.SetParent( GameObject ); // TODO: should items be parented to the world?
+		
+		OnItemAdded?.Invoke( nodeLink );
+		
+		return nodeLink;
+		
+	}
+	
 	public Vector3 ItemGridToWorld( Vector2Int gridPosition, bool noRecursion = false )
 	{
 
@@ -405,17 +440,82 @@ public sealed class World : Component
 
 		Log.Info( $"World {WorldId} loaded" );
 
-		// test add some items
+		/*// test add some items
 		var nodeLink = new WorldNodeLink();
 		nodeLink.Node = new GameObject();
 
 		Items[Vector2Int.Zero] = new Dictionary<ItemPlacement, WorldNodeLink>();
-		Items[Vector2Int.Zero][ItemPlacement.Floor] = nodeLink;
+		Items[Vector2Int.Zero][ItemPlacement.Floor] = nodeLink;*/
 	}
 
 	public void OnWorldUnloaded()
 	{
 		if ( IsProxy ) return;
 		Log.Info( $"World {WorldId} unloaded" );
+		Save();
 	}
+
+	public void Save()
+	{
+		
+		var savedItems = new List<PersistentWorldItem>();
+		
+		foreach ( var item in Items )
+		{
+			var position = item.Key;
+			foreach ( var itemEntry in item.Value )
+			{
+				var placement = itemEntry.Key;
+				var nodeLink = itemEntry.Value;
+				
+				if ( !nodeLink.ShouldBeSaved() )
+				{
+					Log.Info( $"Skipping {nodeLink} at {position}" );
+					continue;
+				}
+
+				var prefabPath = nodeLink.Node.PrefabInstanceSource;
+				if ( string.IsNullOrEmpty( prefabPath ) )
+				{
+					if ( nodeLink.Node.Components.TryGet<WorldItem>( out var worldObject ) )
+					{
+						prefabPath = worldObject.Prefab;
+						if ( string.IsNullOrEmpty( prefabPath ) )
+						{
+							Log.Warning( $"NodeLink {nodeLink} has no prefab path" );
+							continue;
+						}
+					}
+				}
+				
+				var persistentItem = new PersistentWorldItem
+				{
+					Position = position,
+					Placement = placement,
+					Rotation = nodeLink.GridRotation,
+					PlacementType = nodeLink.PlacementType,
+					PrefabPath = prefabPath,
+					ItemId = nodeLink.ItemId
+				};
+				
+				savedItems.Add( persistentItem );
+			}
+		}
+		
+		
+		var saveData = new WorldSaveData
+		{
+			Name = Data.ResourceName,
+			Items = savedItems,
+			LastSave = DateTime.Now
+		};
+		
+		FileSystem.Data.CreateDirectory( "worlds" );
+		
+		// FileSystem.Data.WriteJson( $"worlds/{Data.ResourceName}.json", saveData );
+		var json = JsonSerializer.Serialize( saveData, GameManager.JsonOptions );
+		FileSystem.Data.WriteAllText( $"worlds/{Data.ResourceName}.json", json );
+
+	}
+	
 }
