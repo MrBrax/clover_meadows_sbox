@@ -113,7 +113,7 @@ public partial class WorldManager : Component
 			// await LoadWorldAsync( "res://world/worlds/island.tres" );
 			// await NodeManager.UserInterface.GetNode<Fader>( "Fade" ).FadeOutAsync();
 
-			LoadWorld( ResourceLibrary.GetAll<Data.World>().First() );
+			LoadWorld( ResourceLibrary.GetAll<Data.WorldData>().First() );
 		}
 
 		// WorldLoaded += ( World world ) => NodeManager.SettingsSaveData.ApplyWorldSettings();
@@ -129,12 +129,12 @@ public partial class WorldManager : Component
 		return Worlds.Values.Any( w => w.Data.ResourceName == id );
 	}
 
-	public bool HasWorld( Data.World data )
+	public bool HasWorld( Data.WorldData data )
 	{
 		return Worlds.Values.Any( w => w.Data == data );
 	}
 
-	public World LoadWorld( Data.World data )
+	public World LoadWorld( Data.WorldData data )
 	{
 		Log.Info( $"Loading world: {data.ResourceName}" );
 
@@ -180,7 +180,7 @@ public partial class WorldManager : Component
 		// SetActiveWorld( index );
 	}
 
-	public World GetWorldOrLoad( Data.World data )
+	public World GetWorldOrLoad( Data.WorldData data )
 	{
 		var world = GetWorld( data.ResourceName );
 		return world.IsValid() ? world : LoadWorld( data );
@@ -189,7 +189,7 @@ public partial class WorldManager : Component
 	[Authority]
 	public void RequestLoadWorld( string id )
 	{
-		var worldData = ResourceLibrary.GetAll<Data.World>().FirstOrDefault( w => w.ResourceName == id );
+		var worldData = ResourceLibrary.GetAll<Data.WorldData>().FirstOrDefault( w => w.ResourceName == id );
 		if ( worldData != null )
 		{
 			LoadWorld( worldData );
@@ -204,11 +204,14 @@ public partial class WorldManager : Component
 	public void OnWorldLoadedRpc( string id )
 	{
 		Log.Info( $"World loaded: {id}" );
-		WorldLoaded?.Invoke( GetWorld( id ) );
+		var world = GetWorld( id );
+		
+		WorldLoaded?.Invoke( world );
+		world.OnWorldLoaded();
 
-		foreach ( var world in Worlds )
+		foreach ( var world2 in Worlds )
 		{
-			Log.Info( $"World #{world.Key}: {world.Value.Data.ResourceName}" );
+			Log.Info( $"World #{world2.Key}: {world2.Value.Data.ResourceName}" );
 		}
 		
 	}
@@ -226,6 +229,7 @@ public partial class WorldManager : Component
 	public void UnloadWorld( World world )
 	{
 		Log.Info( $"Unloading world: {world.Data.ResourceName}" );
+		world.OnWorldUnloaded();
 		world.DestroyGameObject();
 		Worlds.Remove( world.Layer );
 		RebuildVisibility();
@@ -246,7 +250,7 @@ public partial class WorldManager : Component
 	public static void LoadWorldCmd( string id )
 	{
 		var worldManager = NodeManager.WorldManager;
-		var worldData = ResourceLibrary.GetAll<Data.World>().FirstOrDefault( w => w.ResourceName == id );
+		var worldData = ResourceLibrary.GetAll<Data.WorldData>().FirstOrDefault( w => w.ResourceName == id );
 		if ( worldData != null )
 		{
 			worldManager.LoadWorld( worldData );

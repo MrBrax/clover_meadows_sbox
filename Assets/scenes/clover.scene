@@ -66,26 +66,6 @@
       ]
     },
     {
-      "__guid": "c34af1ee-c7d0-4463-a46a-6e22449d8444",
-      "Flags": 0,
-      "Name": "Point Light",
-      "Position": "1427.766,251.9082,107.6148",
-      "Tags": "light_point,light",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "Sandbox.PointLight",
-          "__guid": "bdd619b5-8ca0-431e-b4de-367f51c68cbc",
-          "Attenuation": 1,
-          "FogMode": "Enabled",
-          "FogStrength": 1,
-          "LightColor": "0.91373,0.98039,1,1",
-          "Radius": 400,
-          "Shadows": true
-        }
-      ]
-    },
-    {
       "__guid": "99e24ccb-5a06-411e-a1f4-a4ff468472f7",
       "Flags": 0,
       "Name": "NodeManager",

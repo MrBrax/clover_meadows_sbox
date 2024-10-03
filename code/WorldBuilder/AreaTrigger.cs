@@ -8,7 +8,7 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	[RequireComponent] public BoxCollider Collider { get; set; }
 
-	[Property] public Data.World DestinationWorld { get; set; }
+	[Property] public Data.WorldData DestinationWorldData { get; set; }
 	[Property] public string DestinationEntranceId { get; set; }
 	
 	[Property] public bool UnloadPreviousWorld { get; set; } = true;
@@ -18,7 +18,7 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 	{
 		base.DrawGizmos();
 
-		Gizmo.Draw.Text( DestinationWorld?.Title + "\n" + DestinationEntranceId, new Transform() );
+		Gizmo.Draw.Text( DestinationWorldData?.Title + "\n" + DestinationEntranceId, new Transform() );
 		Gizmo.Hitbox.BBox( BBox.FromPositionAndSize( Collider.Center, Collider.Scale ));
 		Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( Collider.Center, Collider.Scale ) );
 	}
@@ -34,7 +34,7 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			return;
 		}
 
-		var w = WorldManager.Instance.GetWorldOrLoad( DestinationWorld );
+		var w = WorldManager.Instance.GetWorldOrLoad( DestinationWorldData );
 
 		var entrance = w.GetEntrance( DestinationEntranceId );
 
