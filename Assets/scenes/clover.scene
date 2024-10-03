@@ -2,84 +2,6 @@
   "__guid": "325a4042-0696-43dd-a79d-dcc314299ba3",
   "GameObjects": [
     {
-      "__guid": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
-      "Flags": 0,
-      "Name": "Camera",
-      "Position": "-340.7997,0,300",
-      "Rotation": "0.00000003465926,0.3826835,-0.00000001435634,0.9238795",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "Sandbox.CameraComponent",
-          "__guid": "cf3cbf96-22b6-4be4-a5d0-672a96c17f9f",
-          "BackgroundColor": "0,0,0,1",
-          "ClearFlags": "All",
-          "FieldOfView": 60,
-          "IsMainCamera": true,
-          "Orthographic": false,
-          "OrthographicHeight": 1204,
-          "Priority": 1,
-          "RenderExcludeTags": "worldlayer_invisible",
-          "RenderTags": "",
-          "TargetEye": "None",
-          "Viewport": "0,0,1,1",
-          "ZFar": 10000,
-          "ZNear": 10
-        },
-        {
-          "__type": "Sandbox.Bloom",
-          "__guid": "d73ef723-c888-41d4-802e-f797c79318be",
-          "BloomColor": {
-            "color": [
-              {
-                "c": "1,1,1,1"
-              },
-              {
-                "t": 1,
-                "c": "1,1,1,1"
-              }
-            ],
-            "alpha": []
-          },
-          "BloomCurve": [
-            {
-              "y": 0.5
-            },
-            {
-              "x": 1,
-              "y": 1
-            }
-          ],
-          "Mode": "Additive",
-          "Strength": 0.5,
-          "Threshold": 0.5,
-          "ThresholdWidth": 0.5
-        },
-        {
-          "__type": "Sandbox.Tonemapping",
-          "__guid": "9d76f362-7227-40eb-a189-69353c780c46",
-          "__version": 1,
-          "AutoExposureEnabled": true,
-          "ExposureBias": 2,
-          "ExposureCompensation": 0,
-          "ExposureMethod": "RGB",
-          "MaximumExposure": 2,
-          "MinimumExposure": 1,
-          "Mode": "Legacy",
-          "Rate": 1
-        },
-        {
-          "__type": "Sandbox.Sharpen",
-          "__guid": "0bffee5e-19f2-41c4-88f9-faefbcce6bf4",
-          "Scale": 0.2
-        },
-        {
-          "__type": "CameraMan",
-          "__guid": "b8a81772-cff0-45a8-ba6c-91736a1b820c"
-        }
-      ]
-    },
-    {
       "__guid": "24e70066-371c-4c2e-8ccf-d4da82d1aef9",
       "Flags": 0,
       "Name": "Object",
@@ -114,20 +36,20 @@
       ]
     },
     {
-      "__guid": "b2ef76ac-04c7-4b6f-8b0c-342879964579",
-      "Flags": 0,
-      "Name": "Player",
-      "Position": "1312,304,16",
-      "Tags": "player",
-      "Enabled": true,
-      "__Prefab": "prefabs/player.prefab",
-      "__PrefabVariables": {}
-    },
-    {
       "__guid": "3b77553c-7af8-47fe-b4ab-1db0324421ac",
       "Flags": 0,
       "Name": "CameraManager",
-      "Enabled": true
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "CameraMan",
+          "__guid": "9d7c9db8-307b-4cae-95ad-4b8a54527d3f",
+          "CameraPrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/camera.prefab"
+          }
+        }
+      ]
     },
     {
       "__guid": "e96ab869-6df6-41f9-935b-da17e151c718",
@@ -139,7 +61,7 @@
           "__type": "Clover.WorldManager",
           "__guid": "7effb95a-4f76-4128-8ab5-547848dfc5ab",
           "ActiveWorldIndex": 0,
-          "Worlds": []
+          "Worlds": {}
         }
       ]
     },
@@ -169,6 +91,25 @@
       "Name": "NodeManager",
       "Position": "-126.4292,-187.5311,115.5769",
       "Enabled": true
+    },
+    {
+      "__guid": "14b9d594-252d-4c6c-956d-775f3346b50d",
+      "Flags": 0,
+      "Name": "NetworkHelper",
+      "Position": "544,240,112",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Clover.NetworkHelper",
+          "__guid": "d8e9c8f9-15b1-47d9-a81b-31f0b5031af2",
+          "PlayerPrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/player.prefab"
+          },
+          "SpawnPoints": [],
+          "StartServer": true
+        }
+      ]
     }
   ],
   "SceneProperties": {

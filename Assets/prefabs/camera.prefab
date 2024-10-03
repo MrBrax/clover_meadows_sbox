@@ -1,0 +1,84 @@
+{
+  "RootObject": {
+    "__guid": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
+    "Flags": 0,
+    "Name": "camera",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.CameraComponent",
+        "__guid": "cf3cbf96-22b6-4be4-a5d0-672a96c17f9f",
+        "BackgroundColor": "0,0,0,1",
+        "ClearFlags": "All",
+        "FieldOfView": 60,
+        "IsMainCamera": true,
+        "Orthographic": false,
+        "OrthographicHeight": 1204,
+        "Priority": 1,
+        "RenderExcludeTags": "worldlayer_invisible",
+        "RenderTags": "",
+        "TargetEye": "None",
+        "Viewport": "0,0,1,1",
+        "ZFar": 10000,
+        "ZNear": 10
+      },
+      {
+        "__type": "Sandbox.Bloom",
+        "__guid": "d73ef723-c888-41d4-802e-f797c79318be",
+        "BloomColor": {
+          "color": [
+            {
+              "c": "1,1,1,1"
+            },
+            {
+              "t": 1,
+              "c": "1,1,1,1"
+            }
+          ],
+          "alpha": []
+        },
+        "BloomCurve": [
+          {
+            "y": 0.5
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "Mode": "Additive",
+        "Strength": 0.5,
+        "Threshold": 0.5,
+        "ThresholdWidth": 0.5
+      },
+      {
+        "__type": "Sandbox.Tonemapping",
+        "__guid": "9d76f362-7227-40eb-a189-69353c780c46",
+        "__version": 1,
+        "AutoExposureEnabled": true,
+        "ExposureBias": 2,
+        "ExposureCompensation": 0,
+        "ExposureMethod": "RGB",
+        "MaximumExposure": 2,
+        "MinimumExposure": 1,
+        "Mode": "Legacy",
+        "Rate": 1
+      },
+      {
+        "__type": "Sandbox.Sharpen",
+        "__guid": "0bffee5e-19f2-41c4-88f9-faefbcce6bf4",
+        "Scale": 0.2
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

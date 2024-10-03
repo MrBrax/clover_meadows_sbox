@@ -7,6 +7,13 @@ public sealed class CameraController : Component
 	
 	protected override void OnUpdate()
 	{
+		if ( IsProxy ) return;
+
+		if ( !SkyCameraNode.IsValid() )
+		{
+			Log.Error( "SkyCameraNode is not valid" );
+			return;
+		}
 		
 		SkyCameraNode.Priority = Input.Down("Jump") ? 10 : 0;
 	}
