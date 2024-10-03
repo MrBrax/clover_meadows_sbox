@@ -101,7 +101,7 @@ public partial class WorldManager : Component
 		};*/
 	}
 
-	public void LoadWorld( Data.World data )
+	public World LoadWorld( Data.World data )
 	{
 		Log.Info( $"Loading world: {data.ResourceName}" );
 
@@ -109,16 +109,17 @@ public partial class WorldManager : Component
 
 		var gameObject = data.Prefab.Clone();
 		
-		gameObject.BreakFromPrefab();
+		// gameObject.BreakFromPrefab();
 
 		var world = gameObject.GetComponent<World>();
 		world.Data = data; // already set
 
-		gameObject.Transform.Position = new Vector3( new Vector3( 0, 0, index * WorldOffset ) );
+		gameObject.WorldPosition = new Vector3( new Vector3( 0, 0, index * WorldOffset ) );
+		gameObject.Transform.ClearInterpolation();
 		gameObject.SetParent( GameObject );
 
-		gameObject.Tags.Add( "world" );
-		gameObject.Tags.Add( $"worldlayer_{index}" );
+		gameObject.Tags.Add( "dworld" );
+		gameObject.Tags.Add( $"dworldlayer_{index}" );
 
 		Worlds.Add( world );
 		
@@ -126,6 +127,12 @@ public partial class WorldManager : Component
 		world.Setup();
 		
 		Log.Info( $"Loaded world: {data.ResourceName}, now has {Worlds.Count} worlds." );
+		
+		RebuildVisibility();
+		
+		// ActiveWorldChanged?.Invoke( world );
+		
+		return world;
 		
 		// SetActiveWorld( index );
 	}

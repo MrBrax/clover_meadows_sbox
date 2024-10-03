@@ -23,10 +23,16 @@ public sealed class World : Component
 	public void Setup()
 	{
 		var layerObjects = GetComponentsInChildren<WorldLayerObject>( true );
-		
 		foreach ( var layerObject in layerObjects )
 		{
 			layerObject.SetLayer( Layer );
+		}
+		
+		var modelPhysics = GetComponentsInChildren<ModelPhysics>( true );
+		foreach ( var model in modelPhysics )
+		{
+			model.Enabled = false;
+			Invoke( 0.01f, () => model.Enabled = true );
 		}
 		
 	}

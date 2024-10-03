@@ -41,6 +41,151 @@
             "RigidbodyFlags": 0
           }
         ]
+      },
+      {
+        "__guid": "ab749490-8a65-460a-aa80-40ff6445bfbb",
+        "Flags": 0,
+        "Name": "Sun",
+        "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
+        "Tags": "light_directional,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.DirectionalLight",
+            "__guid": "7383b3c4-2a93-4b06-b80b-19f329649545",
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.94419,0.97767,1,1",
+            "Shadows": true,
+            "SkyColor": "0.2532,0.32006,0.35349,1"
+          }
+        ]
+      },
+      {
+        "__guid": "f846e901-669f-4e51-88bc-c9296e0ced83",
+        "Flags": 0,
+        "Name": "2D Skybox",
+        "Tags": "skybox",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkyBox2D",
+            "__guid": "71f5b042-e1a2-4bd9-9060-cdf2149d6b2f",
+            "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "Sandbox.EnvmapProbe",
+            "__guid": "de642693-5f3e-4268-b3fd-8a67fd985798",
+            "Texture": "textures/cubemaps/default2.vtex",
+            "Bounds": {
+              "Mins": "-512,-512,-512",
+              "Maxs": "512,512,512"
+            },
+            "DelayBetweenUpdates": 0.1,
+            "Feathering": 0.02,
+            "FrameInterval": 5,
+            "MaxDistance": 512,
+            "MultiBounce": false,
+            "Projection": "Sphere",
+            "RenderDynamically": false,
+            "TintColor": "1,1,1,1",
+            "UpdateStrategy": "OnEnabled",
+            "ZFar": 4096,
+            "ZNear": 16
+          }
+        ]
+      },
+      {
+        "__guid": "ad737830-b14b-447c-bb77-01ba3a70d202",
+        "Flags": 0,
+        "Name": "HouseTrigger",
+        "Position": "1296,528,16",
+        "Tags": "trigger",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.AreaTrigger",
+            "__guid": "37f7a268-98c4-42b0-b862-eae43eadc3cc",
+            "DestinationEntranceId": "entry",
+            "DestinationWorld": "worlds/player_house/player_house.world"
+          },
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "8404f1c7-43d4-49b2-8c70-d4fc0b31fcd7",
+            "Center": "0,0,0",
+            "IsTrigger": true,
+            "OnTriggerEnter": {
+              "__version": 8,
+              "__guid": "9d152fd6-8936-4a4d-8fad-057f21bac510",
+              "__changeId": 8,
+              "UserData": {
+                "Title": "On Trigger Enter",
+                "ReferencedComponentTypes": []
+              },
+              "Variables": [],
+              "Nodes": [
+                {
+                  "Id": 0,
+                  "Type": "input"
+                },
+                {
+                  "Id": 1,
+                  "Type": "log.info",
+                  "UserData": {
+                    "Position": "288,36"
+                  }
+                }
+              ],
+              "Links": [
+                {
+                  "SrcId": 0,
+                  "SrcName": "_signal",
+                  "DstId": 1,
+                  "DstName": "_signal"
+                },
+                {
+                  "Id": 3,
+                  "Value": "asdf",
+                  "DstId": 1,
+                  "DstName": "format"
+                }
+              ]
+            },
+            "Scale": "50,50,50",
+            "Static": false
+          }
+        ]
+      },
+      {
+        "__guid": "32ef1c9c-cf9b-4008-ab05-1bb0d055c8b0",
+        "Flags": 0,
+        "Name": "player_house_exterior",
+        "Position": "1216,528,0",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "0ce33ca5-669d-4a28-bac4-9051321221b8",
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/player_house_exterior/player_house_exterior.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "3ff6cb72-cf6b-41c5-9f7a-2b643b55c40e",
+            "IsTrigger": false,
+            "Model": "models/player_house_exterior/player_house_exterior.vmdl",
+            "Static": false
+          }
+        ]
       }
     ],
     "__variables": []

@@ -3,7 +3,9 @@
     "__guid": "b2ef76ac-04c7-4b6f-8b0c-342879964579",
     "Flags": 0,
     "Name": "player",
+    "Tags": "player",
     "Enabled": true,
+    "NetworkMode": 1,
     "Components": [
       {
         "__type": "Clover.Player.PlayerCharacter",
@@ -15,9 +17,9 @@
         "Acceleration": 10,
         "Bounciness": 0.3,
         "GroundAngle": 45,
-        "Height": 64,
+        "Height": 50,
         "IgnoreLayers": "",
-        "Radius": 16,
+        "Radius": 14,
         "StepHeight": 18,
         "UseCollisionRules": false
       },
@@ -29,20 +31,6 @@
           "_type": "gameobject",
           "go": "b3d17063-df2e-4889-b970-77faaeea7b6d"
         }
-      },
-      {
-        "__type": "Sandbox.Rigidbody",
-        "__guid": "b9f54df4-9257-45a1-a718-3bb8875d3af6",
-        "AngularDamping": 0,
-        "Gravity": false,
-        "LinearDamping": 0,
-        "Locking": {},
-        "MassCenterOverride": "0,0,0",
-        "MassOverride": 200,
-        "MotionEnabled": true,
-        "OverrideMassCenter": false,
-        "RigidbodyFlags": 0,
-        "StartAsleep": false
       },
       {
         "__type": "CameraController",
@@ -64,6 +52,14 @@
         "__type": "Clover.WorldLayerObject",
         "__guid": "4eb450db-642e-43aa-bd5c-bc5770f7b8bf",
         "Layer": 0
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "32b29f22-9c65-40c5-b4f2-9ee4477c7455",
+        "Center": "0,0,25",
+        "IsTrigger": false,
+        "Scale": "32,32,50",
+        "Static": false
       }
     ],
     "Children": [

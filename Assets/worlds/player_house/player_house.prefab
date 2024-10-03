@@ -47,13 +47,73 @@
         "__guid": "ab750cae-1285-469e-9352-779c93e502cc",
         "Flags": 0,
         "Name": "Point Light",
-        "Position": "348.2321,318.6885,73.56631",
+        "Position": "352,320,96.00002",
         "Tags": "light_point,light",
         "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.PointLight",
             "__guid": "01b8ee28-979e-44c8-b4f5-988225d7415b",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 400,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "006d9861-b159-4db0-8154-e1937fd715b8",
+        "Flags": 0,
+        "Name": "Point Light (1)",
+        "Position": "352,96,96.00002",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "d2306f17-dcb9-47eb-8bea-6940795e9cb2",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 400,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "f6b4ec4e-7934-49a1-94ba-1435112add65",
+        "Flags": 0,
+        "Name": "Point Light (2)",
+        "Position": "256,512,96.00008",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "78ec0dc3-f715-4d65-a0b3-9d2bfe9cad94",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 400,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "56b9aeb7-aa79-427a-a1ed-18b67c844532",
+        "Flags": 0,
+        "Name": "Point Light (3)",
+        "Position": "96,192,96.00007",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "fca22887-5923-44d9-87e7-31fe8f9db80c",
             "Attenuation": 1,
             "FogMode": "Enabled",
             "FogStrength": 1,
