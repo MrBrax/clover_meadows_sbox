@@ -13,20 +13,16 @@ public sealed class World : Component
 	[Flags]
 	public enum ItemPlacement
 	{
-		[Icon( "wallpaper")]
-		Wall = 1 << 0,
-		
-		[Icon( "inventory")]
-		OnTop = 1 << 1,
-		
-		[Icon( "waves")]
-		Floor = 1 << 2,
-		
-		
+		[Icon( "wallpaper" )] Wall = 1 << 0,
+
+		[Icon( "inventory" )] OnTop = 1 << 1,
+
+		[Icon( "waves" )] Floor = 1 << 2,
+
+
 		Underground = 1 << 3,
-		
-		[Icon( "dashboard")]
-		FloorDecal = 1 << 4,
+
+		[Icon( "dashboard" )] FloorDecal = 1 << 4,
 	}
 
 	public enum ItemPlacementType
@@ -155,7 +151,7 @@ public sealed class World : Component
 	{
 		return position.x < 0 || position.y < 0 || position.x >= Data.Width || position.y >= Data.Height;
 	}
-	
+
 	public static Rotation GetRotation( ItemRotation rotation )
 	{
 		return rotation switch
@@ -167,7 +163,7 @@ public sealed class World : Component
 			_ => Rotation.FromYaw( 0 )
 		};
 	}
-	
+
 	public static Rotation GetRotation( Direction direction )
 	{
 		return direction switch
@@ -183,7 +179,7 @@ public sealed class World : Component
 			_ => Rotation.FromYaw( 0 )
 		};
 	}
-	
+
 	public static float GetRotationAngle( ItemRotation rotation )
 	{
 		return rotation switch
@@ -195,7 +191,7 @@ public sealed class World : Component
 			_ => 0
 		};
 	}
-	
+
 	/// <summary>
 	///  Checks if an item can be placed at the specified position and rotation.
 	///  It will check if the position is outside the grid, if there are any items at the position, and if there are any items nearby that would block the placement.
@@ -245,7 +241,7 @@ public sealed class World : Component
 
 		return true;
 	}
-	
+
 	public bool CheckGridPositionEligibility( Vector2Int position, out Vector3 worldPosition )
 	{
 		if ( IsOutsideGrid( position ) )
@@ -257,7 +253,7 @@ public sealed class World : Component
 
 		if ( _blockedTiles.Contains( position ) )
 		{
-			Log.Trace(  $"Position {position} is already blocked" );
+			Log.Trace( $"Position {position} is already blocked" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
@@ -269,7 +265,7 @@ public sealed class World : Component
 		var margin = GridSizeCenter * 0.8f;
 		var heightTolerance = 0.1f;
 
-		var topLeft = new Vector3( basePosition.x - margin, basePosition.y - margin, 50  );
+		var topLeft = new Vector3( basePosition.x - margin, basePosition.y - margin, 50 );
 		var topRight = new Vector3( basePosition.x + margin, basePosition.y - margin, 50 );
 		var bottomLeft = new Vector3( basePosition.x - margin, basePosition.y + margin, 50 );
 		var bottomRight = new Vector3( basePosition.x + margin, basePosition.y + margin, 50 );
@@ -303,16 +299,18 @@ public sealed class World : Component
 
 		var traceTopLeft = Scene.Trace.Ray( topLeft, topLeft + Vector3.Down * 100 ) /*.WithTag("terrain")*/.Run();
 		var traceTopRight = Scene.Trace.Ray( topRight, topRight + Vector3.Down * 100 ) /*.WithTag("terrain")*/.Run();
-		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + Vector3.Down * 100 ) /*.WithTag("terrain")*/.Run();
-		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + Vector3.Down * 100 ) /*.WithTag("terrain")*/.Run();
-		
+		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + Vector3.Down * 100 ) /*.WithTag("terrain")*/
+			.Run();
+		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + Vector3.Down * 100 ) /*.WithTag("terrain")*/
+			.Run();
+
 		if ( !traceTopLeft.Hit || !traceTopRight.Hit || !traceBottomLeft.Hit || !traceBottomRight.Hit )
 		{
 			Log.Warning( $"Failed to trace rays at {position}" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
-		
+
 
 		var heightTopLeft = traceTopLeft.HitPosition.y;
 		var heightTopRight = traceTopRight.HitPosition.y;
@@ -334,10 +332,11 @@ public sealed class World : Component
 		// var averageHeight = (heightTopLeft + heightTopRight + heightBottomLeft + heightBottomRight) / 4;
 
 		if ( Math.Abs( heightTopLeft - heightTopRight ) > heightTolerance ||
-			 Math.Abs( heightTopLeft - heightBottomLeft ) > heightTolerance ||
-			 Math.Abs( heightTopLeft - heightBottomRight ) > heightTolerance )
+		     Math.Abs( heightTopLeft - heightBottomLeft ) > heightTolerance ||
+		     Math.Abs( heightTopLeft - heightBottomRight ) > heightTolerance )
 		{
-			Log.Trace( $"Height difference at {position} is too high ({heightTopLeft}, {heightTopRight}, {heightBottomLeft}, {heightBottomRight})" );
+			Log.Trace(
+				$"Height difference at {position} is too high ({heightTopLeft}, {heightTopRight}, {heightBottomLeft}, {heightBottomRight})" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
@@ -345,9 +344,17 @@ public sealed class World : Component
 		worldPosition = new Vector3( basePosition.x, basePosition.y, heightTopLeft );
 
 		return true;
-
 	}
-	
+
+	/// <summary>
+	///  Adds an item to the world at the specified position and placement. It does not check if the item can be placed at the specified position.
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="rotation"></param>
+	/// <param name="placement"></param>
+	/// <param name="item"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
 	public WorldNodeLink AddItem( Vector2Int position, ItemRotation rotation, ItemPlacement placement, GameObject item )
 	{
 		if ( IsOutsideGrid( position ) )
@@ -356,7 +363,7 @@ public sealed class World : Component
 		}
 
 		var nodeLink = new WorldNodeLink( this, item );
-		
+
 		if ( Items.TryGetValue( position, out var dict ) )
 		{
 			dict[placement] = nodeLink;
@@ -365,24 +372,81 @@ public sealed class World : Component
 		{
 			Items[position] = new Dictionary<ItemPlacement, WorldNodeLink>() { { placement, nodeLink } };
 		}
-		
+
 		nodeLink.GridPosition = position;
 		nodeLink.GridPlacement = placement;
 		nodeLink.GridRotation = rotation;
-		
+
 		_nodeLinkMap[item] = nodeLink;
-		
+
 		item.SetParent( GameObject ); // TODO: should items be parented to the world?
-		
+
 		OnItemAdded?.Invoke( nodeLink );
-		
+
 		return nodeLink;
-		
+	}
+
+	/// <summary>
+	/// Removes an item from the world at the specified position and placement.
+	/// </summary>
+	/// <param name="position">The position of the item to remove.</param>
+	/// <param name="placement">The placement of the item to remove.</param>
+	/// <remarks>
+	/// Do NOT remove nodes directly from the world, use this method instead.
+	/// </remarks>
+	public void RemoveItem( Vector2Int position, ItemPlacement placement )
+	{
+		if ( Items.TryGetValue( position, out var itemsDict ) )
+		{
+			if ( itemsDict.ContainsKey( placement ) )
+			{
+				var nodeLink = itemsDict[placement];
+				_nodeLinkMap.Remove( nodeLink.Node );
+				nodeLink.DestroyNode();
+				itemsDict.Remove( placement );
+				if ( itemsDict.Count == 0 )
+				{
+					Log.Info( $"Removed last item at {position}" );
+					Items.Remove( position );
+					// EmitSignal( SignalName.OnItemRemoved, nodeLink );
+					OnItemRemoved?.Invoke( nodeLink );
+				}
+
+				Log.Info( $"Removed item {nodeLink} at {position} with placement {placement}" );
+				// DebugPrint();
+			}
+			else
+			{
+				Log.Warning( $"No item at {position} with placement {placement}" );
+			}
+		}
+		else
+		{
+			Log.Warning( $"No items at {position}" );
+		}
 	}
 	
+	/// <inheritdoc cref="RemoveItem(Vector2Int,ItemPlacement)"/>
+	public void RemoveItem( GameObject node )
+	{
+		// RemoveItem( item.GridPosition, item.Placement );
+		var nodeLink = Items.Values.SelectMany( x => x.Values ).FirstOrDefault( x => x.Node == node );
+		if ( nodeLink == null )
+		{
+			throw new Exception( $"Failed to find node link for {node}" );
+		}
+
+		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
+	}
+
+	/// <inheritdoc cref="RemoveItem(Vector2Int,ItemPlacement)"/>
+	public void RemoveItem( WorldNodeLink nodeLink )
+	{
+		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
+	}
+
 	public Vector3 ItemGridToWorld( Vector2Int gridPosition, bool noRecursion = false )
 	{
-
 		if ( GridSize == 0 ) throw new Exception( "Grid size is 0" );
 		if ( GridSizeCenter == 0 ) throw new Exception( "Grid size center is 0" );
 
@@ -394,7 +458,7 @@ public sealed class World : Component
 			height != 0 ? height : WorldPosition.z
 		);
 	}
-	
+
 	public Vector2Int WorldToItemGrid( Vector3 worldPosition )
 	{
 		var x = (int)Math.Floor( (worldPosition.x - WorldPosition.x) / GridSize );
@@ -457,9 +521,8 @@ public sealed class World : Component
 
 	public void Save()
 	{
-		
 		var savedItems = new List<PersistentWorldItem>();
-		
+
 		foreach ( var item in Items )
 		{
 			var position = item.Key;
@@ -467,7 +530,7 @@ public sealed class World : Component
 			{
 				var placement = itemEntry.Key;
 				var nodeLink = itemEntry.Value;
-				
+
 				if ( !nodeLink.ShouldBeSaved() )
 				{
 					Log.Info( $"Skipping {nodeLink} at {position}" );
@@ -487,7 +550,7 @@ public sealed class World : Component
 						}
 					}
 				}
-				
+
 				var persistentItem = new PersistentWorldItem
 				{
 					Position = position,
@@ -497,25 +560,18 @@ public sealed class World : Component
 					PrefabPath = prefabPath,
 					ItemId = nodeLink.ItemId
 				};
-				
+
 				savedItems.Add( persistentItem );
 			}
 		}
-		
-		
-		var saveData = new WorldSaveData
-		{
-			Name = Data.ResourceName,
-			Items = savedItems,
-			LastSave = DateTime.Now
-		};
-		
+
+
+		var saveData = new WorldSaveData { Name = Data.ResourceName, Items = savedItems, LastSave = DateTime.Now };
+
 		FileSystem.Data.CreateDirectory( "worlds" );
-		
+
 		// FileSystem.Data.WriteJson( $"worlds/{Data.ResourceName}.json", saveData );
 		var json = JsonSerializer.Serialize( saveData, GameManager.JsonOptions );
 		FileSystem.Data.WriteAllText( $"worlds/{Data.ResourceName}.json", json );
-
 	}
-	
 }

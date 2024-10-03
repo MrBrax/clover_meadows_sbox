@@ -37,4 +37,8 @@ public class WorldNodeLink
 		return true;
 	}
 
+	public void DestroyNode()
+	{
+		Node.Destroy();
+	}
 }
