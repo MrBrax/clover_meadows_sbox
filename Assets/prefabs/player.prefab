@@ -69,7 +69,6 @@
         "Name": "Model",
         "Rotation": "-0,0,-0.0000002781418,-1",
         "Enabled": true,
-        "NetworkMode": 1,
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
@@ -97,7 +96,6 @@
         "Position": "168.897,0,181.5938",
         "Rotation": "-0.3826835,-0.00000001672763,0.9238795,-0.00000004038406",
         "Enabled": true,
-        "NetworkMode": 1,
         "Components": [
           {
             "__type": "CameraNode",
@@ -114,7 +112,6 @@
         "Position": "168.897,0,34.77294",
         "Rotation": "0.000000000000000000000219619,0.000000000000005024296,-1,-0.00000004371139",
         "Enabled": true,
-        "NetworkMode": 1,
         "Components": [
           {
             "__type": "CameraNode",

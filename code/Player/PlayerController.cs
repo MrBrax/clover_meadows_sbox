@@ -12,7 +12,8 @@ public class PlayerController : Component
 
 	public Vector3 WishVelocity { get; private set; }
 
-
+	[Sync]
+	public float Yaw { get; set; }
 	
 
 	[Sync]
@@ -36,6 +37,12 @@ public class PlayerController : Component
 
 	protected override void OnUpdate()
 	{
+		
+		if ( Player.Model.IsValid() )
+		{
+			Player.Model.WorldRotation = Rotation.Lerp( Player.Model.WorldRotation, Rotation.From( 0, Yaw, 0 ), Time.Delta * 10.0f );
+		}
+		
 		// Eye input
 		/*if ( !IsProxy )
 		{
@@ -173,9 +180,17 @@ public class PlayerController : Component
 		{
 			// Player.Model.WorldRotation = Rotation.Lerp( Player.Model.WorldRotation, Rotation.LookAt( input, Vector3.Up ),
 			// 	Time.Delta * 10.0f );
+
+			if ( !Player.Model.IsValid() )
+			{
+				Log.Error( "Player.Model is not valid" );
+				return;
+			}
 			
-			var yaw = MathF.Atan2( input.y, input.x ).RadianToDegree();
-			Player.Model.WorldRotation = Rotation.Lerp( Player.Model.WorldRotation, Rotation.From( 0, yaw + 180, 0 ), Time.Delta * 10.0f );
+			var inputYaw = MathF.Atan2( input.y, input.x ).RadianToDegree();
+			// Player.Model.WorldRotation = Rotation.Lerp( Player.Model.WorldRotation, Rotation.From( 0, yaw + 180, 0 ), Time.Delta * 10.0f );
+			// Yaw = yaw + 180;
+			Yaw = Yaw.LerpDegreesTo( inputYaw + 180, Time.Delta * 10.0f );
 			
 			// WishedRotation = Rotation.LookAt( input, Vector3.Up );
 			var forward = Player.Model.WorldRotation.Forward;
