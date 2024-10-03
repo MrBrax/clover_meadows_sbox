@@ -1,15 +1,18 @@
+using System;
 using Sandbox;
 using Sandbox.Citizen;
 using System.Drawing;
 using System.Runtime;
+using Clover.Player;
 
 public class PlayerController : Component
 {
+	[RequireComponent] public PlayerCharacter Player { get; set; }
 	[Property] public Vector3 Gravity { get; set; } = new Vector3( 0, 0, 800 );
 
 	public Vector3 WishVelocity { get; private set; }
 
-	[Property] public GameObject Model { get; set; }
+
 	
 
 	[Sync]
@@ -25,7 +28,7 @@ public class PlayerController : Component
 		/*var cam = Scene.GetAllComponents<CameraComponent>().FirstOrDefault();
 		if ( cam.IsValid() )
 		{
-			var ee = cam.Transform.Rotation.Angles();
+			var ee = cam.WorldRotation.Angles();
 			ee.roll = 0;
 			EyeAngles = ee;
 		}*/
@@ -48,12 +51,12 @@ public class PlayerController : Component
 			if ( FirstPerson )
 			{
 				cam.Transform.Position = Eye.Transform.Position;
-				cam.Transform.Rotation = lookDir;
+				cam.WorldRotation = lookDir;
 			}
 			else
 			{
 				cam.Transform.Position = Transform.Position + lookDir.Backward * 300 + Vector3.Up * 75.0f;
-				cam.Transform.Rotation = lookDir;
+				cam.WorldRotation = lookDir;
 			}
 
 
@@ -78,17 +81,17 @@ public class PlayerController : Component
 				targetAngle = Rotation.LookAt( v, Vector3.Up );
 			}
 
-			float rotateDifference = Model.Transform.Rotation.Distance( targetAngle );
+			float rotateDifference = Model.WorldRotation.Distance( targetAngle );
 
 			if ( rotateDifference > 50.0f || cc.Velocity.Length > 10.0f )
 			{
-				var newRotation = Rotation.Lerp( Model.Transform.Rotation, targetAngle, Time.Delta * 2.0f );
+				var newRotation = Rotation.Lerp( Model.WorldRotation, targetAngle, Time.Delta * 2.0f );
 
 				// We won't end up actually moving to the targetAngle, so calculate how much we're actually moving
-				var angleDiff = Model.Transform.Rotation.Angles() - newRotation.Angles(); // Rotation.Distance is unsigned
+				var angleDiff = Model.WorldRotation.Angles() - newRotation.Angles(); // Rotation.Distance is unsigned
 				moveRotationSpeed = angleDiff.yaw / Time.Delta;
 
-				Model.Transform.Rotation = newRotation;
+				Model.WorldRotation = newRotation;
 			}
 		}*/
 
@@ -168,10 +171,14 @@ public class PlayerController : Component
 
 		if ( input.Length > 0 /*&& !Player.ShouldDisableMovement()*/ )
 		{
-			Model.Transform.Rotation = Rotation.Lerp( Model.Transform.Rotation, Rotation.LookAt( input, Vector3.Up ),
-				Time.Delta * 10.0f );
+			// Player.Model.WorldRotation = Rotation.Lerp( Player.Model.WorldRotation, Rotation.LookAt( input, Vector3.Up ),
+			// 	Time.Delta * 10.0f );
+			
+			var yaw = MathF.Atan2( input.y, input.x ).RadianToDegree();
+			Player.Model.WorldRotation = Rotation.Lerp( Player.Model.WorldRotation, Rotation.From( 0, yaw + 180, 0 ), Time.Delta * 10.0f );
+			
 			// WishedRotation = Rotation.LookAt( input, Vector3.Up );
-			var forward = Model.Transform.Rotation.Backward;
+			var forward = Player.Model.WorldRotation.Forward;
 			WishVelocity = forward.Normal;
 		}
 		else

@@ -97,6 +97,26 @@
         ]
       },
       {
+        "__guid": "e1aced0c-48bc-4b75-8f9a-5fd165fa5e02",
+        "Flags": 0,
+        "Name": "Entrance",
+        "Position": "1360,528.0001,-0.0000684095",
+        "Rotation": "0,0,0.0000001509958,-1",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldEntrance",
+            "__guid": "a5caf789-5869-4fc1-9a97-2cf407fafde1",
+            "EntranceId": "player_house_exit"
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "23fc471c-773d-4337-93c4-9ba7772244ce",
+            "Layer": 0
+          }
+        ]
+      },
+      {
         "__guid": "ad737830-b14b-447c-bb77-01ba3a70d202",
         "Flags": 0,
         "Name": "HouseTrigger",
@@ -108,7 +128,8 @@
             "__type": "Clover.AreaTrigger",
             "__guid": "37f7a268-98c4-42b0-b862-eae43eadc3cc",
             "DestinationEntranceId": "entry",
-            "DestinationWorld": "worlds/player_house/player_house.world"
+            "DestinationWorld": "worlds/player_house/player_house.world",
+            "UnloadPreviousWorld": false
           },
           {
             "__type": "Sandbox.BoxCollider",

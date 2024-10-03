@@ -4,23 +4,25 @@ namespace Clover;
 
 public partial class WorldManager : Component
 {
-	
 	public static WorldManager Instance { get; private set; }
-	
-	[Property] public List<World> Worlds { get; set; } = new();
+
+	// [Property] public List<World> Worlds { get; set; } = new();
+	[Property] public Dictionary<int, World> Worlds { get; set; } = new();
 
 	[Property] public int ActiveWorldIndex { get; set; }
-	[Property] public World ActiveWorld => Worlds.ElementAtOrDefault( ActiveWorldIndex );
-	
+	[Property] public World ActiveWorld => GetWorld( ActiveWorldIndex );
+
 	public delegate void WorldUnloadEventHandler( World world );
+
 	public delegate void WorldLoadedEventHandler( World world );
+
 	public delegate void ActiveWorldChangedEventHandler( World world );
-	
+
 
 	[Property] public WorldLoadedEventHandler WorldLoaded { get; set; }
 	[Property] public WorldUnloadEventHandler WorldUnload { get; set; }
 	[Property] public ActiveWorldChangedEventHandler ActiveWorldChanged { get; set; }
-	
+
 
 	public string CurrentWorldDataPath { get; set; }
 
@@ -38,9 +40,15 @@ public partial class WorldManager : Component
 
 	public World GetWorld( string id )
 	{
-		return Worlds.FirstOrDefault( w => w.WorldId == id );
+		// return Worlds.FirstOrDefault( w => w.WorldId == id );
+		return Worlds.Values.FirstOrDefault( w => w.Data.ResourceName == id );
 	}
-	
+
+	public World GetWorld( int index )
+	{
+		return CollectionExtensions.GetValueOrDefault( Worlds, index );
+	}
+
 	public void SetActiveWorld( int index )
 	{
 		Log.Info( $"Setting active world to index: {index}" );
@@ -51,15 +59,21 @@ public partial class WorldManager : Component
 
 	private void RebuildVisibility()
 	{
+		if ( Worlds.Count == 0 )
+		{
+			Log.Warning( "No worlds to rebuild visibility for." );
+			return;
+		}
+		
 		// rebuild world visibility
 		for ( var i = 0; i < Worlds.Count; i++ )
 		{
 			var isVisible = i == ActiveWorldIndex;
 			var world = Worlds[i];
-			
+
 			world.Tags.Remove( "worldlayer_invisible" );
 			world.Tags.Remove( "worldlayer_visible" );
-			
+
 			if ( isVisible )
 			{
 				world.Tags.Add( "worldlayer_visible" );
@@ -69,7 +83,7 @@ public partial class WorldManager : Component
 				world.Tags.Add( "worldlayer_invisible" );
 			}
 		}
-		
+
 		// rebuild object visibility
 		foreach ( var layerObject in Scene.GetAllComponents<WorldLayerObject>() )
 		{
@@ -79,7 +93,7 @@ public partial class WorldManager : Component
 
 	public void SetActiveWorld( World world )
 	{
-		ActiveWorldIndex = Worlds.IndexOf( world );
+		ActiveWorldIndex = world.Layer;
 		RebuildVisibility();
 	}
 
@@ -101,14 +115,29 @@ public partial class WorldManager : Component
 		};*/
 	}
 
+	public bool HasWorld( string id )
+	{
+		return Worlds.Values.Any( w => w.Data.ResourceName == id );
+	}
+
+	public bool HasWorld( Data.World data )
+	{
+		return Worlds.Values.Any( w => w.Data == data );
+	}
+
 	public World LoadWorld( Data.World data )
 	{
 		Log.Info( $"Loading world: {data.ResourceName}" );
 
-		var index = Worlds.Count;
+		// use the first available index
+		var index = 0;
+		while ( Worlds.ContainsKey( index ) )
+		{
+			index++;
+		}
 
 		var gameObject = data.Prefab.Clone();
-		
+
 		// gameObject.BreakFromPrefab();
 
 		var world = gameObject.GetComponent<World>();
@@ -121,21 +150,56 @@ public partial class WorldManager : Component
 		gameObject.Tags.Add( "dworld" );
 		gameObject.Tags.Add( $"dworldlayer_{index}" );
 
-		Worlds.Add( world );
-		
+		Worlds[index] = world;
+
 		world.Layer = index;
 		world.Setup();
-		
+
 		Log.Info( $"Loaded world: {data.ResourceName}, now has {Worlds.Count} worlds." );
-		
+
 		RebuildVisibility();
-		
+
 		// ActiveWorldChanged?.Invoke( world );
-		
+
 		return world;
-		
+
 		// SetActiveWorld( index );
 	}
+
+	public World GetWorldOrLoad( Data.World data )
+	{
+		var world = GetWorld( data.ResourceName );
+		return world.IsValid() ? world : LoadWorld( data );
+	}
+
+
+	public void UnloadWorld( string id )
+	{
+		var world = GetWorld( id );
+		if ( world.IsValid() )
+		{
+			UnloadWorld( world );
+		}
+	}
+
+	public void UnloadWorld( World world )
+	{
+		Log.Info( $"Unloading world: {world.Data.ResourceName}" );
+		world.DestroyGameObject();
+		Worlds.Remove( world.Layer );
+		RebuildVisibility();
+		WorldUnload?.Invoke( world );
+	}
+
+	public void UnloadWorld( int index )
+	{
+		var world = GetWorld( index );
+		if ( world.IsValid() )
+		{
+			UnloadWorld( world );
+		}
+	}
+
 
 	[ConCmd( "world_load" )]
 	public static void LoadWorldCmd( string id )
@@ -151,31 +215,30 @@ public partial class WorldManager : Component
 			Log.Warning( $"Could not find world with id: {id}" );
 		}
 	}
-	
+
 	[ConCmd( "world_set_active" )]
 	public static void SetActiveWorldCmd( int index )
 	{
 		NodeManager.WorldManager.SetActiveWorld( index );
 	}
-	
-	[ConCmd("world_move_to_entrance")]
+
+	[ConCmd( "world_move_to_entrance" )]
 	public static void MoveToEntranceCmd( int worldIndex, string entranceId )
 	{
-		var world = WorldManager.Instance.Worlds.ElementAtOrDefault( worldIndex );
+		var world = Instance.GetWorld( worldIndex );
 		if ( !world.IsValid() ) throw new Exception( $"Invalid world index: {worldIndex}" );
-		
+
 		var entrance = world.GetEntrance( entranceId );
 		if ( entrance == null ) throw new Exception( $"Invalid entrance id: {entranceId}" );
-		
+
 		WorldManager.Instance.SetActiveWorld( worldIndex );
-		
+
 		var player = NodeManager.Player;
-			
+
 		player.WorldLayerObject.SetLayer( worldIndex, true );
-		
+
 		player.Transform.Position = entrance.Transform.Position;
 		player.GetComponent<CameraController>().SnapCamera();
-		
 	}
 
 	/*private void SetLoadingScreen( bool visible, string text = "" )

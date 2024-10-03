@@ -127,7 +127,7 @@
         "__guid": "f88734aa-50ac-49fa-80bb-f44c691d96c0",
         "Flags": 0,
         "Name": "Entrance",
-        "Position": "512,320,8",
+        "Position": "496,320,0",
         "Rotation": "0,0,1,-0.00000004371139",
         "Enabled": true,
         "Components": [
@@ -140,6 +140,67 @@
             "__type": "Clover.WorldLayerObject",
             "__guid": "14161e64-6242-4e3b-9bad-a5a4281aa15b",
             "Layer": 0
+          }
+        ]
+      },
+      {
+        "__guid": "c18b077f-564b-4d9d-9b5c-b99de6f7d166",
+        "Flags": 0,
+        "Name": "HouseTrigger",
+        "Position": "544,320,16.00014",
+        "Tags": "trigger",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.AreaTrigger",
+            "__guid": "950e5c0a-111d-41be-a019-f34412e29a25",
+            "DestinationEntranceId": "player_house_exit",
+            "DestinationWorld": "worlds/island/island.world"
+          },
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "32652b18-3931-4d82-af6b-7fec3c363f0f",
+            "Center": "0,0,0",
+            "IsTrigger": true,
+            "OnTriggerEnter": {
+              "__version": 8,
+              "__guid": "ec39f0e3-d37c-4035-a10a-4a3d154e304e",
+              "__changeId": 8,
+              "UserData": {
+                "Title": "On Trigger Enter",
+                "ReferencedComponentTypes": []
+              },
+              "Variables": [],
+              "Nodes": [
+                {
+                  "Id": 0,
+                  "Type": "input"
+                },
+                {
+                  "Id": 1,
+                  "Type": "log.info",
+                  "UserData": {
+                    "Position": "288,36"
+                  }
+                }
+              ],
+              "Links": [
+                {
+                  "SrcId": 0,
+                  "SrcName": "_signal",
+                  "DstId": 1,
+                  "DstName": "_signal"
+                },
+                {
+                  "Id": 2,
+                  "Value": "asdf",
+                  "DstId": 1,
+                  "DstName": "format"
+                }
+              ]
+            },
+            "Scale": "21.13332,76.00003,50",
+            "Static": false
           }
         ]
       }

@@ -9,7 +9,11 @@
     "Components": [
       {
         "__type": "Clover.Player.PlayerCharacter",
-        "__guid": "f4b346c7-49e8-445e-9581-0d0cde06d66f"
+        "__guid": "f4b346c7-49e8-445e-9581-0d0cde06d66f",
+        "Model": {
+          "_type": "gameobject",
+          "go": "b3d17063-df2e-4889-b970-77faaeea7b6d"
+        }
       },
       {
         "__type": "Sandbox.CharacterController",
@@ -26,11 +30,7 @@
       {
         "__type": "PlayerController",
         "__guid": "99aba71e-aa75-4bc3-9014-e2be7fa4f4fd",
-        "Gravity": "0,0,800",
-        "Model": {
-          "_type": "gameobject",
-          "go": "b3d17063-df2e-4889-b970-77faaeea7b6d"
-        }
+        "Gravity": "0,0,800"
       },
       {
         "__type": "CameraController",
@@ -67,7 +67,7 @@
         "__guid": "b3d17063-df2e-4889-b970-77faaeea7b6d",
         "Flags": 0,
         "Name": "Model",
-        "Rotation": "0,0,1,-0.00000004371139",
+        "Rotation": "-0,0,-0.0000002781418,-1",
         "Enabled": true,
         "Components": [
           {

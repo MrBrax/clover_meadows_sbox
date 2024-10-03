@@ -4,10 +4,14 @@ namespace Clover;
 
 public sealed class AreaTrigger : Component, Component.ITriggerListener
 {
+	
+	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	[RequireComponent] public BoxCollider Collider { get; set; }
 
 	[Property] public Data.World DestinationWorld { get; set; }
 	[Property] public string DestinationEntranceId { get; set; }
+	
+	[Property] public bool UnloadPreviousWorld { get; set; } = true;
 
 
 	protected override void DrawGizmos()
@@ -15,6 +19,8 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 		base.DrawGizmos();
 
 		Gizmo.Draw.Text( DestinationWorld?.Title + "\n" + DestinationEntranceId, new Transform() );
+		Gizmo.Hitbox.BBox( BBox.FromPositionAndSize( Collider.Center, Collider.Scale ));
+		Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( Collider.Center, Collider.Scale ) );
 	}
 
 	void ITriggerListener.OnTriggerEnter( Collider other )
@@ -26,15 +32,23 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			return;
 		}
 
-		var w = WorldManager.Instance.LoadWorld( DestinationWorld );
+		var w = WorldManager.Instance.GetWorldOrLoad( DestinationWorld );
 
 		var entrance = w.GetEntrance( DestinationEntranceId );
 
 		if ( entrance.IsValid() )
 		{
 			player.WorldPosition = entrance.WorldPosition;
-			
+			player.ModelLookAt( entrance.WorldPosition + entrance.WorldRotation.Forward );
+			player.Transform.ClearInterpolation();
+			player.WorldLayerObject.SetLayer( entrance.WorldLayerObject.Layer );
+			player.GetComponent<CameraController>().SnapCamera();
 			WorldManager.Instance.SetActiveWorld( w );
+			
+			if ( UnloadPreviousWorld )
+			{
+				WorldManager.Instance.UnloadWorld( WorldManager.Instance.GetWorld( WorldLayerObject.Layer ) );
+			}
 		}
 		else
 		{
