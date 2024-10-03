@@ -16,6 +16,7 @@
         "__guid": "424e9a5b-9dd5-4ceb-ad4a-4d16f3612af2",
         "Flags": 0,
         "Name": "Object",
+        "Tags": "terrain",
         "Enabled": true,
         "Components": [
           {

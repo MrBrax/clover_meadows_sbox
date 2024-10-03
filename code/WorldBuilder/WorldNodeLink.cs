@@ -65,7 +65,7 @@ public class WorldNodeLink
 
 	public string GetName()
 	{
-		return ItemData.Name;
+		return ItemData != null ? ItemData.Name : Node.Name;
 	}
 	
 	// public IList<PlaceableNode> GetPlaceableNodes() => Node.GetNodesOfType<PlaceableNode>();

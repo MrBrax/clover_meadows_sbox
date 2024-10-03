@@ -65,7 +65,7 @@ public sealed class World : Component
 
 	public event OnItemRemovedEvent OnItemRemoved;
 
-	[Sync] public NetDictionary<Vector2Int, Dictionary<ItemPlacement, WorldNodeLink>> Items { get; set; } = new();
+	public Dictionary<Vector2Int, Dictionary<ItemPlacement, WorldNodeLink>> Items { get; set; } = new();
 
 	// TODO: should this be synced?
 	private HashSet<Vector2Int> _blockedTiles { get; set; } = new();
@@ -129,9 +129,9 @@ public sealed class World : Component
 	{
 		var check = CheckGridPositionEligibility( position, out var worldPos );
 
-		if ( worldPos.y != 0 )
+		if ( worldPos.z != 0 )
 		{
-			_tileHeights[position] = worldPos.y;
+			_tileHeights[position] = worldPos.z;
 			// Logger.Info( $"Adding grid position height {gridPos} = {worldPos.Y}" );
 		}
 
@@ -339,17 +339,19 @@ public sealed class World : Component
 	{
 		if ( IsOutsideGrid( position ) )
 		{
-			Log.Trace( $"Position {position} is outside the grid" );
+			Log.Warning( $"Position {position} is outside the grid" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
 
 		if ( _blockedTiles.Contains( position ) )
 		{
-			Log.Trace( $"Position {position} is already blocked" );
+			Log.Info( $"Position {position} is already blocked" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
+		
+		Log.Info( $"Checking eligibility of {position}" );
 
 		// trace a ray from the sky straight down in each corner, if height is the same on all corners then it's a valid position
 
@@ -390,11 +392,11 @@ public sealed class World : Component
 			return false;
 		}*/
 
-		var traceTopLeft = Scene.Trace.Ray( topLeft, topLeft + Vector3.Down * 100 ) /*.WithTag("terrain")*/.Run();
-		var traceTopRight = Scene.Trace.Ray( topRight, topRight + Vector3.Down * 100 ) /*.WithTag("terrain")*/.Run();
-		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + Vector3.Down * 100 ) /*.WithTag("terrain")*/
+		var traceTopLeft = Scene.Trace.Ray( topLeft, topLeft + Vector3.Down * 100 ).WithTag("terrain").Run();
+		var traceTopRight = Scene.Trace.Ray( topRight, topRight + Vector3.Down * 100 ).WithTag("terrain").Run();
+		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + Vector3.Down * 100 ).WithTag("terrain")
 			.Run();
-		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + Vector3.Down * 100 ) /*.WithTag("terrain")*/
+		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + Vector3.Down * 100 ).WithTag("terrain")
 			.Run();
 
 		if ( !traceTopLeft.Hit || !traceTopRight.Hit || !traceBottomLeft.Hit || !traceBottomRight.Hit )
@@ -405,10 +407,10 @@ public sealed class World : Component
 		}
 
 
-		var heightTopLeft = traceTopLeft.HitPosition.y;
-		var heightTopRight = traceTopRight.HitPosition.y;
-		var heightBottomLeft = traceBottomLeft.HitPosition.y;
-		var heightBottomRight = traceBottomRight.HitPosition.y;
+		var heightTopLeft = traceTopLeft.HitPosition.z;
+		var heightTopRight = traceTopRight.HitPosition.z;
+		var heightBottomLeft = traceBottomLeft.HitPosition.z;
+		var heightBottomRight = traceBottomRight.HitPosition.z;
 
 		/*if ( heightTopLeft != heightTopRight || heightTopLeft != heightBottomLeft ||
 			 heightTopLeft != heightBottomRight )
@@ -428,13 +430,15 @@ public sealed class World : Component
 		     Math.Abs( heightTopLeft - heightBottomLeft ) > heightTolerance ||
 		     Math.Abs( heightTopLeft - heightBottomRight ) > heightTolerance )
 		{
-			Log.Trace(
+			Log.Info(
 				$"Height difference at {position} is too high ({heightTopLeft}, {heightTopRight}, {heightBottomLeft}, {heightBottomRight})" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
 
 		worldPosition = new Vector3( basePosition.x, basePosition.y, heightTopLeft );
+		
+		Log.Info( $"Position {position} is eligible" );
 
 		return true;
 	}

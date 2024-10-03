@@ -4,6 +4,9 @@
     "_type": "gameobject",
     "prefab": "worlds/island/island.prefab"
   },
+  "IsInside": false,
+  "Width": 100,
+  "Height": 100,
   "__references": [],
   "IsValid": true,
   "__version": 0

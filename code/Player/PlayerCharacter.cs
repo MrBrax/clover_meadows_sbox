@@ -1,4 +1,7 @@
-﻿namespace Clover.Player;
+﻿using System;
+using Clover.Data;
+
+namespace Clover.Player;
 
 public sealed class PlayerCharacter : Component
 {
@@ -6,6 +9,8 @@ public sealed class PlayerCharacter : Component
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	
 	[Property] public GameObject Model { get; set; }
+	
+	[Property] public GameObject InteractPoint { get; set; }
 	
 
 	protected override void OnStart()
@@ -19,6 +24,42 @@ public sealed class PlayerCharacter : Component
 		var dir = ( position - WorldPosition ).Normal;
 		dir.y = 0;
 		Model.WorldRotation = Rotation.LookAt( dir, Vector3.Up );
+	}
+
+	protected override void OnFixedUpdate()
+	{
+		base.OnFixedUpdate();
+
+		if ( Input.Released( "Duck" ) )
+		{
+			WorldManager.Instance.ActiveWorld.SpawnPlacedNode(
+				ResourceLibrary.GetAll<ItemData>().FirstOrDefault(),
+				GetAimingGridPosition(),
+				World.ItemRotation.North,
+				World.ItemPlacement.Floor
+			);
+		}
+	}
+	
+	public Vector2Int GetAimingGridPosition()
+	{
+		
+		var boxPos = InteractPoint.WorldPosition;
+		
+		var world = WorldManager.Instance.ActiveWorld;
+
+		var gridPosition = world.WorldToItemGrid( boxPos );
+		var worldPosition = world.ItemGridToWorld( gridPosition );
+
+		if ( MathF.Abs( boxPos.z - worldPosition.z ) > 16f )
+		{
+			// throw new System.Exception( $"Aiming at a higher position: {boxPos} -> {worldPosition}" );
+			Log.Warning( $"Aiming at a higher position: {boxPos} -> {worldPosition}" );
+			return default;
+		}
+
+		return gridPosition;
+
 	}
 
 	/*protected override void OnUpdate()

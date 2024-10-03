@@ -10,6 +10,10 @@
       {
         "__type": "Clover.Player.PlayerCharacter",
         "__guid": "f4b346c7-49e8-445e-9581-0d0cde06d66f",
+        "InteractPoint": {
+          "_type": "gameobject",
+          "go": "3babed6e-289d-4418-bdfa-98de415a887a"
+        },
         "Model": {
           "_type": "gameobject",
           "go": "b3d17063-df2e-4889-b970-77faaeea7b6d"
@@ -86,6 +90,33 @@
             "RenderType": "On",
             "Tint": "0.83256,0.08906,0.08906,1",
             "UseAnimGraph": true
+          }
+        ],
+        "Children": [
+          {
+            "__guid": "3babed6e-289d-4418-bdfa-98de415a887a",
+            "Flags": 0,
+            "Name": "InteractPoint",
+            "Position": "32,0,0",
+            "Rotation": "0,0,0.0000002781418,-1",
+            "Scale": "3,3,3",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "4d15617d-090f-4f50-9701-83e4792e0df2",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/editor/axis_helper.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
           }
         ]
       },
