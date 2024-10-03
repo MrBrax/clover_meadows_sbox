@@ -10,11 +10,11 @@ public class ItemData : GameResource
 	
 	[Property, TextArea] public string Description { get; set; }
 	
-	[Property] public int Width { get; set; }
-	[Property] public int Height { get; set; }
+	[Property] public int Width { get; set; } = 1;
+	[Property] public int Height { get; set; } = 1;
 
-	[Property]
-	public World.ItemPlacement Placements { get; set; } = World.ItemPlacement.Floor & World.ItemPlacement.Underground;
+	[Property] // default to floor and underground
+	public World.ItemPlacement Placements { get; set; } = World.ItemPlacement.Floor | World.ItemPlacement.Underground;
 	
 	[Property] public bool CanDrop { get; set; } = true;
 	[Property] public bool DisablePickup { get; set; } = false;

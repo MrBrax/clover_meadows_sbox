@@ -128,7 +128,6 @@
             "__type": "Clover.AreaTrigger",
             "__guid": "37f7a268-98c4-42b0-b862-eae43eadc3cc",
             "DestinationEntranceId": "entry",
-            "DestinationWorld": "worlds/player_house/player_house.world",
             "UnloadPreviousWorld": false
           },
           {
@@ -175,6 +174,15 @@
             "Static": false
           }
         ]
+      },
+      {
+        "__guid": "55c6ec85-3f1b-4fb8-9bfe-4434569dd10b",
+        "Flags": 0,
+        "Name": "test",
+        "Position": "1456,336,0",
+        "Enabled": true,
+        "__Prefab": "items/test/test.prefab",
+        "__PrefabVariables": {}
       }
     ],
     "__variables": []

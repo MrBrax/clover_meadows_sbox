@@ -10,10 +10,19 @@ public sealed class World : Component
 	[Flags]
 	public enum ItemPlacement
 	{
+		[Icon( "wallpaper")]
 		Wall = 1 << 0,
+		
+		[Icon( "inventory")]
 		OnTop = 1 << 1,
+		
+		[Icon( "waves")]
 		Floor = 1 << 2,
+		
+		
 		Underground = 1 << 3,
+		
+		[Icon( "dashboard")]
 		FloorDecal = 1 << 4,
 	}
 
@@ -59,7 +68,8 @@ public sealed class World : Component
 
 	[Sync] public NetDictionary<Vector2Int, Dictionary<ItemPlacement, WorldNodeLink>> Items { get; set; } = new();
 
-	[Sync] private HashSet<Vector2Int> _blockedTiles { get; set; } = new();
+	// TODO: should this be synced?
+	private HashSet<Vector2Int> _blockedTiles { get; set; } = new();
 
 	[Sync] private Dictionary<Vector2Int, float> _tileHeights { get; set; } = new();
 
