@@ -13,6 +13,7 @@
       {
         "__type": "Clover.Items.WorldItem",
         "__guid": "55eec3f5-b571-41e9-b7ec-1dec158fff1e",
+        "ItemData": "items/test/test.item",
         "Prefab": "items/test/test.prefab",
         "Size": "1,1",
         "TilePosition": "0,0"

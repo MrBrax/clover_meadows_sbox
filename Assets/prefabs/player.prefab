@@ -100,23 +100,7 @@
             "Position": "32,0,0",
             "Rotation": "0,0,0.0000002781418,-1",
             "Scale": "3,3,3",
-            "Enabled": true,
-            "Components": [
-              {
-                "__type": "Sandbox.ModelRenderer",
-                "__guid": "4d15617d-090f-4f50-9701-83e4792e0df2",
-                "BodyGroups": 18446744073709551615,
-                "Model": "models/editor/axis_helper.vmdl",
-                "RenderOptions": {
-                  "GameLayer": true,
-                  "OverlayLayer": false,
-                  "BloomLayer": false,
-                  "AfterUILayer": false
-                },
-                "RenderType": "On",
-                "Tint": "1,1,1,1"
-              }
-            ]
+            "Enabled": true
           }
         ]
       },

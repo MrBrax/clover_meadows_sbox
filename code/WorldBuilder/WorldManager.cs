@@ -168,6 +168,8 @@ public partial class WorldManager : Component
 
 		world.Setup();
 
+		world.Load();
+
 		Log.Info( $"Loaded world: {data.ResourceName}, now has {Worlds.Count} worlds." );
 
 		RebuildVisibility();
@@ -286,6 +288,15 @@ public partial class WorldManager : Component
 
 		player.WorldPosition = entrance.WorldPosition;
 		player.GetComponent<CameraController>().SnapCamera();
+	}
+	
+	[ConCmd( "world_save_all" )]
+	public static void SaveAllCmd()
+	{
+		foreach ( var world in Instance.Worlds.Values )
+		{
+			world.Save();
+		}
 	}
 
 	/*private void SetLoadingScreen( bool visible, string text = "" )

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using Clover.Data;
 
 namespace Clover.Items;
 
@@ -47,6 +48,8 @@ public class WorldItem : Component
 		get { return !string.IsNullOrEmpty( _prefab ) ? _prefab : GameObject.PrefabInstanceSource; }
 		set { _prefab = value; }
 	}
+	
+	[Property] public ItemData ItemData { get; set; }
 	
 	protected override void OnAwake()
 	{

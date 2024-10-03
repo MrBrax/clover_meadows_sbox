@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using Clover.Components;
 using Clover.Data;
+using Clover.Persistence;
 
 namespace Clover;
 
@@ -74,5 +75,16 @@ public class WorldNodeLink
 	public PlaceableNode GetPlaceableNodeAtGridPosition( Vector2Int position )
 	{
 		return GetPlaceableNodes().FirstOrDefault( n => GridPosition == World.WorldToItemGrid( n.WorldPosition ) );
+	}
+
+	public PersistentItem GetPersistentItem()
+	{
+		var persistentItem = new PersistentItem
+		{
+			ItemId = ItemId,
+		};
+
+		return persistentItem;
+		
 	}
 }

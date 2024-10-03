@@ -736,6 +736,8 @@ public sealed class World : Component
 		Log.Info( $"World {WorldId} unloaded" );
 		Save();
 	}
+	
+	private string SaveFileName => $"worlds/{Data.ResourceName}.json";
 
 	public void Save()
 	{
@@ -776,7 +778,8 @@ public sealed class World : Component
 					Rotation = nodeLink.GridRotation,
 					PlacementType = nodeLink.PlacementType,
 					PrefabPath = prefabPath,
-					ItemId = nodeLink.ItemId
+					ItemId = nodeLink.ItemId,
+					Item = nodeLink.GetPersistentItem()
 				};
 
 				savedItems.Add( persistentItem );
@@ -790,6 +793,63 @@ public sealed class World : Component
 
 		// FileSystem.Data.WriteJson( $"worlds/{Data.ResourceName}.json", saveData );
 		var json = JsonSerializer.Serialize( saveData, GameManager.JsonOptions );
-		FileSystem.Data.WriteAllText( $"worlds/{Data.ResourceName}.json", json );
+		FileSystem.Data.WriteAllText( SaveFileName, json );
 	}
+
+	public void Load()
+	{
+		
+		if ( !FileSystem.Data.FileExists( SaveFileName ) )
+		{
+			Log.Warning( $"File {SaveFileName} does not exist" );
+			return;
+		}
+
+		var json = FileSystem.Data.ReadAllText( SaveFileName );
+		var saveData = JsonSerializer.Deserialize<WorldSaveData>( json, GameManager.JsonOptions );
+
+		Log.Info( $"Loaded save data from {SaveFileName}" );
+
+		foreach ( var item in saveData.Items )
+		{
+			var position = item.Position;
+			var placement = item.Placement;
+			var rotation = item.Rotation;
+			var prefabPath = item.PrefabPath;
+			
+			if ( string.IsNullOrEmpty( prefabPath ) )
+			{
+				Log.Warning( $"Item {item} has no prefab path" );
+				continue;
+			}
+
+			var gameObject = Scene.CreateObject();
+			gameObject.SetPrefabSource( prefabPath );
+			gameObject.UpdateFromPrefab();
+
+			var nodeLink = new WorldNodeLink( this, gameObject );
+
+			nodeLink.GridPosition = position;
+			nodeLink.GridPlacement = placement;
+			nodeLink.GridRotation = rotation;
+			nodeLink.ItemId = item.ItemId;
+			nodeLink.PlacementType = item.PlacementType;
+			
+			if ( !Items.ContainsKey( position ) )
+			{
+				Items[position] = new Dictionary<ItemPlacement, WorldNodeLink>();
+			}
+
+			Items[position][placement] = nodeLink;
+
+			_nodeLinkMap[nodeLink.Node] = nodeLink;
+
+			// nodeLink.LoadItemData();
+			UpdateTransform( nodeLink );
+		}
+		
+		Log.Info( $"Loaded {saveData.Items.Count} items" );
+		
+	}
+	
 }
