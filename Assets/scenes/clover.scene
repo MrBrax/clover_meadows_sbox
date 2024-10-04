@@ -112,6 +112,13 @@
           "__guid": "042455b1-a242-46f4-93a9-57141aae9949"
         }
       ]
+    },
+    {
+      "__guid": "82da970a-8629-4a5f-a6a5-7ba40d61a155",
+      "Flags": 0,
+      "Name": "Object",
+      "Position": "300.3214,304.458,962.4254",
+      "Enabled": true
     }
   ],
   "SceneProperties": {
