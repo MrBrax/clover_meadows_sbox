@@ -2,26 +2,28 @@
 using System.Text.Json.Serialization;
 using Clover.Components;
 using Clover.Data;
+using Clover.Items;
 using Clover.Persistence;
 
 namespace Clover;
 
 public class WorldNodeLink
 {
-	
 	[JsonIgnore] public World World;
 	[JsonIgnore] public GameObject Node;
-	
+
 	public Vector2Int GridPosition;
-	
+
 	public World.ItemRotation GridRotation;
 	public World.ItemPlacement GridPlacement;
 	public World.ItemPlacementType PlacementType;
 
 	public Vector2Int Size;
-	
+
 	public string ItemId;
 	public string PrefabPath;
+
+	public PersistentItem Persistence;
 
 	public ItemData ItemData
 	{
@@ -35,7 +37,7 @@ public class WorldNodeLink
 		// GetData( node );
 		// LoadItemData();
 	}
-	
+
 	public IList<Vector2Int> GetGridPositions( bool global = false )
 	{
 		var itemData = ItemData;
@@ -69,16 +71,17 @@ public class WorldNodeLink
 	{
 		return ItemData != null ? ItemData.Name : Node.Name;
 	}
-	
+
 	// public IList<PlaceableNode> GetPlaceableNodes() => Node.GetNodesOfType<PlaceableNode>();
-	public IEnumerable<PlaceableNode> GetPlaceableNodes() => Node.Components.GetAll<PlaceableNode>( FindMode.EverythingInDescendants );
+	public IEnumerable<PlaceableNode> GetPlaceableNodes() =>
+		Node.Components.GetAll<PlaceableNode>( FindMode.EverythingInDescendants );
 
 	public PlaceableNode GetPlaceableNodeAtGridPosition( Vector2Int position )
 	{
 		return GetPlaceableNodes().FirstOrDefault( n => GridPosition == World.WorldToItemGrid( n.WorldPosition ) );
 	}
 
-	public PersistentItem GetPersistentItem()
+	/*public PersistentItem GetPersistentItem()
 	{
 		var persistentItem = new PersistentItem
 		{
@@ -86,7 +89,7 @@ public class WorldNodeLink
 		};
 
 		return persistentItem;
-	}
+	}*/
 
 	public static WorldNodeLink Get( GameObject gameObject )
 	{
@@ -95,6 +98,16 @@ public class WorldNodeLink
 
 	public PersistentWorldItem OnNodeSave()
 	{
+		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )
+		{
+			Log.Info( $"Running OnItemSave on {Node}" );
+			worldItem.OnItemSave?.Invoke( this );
+		}
+		else
+		{
+			Log.Warning( $"No WorldItem component found on {Node}" );
+		}
+
 		return new PersistentWorldItem
 		{
 			Position = GridPosition,
@@ -103,12 +116,58 @@ public class WorldNodeLink
 			PlacementType = PlacementType,
 			PrefabPath = PrefabPath,
 			ItemId = ItemId,
-			Item = GetPersistentItem()
+			Item = Persistence,
 		};
 	}
-	
+
 	public void OnNodeLoad( PersistentWorldItem persistentItem )
 	{
-		
+		PrefabPath = persistentItem.PrefabPath;
+		ItemId = persistentItem.ItemId;
+
+		Persistence = persistentItem.Item;
+
+		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )
+		{
+			Log.Info( $"Running OnItemLoad on {Node}" );
+			worldItem.OnItemLoad?.Invoke( this );
+		}
+		else
+		{
+			Log.Warning( $"No WorldItem component found on {Node}" );
+		}
+	}
+
+	public void OnNodeAdded()
+	{
+		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )
+		{
+			Log.Info( $"Running OnItemAdded on {Node}" );
+			// worldItem.OnItemAdded?.Invoke( this );
+		}
+
+		if ( Persistence == null )
+		{
+			Persistence = new PersistentItem();
+		}
+	}
+
+	public string GetPrefabPath()
+	{
+		var prefabPath = Node.PrefabInstanceSource;
+		if ( string.IsNullOrEmpty( prefabPath ) )
+		{
+			if ( Node.Components.TryGet<WorldItem>( out var worldObject ) )
+			{
+				prefabPath = worldObject.Prefab;
+				if ( string.IsNullOrEmpty( prefabPath ) )
+				{
+					Log.Warning( $"NodeLink {this} has no prefab path" );
+					return null;
+				}
+			}
+		}
+
+		return prefabPath;
 	}
 }

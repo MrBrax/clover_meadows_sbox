@@ -14,6 +14,168 @@
         "__type": "Clover.Items.WorldItem",
         "__guid": "55eec3f5-b571-41e9-b7ec-1dec158fff1e",
         "ItemData": "items/test/test.item",
+        "OnItemLoad": {
+          "__version": 8,
+          "__guid": "74861861-90ea-45b2-ac53-25735fb034ba",
+          "__changeId": 55,
+          "UserData": {
+            "Title": "On Item Load",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 1,
+              "Type": "property",
+              "Properties": {
+                "_name": "Persistence",
+                "_type": "Clover.WorldNodeLink"
+              },
+              "UserData": {
+                "Position": "204,48"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "call",
+              "Properties": {
+                "_isStatic": false,
+                "_name": "GetArbitraryString",
+                "_type": "Clover.Persistence.PersistentItem"
+              },
+              "UserData": {
+                "Position": "540,24"
+              }
+            },
+            {
+              "Id": 8,
+              "Type": "log.info",
+              "UserData": {
+                "Position": "996,12"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "nodeLink",
+              "DstId": 1,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "_target"
+            },
+            {
+              "Id": 9,
+              "Value": "test",
+              "DstId": 3,
+              "DstName": "key"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_signal",
+              "DstId": 8,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 3,
+              "SrcName": "_result",
+              "DstId": 8,
+              "DstName": "args",
+              "DstIndex": 0
+            },
+            {
+              "Id": 23,
+              "Value": "got data: {0}",
+              "DstId": 8,
+              "DstName": "format"
+            }
+          ]
+        },
+        "OnItemSave": {
+          "__version": 8,
+          "__guid": "9a109d5b-af2c-4199-ad38-7d070fa5a7e9",
+          "__changeId": 25,
+          "UserData": {
+            "Title": "On Item Save",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 1,
+              "Type": "property",
+              "Properties": {
+                "_name": "Persistence",
+                "_type": "Clover.WorldNodeLink"
+              },
+              "UserData": {
+                "Position": "192,24"
+              }
+            },
+            {
+              "Id": 2,
+              "Type": "call",
+              "Properties": {
+                "_isStatic": false,
+                "_name": "SetArbitraryData",
+                "_type": "Clover.Persistence.PersistentItem"
+              },
+              "UserData": {
+                "Position": "528,0"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "nodeLink",
+              "DstId": 1,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 2,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "_result",
+              "DstId": 2,
+              "DstName": "_target"
+            },
+            {
+              "Id": 3,
+              "Value": "test",
+              "DstId": 2,
+              "DstName": "key"
+            },
+            {
+              "Id": 4,
+              "Value": "hello world",
+              "DstId": 2,
+              "DstName": "value"
+            }
+          ]
+        },
         "Prefab": "items/test/test.prefab",
         "Size": "1,1",
         "TilePosition": "0,0"
@@ -32,14 +194,13 @@
         "__guid": "f0a25c5e-4d41-471e-81fc-bd84d32404ea",
         "Flags": 0,
         "Name": "Object",
-        "Position": "0,0,10",
         "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "ca59ecda-187f-4340-a4d2-1a1be8c85e1d",
             "BodyGroups": 18446744073709551615,
-            "Model": "models/editor/node_hint.vmdl",
+            "Model": "models/froggychair/froggychair.vmdl",
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -59,7 +220,9 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
-  "__references": [],
+  "__references": [
+    "dan.froggychair#1600"
+  ],
   "IsValid": true,
   "__version": 1
 }

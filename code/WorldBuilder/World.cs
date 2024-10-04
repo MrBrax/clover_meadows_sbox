@@ -513,12 +513,15 @@ public sealed class World : Component
 		nodeLink.GridPosition = position;
 		nodeLink.GridPlacement = placement;
 		nodeLink.GridRotation = rotation;
+		nodeLink.PrefabPath = nodeLink.GetPrefabPath();
 
 		_nodeLinkMap[item] = nodeLink;
 
 		item.SetParent( GameObject ); // TODO: should items be parented to the world?
 
 		OnItemAdded?.Invoke( nodeLink );
+
+		nodeLink.OnNodeAdded();
 
 		UpdateTransform( nodeLink );
 
@@ -752,21 +755,8 @@ public sealed class World : Component
 					continue;
 				}
 
-				var prefabPath = nodeLink.Node.PrefabInstanceSource;
-				if ( string.IsNullOrEmpty( prefabPath ) )
-				{
-					if ( nodeLink.Node.Components.TryGet<WorldItem>( out var worldObject ) )
-					{
-						prefabPath = worldObject.Prefab;
-						if ( string.IsNullOrEmpty( prefabPath ) )
-						{
-							Log.Warning( $"NodeLink {nodeLink} has no prefab path" );
-							continue;
-						}
-					}
-				}
-				
-				
+				var prefabPath = nodeLink.GetPrefabPath();
+				nodeLink.PrefabPath = prefabPath;
 
 				/*var persistentItem = new PersistentWorldItem
 				{
