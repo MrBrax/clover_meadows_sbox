@@ -487,4 +487,19 @@ public partial class WorldManager : Component
 		// WorldLoaded
 		EmitSignal( SignalName.WorldLoaded, ActiveWorld );
 	}*/
+	
+	public WorldNodeLink GetWorldNodeLink( GameObject gameObject )
+	{
+		foreach ( var world in Worlds.Values )
+		{
+			var link = world.GetItem( gameObject );
+			if ( link != null )
+			{
+				return link;
+			}
+		}
+		
+		return null;
+		
+	}
 }

@@ -191,7 +191,7 @@ public sealed class World : Component
 			_ => 0
 		};
 	}
-	
+
 	/// <summary>
 	/// Retrieves the WorldNodeLinks at the specified grid position.
 	/// This method will return items that are intersecting the grid position as well, if they are larger than 1x1.
@@ -250,6 +250,7 @@ public sealed class World : Component
 					// Logger.Info( "GetItems", $"Item {item} is already found" );
 					continue;
 				}
+
 				yield return item;
 				foundItems.Add( item );
 			}
@@ -261,7 +262,7 @@ public sealed class World : Component
 			}*/
 		}
 	}
-	
+
 	/// <summary>
 	///  Get a node link at a specific grid position and placement.
 	///  Use <see cref="WorldNodeLink.Node"/> to get the node.
@@ -273,7 +274,6 @@ public sealed class World : Component
 	/// <exception cref="ArgumentOutOfRangeException"></exception>
 	public WorldNodeLink GetItem( Vector2Int gridPos, ItemPlacement placement )
 	{
-
 		foreach ( var item in GetItems( gridPos ) )
 		{
 			if ( item.GridPlacement == placement )
@@ -283,6 +283,11 @@ public sealed class World : Component
 		}
 
 		return null;
+	}
+
+	public WorldNodeLink GetItem( GameObject node )
+	{
+		return CollectionExtensions.GetValueOrDefault( _nodeLinkMap, node );
 	}
 
 	/// <summary>
@@ -350,7 +355,7 @@ public sealed class World : Component
 			worldPosition = Vector3.Zero;
 			return false;
 		}
-		
+
 		Log.Info( $"Checking eligibility of {position}" );
 
 		// trace a ray from the sky straight down in each corner, if height is the same on all corners then it's a valid position
@@ -392,11 +397,11 @@ public sealed class World : Component
 			return false;
 		}*/
 
-		var traceTopLeft = Scene.Trace.Ray( topLeft, topLeft + Vector3.Down * 100 ).WithTag("terrain").Run();
-		var traceTopRight = Scene.Trace.Ray( topRight, topRight + Vector3.Down * 100 ).WithTag("terrain").Run();
-		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + Vector3.Down * 100 ).WithTag("terrain")
+		var traceTopLeft = Scene.Trace.Ray( topLeft, topLeft + Vector3.Down * 100 ).WithTag( "terrain" ).Run();
+		var traceTopRight = Scene.Trace.Ray( topRight, topRight + Vector3.Down * 100 ).WithTag( "terrain" ).Run();
+		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + Vector3.Down * 100 ).WithTag( "terrain" )
 			.Run();
-		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + Vector3.Down * 100 ).WithTag("terrain")
+		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + Vector3.Down * 100 ).WithTag( "terrain" )
 			.Run();
 
 		if ( !traceTopLeft.Hit || !traceTopRight.Hit || !traceBottomLeft.Hit || !traceBottomRight.Hit )
@@ -437,37 +442,38 @@ public sealed class World : Component
 		}
 
 		worldPosition = new Vector3( basePosition.x, basePosition.y, heightTopLeft );
-		
+
 		Log.Info( $"Position {position} is eligible" );
 
 		return true;
 	}
 
-	
-	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector2Int position, ItemRotation rotation, ItemPlacement placement )
+
+	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector2Int position, ItemRotation rotation,
+		ItemPlacement placement )
 	{
 		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
-		
+
 		if ( !itemData.Placements.HasFlag( placement ) )
 		{
 			throw new Exception( $"Item {itemData.Name} does not support placement {placement}" );
 		}
-		
+
 		if ( !CanPlaceItem( itemData, position, rotation, placement ) )
 		{
 			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
 		}
-		
+
 		if ( itemData.PlaceScene == null )
 		{
 			throw new Exception( $"Item {itemData.Name} has no place scene" );
 		}
 
 		var gameObject = itemData.PlaceScene.Clone();
-		
+
 		var nodeLink = AddItem( position, rotation, placement, gameObject );
 
 		nodeLink.ItemId = itemData.ResourceName;
@@ -475,15 +481,8 @@ public sealed class World : Component
 
 		return nodeLink;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	/// <summary>
 	///  Adds an item to the world at the specified position and placement. It does not check if the item can be placed at the specified position.
 	/// </summary>
@@ -528,7 +527,6 @@ public sealed class World : Component
 
 	private void UpdateTransform( WorldNodeLink nodeLink )
 	{
-		
 		var position = nodeLink.GridPosition;
 		var placement = nodeLink.GridPlacement;
 
@@ -540,7 +538,6 @@ public sealed class World : Component
 		var itemData = nodeLink.ItemData;
 		if ( itemData != null )
 		{
-
 			var itemWidth = itemData.Width - 1;
 			var itemHeight = itemData.Height - 1;
 
@@ -561,7 +558,6 @@ public sealed class World : Component
 			{
 				offset = new Vector3( -itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
 			}
-
 		}
 		else
 		{
@@ -601,7 +597,6 @@ public sealed class World : Component
 		nodeLink.Node.WorldRotation = newRotation;
 
 		Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
-		
 	}
 
 	/// <summary>
@@ -643,7 +638,7 @@ public sealed class World : Component
 			Log.Warning( $"No items at {position}" );
 		}
 	}
-	
+
 	/// <inheritdoc cref="RemoveItem(Vector2Int,ItemPlacement)"/>
 	public void RemoveItem( GameObject node )
 	{
@@ -736,7 +731,7 @@ public sealed class World : Component
 		Log.Info( $"World {WorldId} unloaded" );
 		Save();
 	}
-	
+
 	private string SaveFileName => $"worlds/{Data.ResourceName}.json";
 
 	public void Save()
@@ -770,8 +765,10 @@ public sealed class World : Component
 						}
 					}
 				}
+				
+				
 
-				var persistentItem = new PersistentWorldItem
+				/*var persistentItem = new PersistentWorldItem
 				{
 					Position = position,
 					Placement = placement,
@@ -780,8 +777,10 @@ public sealed class World : Component
 					PrefabPath = prefabPath,
 					ItemId = nodeLink.ItemId,
 					Item = nodeLink.GetPersistentItem()
-				};
-
+				};*/
+				
+				var persistentItem = nodeLink.OnNodeSave();
+				
 				savedItems.Add( persistentItem );
 			}
 		}
@@ -798,7 +797,6 @@ public sealed class World : Component
 
 	public void Load()
 	{
-		
 		if ( !FileSystem.Data.FileExists( SaveFileName ) )
 		{
 			Log.Warning( $"File {SaveFileName} does not exist" );
@@ -816,7 +814,7 @@ public sealed class World : Component
 			var placement = item.Placement;
 			var rotation = item.Rotation;
 			var prefabPath = item.PrefabPath;
-			
+
 			if ( string.IsNullOrEmpty( prefabPath ) )
 			{
 				Log.Warning( $"Item {item} has no prefab path" );
@@ -834,7 +832,7 @@ public sealed class World : Component
 			nodeLink.GridRotation = rotation;
 			nodeLink.ItemId = item.ItemId;
 			nodeLink.PlacementType = item.PlacementType;
-			
+
 			if ( !Items.ContainsKey( position ) )
 			{
 				Items[position] = new Dictionary<ItemPlacement, WorldNodeLink>();
@@ -843,13 +841,13 @@ public sealed class World : Component
 			Items[position][placement] = nodeLink;
 
 			_nodeLinkMap[nodeLink.Node] = nodeLink;
+			
+			nodeLink.OnNodeLoad( item );
 
 			// nodeLink.LoadItemData();
 			UpdateTransform( nodeLink );
 		}
-		
+
 		Log.Info( $"Loaded {saveData.Items.Count} items" );
-		
 	}
-	
 }

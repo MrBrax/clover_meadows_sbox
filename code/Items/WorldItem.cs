@@ -72,4 +72,11 @@ public class WorldItem : Component
 	{
 		Log.Info( $"WorldItem {GameObject.Name} transform changed" );
 	}
+	
+	public delegate void OnObjectSave( WorldNodeLink nodeLink );
+	[Property] public OnObjectSave OnItemSave { get; set; }
+	
+	public delegate void OnObjectLoad( WorldNodeLink nodeLink );
+	[Property] public OnObjectLoad OnItemLoad { get; set; }
+	
 }

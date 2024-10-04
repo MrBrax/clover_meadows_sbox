@@ -21,6 +21,7 @@ public class WorldNodeLink
 	public Vector2Int Size;
 	
 	public string ItemId;
+	public string PrefabPath;
 
 	public ItemData ItemData
 	{
@@ -85,6 +86,29 @@ public class WorldNodeLink
 		};
 
 		return persistentItem;
+	}
+
+	public static WorldNodeLink Get( GameObject gameObject )
+	{
+		return WorldManager.Instance.GetWorldNodeLink( gameObject );
+	}
+
+	public PersistentWorldItem OnNodeSave()
+	{
+		return new PersistentWorldItem
+		{
+			Position = GridPosition,
+			Placement = GridPlacement,
+			Rotation = GridRotation,
+			PlacementType = PlacementType,
+			PrefabPath = PrefabPath,
+			ItemId = ItemId,
+			Item = GetPersistentItem()
+		};
+	}
+	
+	public void OnNodeLoad( PersistentWorldItem persistentItem )
+	{
 		
 	}
 }
