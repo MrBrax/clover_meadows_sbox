@@ -53,17 +53,14 @@ public class BaseCarriable : Component, ISaveData
 
 	public void OnSave( WorldNodeLink nodeLink )
 	{
-		Log.Info( "Saving durability" );
 		nodeLink.Persistence?.SetArbitraryData( "Durability", Durability );
 	}
 
 	public void OnLoad( WorldNodeLink nodeLink )
 	{
 		if ( nodeLink.Persistence == null ) return;
-
 		if ( nodeLink.Persistence.TryGetArbitraryData<int>( "Durability", out var durability ) )
 		{
-			Log.Info( $"Loading durability: {durability}" );
 			Durability = durability;
 		}
 	}
