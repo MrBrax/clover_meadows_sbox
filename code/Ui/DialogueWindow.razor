@@ -1,7 +1,7 @@
 @using Sandbox;
 @using Sandbox.UI;
 @inherits PanelComponent
-@namespace Sandbox
+@namespace Clover
 
 <root>
 	<div class="dialogue-window" @onclick=@OnClick>
@@ -9,7 +9,14 @@
 			@Name
 		</div>
 		<div class="text">
-			@Text
+			@if ( CurrentNode != null )
+			{
+				@Text
+			}
+			else
+			{
+				@($"[ERROR: CurrentNode {CurrentNodeIndex} is null on dialogue {Dialogue}]")
+			}
 		</div>
 		@if ( CurrentNode != null && CurrentNode.Choices.Count > 0 )
 		{

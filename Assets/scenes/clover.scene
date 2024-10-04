@@ -22,9 +22,8 @@
           "ZIndex": 100
         },
         {
-          "__type": "Sandbox.DialogueWindow",
+          "__type": "Clover.DialogueWindow",
           "__guid": "e4381c2f-796e-44b0-81a2-d666d662876e",
-          "__enabled": false,
           "CurrentChoice": {
             "Nodes": []
           },

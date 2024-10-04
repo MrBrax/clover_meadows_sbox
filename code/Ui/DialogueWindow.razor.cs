@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sandbox;
+namespace Clover;
 
 public partial class DialogueWindow
 {
@@ -19,7 +19,7 @@ public partial class DialogueWindow
 
 	public Dialogue.DialogueNode CurrentNode
 	{
-		get => CurrentNodeList[CurrentNodeIndex];
+		get => CurrentNodeList.ElementAtOrDefault( CurrentNodeIndex );
 		// set => CurrentNodeIndex = Dialogue.Nodes.IndexOf( value );
 	}
 
@@ -45,7 +45,7 @@ public partial class DialogueWindow
 		CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
 		Read();*/
 
-		// LoadDialogue( ResourceLibrary.GetAll<Dialogue>().First() );
+		LoadDialogue( ResourceLibrary.GetAll<Dialogue>().First() );
 	}
 
 	public void LoadDialogue( Dialogue dialogue )
@@ -223,6 +223,46 @@ public partial class DialogueWindow
 			Log.Warning( $"Could not find node with id {id}" );
 		}
 	}
+	
+	public void Advance()
+	{
+		if ( IsOnLastNode && CurrentNode.Choices.Count == 0 )
+		{
+			Log.Info( "Closing window" );
+			End();
+			return;
+		}
+		
+		Log.Info( $"Choices: {CurrentNode.Choices.Count}, index: {CurrentNodeIndex}/{CurrentNodeList.Count}" );
+		
+		// go to the next node if there are no choices
+		
+		if ( CurrentNode.Choices.Count == 0 )
+		{
+			CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );
+			CurrentNodeIndex++;
+			if ( CurrentNode != null )
+			{
+				// CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
+				// Read();
+				if ( CurrentNode.IsHidden )
+				{
+					Advance();
+					return;
+				}
+				
+				Read();
+			}
+			else
+			{
+				Log.Error( "No nodes found for choice" );
+			}
+			return;
+		}
+		
+		Log.Error( "Choices found" );
+		
+	}
 
 	private void Read()
 	{
@@ -271,6 +311,7 @@ public partial class DialogueWindow
 
 	private void Typewriter()
 	{
+		if ( _textTarget == null ) return;
 		if ( _lastLetter > 0.05f )
 		{
 			_lastLetter = 0;
@@ -326,12 +367,15 @@ public partial class DialogueWindow
 		var s = SoundFile.Load( "sounds/speech/alphabet/" + letter.ToString().ToUpper() + ".vsnd" );
 
 		var h = Sound.PlayFile( s );
+		h.ListenLocal = true;
 		h.Pitch = Random.Shared.Float( 1.9f, 2.1f );
 	}
 
 	private void OnClick()
 	{
 		if ( _textIndex < 2 ) return;
+		
+		// Input.ReleaseActions();
 
 		// If we're still typing, finish the text
 		if ( Text.Length < _textTarget.Length )
@@ -350,6 +394,9 @@ public partial class DialogueWindow
 			End();
 			return;
 		}
+		
+		Advance();
+		
 	}
 
 	private void End()

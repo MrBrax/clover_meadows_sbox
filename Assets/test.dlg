@@ -1,7 +1,8 @@
 {
   "Nodes": [
     {
-      "Speaker": "bot",
+      "Id": "823e3ec7",
+      "Speaker": 1,
       "Text": "you want to buy that?",
       "Choices": [
         {
@@ -29,7 +30,7 @@
                 "Properties": {
                   "_isStatic": false,
                   "_name": "JumpToId",
-                  "_type": "Sandbox.DialogueWindow"
+                  "_type": "Clover.DialogueWindow"
                 },
                 "UserData": {
                   "Position": "672,12"
@@ -41,7 +42,7 @@
                 "Properties": {
                   "_isStatic": false,
                   "_name": "GetDataInt",
-                  "_type": "Sandbox.DialogueWindow"
+                  "_type": "Clover.DialogueWindow"
                 },
                 "UserData": {
                   "Position": "60,84"
@@ -53,7 +54,7 @@
                 "Properties": {
                   "_isStatic": false,
                   "_name": "GetDataInt",
-                  "_type": "Sandbox.DialogueWindow"
+                  "_type": "Clover.DialogueWindow"
                 },
                 "UserData": {
                   "Position": "48,168"
@@ -79,7 +80,7 @@
                 "Properties": {
                   "_isStatic": false,
                   "_name": "JumpToId",
-                  "_type": "Sandbox.DialogueWindow"
+                  "_type": "Clover.DialogueWindow"
                 },
                 "UserData": {
                   "Position": "672,180"
@@ -100,7 +101,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 42,
+                "Id": 38,
                 "Value": "bought",
                 "DstId": 3,
                 "DstName": "id"
@@ -112,7 +113,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 43,
+                "Id": 39,
                 "Value": "money",
                 "DstId": 4,
                 "DstName": "key"
@@ -124,7 +125,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 44,
+                "Id": 40,
                 "Value": "price",
                 "DstId": 13,
                 "DstName": "key"
@@ -166,7 +167,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 45,
+                "Id": 41,
                 "Value": "failed",
                 "DstId": 29,
                 "DstName": "id"
@@ -176,15 +177,17 @@
           "Nodes": [
             {
               "Id": "bought",
-              "Speaker": "Bot",
+              "Speaker": 1,
               "Text": "thank you for the purchase",
-              "Choices": []
+              "Choices": [],
+              "IsHidden": true
             },
             {
               "Id": "failed",
-              "Speaker": "Bot",
+              "Speaker": 1,
               "Text": "you only have {{money}} but need {{price}}",
-              "Choices": []
+              "Choices": [],
+              "IsHidden": true
             }
           ]
         },
