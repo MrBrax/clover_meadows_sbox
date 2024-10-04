@@ -1,9 +1,11 @@
-﻿using Clover.Persistence;
+﻿using Clover.Inventory;
+using Clover.Items;
+using Clover.Persistence;
 using Clover.Player;
 
 namespace Clover.Carriable;
 
-public class BaseCarriable : Component, ISaveData
+public class BaseCarriable : Component, ISaveData, IPickupable
 {
 	public int Durability { get; set; } = 100;
 
@@ -64,4 +66,15 @@ public class BaseCarriable : Component, ISaveData
 			Durability = durability;
 		}
 	}
+
+	public bool CanPickup( PlayerCharacter player )
+	{
+		return true;
+	}
+
+	public void OnPickup( PlayerCharacter player )
+	{
+		player.Inventory.PickUpItem( GetComponent<WorldItem>().NodeLink );
+	}
+	
 }

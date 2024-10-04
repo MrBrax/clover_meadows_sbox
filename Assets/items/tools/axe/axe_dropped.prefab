@@ -20,6 +20,14 @@
       {
         "__type": "Clover.Carriable.Axe",
         "__guid": "e0201162-8019-4f60-b93f-3374df7f6ba9"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "b9671b53-03be-43e9-a597-a415bdf3f3a4",
+        "Center": "0,0,10",
+        "IsTrigger": false,
+        "Scale": "20,20,20",
+        "Static": false
       }
     ],
     "Children": [
