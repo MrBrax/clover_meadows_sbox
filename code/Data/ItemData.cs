@@ -18,11 +18,12 @@ public class ItemData : GameResource
 	
 	[Property] public bool CanDrop { get; set; } = true;
 	[Property] public bool DisablePickup { get; set; } = false;
+	
 	[Property] public bool IsStackable { get; set; } = false;
-	[Property] public int StackSize { get; set; } = 1;
+	[Property, ShowIf( nameof( IsStackable ), true )]
+	public int StackSize { get; set; } = 1;
 	
 	[Property] public GameObject ModelScene { get; set; }
-	[Property] public GameObject CarryScene { get; set; }
 	[Property] public GameObject DropScene { get; set; }
 	[Property] public GameObject PlaceScene { get; set; }
 	

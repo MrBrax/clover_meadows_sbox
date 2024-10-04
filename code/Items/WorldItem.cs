@@ -95,6 +95,8 @@ public class WorldItem : Component
 		
 		if ( Gizmo.Camera == null ) return;
 
+		if ( ItemData == null ) return;
+
 		Gizmo.Transform = global::Transform.Zero;
 
 		if ( Size == Vector2Int.Zero )
