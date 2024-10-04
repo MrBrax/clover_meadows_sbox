@@ -24,6 +24,7 @@
         {
           "__type": "Clover.DialogueWindow",
           "__guid": "e4381c2f-796e-44b0-81a2-d666d662876e",
+          "__enabled": false,
           "CurrentChoice": {
             "Nodes": []
           },

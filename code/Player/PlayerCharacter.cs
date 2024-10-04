@@ -1,4 +1,5 @@
 ﻿using System;
+using Clover.Components;
 using Clover.Data;
 
 namespace Clover.Player;
@@ -7,10 +8,16 @@ public sealed class PlayerCharacter : Component
 {
 	
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
+	[RequireComponent] public PlayerController Controller { get; set; }
 	
 	[Property] public GameObject Model { get; set; }
 	
 	[Property] public GameObject InteractPoint { get; set; }
+	
+	[Property] public SittableNode Seat { get; set; }
+	
+	public Vector3 EnterPosition { get; set; }
+	public bool IsSitting => Seat.IsValid();
 	
 
 	protected override void OnStart()
@@ -39,6 +46,16 @@ public sealed class PlayerCharacter : Component
 				World.ItemPlacement.Floor
 			);
 		}
+		
+		if ( Input.Pressed( "use") && IsSitting )
+		{
+			Seat.Occupant = null;
+			Seat = null;
+			WorldPosition = EnterPosition;
+			Input.Clear( "use" );
+			Input.ReleaseAction( "use" );
+		}
+		
 	}
 	
 	public Vector2Int GetAimingGridPosition()
@@ -83,5 +100,10 @@ public sealed class PlayerCharacter : Component
 	{
 		WorldLayerObject.SetLayer( layer, true );
 		WorldManager.Instance.SetActiveWorld( layer );
+	}
+
+	public bool ShouldMove()
+	{
+		return !IsSitting;
 	}
 }

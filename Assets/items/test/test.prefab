@@ -17,7 +17,7 @@
         "OnItemLoad": {
           "__version": 8,
           "__guid": "74861861-90ea-45b2-ac53-25735fb034ba",
-          "__changeId": 55,
+          "__changeId": 56,
           "UserData": {
             "Title": "On Item Load",
             "ReferencedComponentTypes": []
@@ -108,7 +108,7 @@
         "OnItemSave": {
           "__version": 8,
           "__guid": "9a109d5b-af2c-4199-ad38-7d070fa5a7e9",
-          "__changeId": 25,
+          "__changeId": 32,
           "UserData": {
             "Title": "On Item Save",
             "ReferencedComponentTypes": []
@@ -187,6 +187,31 @@
         "IsTrigger": false,
         "Scale": "32,32,32",
         "Static": true
+      },
+      {
+        "__type": "Clover.Interactable.Light",
+        "__guid": "019f62e8-f1ad-4fbe-8061-b35cecc519fc",
+        "__enabled": false,
+        "IsOn": true,
+        "LightSwitchSound": "sounds/interact/lightswitch.sound",
+        "Targets": [
+          {
+            "_type": "gameobject",
+            "go": "5afd13e9-9ffc-47f7-a8b0-c0f7313c28fa"
+          }
+        ]
+      },
+      {
+        "__type": "Clover.Interactable.Sittable",
+        "__guid": "f1ce8783-5d5f-4f1f-83ab-fd4ea18c7b3b",
+        "Seats": [
+          {
+            "_type": "component",
+            "component_id": "949903b6-4df9-4b3f-b90f-d1463c2cd619",
+            "go": "26a9bc1d-0411-48e3-a12c-d34b1e59dd3a",
+            "component_type": "SittableNode"
+          }
+        ]
       }
     ],
     "Children": [
@@ -209,6 +234,38 @@
             },
             "RenderType": "On",
             "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "5afd13e9-9ffc-47f7-a8b0-c0f7313c28fa",
+        "Flags": 0,
+        "Name": "Point Light",
+        "Position": "0,0,16",
+        "Tags": "light_point,light",
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "05294f53-136f-4d4f-a33c-fa551f944256",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 400,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "26a9bc1d-0411-48e3-a12c-d34b1e59dd3a",
+        "Flags": 0,
+        "Name": "Seat",
+        "Position": "-2.464873,0,11.35362",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.Components.SittableNode",
+            "__guid": "949903b6-4df9-4b3f-b90f-d1463c2cd619"
           }
         ]
       }

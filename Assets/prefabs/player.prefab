@@ -64,6 +64,16 @@
         "IsTrigger": false,
         "Scale": "32,32,50",
         "Static": false
+      },
+      {
+        "__type": "Clover.Player.PlayerInteract",
+        "__guid": "8308b683-4809-4541-b2c6-407cc15351b7",
+        "InteractCollider": {
+          "_type": "component",
+          "component_id": "117d90de-b6c0-4515-b2ec-077b4714a5a7",
+          "go": "0d4341eb-c028-4389-979c-d513c26ea49e",
+          "component_type": "BoxCollider"
+        }
       }
     ],
     "Children": [
@@ -101,6 +111,24 @@
             "Rotation": "0,0,0.0000002781418,-1",
             "Scale": "3,3,3",
             "Enabled": true
+          },
+          {
+            "__guid": "0d4341eb-c028-4389-979c-d513c26ea49e",
+            "Flags": 0,
+            "Name": "InteractBox",
+            "Position": "20,0,0",
+            "Rotation": "0,0,0.0000002781418,-1",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "117d90de-b6c0-4515-b2ec-077b4714a5a7",
+                "Center": "0,0,25",
+                "IsTrigger": true,
+                "Scale": "24,24,50",
+                "Static": false
+              }
+            ]
           }
         ]
       },

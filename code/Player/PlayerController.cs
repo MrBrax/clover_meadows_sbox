@@ -126,7 +126,12 @@ public class PlayerController : Component
 	{
 		if ( IsProxy )
 			return;
-
+		
+		if ( !Player.ShouldMove() )
+		{
+			return;
+		}
+		
 		BuildWishVelocity();
 
 		var cc = GameObject.Components.Get<CharacterController>();
