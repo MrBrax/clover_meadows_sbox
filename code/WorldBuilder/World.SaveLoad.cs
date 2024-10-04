@@ -6,7 +6,7 @@ namespace Clover;
 
 public sealed partial class World
 {
-	private string SaveFileName => $"worlds/{Data.ResourceName}.json";
+	private string SaveFileName => $"{GameManager.Instance.SaveProfile}/worlds/{Data.ResourceName}.json";
 
 	private WorldSaveData _saveData = new();
 
@@ -53,7 +53,7 @@ public sealed partial class World
 
 		_saveData.Items = savedItems;
 
-		FileSystem.Data.CreateDirectory( "worlds" );
+		FileSystem.Data.CreateDirectory( $"{GameManager.Instance.SaveProfile}/worlds" );
 
 		// FileSystem.Data.WriteJson( $"worlds/{Data.ResourceName}.json", saveData );
 		var json = JsonSerializer.Serialize( _saveData, GameManager.JsonOptions );
