@@ -1,0 +1,66 @@
+ContextMenu {
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.context-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    // background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: all;
+}
+
+.context-menu {
+    position: absolute;
+    background-color: white;
+    // border: 1px solid black;
+    
+    min-width: 300px;
+    
+    font-family: Itim;
+    font-size: 40px;
+    
+    border-radius: 20px;
+    
+    flex-direction: column;
+    
+    box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.3);
+    
+    overflow: hidden;
+    
+    .context-menu-title {
+        background-color: #0c83dd;
+        color: white;
+        padding: 10px 30px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        font-weight: bold;
+        font-size: 50px;
+        text-stroke: 10px #439dd6;
+    }
+    
+    
+    button {
+        pointer-events: all;
+        padding: 20px 30px;
+        
+        cursor: pointer;
+        
+        background-color: white;
+        
+        transition: all 0.1s ease;
+        
+        &:hover {
+            background-color: #f0f0f0;
+            padding-left: 30px;
+        }
+        
+    }
+}

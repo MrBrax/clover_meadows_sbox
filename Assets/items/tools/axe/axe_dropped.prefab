@@ -13,6 +13,7 @@
       {
         "__type": "Clover.Items.WorldItem",
         "__guid": "df3cc97f-e556-4c3f-947f-4bef5c357862",
+        "CanPickupSimple": true,
         "ItemData": "items/tools/axe/axe.tool",
         "Prefab": "items/tools/axe/axe_dropped.prefab",
         "Size": "1,1"

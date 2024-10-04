@@ -10,8 +10,14 @@ public class Inventory : Component
 	
 	[Property, ReadOnly] public int ItemCount => Container.Slots.Count;
 	
-	public InventoryContainer Container { get; private set; } = new InventoryContainer();
-	
+	public InventoryContainer Container { get; private set; } = new();
+
+	protected override void OnAwake()
+	{
+		base.OnAwake();
+		Container.Owner = GameObject;
+	}
+
 	public void PickUpItem( PersistentItem item )
 	{
 		Container.AddItem( item, true );

@@ -11,9 +11,9 @@ InventoryUi {
     align-items: center;
 
     .inventory-window {
-        background-color: #ede2d4;
+        background-color: #d4e7ed;
         border-radius: 5px;
-        padding: 10px;
+        padding: 20px;
 
         width: 1000px;
         height: 700px;
@@ -33,7 +33,7 @@ InventoryUi {
                 
                
                 
-                background-color: rgba(0, 0, 0, 0.2);
+                background-color: rgba(255, 255, 255, 0.5);
                 border-radius: 10px;
                 
                 position: relative;
@@ -65,6 +65,11 @@ InventoryUi {
                 
                 &:hover .name {
                     transform: translateY(0%);
+                }
+                
+                &.dragging {
+                    opacity: 0.5;
+                    transform: scale(0.7);
                 }
                 
             }

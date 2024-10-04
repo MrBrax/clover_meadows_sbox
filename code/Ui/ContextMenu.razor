@@ -1,0 +1,95 @@
+@using System
+@using Clover.Data
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel
+@namespace Clover.Ui
+
+<root>
+	<div class="context-background" @onclick=@Close @onmousedown=@Close @onrightclick=@Close>
+	</div>
+	<div class="context-menu" style="left: @Position.x; top: @Position.y;" @ref=" Content">
+		<div class="context-menu-title">@Title</div>
+		@foreach ( var item in _items )
+		{
+			<button @onclick=@( () => item.Action() )>
+				@item.Text
+			</button>
+		}
+
+	</div>
+</root>
+
+@code {
+
+	public Panel _sourcePanel;
+
+	public Vector2 Position { get; set; }
+
+	public Panel Content { get; set; }
+	
+	public string Title { get; set; }
+	
+	public struct ContextMenuItem
+	{
+		public string Text;
+		public Action Action;
+	}
+	
+	private List<ContextMenuItem> _items = new List<ContextMenuItem>();
+
+	public void Close( PanelEvent e )
+	{
+		Log.Info( "Close" );
+		e.StopPropagation();
+		Delete();
+	}
+
+	public ContextMenu()
+	{
+	}
+
+	public ContextMenu( Panel sourcePanel, Vector2 position )
+	{
+		_sourcePanel = sourcePanel;
+		Position = position;
+		sourcePanel.FindRootPanel().AddChild( this );
+		Log.Info( "Position: " + Position );
+	}
+
+	public void AddItem( string text, Action action )
+	{
+		/*if ( !Content.IsValid() )
+		{
+			Log.Error( "Content is not valid" );
+			return;
+		}
+
+		var button = new Button( text );
+		button.AddEventListener( "click", ( e ) =>
+		{
+			action();
+			Close( e );
+		} );
+		Content.AddChild( button );
+		StateHasChanged();*/
+		
+		_items.Add( new ContextMenuItem()
+		{
+			Text = text,
+			Action = action
+		} );
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+		
+		if ( !_sourcePanel.IsValid() )
+		{
+			Delete();
+		}
+		
+	}
+
+}

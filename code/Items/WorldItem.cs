@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 using Clover.Data;
+using Clover.Inventory;
+using Clover.Player;
 
 namespace Clover.Items;
 
-public class WorldItem : Component
+public class WorldItem : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
@@ -130,4 +132,16 @@ public class WorldItem : Component
 		if ( Gizmo.Camera == null ) return;
 		Gizmo.Draw.Text( WorldPosition.ToString(), new Transform( WorldPosition ) );
 	}*/
+	
+	[Property] public bool CanPickupSimple { get; set; }
+	
+	public bool CanPickup( PlayerCharacter player )
+	{
+		return CanPickupSimple;
+	}
+
+	public void OnPickup( PlayerCharacter player )
+	{
+		player.Inventory.PickUpItem( NodeLink );
+	}
 }

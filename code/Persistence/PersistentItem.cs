@@ -102,6 +102,10 @@ public class PersistentItem
 		return ItemData?.GetIcon();
 	}
 	
+	public virtual Texture GetIconTexture()
+	{
+		return ItemData?.GetIconTexture();
+	}
 	
 	/// <summary>
 	///		 Returns true if this item can be merged with the other item. Throws an exception if it can't.
