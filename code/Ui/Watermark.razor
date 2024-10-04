@@ -1,0 +1,26 @@
+@using System
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Clover
+
+<root>
+	<div class="watermark-container">
+		<div class="name">clover meadows project - s&amp;box</div>
+		<div class="date">@DateTime.Now.ToString("MMMM dd, yyyy")</div>
+		<div class="link">thugbrax.itch.io/clover-meadows</div>
+	</div>
+</root>
+
+@*
+@code
+{
+
+	[Property, TextArea] public string MyStringValue { get; set; } = "Hello World!";
+
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine( MyStringValue );
+}
+*@
