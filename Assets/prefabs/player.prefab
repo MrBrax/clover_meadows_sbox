@@ -68,6 +68,10 @@
       {
         "__type": "Clover.Player.PlayerInteract",
         "__guid": "8308b683-4809-4541-b2c6-407cc15351b7",
+        "Cursor": {
+          "_type": "gameobject",
+          "go": "8be4e3e2-33c1-4c39-a5b0-ca2696886f90"
+        },
         "InteractCollider": {
           "_type": "component",
           "component_id": "117d90de-b6c0-4515-b2ec-077b4714a5a7",
@@ -161,6 +165,28 @@
             "__guid": "4bfeaf52-03a5-4eb5-8679-5b0183a6aad9",
             "FieldOfView": 90,
             "Priority": 0
+          }
+        ]
+      },
+      {
+        "__guid": "8be4e3e2-33c1-4c39-a5b0-ca2696886f90",
+        "Flags": 0,
+        "Name": "Cursor",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "a45a0aaa-6eb7-4fe6-9404-20e5e14659fe",
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/editor/iv_helper.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
           }
         ]
       }

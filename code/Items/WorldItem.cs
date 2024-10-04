@@ -8,10 +8,12 @@ public class WorldItem : Component
 {
 	
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
+
+	public WorldNodeLink NodeLink => WorldLayerObject.World.GetItem( GameObject );
 	
 	private Vector2Int _tilePosition { get; set; }
 
-	[Property, ReadOnly, Sync]
+	/*[Property, ReadOnly, Sync]
 	public Vector2Int TilePosition
 	{
 		get => _tilePosition;
@@ -35,10 +37,16 @@ public class WorldItem : Component
 	}
 	
 	[Property, ReadOnly, Sync]
-	public Vector2Int Size { get; set; } = new(1, 1);
+	public Vector2Int Size { get; set; } = new(1, 1);*/
 
-	public delegate void TilePositionChanged( Vector2Int oldPosition, Vector2Int newPosition );
-	[JsonIgnore] public TilePositionChanged OnTilePositionChanged;
+	/*public delegate void TilePositionChanged( Vector2Int oldPosition, Vector2Int newPosition );
+	[JsonIgnore] public TilePositionChanged OnTilePositionChanged;*/
+
+	public Vector2Int GridPosition => NodeLink.GridPosition;
+	[Property, ReadOnly] public Vector2Int Size => NodeLink?.Size ?? new Vector2Int( ItemData.Width, ItemData.Height );
+	public World.ItemPlacement GridPlacement => NodeLink.GridPlacement;
+	public World.ItemPlacementType GridPlacementType => NodeLink.PlacementType;
+	
 	
 	private string _prefab;
 
@@ -78,5 +86,23 @@ public class WorldItem : Component
 	
 	public delegate void OnObjectLoad( WorldNodeLink nodeLink );
 	[Property] public OnObjectLoad OnItemLoad { get; set; }
-	
+
+	protected override void DrawGizmos()
+	{
+		base.DrawGizmos();
+
+		Gizmo.Transform = global::Transform.Zero;
+		
+		// use the item's size to draw the bounding box, offset
+		
+		
+
+		// Gizmo.Draw.LineBBox( bbox );
+	}
+
+	protected override void OnUpdate()
+	{
+		base.OnUpdate();
+		DrawGizmos();
+	}
 }
