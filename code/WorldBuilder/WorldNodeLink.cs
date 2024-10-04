@@ -141,6 +141,7 @@ public class WorldNodeLink
 		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
 			Log.Info( $"Running OnItemLoad on {Node}" );
+			worldItem.WorldLayerObject.SetLayer( World.Layer );
 			worldItem.OnItemLoad?.Invoke( this );
 		}
 		else

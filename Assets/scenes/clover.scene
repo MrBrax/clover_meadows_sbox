@@ -90,6 +90,28 @@
           "StartServer": true
         }
       ]
+    },
+    {
+      "__guid": "fe6b0b57-43ce-47c3-80c4-0a4c8cb0a4e9",
+      "Flags": 0,
+      "Name": "Watermark",
+      "Position": "1738.691,-144.6614,1454.264",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "c0a9bdc9-aaff-480d-8433-966776d2cd17",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "ZIndex": 100
+        },
+        {
+          "__type": "Clover.Watermark",
+          "__guid": "042455b1-a242-46f4-93a9-57141aae9949"
+        }
+      ]
     }
   ],
   "SceneProperties": {

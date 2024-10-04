@@ -16,7 +16,7 @@
         "__guid": "709a0c4e-9150-4acf-a1ca-0e18bf91ef8e",
         "Flags": 0,
         "Name": "Model",
-        "Tags": "solid",
+        "Tags": "solid,terrain",
         "Enabled": true,
         "Components": [
           {

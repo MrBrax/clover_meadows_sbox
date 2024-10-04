@@ -364,11 +364,13 @@ public sealed class World : Component
 
 		var margin = GridSizeCenter * 0.8f;
 		var heightTolerance = 0.1f;
+		
+		var baseHeight = basePosition.z + 100;
 
-		var topLeft = new Vector3( basePosition.x - margin, basePosition.y - margin, 50 );
-		var topRight = new Vector3( basePosition.x + margin, basePosition.y - margin, 50 );
-		var bottomLeft = new Vector3( basePosition.x - margin, basePosition.y + margin, 50 );
-		var bottomRight = new Vector3( basePosition.x + margin, basePosition.y + margin, 50 );
+		var topLeft = new Vector3( basePosition.x - margin, basePosition.y - margin, baseHeight );
+		var topRight = new Vector3( basePosition.x + margin, basePosition.y - margin, baseHeight );
+		var bottomLeft = new Vector3( basePosition.x - margin, basePosition.y + margin, baseHeight );
+		var bottomRight = new Vector3( basePosition.x + margin, basePosition.y + margin, baseHeight );
 
 		/*var spaceState = GetWorld3D().DirectSpaceState;
 
@@ -406,7 +408,7 @@ public sealed class World : Component
 
 		if ( !traceTopLeft.Hit || !traceTopRight.Hit || !traceBottomLeft.Hit || !traceBottomRight.Hit )
 		{
-			Log.Warning( $"Failed to trace rays at {position}" );
+			Log.Warning( $"Failed to trace rays at {position}, start height is {baseHeight}" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
