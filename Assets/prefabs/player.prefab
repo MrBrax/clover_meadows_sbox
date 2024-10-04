@@ -78,6 +78,17 @@
           "go": "0d4341eb-c028-4389-979c-d513c26ea49e",
           "component_type": "BoxCollider"
         }
+      },
+      {
+        "__type": "Clover.Components.Equips",
+        "__guid": "5b36bfb8-5f6c-46a6-a0de-29dbdfb3db5b",
+        "AttachPoints": {
+          "Tool": {
+            "_type": "gameobject",
+            "go": "0058772d-b32f-4f63-bdfa-1cbb5bc8482e"
+          }
+        },
+        "EquippedItems": {}
       }
     ],
     "Children": [
@@ -107,6 +118,14 @@
           }
         ],
         "Children": [
+          {
+            "__guid": "0058772d-b32f-4f63-bdfa-1cbb5bc8482e",
+            "Flags": 0,
+            "Name": "Tool",
+            "Position": "-0.000007790257,-14.00411,20.06",
+            "Rotation": "0,0,0.0000002781418,-1",
+            "Enabled": true
+          },
           {
             "__guid": "3babed6e-289d-4418-bdfa-98de415a887a",
             "Flags": 0,
