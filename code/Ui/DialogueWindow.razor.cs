@@ -1,4 +1,5 @@
 ﻿using System;
+using Sandbox.UI;
 
 namespace Clover;
 
@@ -46,6 +47,8 @@ public partial class DialogueWindow
 		Read();*/
 
 		LoadDialogue( ResourceLibrary.GetAll<Dialogue>().First() );
+
+		Panel.ButtonInput = PanelInputType.UI;
 	}
 
 	public void LoadDialogue( Dialogue dialogue )
@@ -283,6 +286,7 @@ public partial class DialogueWindow
 		else
 		{
 			Log.Error( "No targets found" );
+			Name = "NO TARGETS";
 		}
 
 		// _skipped = false;
@@ -371,11 +375,13 @@ public partial class DialogueWindow
 		h.Pitch = Random.Shared.Float( 1.9f, 2.1f );
 	}
 
-	private void OnClick()
+	private void OnClick( PanelEvent e )
 	{
-		if ( _textIndex < 2 ) return;
+		// if ( _textIndex < 2 ) return;
 		
 		// Input.ReleaseActions();
+		
+		e.StopPropagation();
 
 		// If we're still typing, finish the text
 		if ( Text.Length < _textTarget.Length )

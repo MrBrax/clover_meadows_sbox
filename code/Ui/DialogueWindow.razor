@@ -23,7 +23,7 @@
 			<div class="choices">
 				@foreach ( var button in CurrentNode.Choices )
 				{
-					<button @onclick=@( () => OnChoice( button ) )>
+					<button @onclick=@( ( PanelEvent e ) => { OnChoice( button ); e.StopPropagation(); } )>
 						@button.Label
 					</button>
 				}
