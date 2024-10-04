@@ -23,6 +23,7 @@ public class WorldNodeLink
 	public string ItemId;
 	public string PrefabPath;
 
+	[Icon( "save" )]
 	public PersistentItem Persistence;
 
 	public ItemData ItemData
@@ -90,6 +91,16 @@ public class WorldNodeLink
 
 		return persistentItem;
 	}*/
+	
+	public T GetPersistence<T>() where T : PersistentItem
+	{
+		if ( Persistence is T t )
+		{
+			return t;
+		}
+		
+		return null;
+	}
 
 	public static WorldNodeLink Get( GameObject gameObject )
 	{
