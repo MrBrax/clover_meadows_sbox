@@ -11,6 +11,7 @@ public sealed class PlayerCharacter : Component
 	
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	[RequireComponent] public PlayerController Controller { get; set; }
+	[RequireComponent] public Inventory.Inventory Inventory { get; set; }
 
 	[Property] public GameObject Model { get; set; }
 
@@ -20,6 +21,8 @@ public sealed class PlayerCharacter : Component
 
 	public Vector3 EnterPosition { get; set; }
 	public bool IsSitting => Seat.IsValid();
+
+	public World World => WorldLayerObject.World;
 
 
 	protected override void OnStart()

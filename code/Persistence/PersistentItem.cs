@@ -17,6 +17,9 @@ public class PersistentItem
 		get => ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == ItemId );
 	}
 	
+	[JsonIgnore] public virtual bool Stackable => false;
+	[JsonIgnore] public virtual int MaxStack => 1;
+	
 	/*public string GetArbitraryString( string key )
 	{
 		if ( ArbitraryData.TryGetValue( key, out var value ) )
@@ -92,6 +95,29 @@ public class PersistentItem
 	public virtual string GetDescription()
 	{
 		return ItemData?.Description;
+	}
+	
+	
+	/// <summary>
+	///		 Returns true if this item can be merged with the other item. Throws an exception if it can't.
+	/// </summary>
+	/// <param name="other"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
+	public virtual bool CanMergeWith( PersistentItem other )
+	{
+		return true;
+	}
+
+	public virtual void MergeWith( PersistentItem other )
+	{
+		return;
+	}
+	
+	public PersistentItem Clone()
+	{
+		// TODO: DON'T DO THIS KIDS, PLEASE FIND A BETTER WAY
+		return JsonSerializer.Deserialize<PersistentItem>( JsonSerializer.Serialize( this, GameManager.JsonOptions ), GameManager.JsonOptions );
 	}
 	
 }

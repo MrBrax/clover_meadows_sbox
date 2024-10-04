@@ -208,4 +208,9 @@ public class WorldNodeLink
 		// Log.Info( $"Calculated size for {this}: {Size}" );
 		
 	}
+
+	public void Remove()
+	{
+		World.RemoveItem( this );
+	}
 }

@@ -102,4 +102,8 @@ public class ItemData : GameResource
 		return positions;
 	}
 
+	public bool IsSameAs( ItemData item )
+	{
+		return item != null && item.ResourcePath == ResourcePath;
+	}
 }

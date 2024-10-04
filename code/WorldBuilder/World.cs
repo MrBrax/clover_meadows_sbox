@@ -152,46 +152,6 @@ public sealed partial class World : Component
 		return position.x < 0 || position.y < 0 || position.x >= Data.Width || position.y >= Data.Height;
 	}
 
-	public static Rotation GetRotation( ItemRotation rotation )
-	{
-		return rotation switch
-		{
-			ItemRotation.North => Rotation.FromYaw( 0 ),
-			ItemRotation.East => Rotation.FromYaw( 90 ),
-			ItemRotation.South => Rotation.FromYaw( 180 ),
-			ItemRotation.West => Rotation.FromYaw( 270 ),
-			_ => Rotation.FromYaw( 0 )
-		};
-	}
-
-	public static Rotation GetRotation( Direction direction )
-	{
-		return direction switch
-		{
-			Direction.North => Rotation.FromYaw( 0 ),
-			Direction.East => Rotation.FromYaw( 90 ),
-			Direction.South => Rotation.FromYaw( 180 ),
-			Direction.West => Rotation.FromYaw( 270 ),
-			Direction.NorthWest => Rotation.FromYaw( 315 ),
-			Direction.NorthEast => Rotation.FromYaw( 45 ),
-			Direction.SouthWest => Rotation.FromYaw( 225 ),
-			Direction.SouthEast => Rotation.FromYaw( 135 ),
-			_ => Rotation.FromYaw( 0 )
-		};
-	}
-
-	public static float GetRotationAngle( ItemRotation rotation )
-	{
-		return rotation switch
-		{
-			ItemRotation.North => 0,
-			ItemRotation.East => 90,
-			ItemRotation.South => 180,
-			ItemRotation.West => 270,
-			_ => 0
-		};
-	}
-
 	/// <summary>
 	/// Retrieves the WorldNodeLinks at the specified grid position.
 	/// This method will return items that are intersecting the grid position as well, if they are larger than 1x1.
@@ -463,7 +423,7 @@ public sealed partial class World : Component
 	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector2Int position, ItemRotation rotation,
 		ItemPlacement placement )
 	{
-		if ( IsOutsideGrid( position ) )
+		/*if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
@@ -496,6 +456,80 @@ public sealed partial class World : Component
 
 		gameObject.NetworkSpawn();
 
+		return nodeLink;*/
+		
+		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation, placement );
+		
+	}
+
+	public WorldNodeLink SpawnDroppedNode( ItemData itemData, Vector2Int position, ItemRotation rotation,
+		ItemPlacement placement )
+	{
+		return SpawnNode( itemData, ItemPlacementType.Dropped, position, rotation, placement );
+	}
+	
+	private WorldNodeLink SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector2Int position, ItemRotation rotation, ItemPlacement placement )
+	{
+		if ( IsOutsideGrid( position ) )
+		{
+			throw new Exception( $"Position {position} is outside the grid" );
+		}
+
+		if ( !itemData.Placements.HasFlag( placement ) )
+		{
+			throw new Exception( $"Item {itemData.Name} does not support placement {placement}" );
+		}
+
+		if ( !CanPlaceItem( itemData, position, rotation, placement ) )
+		{
+			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
+		}
+
+		GameObject scene = placementType switch
+		{
+			ItemPlacementType.Placed => itemData.PlaceScene,
+			ItemPlacementType.Dropped => itemData.DropScene,
+			_ => throw new ArgumentOutOfRangeException( nameof(placementType), placementType, null )
+		};
+
+		if ( scene == null )
+		{
+			throw new Exception( $"Item {itemData.Name} has no place scene" );
+		}
+
+		var gameObject = scene.Clone();
+
+		var nodeLink = AddItem( position, rotation, placement, gameObject );
+
+		nodeLink.ItemId = itemData.ResourceName;
+		nodeLink.PlacementType = ItemPlacementType.Placed;
+		
+		nodeLink.CalculateSize();
+		
+		UpdateTransform( nodeLink );
+
+		gameObject.NetworkSpawn();
+
+		return nodeLink;
+		
+	}
+	
+
+	public WorldNodeLink SpawnPlacedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation,
+		ItemPlacement placement )
+	{
+		var itemData = persistentItem.ItemData;
+		var nodeLink = SpawnPlacedNode( itemData, position, rotation, placement );
+		nodeLink.Persistence = persistentItem;
+		return nodeLink;
+	}
+	
+	public WorldNodeLink SpawnDroppedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation,
+		ItemPlacement placement )
+	{
+		var itemData = persistentItem.ItemData;
+		var nodeLink = SpawnDroppedNode( itemData, position, rotation, placement );
+		nodeLink.Persistence = persistentItem;
 		return nodeLink;
 	}
 
