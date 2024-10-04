@@ -1,0 +1,19 @@
+@using Clover.Data
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Clover.Ui
+
+<root>
+	<h1>debug stuff</h1>
+	<section>
+		<h2>Items</h2>
+		@foreach ( var item in ResourceLibrary.GetAll<ItemData>() )
+		{
+			<button @onclick=@(() => SpawnItem( item ))>
+				@item.Name
+			</button>
+		}
+	</section>
+
+</root>

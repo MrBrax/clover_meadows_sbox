@@ -116,9 +116,37 @@
     {
       "__guid": "82da970a-8629-4a5f-a6a5-7ba40d61a155",
       "Flags": 0,
-      "Name": "Object",
+      "Name": "GameManager",
       "Position": "300.3214,304.458,962.4254",
-      "Enabled": true
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Clover.GameManager",
+          "__guid": "1ec5f9d8-9d73-4e49-8d28-8da7f5fac66f"
+        }
+      ]
+    },
+    {
+      "__guid": "937ba646-68bc-43a6-9037-1f6032f825fd",
+      "Flags": 0,
+      "Name": "Debug",
+      "Position": "300.3214,304.458,962.4254",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "6a455d33-eae9-43b5-b891-2fcc47dac0c9",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "ZIndex": 100
+        },
+        {
+          "__type": "Clover.Ui.DebugWindow",
+          "__guid": "d49c6350-b94d-48e6-8173-9cbb976af6ad"
+        }
+      ]
     }
   ],
   "SceneProperties": {

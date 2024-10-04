@@ -120,6 +120,11 @@ public class WorldNodeLink
 		}
 		
 		Persistence.ItemId ??= ItemId;
+		
+		foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndDescendants ) )
+		{
+			saveable.OnSave( this );
+		}
 
 		return new PersistentWorldItem
 		{
@@ -139,6 +144,11 @@ public class WorldNodeLink
 		ItemId = persistentItem.ItemId;
 
 		Persistence = persistentItem.Item;
+		
+		foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndAncestors ) )
+		{
+			saveable.OnLoad( this );
+		}
 
 		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )
 		{

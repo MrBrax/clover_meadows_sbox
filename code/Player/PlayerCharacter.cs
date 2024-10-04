@@ -6,6 +6,9 @@ namespace Clover.Player;
 
 public sealed class PlayerCharacter : Component
 {
+	
+	public static PlayerCharacter Local => Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => !x.IsProxy );
+	
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	[RequireComponent] public PlayerController Controller { get; set; }
 

@@ -491,6 +491,8 @@ public sealed partial class World : Component
 		nodeLink.PlacementType = ItemPlacementType.Placed;
 		
 		nodeLink.CalculateSize();
+		
+		UpdateTransform( nodeLink );
 
 		gameObject.NetworkSpawn();
 
@@ -538,7 +540,7 @@ public sealed partial class World : Component
 
 		nodeLink.OnNodeAdded();
 
-		UpdateTransform( nodeLink );
+		// UpdateTransform( nodeLink );
 
 		return nodeLink;
 	}

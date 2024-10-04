@@ -12,6 +12,8 @@ public sealed partial class World
 
 	public void Save()
 	{
+		Log.Info( $"Saving world {Data.ResourceName}" );
+		
 		var savedItems = new List<PersistentWorldItem>();
 
 		foreach ( var item in Items )
@@ -51,9 +53,19 @@ public sealed partial class World
 
 		// var saveData = new WorldSaveData { Name = Data.ResourceName, Items = savedItems, LastSave = DateTime.Now };
 
-		_saveData.Items = savedItems;
+		if ( _saveData == null )
+		{
+			Log.Warning( "Save data is null, creating new instance. Should probably do this when starting the game" );
+			_saveData = new WorldSaveData();
+		}
 
-		FileSystem.Data.CreateDirectory( $"{GameManager.Instance.SaveProfile}/worlds" );
+		_saveData.LastSave = DateTime.Now;
+
+		_saveData.Items = savedItems;
+		
+		Log.Info( $"Saving {savedItems.Count} items" );
+		
+		FileSystem.Data.CreateDirectory( $"{GameManager.Instance?.SaveProfile}/worlds" );
 
 		// FileSystem.Data.WriteJson( $"worlds/{Data.ResourceName}.json", saveData );
 		var json = JsonSerializer.Serialize( _saveData, GameManager.JsonOptions );
@@ -108,14 +120,13 @@ public sealed partial class World
 			_nodeLinkMap[nodeLink.Node] = nodeLink;
 
 			nodeLink.OnNodeLoad( item );
-			
+
 			nodeLink.CalculateSize();
 
 			// nodeLink.LoadItemData();
 			UpdateTransform( nodeLink );
 
 			gameObject.NetworkSpawn();
-			
 		}
 
 		Log.Info( $"Loaded {saveData.Items.Count} items" );

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Clover.Data;
 
 namespace Clover.Persistence;
@@ -16,7 +17,7 @@ public class PersistentItem
 		get => ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == ItemId );
 	}
 	
-	public string GetArbitraryString( string key )
+	/*public string GetArbitraryString( string key )
 	{
 		if ( ArbitraryData.TryGetValue( key, out var value ) )
 		{
@@ -50,15 +51,30 @@ public class PersistentItem
 			return (bool)value;
 		}
 		return false;
-	}
+	}*/
 	
 	public T GetArbitraryData<T>( string key )
 	{
-		if ( ArbitraryData.TryGetValue( key, out var value ) )
+		return TryGetArbitraryData<T>( key, out var value ) ? value : default;
+	}
+	
+	public bool TryGetArbitraryData<T>( string key, out T value )
+	{
+		if ( ArbitraryData.TryGetValue( key, out var obj ) )
 		{
-			return (T)value;
+			if ( obj is not JsonElement jsonElement )
+			{
+				Log.Error( $"Arbitrary data {key} is not a JsonElement" );
+				value = default;
+				return false;
+			}
+			
+			value = JsonSerializer.Deserialize<T>( jsonElement.GetRawText() );
+			
+			return true;
 		}
-		return default;
+		value = default;
+		return false;
 	}
 	
 	[Description( "Set arbitrary data on this item." )]
