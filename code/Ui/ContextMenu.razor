@@ -54,7 +54,7 @@
 		_sourcePanel = sourcePanel;
 		Position = position;
 		sourcePanel.FindRootPanel().AddChild( this );
-		Log.Info( "Position: " + Position );
+		Sound.Play( "sounds/ui/menu_open.sound" );
 	}
 
 	public void AddItem( string text, Action action )

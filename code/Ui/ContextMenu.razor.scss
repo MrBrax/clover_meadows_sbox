@@ -62,5 +62,10 @@ ContextMenu {
             padding-left: 30px;
         }
         
+        &:active {
+            sound-in: "sounds/ui/button_down.sound";
+            sound-out: "sounds/ui/button_up.sound";
+        }
+        
     }
 }

@@ -26,6 +26,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		{
 			// Logger.Info( e );
 			//x NodeManager.UserInterface.ShowWarning( e.Message );
+			Log.Error( e.Message );
 			return;
 		}
 

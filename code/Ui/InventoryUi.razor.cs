@@ -82,6 +82,7 @@ public partial class InventoryUi : IPlayerSpawned
 			Panel.Style.Display = Show ? DisplayMode.Flex : DisplayMode.None;
 			if ( Show ) UpdateInventory();
 			StateHasChanged();
+			Sound.Play( "sounds/ui/inventory_toggle.sound" );
 		}
 	}
 

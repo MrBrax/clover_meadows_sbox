@@ -108,11 +108,13 @@ public partial class InventoryUiSlot
 			Ghost.Delete();
 		}
 	}
-	
+
 	private ContextMenu _contextMenu;
 
 	protected override void OnRightClick( MousePanelEvent e )
 	{
+		if ( !Slot.HasItem ) return;
+
 		if ( _contextMenu.IsValid() )
 		{
 			Log.Info( "Deleting context menu" );
@@ -123,10 +125,21 @@ public partial class InventoryUiSlot
 		Log.Info( "Creating context menu" );
 		_contextMenu = new ContextMenu( this, Mouse.Position * ScaleFromScreen );
 		_contextMenu.Title = Slot.GetName();
-		_contextMenu.AddItem( "Drop", () =>
-		{
-			Slot.Drop();
-		} );
 
+		if ( Slot.GetItem().ItemData.PlaceScene != null )
+		{
+			_contextMenu.AddItem( "Place", () =>
+			{
+				Slot.Place();
+			} );
+		}
+
+		if ( Slot.GetItem().ItemData.DropScene != null )
+		{
+			_contextMenu.AddItem( "Drop", () =>
+			{
+				Slot.Drop();
+			} );
+		}
 	}
 }

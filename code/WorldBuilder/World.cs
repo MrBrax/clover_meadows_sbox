@@ -494,7 +494,7 @@ public sealed partial class World : Component
 
 		if ( scene == null )
 		{
-			throw new Exception( $"Item {itemData.Name} has no place scene" );
+			throw new Exception( $"Item {itemData.Name} has no {placementType} scene" );
 		}
 
 		var gameObject = scene.Clone();

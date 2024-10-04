@@ -91,6 +91,8 @@ public class Inventory : Component
 		} ) );*/
 		
 		PickUpItem( inventoryItem );
+
+		Sound.Play( "sounds/interact/item_pickup.sound", WorldPosition );
 		
 		nodeLink.Remove();
 
