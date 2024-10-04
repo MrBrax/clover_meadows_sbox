@@ -8,6 +8,8 @@ public class Inventory : Component
 	
 	[RequireComponent] public PlayerCharacter Player { get; private set; }
 	
+	[Property, ReadOnly] public int ItemCount => Container.Slots.Count;
+	
 	public InventoryContainer Container { get; private set; } = new InventoryContainer();
 	
 	public void PickUpItem( PersistentItem item )

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Clover.Player;
 
 namespace Clover;
 
@@ -55,6 +56,10 @@ public sealed class NetworkHelper : Component, Component.INetworkListener
 		// Spawn this object and make the client the owner
 		var player = PlayerPrefab.Clone( startLocation, name: $"Player - {channel.DisplayName}" );
 		player.NetworkSpawn( channel );
+		
+		// Notify any listeners that a player has spawned
+		Scene.RunEvent<IPlayerSpawned>( x => x.OnPlayerSpawned( player.GetComponent<PlayerCharacter>() ) );
+		
 	}
 
 	/// <summary>
@@ -84,4 +89,13 @@ public sealed class NetworkHelper : Component, Component.INetworkListener
 		//
 		return Transform.World;
 	}
+}
+
+public interface IPlayerSpawned
+{
+	/// <summary>
+	///  Called when a player has spawned into the game
+	/// </summary>
+	/// <param name="player"></param>
+	void OnPlayerSpawned( PlayerCharacter player );
 }

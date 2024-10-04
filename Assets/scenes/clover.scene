@@ -147,6 +147,29 @@
           "__guid": "d49c6350-b94d-48e6-8173-9cbb976af6ad"
         }
       ]
+    },
+    {
+      "__guid": "d500dd67-6bfc-481e-8fa0-8337c45a60e0",
+      "Flags": 0,
+      "Name": "GameUi",
+      "Position": "300.3214,304.458,962.4254",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "19f1b096-d756-4f8a-adbe-bb2a71cfbef1",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "ZIndex": 100
+        },
+        {
+          "__type": "Clover.Ui.InventoryUi",
+          "__guid": "4181c135-f152-4510-b2ca-e93040af3219",
+          "MyStringValue": "Hello World!"
+        }
+      ]
     }
   ],
   "SceneProperties": {

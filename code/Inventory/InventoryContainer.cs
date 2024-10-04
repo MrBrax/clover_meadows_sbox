@@ -347,6 +347,7 @@ public sealed partial class InventoryContainer
 	{
 		// OnInventoryChanged?.Invoke();
 		//x EmitSignal( SignalName.InventoryChanged );
+		InventoryChanged?.Invoke();
 	}
 
 	public void RemoveSlot( InventorySlot<PersistentItem> inventorySlot )

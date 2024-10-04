@@ -97,6 +97,11 @@ public class PersistentItem
 		return ItemData?.Description;
 	}
 	
+	public virtual string GetIcon()
+	{
+		return ItemData?.GetIcon();
+	}
+	
 	
 	/// <summary>
 	///		 Returns true if this item can be merged with the other item. Throws an exception if it can't.

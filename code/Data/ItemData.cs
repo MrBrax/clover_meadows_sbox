@@ -36,9 +36,14 @@ public class ItemData : GameResource
 		return ResourceLibrary.GetAll<T>().FirstOrDefault( i => i.ResourceName == id );
 	}
 	
-	public virtual Texture GetIcon()
+	public virtual string GetIcon()
 	{
-		return Icon != null ? Texture.Load( FileSystem.Mounted, Icon ) : null;
+		return Icon != null ? Icon : "tools/images/common/icon_error.png";
+	}
+	
+	public virtual Texture GetIconTexture()
+	{
+		return Texture.Load( FileSystem.Mounted, GetIcon() );
 	}
 	
 	/// <summary>

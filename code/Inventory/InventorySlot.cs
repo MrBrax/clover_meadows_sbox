@@ -55,6 +55,11 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 	{
 		return _persistentItem.GetName();
 	}
+	
+	public object GetIcon()
+	{
+		return _persistentItem.GetIcon();
+	}
 
 	public void Delete()
 	{
@@ -203,4 +208,5 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 	}
 
+	
 }

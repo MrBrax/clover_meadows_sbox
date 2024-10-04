@@ -234,6 +234,12 @@
           "KeyboardCode": "g",
           "GamepadCode": "None",
           "GroupName": "Other"
+        },
+        {
+          "Name": "Inventory",
+          "KeyboardCode": "tab",
+          "GamepadCode": "None",
+          "GroupName": "Other"
         }
       ],
       "__guid": "9f7c2a2e-cd32-4cb6-ba10-4ff9bc240629"
