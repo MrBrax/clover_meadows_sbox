@@ -45,7 +45,7 @@ public class WorldNodeLink
 
 		if ( itemData == null )
 		{
-			throw new Exception( $"Item data not found on {this}" );
+			throw new Exception( $"Item data not found on {this} ({ItemId})" );
 		}
 
 		return itemData.GetGridPositions( GridRotation, GridPosition );
@@ -118,6 +118,8 @@ public class WorldNodeLink
 		{
 			Log.Warning( $"No WorldItem component found on {Node}" );
 		}
+		
+		Persistence.ItemId ??= ItemId;
 
 		return new PersistentWorldItem
 		{
@@ -140,7 +142,7 @@ public class WorldNodeLink
 
 		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
-			Log.Info( $"Running OnItemLoad on {Node}" );
+			// Log.Info( $"Running OnItemLoad on {Node}" );
 			worldItem.WorldLayerObject.SetLayer( World.Layer );
 			worldItem.OnItemLoad?.Invoke( this );
 		}
@@ -181,5 +183,19 @@ public class WorldNodeLink
 		}
 
 		return prefabPath;
+	}
+
+	public void CalculateSize()
+	{
+		var gridPositions = GetGridPositions();
+		var minX = gridPositions.Min( p => p.x );
+		var minY = gridPositions.Min( p => p.y );
+		var maxX = gridPositions.Max( p => p.x );
+		var maxY = gridPositions.Max( p => p.y );
+		
+		Size = new Vector2Int( maxX - minX + 1, maxY - minY + 1 );
+		
+		// Log.Info( $"Calculated size for {this}: {Size}" );
+		
 	}
 }

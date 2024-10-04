@@ -108,9 +108,14 @@ public sealed partial class World
 			_nodeLinkMap[nodeLink.Node] = nodeLink;
 
 			nodeLink.OnNodeLoad( item );
+			
+			nodeLink.CalculateSize();
 
 			// nodeLink.LoadItemData();
 			UpdateTransform( nodeLink );
+
+			gameObject.NetworkSpawn();
+			
 		}
 
 		Log.Info( $"Loaded {saveData.Items.Count} items" );

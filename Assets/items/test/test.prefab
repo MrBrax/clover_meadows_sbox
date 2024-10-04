@@ -79,7 +79,7 @@
               "DstName": "_target"
             },
             {
-              "Id": 9,
+              "Id": 11,
               "Value": "test",
               "DstId": 3,
               "DstName": "key"
@@ -98,7 +98,7 @@
               "DstIndex": 0
             },
             {
-              "Id": 23,
+              "Id": 12,
               "Value": "got data: {0}",
               "DstId": 8,
               "DstName": "format"
@@ -163,13 +163,13 @@
               "DstName": "_target"
             },
             {
-              "Id": 3,
+              "Id": 5,
               "Value": "test",
               "DstId": 2,
               "DstName": "key"
             },
             {
-              "Id": 4,
+              "Id": 6,
               "Value": "hello world",
               "DstId": 2,
               "DstName": "value"
@@ -177,8 +177,7 @@
           ]
         },
         "Prefab": "items/test/test.prefab",
-        "Size": "1,1",
-        "TilePosition": "0,0"
+        "Size": "1,1"
       },
       {
         "__type": "Sandbox.BoxCollider",
@@ -219,13 +218,14 @@
         "__guid": "f0a25c5e-4d41-471e-81fc-bd84d32404ea",
         "Flags": 0,
         "Name": "Object",
+        "Scale": "0.8,0.8,0.8",
         "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "ca59ecda-187f-4340-a4d2-1a1be8c85e1d",
             "BodyGroups": 18446744073709551615,
-            "Model": "models/froggychair/froggychair.vmdl",
+            "Model": "models/citizen_props/crate01.vmdl",
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -261,7 +261,6 @@
         "Flags": 0,
         "Name": "Seat",
         "Position": "-2.464873,0,11.35362",
-        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.Components.SittableNode",
@@ -278,7 +277,7 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [
-    "dan.froggychair#1600"
+    "garry.crate#10652"
   ],
   "IsValid": true,
   "__version": 1

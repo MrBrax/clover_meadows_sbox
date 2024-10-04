@@ -172,21 +172,56 @@
         "__guid": "8be4e3e2-33c1-4c39-a5b0-ca2696886f90",
         "Flags": 0,
         "Name": "Cursor",
+        "Position": "64,0,0",
         "Enabled": true,
-        "Components": [
+        "Children": [
           {
-            "__type": "Sandbox.ModelRenderer",
-            "__guid": "a45a0aaa-6eb7-4fe6-9404-20e5e14659fe",
-            "BodyGroups": 18446744073709551615,
-            "Model": "models/editor/iv_helper.vmdl",
-            "RenderOptions": {
-              "GameLayer": true,
-              "OverlayLayer": false,
-              "BloomLayer": false,
-              "AfterUILayer": false
-            },
-            "RenderType": "On",
-            "Tint": "1,1,1,1"
+            "__guid": "8bb9b265-16de-4fb1-9877-755440b241a8",
+            "Flags": 0,
+            "Name": "Object",
+            "Position": "0,0,12",
+            "Rotation": "0,0.7071068,0,0.7071068",
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "e14f634c-c0fa-42f9-a6c9-2d5c29f629b5",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/editor/arrow.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          },
+          {
+            "__guid": "88d5971a-a164-45bf-8a72-e748c5de2b39",
+            "Flags": 0,
+            "Name": "Object",
+            "Position": "0,0,0.1",
+            "Scale": "0.32,0.32,1",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "69c37a51-4f2d-4e8c-bc01-b91d31eb4eb0",
+                "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/effects/light_glow_yellow.vmat",
+                "Model": "models/dev/plane.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,0.15"
+              }
+            ]
           }
         ]
       }

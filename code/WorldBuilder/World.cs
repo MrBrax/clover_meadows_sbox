@@ -356,7 +356,7 @@ public sealed partial class World : Component
 			return false;
 		}
 
-		Log.Info( $"Checking eligibility of {position}" );
+		// Log.Info( $"Checking eligibility of {position}" );
 
 		// trace a ray from the sky straight down in each corner, if height is the same on all corners then it's a valid position
 
@@ -365,7 +365,8 @@ public sealed partial class World : Component
 		var margin = GridSizeCenter * 0.8f;
 		var heightTolerance = 0.1f;
 		
-		var baseHeight = basePosition.z + 100;
+		var traceDistance = 2000f;
+		var baseHeight = basePosition.z + 1000;
 
 		var topLeft = new Vector3( basePosition.x - margin, basePosition.y - margin, baseHeight );
 		var topRight = new Vector3( basePosition.x + margin, basePosition.y - margin, baseHeight );
@@ -399,20 +400,26 @@ public sealed partial class World : Component
 			return false;
 		}*/
 
-		var traceTopLeft = Scene.Trace.Ray( topLeft, topLeft + Vector3.Down * 100 ).WithTag( "terrain" ).Run();
-		var traceTopRight = Scene.Trace.Ray( topRight, topRight + Vector3.Down * 100 ).WithTag( "terrain" ).Run();
-		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + Vector3.Down * 100 ).WithTag( "terrain" )
+		var traceTopLeft = Scene.Trace.Ray( topLeft, topLeft + (Vector3.Down * traceDistance) ).WithTag( "terrain" )
 			.Run();
-		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + Vector3.Down * 100 ).WithTag( "terrain" )
+		var traceTopRight = Scene.Trace.Ray( topRight, topRight + (Vector3.Down * traceDistance) ).WithTag( "terrain" )
 			.Run();
+		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + (Vector3.Down * traceDistance) ).WithTag( "terrain" )
+			.Run();
+		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + (Vector3.Down * traceDistance) ).WithTag( "terrain" )
+			.Run();
+		
+		// Gizmo.Draw.Line( topLeft, topLeft + (Vector3.Down * traceDistance) );
+		// Gizmo.Draw.Line( topRight, topRight + (Vector3.Down * traceDistance) );
+		// Gizmo.Draw.Line( bottomLeft, bottomLeft + (Vector3.Down * traceDistance) );
+		// Gizmo.Draw.Line( bottomRight, bottomRight + (Vector3.Down * traceDistance) );
 
 		if ( !traceTopLeft.Hit || !traceTopRight.Hit || !traceBottomLeft.Hit || !traceBottomRight.Hit )
 		{
-			Log.Warning( $"Failed to trace rays at {position}, start height is {baseHeight}" );
+			Log.Warning( $"Ray trace failed at {position} ({basePosition}), start height is {baseHeight}" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
-
 
 		var heightTopLeft = traceTopLeft.HitPosition.z;
 		var heightTopRight = traceTopRight.HitPosition.z;
@@ -442,10 +449,12 @@ public sealed partial class World : Component
 			worldPosition = Vector3.Zero;
 			return false;
 		}
+		
+		if ( heightTopLeft.AlmostEqual( 0f ) ) heightTopLeft = 0f;
 
 		worldPosition = new Vector3( basePosition.x, basePosition.y, heightTopLeft );
 
-		Log.Info( $"Position {position} is eligible" );
+		// Log.Info( $"Position {position} is eligible" );
 
 		return true;
 	}
@@ -480,6 +489,10 @@ public sealed partial class World : Component
 
 		nodeLink.ItemId = itemData.ResourceName;
 		nodeLink.PlacementType = ItemPlacementType.Placed;
+		
+		nodeLink.CalculateSize();
+
+		gameObject.NetworkSpawn();
 
 		return nodeLink;
 	}
@@ -601,7 +614,7 @@ public sealed partial class World : Component
 		nodeLink.Node.WorldPosition = newPosition;
 		nodeLink.Node.WorldRotation = newRotation;
 
-		Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
+		// Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
 	}
 
 	/// <summary>
@@ -693,12 +706,12 @@ public sealed partial class World : Component
 			layerObject.SetLayer( Layer );
 		}
 
-		var modelPhysics = GetComponentsInChildren<ModelPhysics>( true );
+		/*var modelPhysics = GetComponentsInChildren<ModelPhysics>( true );
 		foreach ( var model in modelPhysics )
 		{
 			model.Enabled = false;
 			Invoke( 0.01f, () => model.Enabled = true );
-		}
+		}*/
 	}
 
 	public WorldEntrance GetEntrance( string entranceId )
@@ -741,6 +754,6 @@ public sealed partial class World : Component
 	{
 		base.OnUpdate();
 		
-		Gizmo.Draw.Grid( Gizmo.GridAxis.XY, 32f );
+		// Gizmo.Draw.Grid( Gizmo.GridAxis.XY, 32f );
 	}
 }

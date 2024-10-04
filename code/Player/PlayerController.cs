@@ -136,7 +136,7 @@ public class PlayerController : Component
 
 		var cc = GameObject.Components.Get<CharacterController>();
 
-		/*if ( cc.IsOnGround && Input.Down( "Jump" ) )
+		if ( cc.IsOnGround && Input.Down( "Jump" ) )
 		{
 			float flGroundFactor = 1.0f;
 			float flMul = 268.3281572999747f * 1.2f;
@@ -150,7 +150,7 @@ public class PlayerController : Component
 
 			fJumps += 1.0f;
 
-		}*/
+		}
 
 		if ( cc.IsOnGround )
 		{
