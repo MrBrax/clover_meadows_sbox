@@ -15,12 +15,14 @@ InventoryUi {
         border-radius: 20px;
         padding: 20px;
 
-        width: 700px;
+        width: 900px;
         height: 700px;
 
         pointer-events: all;
         
         gap: 10px;
+        
+        align-items: center;
 
         .equip-slots {
             flex-shrink: 0;
@@ -29,8 +31,10 @@ InventoryUi {
 
             InventoryUiEquip {
                 aspect-ratio: 1;
-                width: 130px;
-                height: 130px;
+                width: 100px;
+                height: 100px;
+                
+                flex-shrink: 0;
 
                 background-color: rgba(255, 255, 255, 0.2);
                 border-radius: 10px;
@@ -42,9 +46,27 @@ InventoryUi {
                 align-items: center;
                 
                 font-family: Itim;
-                font-size: 35px;
+                font-size: 25px;
                 // color: rgba(255, 255, 255, 0.9);
-                color: blue;
+                color: #7878dd;
+                
+                pointer-events: all;
+                
+                transition: background-color 0.2s ease, border-color 0.2s ease;
+                
+                &.has-item {
+                    background-color: rgba(255, 255, 255, 0.5);
+                }
+                
+                &.moving-to {
+                    background-color: rgba(255, 255, 255, 0.8);
+                    border-color: white;
+                }
+                
+                img {
+                    width: 80%;
+                    height: 80%;
+                }
 
             }
         }
@@ -80,7 +102,7 @@ InventoryUi {
                 width: 130px;
                 height: 130px;
 
-                // flex-shrink: 0;
+                flex-shrink: 0;
                 // flex-basis: calc(12.5%);
 
                 align-content: center;
@@ -97,6 +119,8 @@ InventoryUi {
                 overflow: hidden;
 
                 pointer-events: all;
+                
+                transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.05s ease;
 
                 &.has-item {
                     background-color: rgba(255, 255, 255, 0.5);
@@ -141,6 +165,7 @@ InventoryUi {
                 &.dragging {
                     opacity: 0.5;
                     transform: scale(0.7);
+                    .name { display: none; }
                 }
 
             }

@@ -24,6 +24,18 @@ public partial class InventoryUiSlot
 		}
 	}
 
+	protected override void OnDoubleClick( MousePanelEvent e )
+	{
+		base.OnDoubleClick( e );
+		
+		if ( Slot == null || !Slot.HasItem ) return;
+		
+		if ( Slot.GetItem().ItemData is ToolData toolData )
+		{
+			Slot.Equip();
+		}
+	}
+
 	private Panel Ghost;
 
 	public override bool WantsDrag => true;
@@ -76,13 +88,35 @@ public partial class InventoryUiSlot
 		{
 			s.RemoveClass( "moving-to" );
 		}
+		
+		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiEquip>() )
+		{
+			s.RemoveClass( "moving-to" );
+		}
 
 		if ( Slot == null || !Slot.HasItem ) return;
 
 		var slot = FindRootPanel().Descendants.OfType<InventoryUiSlot>()
 			.FirstOrDefault( x => x.IsInside( e.ScreenPosition ) );
-		if ( slot == null ) return;
+		if ( slot != null )
+		{
+			DropOnSlot( slot );
+			return;
+		}
+		
+		var equip = FindRootPanel().Descendants.OfType<InventoryUiEquip>()
+			.FirstOrDefault( x => x.IsInside( e.ScreenPosition ) );
 
+		if ( equip != null )
+		{
+			DropOnEquip( equip );
+			return;
+		}
+		
+	}
+
+	private void DropOnSlot( InventoryUiSlot slot )
+	{
 		Log.Info( $"Dropped on {slot.Index}" );
 
 		if ( Inventory.Id == slot.Inventory.Id )
@@ -95,7 +129,26 @@ public partial class InventoryUiSlot
 		}
 
 		Sound.Play( "sounds/ui/inventory_stop_drag.sound" );
+		
 	}
+	
+	private void DropOnEquip( InventoryUiEquip equip )
+	{
+		Log.Info( $"Dropped on {equip.Slot}" );
+
+		if ( Inventory.Id == equip.Inventory.Id )
+		{
+			Slot.Equip();
+		}
+		else
+		{
+			throw new NotImplementedException();
+		}
+
+		Sound.Play( "sounds/ui/inventory_stop_drag.sound" );
+		
+	}
+
 
 	protected override void OnDragSelect( SelectionEvent e )
 	{
@@ -103,8 +156,11 @@ public partial class InventoryUiSlot
 
 		var slot = FindRootPanel().Descendants.OfType<InventoryUiSlot>()
 			.FirstOrDefault( x => x.IsInside( e.EndPoint ) );
+		
+		var equip = FindRootPanel().Descendants.OfType<InventoryUiEquip>()
+			.FirstOrDefault( x => x.IsInside( e.EndPoint ) );
 
-		if ( slot == null ) return;
+		if ( slot == null && equip == null ) return;
 
 		// Log.Info( $"Selected on {slot.Index}" );
 
@@ -112,8 +168,14 @@ public partial class InventoryUiSlot
 		{
 			s.RemoveClass( "moving-to" );
 		}
+		
+		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiEquip>() )
+		{
+			s.RemoveClass( "moving-to" );
+		}
 
-		slot.AddClass( "moving-to" );
+		slot?.AddClass( "moving-to" );
+		equip?.AddClass( "moving-to" );
 	}
 
 	protected override void OnDrag( DragEvent e )
@@ -123,18 +185,6 @@ public partial class InventoryUiSlot
 		Ghost.Style.Top = (e.ScreenPosition.y - e.LocalGrabPosition.y) * ScaleFromScreen;
 		Ghost.Style.Left = (e.ScreenPosition.x - e.LocalGrabPosition.x) * ScaleFromScreen;
 	}
-
-	/*public override void Tick()
-	{
-		base.Tick();
-
-		if ( Ghost.IsValid() )
-		{
-			Ghost.Style.Top = (Mouse.Position.y - 65) * ScaleFromScreen;
-			Ghost.Style.Left = (Mouse.Position.x - 65) * ScaleFromScreen;
-		}
-
-	}*/
 
 	public override void OnDeleted()
 	{

@@ -7,7 +7,7 @@
 <root>
 	@if ( Tool != null )
 	{
-		@Tool.ItemData.Name
+		<img src=@Tool.ItemData.GetIcon() />
 	}
 	else
 	{
