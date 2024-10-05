@@ -35,6 +35,7 @@ public sealed class PlayerCharacter : Component
 
 	public World World => WorldLayerObject.World;
 
+	public Action<World> OnWorldChanged { get; set; }
 
 	protected override void OnStart()
 	{
@@ -42,6 +43,11 @@ public sealed class PlayerCharacter : Component
 		GameObject.BreakFromPrefab();
 
 		Load();
+
+		OnWorldChanged += ( world ) =>
+		{
+			Save();
+		};
 	}
 
 	public void ModelLookAt( Vector3 position )
@@ -134,6 +140,7 @@ public sealed class PlayerCharacter : Component
 
 	public PlayerSaveData SaveData { get; set; }
 
+
 	public void Save()
 	{
 		SaveData ??= new PlayerSaveData( PlayerId );
@@ -166,7 +173,6 @@ public sealed class PlayerCharacter : Component
 
 	public void Load()
 	{
-		
 		// TODO: temporary fix for player id
 		if ( string.IsNullOrEmpty( PlayerId ) )
 		{
@@ -182,7 +188,7 @@ public sealed class PlayerCharacter : Component
 				Log.Info( $"PlayerId generated: {PlayerId}" );
 			}
 		}
-		
+
 		if ( !FileSystem.Data.FileExists( SaveFilePath ) )
 		{
 			Log.Warning( $"File {SaveFilePath} does not exist" );

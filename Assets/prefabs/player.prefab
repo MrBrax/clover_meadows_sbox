@@ -10,6 +10,7 @@
       {
         "__type": "Clover.Player.PlayerCharacter",
         "__guid": "f4b346c7-49e8-445e-9581-0d0cde06d66f",
+        "Clovers": 0,
         "InteractPoint": {
           "_type": "gameobject",
           "go": "3babed6e-289d-4418-bdfa-98de415a887a"
@@ -93,6 +94,16 @@
         "__type": "Clover.Inventory.Inventory",
         "__guid": "5b2516aa-8b95-427e-8771-c2163544c958",
         "ItemCount": 0
+      },
+      {
+        "__type": "Clover.Components.Footsteps",
+        "__guid": "0a84ccd3-8a96-4317-890f-8d98284a2035"
+      },
+      {
+        "__type": "Sandbox.AudioListener",
+        "__guid": "55844445-1b77-43bd-90be-217baec999e8",
+        "__enabled": false,
+        "UseCameraDirection": true
       }
     ],
     "Children": [

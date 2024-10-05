@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+using Clover.Data;
 using Sandbox.Diagnostics;
 
 namespace Clover;
@@ -12,6 +14,8 @@ public partial class WorldManager : Component
 
 	[Property] public int ActiveWorldIndex { get; set; }
 	[Property] public World ActiveWorld => GetWorld( ActiveWorldIndex );
+	
+	[Property] public WorldData DefaultWorldData { get; set; }
 
 	public delegate void WorldUnloadEventHandler( World world );
 
@@ -114,7 +118,7 @@ public partial class WorldManager : Component
 			// await LoadWorldAsync( "res://world/worlds/island.tres" );
 			// await NodeManager.UserInterface.GetNode<Fader>( "Fade" ).FadeOutAsync();
 
-			LoadWorld( ResourceLibrary.GetAll<Data.WorldData>().First() );
+			LoadWorld( DefaultWorldData );
 		}
 
 		// WorldLoaded += ( World world ) => NodeManager.SettingsSaveData.ApplyWorldSettings();
@@ -135,7 +139,7 @@ public partial class WorldManager : Component
 		return Worlds.Values.Any( w => w.Data == data );
 	}
 
-	public World LoadWorld( Data.WorldData data )
+	public async Task<World> LoadWorld( Data.WorldData data )
 	{
 		Log.Info( $"Loading world: {data.ResourceName}" );
 
@@ -166,7 +170,7 @@ public partial class WorldManager : Component
 		
 		Worlds[index] = world;
 
-		world.Setup();
+		await world.Setup();
 
 		world.Load();
 
@@ -183,11 +187,11 @@ public partial class WorldManager : Component
 		// SetActiveWorld( index );
 	}
 
-	public World GetWorldOrLoad( Data.WorldData data )
+	public async Task<World> GetWorldOrLoad( Data.WorldData data )
 	{
 		Assert.NotNull( data, "World data is null." );
 		var world = GetWorld( data.ResourceName );
-		return world.IsValid() ? world : LoadWorld( data );
+		return world.IsValid() ? world : await LoadWorld( data );
 	}
 	
 	[Authority]

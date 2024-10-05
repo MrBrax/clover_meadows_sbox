@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Clover.Data;
 using Clover.Items;
 using Clover.Persistence;
@@ -734,7 +735,7 @@ public sealed partial class World : Component
 		return new Vector2Int( x, y );
 	}
 
-	public void Setup()
+	public async Task Setup()
 	{
 		var layerObjects = GetComponentsInChildren<WorldLayerObject>( true );
 		foreach ( var layerObject in layerObjects )
@@ -748,6 +749,21 @@ public sealed partial class World : Component
 			model.Enabled = false;
 			Invoke( 0.01f, () => model.Enabled = true );
 		}*/
+		
+		var modelPhysics = GetComponentsInChildren<ModelPhysics>( true ).ToList();
+		
+		foreach ( var model in modelPhysics )
+		{
+			model.Enabled = false;
+		}
+
+		await Task.Frame();
+		
+		foreach ( var model in modelPhysics )
+		{
+			model.Enabled = true;
+		}
+		
 	}
 
 	public WorldEntrance GetEntrance( string entranceId )

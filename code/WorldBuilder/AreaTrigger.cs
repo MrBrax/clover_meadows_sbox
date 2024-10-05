@@ -4,13 +4,12 @@ namespace Clover;
 
 public sealed class AreaTrigger : Component, Component.ITriggerListener
 {
-	
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	[RequireComponent] public BoxCollider Collider { get; set; }
 
 	[Property] public Data.WorldData DestinationWorldData { get; set; }
 	[Property] public string DestinationEntranceId { get; set; }
-	
+
 	[Property] public bool UnloadPreviousWorld { get; set; } = true;
 
 
@@ -19,14 +18,14 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 		base.DrawGizmos();
 
 		Gizmo.Draw.Text( DestinationWorldData?.Title + "\n" + DestinationEntranceId, new Transform() );
-		Gizmo.Hitbox.BBox( BBox.FromPositionAndSize( Collider.Center, Collider.Scale ));
+		Gizmo.Hitbox.BBox( BBox.FromPositionAndSize( Collider.Center, Collider.Scale ) );
 		Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( Collider.Center, Collider.Scale ) );
 	}
 
 	void ITriggerListener.OnTriggerEnter( Collider other )
 	{
 		if ( IsProxy ) return;
-		
+
 		var player = other.GetComponent<PlayerCharacter>();
 		if ( !player.IsValid() )
 		{
@@ -34,32 +33,30 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			return;
 		}
 
-		var w = WorldManager.Instance.GetWorldOrLoad( DestinationWorldData );
+		Enter( player );
+	}
+
+	private async void Enter( PlayerCharacter player )
+	{
+		var w = await WorldManager.Instance.GetWorldOrLoad( DestinationWorldData );
 
 		var entrance = w.GetEntrance( DestinationEntranceId );
 
 		if ( entrance.IsValid() )
 		{
-			/*player.WorldPosition = entrance.WorldPosition;
-			player.ModelLookAt( entrance.WorldPosition + entrance.WorldRotation.Forward );
-			player.Transform.ClearInterpolation();
-			player.WorldLayerObject.SetLayer( entrance.WorldLayerObject.Layer );
-			player.GetComponent<CameraController>().SnapCamera();
-			WorldManager.Instance.SetActiveWorld( w );
-			
-			if ( UnloadPreviousWorld )
-			{
-				WorldManager.Instance.UnloadWorld( WorldManager.Instance.GetWorld( WorldLayerObject.Layer ) );
-			}*/
-			
+			var currentWorld = WorldManager.Instance.GetWorld( WorldLayerObject.Layer );
+
+			currentWorld.Save();
+
 			player.TeleportTo( entrance.WorldPosition, entrance.WorldRotation );
 			player.SetLayer( entrance.WorldLayerObject.Layer );
-			
-			if ( UnloadPreviousWorld && WorldManager.Instance.GetWorld( WorldLayerObject.Layer ).ShouldUnloadOnExit )
+
+			player.OnWorldChanged?.Invoke( w );
+
+			if ( UnloadPreviousWorld && currentWorld.ShouldUnloadOnExit )
 			{
-				WorldManager.Instance.UnloadWorld( WorldManager.Instance.GetWorld( WorldLayerObject.Layer ) );
+				WorldManager.Instance.UnloadWorld( currentWorld );
 			}
-			
 		}
 		else
 		{
