@@ -13,5 +13,9 @@ public class ToolData : ItemData
 	{
 		return CarryScene.Clone().GetComponent<BaseCarriable>();
 	}
-	
+
+	public override string GetIcon()
+	{
+		return Icon ?? "ui/icons/default_tool.png";
+	}
 }

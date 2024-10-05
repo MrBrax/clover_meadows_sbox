@@ -181,6 +181,7 @@ public partial class InventoryUiEquip : IEquipChanged
 		
 	}
 
+	private Panel _lastHovered;
 	protected override void OnDragSelect( SelectionEvent e )
 	{
 		if ( !HasItem ) return;
@@ -207,6 +208,13 @@ public partial class InventoryUiEquip : IEquipChanged
 
 		slot?.AddClass( "moving-to" );
 		equip?.AddClass( "moving-to" );
+		
+		Panel currentHovered = slot != null ? slot : equip;
+		if ( _lastHovered != currentHovered )
+		{
+			Sound.Play( "sounds/ui/inventory_hover_drag.sound" );
+			_lastHovered = currentHovered;
+		}
 	}
 
 	protected override void OnDrag( DragEvent e )

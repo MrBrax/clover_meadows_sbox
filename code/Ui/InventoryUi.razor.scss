@@ -19,9 +19,9 @@ InventoryUi {
         height: 700px;
 
         pointer-events: all;
-        
+
         gap: 10px;
-        
+
         align-items: center;
 
         .equip-slots {
@@ -33,36 +33,36 @@ InventoryUi {
                 aspect-ratio: 1;
                 width: 100px;
                 height: 100px;
-                
+
                 flex-shrink: 0;
 
                 background-color: rgba(255, 255, 255, 0.2);
                 border-radius: 10px;
 
                 border: 5px solid transparent;
-                
+
                 align-content: center;
                 justify-content: center;
                 align-items: center;
-                
+
                 font-family: Itim;
                 font-size: 25px;
                 // color: rgba(255, 255, 255, 0.9);
                 color: #7878dd;
-                
+
                 pointer-events: all;
-                
+
                 transition: background-color 0.2s ease, border-color 0.2s ease;
-                
+
                 &.has-item {
                     background-color: rgba(255, 255, 255, 0.5);
                 }
-                
+
                 &.moving-to {
                     background-color: rgba(255, 255, 255, 0.8);
                     border-color: white;
                 }
-                
+
                 img {
                     width: 80%;
                     height: 80%;
@@ -76,7 +76,7 @@ InventoryUi {
             // gap: 20px;
             // justify-content: flex-start;
             // align-items: center;
-            
+
             flex-grow: 1;
 
             flex-direction: column;
@@ -119,11 +119,20 @@ InventoryUi {
                 overflow: hidden;
 
                 pointer-events: all;
-                
+
                 transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.05s ease;
 
                 &.has-item {
+
                     background-color: rgba(255, 255, 255, 0.5);
+
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.9);
+                    }
+
+                    &:hover .name {
+                        transform: translateY(0%);
+                    }
                 }
 
                 &.moving-to {
@@ -158,14 +167,13 @@ InventoryUi {
 
                 }
 
-                &:hover .name {
-                    transform: translateY(0%);
-                }
-
                 &.dragging {
                     opacity: 0.5;
                     transform: scale(0.7);
-                    .name { display: none; }
+
+                    .name {
+                        display: none;
+                    }
                 }
 
             }
