@@ -52,43 +52,43 @@ public class Equips : Component
 	{
 		return EquippedItems.ContainsKey( slot ) && EquippedItems[slot].IsValid();
 	}
-	
+
 	public bool TryGetEquippedItem( EquipSlot slot, out GameObject item )
 	{
 		return EquippedItems.TryGetValue( slot, out item );
 	}
-	
+
 	public void SetEquippedItem( EquipSlot slot, GameObject item )
 	{
 		if ( slot == 0 ) throw new ArgumentException( "Invalid slot" );
 		if ( !item.IsValid() ) throw new ArgumentException( "Item is not valid" );
-		
+
 		if ( !AttachPoints.TryGetValue( slot, out var attachPoint ) )
 		{
 			throw new ArgumentException( $"No attach point for slot {slot}" );
 		}
-		
+
 		if ( EquippedItems.ContainsKey( slot ) )
 		{
 			RemoveEquippedItem( slot, true );
 		}
-		
+
 		EquippedItems[slot] = item;
-		
+
 		item.SetParent( attachPoint );
 		item.LocalPosition = Vector3.Zero;
 		item.LocalRotation = Rotation.Identity;
-		
+
 		if ( item.Components.TryGet<BaseCarriable>( out var carriable ) )
 		{
 			carriable.SetHolder( GameObject );
 			carriable.OnEquip( GameObject ); // TODO: don't hardcode player, since NPCs can use items too
 		}
-		
-		OnEquippedItemChanged?.Invoke( slot, item );
 
+		OnEquippedItemChanged?.Invoke( slot, item );
+		Scene.RunEvent<IEquipChanged>( x => x.OnEquippedItemChanged( GameObject, slot, item ) );
 	}
-	
+
 	public void RemoveEquippedItem( EquipSlot slot, bool destroy = false )
 	{
 		if ( EquippedItems.ContainsKey( slot ) )
@@ -96,9 +96,10 @@ public class Equips : Component
 			if ( destroy ) EquippedItems[slot].Destroy();
 			EquippedItems.Remove( slot );
 			OnEquippedItemRemoved?.Invoke( slot );
+			Scene.RunEvent<IEquipChanged>( x => x.OnEquippedItemRemoved( GameObject, slot ) );
 		}
 	}
-	
+
 	public void SetEquippableVisibility( EquipSlot slot, bool visible )
 	{
 		if ( EquippedItems.ContainsKey( slot ) )
@@ -106,6 +107,7 @@ public class Equips : Component
 			EquippedItems[slot].Enabled = visible;
 			return;
 		}
+
 		throw new Exception( $"No item equipped in slot {slot}" );
 	}
 
@@ -115,7 +117,6 @@ public class Equips : Component
 
 		if ( Input.Pressed( "UseTool" ) )
 		{
-			
 			if ( HasEquippedItem( EquipSlot.Tool ) )
 			{
 				var tool = GetEquippedItem<BaseCarriable>( EquipSlot.Tool );
@@ -133,7 +134,12 @@ public class Equips : Component
 			{
 				Log.Info( "No tool equipped" );
 			}
-			
 		}
 	}
+}
+
+public interface IEquipChanged
+{
+	void OnEquippedItemChanged( GameObject owner, Equips.EquipSlot slot, GameObject item );
+	void OnEquippedItemRemoved( GameObject owner, Equips.EquipSlot slot );
 }

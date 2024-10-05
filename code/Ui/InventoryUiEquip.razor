@@ -1,0 +1,16 @@
+@using Clover.Components
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel
+@namespace Clover.Ui
+
+<root>
+	@if ( Tool != null )
+	{
+		@Tool.ItemData.Name
+	}
+	else
+	{
+		@Slot
+	}
+</root>

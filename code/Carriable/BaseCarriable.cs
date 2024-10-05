@@ -1,4 +1,5 @@
-﻿using Clover.Inventory;
+﻿using Clover.Data;
+using Clover.Inventory;
 using Clover.Items;
 using Clover.Persistence;
 using Clover.Player;
@@ -14,7 +15,7 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 	public GameObject Holder { get; set; }
 	public PlayerCharacter Player => Holder.GetComponent<PlayerCharacter>();
 
-	// public ToolData ItemData { get; set; }
+	[Property] public ToolData ItemData { get; set; }
 
 	public void SetHolder( GameObject holder )
 	{

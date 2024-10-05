@@ -17,8 +17,37 @@ InventoryUi {
 
         width: 700px;
         height: 700px;
-        
+
         pointer-events: all;
+        
+        gap: 10px;
+
+        .equip-slots {
+            flex-shrink: 0;
+            gap: 10px;
+            flex-direction: column;
+
+            InventoryUiEquip {
+                aspect-ratio: 1;
+                width: 130px;
+                height: 130px;
+
+                background-color: rgba(255, 255, 255, 0.2);
+                border-radius: 10px;
+
+                border: 5px solid transparent;
+                
+                align-content: center;
+                justify-content: center;
+                align-items: center;
+                
+                font-family: Itim;
+                font-size: 35px;
+                // color: rgba(255, 255, 255, 0.9);
+                color: blue;
+
+            }
+        }
 
         .inventory-slots {
             // flex-wrap: wrap;
@@ -26,8 +55,10 @@ InventoryUi {
             // justify-content: flex-start;
             // align-items: center;
             
+            flex-grow: 1;
+
             flex-direction: column;
-            
+
             gap: 10px;
 
             .inventory-row {
@@ -48,34 +79,34 @@ InventoryUi {
                 // flex-basis: calc(20% - 10px);
                 width: 130px;
                 height: 130px;
-                
+
                 // flex-shrink: 0;
                 // flex-basis: calc(12.5%);
-                
+
                 align-content: center;
                 justify-content: center;
-                align-items: center;                
-                
+                align-items: center;
+
                 background-color: rgba(255, 255, 255, 0.2);
                 border-radius: 10px;
-                
+
                 border: 5px solid transparent;
-                
+
                 position: relative;
-                
+
                 overflow: hidden;
-                
+
                 pointer-events: all;
-                
+
                 &.has-item {
                     background-color: rgba(255, 255, 255, 0.5);
                 }
-                
+
                 &.moving-to {
                     background-color: rgba(255, 255, 255, 0.8);
                     border-color: white;
                 }
-                
+
                 .icon {
                     width: 80%;
                     height: 80%;
@@ -83,7 +114,7 @@ InventoryUi {
                     background-repeat: no-repeat;
                     background-position: center;
                 }
-                
+
                 .name {
                     position: absolute;
                     bottom: 0;
@@ -93,25 +124,25 @@ InventoryUi {
                     backdrop-filter: blur(5px);
                     color: white;
                     padding: 5px 10px;
-                    
+
                     font-family: Itim;
                     font-size: 20px;
-                    
+
                     transition: transform 0.2s ease;
-                    
+
                     transform: translateY(100%);
-                    
+
                 }
-                
+
                 &:hover .name {
                     transform: translateY(0%);
                 }
-                
+
                 &.dragging {
                     opacity: 0.5;
                     transform: scale(0.7);
                 }
-                
+
             }
 
         }

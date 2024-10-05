@@ -87,8 +87,12 @@
             "_type": "gameobject",
             "go": "0058772d-b32f-4f63-bdfa-1cbb5bc8482e"
           }
-        },
-        "EquippedItems": {}
+        }
+      },
+      {
+        "__type": "Clover.Inventory.Inventory",
+        "__guid": "5b2516aa-8b95-427e-8771-c2163544c958",
+        "ItemCount": 0
       }
     ],
     "Children": [
@@ -123,7 +127,7 @@
             "Flags": 0,
             "Name": "Tool",
             "Position": "-0.000007790257,-14.00411,20.06",
-            "Rotation": "0,0,0.0000002781418,-1",
+            "Rotation": "0,0,1,-0.00000004371139",
             "Enabled": true
           },
           {

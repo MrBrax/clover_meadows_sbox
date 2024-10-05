@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Clover.Carriable;
 using Clover.Data;
 using Clover.Items;
 
@@ -132,20 +133,38 @@ public class PersistentItem
 		return JsonSerializer.Deserialize<PersistentItem>( JsonSerializer.Serialize( this, GameManager.JsonOptions ),
 			GameManager.JsonOptions );
 	}
+	
+	/*public GameObject Create()
+	{
+		var gameObject = new GameObject();
+
+		if ( gameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+		{
+			worldItem.NodeLink.Persistence = this;
+		}
+
+		if ( gameObject.Components.TryGet<Persistent>( out var persistent ) )
+		{
+			persistent.OnItemLoad( this );
+		}
+
+		return gameObject;
+	}*/
 
 	public static PersistentItem Create( GameObject gameObject )
 	{
 		if ( !gameObject.IsValid() ) throw new Exception( "Item is null" );
 
 		var persistentItem = new PersistentItem();
-
+		
 		if ( gameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
 			persistentItem.ItemId = worldItem.ItemData.ResourceName;
 		}
-		else
+		
+		if ( gameObject.Components.TryGet<BaseCarriable>( out var carriable ) )
 		{
-			Log.Error( $"GameObject {gameObject} has no item data" );
+			persistentItem.ItemId ??= carriable.ItemData.ResourceName;
 		}
 
 		if ( gameObject.Components.TryGet<Persistent>( out var persistent ) )

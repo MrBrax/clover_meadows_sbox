@@ -7,31 +7,40 @@
     "Components": [
       {
         "__type": "Clover.Carriable.Axe",
-        "__guid": "e0201162-8019-4f60-b93f-3374df7f6ba9"
+        "__guid": "e0201162-8019-4f60-b93f-3374df7f6ba9",
+        "ItemData": "items/tools/axe/axe.tool"
       }
     ],
     "Children": [
       {
         "__guid": "f00e68e2-38ce-426a-90a8-0ab4acca4093",
         "Flags": 0,
-        "Name": "Object",
+        "Name": "Model",
         "Position": "0,0,1",
         "Scale": "0.7,0.7,0.7",
         "Enabled": true,
-        "Components": [
+        "Children": [
           {
-            "__type": "Sandbox.ModelRenderer",
-            "__guid": "520f4f52-f977-4d6d-91af-ddfbe0a140df",
-            "BodyGroups": 18446744073709551615,
-            "Model": "models/axe/axe.vmdl",
-            "RenderOptions": {
-              "GameLayer": true,
-              "OverlayLayer": false,
-              "BloomLayer": false,
-              "AfterUILayer": false
-            },
-            "RenderType": "On",
-            "Tint": "1,1,1,1"
+            "__guid": "e058eac5-8f2f-4c10-aa14-97d165af580c",
+            "Flags": 0,
+            "Name": "Object",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "520f4f52-f977-4d6d-91af-ddfbe0a140df",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/axe/axe.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
           }
         ]
       }

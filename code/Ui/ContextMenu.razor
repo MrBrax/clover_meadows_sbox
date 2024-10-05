@@ -92,4 +92,11 @@
 		
 	}
 
+	public override void Delete( bool immediate = false )
+	{
+		base.Delete( immediate );
+		
+		Sound.Play( "sounds/ui/menu_close.sound" );
+	}
+
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Resources;
+using Clover.Components;
 using Clover.Data;
 using Clover.Persistence;
 
@@ -105,13 +106,13 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		TakeOneOrDelete();
 	}
 
-	/*public void Equip()
+	public void Equip()
 	{
 
 		Components.Equips.EquipSlot slot;
 
 		// get slot from item
-		if ( _persistentItem is Persistence.BaseCarriable )
+		/*if ( _persistentItem is Persistence.BaseCarriable )
 		{
 			slot = Components.Equips.EquipSlot.Tool;
 		}
@@ -129,16 +130,24 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			// throw new Exception( $"Item {_persistentItem} is not equipable." );
 			NodeManager.UserInterface.ShowWarning( "This item is not equipable." );
 			return;
+		}*/
+
+		slot = Equips.EquipSlot.Tool; // TODO: get slot from item
+		
+		if ( _persistentItem.ItemData is not ToolData toolData )
+		{
+			Log.Error( "Item is not a tool" ); // TODO: handle other types of items
+			return;
 		}
 
-
+		// create a copy of the currently equipped item
 		PersistentItem currentEquip = null;
 		if ( InventoryContainer.Player.Equips.HasEquippedItem( slot ) )
 		{
 			currentEquip = PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( slot ) );
 		}
 
-		if ( _persistentItem is Persistence.BaseCarriable carriable )
+		/*if ( _persistentItem is Persistence.BaseCarriable carriable )
 		{
 			var carriableNode = carriable.Create();
 			InventoryContainer.Player.Equips.SetEquippedItem( Components.Equips.EquipSlot.Tool, carriableNode );
@@ -147,6 +156,13 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		{
 			var clothingNode = clothingItem.Create();
 			InventoryContainer.Player.Equips.SetEquippedItem( slot, clothingNode );
+		}*/
+		
+		// equip the item
+		if ( toolData != null )
+		{
+			var tool = toolData.SpawnCarriable();
+			InventoryContainer.Player.Equips.SetEquippedItem( slot, tool.GameObject );
 		}
 
 		var currentIndex = Index;
@@ -161,7 +177,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 	}
-
+	
+	/*
 	public void Bury()
 	{
 		Logger.Info( "Burying item" );

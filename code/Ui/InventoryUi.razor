@@ -1,3 +1,4 @@
+@using Clover.Components
 @using Sandbox;
 @using Sandbox.UI;
 @inherits PanelComponent
@@ -6,6 +7,13 @@
 <root>
 	<div class="modal-background"></div>
 	<div class="inventory-window">
-		<div class="inventory-slots" @ref="SlotContainer"></div>
+		<div class="equip-slots">
+			<InventoryUiEquip Inventory=@Inventory Slot=@Equips.EquipSlot.Hat></InventoryUiEquip>
+			<InventoryUiEquip Inventory=@Inventory Slot=@Equips.EquipSlot.Top></InventoryUiEquip>
+			<InventoryUiEquip Inventory=@Inventory Slot=@Equips.EquipSlot.Bottom></InventoryUiEquip>
+			<InventoryUiEquip Inventory=@Inventory Slot=@Equips.EquipSlot.Shoes></InventoryUiEquip>
+			<InventoryUiEquip Inventory=@Inventory Slot=@Equips.EquipSlot.Tool></InventoryUiEquip>
+		</div>
+		<div class="inventory-slots" @ref=" SlotContainer"></div>
 	</div>
 </root>

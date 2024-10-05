@@ -111,4 +111,21 @@ public class ItemData : GameResource
 	{
 		return item != null && item.ResourcePath == ResourcePath;
 	}
+
+	public GameObject SpawnPlaced()
+	{
+		return Spawn( PlaceScene );
+	}
+	
+	public GameObject SpawnDropped()
+	{
+		return Spawn( DropScene );
+	}
+	
+	private GameObject Spawn( GameObject scene )
+	{
+		if ( !scene.IsValid() ) return null;
+		return scene.Clone();
+	}
+	
 }

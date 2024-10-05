@@ -1,4 +1,5 @@
 ﻿using System;
+using Clover.Data;
 using Clover.Inventory;
 using Clover.Persistence;
 using Sandbox.UI;
@@ -148,7 +149,7 @@ public partial class InventoryUiSlot
 
 	protected override void OnRightClick( MousePanelEvent e )
 	{
-		if ( !Slot.HasItem ) return;
+		if ( Slot == null || !Slot.HasItem ) return;
 
 		if ( _contextMenu.IsValid() )
 		{
@@ -160,8 +161,18 @@ public partial class InventoryUiSlot
 		Log.Info( "Creating context menu" );
 		_contextMenu = new ContextMenu( this, Mouse.Position * ScaleFromScreen );
 		_contextMenu.Title = Slot.GetName();
+		
+		var item = Slot.GetItem();
+		
+		if ( item.ItemData is ToolData toolData )
+		{
+			_contextMenu.AddItem( "Equip", () =>
+			{
+				Slot.Equip();
+			} );
+		}
 
-		if ( Slot.GetItem().ItemData.PlaceScene != null )
+		if ( item.ItemData.PlaceScene != null )
 		{
 			_contextMenu.AddItem( "Place", () =>
 			{
@@ -169,7 +180,7 @@ public partial class InventoryUiSlot
 			} );
 		}
 
-		if ( Slot.GetItem().ItemData.DropScene != null )
+		if ( item.ItemData.DropScene != null )
 		{
 			_contextMenu.AddItem( "Drop", () =>
 			{
