@@ -15,7 +15,7 @@ public sealed class CameraController : Component
 			return;
 		}
 		
-		SkyCameraNode.Priority = Input.Down("Jump") ? 10 : 0;
+		SkyCameraNode.Priority = Input.Down("View") ? 10 : 0;
 	}
 
 	public void SnapCamera()

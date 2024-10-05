@@ -47,7 +47,7 @@
           }
         ],
         "Mode": "Additive",
-        "Strength": 0.5,
+        "Strength": 0.1,
         "Threshold": 0.5,
         "ThresholdWidth": 0.5
       },

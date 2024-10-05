@@ -98,7 +98,6 @@ public partial class InventoryUiEquip : IEquipChanged
 	protected override void OnDragStart( DragEvent e )
 	{
 		if ( !HasItem ) return;
-		Log.Info( "OnDragStart" );
 
 		AddClass( "dragging" );
 
@@ -113,10 +112,6 @@ public partial class InventoryUiEquip : IEquipChanged
 		Ghost.Style.BorderBottomLeftRadius = Ghost.Style.BorderBottomRightRadius =
 			Ghost.Style.BorderTopLeftRadius = Ghost.Style.BorderTopRightRadius = 10;
 		Ghost.Style.ZIndex = 1000;
-		// Ghost.Style.BackgroundImage = Slot.GetItem().GetIconTexture();
-		// Ghost.Style.BackgroundRepeat = BackgroundRepeat.NoRepeat;
-		// Ghost.Style.BackgroundPositionX = Length.Cover;
-		// Ghost.Style.BackgroundPositionY = Length.Cover;
 
 		var icon = new Image();
 		
