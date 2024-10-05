@@ -170,6 +170,27 @@
           "__guid": "4181c135-f152-4510-b2ca-e93040af3219"
         }
       ]
+    },
+    {
+      "__guid": "c9f785c2-5469-481d-8785-cd604d6a1cdd",
+      "Flags": 0,
+      "Name": "ParticleManager",
+      "Position": "300.3214,304.458,962.4254",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Braxnet.ParticleManager",
+          "__guid": "13b4cbe1-176c-491a-853b-19cd7877ab01",
+          "Confetti": {
+            "_type": "gameobject",
+            "prefab": "particles/confetti.prefab"
+          },
+          "Poof": {
+            "_type": "gameobject",
+            "prefab": "particles/poof.prefab"
+          }
+        }
+      ]
     }
   ],
   "SceneProperties": {

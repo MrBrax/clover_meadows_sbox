@@ -1,0 +1,170 @@
+{
+  "RootObject": {
+    "__guid": "4730e1c3-b3d8-4375-b399-cce46a2767ba",
+    "Flags": 0,
+    "Name": "poof",
+    "Tags": "particles",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.ParticleSphereEmitter",
+        "__guid": "743d73b0-487c-4537-ab81-35770d61b91d",
+        "Burst": 100,
+        "Delay": 0,
+        "DestroyOnEnd": true,
+        "Duration": 3,
+        "Loop": false,
+        "OnEdge": false,
+        "Radius": 20,
+        "Rate": 0,
+        "RateOverDistance": 0,
+        "Velocity": 5
+      },
+      {
+        "__type": "Sandbox.ParticleSpriteRenderer",
+        "__guid": "d0ba3ca6-0155-4fc3-a9dc-dbd5e54467df",
+        "Additive": false,
+        "Alignment": "LookAtCamera",
+        "BlurAmount": 0.5,
+        "BlurOpacity": 0.5,
+        "BlurSpacing": 0.5,
+        "DepthFeather": 0,
+        "FaceVelocity": false,
+        "FogStrength": 1,
+        "LeadingTrail": true,
+        "Lighting": true,
+        "MotionBlur": false,
+        "Opaque": false,
+        "RotationOffset": 0,
+        "Scale": 1,
+        "Shadows": false,
+        "SortMode": "Unsorted",
+        "Texture": "materials/particles/particle_smokegrenade.vtex"
+      },
+      {
+        "__type": "Sandbox.ParticleEffect",
+        "__guid": "4531eb6c-47e3-4adc-8b6d-3f0f2e35d869",
+        "__version": 1,
+        "Alpha": {
+          "Type": "Curve",
+          "CurveA": [
+            {},
+            {
+              "x": 0.06845238,
+              "y": 1
+            },
+            {
+              "x": 1
+            }
+          ],
+          "Constants": "1,0,0,0"
+        },
+        "ApplyAlpha": true,
+        "ApplyColor": true,
+        "ApplyRotation": true,
+        "ApplyShape": true,
+        "Bounce": {
+          "Constants": "1,0,0,0"
+        },
+        "Brightness": {
+          "Constants": "1,0,0,0"
+        },
+        "Bumpiness": {},
+        "Collision": false,
+        "CollisionRadius": 1,
+        "Damping": {},
+        "DieOnCollisionChance": {},
+        "Force": false,
+        "ForceDirection": "0,0,0",
+        "ForceScale": {
+          "Constants": "1,0,0,0"
+        },
+        "Friction": {
+          "Constants": "1,0,0,0"
+        },
+        "Gradient": {
+          "Type": "Range",
+          "Evaluation": "Particle",
+          "GradientA": {
+            "color": [
+              {
+                "t": 0.5,
+                "c": "1,1,1,1"
+              }
+            ],
+            "alpha": []
+          },
+          "GradientB": {
+            "color": [
+              {
+                "t": 0.5,
+                "c": "1,1,1,1"
+              }
+            ],
+            "alpha": []
+          },
+          "ConstantA": "1,1,1,1",
+          "ConstantB": "0.77209,0.50994,0.50994,1"
+        },
+        "Lifetime": {
+          "Type": "Range",
+          "Evaluation": "Particle",
+          "Constants": "0.3,1,0,0"
+        },
+        "MaxParticles": 1000,
+        "OrbitalForce": {},
+        "OrbitalPull": {},
+        "PerParticleTimeScale": {
+          "Constants": "1,0,0,0"
+        },
+        "Pitch": {},
+        "PreWarm": 0,
+        "PushStrength": {},
+        "Roll": {
+          "Type": "Range",
+          "Evaluation": "Particle",
+          "Constants": "0,360,0,0"
+        },
+        "Scale": {
+          "Type": "Curve",
+          "CurveA": {
+            "rangey": "10,20",
+            "frames": [
+              {},
+              {
+                "x": 1,
+                "y": 1
+              }
+            ]
+          },
+          "Constants": "1,0,0,0"
+        },
+        "SequenceId": {},
+        "SequenceSpeed": {
+          "Constants": "1,0,0,0"
+        },
+        "SequenceTime": {
+          "Constants": "1,0,0,0"
+        },
+        "SheetSequence": false,
+        "Space": "World",
+        "StartDelay": {},
+        "StartVelocity": {
+          "Constants": "1,0,0,0"
+        },
+        "Stretch": {},
+        "TimeScale": 1,
+        "Tint": "1,1,1,1",
+        "Yaw": {}
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

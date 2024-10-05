@@ -100,7 +100,7 @@ public class Axe : BaseCarriable
 		
 		var tween = TweenManager.CreateTween();
 		var treePositionTween = tween.AddRotation( model, Rotation.FromRoll( 90f ), 1f );
-		treePositionTween.SetEasing( Sandbox.Utility.Easing.ExpoOut );
+		treePositionTween.SetEasing( Sandbox.Utility.Easing.ExpoIn );
 
 		// var treeSizeTween = tween.Parallel().TweenProperty( model, "scale", Vector3.Zero, 0.1f ).SetDelay( 0.9f );
 		// var treeOpacityTween = tween.Parallel().TweenProperty( model, "modulate:a", 0, 2f );
@@ -114,6 +114,7 @@ public class Axe : BaseCarriable
 		/*var particle = Loader.LoadResource<PackedScene>( "res://particles/poof.tscn" ).Instantiate<Node3D>();
 		GetTree().Root.AddChild( particle );
 		particle.GlobalPosition = tree.GlobalPosition + Vector3.Left * 1f;*/
+		ParticleManager.PoofAt( tree.WorldPosition + Vector3.Right * 64f, 4 );
 
 		// model.Hide();
 		model.Enabled = false;
