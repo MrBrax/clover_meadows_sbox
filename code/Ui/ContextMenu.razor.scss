@@ -35,6 +35,19 @@ ContextMenu {
     
     overflow: hidden;
     
+    opacity: 1;
+
+    transition: opacity 0.1s ease, transform 0.1s ease;
+    
+    &:intro {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    
+    &:outro {
+        opacity: 0;
+    }
+    
     .context-menu-title {
         background-color: #0c83dd;
         color: white;
@@ -55,7 +68,7 @@ ContextMenu {
         
         background-color: white;
         
-        transition: all 0.1s ease;
+        // transition: all 0.05s ease;
         
         &:hover {
             background-color: #f0f0f0;

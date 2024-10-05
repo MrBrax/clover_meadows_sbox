@@ -36,9 +36,9 @@ public partial class InventoryUiSlot
 
 		Ghost = new Panel();
 		Ghost.Style.Position = PositionMode.Absolute;
-		Ghost.Style.Width = 130;
-		Ghost.Style.Height = 130;
-		Ghost.Style.BackgroundColor = new Color( 0, 0, 0, 0.8f );
+		Ghost.Style.Width = 100;
+		Ghost.Style.Height = 100;
+		Ghost.Style.BackgroundColor = new Color( 255, 255, 255, 0.8f );
 		Ghost.Style.AlignContent = Align.Center;
 		Ghost.Style.JustifyContent = Justify.Center;
 		Ghost.Style.AlignItems = Align.Center;
@@ -52,11 +52,13 @@ public partial class InventoryUiSlot
 
 		var icon = new Image();
 		icon.Texture = Slot.GetItem().GetIconTexture();
-		icon.Style.Width = 80;
-		icon.Style.Height = 80;
+		icon.Style.Width = Ghost.Style.Width.GetValueOrDefault().Value * 0.8f;
+		icon.Style.Height = Ghost.Style.Height.GetValueOrDefault().Value * 0.8f;
 		Ghost.AddChild( icon );
 
 		FindRootPanel().AddChild( Ghost );
+
+		Sound.Play( "sounds/ui/inventory_start_drag.sound" );
 	}
 
 	protected override void OnDragEnd( DragEvent e )
@@ -67,6 +69,11 @@ public partial class InventoryUiSlot
 		if ( Ghost.IsValid() )
 		{
 			Ghost.Delete();
+		}
+		
+		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiSlot>() )
+		{
+			s.RemoveClass( "moving-to" );
 		}
 
 		if ( Slot == null || !Slot.HasItem ) return;
@@ -85,13 +92,27 @@ public partial class InventoryUiSlot
 		{
 			throw new NotImplementedException();
 		}
+		
+		Sound.Play( "sounds/ui/inventory_stop_drag.sound" );
 	}
 
 	protected override void OnDragSelect( SelectionEvent e )
 	{
-		// Log.Info( "OnDragSelect" );
-	}
+		var slot = FindRootPanel().Descendants.OfType<InventoryUiSlot>()
+			.FirstOrDefault( x => x.IsInside( e.EndPoint ) );
+		
+		if ( slot == null ) return;
+		
+		// Log.Info( $"Selected on {slot.Index}" );
+		
+		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiSlot>() )
+		{
+			s.RemoveClass( "moving-to" );
+		}
 
+		slot.AddClass( "moving-to" );
+
+	}
 
 	protected override void OnDrag( DragEvent e )
 	{
@@ -99,6 +120,18 @@ public partial class InventoryUiSlot
 		Ghost.Style.Top = (e.ScreenPosition.y - e.LocalGrabPosition.y) * ScaleFromScreen;
 		Ghost.Style.Left = (e.ScreenPosition.x - e.LocalGrabPosition.x) * ScaleFromScreen;
 	}
+
+	/*public override void Tick()
+	{
+		base.Tick();
+		
+		if ( Ghost.IsValid() )
+		{
+			Ghost.Style.Top = (Mouse.Position.y - 65) * ScaleFromScreen;
+			Ghost.Style.Left = (Mouse.Position.x - 65) * ScaleFromScreen;
+		}
+		
+	}*/
 
 	public override void OnDeleted()
 	{

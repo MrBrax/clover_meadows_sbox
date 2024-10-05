@@ -30,6 +30,8 @@ public partial class InventoryUi : IPlayerSpawned
 		UpdateInventory();
 		Panel.Style.Display = DisplayMode.None;
 	}
+	
+	private const int SlotsPerRow = 5;
 
 	private void UpdateInventory()
 	{
@@ -47,15 +49,27 @@ public partial class InventoryUi : IPlayerSpawned
 			return;
 		}
 
+		Panel row = null;
+		
 		foreach ( var entry in Inventory.Container.GetEnumerator() )
 		{
-
+			var rowNumber = entry.Index / SlotsPerRow;
+			var columnNumber = entry.Index % SlotsPerRow;
+			if ( row == null || columnNumber == 0 )
+			{
+				row = new Panel();
+				row.AddClass( "inventory-row" );
+				SlotContainer.AddChild( row );
+			}
+			
 			var slotButton = new InventoryUiSlot();
 			slotButton.Index = entry.Index;
 			slotButton.Slot = entry.HasSlot ? entry.Slot : null;
 			slotButton.Inventory = Inventory;
+			slotButton.AddClass( entry.HasSlot ? "has-item" : "empty" );
 			
-			SlotContainer.AddChild( slotButton );
+			// SlotContainer.AddChild( slotButton );
+			row.AddChild( slotButton );
 
 		}
 		
