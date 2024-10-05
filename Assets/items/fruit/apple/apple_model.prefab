@@ -1,0 +1,49 @@
+{
+  "RootObject": {
+    "__guid": "284e2d07-ab4a-408f-84bc-184c3e094d9d",
+    "Flags": 0,
+    "Name": "apple_model",
+    "Enabled": true,
+    "Children": [
+      {
+        "__guid": "69ce37be-b756-4497-a931-9dfaa79fce72",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "8cee8636-9b05-4281-8e38-e3602398b102",
+            "Flags": 0,
+            "Name": "apple",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "a776ab3f-bccd-4a5b-a779-bcfa58047afe",
+                "BodyGroups": 18446744073709551615,
+                "Model": "items/fruit/apple/apple.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "0.91163,0.01272,0.01272,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

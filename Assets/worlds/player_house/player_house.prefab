@@ -34,12 +34,11 @@
             "Tint": "1,1,1,1"
           },
           {
-            "__type": "Sandbox.ModelPhysics",
+            "__type": "Sandbox.ModelCollider",
             "__guid": "e0daec7f-4fc5-471d-9f26-cf20ab67ee98",
-            "Locking": {},
+            "IsTrigger": false,
             "Model": "models/player_house/house.vmdl",
-            "MotionEnabled": false,
-            "RigidbodyFlags": 0
+            "Static": true
           }
         ]
       },

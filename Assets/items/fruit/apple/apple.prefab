@@ -1,0 +1,78 @@
+{
+  "RootObject": {
+    "__guid": "6aca7f59-12af-42f0-8e9f-73ca099b3078",
+    "Flags": 0,
+    "Name": "apple",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.Fruit",
+        "__guid": "6e3d1dfb-aa16-4958-b1be-6edf99b152da",
+        "FruitData": "items/fruit/apple/apple.fruit"
+      },
+      {
+        "__type": "Sandbox.HullCollider",
+        "__guid": "104c732c-ecb2-4137-aa32-4b1b0b2dc9b5",
+        "BoxSize": "50,50,50",
+        "Center": "0,0,25",
+        "Height": 50,
+        "IsTrigger": false,
+        "Radius": 8,
+        "Radius2": 0,
+        "Slices": 16,
+        "Static": true,
+        "Type": "Cylinder"
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "770f97ec-32cd-4b2d-b628-b88818f8de9c",
+        "CanPickupSimple": true,
+        "ItemData": "items/fruit/apple/apple.fruit",
+        "Prefab": "items/fruit/apple/apple.prefab",
+        "Size": "1,1"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "43e5ba11-698c-491c-8b8a-a3ae33e479f4",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "c84a75f3-ab16-42a6-8894-435a74a03e2d",
+            "Flags": 0,
+            "Name": "apple",
+            "Position": "0,0,8",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "1657fd69-2e21-426c-a374-00dd63694683",
+                "BodyGroups": 18446744073709551615,
+                "Model": "items/fruit/apple/apple.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "0.91163,0.01272,0.01272,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

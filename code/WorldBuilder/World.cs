@@ -508,6 +508,8 @@ public sealed partial class World : Component
 		nodeLink.CalculateSize();
 		
 		UpdateTransform( nodeLink );
+		
+		gameObject.Name = nodeLink.GetName();
 
 		gameObject.NetworkSpawn();
 

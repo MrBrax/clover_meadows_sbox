@@ -1,0 +1,194 @@
+{
+  "RootObject": {
+    "__guid": "226fd5ce-e46c-4a6e-a700-225d8692c2a4",
+    "Flags": 0,
+    "Name": "tree_apple",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.Tree",
+        "__guid": "5e808898-4dec-470f-8f3a-806e2958124d",
+        "FallGroundSound": "items/trees/tree_shared/tree_fall_ground.sound",
+        "FallSound": "items/trees/tree_shared/tree_fall.sound",
+        "FruitData": "items/fruit/apple/apple.fruit",
+        "GrowSpawnPoints": [
+          {
+            "_type": "gameobject",
+            "go": "e30a5a27-9220-4230-b883-88d0d37f3851"
+          },
+          {
+            "_type": "gameobject",
+            "go": "76ce34a3-9aa6-49a7-b654-adeb4594603d"
+          },
+          {
+            "_type": "gameobject",
+            "go": "49c3b3cb-8ca9-4bdc-87b1-c59fe553eb26"
+          }
+        ],
+        "ShakeSpawnPoints": [
+          {
+            "_type": "gameobject",
+            "go": "376fb9ce-e491-4754-8ae4-aa38a5b2b0dc"
+          },
+          {
+            "_type": "gameobject",
+            "go": "963271a5-4b8a-4b31-95b4-3cd7bf506148"
+          },
+          {
+            "_type": "gameobject",
+            "go": "bdb1ebfb-4431-493c-b5e4-287c586e0000"
+          }
+        ],
+        "StumpData": "items/trees/tree_stump/tree_stump.item",
+        "StumpModel": {
+          "_type": "gameobject",
+          "go": "6675355c-1ad7-455e-aeaf-2105f63506ad"
+        },
+        "TreeModel": {
+          "_type": "gameobject",
+          "go": "ddae35ed-cadf-4fc5-98e1-e80f450c2a49"
+        }
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "a10a9d14-b79c-4f12-a57e-74709a6c3b56",
+        "CanPickupSimple": false,
+        "ItemData": "items/trees/tree_apple/tree_apple.item",
+        "Prefab": "items/trees/tree_apple/tree_apple.prefab",
+        "Size": "1,1"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "52e527a2-3a9f-4937-8050-f13996725a87",
+        "Layer": 0
+      },
+      {
+        "__type": "Sandbox.HullCollider",
+        "__guid": "0246e54b-bbb9-40a2-8dd1-01c1a66920d1",
+        "BoxSize": "50,50,50",
+        "Center": "0,0,25",
+        "Height": 50,
+        "IsTrigger": false,
+        "Radius": 12,
+        "Radius2": 0,
+        "Slices": 16,
+        "Static": true,
+        "Surface": "surfaces/wood.surface",
+        "Type": "Cylinder"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "ddae35ed-cadf-4fc5-98e1-e80f450c2a49",
+        "Flags": 0,
+        "Name": "TreeModel",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "dfbd19e8-2572-48b6-8c16-3189ab8a9625",
+            "Flags": 0,
+            "Name": "Object",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "2a9db622-9216-4154-9be9-f02747899486",
+                "BodyGroups": 18446744073709551615,
+                "Model": "items/trees/tree_shared/tree_shared.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__guid": "6675355c-1ad7-455e-aeaf-2105f63506ad",
+        "Flags": 0,
+        "Name": "StumpModel",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "b4010525-269c-4580-8b0b-f0d24e6444d5",
+            "Flags": 0,
+            "Name": "Object",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "e989a19d-9937-4fa4-8421-d1de59cfc6de",
+                "BodyGroups": 18446744073709551615,
+                "Model": "items/trees/tree_shared/tree_stump.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__guid": "49c3b3cb-8ca9-4bdc-87b1-c59fe553eb26",
+        "Flags": 0,
+        "Name": "GrowPos3",
+        "Position": "12.47574,33.27547,93.85516",
+        "Enabled": true
+      },
+      {
+        "__guid": "76ce34a3-9aa6-49a7-b654-adeb4594603d",
+        "Flags": 0,
+        "Name": "GrowPos2",
+        "Position": "12.58341,-1.462076,115.626",
+        "Enabled": true
+      },
+      {
+        "__guid": "e30a5a27-9220-4230-b883-88d0d37f3851",
+        "Flags": 0,
+        "Name": "GrowPos1",
+        "Position": "7.741299,-45.52605,91.8504",
+        "Enabled": true
+      },
+      {
+        "__guid": "376fb9ce-e491-4754-8ae4-aa38a5b2b0dc",
+        "Flags": 0,
+        "Name": "SpawnPos1",
+        "Position": "0,-32,0",
+        "Enabled": true
+      },
+      {
+        "__guid": "963271a5-4b8a-4b31-95b4-3cd7bf506148",
+        "Flags": 0,
+        "Name": "SpawnPos2",
+        "Position": "32,0,0.000001025769",
+        "Enabled": true
+      },
+      {
+        "__guid": "bdb1ebfb-4431-493c-b5e4-287c586e0000",
+        "Flags": 0,
+        "Name": "SpawnPos3",
+        "Position": "0,32,-0.000002471082",
+        "Enabled": true
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

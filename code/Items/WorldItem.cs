@@ -10,7 +10,7 @@ public class WorldItem : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
-	public WorldNodeLink NodeLink => WorldLayerObject.World.GetItem( GameObject );
+	public WorldNodeLink NodeLink => WorldLayerObject?.World?.GetItem( GameObject );
 
 	private Vector2Int _tilePosition { get; set; }
 
@@ -44,10 +44,10 @@ public class WorldItem : Component, IPickupable
 	[JsonIgnore] public TilePositionChanged OnTilePositionChanged;*/
 
 	public Vector2Int GridPosition => NodeLink?.GridPosition ?? Vector2Int.Zero;
-	[Property, ReadOnly] public Vector2Int Size => NodeLink?.Size ?? new Vector2Int( ItemData.Width, ItemData.Height );
-	public World.ItemPlacement GridPlacement => NodeLink.GridPlacement;
-	public World.ItemPlacementType GridPlacementType => NodeLink.PlacementType;
-	public World.ItemRotation GridRotation => NodeLink.GridRotation;
+	[Property, ReadOnly] public Vector2Int Size => NodeLink?.Size ?? new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
+	public World.ItemPlacement GridPlacement => NodeLink?.GridPlacement ?? World.ItemPlacement.Floor;
+	public World.ItemPlacementType GridPlacementType => NodeLink?.PlacementType ?? World.ItemPlacementType.Placed;
+	public World.ItemRotation GridRotation => NodeLink?.GridRotation ?? World.ItemRotation.North;
 
 
 	private string _prefab;

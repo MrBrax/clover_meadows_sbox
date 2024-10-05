@@ -1,0 +1,77 @@
+{
+  "RootObject": {
+    "__guid": "9ee9e3c3-e220-4fee-b7cd-cfe1b6884b81",
+    "Flags": 0,
+    "Name": "tree_stump",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "0c82d3aa-8a7d-4ecb-a979-fe22673e1fb8",
+        "CanPickupSimple": false,
+        "ItemData": "items/trees/tree_stump/tree_stump.item",
+        "Prefab": "items/trees/tree_stump/tree_stump.prefab",
+        "Size": "1,1"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "653b7076-69df-436c-b455-5946bc79d7a7",
+        "Layer": 0
+      },
+      {
+        "__type": "Sandbox.HullCollider",
+        "__guid": "d3611d28-45c1-465c-8119-fa1a6455d14f",
+        "BoxSize": "50,50,50",
+        "Center": "0,0,25",
+        "Height": 50,
+        "IsTrigger": false,
+        "Radius": 12,
+        "Radius2": 0,
+        "Slices": 16,
+        "Static": true,
+        "Type": "Cylinder"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "c98f1170-5961-45f0-993d-d1515256599d",
+        "Flags": 0,
+        "Name": "StumpModel",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "c7d18e5f-34c2-4733-8880-a669bc88f352",
+            "Flags": 0,
+            "Name": "Object",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "4c0cf5d3-803c-435d-9bb4-f877cbd3de2b",
+                "BodyGroups": 18446744073709551615,
+                "Model": "items/trees/tree_shared/tree_stump.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

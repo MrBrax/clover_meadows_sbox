@@ -1,0 +1,25 @@
+{
+  "Name": "Tree stump",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "Placements": "Floor, Underground",
+  "CanDrop": false,
+  "DisablePickup": true,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": null,
+  "DropScene": null,
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/trees/tree_stump/tree_stump.prefab"
+  },
+  "Icon": null,
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/trees/tree_stump/tree_stump.prefab"
+  },
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}

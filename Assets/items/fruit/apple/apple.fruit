@@ -1,0 +1,29 @@
+{
+  "InTreeScene": {
+    "_type": "gameobject",
+    "prefab": "items/fruit/apple/apple_model.prefab"
+  },
+  "Name": "Apple",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "Placements": "Floor, Underground",
+  "CanDrop": true,
+  "DisablePickup": false,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": {
+    "_type": "gameobject",
+    "prefab": "items/fruit/apple/apple_model.prefab"
+  },
+  "DropScene": {
+    "_type": "gameobject",
+    "prefab": "items/fruit/apple/apple.prefab"
+  },
+  "PlaceScene": null,
+  "Icon": null,
+  "DefaultTypeScene": null,
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}
