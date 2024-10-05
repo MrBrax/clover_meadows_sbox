@@ -63,14 +63,14 @@ public partial class InventoryUiSlot
 
 	protected override void OnDragEnd( DragEvent e )
 	{
-		// Log.Info( "OnDragEnd" );
+		Log.Info( "OnDragEnd" );
 		RemoveClass( "dragging" );
 
 		if ( Ghost.IsValid() )
 		{
 			Ghost.Delete();
 		}
-		
+
 		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiSlot>() )
 		{
 			s.RemoveClass( "moving-to" );
@@ -92,30 +92,32 @@ public partial class InventoryUiSlot
 		{
 			throw new NotImplementedException();
 		}
-		
+
 		Sound.Play( "sounds/ui/inventory_stop_drag.sound" );
 	}
 
 	protected override void OnDragSelect( SelectionEvent e )
 	{
+		if ( Slot == null || !Slot.HasItem ) return;
+
 		var slot = FindRootPanel().Descendants.OfType<InventoryUiSlot>()
 			.FirstOrDefault( x => x.IsInside( e.EndPoint ) );
-		
+
 		if ( slot == null ) return;
-		
+
 		// Log.Info( $"Selected on {slot.Index}" );
-		
+
 		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiSlot>() )
 		{
 			s.RemoveClass( "moving-to" );
 		}
 
 		slot.AddClass( "moving-to" );
-
 	}
 
 	protected override void OnDrag( DragEvent e )
 	{
+		if ( Slot == null || !Slot.HasItem ) return;
 		if ( !Ghost.IsValid() ) return;
 		Ghost.Style.Top = (e.ScreenPosition.y - e.LocalGrabPosition.y) * ScaleFromScreen;
 		Ghost.Style.Left = (e.ScreenPosition.x - e.LocalGrabPosition.x) * ScaleFromScreen;
@@ -124,13 +126,13 @@ public partial class InventoryUiSlot
 	/*public override void Tick()
 	{
 		base.Tick();
-		
+
 		if ( Ghost.IsValid() )
 		{
 			Ghost.Style.Top = (Mouse.Position.y - 65) * ScaleFromScreen;
 			Ghost.Style.Left = (Mouse.Position.x - 65) * ScaleFromScreen;
 		}
-		
+
 	}*/
 
 	public override void OnDeleted()
