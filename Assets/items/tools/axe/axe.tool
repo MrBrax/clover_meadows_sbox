@@ -1,5 +1,8 @@
 {
-  "CarryScene": null,
+  "CarryScene": {
+    "_type": "gameobject",
+    "prefab": "items/tools/axe/axe_carry.prefab"
+  },
   "Name": "Axe",
   "Description": "chop chop",
   "Width": 1,

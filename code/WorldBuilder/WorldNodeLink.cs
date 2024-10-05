@@ -125,6 +125,11 @@ public class WorldNodeLink
 		{
 			saveable.OnSave( this );
 		}
+		
+		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndDescendants ) )
+		{
+			persistent.OnSave( Persistence );
+		}
 
 		return new PersistentWorldItem
 		{
@@ -148,6 +153,11 @@ public class WorldNodeLink
 		foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndAncestors ) )
 		{
 			saveable.OnLoad( this );
+		}
+		
+		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndAncestors ) )
+		{
+			persistent.OnLoad( Persistence );
 		}
 
 		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )

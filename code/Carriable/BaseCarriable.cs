@@ -5,7 +5,7 @@ using Clover.Player;
 
 namespace Clover.Carriable;
 
-public class BaseCarriable : Component, ISaveData, IPickupable
+public class BaseCarriable : Component, IPersistent, IPickupable
 {
 	public int Durability { get; set; } = 100;
 
@@ -53,7 +53,7 @@ public class BaseCarriable : Component, ISaveData, IPickupable
 	{
 	}
 
-	public void OnSave( WorldNodeLink nodeLink )
+	/*public void OnSave( WorldNodeLink nodeLink )
 	{
 		nodeLink.Persistence?.SetArbitraryData( "Durability", Durability );
 	}
@@ -65,7 +65,7 @@ public class BaseCarriable : Component, ISaveData, IPickupable
 		{
 			Durability = durability;
 		}
-	}
+	}*/
 
 	public bool CanPickup( PlayerCharacter player )
 	{
@@ -76,5 +76,17 @@ public class BaseCarriable : Component, ISaveData, IPickupable
 	{
 		player.Inventory.PickUpItem( GetComponent<WorldItem>().NodeLink );
 	}
-	
+
+	public void OnSave( PersistentItem item )
+	{
+		item.SetArbitraryData( "Durability", Durability );
+	}
+
+	public void OnLoad( PersistentItem item )
+	{
+		if ( item.TryGetArbitraryData<int>( "Durability", out var durability ) )
+		{
+			Durability = durability;
+		}
+	}
 }

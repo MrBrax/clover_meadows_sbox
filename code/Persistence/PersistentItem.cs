@@ -1,25 +1,27 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Clover.Data;
+using Clover.Items;
 
 namespace Clover.Persistence;
 
-[JsonDerivedType( typeof( Persistence.PersistentItem ), "base" )]
+[JsonDerivedType( typeof(Persistence.PersistentItem), "base" )]
 public class PersistentItem
 {
-	
 	[Property] public string ItemId { get; set; }
-	
+
 	[Property] public Dictionary<string, object> ArbitraryData { get; set; } = new();
-	
-	[JsonIgnore] public ItemData ItemData
+
+	[JsonIgnore]
+	public ItemData ItemData
 	{
 		get => ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == ItemId );
 	}
-	
+
 	[JsonIgnore] public virtual bool Stackable => false;
 	[JsonIgnore] public virtual int MaxStack => 1;
-	
+
 	/*public string GetArbitraryString( string key )
 	{
 		if ( ArbitraryData.TryGetValue( key, out var value ) )
@@ -28,7 +30,7 @@ public class PersistentItem
 		}
 		return null;
 	}
-	
+
 	public int GetArbitraryInt( string key )
 	{
 		if ( ArbitraryData.TryGetValue( key, out var value ) )
@@ -37,7 +39,7 @@ public class PersistentItem
 		}
 		return 0;
 	}
-	
+
 	public float GetArbitraryFloat( string key )
 	{
 		if ( ArbitraryData.TryGetValue( key, out var value ) )
@@ -46,7 +48,7 @@ public class PersistentItem
 		}
 		return 0;
 	}
-	
+
 	public bool GetArbitraryBool( string key )
 	{
 		if ( ArbitraryData.TryGetValue( key, out var value ) )
@@ -55,12 +57,12 @@ public class PersistentItem
 		}
 		return false;
 	}*/
-	
+
 	public T GetArbitraryData<T>( string key )
 	{
 		return TryGetArbitraryData<T>( key, out var value ) ? value : default;
 	}
-	
+
 	public bool TryGetArbitraryData<T>( string key, out T value )
 	{
 		if ( ArbitraryData.TryGetValue( key, out var obj ) )
@@ -71,42 +73,43 @@ public class PersistentItem
 				value = default;
 				return false;
 			}
-			
+
 			value = JsonSerializer.Deserialize<T>( jsonElement.GetRawText() );
-			
+
 			return true;
 		}
+
 		value = default;
 		return false;
 	}
-	
+
 	[Description( "Set arbitrary data on this item." )]
-	[Icon("description")]
+	[Icon( "description" )]
 	public void SetArbitraryData( string key, object value )
 	{
 		ArbitraryData[key] = value;
 	}
-	
+
 	public virtual string GetName()
 	{
 		return ItemData?.Name;
 	}
-	
+
 	public virtual string GetDescription()
 	{
 		return ItemData?.Description;
 	}
-	
+
 	public virtual string GetIcon()
 	{
 		return ItemData?.GetIcon();
 	}
-	
+
 	public virtual Texture GetIconTexture()
 	{
 		return ItemData?.GetIconTexture();
 	}
-	
+
 	/// <summary>
 	///		 Returns true if this item can be merged with the other item. Throws an exception if it can't.
 	/// </summary>
@@ -122,11 +125,41 @@ public class PersistentItem
 	{
 		return;
 	}
-	
+
 	public PersistentItem Clone()
 	{
 		// TODO: DON'T DO THIS KIDS, PLEASE FIND A BETTER WAY
-		return JsonSerializer.Deserialize<PersistentItem>( JsonSerializer.Serialize( this, GameManager.JsonOptions ), GameManager.JsonOptions );
+		return JsonSerializer.Deserialize<PersistentItem>( JsonSerializer.Serialize( this, GameManager.JsonOptions ),
+			GameManager.JsonOptions );
 	}
-	
+
+	public static PersistentItem Create( GameObject gameObject )
+	{
+		if ( !gameObject.IsValid() ) throw new Exception( "Item is null" );
+
+		var persistentItem = new PersistentItem();
+
+		if ( gameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+		{
+			persistentItem.ItemId = worldItem.ItemData.ResourceName;
+		}
+		else
+		{
+			Log.Error( $"GameObject {gameObject} has no item data" );
+		}
+
+		if ( gameObject.Components.TryGet<Persistent>( out var persistent ) )
+		{
+			persistent.OnItemSave( persistentItem );
+		}
+
+		var nodeLink = WorldManager.Instance.GetWorldNodeLink( gameObject );
+		if ( nodeLink != null )
+		{
+			nodeLink.OnNodeSave();
+			persistentItem = nodeLink.Persistence;
+		}
+
+		return persistentItem;
+	}
 }

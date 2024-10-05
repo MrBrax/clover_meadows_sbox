@@ -1,0 +1,51 @@
+{
+  "RootObject": {
+    "__guid": "98c9c396-6851-4954-ad83-988801637930",
+    "Flags": 0,
+    "Name": "axe_carry",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.Axe",
+        "__guid": "e0201162-8019-4f60-b93f-3374df7f6ba9"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "f00e68e2-38ce-426a-90a8-0ab4acca4093",
+        "Flags": 0,
+        "Name": "Object",
+        "Position": "0,0,1",
+        "Scale": "0.7,0.7,0.7",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "520f4f52-f977-4d6d-91af-ddfbe0a140df",
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/axe/axe.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "wujekfoliarz.axe#41177"
+  ],
+  "IsValid": true,
+  "__version": 1
+}
