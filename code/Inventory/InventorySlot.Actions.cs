@@ -176,6 +176,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			InventoryContainer.AddItemToIndex( currentEquip, currentIndex );
 		}
 
+		InventoryContainer.Player.Save();
+
 	}
 	
 	/*

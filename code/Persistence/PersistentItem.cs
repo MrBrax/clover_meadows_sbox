@@ -171,6 +171,11 @@ public class PersistentItem
 		{
 			persistent.OnItemSave( persistentItem );
 		}
+		
+		if ( gameObject.Components.TryGet<IPersistent>( out var persistent2 ) )
+		{
+			persistent2.OnSave( persistentItem );
+		}
 
 		var nodeLink = WorldManager.Instance.GetWorldNodeLink( gameObject );
 		if ( nodeLink != null )
@@ -181,4 +186,29 @@ public class PersistentItem
 
 		return persistentItem;
 	}
+	
+	public BaseCarriable SpawnCarriable()
+	{
+		if ( ItemData is not ToolData toolData ) throw new Exception( $"ItemData is not a ToolData for {ItemId}" );
+		
+		var carriable = toolData.SpawnCarriable();
+		
+		if ( carriable == null ) throw new Exception( $"Carriable is null for {ItemId}" );
+		
+		carriable.Durability = GetArbitraryData<int>( "Durability" );
+		
+		if ( carriable.GameObject.Components.TryGet<Persistent>( out var persistent ) )
+		{
+			persistent.OnItemLoad( this );
+		}
+		
+		if ( carriable.GameObject.Components.TryGet<IPersistent>( out var persistent2 ) )
+		{
+			persistent2.OnLoad( this );
+		}
+		
+		return carriable;
+		
+	}
+	
 }

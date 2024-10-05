@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Text.Json;
+using Clover.Carriable;
 using Clover.Components;
 using Clover.Data;
 using Clover.Inventory;
@@ -8,16 +11,18 @@ namespace Clover.Player;
 
 public sealed class PlayerCharacter : Component
 {
-	
-	public static PlayerCharacter Local => Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => !x.IsProxy );
-	
-	[Sync] public string PlayerId { get; set; } = Guid.NewGuid().ToString();
+	public static PlayerCharacter Local =>
+		Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => !x.IsProxy );
+
+	[Sync] public string PlayerId { get; set; }
 	[Sync] public string PlayerName { get; set; }
-	
+
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	[RequireComponent] public PlayerController Controller { get; set; }
 	[RequireComponent] public Inventory.Inventory Inventory { get; set; }
 	[RequireComponent] public Equips Equips { get; set; }
+
+	[Property] public int Clovers { get; set; }
 
 	[Property] public GameObject Model { get; set; }
 
@@ -35,6 +40,8 @@ public sealed class PlayerCharacter : Component
 	{
 		base.OnStart();
 		GameObject.BreakFromPrefab();
+
+		Load();
 	}
 
 	public void ModelLookAt( Vector3 position )
@@ -121,16 +128,16 @@ public sealed class PlayerCharacter : Component
 	{
 		return !IsSitting;
 	}
-	
-	
+
+
 	public string SaveFilePath => $"players/{PlayerId}.json";
-	
+
 	public PlayerSaveData SaveData { get; set; }
-	
+
 	public void Save()
 	{
 		SaveData ??= new PlayerSaveData( PlayerId );
-		
+
 		SaveData.Name = PlayerName ?? Network.Owner.DisplayName;
 
 		SaveData.InventorySlots.Clear();
@@ -145,6 +152,91 @@ public sealed class PlayerCharacter : Component
 			SaveData.EquippedItems.Add( slot, PersistentItem.Create( item ) );
 		}
 
+		SaveData.Clovers = Clovers;
+
+		SaveData.LastSave = DateTime.Now;
+
+		var json = JsonSerializer.Serialize( SaveData, GameManager.JsonOptions );
+
+		FileSystem.Data.CreateDirectory( "players" );
+
+		FileSystem.Data.WriteAllText( SaveFilePath, json );
 	}
-	
+
+
+	public void Load()
+	{
+		
+		// TODO: temporary fix for player id
+		if ( string.IsNullOrEmpty( PlayerId ) )
+		{
+			var save = FileSystem.Data.FindFile( "players", "*.json" );
+			if ( save != null && save.Any() )
+			{
+				PlayerId = Path.GetFileNameWithoutExtension( save.First() );
+				Log.Info( $"PlayerId found: {PlayerId}" );
+			}
+			else
+			{
+				PlayerId = Guid.NewGuid().ToString();
+				Log.Info( $"PlayerId generated: {PlayerId}" );
+			}
+		}
+		
+		if ( !FileSystem.Data.FileExists( SaveFilePath ) )
+		{
+			Log.Warning( $"File {SaveFilePath} does not exist" );
+			return;
+		}
+
+		var json = FileSystem.Data.ReadAllText( SaveFilePath );
+		SaveData = JsonSerializer.Deserialize<PlayerSaveData>( json, GameManager.JsonOptions );
+
+		PlayerName = SaveData.Name;
+		Clovers = SaveData.Clovers;
+
+		// limit inventory slots if for some reason it exceeds max items
+		if ( SaveData.InventorySlots.Count > Inventory.Container.MaxItems )
+		{
+			Log.Error( "Inventory slots count exceeds max items" );
+			SaveData.InventorySlots = SaveData.InventorySlots.Take( Inventory.Container.MaxItems ).ToList();
+		}
+
+		Inventory.Container.RemoveSlots();
+
+		foreach ( var slot in SaveData.InventorySlots )
+		{
+			if ( slot.GetItem() == null )
+			{
+				Log.Error( "Item is null" );
+				continue;
+			}
+
+			if ( slot.GetItem().ItemData == null )
+			{
+				Log.Error( "ItemData is null" );
+				continue;
+			}
+
+			Inventory.Container.ImportSlot( slot );
+		}
+
+		Inventory.Container.RecalculateIndexes();
+
+		foreach ( var (slot, item) in SaveData.EquippedItems )
+		{
+			if ( item.ItemData is ToolData toolData )
+			{
+				var carriableNode = toolData.SpawnCarriable();
+
+				if ( carriableNode == null )
+				{
+					Log.Error( $"Item is not a carriable" );
+					continue;
+				}
+
+				Equips.SetEquippedItem( slot, carriableNode.GameObject );
+			}
+		}
+	}
 }
