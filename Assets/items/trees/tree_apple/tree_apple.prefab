@@ -11,6 +11,7 @@
         "FallGroundSound": "items/trees/tree_shared/tree_fall_ground.sound",
         "FallSound": "items/trees/tree_shared/tree_fall.sound",
         "FruitData": "items/fruit/apple/apple.fruit",
+        "FruitHitGroundSound": "items/trees/tree_shared/item_drop.sound",
         "GrowSpawnPoints": [
           {
             "_type": "gameobject",

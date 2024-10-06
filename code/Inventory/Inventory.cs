@@ -1,4 +1,5 @@
-﻿using Clover.Persistence;
+﻿using Braxnet;
+using Clover.Persistence;
 using Clover.Player;
 
 namespace Clover.Inventory;
@@ -28,15 +29,15 @@ public class Inventory : Component
 		PickUpItem( WorldManager.Instance.ActiveWorld.GetItem( gameObject ) );
 	}
 	
-	public void PickUpItem( WorldNodeLink nodeLink )
+	public async void PickUpItem( WorldNodeLink nodeLink )
 	{
 		if ( string.IsNullOrWhiteSpace( nodeLink.ItemId ) ) throw new System.Exception( "Item data is null" );
 
-		/*if ( nodeLink.IsBeingPickedUp )
+		if ( nodeLink.IsBeingPickedUp )
 		{
-			Logger.Warn( $"Item {nodeLink.ItemDataPath} is already being picked up" );
+			Log.Warning( $"Item {nodeLink} is already being picked up" );
 			return;
-		}*/
+		}
 
 		Log.Info( $"Picking up item {nodeLink.ItemId}" );
 
@@ -90,11 +91,27 @@ public class Inventory : Component
 
 		} ) );*/
 		
+		Player.InCutscene = true;
+		Player.CutsceneTarget = Vector3.Zero;
+		Player.CharacterController.Velocity = Vector3.Zero;
+		
+		nodeLink.IsBeingPickedUp = true;
+
+		var tween = TweenManager.CreateTween();
+		tween.AddPosition( nodeLink.Node, Player.WorldPosition + Vector3.Up * 16f, 0.2f );
+		var scale = tween.AddScale( nodeLink.Node, Vector3.Zero, 0.3f );
+		scale.Parallel = true;
+
+		await tween.Wait();
+		
 		PickUpItem( inventoryItem );
 
 		Sound.Play( "sounds/interact/item_pickup.sound", WorldPosition );
+		Log.Info( WorldPosition );
 		
 		nodeLink.Remove();
+		
+		Player.InCutscene = false;
 		
 		Player.Save();
 

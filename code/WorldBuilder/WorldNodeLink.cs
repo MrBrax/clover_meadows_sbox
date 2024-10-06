@@ -31,6 +31,8 @@ public class WorldNodeLink
 		get => ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == ItemId );
 	}
 
+	public bool IsBeingPickedUp { get; set; }
+
 	public WorldNodeLink( World world, GameObject item )
 	{
 		World = world;

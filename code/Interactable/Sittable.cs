@@ -36,7 +36,7 @@ public class Sittable : Component, IInteract
 		player.Seat = seat;
 		player.EnterPosition = player.WorldPosition;
 		player.WorldPosition = seat.WorldPosition;
-		player.Controller.Yaw = seat.WorldRotation.Yaw();
+		player.PlayerController.Yaw = seat.WorldRotation.Yaw();
 		
 		Input.Clear( "use" );
 	}

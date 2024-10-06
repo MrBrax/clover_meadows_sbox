@@ -1,7 +1,7 @@
 {
   "UI": false,
   "Volume": "1",
-  "Pitch": "1",
+  "Pitch": "0.8 1.2",
   "Decibels": 70,
   "SelectionMode": "Random",
   "Sounds": [

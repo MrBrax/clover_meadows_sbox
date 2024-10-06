@@ -1,11 +1,11 @@
 {
-  "UI": true,
-  "Volume": "0.2",
+  "UI": false,
+  "Volume": "1",
   "Pitch": "1",
   "Decibels": 70,
   "SelectionMode": "Random",
   "Sounds": [
-    "sounds/kenney/ui/drop_003.vsnd"
+    "sounds/footsteps/footstep-gravel-walk-004.vsnd"
   ],
   "Occlusion": true,
   "AirAbsorption": true,

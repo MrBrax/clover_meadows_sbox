@@ -15,7 +15,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		var position = InventoryContainer.Player.GetAimingGridPosition();
 		var playerRotation =
 			World.GetItemRotationFromDirection(
-				World.Get4Direction( InventoryContainer.Player.Controller.Yaw ) );
+				World.Get4Direction( InventoryContainer.Player.PlayerController.Yaw ) );
 
 		try
 		{
@@ -32,6 +32,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		//x InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
+		Sound.Play( "sounds/interact/item_drop.sound", InventoryContainer.Owner.WorldPosition );
 
 		TakeOneOrDelete();
 
@@ -45,7 +46,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		var playerRotation =
 			World.GetItemRotationFromDirection(
-				World.Get4Direction( InventoryContainer.Player.Controller.Yaw ) );
+				World.Get4Direction( InventoryContainer.Player.PlayerController.Yaw ) );
 
 		var floorItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
 
@@ -75,6 +76,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 				}
 
 				//x InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
+				Sound.Play( "sounds/interact/item_place.sound", InventoryContainer.Owner.WorldPosition );
 
 				TakeOneOrDelete();
 
@@ -102,6 +104,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		//x InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
+		Sound.Play( "sounds/interact/item_place.sound", InventoryContainer.Owner.WorldPosition );
 
 		TakeOneOrDelete();
 	}

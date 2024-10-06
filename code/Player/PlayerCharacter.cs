@@ -18,7 +18,8 @@ public sealed class PlayerCharacter : Component
 	[Sync] public string PlayerName { get; set; }
 
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
-	[RequireComponent] public PlayerController Controller { get; set; }
+	[RequireComponent] public CharacterController CharacterController { get; set; }
+	[RequireComponent] public PlayerController PlayerController { get; set; }
 	[RequireComponent] public Inventory.Inventory Inventory { get; set; }
 	[RequireComponent] public Equips Equips { get; set; }
 
@@ -36,6 +37,9 @@ public sealed class PlayerCharacter : Component
 	public World World => WorldLayerObject.World;
 
 	public Action<World> OnWorldChanged { get; set; }
+	
+	public bool InCutscene { get; set; }
+	public Vector3? CutsceneTarget { get; set; }
 
 	protected override void OnStart()
 	{
@@ -132,7 +136,7 @@ public sealed class PlayerCharacter : Component
 
 	public bool ShouldMove()
 	{
-		return !IsSitting;
+		return !IsSitting && !InCutscene;
 	}
 
 

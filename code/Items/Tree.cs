@@ -136,6 +136,12 @@ public class Tree : Component, IPersistent, IInteract
 			{
 				Sound.Play( FruitHitGroundSound, shakePoint.WorldPosition );
 			};
+			
+			p.OnBounce += () =>
+			{
+				Log.Info( "Bounce");
+				Sound.Play( FruitHitGroundSound, shakePoint.WorldPosition );
+			};
 
 			/* await ToSignal( tween, Tween.SignalName.Finished );
 
