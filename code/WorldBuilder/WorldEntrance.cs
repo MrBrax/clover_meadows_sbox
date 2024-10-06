@@ -1,5 +1,7 @@
 ﻿namespace Clover;
 
+[Category( "Clover/World" )]
+[Icon( "world" )]
 public class WorldEntrance : Component
 {
 	

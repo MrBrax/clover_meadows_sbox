@@ -10,6 +10,8 @@ using Sandbox.Diagnostics;
 
 namespace Clover;
 
+[Category( "Clover/World" )]
+[Icon( "world" )]
 public sealed partial class World : Component
 {
 	[Flags]

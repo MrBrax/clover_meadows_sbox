@@ -3,6 +3,8 @@ using Clover.Player;
 
 namespace Clover.Interactable;
 
+[Category( "Clover/Interactable" )]
+[Icon( "chair" )]
 public class Sittable : Component, IInteract
 {
 	

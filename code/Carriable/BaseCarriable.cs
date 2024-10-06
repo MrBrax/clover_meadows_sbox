@@ -6,6 +6,9 @@ using Clover.Player;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
+[Hide]
+[Icon( "build" )]
 public class BaseCarriable : Component, IPersistent, IPickupable
 {
 	public int Durability { get; set; } = 100;

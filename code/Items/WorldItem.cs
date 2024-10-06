@@ -6,6 +6,8 @@ using Clover.Player;
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
+[Icon("outlet")]
 public class WorldItem : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }

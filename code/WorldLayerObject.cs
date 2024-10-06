@@ -2,6 +2,8 @@ using Sandbox;
 
 namespace Clover;
 
+[Category( "Clover" )]
+[Icon( "visibility" )]
 public sealed class WorldLayerObject : Component
 {
 	

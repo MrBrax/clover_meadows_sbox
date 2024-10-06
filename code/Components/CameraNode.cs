@@ -1,5 +1,7 @@
 using Sandbox;
 
+[Category( "Clover/Camera" )]
+[Icon( "camera" )]
 public sealed class CameraNode : Component
 {
 	

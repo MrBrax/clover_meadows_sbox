@@ -2,6 +2,7 @@
 
 namespace Clover;
 
+[Category( "Clover/World" )]
 public sealed class AreaTrigger : Component, Component.ITriggerListener
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }

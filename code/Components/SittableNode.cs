@@ -2,6 +2,8 @@
 
 namespace Clover.Components;
 
+[Category( "Clover/Components" )]
+[Icon( "chair" )]
 public class SittableNode : Component
 {
 	

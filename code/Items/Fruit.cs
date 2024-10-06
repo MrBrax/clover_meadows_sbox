@@ -2,6 +2,7 @@
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
 public class Fruit : Component
 {
 	

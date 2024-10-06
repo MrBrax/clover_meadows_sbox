@@ -1,5 +1,7 @@
 using Sandbox;
 
+[Category( "Clover/Player" )]
+[Icon( "camera" )]
 public sealed class CameraController : Component
 {
 	[Property] public CameraNode MainCameraNode { get; set; }

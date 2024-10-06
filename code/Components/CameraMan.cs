@@ -1,6 +1,8 @@
 using System;
 using Sandbox;
 
+[Category( "Clover/Camera" )]
+[Icon( "camera" )]
 public sealed class CameraMan : Component
 {
 	// [RequireComponent] public CameraComponent CameraComponent { get; set; }

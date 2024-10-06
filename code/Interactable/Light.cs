@@ -2,6 +2,8 @@
 
 namespace Clover.Interactable;
 
+[Category( "Clover/Interactable" )]
+[Icon( "lightbulb" )]
 public class Light : Component, IInteract
 {
 

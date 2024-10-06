@@ -1,5 +1,7 @@
 ﻿namespace Clover.Persistence;
 
+[Category( "Clover/Persistence" )]
+[Icon( "save" )]
 public class Persistent : Component
 {
 	

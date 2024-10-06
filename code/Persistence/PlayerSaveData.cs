@@ -13,6 +13,7 @@ public class PlayerSaveData
 	public List<InventorySlot<PersistentItem>> InventorySlots = new();
 	public Dictionary<Equips.EquipSlot, PersistentItem> EquippedItems = new();
 	
+	public DateTime Created = DateTime.Now;
 	public DateTime LastSave = DateTime.Now;
 	
 	public int Clovers;
