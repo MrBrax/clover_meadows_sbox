@@ -6,6 +6,7 @@ using Clover.Items;
 using Clover.Persistence;
 using Clover.Player;
 using Sandbox;
+using Sandbox.Diagnostics;
 
 namespace Clover;
 
@@ -471,6 +472,8 @@ public sealed partial class World : Component
 	
 	private WorldNodeLink SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector2Int position, ItemRotation rotation, ItemPlacement placement )
 	{
+		Assert.NotNull( itemData, "Item data is null" );
+		
 		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );

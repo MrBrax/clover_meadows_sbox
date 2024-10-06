@@ -13,5 +13,10 @@ public class FruitData : ItemData
 	{
 		// TODO: Add "Eat" action
 		yield return new ItemAction { Name = "Eat", Action = () => { slot.Delete(); } };
+		
+		foreach ( var action in base.GetActions( slot ) )
+		{
+			yield return action;
+		}
 	}
 }

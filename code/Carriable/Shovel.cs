@@ -36,6 +36,14 @@ public class Shovel : BaseCarriable
 		}
 		else
 		{
+			
+			var undergroundItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Underground );
+			if ( undergroundItem != null )
+			{
+				DigUpItem( pos, undergroundItem );
+				return;
+			}
+			
 			var floorItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Floor );
 			if ( floorItem != null )
 			{
@@ -54,13 +62,7 @@ public class Shovel : BaseCarriable
 
 				return;
 			}
-
-			var undergroundItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Underground );
-			if ( undergroundItem != null )
-			{
-				DigUpItem( pos, undergroundItem );
-				return;
-			}
+			
 		}
 
 		Log.Warning( "No action taken." );
@@ -200,7 +202,7 @@ public class Shovel : BaseCarriable
 		Player.World.RemoveItem( item );
 
 		var dirt = Player.World.GetItem( pos, World.ItemPlacement.Floor );
-		if ( dirt != null && dirt.ItemData?.Name == "BuriedItem" )
+		if ( dirt != null && dirt.ItemData?.ResourceName == "buried_item" )
 		{
 			Player.World.RemoveItem( dirt );
 		}
@@ -243,5 +245,24 @@ public class Shovel : BaseCarriable
 		Player.World.RemoveItem( item );
 
 		DigHole( pos );
+	}
+
+	public void BuryItem( InventorySlot<PersistentItem> slot, WorldNodeLink hole )
+	{
+		
+		var gridPos = hole.GridPosition;
+		
+		hole.RefreshPersistence();
+		// var item = hole.Persistence;
+		
+		hole.Remove();
+		
+		// main item
+		Player.World.SpawnDroppedNode( slot.PersistentItem, gridPos, World.ItemRotation.North, World.ItemPlacement.Underground );
+		
+		// dirt
+		Player.World.SpawnPlacedNode( Data.ItemData.Get( "buried_item" ), gridPos, World.ItemRotation.North, World.ItemPlacement.Floor );
+
+
 	}
 }

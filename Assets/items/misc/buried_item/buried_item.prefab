@@ -1,0 +1,67 @@
+{
+  "RootObject": {
+    "__guid": "49615c35-52d6-40dc-8dcc-178b18b4cb85",
+    "Flags": 0,
+    "Name": "buried_item",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "25c61185-f3fd-4b66-a519-2f2955da6d94",
+        "CanPickupSimple": false,
+        "ItemData": "items/misc/buried_item/buried_item.item",
+        "Prefab": "items/misc/buried_item/buried_item.prefab",
+        "Size": "1,1"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "8fe689a6-1bdb-454d-8d1e-4743c139efb2",
+        "Layer": 0
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "038e2ea9-2fba-48b0-90d5-b5d6907b682e",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "a19dc11f-e35b-4298-9dd5-5df2e9abd9a8",
+            "Flags": 0,
+            "Name": "buried_item",
+            "Position": "0,0,0.1",
+            "Rotation": "0,0,0.1942339,0.9809552",
+            "Scale": "0.7,0.7,0.7",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "4aee3539-0e56-4841-97c9-c57e641fb78a",
+                "BodyGroups": 18446744073709551615,
+                "Model": "items/misc/buried_item/buried_item.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "Off",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

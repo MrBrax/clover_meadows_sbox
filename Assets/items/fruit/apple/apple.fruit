@@ -21,7 +21,7 @@
     "prefab": "items/fruit/apple/apple.prefab"
   },
   "PlaceScene": null,
-  "Icon": null,
+  "Icon": "items/fruit/apple/apple_icon.png",
   "DefaultTypeScene": null,
   "__references": [],
   "IsValid": true,

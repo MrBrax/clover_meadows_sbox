@@ -185,6 +185,8 @@ public class WorldNodeLink
 		{
 			Log.Warning( $"No WorldItem component found on {Node}" );
 		}
+		
+		Node.Name = GetName();
 	}
 
 	public void OnNodeAdded()

@@ -251,7 +251,7 @@ public sealed class ScaleTween : BaseTween
 
 		GameObject.WorldScale = Vector3.Lerp( StartScale, EndScale, GetFraction() );
 		
-		Log.Info( $"{GameObject.Name} {GameObject.WorldScale.z} {GetFraction()}" );
+		// ( $"{GameObject.Name} {GameObject.WorldScale.z} {GetFraction()}" );
 
 		if ( IsFinished )
 		{
@@ -381,7 +381,7 @@ public sealed class Tween
 			return;
 		}
 		
-		Log.Info( $"Tween has {_propertyTweens.Count} tweens" );
+		// Log.Info( $"Tween has {_propertyTweens.Count} tweens" );
 		
 		// separately handle parallel tweens
 		var parallelTweens = _propertyTweens.Where( x => x.Parallel ).ToList();
@@ -397,7 +397,7 @@ public sealed class Tween
 
 			if ( tween.IsFinished )
 			{
-				Log.Info( $"Parallel tween finished, {_propertyTweens.Count} tweens left" );
+				// Log.Info( $"Parallel tween finished, {_propertyTweens.Count} tweens left" );
 				tween.Cleanup();
 				_propertyTweens.Remove( tween );
 			}
@@ -424,7 +424,7 @@ public sealed class Tween
 			currentTween.Cleanup();
 			_propertyTweens.Remove( currentTween );
 			
-			Log.Info( $"Sync tween finished, {_propertyTweens.Count} tweens left" );
+			// Log.Info( $"Sync tween finished, {_propertyTweens.Count} tweens left" );
 
 			/*if ( _propertyTweens.Count > 0 )
 			{

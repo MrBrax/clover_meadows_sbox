@@ -5,7 +5,7 @@
   "Decibels": 70,
   "SelectionMode": "Random",
   "Sounds": [
-    "sounds/kenney/ui/drop_003.vsnd"
+    "sounds/kenney/ui/minimize_008.vsnd"
   ],
   "Occlusion": true,
   "AirAbsorption": true,

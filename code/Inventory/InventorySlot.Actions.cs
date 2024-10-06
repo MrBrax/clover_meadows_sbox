@@ -21,7 +21,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		{
 			// Inventory.World.SpawnDroppedItem( _item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
 			// InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, position, playerRotation, World.ItemPlacement.Floor, true );
-			InventoryContainer.Player.World.SpawnDroppedNode( _persistentItem, position, playerRotation, World.ItemPlacement.Floor );
+			InventoryContainer.Player.World.SpawnDroppedNode( PersistentItem, position, playerRotation, World.ItemPlacement.Floor );
 		}
 		catch ( Exception e )
 		{
@@ -67,7 +67,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 				{
 					// InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
 					// 	false );
-					InventoryContainer.Player.World.SpawnPlacedNode( _persistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop );
+					InventoryContainer.Player.World.SpawnPlacedNode( PersistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop );
 				}
 				catch ( System.Exception e )
 				{
@@ -94,7 +94,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			// 	playerRotation );
 			// InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.Floor,
 			// 	false );
-			InventoryContainer.Player.World.SpawnPlacedNode( _persistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.Floor );
+			InventoryContainer.Player.World.SpawnPlacedNode( PersistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.Floor );
 		}
 		catch ( System.Exception e )
 		{
@@ -137,7 +137,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		slot = Equips.EquipSlot.Tool; // TODO: get slot from item
 		
-		if ( _persistentItem.ItemData is not ToolData toolData )
+		if ( PersistentItem.ItemData is not ToolData toolData )
 		{
 			Log.Error( "Item is not a tool" ); // TODO: handle other types of items
 			return;
@@ -147,7 +147,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		PersistentItem currentEquip = null;
 		if ( InventoryContainer.Player.Equips.HasEquippedItem( slot ) )
 		{
-			currentEquip = PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( slot ) );
+			currentEquip = Persistence.PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( slot ) );
 		}
 
 		/*if ( _persistentItem is Persistence.BaseCarriable carriable )
@@ -379,7 +379,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		SetAmount( Amount - amount );
 
-		var newItem = _persistentItem.Clone();
+		var newItem = PersistentItem.Clone();
 
 		// var slot = new InventorySlot<PersistentItem>( InventoryContainer );
 		// slot.SetItem( newItem );

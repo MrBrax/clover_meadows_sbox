@@ -121,6 +121,13 @@
             "CreateBoneObjects": false,
             "Model": "models/player/placeholder.vmdl",
             "Morphs": {},
+            "Parameters": {
+              "bools": {},
+              "ints": {},
+              "floats": {},
+              "vectors": {},
+              "rotations": {}
+            },
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -236,7 +243,7 @@
             "__guid": "88d5971a-a164-45bf-8a72-e748c5de2b39",
             "Flags": 0,
             "Name": "Object",
-            "Position": "0,0,0.1",
+            "Position": "0,0,0.2",
             "Scale": "0.32,0.32,1",
             "Enabled": true,
             "Components": [
@@ -256,6 +263,20 @@
                 "Tint": "1,1,1,0.15"
               }
             ]
+          }
+        ]
+      },
+      {
+        "__guid": "cfacd09d-d601-4a75-8d76-436d63139c5e",
+        "Flags": 0,
+        "Name": "Object",
+        "Position": "0,0,64",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.AudioListener",
+            "__guid": "ee582a0b-501b-4947-87ff-0d333968915f",
+            "UseCameraDirection": true
           }
         ]
       }

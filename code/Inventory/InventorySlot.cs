@@ -11,15 +11,15 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	[JsonInclude] public int Index { get; set; } = -1;
 
-	[JsonInclude, JsonPropertyName( "_item" )] public TItem _persistentItem;
+	[JsonInclude, JsonPropertyName( "_item" )] public TItem PersistentItem;
 
 	/// <summary>
 	/// The amount of the item in the inventory slot. Not applicable for non-stackable items.
 	/// </summary>
 	[JsonInclude] public int Amount { get; private set; } = 1;
 
-	[JsonIgnore] public bool IsStackable => _persistentItem.Stackable;
-	[JsonIgnore] public bool MaxStackReached => _persistentItem.MaxStack <= Amount;
+	[JsonIgnore] public bool IsStackable => PersistentItem.Stackable;
+	[JsonIgnore] public bool MaxStackReached => PersistentItem.MaxStack <= Amount;
 
 	public InventorySlot( InventoryContainer inventory )
 	{
@@ -33,37 +33,37 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	[JsonIgnore] public InventoryContainer InventoryContainer { get; set; }
 
-	[JsonIgnore] public bool HasItem => _persistentItem != null;
+	[JsonIgnore] public bool HasItem => PersistentItem != null;
 
 	public void SetItem( TItem item )
 	{
-		_persistentItem = item;
+		PersistentItem = item;
 		InventoryContainer.OnChange();
 	}
 
 	public TItem GetItem()
 	{
-		return _persistentItem;
+		return PersistentItem;
 	}
 
 	public T GetItem<T>() where T : TItem
 	{
-		return (T)_persistentItem;
+		return (T)PersistentItem;
 	}
 
 	public string GetName()
 	{
-		return _persistentItem.GetName();
+		return PersistentItem.GetName();
 	}
 	
 	public string GetIcon()
 	{
-		return _persistentItem.GetIcon();
+		return PersistentItem.GetIcon();
 	}
 	
 	public Texture GetIconTexture()
 	{
-		return _persistentItem.GetIconTexture();
+		return PersistentItem.GetIconTexture();
 	}
 
 	public void Delete()
@@ -88,21 +88,21 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 	{
 
 		// abort if either item is null
-		if ( _persistentItem == null || other._persistentItem == null )
+		if ( PersistentItem == null || other.PersistentItem == null )
 		{
 			Log.Info( "CanMerge: Item is null" );
 			return false;
 		}
 
 		// abort if item types are not the same
-		if ( _persistentItem.GetType() != other._persistentItem.GetType() )
+		if ( PersistentItem.GetType() != other.PersistentItem.GetType() )
 		{
 			Log.Info( "CanMerge: Item types are not the same" );
 			return false;
 		}
 
 		// abort if either item is not stackable
-		if ( _persistentItem.Stackable == false || other._persistentItem.Stackable == false )
+		if ( PersistentItem.Stackable == false || other.PersistentItem.Stackable == false )
 		{
 			Log.Info( "CanMerge: Item is not stackable" );
 			return false;
@@ -116,15 +116,15 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		// abort if stack can't hold the amount
-		if ( _persistentItem.MaxStack < Amount + other.Amount )
+		if ( PersistentItem.MaxStack < Amount + other.Amount )
 		{
-			Log.Info( $"CanMerge: Stack cannot hold the amount ({_persistentItem.MaxStack} < {Amount + other.Amount})" );
+			Log.Info( $"CanMerge: Stack cannot hold the amount ({PersistentItem.MaxStack} < {Amount + other.Amount})" );
 			return false;
 		}
 
 		try
 		{
-			_persistentItem.CanMergeWith( other._persistentItem );
+			PersistentItem.CanMergeWith( other.PersistentItem );
 		}
 		catch ( Exception e )
 		{
@@ -163,7 +163,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		// sanity check!!!
-		if ( !_persistentItem.CanMergeWith( other._persistentItem ) )
+		if ( !PersistentItem.CanMergeWith( other.PersistentItem ) )
 		{
 			throw new Exception( "Cannot merge with slot with incompatible item" );
 		}
@@ -186,7 +186,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// other.InventoryContainer.SyncToPlayerList();
 
 		// call merge on the item, by default it does nothing
-		_persistentItem.MergeWith( other._persistentItem );
+		PersistentItem.MergeWith( other.PersistentItem );
 
 		// delete and sync this one
 		Delete();
@@ -196,7 +196,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// XLog.Info( "InventoryContainerSlot", $"Merged {other.Amount} items into slot {Index}" );
 	}
 
-	private void TakeOneOrDelete()
+	public void TakeOneOrDelete()
 	{
 		if ( !IsStackable )
 		{

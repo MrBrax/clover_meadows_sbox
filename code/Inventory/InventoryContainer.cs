@@ -541,7 +541,7 @@ public sealed partial class InventoryContainer
 		var slots = GetSlotsWithItem( item.ItemData );
 		if ( slots.Count() == 0 ) return false;
 
-		var slotWithStackSpaceLeft = slots.Where( s => s.Amount < s._persistentItem.ItemData.StackSize ).ToList();
+		var slotWithStackSpaceLeft = slots.Where( s => s.Amount < s.PersistentItem.ItemData.StackSize ).ToList();
 
 		if ( slotWithStackSpaceLeft.Count() > 0 ) return true;
 

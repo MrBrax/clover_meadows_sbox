@@ -1,0 +1,28 @@
+{
+  "Name": "Buried item",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "Placements": "Floor",
+  "CanDrop": true,
+  "DisablePickup": true,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": null,
+  "DropScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/buried_item/buried_item.prefab"
+  },
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/buried_item/buried_item.prefab"
+  },
+  "Icon": null,
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/buried_item/buried_item.prefab"
+  },
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}

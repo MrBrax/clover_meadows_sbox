@@ -1,5 +1,6 @@
 ﻿using Clover.Interactable;
 using Clover.Inventory;
+using Clover.Items;
 
 namespace Clover.Player;
 
@@ -77,7 +78,7 @@ public class PlayerInteract : Component
 				return;
 			}
 		}
-		
+
 		Log.Warning( "No pickupable node found" );
 	}
 
@@ -87,6 +88,15 @@ public class PlayerInteract : Component
 		{
 			if ( collider.GameObject.Components.TryGet<IPickupable>( out var pickupable ) )
 			{
+				if ( collider.GameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+				{
+					if ( worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
+					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop )
+					{
+						continue;
+					}
+				}
+
 				return pickupable;
 			}
 		}
@@ -102,6 +112,17 @@ public class PlayerInteract : Component
 		{
 			if ( collider.GameObject.Components.TryGet<IInteract>( out var interactable ) )
 			{
+				if ( collider.GameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+				{
+					if ( worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
+					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop &&
+					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Wall
+					   )
+					{
+						continue;
+					}
+				}
+
 				return interactable;
 			}
 		}
