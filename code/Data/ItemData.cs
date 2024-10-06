@@ -15,27 +15,27 @@ public class ItemData : GameResource
 
 	[Property, TextArea] public string Description { get; set; }
 
-	[Property] public int Width { get; set; } = 1;
-	[Property] public int Height { get; set; } = 1;
+	[Property, Group("World")] public int Width { get; set; } = 1;
+	[Property, Group("World")] public int Height { get; set; } = 1;
 
-	[Property] // default to floor and underground
+	[Property, Group("World")] // default to floor and underground
 	public World.ItemPlacement Placements { get; set; } = World.ItemPlacement.Floor | World.ItemPlacement.Underground;
 
-	[Property] public bool CanDrop { get; set; } = true;
-	[Property] public bool DisablePickup { get; set; } = false;
+	[Property, Group("Inventory")] public bool CanDrop { get; set; } = true;
+	[Property, Group("Inventory")] public bool DisablePickup { get; set; } = false;
 
-	[Property] public bool IsStackable { get; set; } = false;
+	[Property, Group("Inventory")] public bool IsStackable { get; set; } = false;
 
 	[Property, ShowIf( nameof(IsStackable), true )]
 	public int StackSize { get; set; } = 1;
 
-	[Property] public GameObject ModelScene { get; set; }
-	[Property] public GameObject DropScene { get; set; }
-	[Property] public GameObject PlaceScene { get; set; }
+	[Property, Group("Scenes")] public GameObject ModelScene { get; set; }
+	[Property, Group("Scenes")] public GameObject DropScene { get; set; }
+	[Property, Group("Scenes")] public GameObject PlaceScene { get; set; }
+	[Property, ReadOnly, Group("Scenes")] public virtual GameObject DefaultTypeScene => PlaceScene;
 
 	[Property, ImageAssetPath] public string Icon { get; set; }
 
-	public virtual GameObject DefaultTypeScene => PlaceScene;
 
 	public static T GetById<T>( string id ) where T : ItemData
 	{

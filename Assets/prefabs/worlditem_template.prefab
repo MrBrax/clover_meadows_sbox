@@ -1,0 +1,61 @@
+{
+  "RootObject": {
+    "__guid": "551ab4e4-90be-4111-a111-bab232b1f0a7",
+    "Flags": 0,
+    "Name": "worlditem_template",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "b033a698-14b0-4275-ac76-d2842f19d9e1",
+        "CanPickupSimple": false,
+        "Size": "1,1"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "26bbce29-4298-4d07-becf-e620a8868d1a",
+        "Layer": 0
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "316b5fa3-082e-4823-bf48-2ab315e18b90",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "87b70e3c-5c9e-4897-a238-ecdcc57ede12",
+            "Flags": 0,
+            "Name": "Renderer",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "12b9eded-fa12-47ed-b349-16cc20c08c6d",
+                "BodyGroups": 18446744073709551615,
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

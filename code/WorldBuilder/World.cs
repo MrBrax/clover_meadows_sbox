@@ -21,10 +21,12 @@ public sealed partial class World : Component
 
 		[Icon( "waves" )] Floor = 1 << 2,
 
-
+		[Description( "Items dug into the ground" )]
 		Underground = 1 << 3,
 
-		[Icon( "dashboard" )] FloorDecal = 1 << 4,
+		
+		[Icon( "dashboard" ), Description( "Special case for decals" )]
+		FloorDecal = 1 << 4,
 	}
 
 	public enum ItemPlacementType

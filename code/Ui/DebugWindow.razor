@@ -8,10 +8,11 @@
 	<h1>debug stuff</h1>
 	<section>
 		<h2>Items</h2>
-		@foreach ( var item in ResourceLibrary.GetAll<ItemData>() )
+		@foreach ( var item in ResourceLibrary.GetAll<ItemData>().OrderBy( x => x.Name ) )
 		{
-			<button @onclick=@(() => SpawnItem( item ))>
-				@item.Name
+			<button @onclick=@( () => SpawnItem( item ) )>
+				<img src=@item.GetIcon() />
+				<span>@item.Name</span>
 			</button>
 		}
 	</section>

@@ -30,5 +30,12 @@ DebugWindow {
 		&:hover {
 			background-color: rgba(0, 0, 0, 0.8);
 		}
+		gap: 10px;
+		align-items: center;
+		align-content: center;
+		img {
+			width: 30px;
+			height: 30px;
+		}
 	}
 }
