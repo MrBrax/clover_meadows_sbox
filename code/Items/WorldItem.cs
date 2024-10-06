@@ -71,13 +71,23 @@ public class WorldItem : Component, IPickupable
 
 		base.OnEnabled();
 
-		/*BackupPrefabSource();
-
+		BackupPrefabSource();
+		/*
 		if ( Transform.Position != Vector3.Zero )
 		{
 			// Log.Warning( $"WorldObject {GameObject.Name} has no position set" );
 			SetPosition( Transform.Position );
 		}*/
+	}
+
+	private void BackupPrefabSource()
+	{
+		// Log.Info( $"WorldItem {GameObject.Name} has prefab source {GameObject.PrefabInstanceSource}, backup is {Prefab}" );
+		if ( !string.IsNullOrEmpty( GameObject.PrefabInstanceSource ) && GameObject.PrefabInstanceSource != Prefab )
+		{
+			Log.Error( $"WorldItem {GameObject.Name} has prefab source {GameObject.PrefabInstanceSource}, backup is {Prefab}" );
+			Prefab = GameObject.PrefabInstanceSource;
+		}
 	}
 
 	private void GameObjectTransformChanged()

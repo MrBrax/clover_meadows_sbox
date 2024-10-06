@@ -130,6 +130,11 @@ public sealed partial class World
 
 			// nodeLink.LoadItemData();
 			UpdateTransform( nodeLink );
+			
+			foreach ( var pos in nodeLink.GetGridPositions( true ) )
+			{
+				_nodeLinkGridMap[pos] = nodeLink;
+			}
 
 			gameObject.NetworkSpawn();
 		}

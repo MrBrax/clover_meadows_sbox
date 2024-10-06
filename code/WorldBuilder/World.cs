@@ -79,6 +79,8 @@ public sealed partial class World : Component
 	[Sync] private Dictionary<Vector2Int, float> _tileHeights { get; set; } = new();
 
 	private Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
+	
+	private Dictionary<Vector2Int, WorldNodeLink> _nodeLinkGridMap = new();
 
 	[Sync] public int Layer { get; set; }
 
@@ -517,6 +519,12 @@ public sealed partial class World : Component
 		UpdateTransform( nodeLink );
 		
 		gameObject.Name = nodeLink.GetName();
+		
+		// add node link to grid map
+		foreach ( var pos in nodeLink.GetGridPositions( true ) )
+		{
+			_nodeLinkGridMap[pos] = nodeLink;
+		}
 
 		gameObject.NetworkSpawn();
 
@@ -608,19 +616,23 @@ public sealed partial class World : Component
 			// "rotate" the offset based on the item's rotation
 			if ( nodeLink.GridRotation == ItemRotation.North )
 			{
-				offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
+				// offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
+				offset = new Vector3( itemWidth * GridSizeCenter, itemHeight * GridSizeCenter, 0 );
 			}
 			else if ( nodeLink.GridRotation == ItemRotation.East )
 			{
-				offset = new Vector3( itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
+				// offset = new Vector3( itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
+				offset = new Vector3( itemHeight * GridSizeCenter, itemWidth * GridSizeCenter, 0 );
 			}
 			else if ( nodeLink.GridRotation == ItemRotation.South )
 			{
-				offset = new Vector3( itemWidth * GridSizeCenter, 0, -itemHeight * GridSizeCenter );
+				// offset = new Vector3( itemWidth * GridSizeCenter, 0, -itemHeight * GridSizeCenter );
+				offset = new Vector3( -itemWidth * GridSizeCenter, -itemHeight * GridSizeCenter, 0 );
 			}
 			else if ( nodeLink.GridRotation == ItemRotation.West )
 			{
-				offset = new Vector3( -itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
+				// offset = new Vector3( -itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
+				offset = new Vector3( -itemHeight * GridSizeCenter, -itemWidth * GridSizeCenter, 0 );
 			}
 		}
 		else
@@ -681,6 +693,13 @@ public sealed partial class World : Component
 				_nodeLinkMap.Remove( nodeLink.Node );
 				nodeLink.DestroyNode();
 				itemsDict.Remove( placement );
+				
+				// remove all entries in grid map containing this node
+				foreach ( var entry in _nodeLinkGridMap.Where( x => x.Value == nodeLink ).ToList() )
+				{
+					_nodeLinkGridMap.Remove( entry.Key );
+				}
+				
 				if ( itemsDict.Count == 0 )
 				{
 					Log.Info( $"Removed last item at {position}" );
@@ -814,7 +833,25 @@ public sealed partial class World : Component
 	protected override void OnUpdate()
 	{
 		base.OnUpdate();
+
+		if ( !Game.IsEditor || Gizmo.Camera == null ) return;
 		
-		// Gizmo.Draw.Grid( Gizmo.GridAxis.XY, 32f );
+		Gizmo.Draw.Grid( Gizmo.GridAxis.XY, 32f );
+		
+		/*foreach ( var pos in _blockedTiles )
+		{
+			Gizmo.Draw.Text( pos.ToString(), new Transform( ItemGridToWorld( pos ) ) );
+		}
+		
+		foreach ( var item in Items.Values.SelectMany( x => x.Values ) )
+		{
+			Gizmo.Draw.Text( item.GridPosition.ToString(), new Transform( ItemGridToWorld( item.GridPosition ) ) );
+		}*/
+
+		foreach ( var item in _nodeLinkGridMap )
+		{
+			Gizmo.Draw.Text( $"{item.Key} {item.Value.GetName()}", new Transform( ItemGridToWorld( item.Key ) ) );
+		}
+		
 	}
 }

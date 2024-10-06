@@ -1,0 +1,121 @@
+{
+  "RootObject": {
+    "__guid": "6a090e65-0b17-4d34-bcae-edc2aa434eb6",
+    "Flags": 0,
+    "Name": "test2",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "e1f5e2ba-5dfd-4b54-b453-f6b4edf85f8e",
+        "Layer": 0
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "55eec3f5-b571-41e9-b7ec-1dec158fff1e",
+        "CanPickupSimple": true,
+        "ItemData": "items/test/test2.item",
+        "Prefab": "items/test/test2.prefab",
+        "Size": "1,2"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "9d953747-0304-4ed7-baa5-3f4ba9c37455",
+        "Center": "0,0,16",
+        "IsTrigger": false,
+        "Scale": "32,64,32",
+        "Static": true
+      },
+      {
+        "__type": "Clover.Interactable.Light",
+        "__guid": "019f62e8-f1ad-4fbe-8061-b35cecc519fc",
+        "__enabled": false,
+        "IsOn": true,
+        "LightSwitchSound": "sounds/interact/lightswitch.sound",
+        "Targets": [
+          {
+            "_type": "gameobject",
+            "go": "5afd13e9-9ffc-47f7-a8b0-c0f7313c28fa"
+          }
+        ]
+      },
+      {
+        "__type": "Clover.Interactable.Sittable",
+        "__guid": "f1ce8783-5d5f-4f1f-83ab-fd4ea18c7b3b",
+        "Seats": [
+          {
+            "_type": "component",
+            "component_id": "949903b6-4df9-4b3f-b90f-d1463c2cd619",
+            "go": "26a9bc1d-0411-48e3-a12c-d34b1e59dd3a",
+            "component_type": "SittableNode"
+          }
+        ]
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "f0a25c5e-4d41-471e-81fc-bd84d32404ea",
+        "Flags": 0,
+        "Name": "Object",
+        "Scale": "0.8,1.7,0.8",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "ca59ecda-187f-4340-a4d2-1a1be8c85e1d",
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/citizen_props/crate01.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "5afd13e9-9ffc-47f7-a8b0-c0f7313c28fa",
+        "Flags": 0,
+        "Name": "Point Light",
+        "Position": "0,0,16",
+        "Tags": "light_point,light",
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "05294f53-136f-4d4f-a33c-fa551f944256",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 400,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "26a9bc1d-0411-48e3-a12c-d34b1e59dd3a",
+        "Flags": 0,
+        "Name": "Seat",
+        "Position": "-2.464873,0,11.35362",
+        "Components": [
+          {
+            "__type": "Clover.Components.SittableNode",
+            "__guid": "949903b6-4df9-4b3f-b90f-d1463c2cd619"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}
