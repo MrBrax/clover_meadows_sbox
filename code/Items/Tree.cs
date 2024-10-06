@@ -42,7 +42,7 @@ public class Tree : Component, IPersistent, IInteract
 	protected override void OnAwake()
 	{
 		base.OnAwake();
-		StumpModel.Enabled = false;
+		if ( StumpModel.IsValid() ) StumpModel.Enabled = false;
 	}
 
 	private void SpawnFruit()
@@ -209,6 +209,7 @@ public class Tree : Component, IPersistent, IInteract
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
+		if ( FruitData == null ) return;
 		CheckGrowth();
 	}
 
@@ -242,6 +243,7 @@ public class Tree : Component, IPersistent, IInteract
 
 	public void StartInteract( PlayerCharacter player )
 	{
+		if ( FruitData == null ) return;
 		Shake();
 	}
 

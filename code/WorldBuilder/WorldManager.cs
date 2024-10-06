@@ -182,9 +182,12 @@ public class WorldManager : Component
 		
 		OnWorldLoadedRpc( data.ResourceName );
 
+		// return dummy task to shut up the compiler
+
+		await Task.Frame();
+		
 		return world;
 
-		// SetActiveWorld( index );
 	}
 
 	public async Task<World> GetWorldOrLoad( Data.WorldData data )

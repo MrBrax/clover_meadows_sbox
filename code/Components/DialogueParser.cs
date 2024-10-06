@@ -399,7 +399,7 @@ tags:
 		var line = new DialogueLine( this );
 		line.Index = _currentLine;
 
-		var indent = 0;
+		// var indent = 0;
 
 
 		/*while ( _currentSymbolIndex < _text.Length )

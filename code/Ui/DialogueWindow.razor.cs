@@ -32,7 +32,7 @@ public partial class DialogueWindow
 	private int _textIndex;
 	private string _textTarget;
 	private TimeSince _lastLetter;
-	private bool _skipped;
+	// private bool _skipped;
 
 
 	protected override void OnStart()

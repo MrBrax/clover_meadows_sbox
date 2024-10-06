@@ -1,0 +1,95 @@
+{
+  "RootObject": {
+    "__guid": "226fd5ce-e46c-4a6e-a700-225d8692c2a4",
+    "Flags": 0,
+    "Name": "tree_pine",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.Tree",
+        "__guid": "5e808898-4dec-470f-8f3a-806e2958124d",
+        "FallGroundSound": "items/trees/tree_shared/tree_fall_ground.sound",
+        "FallSound": "items/trees/tree_shared/tree_fall.sound",
+        "FruitHitGroundSound": "items/trees/tree_shared/item_drop.sound",
+        "GrowSpawnPoints": [],
+        "ShakeSpawnPoints": [],
+        "StumpData": "items/trees/tree_stump/tree_stump.item",
+        "TreeModel": {
+          "_type": "gameobject",
+          "go": "ddae35ed-cadf-4fc5-98e1-e80f450c2a49"
+        }
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "a10a9d14-b79c-4f12-a57e-74709a6c3b56",
+        "CanPickupSimple": false,
+        "ItemData": "items/trees/tree_pine/tree_pine.item",
+        "Prefab": "items/trees/tree_pine/tree_pine.prefab",
+        "Size": "1,1"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "52e527a2-3a9f-4937-8050-f13996725a87",
+        "Layer": 0
+      },
+      {
+        "__type": "Sandbox.HullCollider",
+        "__guid": "0246e54b-bbb9-40a2-8dd1-01c1a66920d1",
+        "BoxSize": "50,50,50",
+        "Center": "0,0,25",
+        "Height": 50,
+        "IsTrigger": false,
+        "Radius": 12,
+        "Radius2": 0,
+        "Slices": 16,
+        "Static": true,
+        "Surface": "surfaces/wood.surface",
+        "Type": "Cylinder"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "ddae35ed-cadf-4fc5-98e1-e80f450c2a49",
+        "Flags": 0,
+        "Name": "TreeModel",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "dfbd19e8-2572-48b6-8c16-3189ab8a9625",
+            "Flags": 0,
+            "Name": "Object",
+            "Scale": "0.35,0.35,0.35",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "2a9db622-9216-4154-9be9-f02747899486",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/forest/tree_9.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "ambi.tree_9#50287"
+  ],
+  "IsValid": true,
+  "__version": 1
+}

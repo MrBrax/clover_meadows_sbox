@@ -1,0 +1,25 @@
+{
+  "Name": "Palm tree",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "Placements": "Floor",
+  "CanDrop": false,
+  "DisablePickup": true,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": null,
+  "DropScene": null,
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/trees/tree_palm/tree_palm.prefab"
+  },
+  "Icon": null,
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/trees/tree_palm/tree_palm.prefab"
+  },
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}

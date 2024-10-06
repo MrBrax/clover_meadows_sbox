@@ -98,7 +98,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 		catch ( System.Exception e )
 		{
-			// Logger.LogError( e.Message );
+			Log.Error( e.Message );
 			//x NodeManager.UserInterface.ShowWarning( e.Message );
 			return;
 		}

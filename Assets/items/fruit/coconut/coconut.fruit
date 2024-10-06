@@ -1,0 +1,29 @@
+{
+  "InTreeScene": {
+    "_type": "gameobject",
+    "prefab": "items/fruit/coconut/coconut_model.prefab"
+  },
+  "Name": "Coconut",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "Placements": "Floor, Underground",
+  "CanDrop": true,
+  "DisablePickup": false,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": {
+    "_type": "gameobject",
+    "prefab": "items/fruit/coconut/coconut_model.prefab"
+  },
+  "DropScene": {
+    "_type": "gameobject",
+    "prefab": "items/fruit/coconut/coconut.prefab"
+  },
+  "PlaceScene": null,
+  "Icon": "items/fruit/apple/apple_icon.png",
+  "DefaultTypeScene": null,
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}

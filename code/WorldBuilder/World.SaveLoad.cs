@@ -9,6 +9,8 @@ public sealed partial class World
 	private string SaveFileName => $"{GameManager.Instance.SaveProfile}/worlds/{Data.ResourceName}.json";
 
 	private WorldSaveData _saveData = new();
+	
+	public Action OnSave;
 
 	public void Save()
 	{
@@ -70,6 +72,9 @@ public sealed partial class World
 		// FileSystem.Data.WriteJson( $"worlds/{Data.ResourceName}.json", saveData );
 		var json = JsonSerializer.Serialize( _saveData, GameManager.JsonOptions );
 		FileSystem.Data.WriteAllText( SaveFileName, json );
+		
+		OnSave?.Invoke();
+		Scene.RunEvent<IWorldEvent>( x => x.OnSaved() );
 	}
 
 	public void Load()
@@ -133,4 +138,9 @@ public sealed partial class World
 
 		_saveData = saveData;
 	}
+}
+
+interface IWorldEvent
+{
+	void OnSaved();
 }
