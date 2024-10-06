@@ -752,7 +752,7 @@ public sealed partial class World : Component
 			Invoke( 0.01f, () => model.Enabled = true );
 		}*/
 		
-		var modelPhysics = GetComponentsInChildren<ModelPhysics>( true ).ToList();
+		/*var modelPhysics = GetComponentsInChildren<ModelPhysics>( true ).ToList();
 		
 		foreach ( var model in modelPhysics )
 		{
@@ -764,7 +764,7 @@ public sealed partial class World : Component
 		foreach ( var model in modelPhysics )
 		{
 			model.Enabled = true;
-		}
+		}*/
 		
 	}
 
