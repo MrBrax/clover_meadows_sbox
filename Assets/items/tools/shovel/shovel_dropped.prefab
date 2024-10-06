@@ -1,0 +1,87 @@
+{
+  "RootObject": {
+    "__guid": "80072466-478f-498a-a9d9-7b773f20c6e7",
+    "Flags": 0,
+    "Name": "shovel_dropped",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.Shovel",
+        "__guid": "ac6136f3-5b76-498d-9b7e-f1df50e5cb4d",
+        "ItemData": "items/tools/shovel/shovel.tool"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "a6f942cd-48cc-4a3d-b878-920c2c9cab0b",
+        "Layer": 0
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "2ddf4810-2459-4f65-9990-ee03efaa1b26",
+        "CanPickupSimple": true,
+        "ItemData": "items/tools/shovel/shovel.tool",
+        "Prefab": "items/tools/shovel/shovel_dropped.prefab",
+        "Size": "1,1"
+      },
+      {
+        "__type": "Sandbox.HullCollider",
+        "__guid": "1e64cf9e-62ed-4dcf-bf28-66f60f68dba2",
+        "BoxSize": "50,50,50",
+        "Center": "0,0,25",
+        "Height": 50,
+        "IsTrigger": false,
+        "Radius": 16,
+        "Radius2": 0,
+        "Slices": 16,
+        "Static": false,
+        "Type": "Cylinder"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "f1d8fdb7-f4e8-43c9-947b-9c359cc721ff",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "a83de2bc-1f7d-47df-9e23-ec8472009980",
+            "Flags": 0,
+            "Name": "Object",
+            "Position": "8,8,0.5",
+            "Rotation": "0,0,0.3826835,0.9238795",
+            "Scale": "1.4,1.4,1.4",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "aa534f03-7119-4f4e-b558-edbf83c42ac1",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/3dmodelscc0/meleeweaponspack/spade/spade.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "titanovsky.spade#53827"
+  ],
+  "IsValid": true,
+  "__version": 1
+}

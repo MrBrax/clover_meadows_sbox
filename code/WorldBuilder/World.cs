@@ -305,7 +305,7 @@ public sealed partial class World : Component
 	{
 		if ( IsOutsideGrid( position ) )
 		{
-			Log.Warning( $"Position {position} is outside the grid" );
+			// Log.Warning( $"Position {position} is outside the grid" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}

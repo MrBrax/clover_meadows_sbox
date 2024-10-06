@@ -1,0 +1,64 @@
+{
+  "RootObject": {
+    "__guid": "80072466-478f-498a-a9d9-7b773f20c6e7",
+    "Flags": 0,
+    "Name": "shovel_carry",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.Shovel",
+        "__guid": "ac6136f3-5b76-498d-9b7e-f1df50e5cb4d",
+        "DigSound": "items/tools/shovel/shovel_dig.sound",
+        "FillSound": "items/tools/shovel/shovel_fill.sound",
+        "HitSound": "items/tools/shovel/shovel_hit.sound",
+        "ItemData": "items/tools/shovel/shovel.tool"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "f1d8fdb7-f4e8-43c9-947b-9c359cc721ff",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "a83de2bc-1f7d-47df-9e23-ec8472009980",
+            "Flags": 0,
+            "Name": "Object",
+            "Position": "0,7.966495,25.97393",
+            "Rotation": "0.4218444,-0.4218445,0.5674921,0.5674921",
+            "Scale": "1.6,1.6,1.6",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "aa534f03-7119-4f4e-b558-edbf83c42ac1",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/3dmodelscc0/meleeweaponspack/spade/spade.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "titanovsky.spade#53827"
+  ],
+  "IsValid": true,
+  "__version": 1
+}

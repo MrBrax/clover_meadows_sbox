@@ -135,6 +135,15 @@ public class Equips : Component
 				Log.Info( "No tool equipped" );
 			}
 		}
+
+		else if ( Input.Released( "UseTool" ) )
+		{
+			if ( HasEquippedItem( EquipSlot.Tool ) )
+			{
+				var tool = GetEquippedItem<BaseCarriable>( EquipSlot.Tool );
+				tool.OnUseUp();
+			}
+		}
 	}
 }
 

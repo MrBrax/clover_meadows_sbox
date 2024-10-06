@@ -1,4 +1,5 @@
-﻿using Clover.Carriable;
+﻿using System;
+using Clover.Carriable;
 using Clover.Inventory;
 using Clover.Persistence;
 
@@ -13,6 +14,7 @@ public class ToolData : ItemData
 	
 	public BaseCarriable SpawnCarriable()
 	{
+		if ( !CarryScene.IsValid() ) throw new Exception( $"{ResourceName} has no CarryScene" );
 		return CarryScene.Clone().GetComponent<BaseCarriable>();
 	}
 

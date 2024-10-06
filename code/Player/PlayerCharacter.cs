@@ -249,4 +249,9 @@ public sealed class PlayerCharacter : Component
 			}
 		}
 	}
+
+	public void SnapToGrid()
+	{
+		WorldPosition = World.ItemGridToWorld( World.WorldToItemGrid( WorldPosition ) );
+	}
 }

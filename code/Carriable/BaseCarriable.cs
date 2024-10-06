@@ -42,10 +42,16 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 		Holder = null;
 	}
 
+	/// <summary>
+	///  Called when you press down on the use button. Useful for holding an action like drawing a net or aiming a bow.
+	/// </summary>
 	public virtual void OnUseDown()
 	{
 	}
 
+	/// <summary>
+	///  Called when you release the use button. Useful for firing a bow or swinging a tool.
+	/// </summary>
 	public virtual void OnUseUp()
 	{
 	}

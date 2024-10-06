@@ -144,6 +144,19 @@ public class WorldNodeLink
 			Item = Persistence,
 		};
 	}
+	
+	public void RefreshPersistence()
+	{
+		foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndDescendants ) )
+		{
+			saveable.OnSave( this );
+		}
+		
+		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndDescendants ) )
+		{
+			persistent.OnSave( Persistence );
+		}
+	}
 
 	public void OnNodeLoad( PersistentWorldItem persistentItem )
 	{

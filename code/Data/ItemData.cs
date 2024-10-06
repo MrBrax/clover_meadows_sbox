@@ -5,6 +5,8 @@ using Clover.Persistence;
 namespace Clover.Data;
 
 [GameResource("Item", "item", "item")]
+[Category("Clover/Items")]
+[Icon("weekend")]
 public class ItemData : GameResource
 {
 	
@@ -139,6 +141,11 @@ public class ItemData : GameResource
 	public virtual IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
 	{
 		yield break;
+	}
+	
+	public static ItemData Get( string id )
+	{
+		return ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == id );
 	}
 	
 }

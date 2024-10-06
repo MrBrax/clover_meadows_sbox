@@ -1,0 +1,81 @@
+{
+  "RootObject": {
+    "__guid": "06b77654-1dcd-47bc-b6e7-5740e8a354f3",
+    "Flags": 0,
+    "Name": "hole",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.HullCollider",
+        "__guid": "de5cbc17-6a7d-415a-9f52-219a87ab94b3",
+        "BoxSize": "50,50,50",
+        "Center": "0,0,25",
+        "Height": 50,
+        "IsTrigger": false,
+        "Radius": 16,
+        "Radius2": 0,
+        "Slices": 16,
+        "Static": false,
+        "Type": "Cylinder"
+      },
+      {
+        "__type": "Clover.Items.Hole",
+        "__guid": "eb7d6183-13e9-4629-b5b6-8915e1839d79"
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "1f4356d2-3243-43d4-92d8-5eef2371cd6b",
+        "CanPickupSimple": false,
+        "ItemData": "items/misc/hole/hole.item",
+        "Prefab": "items/misc/hole/hole.prefab",
+        "Size": "1,1"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "26f3048f-2695-42f5-aa5d-dd9d78c25ea5",
+        "Layer": 0
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "7b45a966-a533-4688-a416-7e3c647b2cd8",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "15ca5de5-37cc-43f1-84b6-eb797c3b8f19",
+            "Flags": 0,
+            "Name": "hole",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "77a9c52c-090e-4f80-8f32-223fff9d26ac",
+                "BodyGroups": 18446744073709551615,
+                "Model": "items/misc/hole/hole.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}
