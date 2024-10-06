@@ -95,6 +95,8 @@ public class Inventory : Component
 		Sound.Play( "sounds/interact/item_pickup.sound", WorldPosition );
 		
 		nodeLink.Remove();
+		
+		Player.Save();
 
 	}
 	
