@@ -5,7 +5,7 @@ using Sandbox.Diagnostics;
 
 namespace Clover;
 
-public partial class WorldManager : Component
+public class WorldManager : Component
 {
 	public static WorldManager Instance { get; private set; }
 
@@ -118,7 +118,7 @@ public partial class WorldManager : Component
 			// await LoadWorldAsync( "res://world/worlds/island.tres" );
 			// await NodeManager.UserInterface.GetNode<Fader>( "Fade" ).FadeOutAsync();
 
-			LoadWorld( DefaultWorldData );
+			_ = LoadWorld( DefaultWorldData );
 		}
 
 		// WorldLoaded += ( World world ) => NodeManager.SettingsSaveData.ApplyWorldSettings();
@@ -170,7 +170,7 @@ public partial class WorldManager : Component
 		
 		Worlds[index] = world;
 
-		await world.Setup();
+		world.Setup();
 
 		world.Load();
 
@@ -200,7 +200,7 @@ public partial class WorldManager : Component
 		var worldData = ResourceLibrary.GetAll<Data.WorldData>().FirstOrDefault( w => w.ResourceName == id );
 		if ( worldData != null )
 		{
-			LoadWorld( worldData );
+			_ = LoadWorld( worldData );
 		}
 		else
 		{
@@ -261,7 +261,7 @@ public partial class WorldManager : Component
 		var worldData = ResourceLibrary.GetAll<Data.WorldData>().FirstOrDefault( w => w.ResourceName == id );
 		if ( worldData != null )
 		{
-			worldManager.LoadWorld( worldData );
+			_ = worldManager.LoadWorld( worldData );
 		}
 		else
 		{

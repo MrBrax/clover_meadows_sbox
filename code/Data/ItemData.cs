@@ -1,4 +1,6 @@
 ﻿using System;
+using Clover.Inventory;
+using Clover.Persistence;
 
 namespace Clover.Data;
 
@@ -126,6 +128,17 @@ public class ItemData : GameResource
 	{
 		if ( !scene.IsValid() ) return null;
 		return scene.Clone();
+	}
+	
+	public struct ItemAction
+	{
+		public string Name;
+		public Action Action;
+	}
+	
+	public virtual IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
+	{
+		yield break;
 	}
 	
 }

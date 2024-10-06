@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using Braxnet;
 using Clover.Data;
+using Clover.Interactable;
 using Clover.Persistence;
+using Clover.Player;
 
 namespace Clover.Items;
 
-public class Tree : Component, IPersistent
+public class Tree : Component, IPersistent, IInteract
 {
 	
 	[RequireComponent] public WorldItem WorldItem { get; set; }
@@ -65,6 +67,31 @@ public class Tree : Component, IPersistent
 		_hasFruit = true;
 	}
 	
+	private async void Shake()
+	{
+		if ( IsShaking ) return;
+
+		IsShaking = true;
+
+		/*var tween = GetTree().CreateTween();
+		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, 5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.In );
+		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, -5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.InOut );
+		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, 5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.InOut );
+		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, 0 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
+		await ToSignal( tween, Tween.SignalName.Finished );*/
+		
+		var tween = TweenManager.CreateTween();
+		tween.AddRotation( TreeModel, Rotation.FromRoll( 5 ), 0.2f ).SetEasing( Sandbox.Utility.Easing.QuadraticOut );
+		tween.AddRotation( TreeModel, Rotation.FromRoll( -5 ), 0.2f ).SetEasing( Sandbox.Utility.Easing.QuadraticInOut );
+		tween.AddRotation( TreeModel, Rotation.FromRoll( 5 ), 0.2f ).SetEasing( Sandbox.Utility.Easing.QuadraticInOut );
+		tween.AddRotation( TreeModel, Rotation.FromRoll( 0 ), 0.2f ).SetEasing( Sandbox.Utility.Easing.QuadraticOut );
+		await tween.Wait();
+
+		await DropFruitAsync();
+
+		IsShaking = false;
+	}
+	
 	public async Task DropFruitAsync()
 	{
 		if ( IsDroppingFruit ) return;
@@ -82,23 +109,7 @@ public class Tree : Component, IPersistent
 			var growNodeRaw = growPoint.Children.FirstOrDefault();
 			var shakeNodeRaw = shakePoint;
 
-			// Log.Info( $"growNodeRaw: {growNodeRaw}" );
-			// Log.Info( $"shakeNodeRaw: {shakeNodeRaw}" );
-
-			/* if ( !IsInstanceValid( growNode ) || !IsInstanceValid( spawnNode ) )
-			{
-				throw new Exception( "growNode or spawnNode is null" );
-			} */
-
-			/*if ( growNodeRaw is not Node3D growNode || shakeNodeRaw is not Node3D spawnNode )
-			{
-				throw new Exception( "growNode or spawnNode is null" );
-			}*/
-			
-			var spawnNode = shakeNodeRaw;
-			var growNode = growNodeRaw;
-
-			var endPos = spawnNode.WorldPosition + Vector3.Up * 8f;
+			var endPos = shakeNodeRaw.WorldPosition + Vector3.Up * 8f;
 
 			// if ( child is not Node3D growNode ) continue;
 			/*var tween = GetTree().CreateTween();
@@ -117,9 +128,14 @@ public class Tree : Component, IPersistent
 			} ) );*/
 
 			var tween = TweenManager.CreateTween();
-			var p = tween.AddPosition( growNode, endPos, 0.7f + Random.Shared.Float() * 0.5f );
+			var p = tween.AddPosition( growNodeRaw, endPos, 0.7f + Random.Shared.Float() * 0.5f );
 			p.SetEasing( Sandbox.Utility.Easing.BounceOut );
 			p.SetDelay( Random.Shared.Float() * 0.5f );
+			
+			p.OnFinish += () =>
+			{
+				Sound.Play( FruitHitGroundSound, shakePoint.WorldPosition );
+			};
 
 			/* await ToSignal( tween, Tween.SignalName.Finished );
 
@@ -216,5 +232,15 @@ public class Tree : Component, IPersistent
 			if ( !shakePoint.IsValid() ) continue;
 			Gizmo.Draw.LineSphere( shakePoint.LocalPosition, 8f );
 		}
+	}
+
+	public void StartInteract( PlayerCharacter player )
+	{
+		Shake();
+	}
+
+	public void FinishInteract( PlayerCharacter player )
+	{
+		
 	}
 }

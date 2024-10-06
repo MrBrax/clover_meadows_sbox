@@ -105,6 +105,27 @@
                 "Tint": "1,1,1,1"
               }
             ]
+          },
+          {
+            "__guid": "e30a5a27-9220-4230-b883-88d0d37f3851",
+            "Flags": 0,
+            "Name": "GrowPos1",
+            "Position": "7.741299,-45.52605,91.8504",
+            "Enabled": true
+          },
+          {
+            "__guid": "76ce34a3-9aa6-49a7-b654-adeb4594603d",
+            "Flags": 0,
+            "Name": "GrowPos2",
+            "Position": "12.58341,-1.462076,115.626",
+            "Enabled": true
+          },
+          {
+            "__guid": "49c3b3cb-8ca9-4bdc-87b1-c59fe553eb26",
+            "Flags": 0,
+            "Name": "GrowPos3",
+            "Position": "12.47574,33.27547,93.85516",
+            "Enabled": true
           }
         ]
       },
@@ -137,27 +158,6 @@
             ]
           }
         ]
-      },
-      {
-        "__guid": "49c3b3cb-8ca9-4bdc-87b1-c59fe553eb26",
-        "Flags": 0,
-        "Name": "GrowPos3",
-        "Position": "12.47574,33.27547,93.85516",
-        "Enabled": true
-      },
-      {
-        "__guid": "76ce34a3-9aa6-49a7-b654-adeb4594603d",
-        "Flags": 0,
-        "Name": "GrowPos2",
-        "Position": "12.58341,-1.462076,115.626",
-        "Enabled": true
-      },
-      {
-        "__guid": "e30a5a27-9220-4230-b883-88d0d37f3851",
-        "Flags": 0,
-        "Name": "GrowPos1",
-        "Position": "7.741299,-45.52605,91.8504",
-        "Enabled": true
       },
       {
         "__guid": "376fb9ce-e491-4754-8ae4-aa38a5b2b0dc",

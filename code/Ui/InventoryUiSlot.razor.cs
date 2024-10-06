@@ -223,15 +223,24 @@ public partial class InventoryUiSlot
 		
 		var item = Slot.GetItem();
 		
-		if ( item.ItemData is ToolData toolData )
+		/*if ( item.ItemData is ToolData toolData )
 		{
 			_contextMenu.AddItem( "Equip", () =>
 			{
 				Slot.Equip();
 			} );
+		}*/
+		
+		foreach ( var action in item.ItemData.GetActions( Slot ) )
+		{
+			_contextMenu.AddItem( action.Name, () =>
+			{
+				action.Action();
+			} );
 		}
+		
 
-		if ( item.ItemData.PlaceScene != null )
+		if ( item.ItemData.PlaceScene != null && item.ItemData.CanDrop )
 		{
 			_contextMenu.AddItem( "Place", () =>
 			{
@@ -239,7 +248,7 @@ public partial class InventoryUiSlot
 			} );
 		}
 
-		if ( item.ItemData.DropScene != null )
+		if ( item.ItemData.DropScene != null && item.ItemData.CanDrop )
 		{
 			_contextMenu.AddItem( "Drop", () =>
 			{

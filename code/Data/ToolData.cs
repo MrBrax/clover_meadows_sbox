@@ -1,4 +1,6 @@
 ﻿using Clover.Carriable;
+using Clover.Inventory;
+using Clover.Persistence;
 
 namespace Clover.Data;
 
@@ -17,5 +19,10 @@ public class ToolData : ItemData
 	public override string GetIcon()
 	{
 		return Icon ?? "ui/icons/default_tool.png";
+	}
+	
+	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
+	{
+		yield return new ItemAction { Name = "Equip", Action = slot.Equip };
 	}
 }

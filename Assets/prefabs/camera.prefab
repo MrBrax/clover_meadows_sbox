@@ -68,6 +68,14 @@
         "__type": "Sandbox.Sharpen",
         "__guid": "0bffee5e-19f2-41c4-88f9-faefbcce6bf4",
         "Scale": 0.2
+      },
+      {
+        "__type": "Sandbox.AmbientOcclusion",
+        "__guid": "0063d5a6-0e58-4ea0-9d93-a97cdef4af8f",
+        "FalloffDistance": 1,
+        "Intensity": 8,
+        "Quality": "High",
+        "Radius": 32
       }
     ],
     "Children": [],

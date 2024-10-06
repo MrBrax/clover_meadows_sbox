@@ -737,7 +737,7 @@ public sealed partial class World : Component
 		return new Vector2Int( x, y );
 	}
 
-	public async Task Setup()
+	public void Setup()
 	{
 		var layerObjects = GetComponentsInChildren<WorldLayerObject>( true );
 		foreach ( var layerObject in layerObjects )

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Sandbox.Network;
 
 namespace Braxnet;
 
@@ -69,6 +68,8 @@ public class BaseTween
 	public bool IsFinished => StartTime > Duration;
 	
 	public Func<float, float> EaseFunction;
+
+	public bool IsSetup;
 	
 	/// <summary>
 	///  Execute before the tween starts
@@ -151,7 +152,7 @@ public sealed class PositionTween : BaseTween
 	public override void Setup()
 	{
 		base.Setup();
-		StartPosition = GameObject.Transform.Position;
+		StartPosition = GameObject.WorldPosition;
 	}
 	
 	public override void Update()
@@ -192,7 +193,7 @@ public sealed class ScaleTween : BaseTween
 	public override void Setup()
 	{
 		base.Setup();
-		StartScale = GameObject.Transform.Scale;
+		StartScale = GameObject.WorldScale;
 	}
 	
 	public override void Update()
@@ -205,11 +206,11 @@ public sealed class ScaleTween : BaseTween
 		
 		if ( EaseFunction != null )
 		{
-			GameObject.Transform.Scale = Vector3.Lerp( StartScale, EndScale, EaseFunction( Math.Clamp( StartTime / Duration, 0, 1 ) ) );
+			GameObject.WorldScale = Vector3.Lerp( StartScale, EndScale, EaseFunction( Math.Clamp( StartTime / Duration, 0, 1 ) ) );
 		}
 		else
 		{
-			GameObject.Transform.Scale = Vector3.Lerp( StartScale, EndScale, Math.Clamp( StartTime / Duration, 0, 1 ) );
+			GameObject.WorldScale = Vector3.Lerp( StartScale, EndScale, Math.Clamp( StartTime / Duration, 0, 1 ) );
 		}
 		
 		if ( IsFinished )
@@ -272,6 +273,8 @@ public sealed class Tween
 	
 	private TaskCompletionSource<bool> _taskCompletionSource;
 	
+	// private int _currentTweenIndex;
+	
 	public FloatTween AddFloat( GameObject gameObject, float duration, Action<GameObject, float> onUpdate, Action onFinish = null )
 	{
 		var tween = new FloatTween
@@ -282,35 +285,8 @@ public sealed class Tween
 			OnFinish = onFinish,
 		};
 		_propertyTweens.Add( tween );
-		tween.Setup();
+		// tween.Setup();
 		return tween;
-	}
-	
-	public void Update()
-	{
-		foreach ( var tween in _propertyTweens.ToList() )
-		{
-			tween.Update();
-			if ( tween.IsFinished )
-			{
-				// Log.Info( "PropertyTween finished" );
-				tween.Cleanup();
-				_propertyTweens.Remove( tween );
-			}
-		}
-		
-		if ( IsFinished )
-		{
-			// Log.Info( "Tween finished" );
-			OnFinish?.Invoke();
-			_taskCompletionSource?.SetResult( true );
-		}
-	}
-	
-	public async Task Wait()
-	{
-		_taskCompletionSource = new TaskCompletionSource<bool>();
-		await _taskCompletionSource.Task;
 	}
 	
 	/*public TimeSince StartTime;
@@ -366,7 +342,7 @@ public sealed class Tween
 			EndPosition = transformPosition,
 		};
 		_propertyTweens.Add( tween );
-		tween.Setup();
+		// tween.Setup();
 		return tween;
 	}
 	
@@ -379,7 +355,7 @@ public sealed class Tween
 			EndScale = transformScale,
 		};
 		_propertyTweens.Add( tween );
-		tween.Setup();
+		// tween.Setup();
 		return tween;
 	}
 	
@@ -392,7 +368,64 @@ public sealed class Tween
 			EndRotation = rotation,
 		};
 		_propertyTweens.Add( tween );
-		tween.Setup();
+		// tween.Setup();
 		return tween;
+	}
+	
+	public void Update()
+	{
+		/*foreach ( var tween in _propertyTweens.ToList() )
+		{
+			tween.Update();
+			if ( tween.IsFinished )
+			{
+				// Log.Info( "PropertyTween finished" );
+				tween.Cleanup();
+				_propertyTweens.Remove( tween );
+			}
+		}*/
+		
+		if ( _propertyTweens.Count == 0 ) return;
+		
+		var currentTween = _propertyTweens.ElementAtOrDefault( 0 );
+
+		if ( currentTween == null )
+		{
+			Log.Warning( $"Tween is null, no tweens left" );
+			return;
+		}
+		
+		if ( !currentTween.IsSetup )
+		{
+			currentTween.Setup();
+			currentTween.IsSetup = true;
+		}
+		
+		currentTween.Update();
+		
+		if ( currentTween.IsFinished )
+		{
+			Log.Info( $"Tween finished, {_propertyTweens.Count} tweens left" );
+			currentTween.Cleanup();
+			_propertyTweens.RemoveAt( 0 );
+			
+			/*if ( _propertyTweens.Count > 0 )
+			{
+				_currentTweenIndex = Math.Clamp( _currentTweenIndex + 1, 0, _propertyTweens.Count - 1 );
+			}*/
+		}
+		
+		if ( IsFinished )
+		{
+			// Log.Info( "Tween finished" );
+			OnFinish?.Invoke();
+			_taskCompletionSource?.SetResult( true );
+		}
+	}
+	
+	public async Task Wait()
+	{
+		_taskCompletionSource = new TaskCompletionSource<bool>();
+		await _taskCompletionSource.Task;
 	}
 }
