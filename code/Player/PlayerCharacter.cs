@@ -11,6 +11,7 @@ namespace Clover.Player;
 
 public sealed class PlayerCharacter : Component
 {
+	[ActionGraphNode( "player.local" ), Title( "Local Player" ), Icon( "face" ), Category( "Clover" )]
 	public static PlayerCharacter Local =>
 		Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => !x.IsProxy );
 
@@ -37,7 +38,7 @@ public sealed class PlayerCharacter : Component
 	public World World => WorldLayerObject.World;
 
 	public Action<World> OnWorldChanged { get; set; }
-	
+
 	public bool InCutscene { get; set; }
 	public Vector3? CutsceneTarget { get; set; }
 

@@ -5,7 +5,8 @@ namespace Braxnet;
 public sealed class ParticleManager : Component
 {
 	
-	[ActionGraphNode("particlemanager.instance"), Title("Particle Manager Instance")]
+	[ActionGraphNode("particlemanager.instance"), Title("Particle Manager Instance"), Icon("cloud"),
+	 Category( "Clover" )]
 	public static ParticleManager Instance => Game.ActiveScene.GetAllComponents<ParticleManager>().FirstOrDefault();
 
 	[Property] public GameObject Poof { get; set; }
