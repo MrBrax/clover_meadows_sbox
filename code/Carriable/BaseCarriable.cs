@@ -1,4 +1,5 @@
-﻿using Clover.Data;
+﻿using System;
+using Clover.Data;
 using Clover.Inventory;
 using Clover.Items;
 using Clover.Persistence;
@@ -7,7 +8,6 @@ using Clover.Player;
 namespace Clover.Carriable;
 
 [Category( "Clover/Carriable" )]
-[Hide]
 [Icon( "build" )]
 public class BaseCarriable : Component, IPersistent, IPickupable
 {
@@ -19,6 +19,18 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 	public PlayerCharacter Player => Holder.GetComponent<PlayerCharacter>();
 
 	[Property] public ToolData ItemData { get; set; }
+	
+	public delegate void OnEquipActionEvent( GameObject holder );
+	[Property] public OnEquipActionEvent OnEquipAction { get; set; }
+	
+	public delegate void OnUnequipActionEvent();
+	[Property] public OnUnequipActionEvent OnUnequipAction { get; set; }
+	
+	public delegate void OnUseDownActionEvent();
+	[Property] public OnUseDownActionEvent OnUseDownAction { get; set; }
+	
+	public delegate void OnUseUpActionEvent();
+	[Property] public OnUseUpActionEvent OnUseUpAction { get; set; }
 
 	public void SetHolder( GameObject holder )
 	{

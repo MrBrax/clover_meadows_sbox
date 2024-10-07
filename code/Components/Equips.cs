@@ -83,6 +83,7 @@ public class Equips : Component
 		{
 			carriable.SetHolder( GameObject );
 			carriable.OnEquip( GameObject ); // TODO: don't hardcode player, since NPCs can use items too
+			carriable.OnEquipAction?.Invoke( GameObject );
 		}
 
 		OnEquippedItemChanged?.Invoke( slot, item );
@@ -124,6 +125,7 @@ public class Equips : Component
 				{
 					// tool.OnUse( GetComponent<PlayerCharacter>() );
 					tool.OnUseDown();
+					tool.OnUseDownAction?.Invoke();
 				}
 				else
 				{
@@ -142,6 +144,7 @@ public class Equips : Component
 			{
 				var tool = GetEquippedItem<BaseCarriable>( EquipSlot.Tool );
 				tool.OnUseUp();
+				tool.OnUseUpAction?.Invoke();
 			}
 		}
 	}
