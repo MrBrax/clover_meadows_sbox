@@ -7,7 +7,10 @@ public class WorldSaveData
 	
 	public string Name;
 	// public Dictionary<Vector2Int, Dictionary<World.ItemPlacement, NodeEntry>> Items = new();
+	
 	public List<PersistentWorldItem> Items = new();
+	
+	public List<PersistentWorldObject> Objects = new();
 
 	/*public struct NodeEntry
 	{

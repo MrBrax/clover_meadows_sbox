@@ -8,9 +8,9 @@
       {
         "__type": "Sandbox.Rigidbody",
         "__guid": "767ed163-3600-4bbb-b422-a2857e6abba4",
-        "AngularDamping": 0,
+        "AngularDamping": 0.5,
         "Gravity": true,
-        "LinearDamping": 0.1,
+        "LinearDamping": 0.5,
         "Locking": {},
         "MassCenterOverride": "0,0,0",
         "MassOverride": 10,

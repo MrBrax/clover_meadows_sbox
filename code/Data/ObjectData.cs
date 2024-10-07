@@ -8,5 +8,9 @@ public class ObjectData : GameResource // TODO: better name
 	[Property, TextArea] public string Description { get; set; }
 	
 	[Property] public GameObject Prefab { get; set; }
-	
+
+	public static ObjectData Get( string objectId )
+	{
+		return ResourceLibrary.GetAll<ObjectData>().FirstOrDefault( x => x.ResourceName == objectId );
+	}
 }

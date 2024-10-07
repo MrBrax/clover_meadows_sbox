@@ -12,6 +12,7 @@ namespace Clover.Persistence;
 public class PersistentItem
 {
 	[Property] public string ItemId { get; set; }
+	[Property] public string ObjectId { get; set; }
 	
 	[Property] public string PackageIdent { get; set; }
 	
@@ -22,7 +23,13 @@ public class PersistentItem
 	[JsonIgnore]
 	public ItemData ItemData
 	{
-		get => ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == ItemId );
+		get => ItemData.Get( ItemId );
+	}
+	
+	[JsonIgnore]
+	public ObjectData ObjectData
+	{
+		get => ObjectData.Get( ObjectId );
 	}
 
 	[JsonIgnore] public virtual bool IsStackable => ItemData.IsStackable;
@@ -144,6 +151,11 @@ public class PersistentItem
 		if ( gameObject.Components.TryGet<IPersistent>( out var persistent2 ) )
 		{
 			persistent2.OnSave( persistentItem );
+		}
+		
+		if ( gameObject.Components.TryGet<WorldObject>( out var worldObject ) )
+		{
+			persistentItem.ObjectId = worldObject.ObjectData?.ResourceName;
 		}
 
 		var nodeLink = WorldManager.Instance.GetWorldNodeLink( gameObject );

@@ -1,0 +1,11 @@
+{
+  "Name": "Scooter",
+  "Description": null,
+  "Prefab": {
+    "_type": "gameobject",
+    "prefab": "vehicles/scooter/scooter.prefab"
+  },
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}

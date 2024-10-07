@@ -252,7 +252,6 @@
         "Flags": 0,
         "Name": "Scooter",
         "Position": "1632,384,0.00009798329",
-        "Enabled": true,
         "__Prefab": "vehicles/scooter/scooter.prefab",
         "__PrefabVariables": {}
       },
@@ -272,7 +271,6 @@
         "Name": "soccerball",
         "Position": "1664,511.9997,12",
         "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000002384186",
-        "Enabled": true,
         "__Prefab": "items/misc/soccerball/soccerball.prefab",
         "__PrefabVariables": {}
       }

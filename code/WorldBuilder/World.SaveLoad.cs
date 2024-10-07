@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json;
+using Clover.Items;
 using Clover.Persistence;
 
 namespace Clover;
@@ -37,23 +38,20 @@ public sealed partial class World
 				var prefabPath = nodeLink.GetPrefabPath();
 				nodeLink.PrefabPath = prefabPath;
 
-				/*var persistentItem = new PersistentWorldItem
-				{
-					Position = position,
-					Placement = placement,
-					Rotation = nodeLink.GridRotation,
-					PlacementType = nodeLink.PlacementType,
-					PrefabPath = prefabPath,
-					ItemId = nodeLink.ItemId,
-					Item = nodeLink.GetPersistentItem()
-				};*/
-
 				var persistentItem = nodeLink.OnNodeSave();
 
 				savedItems.Add( persistentItem );
 			}
 		}
+		
+		var savedObjects = new List<PersistentWorldObject>();
 
+		foreach ( var worldObject in Scene.GetAllComponents<WorldObject>().Where( x => x.WorldLayerObject.Layer == Layer ) )
+		{
+			Log.Info( $"Saving object {worldObject}" );
+			var persistentObject = worldObject.OnObjectSave();
+			savedObjects.Add( persistentObject );
+		}
 
 		// var saveData = new WorldSaveData { Name = Data.ResourceName, Items = savedItems, LastSave = DateTime.Now };
 
@@ -64,10 +62,12 @@ public sealed partial class World
 		}
 
 		_saveData.LastSave = DateTime.Now;
-
-		_saveData.Items = savedItems;
-
+		
 		Log.Info( $"Saving {savedItems.Count} items" );
+		_saveData.Items = savedItems;
+		
+		Log.Info( $"Saving {savedObjects.Count} objects" );
+		_saveData.Objects = savedObjects;
 
 		FileSystem.Data.CreateDirectory( $"{GameManager.Instance?.SaveProfile}/worlds" );
 
@@ -140,8 +140,30 @@ public sealed partial class World
 
 			gameObject.NetworkSpawn();
 		}
-
+		
 		Log.Info( $"Loaded {saveData.Items.Count} items" );
+		
+		foreach ( var worldObject in saveData.Objects )
+		{
+			Log.Info( $"Loading object {worldObject}" );
+			var gameObject = Scene.CreateObject();
+			gameObject.SetPrefabSource( worldObject.PrefabPath );
+			gameObject.UpdateFromPrefab();
+			
+			if ( !gameObject.Components.TryGet<WorldObject>( out var worldObjectComponent ) )
+			{
+				Log.Warning( $"No WorldObject component found on {gameObject}" );
+				gameObject.Destroy();
+				continue;
+			}
+			
+			worldObjectComponent.WorldLayerObject.SetLayer( Layer );
+			worldObjectComponent.OnObjectLoad( worldObject );
+			
+			gameObject.NetworkSpawn();
+		}
+		
+		Log.Info( $"Loaded {saveData.Objects.Count} objects" );
 
 		_saveData = saveData;
 	}

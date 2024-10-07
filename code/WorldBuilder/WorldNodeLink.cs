@@ -124,7 +124,7 @@ public class WorldNodeLink
 	{
 		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
-			Log.Info( $"Running OnItemSave on {Node}" );
+			Log.Trace( $"Running OnItemSave on {Node}" );
 			worldItem.OnItemSave?.Invoke( this );
 		}
 		else
@@ -204,7 +204,7 @@ public class WorldNodeLink
 	{
 		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
-			Log.Info( $"Running OnItemAdded on {Node}" );
+			Log.Trace( $"Running OnItemAdded on {Node}" );
 			// worldItem.OnItemAdded?.Invoke( this );
 		}
 

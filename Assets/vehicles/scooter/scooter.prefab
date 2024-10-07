@@ -60,6 +60,12 @@
         "__type": "Clover.WorldLayerObject",
         "__guid": "9a1ef19c-05a9-49e3-99b9-5b7bf92101f7",
         "Layer": 0
+      },
+      {
+        "__type": "Clover.Items.WorldObject",
+        "__guid": "4c9526b2-22c1-4b6a-b131-5f1e0cea6df9",
+        "ObjectData": "vehicles/scooter/scooter.odata",
+        "Prefab": "vehicles/scooter/scooter.prefab"
       }
     ],
     "Children": [
