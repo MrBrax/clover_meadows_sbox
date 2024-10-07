@@ -1,6 +1,9 @@
 {
-  "CarryScene": null,
-  "Name": null,
+  "CarryScene": {
+    "_type": "gameobject",
+    "prefab": "items/tools/shovel/shovel_carry.prefab"
+  },
+  "Name": "Shovel",
   "Description": null,
   "Width": 1,
   "Height": 1,
@@ -10,10 +13,13 @@
   "IsStackable": false,
   "StackSize": 1,
   "ModelScene": null,
-  "DropScene": null,
+  "DropScene": {
+    "_type": "gameobject",
+    "prefab": "items/tools/shovel/shovel_dropped.prefab"
+  },
   "PlaceScene": null,
-  "Icon": null,
   "DefaultTypeScene": null,
+  "Icon": null,
   "__references": [],
   "IsValid": true,
   "__version": 0
