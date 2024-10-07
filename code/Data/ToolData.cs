@@ -9,7 +9,7 @@ namespace Clover.Data;
 public class ToolData : ItemData
 {
 	
-	[Property] public GameObject CarryScene { get; set; }
+	[Property, Group("Tool")] public GameObject CarryScene { get; set; }
 	
 	
 	public BaseCarriable SpawnCarriable()
