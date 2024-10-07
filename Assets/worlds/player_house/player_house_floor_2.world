@@ -1,0 +1,13 @@
+{
+  "Title": "Player house floor 2",
+  "Prefab": {
+    "_type": "gameobject",
+    "prefab": "worlds/player_house/player_house_floor_2.prefab"
+  },
+  "IsInside": false,
+  "Width": 50,
+  "Height": 50,
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}

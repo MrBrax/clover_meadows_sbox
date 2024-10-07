@@ -24,7 +24,7 @@ public class WorldNodeLink
 	public string PrefabPath;
 
 	[Icon( "save" )]
-	public PersistentItem Persistence;
+	private PersistentItem Persistence { get; set; }
 
 	public ItemData ItemData
 	{
@@ -93,6 +93,17 @@ public class WorldNodeLink
 
 		return persistentItem;
 	}*/
+	
+	public void SetPersistence( PersistentItem persistentItem )
+	{
+		Persistence = persistentItem;
+	}
+	
+	[Pure, Icon( "save" )]
+	public PersistentItem GetPersistence()
+	{
+		return Persistence ??= new PersistentItem();
+	}
 	
 	public T GetPersistence<T>() where T : PersistentItem
 	{

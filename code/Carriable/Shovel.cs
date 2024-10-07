@@ -182,7 +182,7 @@ public class Shovel : BaseCarriable
 
 		// var inventoryItem = PersistentItem.Create( item );
 		item.RefreshPersistence();
-		var inventoryItem = item.Persistence;
+		var inventoryItem = item.GetPersistence();
 
 		try
 		{
@@ -224,7 +224,7 @@ public class Shovel : BaseCarriable
 			// var inventoryItem = PersistentItem.Create( item );
 
 			item.RefreshPersistence();
-			var inventoryItem = item.Persistence;
+			var inventoryItem = item.GetPersistence();
 
 			try
 			{

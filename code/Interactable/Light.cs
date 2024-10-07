@@ -1,10 +1,11 @@
-﻿using Clover.Player;
+﻿using Clover.Persistence;
+using Clover.Player;
 
 namespace Clover.Interactable;
 
 [Category( "Clover/Interactable" )]
 [Icon( "lightbulb" )]
-public class Light : Component, IInteract
+public class Light : Component, IInteract, IPersistent
 {
 
 	[Property] public bool IsOn { get; set; } = true;
@@ -53,5 +54,17 @@ public class Light : Component, IInteract
 			}*/
 			target.Enabled = IsOn;
 		}
+	}
+
+	public void OnSave( PersistentItem item )
+	{
+		item.SetArbitraryData( "IsOn", IsOn );
+		
+	}
+
+	public void OnLoad( PersistentItem item )
+	{
+		IsOn = item.GetArbitraryData<bool>( "IsOn" );
+		UpdateState();
 	}
 }

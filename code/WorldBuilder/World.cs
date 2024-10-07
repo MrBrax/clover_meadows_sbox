@@ -26,7 +26,7 @@ public sealed partial class World : Component
 		[Description( "Items dug into the ground" )]
 		Underground = 1 << 3,
 
-		
+
 		[Icon( "dashboard" ), Description( "Special case for decals" )]
 		FloorDecal = 1 << 4,
 	}
@@ -79,7 +79,7 @@ public sealed partial class World : Component
 	[Sync] private Dictionary<Vector2Int, float> _tileHeights { get; set; } = new();
 
 	private Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
-	
+
 	private Dictionary<Vector2Int, WorldNodeLink> _nodeLinkGridMap = new();
 
 	[Sync] public int Layer { get; set; }
@@ -332,7 +332,7 @@ public sealed partial class World : Component
 
 		var margin = GridSizeCenter * 0.8f;
 		var heightTolerance = 0.1f;
-		
+
 		var traceDistance = 2000f;
 		var baseHeight = basePosition.z + 1000;
 
@@ -372,11 +372,13 @@ public sealed partial class World : Component
 			.Run();
 		var traceTopRight = Scene.Trace.Ray( topRight, topRight + (Vector3.Down * traceDistance) ).WithTag( "terrain" )
 			.Run();
-		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + (Vector3.Down * traceDistance) ).WithTag( "terrain" )
+		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + (Vector3.Down * traceDistance) )
+			.WithTag( "terrain" )
 			.Run();
-		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + (Vector3.Down * traceDistance) ).WithTag( "terrain" )
+		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + (Vector3.Down * traceDistance) )
+			.WithTag( "terrain" )
 			.Run();
-		
+
 		// Gizmo.Draw.Line( topLeft, topLeft + (Vector3.Down * traceDistance) );
 		// Gizmo.Draw.Line( topRight, topRight + (Vector3.Down * traceDistance) );
 		// Gizmo.Draw.Line( bottomLeft, bottomLeft + (Vector3.Down * traceDistance) );
@@ -417,7 +419,7 @@ public sealed partial class World : Component
 			worldPosition = Vector3.Zero;
 			return false;
 		}
-		
+
 		if ( heightTopLeft.AlmostEqual( 0f ) ) heightTopLeft = 0f;
 
 		worldPosition = new Vector3( basePosition.x, basePosition.y, heightTopLeft );
@@ -457,17 +459,16 @@ public sealed partial class World : Component
 
 		nodeLink.ItemId = itemData.ResourceName;
 		nodeLink.PlacementType = ItemPlacementType.Placed;
-		
+
 		nodeLink.CalculateSize();
-		
+
 		UpdateTransform( nodeLink );
 
 		gameObject.NetworkSpawn();
 
 		return nodeLink;*/
-		
+
 		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation, placement );
-		
 	}
 
 	public WorldNodeLink SpawnDroppedNode( ItemData itemData, Vector2Int position, ItemRotation rotation,
@@ -475,11 +476,12 @@ public sealed partial class World : Component
 	{
 		return SpawnNode( itemData, ItemPlacementType.Dropped, position, rotation, placement );
 	}
-	
-	private WorldNodeLink SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector2Int position, ItemRotation rotation, ItemPlacement placement )
+
+	private WorldNodeLink SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector2Int position,
+		ItemRotation rotation, ItemPlacement placement )
 	{
 		Assert.NotNull( itemData, "Item data is null" );
-		
+
 		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
@@ -504,7 +506,7 @@ public sealed partial class World : Component
 
 		if ( scene == null )
 		{
-			throw new Exception( $"Item {( itemData.Name ?? itemData.ResourceName )} has no {placementType} scene" );
+			throw new Exception( $"Item {(itemData.Name ?? itemData.ResourceName)} has no {placementType} scene" );
 		}
 
 		var gameObject = scene.Clone();
@@ -513,13 +515,13 @@ public sealed partial class World : Component
 
 		nodeLink.ItemId = itemData.ResourceName;
 		nodeLink.PlacementType = ItemPlacementType.Placed;
-		
+
 		nodeLink.CalculateSize();
-		
+
 		UpdateTransform( nodeLink );
-		
+
 		gameObject.Name = nodeLink.GetName();
-		
+
 		// add node link to grid map
 		foreach ( var pos in nodeLink.GetGridPositions( true ) )
 		{
@@ -529,25 +531,24 @@ public sealed partial class World : Component
 		gameObject.NetworkSpawn();
 
 		return nodeLink;
-		
 	}
-	
+
 
 	public WorldNodeLink SpawnPlacedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation,
 		ItemPlacement placement )
 	{
 		var itemData = persistentItem.ItemData;
 		var nodeLink = SpawnPlacedNode( itemData, position, rotation, placement );
-		nodeLink.Persistence = persistentItem;
+		nodeLink.SetPersistence( persistentItem );
 		return nodeLink;
 	}
-	
+
 	public WorldNodeLink SpawnDroppedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation,
 		ItemPlacement placement )
 	{
 		var itemData = persistentItem.ItemData;
 		var nodeLink = SpawnDroppedNode( itemData, position, rotation, placement );
-		nodeLink.Persistence = persistentItem;
+		nodeLink.SetPersistence( persistentItem );
 		return nodeLink;
 	}
 
@@ -693,13 +694,13 @@ public sealed partial class World : Component
 				_nodeLinkMap.Remove( nodeLink.Node );
 				nodeLink.DestroyNode();
 				itemsDict.Remove( placement );
-				
+
 				// remove all entries in grid map containing this node
 				foreach ( var entry in _nodeLinkGridMap.Where( x => x.Value == nodeLink ).ToList() )
 				{
 					_nodeLinkGridMap.Remove( entry.Key );
 				}
-				
+
 				if ( itemsDict.Count == 0 )
 				{
 					Log.Info( $"Removed last item at {position}" );
@@ -777,21 +778,20 @@ public sealed partial class World : Component
 			model.Enabled = false;
 			Invoke( 0.01f, () => model.Enabled = true );
 		}*/
-		
+
 		/*var modelPhysics = GetComponentsInChildren<ModelPhysics>( true ).ToList();
-		
+
 		foreach ( var model in modelPhysics )
 		{
 			model.Enabled = false;
 		}
 
 		await Task.Frame();
-		
+
 		foreach ( var model in modelPhysics )
 		{
 			model.Enabled = true;
 		}*/
-		
 	}
 
 	public WorldEntrance GetEntrance( string entranceId )
@@ -834,15 +834,20 @@ public sealed partial class World : Component
 	{
 		base.OnUpdate();
 
-		if ( !Game.IsEditor || Gizmo.Camera == null ) return;
-		
+		return;
+
+		if ( !Game.IsEditor || Gizmo.Camera == null || Layer != WorldManager.Instance.ActiveWorldIndex ) return;
+
+		Gizmo.Transform = new Transform( WorldPosition );
+		// Log.Info( WorldId + ": " + WorldPosition  );
+
 		Gizmo.Draw.Grid( Gizmo.GridAxis.XY, 32f );
-		
+
 		/*foreach ( var pos in _blockedTiles )
 		{
 			Gizmo.Draw.Text( pos.ToString(), new Transform( ItemGridToWorld( pos ) ) );
 		}
-		
+
 		foreach ( var item in Items.Values.SelectMany( x => x.Values ) )
 		{
 			Gizmo.Draw.Text( item.GridPosition.ToString(), new Transform( ItemGridToWorld( item.GridPosition ) ) );
@@ -852,6 +857,5 @@ public sealed partial class World : Component
 		{
 			Gizmo.Draw.Text( $"{item.Key} {item.Value.GetName()}", new Transform( ItemGridToWorld( item.Key ) ) );
 		}
-		
 	}
 }

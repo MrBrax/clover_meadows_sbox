@@ -77,13 +77,18 @@ public class WorldManager : Component
 			return;
 		}
 		
-		Log.Info( "Rebuilding world visibility..." );
+		Log.Info( $"Rebuilding world visibility for {Worlds.Count} worlds..." );
 		
 		// rebuild world visibility
 		for ( var i = 0; i < Worlds.Count; i++ )
 		{
 			var isVisible = i == ActiveWorldIndex;
-			var world = Worlds[i];
+			var world = Worlds.TryGetValue( i, out var w ) ? w : null;
+			if ( world == null )
+			{
+				Log.Warning( $"World not found at index: {i}" );
+				continue;
+			}
 
 			world.Tags.Remove( "worldlayer_invisible" );
 			world.Tags.Remove( "worldlayer_visible" );

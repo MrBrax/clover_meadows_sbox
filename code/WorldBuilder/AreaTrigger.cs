@@ -21,6 +21,7 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 		Gizmo.Draw.Text( DestinationWorldData?.Title + "\n" + DestinationEntranceId, new Transform() );
 		Gizmo.Hitbox.BBox( BBox.FromPositionAndSize( Collider.Center, Collider.Scale ) );
 		Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( Collider.Center, Collider.Scale ) );
+		Gizmo.Draw.Arrow( Vector3.Zero, Vector3.Forward * 64f );
 	}
 
 	void ITriggerListener.OnTriggerEnter( Collider other )
@@ -50,6 +51,7 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			currentWorld.Save();
 
 			player.TeleportTo( entrance.WorldPosition, entrance.WorldRotation );
+			player.ModelLookAt( entrance.WorldPosition + entrance.WorldRotation.Forward );
 			player.SetLayer( entrance.WorldLayerObject.Layer );
 
 			player.OnWorldChanged?.Invoke( w );

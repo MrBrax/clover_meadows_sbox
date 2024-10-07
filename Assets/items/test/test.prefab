@@ -15,6 +15,85 @@
         "__guid": "55eec3f5-b571-41e9-b7ec-1dec158fff1e",
         "CanPickupSimple": true,
         "ItemData": "items/test/test.item",
+        "OnItemSave": {
+          "__version": 8,
+          "__guid": "47c94395-3ba2-437a-b794-dd0ecc9baeda",
+          "__changeId": 21,
+          "UserData": {
+            "Title": "On Item Save",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 2,
+              "Type": "call",
+              "Properties": {
+                "_isStatic": false,
+                "_name": "GetPersistence",
+                "_type": "Clover.WorldNodeLink"
+              },
+              "UserData": {
+                "Position": "180,24"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "call",
+              "Properties": {
+                "_isStatic": false,
+                "_name": "SetArbitraryData",
+                "_type": "Clover.Persistence.PersistentItem"
+              },
+              "UserData": {
+                "Position": "504,0"
+              }
+            },
+            {
+              "Id": 4,
+              "Type": "time.now",
+              "UserData": {
+                "Position": "252,84"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "nodeLink",
+              "DstId": 2,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 2,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "_target"
+            },
+            {
+              "Id": 12,
+              "Value": "testdata",
+              "DstId": 3,
+              "DstName": "key"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "value"
+            }
+          ]
+        },
         "Prefab": "items/test/test.prefab",
         "Size": "1,1"
       },
@@ -104,6 +183,26 @@
           {
             "__type": "Clover.Components.SittableNode",
             "__guid": "949903b6-4df9-4b3f-b90f-d1463c2cd619"
+          }
+        ]
+      },
+      {
+        "__guid": "6d9ede88-1f07-4d06-8e72-4ecf25b2153e",
+        "Flags": 0,
+        "Name": "Point Light",
+        "Position": "0,0,48",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "4812bad7-4e9a-4227-be4b-983ada73f460",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 400,
+            "Shadows": true
           }
         ]
       }

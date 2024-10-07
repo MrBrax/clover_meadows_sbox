@@ -181,7 +181,7 @@ public class PersistentItem
 		if ( nodeLink != null )
 		{
 			nodeLink.OnNodeSave();
-			persistentItem = nodeLink.Persistence;
+			persistentItem = nodeLink.GetPersistence();
 		}
 
 		return persistentItem;

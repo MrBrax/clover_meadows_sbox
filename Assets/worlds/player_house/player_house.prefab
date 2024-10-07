@@ -143,6 +143,26 @@
         ]
       },
       {
+        "__guid": "9dc34ec5-76e0-42dc-a664-d5eea5321aa1",
+        "Flags": 0,
+        "Name": "Entrance (1)",
+        "Position": "496,192,72",
+        "Rotation": "0,0,0.7071069,0.7071066",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldEntrance",
+            "__guid": "dff2f1f2-65cc-4a35-bad6-e58f8f377c68",
+            "EntranceId": "exit_floor_2"
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "13ba7cff-f8ef-4f3a-9166-49560d7b8a3d",
+            "Layer": 0
+          }
+        ]
+      },
+      {
         "__guid": "c18b077f-564b-4d9d-9b5c-b99de6f7d166",
         "Flags": 0,
         "Name": "HouseTrigger",
@@ -205,6 +225,74 @@
           {
             "__type": "Clover.WorldLayerObject",
             "__guid": "363c6364-0e0c-4cdc-9d96-d381cb537bf0",
+            "Layer": 0
+          }
+        ]
+      },
+      {
+        "__guid": "75516871-21aa-41d5-a31a-35e55fe3a8b1",
+        "Flags": 0,
+        "Name": "HouseTrigger (1)",
+        "Position": "480,160,96",
+        "Rotation": "0,0,-0.7071067,0.7071068",
+        "Tags": "trigger",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.AreaTrigger",
+            "__guid": "56fc5c55-aa52-458c-92b3-81a91a6aca31",
+            "DestinationEntranceId": "entry",
+            "DestinationWorldData": "worlds/player_house/player_house_floor_2.world",
+            "UnloadPreviousWorld": true
+          },
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "8e6805f5-4466-48ac-b8c1-bf0bd87ebe1c",
+            "Center": "0,0,0",
+            "IsTrigger": true,
+            "OnTriggerEnter": {
+              "__version": 8,
+              "__guid": "91dac490-bb87-4763-ae78-3fc64fad36a7",
+              "__changeId": 8,
+              "UserData": {
+                "Title": "On Trigger Enter",
+                "ReferencedComponentTypes": []
+              },
+              "Variables": [],
+              "Nodes": [
+                {
+                  "Id": 0,
+                  "Type": "input"
+                },
+                {
+                  "Id": 1,
+                  "Type": "log.info",
+                  "UserData": {
+                    "Position": "288,36"
+                  }
+                }
+              ],
+              "Links": [
+                {
+                  "SrcId": 0,
+                  "SrcName": "_signal",
+                  "DstId": 1,
+                  "DstName": "_signal"
+                },
+                {
+                  "Id": 2,
+                  "Value": "asdf",
+                  "DstId": 1,
+                  "DstName": "format"
+                }
+              ]
+            },
+            "Scale": "21.13332,76.00003,50",
+            "Static": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "c26c2bcc-e180-4dc0-b6d8-beb7b493265e",
             "Layer": 0
           }
         ]
