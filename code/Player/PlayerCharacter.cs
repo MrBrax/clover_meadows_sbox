@@ -42,6 +42,8 @@ public sealed class PlayerCharacter : Component
 	public bool InCutscene { get; set; }
 	public Vector3? CutsceneTarget { get; set; }
 
+	public string LastEntrance { get; set; }
+
 	protected override void OnStart()
 	{
 		base.OnStart();
@@ -62,7 +64,7 @@ public sealed class PlayerCharacter : Component
 		Model.WorldRotation = Rotation.LookAt( dir, Vector3.Up );
 		PlayerController.Yaw = Model.WorldRotation.Yaw();
 	}
-	
+
 	public void ModelLook( Rotation rotation )
 	{
 		Model.WorldRotation = rotation;
@@ -98,6 +100,17 @@ public sealed class PlayerCharacter : Component
 			Input.Clear( "use" );
 			Input.ReleaseAction( "use" );
 		}
+
+		if ( WorldPosition.z < -500f )
+		{
+			Log.Error( $"Player fell off the world: {WorldPosition} in world {World}" );
+			TeleportTo( LastEntrance );
+		}
+		else if ( World != null && WorldPosition.z < World.WorldPosition.z - 500f )
+		{
+			Log.Error( $"Player fell off the world: {WorldPosition} in world {World}" );
+			TeleportTo( LastEntrance );
+		}
 	}
 
 	public Vector2Int GetAimingGridPosition()
@@ -123,6 +136,20 @@ public sealed class PlayerCharacter : Component
 	{
 		Gizmo.Draw.Arrow( WorldPosition + Vector3.Up * 16f, WorldPosition + Vector3.Up * 16 + Model.WorldRotation.Forward * 32f );
 	}*/
+
+	public void TeleportTo( string entrance )
+	{
+		var spawnPoint = World.GetEntrance( entrance );
+		if ( spawnPoint.IsValid() )
+		{
+			TeleportTo( spawnPoint.WorldPosition, spawnPoint.WorldRotation );
+			LastEntrance = entrance;
+		}
+		else
+		{
+			Log.Error( $"No spawn point found in the world for entrance {entrance}" );
+		}
+	}
 
 	[Authority]
 	public void TeleportTo( Vector3 pos, Rotation rot )
@@ -160,7 +187,7 @@ public sealed class PlayerCharacter : Component
 	public void Save()
 	{
 		Scene.RunEvent<IPlayerSaved>( x => x.PrePlayerSave( this ) );
-		
+
 		SaveData ??= new PlayerSaveData( PlayerId );
 
 		SaveData.Name = PlayerName ?? Network.Owner.DisplayName;
@@ -186,7 +213,7 @@ public sealed class PlayerCharacter : Component
 		FileSystem.Data.CreateDirectory( "players" );
 
 		FileSystem.Data.WriteAllText( SaveFilePath, json );
-		
+
 		Scene.RunEvent<IPlayerSaved>( x => x.PostPlayerSave( this ) );
 	}
 
@@ -278,8 +305,6 @@ public sealed class PlayerCharacter : Component
 
 	public void SetCarriableVisibility( bool state )
 	{
-		
-		
 	}
 }
 

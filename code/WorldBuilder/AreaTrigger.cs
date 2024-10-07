@@ -50,9 +50,9 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 
 			currentWorld.Save();
 
-			player.TeleportTo( entrance.WorldPosition, entrance.WorldRotation );
-			player.ModelLookAt( entrance.WorldPosition + entrance.WorldRotation.Forward );
 			player.SetLayer( entrance.WorldLayerObject.Layer );
+			player.TeleportTo( entrance.EntranceId );
+			// player.ModelLookAt( entrance.WorldPosition + entrance.WorldRotation.Forward );
 
 			player.OnWorldChanged?.Invoke( w );
 

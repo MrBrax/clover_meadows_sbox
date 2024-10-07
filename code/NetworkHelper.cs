@@ -12,18 +12,21 @@ public sealed class NetworkHelper : Component, Component.INetworkListener
 	/// <summary>
 	/// Create a server (if we're not joining one)
 	/// </summary>
-	[Property] public bool StartServer { get; set; } = true;
+	[Property]
+	public bool StartServer { get; set; } = true;
 
 	/// <summary>
 	/// The prefab to spawn for the player to control.
 	/// </summary>
-	[Property] public GameObject PlayerPrefab { get; set; }
+	[Property]
+	public GameObject PlayerPrefab { get; set; }
 
 	/// <summary>
 	/// A list of points to choose from randomly to spawn the player in. If not set, we'll spawn at the
 	/// location of the NetworkHelper object.
 	/// </summary>
-	[Property] public List<GameObject> SpawnPoints { get; set; }
+	[Property]
+	public List<GameObject> SpawnPoints { get; set; }
 
 	protected override async Task OnLoad()
 	{
@@ -56,10 +59,26 @@ public sealed class NetworkHelper : Component, Component.INetworkListener
 		// Spawn this object and make the client the owner
 		var player = PlayerPrefab.Clone( startLocation, name: $"Player - {channel.DisplayName}" );
 		player.NetworkSpawn( channel );
-		
+
 		// Notify any listeners that a player has spawned
 		Scene.RunEvent<IPlayerSpawned>( x => x.OnPlayerSpawned( player.GetComponent<PlayerCharacter>() ) );
-		
+
+		if ( WorldManager.Instance.ActiveWorld != null )
+		{
+			var spawnPoint = WorldManager.Instance.ActiveWorld.GetEntrance( "spawn" );
+			if ( spawnPoint.IsValid() )
+			{
+				player.GetComponent<PlayerCharacter>().TeleportTo( spawnPoint.EntranceId );
+			}
+			else
+			{
+				Log.Error( "No spawn point found in the world" );
+			}
+		}
+		else
+		{
+			Log.Error( "No active world found" );
+		}
 	}
 
 	/// <summary>
