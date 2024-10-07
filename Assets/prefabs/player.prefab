@@ -78,7 +78,9 @@
           "component_id": "117d90de-b6c0-4515-b2ec-077b4714a5a7",
           "go": "0d4341eb-c028-4389-979c-d513c26ea49e",
           "component_type": "BoxCollider"
-        }
+        },
+        "PickUpFailSound": "sounds/interact/pickup_fail.sound",
+        "UseFailSound": "sounds/interact/use_fail.sound"
       },
       {
         "__type": "Clover.Components.Equips",

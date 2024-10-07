@@ -13,6 +13,9 @@ public class PlayerInteract : Component
 	[Property] public BoxCollider InteractCollider { get; set; }
 
 	[Property] public GameObject Cursor { get; set; }
+	
+	[Property] public SoundEvent UseFailSound { get; set; }
+	[Property] public SoundEvent PickUpFailSound { get; set; }
 
 	protected override void OnAwake()
 	{
@@ -42,6 +45,10 @@ public class PlayerInteract : Component
 			{
 				_currentInteractable = interactable;
 				_currentInteractable.StartInteract( GetComponent<PlayerCharacter>() );
+			}
+			else
+			{
+				Sound.Play( UseFailSound, WorldPosition );
 			}
 		}
 		else if ( Input.Released( "use" ) )
@@ -80,6 +87,9 @@ public class PlayerInteract : Component
 		}
 
 		Log.Warning( "No pickupable node found" );
+		
+		Sound.Play( PickUpFailSound, WorldPosition );
+		
 	}
 
 	private IPickupable GetPickupableNode()
@@ -106,7 +116,6 @@ public class PlayerInteract : Component
 
 	private IInteract FindInteractable()
 	{
-		Log.Info( InteractCollider.Touching.Count() );
 
 		foreach ( var collider in InteractCollider.Touching )
 		{

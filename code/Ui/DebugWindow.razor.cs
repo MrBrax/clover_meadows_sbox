@@ -18,5 +18,7 @@ public partial class DebugWindow
 		
 		PlayerCharacter.Local.Inventory.PickUpItem( pItem );
 		
+		Sound.Play( "sounds/interact/item_pickup.sound", PlayerCharacter.Local.WorldPosition );
+		
 	}
 }
