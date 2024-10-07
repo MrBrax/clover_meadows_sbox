@@ -9,13 +9,15 @@ public sealed partial class World
 	private string SaveFileName => $"{GameManager.Instance.SaveProfile}/worlds/{Data.ResourceName}.json";
 
 	private WorldSaveData _saveData = new();
-	
+
 	public Action OnSave;
 
 	public void Save()
 	{
 		Log.Info( $"Saving world {Data.ResourceName}" );
 		
+		Scene.RunEvent<IWorldSaved>( x => x.PreWorldSaved( this ) );
+
 		var savedItems = new List<PersistentWorldItem>();
 
 		foreach ( var item in Items )
@@ -64,17 +66,17 @@ public sealed partial class World
 		_saveData.LastSave = DateTime.Now;
 
 		_saveData.Items = savedItems;
-		
+
 		Log.Info( $"Saving {savedItems.Count} items" );
-		
+
 		FileSystem.Data.CreateDirectory( $"{GameManager.Instance?.SaveProfile}/worlds" );
 
 		// FileSystem.Data.WriteJson( $"worlds/{Data.ResourceName}.json", saveData );
 		var json = JsonSerializer.Serialize( _saveData, GameManager.JsonOptions );
 		FileSystem.Data.WriteAllText( SaveFileName, json );
-		
+
 		OnSave?.Invoke();
-		Scene.RunEvent<IWorldEvent>( x => x.OnSaved() );
+		Scene.RunEvent<IWorldSaved>( x => x.PostWorldSaved( this ) );
 	}
 
 	public void Load()
@@ -130,7 +132,7 @@ public sealed partial class World
 
 			// nodeLink.LoadItemData();
 			UpdateTransform( nodeLink );
-			
+
 			foreach ( var pos in nodeLink.GetGridPositions( true ) )
 			{
 				_nodeLinkGridMap[pos] = nodeLink;
@@ -145,7 +147,8 @@ public sealed partial class World
 	}
 }
 
-interface IWorldEvent
+interface IWorldSaved
 {
-	void OnSaved();
+	void PreWorldSaved( World world );
+	void PostWorldSaved( World world );
 }

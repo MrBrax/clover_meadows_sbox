@@ -159,6 +159,8 @@ public sealed class PlayerCharacter : Component
 
 	public void Save()
 	{
+		Scene.RunEvent<IPlayerSaved>( x => x.PrePlayerSave( this ) );
+		
 		SaveData ??= new PlayerSaveData( PlayerId );
 
 		SaveData.Name = PlayerName ?? Network.Owner.DisplayName;
@@ -184,6 +186,8 @@ public sealed class PlayerCharacter : Component
 		FileSystem.Data.CreateDirectory( "players" );
 
 		FileSystem.Data.WriteAllText( SaveFilePath, json );
+		
+		Scene.RunEvent<IPlayerSaved>( x => x.PostPlayerSave( this ) );
 	}
 
 
@@ -277,4 +281,10 @@ public sealed class PlayerCharacter : Component
 		
 		
 	}
+}
+
+public interface IPlayerSaved
+{
+	void PrePlayerSave( PlayerCharacter player );
+	void PostPlayerSave( PlayerCharacter player );
 }

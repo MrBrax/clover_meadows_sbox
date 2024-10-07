@@ -1,0 +1,39 @@
+MainUi
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	
+	.is-saving {
+		position: absolute;
+		top: 50px;
+		right: 50px;
+		color: #2b79f1;
+		font-size: 80px;
+		text-stroke: 10px white;
+		
+		animation: saving 1s infinite ease;
+		transition: opacity 0.2s;
+		
+		opacity: 0;
+		
+		&.saving {
+			opacity: 1;
+		}
+	}
+	
+}
+
+@keyframes saving {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
