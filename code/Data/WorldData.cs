@@ -8,10 +8,10 @@ public class WorldData : GameResource
 	
 	[Property] public GameObject Prefab { get; set; }
 	
-	[Property] public bool IsInside { get; set; }
+	[Property, Group("Weather")] public bool IsInside { get; set; }
 	
-	[Property] public int Width { get; set; }
+	[Property, Group("Grid")] public int Width { get; set; }
 	
-	[Property] public int Height { get; set; }
+	[Property, Group("Grid")] public int Height { get; set; }
 	
 }
