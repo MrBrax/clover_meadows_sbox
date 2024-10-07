@@ -1,0 +1,69 @@
+{
+  "RootObject": {
+    "__guid": "928ac1a3-4981-4e83-b209-36f845f5f899",
+    "Flags": 0,
+    "Name": "bridge",
+    "Enabled": true,
+    "Children": [
+      {
+        "__guid": "f5528230-8d7a-4d5f-8454-d917a4ddc927",
+        "Flags": 0,
+        "Name": "bridge",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "9bf33519-c5a6-4b16-ade7-32cb82efff71",
+            "BodyGroups": 18446744073709551615,
+            "Model": "buildings/bridge/bridge.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "3befb9a1-4482-495d-b882-2eaba47c253f",
+            "IsTrigger": false,
+            "Model": "buildings/bridge/bridge.vmdl",
+            "Static": false
+          }
+        ]
+      },
+      {
+        "__guid": "364cbc2c-27cd-4a2f-928c-efe271986225",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "7b00efe5-1e2a-4a2e-addb-c3c9bbdc7d83",
+            "Center": "0,0,25",
+            "IsTrigger": true,
+            "Scale": "250,60,50",
+            "Static": false
+          },
+          {
+            "__type": "Clover.Components.CollisionLayerTrigger",
+            "__guid": "d6831583-52ea-425d-b943-3ef29e2fffcb",
+            "Layer": "noblocker"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

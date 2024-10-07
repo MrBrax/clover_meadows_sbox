@@ -29,8 +29,8 @@
         "Height": 50,
         "IgnoreLayers": "",
         "Radius": 14,
-        "StepHeight": 18,
-        "UseCollisionRules": false
+        "StepHeight": 14,
+        "UseCollisionRules": true
       },
       {
         "__type": "PlayerController",

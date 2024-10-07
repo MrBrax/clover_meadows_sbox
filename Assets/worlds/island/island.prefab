@@ -151,6 +151,26 @@
         ]
       },
       {
+        "__guid": "7eabb8c4-08e8-4de0-b100-1cfaf1e6786f",
+        "Flags": 0,
+        "Name": "Entrance (1)",
+        "Position": "1664,256,-0.00004251624",
+        "Rotation": "0,0,0.0000001509958,-1",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldEntrance",
+            "__guid": "221ee7ca-096a-45cd-b952-6fc4cd312f16",
+            "EntranceId": "spawn"
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "5ed6164e-5224-4b45-8d42-a94183800a33",
+            "Layer": 0
+          }
+        ]
+      },
+      {
         "__guid": "ad737830-b14b-447c-bb77-01ba3a70d202",
         "Flags": 0,
         "Name": "HouseTrigger",
@@ -213,7 +233,8 @@
       {
         "__guid": "af03d12e-120b-4fc1-aec4-57665595e5f6",
         "Flags": 0,
-        "Name": "Object",
+        "Name": "Blocker",
+        "Tags": "blocker",
         "Enabled": true,
         "Components": [
           {
@@ -224,14 +245,6 @@
             "Static": true,
             "Surface": "surfaces/grass.surface"
           }
-        ],
-        "Children": [
-          {
-            "__guid": "e82e5158-e147-4fb3-8e81-cdeb834f2594",
-            "Flags": 0,
-            "Name": "Object",
-            "Enabled": true
-          }
         ]
       },
       {
@@ -241,6 +254,16 @@
         "Position": "1632,384,0.00009798329",
         "Enabled": true,
         "__Prefab": "vehicles/scooter/scooter.prefab",
+        "__PrefabVariables": {}
+      },
+      {
+        "__guid": "14d70389-53b7-4cc1-8ddf-04e6363bc978",
+        "Flags": 0,
+        "Name": "bridge",
+        "Position": "1472,2816,1.000304",
+        "Rotation": "-0.00000002107342,0.00000002107342,0.7071068,0.7071068",
+        "Enabled": true,
+        "__Prefab": "buildings/bridge/bridge.prefab",
         "__PrefabVariables": {}
       }
     ],

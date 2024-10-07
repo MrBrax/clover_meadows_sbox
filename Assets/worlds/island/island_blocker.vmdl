@@ -78,7 +78,7 @@
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
-						filename = "models/island/world.fbx"
+						filename = "worlds/island/island_blocker.fbx"
 						import_scale = 1.0
 						maxMeshVertices = 0
 						qemError = 0.0
