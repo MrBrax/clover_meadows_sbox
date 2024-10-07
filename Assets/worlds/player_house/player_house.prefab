@@ -22,6 +22,7 @@
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "5e5a89d3-8241-46c8-89f3-c94bdc85fd7c",
+            "__enabled": false,
             "BodyGroups": 18446744073709551615,
             "Model": "models/player_house/house.vmdl",
             "RenderOptions": {
@@ -294,6 +295,321 @@
             "__type": "Clover.WorldLayerObject",
             "__guid": "c26c2bcc-e180-4dc0-b6d8-beb7b493265e",
             "Layer": 0
+          }
+        ]
+      },
+      {
+        "__guid": "07aa325b-7c5e-42da-8674-e6c16a391a57",
+        "Flags": 0,
+        "Name": "int",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "399d05b1-8dbd-42a6-946a-27208096ccc3",
+            "BodyGroups": 18446744073709551615,
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "6e96f759-462f-45fa-962e-a89bed0618ec",
+        "Flags": 0,
+        "Name": "house_floor_base_int",
+        "Tags": "nobuild",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "d3cb61fc-5f75-4b13-a3cc-9ed3db290b0c",
+            "BodyGroups": 18446744073709551615,
+            "Model": "worlds/player_house/floor_base/house_floor_base_int.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "bcd9d2e2-e882-42a6-89b3-08b844913661",
+            "IsTrigger": false,
+            "Model": "worlds/player_house/floor_base/house_floor_base_int.vmdl",
+            "Static": false
+          }
+        ]
+      },
+      {
+        "__guid": "9e95fb93-e09e-4f6e-9aaa-7d7937b5b296",
+        "Flags": 0,
+        "Name": "house_floor_base_room1",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "122e39cf-c412-451a-99aa-085f385bd10c",
+            "BodyGroups": 18446744073709551615,
+            "Model": "worlds/player_house/floor_base/house_floor_base_room1.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "8b10bb1d-d019-4ce0-9bab-fe48c301c4de",
+        "Flags": 0,
+        "Name": "house_floor_base_room2",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "152a7678-5d41-4f21-a3c8-ca355c3fb783",
+            "BodyGroups": 18446744073709551615,
+            "Model": "worlds/player_house/floor_base/house_floor_base_room2.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "f2fdf53d-7900-4011-97a6-151b760b8535",
+        "Flags": 0,
+        "Name": "house_floor_base_walls",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "38b3c39d-c2f1-43d1-8d97-54812d2dc5d7",
+            "BodyGroups": 18446744073709551615,
+            "Model": "worlds/player_house/floor_base/house_floor_base_walls.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "f5784bcb-d490-43f6-b2fc-fc354ff8f611",
+        "Flags": 0,
+        "Name": "InteriorManager",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.InteriorManager",
+            "__guid": "c4babfdc-5804-4dfc-aad1-c453c83e66cd",
+            "Rooms": {
+              "room1": {
+                "Wall": {
+                  "_type": "gameobject",
+                  "go": "96d4141e-a9a8-4f4b-9356-f3cf556de33e"
+                },
+                "Floor": {
+                  "_type": "gameobject",
+                  "go": "f7c2c9ae-b5f4-4cb0-9cd3-42489f3da101"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "__guid": "8fa783d3-1e34-4b8a-9f7e-6221a36fae70",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true
+      },
+      {
+        "__guid": "f7c2c9ae-b5f4-4cb0-9cd3-42489f3da101",
+        "Flags": 0,
+        "Name": "Box",
+        "Position": "320,319.9999,0.00008786379",
+        "Components": [
+          {
+            "__type": "Sandbox.MeshComponent",
+            "__guid": "2254b511-9b20-4ce3-b286-91a624d062cb",
+            "Collision": "Mesh",
+            "Color": "1,1,1,1",
+            "HideInGame": false,
+            "IsTrigger": false,
+            "Mesh": {
+              "Topology": "H4sIAAAAAAAACk2MAQoAIAgDrSz7/4drBwoOjmKbczO7Ygg0hYuTHuB1hXgS/so\u002Bqi4vOdnOrb6NT15bJXy63JDz/\u002Bg6SXigAAAA",
+              "Positions": [
+                "-96,-96.00012,0",
+                "96,-96.00012,0",
+                "96,96.00012,0",
+                "-96,96.00012,0"
+              ],
+              "TextureCoord": [
+                "2.005347,2.00535",
+                "0,0",
+                "2.005347,0",
+                "0,0",
+                "0,0",
+                "0,0",
+                "0,2.00535",
+                "0,0"
+              ],
+              "TextureUAxis": [
+                "1,0,0"
+              ],
+              "TextureVAxis": [
+                "0,-1,0"
+              ],
+              "TextureScale": [
+                "0.187,0.187"
+              ],
+              "TextureOffset": [
+                "-1197.861,2224.599"
+              ],
+              "MaterialIndex": [
+                0
+              ],
+              "EdgeFlags": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "Materials": [
+                "materials/dev/reflectivity_30.vmat"
+              ]
+            },
+            "SmoothingAngle": 40,
+            "Static": false
+          }
+        ]
+      },
+      {
+        "__guid": "96d4141e-a9a8-4f4b-9356-f3cf556de33e",
+        "Flags": 0,
+        "Name": "Box",
+        "Position": "192,320,0.00005340576",
+        "Components": [
+          {
+            "__type": "Sandbox.MeshComponent",
+            "__guid": "52dd6560-dc4b-45e7-b5e9-ae637526c03e",
+            "Collision": "Mesh",
+            "Color": "1,1,1,1",
+            "HideInGame": false,
+            "IsTrigger": false,
+            "Mesh": {
+              "Topology": "H4sIAAAAAAAACk3QWQ5DMQhD0fR1ep3H/W\u002B19ZGIBJJ/8DWQrGOMb7SN1BLtokN0jtboGd2jTQnT6129pebIj8a\u002Bol\u002BKt6/Zfde1WHVsc/HYS\u002BWxp7oLb5b7bm0\u002BVp\u002BPx8rw9bEy8za75fh2Peq9PLd496d8GW\u002BZWTxWho/Hysw/8jf6c759en8ghsqfeAEAAA==",
+              "Positions": [
+                "32,-96,95.99995",
+                "32,-96,0",
+                "32,96,0",
+                "32,96,95.99995",
+                "224,96,95.99995",
+                "224,96,0",
+                "224,-96,0",
+                "224,-96,95.99995"
+              ],
+              "TextureCoord": [
+                "0,1",
+                "2.005347,0",
+                "2.005347,1",
+                "0,0",
+                "2.005347,0",
+                "0,1",
+                "0,0",
+                "0,0",
+                "2.005347,0",
+                "0,0",
+                "0,0",
+                "0,0",
+                "2.005347,1",
+                "0,0",
+                "0,1",
+                "0,0",
+                "2.005347,1",
+                "0,0",
+                "0,0",
+                "0,0"
+              ],
+              "TextureUAxis": [
+                "0,1,0",
+                "0.9999999,0.00000005960464,0",
+                "-0.9999999,0.00000005960464,0"
+              ],
+              "TextureVAxis": [
+                "0,0,-1",
+                "0,0,-1",
+                "0,0,-1"
+              ],
+              "TextureScale": [
+                "0.187,0.1874999",
+                "0.187,0.1874999",
+                "0.187,0.1874999"
+              ],
+              "TextureOffset": [
+                "-1197.861,512.0003",
+                "-1197.861,512.0003",
+                "2224.599,512.0003"
+              ],
+              "MaterialIndex": [
+                0,
+                0,
+                0
+              ],
+              "EdgeFlags": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "Materials": [
+                "materials/dev/reflectivity_30.vmat"
+              ]
+            },
+            "SmoothingAngle": 40,
+            "Static": false
           }
         ]
       }

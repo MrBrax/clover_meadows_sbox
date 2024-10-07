@@ -29,6 +29,8 @@ public sealed partial class World : Component
 
 		[Icon( "dashboard" ), Description( "Special case for decals" )]
 		FloorDecal = 1 << 4,
+		
+		Rug = 1 << 5,
 	}
 
 	public enum ItemPlacementType
@@ -391,10 +393,10 @@ public sealed partial class World : Component
 			return false;
 		}
 
-		var heightTopLeft = traceTopLeft.HitPosition.z;
-		var heightTopRight = traceTopRight.HitPosition.z;
-		var heightBottomLeft = traceBottomLeft.HitPosition.z;
-		var heightBottomRight = traceBottomRight.HitPosition.z;
+		var heightTopLeft = traceTopLeft.HitPosition.z - WorldPosition.z;
+		var heightTopRight = traceTopRight.HitPosition.z - WorldPosition.z;
+		var heightBottomLeft = traceBottomLeft.HitPosition.z - WorldPosition.z;
+		var heightBottomRight = traceBottomRight.HitPosition.z - WorldPosition.z;
 
 		/*if ( heightTopLeft != heightTopRight || heightTopLeft != heightBottomLeft ||
 			 heightTopLeft != heightBottomRight )
@@ -421,6 +423,13 @@ public sealed partial class World : Component
 		}
 
 		if ( heightTopLeft.AlmostEqual( 0f ) ) heightTopLeft = 0f;
+		
+		if ( Data.MaxItemAltitude > 0 && heightTopLeft > Data.MaxItemAltitude )
+		{
+			Log.Warning( $"Height at {position} is too high: {heightTopLeft}" );
+			worldPosition = Vector3.Zero;
+			return false;
+		}
 
 		worldPosition = new Vector3( basePosition.x, basePosition.y, heightTopLeft );
 
@@ -752,7 +761,7 @@ public sealed partial class World : Component
 		return new Vector3(
 			(gridPosition.x * GridSize) + GridSizeCenter + WorldPosition.x,
 			(gridPosition.y * GridSize) + GridSizeCenter + WorldPosition.y,
-			height != 0 ? height : WorldPosition.z
+			height != 0 ? WorldPosition.z + height : WorldPosition.z
 		);
 	}
 

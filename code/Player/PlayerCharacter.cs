@@ -106,7 +106,7 @@ public sealed class PlayerCharacter : Component
 		{
 			// throw new System.Exception( $"Aiming at a higher position: {boxPos} -> {worldPosition}" );
 			// Log.Warning( $"Aiming at a higher position: {boxPos} -> {worldPosition}" );
-			// return default;
+			return default;
 		}
 
 		return gridPosition;
