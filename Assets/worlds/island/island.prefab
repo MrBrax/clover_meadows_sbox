@@ -15,7 +15,7 @@
       {
         "__guid": "424e9a5b-9dd5-4ceb-ad4a-4d16f3612af2",
         "Flags": 0,
-        "Name": "Object",
+        "Name": "Map",
         "Tags": "terrain",
         "Enabled": true,
         "Components": [
@@ -34,12 +34,44 @@
             "Tint": "1,1,1,1"
           },
           {
-            "__type": "Sandbox.ModelPhysics",
-            "__guid": "2ec50803-0f41-42f2-aa06-1a281f544883",
-            "Locking": {},
-            "Model": "models/island/world.vmdl",
-            "MotionEnabled": false,
-            "RigidbodyFlags": 0
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "f8f61d3f-7eaa-499b-b428-1d9fcceb8bee",
+            "IsTrigger": false,
+            "Model": "worlds/island/island_grass.vmdl",
+            "Static": true,
+            "Surface": "surfaces/grass.surface"
+          },
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "53dea54b-1a34-4e7e-a03e-d3972c5803a0",
+            "IsTrigger": false,
+            "Model": "worlds/island/island_cliff.vmdl",
+            "Static": true,
+            "Surface": "surfaces/concrete.surface"
+          },
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "5d828e3c-ae29-48dc-8c33-a058376fa986",
+            "IsTrigger": false,
+            "Model": "worlds/island/island_sidewalk.vmdl",
+            "Static": true,
+            "Surface": "surfaces/concrete.surface"
+          },
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "d886ed27-f9a3-4362-a995-dfcb56ab1259",
+            "IsTrigger": false,
+            "Model": "worlds/island/island_road.vmdl",
+            "Static": true,
+            "Surface": "surfaces/concrete.surface"
+          },
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "de762af6-e87e-4526-acfe-8efa0d74342b",
+            "IsTrigger": false,
+            "Model": "worlds/island/island_sand.vmdl",
+            "Static": true,
+            "Surface": "surfaces/sand.surface"
           }
         ]
       },
@@ -72,6 +104,7 @@
           {
             "__type": "Sandbox.SkyBox2D",
             "__guid": "71f5b042-e1a2-4bd9-9060-cdf2149d6b2f",
+            "SkyIndirectLighting": true,
             "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
             "Tint": "1,1,1,1"
           },
@@ -174,6 +207,22 @@
             "IsTrigger": false,
             "Model": "models/player_house_exterior/player_house_exterior.vmdl",
             "Static": false
+          }
+        ]
+      },
+      {
+        "__guid": "af03d12e-120b-4fc1-aec4-57665595e5f6",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "be2c9cb1-446a-43df-bdc8-3b39d6c65dd0",
+            "IsTrigger": false,
+            "Model": "worlds/island/island_blocker.vmdl",
+            "Static": true,
+            "Surface": "surfaces/grass.surface"
           }
         ]
       }

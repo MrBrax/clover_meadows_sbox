@@ -27,38 +27,34 @@
 							},
 							{
 								from = "lake.vmat"
-								to = "materials/dev/reflectivity_30.vmat"
+								to = "materials/water/water_pond_a.vmat"
 							},
 							{
 								from = "ocean.001.vmat"
-								to = "materials/dev/reflectivity_30.vmat"
+								to = "materials/water/water_pond_a.vmat"
 							},
 							{
 								from = "river.vmat"
-								to = "materials/dev/reflectivity_30.vmat"
+								to = "materials/water/water_pond_a.vmat"
 							},
 							{
 								from = "road.vmat"
-								to = "materials/dev/reflectivity_30.vmat"
+								to = "materials/world/summer/road.vmat"
 							},
 							{
 								from = "sand.vmat"
-								to = "materials/dev/reflectivity_30.vmat"
+								to = "materials/world/summer/sand.vmat"
 							},
 							{
 								from = "sidewalk.vmat"
-								to = "materials/dev/reflectivity_30.vmat"
+								to = "materials/world/summer/sidewalk.vmat"
 							},
 							{
 								from = "waterfall.vmat"
-								to = "materials/dev/reflectivity_30.vmat"
+								to = "materials/water/water_pond_a.vmat"
 							},
 							{
 								from = "city_temp.vmat"
-								to = "materials/dev/reflectivity_30.vmat"
-							},
-							{
-								from = "blocker.vmat"
 								to = "materials/dev/reflectivity_30.vmat"
 							},
 						]
@@ -264,6 +260,7 @@
 						}
 					},
 				]
+				disabled = true
 			},
 			{
 				_class = "RenderMeshList"
@@ -285,7 +282,6 @@
 							exception_list = 
 							[
 								"island_8x7_riverbed",
-								"island_8x7_blocker_colonly",
 								"island_8x7_grass_col",
 								"island_8x7_cliff_col",
 								"island_8x7_city_col",
