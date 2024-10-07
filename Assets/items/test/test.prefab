@@ -81,7 +81,7 @@
               "DstName": "_target"
             },
             {
-              "Id": 12,
+              "Id": 6,
               "Value": "testdata",
               "DstId": 3,
               "DstName": "key"
@@ -104,19 +104,6 @@
         "IsTrigger": false,
         "Scale": "32,32,32",
         "Static": true
-      },
-      {
-        "__type": "Clover.Interactable.Light",
-        "__guid": "019f62e8-f1ad-4fbe-8061-b35cecc519fc",
-        "__enabled": false,
-        "IsOn": true,
-        "LightSwitchSound": "sounds/interact/lightswitch.sound",
-        "Targets": [
-          {
-            "_type": "gameobject",
-            "go": "5afd13e9-9ffc-47f7-a8b0-c0f7313c28fa"
-          }
-        ]
       },
       {
         "__type": "Clover.Interactable.Sittable",
@@ -156,25 +143,6 @@
         ]
       },
       {
-        "__guid": "5afd13e9-9ffc-47f7-a8b0-c0f7313c28fa",
-        "Flags": 0,
-        "Name": "Point Light",
-        "Position": "0,0,16",
-        "Tags": "light_point,light",
-        "Components": [
-          {
-            "__type": "Sandbox.PointLight",
-            "__guid": "05294f53-136f-4d4f-a33c-fa551f944256",
-            "Attenuation": 1,
-            "FogMode": "Enabled",
-            "FogStrength": 1,
-            "LightColor": "0.91373,0.98039,1,1",
-            "Radius": 400,
-            "Shadows": true
-          }
-        ]
-      },
-      {
         "__guid": "26a9bc1d-0411-48e3-a12c-d34b1e59dd3a",
         "Flags": 0,
         "Name": "Seat",
@@ -183,26 +151,6 @@
           {
             "__type": "Clover.Components.SittableNode",
             "__guid": "949903b6-4df9-4b3f-b90f-d1463c2cd619"
-          }
-        ]
-      },
-      {
-        "__guid": "6d9ede88-1f07-4d06-8e72-4ecf25b2153e",
-        "Flags": 0,
-        "Name": "Point Light",
-        "Position": "0,0,48",
-        "Tags": "light_point,light",
-        "Enabled": true,
-        "Components": [
-          {
-            "__type": "Sandbox.PointLight",
-            "__guid": "4812bad7-4e9a-4227-be4b-983ada73f460",
-            "Attenuation": 1,
-            "FogMode": "Enabled",
-            "FogStrength": 1,
-            "LightColor": "0.91373,0.98039,1,1",
-            "Radius": 400,
-            "Shadows": true
           }
         ]
       }
@@ -214,9 +162,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
-  "__references": [
-    "garry.crate#10652"
-  ],
+  "__references": [],
   "IsValid": true,
   "__version": 1
 }

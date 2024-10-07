@@ -132,7 +132,6 @@
       "Flags": 0,
       "Name": "Debug",
       "Position": "300.3214,304.458,962.4254",
-      "Enabled": true,
       "Components": [
         {
           "__type": "Sandbox.ScreenPanel",

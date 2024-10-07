@@ -8,8 +8,14 @@
       {
         "__type": "Clover.Vehicles.BaseVehicle",
         "__guid": "67904784-2b8f-436b-b58d-787064b3cb1f",
+        "EngineSound": "vehicles/scooter/engine.sound",
+        "ExhaustParticles": {
+          "_type": "gameobject",
+          "go": "318c5f84-912d-44cf-9ee6-3dc002cc5c5a"
+        },
         "Gravity": "0,0,800",
         "Headlights": [],
+        "IdleSound": "vehicles/scooter/moped_idle.sound",
         "Model": {
           "_type": "gameobject",
           "go": "843cf470-c5e3-4f93-91a4-d0cdae3d9bf6"
@@ -22,12 +28,13 @@
             "component_type": "SittableNode"
           }
         ],
+        "StartEngineSound": "vehicles/scooter/kick.sound",
         "Steering": 4
       },
       {
         "__type": "Sandbox.CharacterController",
         "__guid": "efc246b5-7b9a-48fe-b135-1a9e129918af",
-        "Acceleration": 10,
+        "Acceleration": 3,
         "Bounciness": 0.3,
         "GroundAngle": 45,
         "Height": 64,
@@ -79,14 +86,14 @@
             "__guid": "e92d0620-63e8-4e87-884d-cb5f6b991e07",
             "Flags": 0,
             "Name": "Object",
-            "Position": "0,-3.331901,16",
+            "Position": "0,-3.331901,0",
             "Enabled": true,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "baed6ccd-d09e-4ab4-962f-0b54638b3465",
                 "BodyGroups": 18446744073709551615,
-                "Model": "models/editor/node_hint.vmdl",
+                "Model": "models/city_props/vehicles/scooter.vmdl",
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -95,6 +102,162 @@
                 },
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
+              }
+            ]
+          },
+          {
+            "__guid": "318c5f84-912d-44cf-9ee6-3dc002cc5c5a",
+            "Flags": 0,
+            "Name": "Particles",
+            "Position": "-33.02185,5.425832,11.68508",
+            "Rotation": "0.1736482,0.000000007590403,0.9848077,-0.00000004304731",
+            "Tags": "particles",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ParticleEffect",
+                "__guid": "42139e66-c195-4af0-a1dc-53d8d5c51ee9",
+                "__version": 1,
+                "Alpha": {
+                  "Type": "Range",
+                  "Constants": "1,0,0,0"
+                },
+                "ApplyAlpha": true,
+                "ApplyColor": true,
+                "ApplyRotation": true,
+                "ApplyShape": true,
+                "Bounce": {
+                  "Constants": "1,0,0,0"
+                },
+                "Brightness": {
+                  "Constants": "1,0,0,0"
+                },
+                "Bumpiness": {},
+                "Collision": false,
+                "CollisionRadius": 1,
+                "Damping": {},
+                "DieOnCollisionChance": {},
+                "Force": true,
+                "ForceDirection": "0,0,10",
+                "ForceScale": {
+                  "Constants": "1,0,0,0"
+                },
+                "Friction": {
+                  "Constants": "1,0,0,0"
+                },
+                "Gradient": {
+                  "GradientA": {
+                    "color": [
+                      {
+                        "t": 0.5,
+                        "c": "1,1,1,1"
+                      }
+                    ],
+                    "alpha": []
+                  },
+                  "GradientB": {
+                    "color": [
+                      {
+                        "t": 0.5,
+                        "c": "1,1,1,1"
+                      }
+                    ],
+                    "alpha": []
+                  },
+                  "ConstantA": "1,1,1,1",
+                  "ConstantB": "1,1,1,1"
+                },
+                "Lifetime": {
+                  "Constants": "1,0,0,0"
+                },
+                "MaxParticles": 1000,
+                "OrbitalForce": {},
+                "OrbitalPull": {},
+                "PerParticleTimeScale": {
+                  "Constants": "1,0,0,0"
+                },
+                "Pitch": {},
+                "PreWarm": 0,
+                "PushStrength": {},
+                "Roll": {
+                  "Type": "Range",
+                  "Evaluation": "Particle",
+                  "Constants": "0,360,0,0"
+                },
+                "Scale": {
+                  "Type": "Range",
+                  "CurveA": [
+                    {
+                      "in": -2.5641017,
+                      "out": 2.5641017
+                    },
+                    {
+                      "x": 0.48062593,
+                      "y": 0.7406417
+                    }
+                  ],
+                  "Constants": "0.5,15,0,0"
+                },
+                "SequenceId": {},
+                "SequenceSpeed": {
+                  "Constants": "1,0,0,0"
+                },
+                "SequenceTime": {
+                  "Constants": "1,0,0,0"
+                },
+                "SheetSequence": false,
+                "Space": "World",
+                "StartDelay": {},
+                "StartVelocity": {
+                  "Constants": "23.867,0,0,0"
+                },
+                "Stretch": {},
+                "TimeScale": 1,
+                "Tint": "1,1,1,1",
+                "Yaw": {}
+              },
+              {
+                "__type": "Sandbox.ParticleConeEmitter",
+                "__guid": "17286d65-3dff-4d34-af83-92cca31a2df4",
+                "Burst": 0,
+                "ConeAngle": 30,
+                "ConeFar": 50,
+                "ConeNear": 1,
+                "Delay": 0,
+                "DestroyOnEnd": false,
+                "Duration": 1,
+                "InVolume": false,
+                "Loop": true,
+                "OnEdge": false,
+                "Rate": 10,
+                "RateOverDistance": 10
+              },
+              {
+                "__type": "Sandbox.ParticleSpriteRenderer",
+                "__guid": "d57765ec-7368-4155-96e6-a9828ada1ca0",
+                "Additive": false,
+                "Alignment": "LookAtCamera",
+                "BlurAmount": 0.5,
+                "BlurOpacity": 0.5,
+                "BlurSpacing": 0.5,
+                "DepthFeather": 0,
+                "FaceVelocity": false,
+                "FogStrength": 1,
+                "LeadingTrail": true,
+                "Lighting": false,
+                "MotionBlur": false,
+                "Opaque": false,
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RotationOffset": 0,
+                "Scale": 1,
+                "Shadows": false,
+                "SortMode": "Unsorted",
+                "Texture": "materials/particle/particle_smokegrenade.vtex"
               }
             ]
           }
@@ -108,7 +271,9 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
-  "__references": [],
+  "__references": [
+    "svin.scooter#19812"
+  ],
   "IsValid": true,
   "__version": 1
 }

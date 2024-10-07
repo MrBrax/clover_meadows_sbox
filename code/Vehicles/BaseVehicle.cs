@@ -18,6 +18,15 @@ public class BaseVehicle : Component, IInteract
 
 	[Property] public float Steering { get; set; } = 0.5f;
 
+	[Property] public SoundEvent StartEngineSound { get; set; }
+	[Property] public SoundEvent StopEngineSound { get; set; }
+	[Property] public SoundEvent IdleSound { get; set; }
+	[Property] public SoundEvent EngineSound { get; set; }
+	[Property] public SoundEvent HornSound { get; set; }
+	
+	[Property] public GameObject ExhaustParticles { get; set; }
+
+
 	private float Momentum;
 
 	private bool IsOn;
@@ -25,6 +34,10 @@ public class BaseVehicle : Component, IInteract
 	public Dictionary<SittableNode, GameObject> Occupants { get; set; } = new();
 
 	public bool HasDriver => Occupants.Keys.Contains( Seats[0] );
+
+	private SoundHandle _idleSoundHandle;
+	private SoundHandle _engineSoundHandle;
+	private TimeSince _startEngineTime;
 
 	protected override void OnStart()
 	{
@@ -34,6 +47,8 @@ public class BaseVehicle : Component, IInteract
 		{
 			light.Enabled = false;
 		}
+		
+		ExhaustParticles.Enabled = false;
 	}
 
 	public void StartInteract( PlayerCharacter player )
@@ -56,6 +71,18 @@ public class BaseVehicle : Component, IInteract
 		{
 			light.Enabled = true;
 		}
+
+		GameObject.PlaySound( StartEngineSound );
+
+		_idleSoundHandle = GameObject.PlaySound( IdleSound );
+		_idleSoundHandle.Volume = 0;
+
+		_engineSoundHandle = GameObject.PlaySound( EngineSound );
+		_engineSoundHandle.Volume = 0;
+
+		_startEngineTime = 0;
+		
+		ExhaustParticles.Enabled = true;
 	}
 
 	private void StopEngine()
@@ -66,6 +93,13 @@ public class BaseVehicle : Component, IInteract
 		{
 			light.Enabled = false;
 		}
+
+		GameObject.PlaySound( StopEngineSound );
+
+		_idleSoundHandle.Stop();
+		_engineSoundHandle.Stop();
+		
+		ExhaustParticles.Enabled = false;
 	}
 
 	public void AddOccupant( int seatIndex, GameObject occupant )
@@ -77,12 +111,13 @@ public class BaseVehicle : Component, IInteract
 		Occupants[seat] = occupant;
 		Log.Info( $"Added occupant to seat {seatIndex}" );
 
-		occupant.WorldPosition = seat.WorldPosition;
+		// occupant.WorldPosition = seat.WorldPosition;
 		occupant.SetParent( GameObject );
 		Log.Info( $"Occupant {occupant.Name} position: {seat.WorldPosition}, vehicle position: {WorldPosition}" );
 		if ( occupant.Components.TryGet<PlayerCharacter>( out var player ) )
 		{
 			// player.Seat = seat;
+			player.TeleportTo( seat.WorldPosition, seat.WorldRotation );
 			player.PlayerController.Yaw = Model.WorldRotation.Yaw();
 			player.SetCollisionEnabled( false );
 			player.SetCarriableVisibility( false );
@@ -107,7 +142,7 @@ public class BaseVehicle : Component, IInteract
 
 		Occupants.Remove( seat );
 		Log.Info( $"Removed occupant from seat {Seats.IndexOf( seat )}" );
-		
+
 		occupant.SetParent( null );
 
 		if ( occupant.Components.TryGet<PlayerCharacter>( out var player ) )
@@ -146,6 +181,8 @@ public class BaseVehicle : Component, IInteract
 				rider.OnExitVehicle();
 			}
 		}
+
+		StopEngine();
 	}
 
 	public void TryToEjectOccupant( GameObject occupant )
@@ -158,7 +195,14 @@ public class BaseVehicle : Component, IInteract
 
 		RemoveOccupant( occupant );
 
-		occupant.WorldPosition = exitPosition;
+		if ( occupant.Components.TryGet<PlayerCharacter>( out var player ) )
+		{
+			player.TeleportTo( exitPosition, Model.WorldRotation );
+		}
+		else
+		{
+			occupant.WorldPosition = exitPosition;
+		}
 	}
 
 	private Vector3 FindExitPosition( GameObject occupant )
@@ -171,12 +215,37 @@ public class BaseVehicle : Component, IInteract
 		base.OnFixedUpdate();
 
 		// HandleOccupants();
+		HandleSounds();
 		Handling();
 
 		if ( HasDriver && Input.Pressed( "Use" ) )
 		{
 			TryToEjectOccupant( Occupants[Seats[0]] );
+			Input.Clear( "Use" );
 		}
+	}
+
+	private void HandleSounds()
+	{
+		if ( !IsOn ) return;
+
+		if ( _startEngineTime < 1f ) return;
+
+		var velocity = CharacterController.Velocity.Length;
+
+		if ( velocity < 2f )
+		{
+			_idleSoundHandle.Volume = _idleSoundHandle.Volume.LerpTo( IdleSound.Volume.FixedValue, Time.Delta * 2.0f );
+			_engineSoundHandle.Volume = _engineSoundHandle.Volume.LerpTo( 0, Time.Delta * 2.0f );
+		}
+		else
+		{
+			_idleSoundHandle.Volume = _idleSoundHandle.Volume.LerpTo( 0, Time.Delta * 2.0f );
+			_engineSoundHandle.Volume =
+				_engineSoundHandle.Volume.LerpTo( EngineSound.Volume.FixedValue, Time.Delta * 2.0f );
+		}
+
+		_engineSoundHandle.Pitch = MathX.Lerp( 0.5f, 1.5f, MathF.Abs( velocity / 500 ) );
 	}
 
 	public Vector3 WishVelocity { get; private set; }
@@ -194,7 +263,7 @@ public class BaseVehicle : Component, IInteract
 		{
 			CharacterController.Velocity = CharacterController.Velocity.WithZ( 0 );
 			CharacterController.Accelerate( WishVelocity );
-			CharacterController.ApplyFriction( 4.0f );
+			CharacterController.ApplyFriction( 1.0f );
 		}
 		else
 		{
@@ -238,23 +307,29 @@ public class BaseVehicle : Component, IInteract
 			// Yaw = Yaw.LerpDegreesTo( inputYaw + 180, Time.Delta * 10.0f );
 
 			Model.WorldRotation *= Rotation.From( 0, Steering * input.y, 0 );
+			// Model.WorldRotation = Rotation.Lerp( Model.WorldRotation, Model.WorldRotation * Rotation.From( 0, Steering * input.y, 0 ), Time.Delta * 10.0f );
 
-			// WishedRotation = Rotation.LookAt( input, Vector3.Up );
 			var forward = Model.WorldRotation.Forward;
-			WishVelocity = forward.Normal;
+			WishVelocity = forward * ( input.x * 300f );
+			WishVelocity = WishVelocity.ClampLength( 200f );
+
+			Gizmo.Draw.ScreenText( WishVelocity.Length.ToString(), new Vector2( 20, 20 ) );
+
 		}
 		else
 		{
 			WishVelocity = Vector3.Zero;
 		}
 
-		if ( Input.Down( "Run" ) )
+		// WishVelocity *= 200f;
+
+		/*if ( Input.Down( "Run" ) )
 		{
 			WishVelocity *= 180.0f;
 		}
 		else
 		{
 			WishVelocity *= 110.0f;
-		}
+		}*/
 	}
 }
