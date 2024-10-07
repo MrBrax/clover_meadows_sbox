@@ -2,6 +2,7 @@ DebugWindow {
     position: absolute;
     top: 10px;
     right: 10px;
+	bottom: 10px;
     background-color: rgba(0, 0, 0, 0.5);
 	backdrop-filter: blur(5px);
     padding: 20px;
@@ -11,18 +12,24 @@ DebugWindow {
 
     flex-direction: column;
     gap: 10px;
+	
+	min-width: 300px;
+	overflow-y: scroll;
 
     h1 {
         font-size: 30px;
         font-weight: bold;
+		flex-shrink: 0;
     }
 	
 	section {
 		flex-direction: column;
 		gap: 10px;
+		flex-shrink: 0;
 	}
 	
 	button {
+		flex-shrink: 0;
 		background-color: rgba(0, 0, 0, 0.6);
 		color: white;
 		padding: 10px;
