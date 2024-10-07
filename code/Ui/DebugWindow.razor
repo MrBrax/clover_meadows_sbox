@@ -12,7 +12,7 @@
 		{
 			<button @onclick=@( () => SpawnItem( item ) )>
 				<img src=@item.GetIcon() />
-				<span>@item.Name</span>
+				<span>@( item.Name ?? item.ResourceName )</span>
 			</button>
 		}
 	</section>
