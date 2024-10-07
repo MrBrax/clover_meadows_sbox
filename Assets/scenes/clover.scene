@@ -167,6 +167,10 @@
         {
           "__type": "Clover.Ui.InventoryUi",
           "__guid": "4181c135-f152-4510-b2ca-e93040af3219"
+        },
+        {
+          "__type": "Clover.MainUi",
+          "__guid": "13915653-ee4b-4579-bda4-c285508c484b"
         }
       ]
     },
