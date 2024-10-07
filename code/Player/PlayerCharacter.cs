@@ -255,4 +255,15 @@ public sealed class PlayerCharacter : Component
 	{
 		WorldPosition = World.ItemGridToWorld( World.WorldToItemGrid( WorldPosition ) );
 	}
+
+	public void SetCollisionEnabled( bool state )
+	{
+		CharacterController.Enabled = state;
+	}
+
+	public void SetCarriableVisibility( bool state )
+	{
+		
+		
+	}
 }
