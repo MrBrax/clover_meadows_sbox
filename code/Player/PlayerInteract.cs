@@ -45,6 +45,7 @@ public class PlayerInteract : Component
 			{
 				_currentInteractable = interactable;
 				_currentInteractable.StartInteract( GetComponent<PlayerCharacter>() );
+				Input.Clear( "use" );
 			}
 			else
 			{
@@ -57,6 +58,7 @@ public class PlayerInteract : Component
 			{
 				_currentInteractable.FinishInteract( GetComponent<PlayerCharacter>() );
 				_currentInteractable = null;
+				Input.Clear( "use" );
 			}
 		}
 
