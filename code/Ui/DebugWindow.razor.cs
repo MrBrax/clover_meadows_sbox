@@ -21,4 +21,19 @@ public partial class DebugWindow
 		Sound.Play( "sounds/interact/item_pickup.sound", PlayerCharacter.Local.WorldPosition );
 		
 	}
+
+	[ConCmd( "spawn_cloud_item" )]
+	public static async void SpawnCloudItem( string packageIdent )
+	{
+		var package = await Package.Fetch( packageIdent, false );
+		
+		if ( package == null )
+		{
+			Log.Error( $"Failed to fetch package {packageIdent}" );
+			return;
+		}
+		
+		Log.Info( package.Title );
+
+	}
 }
