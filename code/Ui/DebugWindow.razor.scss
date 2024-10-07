@@ -1,4 +1,4 @@
-DebugWindow {
+.debug-window {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -21,6 +21,16 @@ DebugWindow {
         font-weight: bold;
 		flex-shrink: 0;
     }
+	
+	h2 {
+		font-size: 25px;
+		font-weight: bold;
+		flex-shrink: 0;
+	}
+	
+	.lists {
+		gap: 10px;
+	}
 	
 	section {
 		flex-direction: column;

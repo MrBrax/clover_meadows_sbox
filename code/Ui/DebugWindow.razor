@@ -4,17 +4,35 @@
 @inherits PanelComponent
 @namespace Clover.Ui
 
+@if ( !IsVisible )
+{
+	return;
+}
+
 <root>
-	<h1>debug stuff</h1>
-	<section>
-		<h2>Items</h2>
-		@foreach ( var item in ResourceLibrary.GetAll<ItemData>().OrderBy( x => x.Name ) )
-		{
-			<button @onclick=@( () => SpawnItem( item ) )>
-				<img src=@item.GetIcon() />
-				<span>@( item.Name ?? item.ResourceName )</span>
-			</button>
-		}
-	</section>
+	<div class="debug-window">
+		<h1>debug stuff</h1>
+		<div class="lists">
+			<section>
+				<h2>Items</h2>
+				@foreach ( var item in ResourceLibrary.GetAll<ItemData>().OrderBy( x => x.Name ) )
+				{
+					<button @onclick=@( () => SpawnItem( item ) )>
+						<img src=@item.GetIcon()/>
+						<span>@( item.Name ?? item.ResourceName )</span>
+					</button>
+				}
+			</section>
+			<section>
+				<h2>Objects</h2>
+				@foreach ( var obj in ResourceLibrary.GetAll<ObjectData>().OrderBy( x => x.Name ) )
+				{
+					<button @onclick=@( () => SpawnObject( obj ) )>
+						<span>@( obj.Name ?? obj.ResourceName )</span>
+					</button>
+				}
+			</section>
+		</div>
+	</div>
 
 </root>

@@ -1,4 +1,6 @@
-﻿using Clover.Data;
+﻿using System;
+using Clover.Data;
+using Clover.Items;
 using Clover.Persistence;
 using Clover.Player;
 
@@ -6,20 +8,50 @@ namespace Clover.Ui;
 
 public partial class DebugWindow
 {
-	private void SpawnItem( ItemData item )
+	public bool IsVisible { get; set; }
+	
+	private void ToggleVisibility()
+	{
+		IsVisible = !IsVisible;
+	}
+
+	protected override void OnFixedUpdate()
 	{
 		
-		/*var direction = PlayerCharacter.Local.GetAimingDirection();
+		if ( Input.Released( "DebugWindow" ) )
+		{
+			Log.Info( "Debug key pressed" );
+			ToggleVisibility();
+		}
 		
-		WorldManager.Instance.ActiveWorld.SpawnPlacedNode( item, PlayerCharacter.Local.GetAimingGridPosition(),
-			World.ItemRotation.North, World.ItemPlacement.Floor );*/
+	}
 
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( IsVisible );
+	}
+
+	private void SpawnItem( ItemData item )
+	{
 		var pItem = item.CreatePersistentItem();
 		
 		PlayerCharacter.Local.Inventory.PickUpItem( pItem );
 		
 		Sound.Play( "sounds/interact/item_pickup.sound", PlayerCharacter.Local.WorldPosition );
 		
+	}
+	
+	private void SpawnObject( ObjectData item )
+	{
+		var gameObject = item.Prefab.Clone();
+		
+		var worldObject = gameObject.GetComponent<WorldObject>();
+		worldObject.WorldLayerObject.SetLayer( PlayerCharacter.Local.WorldLayerObject.Layer, true );
+		
+		worldObject.WorldPosition = PlayerCharacter.Local.WorldPosition;
+		
+		Sound.Play( "sounds/interact/item_pickup.sound", PlayerCharacter.Local.WorldPosition );
+
 	}
 
 	[ConCmd( "spawn_cloud_item" )]
@@ -44,4 +76,6 @@ public partial class DebugWindow
 		}
 
 	}
+
+	
 }
