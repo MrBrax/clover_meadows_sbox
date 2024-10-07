@@ -81,8 +81,11 @@ public class BaseVehicle : Component, IInteract
 		_engineSoundHandle.Volume = 0;
 
 		_startEngineTime = 0;
-		
-		ExhaustParticles.Enabled = true;
+
+		if ( ExhaustParticles != null )
+		{
+			ExhaustParticles.Enabled = true;
+		}
 	}
 
 	private void StopEngine()
@@ -94,12 +97,15 @@ public class BaseVehicle : Component, IInteract
 			light.Enabled = false;
 		}
 
-		GameObject.PlaySound( StopEngineSound );
+		GameObject?.PlaySound( StopEngineSound );
 
-		_idleSoundHandle.Stop();
-		_engineSoundHandle.Stop();
-		
-		ExhaustParticles.Enabled = false;
+		_idleSoundHandle?.Stop();
+		_engineSoundHandle?.Stop();
+
+		if ( ExhaustParticles != null )
+		{
+			ExhaustParticles.Enabled = false;
+		}
 	}
 
 	public void AddOccupant( int seatIndex, GameObject occupant )
