@@ -1,5 +1,5 @@
 {
-  "Name": null,
+  "Name": "Hole",
   "Description": null,
   "Width": 1,
   "Height": 1,
@@ -10,9 +10,15 @@
   "StackSize": 1,
   "ModelScene": null,
   "DropScene": null,
-  "PlaceScene": null,
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/hole/hole.prefab"
+  },
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/hole/hole.prefab"
+  },
   "Icon": null,
-  "DefaultTypeScene": null,
   "__references": [],
   "IsValid": true,
   "__version": 0
