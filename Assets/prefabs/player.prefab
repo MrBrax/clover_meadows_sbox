@@ -106,6 +106,10 @@
         "__guid": "55844445-1b77-43bd-90be-217baec999e8",
         "__enabled": false,
         "UseCameraDirection": true
+      },
+      {
+        "__type": "Clover.Components.VehicleRider",
+        "__guid": "ab9a83fa-0380-4c6c-b3d6-7f7a3559696f"
       }
     ],
     "Children": [

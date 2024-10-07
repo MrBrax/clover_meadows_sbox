@@ -60,6 +60,13 @@ public sealed class PlayerCharacter : Component
 		var dir = (position - WorldPosition).Normal;
 		dir.y = 0;
 		Model.WorldRotation = Rotation.LookAt( dir, Vector3.Up );
+		PlayerController.Yaw = Model.WorldRotation.Yaw();
+	}
+	
+	public void ModelLook( Rotation rotation )
+	{
+		Model.WorldRotation = rotation;
+		PlayerController.Yaw = Model.WorldRotation.Yaw();
 	}
 
 	protected override void OnFixedUpdate()
@@ -137,7 +144,11 @@ public sealed class PlayerCharacter : Component
 
 	public bool ShouldMove()
 	{
-		return !IsSitting && !InCutscene;
+		// return !IsSitting && !InCutscene;
+		if ( IsSitting ) return false;
+		if ( InCutscene ) return false;
+		if ( Components.TryGet<VehicleRider>( out var rider ) && rider.Vehicle.IsValid() ) return false;
+		return true;
 	}
 
 
@@ -258,7 +269,7 @@ public sealed class PlayerCharacter : Component
 
 	public void SetCollisionEnabled( bool state )
 	{
-		CharacterController.Enabled = state;
+		// CharacterController.Enabled = state;
 	}
 
 	public void SetCarriableVisibility( bool state )

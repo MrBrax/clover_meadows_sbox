@@ -1,0 +1,114 @@
+{
+  "RootObject": {
+    "__guid": "19ca3112-5fe7-414f-aca2-1b79e7bd29b1",
+    "Flags": 0,
+    "Name": "scooter",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Vehicles.BaseVehicle",
+        "__guid": "67904784-2b8f-436b-b58d-787064b3cb1f",
+        "Gravity": "0,0,800",
+        "Headlights": [],
+        "Model": {
+          "_type": "gameobject",
+          "go": "843cf470-c5e3-4f93-91a4-d0cdae3d9bf6"
+        },
+        "Seats": [
+          {
+            "_type": "component",
+            "component_id": "62c7954a-aeaa-41b0-9904-b57117b6ca90",
+            "go": "e4872e07-4521-40b1-941e-3b9feefd8d78",
+            "component_type": "SittableNode"
+          }
+        ],
+        "Steering": 4
+      },
+      {
+        "__type": "Sandbox.CharacterController",
+        "__guid": "efc246b5-7b9a-48fe-b135-1a9e129918af",
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 64,
+        "IgnoreLayers": "",
+        "Radius": 16,
+        "StepHeight": 18,
+        "UseCollisionRules": false
+      },
+      {
+        "__type": "Sandbox.HullCollider",
+        "__guid": "609f7c26-0ed9-4130-b0c6-890d249f06cf",
+        "BoxSize": "50,50,50",
+        "Center": "0,0,25",
+        "Height": 50,
+        "IsTrigger": false,
+        "Radius": 25,
+        "Radius2": 0,
+        "Slices": 16,
+        "Static": false,
+        "Type": "Cylinder"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "9a1ef19c-05a9-49e3-99b9-5b7bf92101f7",
+        "Layer": 0
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "843cf470-c5e3-4f93-91a4-d0cdae3d9bf6",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "e4872e07-4521-40b1-941e-3b9feefd8d78",
+            "Flags": 0,
+            "Name": "Seat",
+            "Position": "-5.712124,0.00001264484,26.15299",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Clover.Components.SittableNode",
+                "__guid": "62c7954a-aeaa-41b0-9904-b57117b6ca90"
+              }
+            ]
+          },
+          {
+            "__guid": "e92d0620-63e8-4e87-884d-cb5f6b991e07",
+            "Flags": 0,
+            "Name": "Object",
+            "Position": "0,-3.331901,16",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "baed6ccd-d09e-4ab4-962f-0b54638b3465",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/editor/node_hint.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

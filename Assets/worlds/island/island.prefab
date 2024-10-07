@@ -224,7 +224,24 @@
             "Static": true,
             "Surface": "surfaces/grass.surface"
           }
+        ],
+        "Children": [
+          {
+            "__guid": "e82e5158-e147-4fb3-8e81-cdeb834f2594",
+            "Flags": 0,
+            "Name": "Object",
+            "Enabled": true
+          }
         ]
+      },
+      {
+        "__guid": "19ca3112-5fe7-414f-aca2-1b79e7bd29b1",
+        "Flags": 0,
+        "Name": "Scooter",
+        "Position": "1632,384,0.00009798329",
+        "Enabled": true,
+        "__Prefab": "vehicles/scooter/scooter.prefab",
+        "__PrefabVariables": {}
       }
     ],
     "__variables": []

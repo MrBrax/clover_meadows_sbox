@@ -135,6 +135,12 @@ public class PlayerController : Component
 		BuildWishVelocity();
 
 		var cc = GameObject.Components.Get<CharacterController>();
+		
+		if ( !cc.IsValid() )
+		{
+			// Log.Error( "CharacterController is not valid" );
+			return;
+		}
 
 		if ( cc.IsOnGround && Input.Down( "Jump" ) )
 		{
