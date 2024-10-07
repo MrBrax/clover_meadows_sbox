@@ -34,6 +34,14 @@ public partial class DebugWindow
 		}
 		
 		Log.Info( package.Title );
+		
+		var pp = package.GetMeta<string>("ParentPackage");
+
+		if ( pp == null || pp != Game.Ident )
+		{
+			Log.Error( $"Package {packageIdent} is not supported" );
+			return;
+		}
 
 	}
 }
