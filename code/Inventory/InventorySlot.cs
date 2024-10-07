@@ -18,8 +18,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 	/// </summary>
 	[JsonInclude] public int Amount { get; private set; } = 1;
 
-	[JsonIgnore] public bool IsStackable => PersistentItem.Stackable;
-	[JsonIgnore] public bool MaxStackReached => PersistentItem.MaxStack <= Amount;
+	[JsonIgnore] public bool IsStackable => PersistentItem.IsStackable;
+	[JsonIgnore] public bool MaxStackReached => PersistentItem.StackSize <= Amount;
 
 	public InventorySlot( InventoryContainer inventory )
 	{
@@ -102,7 +102,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		// abort if either item is not stackable
-		if ( PersistentItem.Stackable == false || other.PersistentItem.Stackable == false )
+		if ( PersistentItem.IsStackable == false || other.PersistentItem.IsStackable == false )
 		{
 			Log.Info( "CanMerge: Item is not stackable" );
 			return false;
@@ -116,9 +116,9 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		// abort if stack can't hold the amount
-		if ( PersistentItem.MaxStack < Amount + other.Amount )
+		if ( PersistentItem.StackSize < Amount + other.Amount )
 		{
-			Log.Info( $"CanMerge: Stack cannot hold the amount ({PersistentItem.MaxStack} < {Amount + other.Amount})" );
+			Log.Info( $"CanMerge: Stack cannot hold the amount ({PersistentItem.StackSize} < {Amount + other.Amount})" );
 			return false;
 		}
 

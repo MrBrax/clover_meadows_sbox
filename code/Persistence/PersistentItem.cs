@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Clover.Carriable;
 using Clover.Data;
 using Clover.Items;
@@ -11,6 +12,10 @@ namespace Clover.Persistence;
 public class PersistentItem
 {
 	[Property] public string ItemId { get; set; }
+	
+	[Property] public string PackageIdent { get; set; }
+	
+	[JsonIgnore] public bool IsPackage => !string.IsNullOrEmpty( PackageIdent );
 
 	[Property] public Dictionary<string, object> ArbitraryData { get; set; } = new();
 
@@ -20,45 +25,9 @@ public class PersistentItem
 		get => ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == ItemId );
 	}
 
-	[JsonIgnore] public virtual bool Stackable => false;
-	[JsonIgnore] public virtual int MaxStack => 1;
-
-	/*public string GetArbitraryString( string key )
-	{
-		if ( ArbitraryData.TryGetValue( key, out var value ) )
-		{
-			return value.ToString();
-		}
-		return null;
-	}
-
-	public int GetArbitraryInt( string key )
-	{
-		if ( ArbitraryData.TryGetValue( key, out var value ) )
-		{
-			return (int)value;
-		}
-		return 0;
-	}
-
-	public float GetArbitraryFloat( string key )
-	{
-		if ( ArbitraryData.TryGetValue( key, out var value ) )
-		{
-			return (float)value;
-		}
-		return 0;
-	}
-
-	public bool GetArbitraryBool( string key )
-	{
-		if ( ArbitraryData.TryGetValue( key, out var value ) )
-		{
-			return (bool)value;
-		}
-		return false;
-	}*/
-
+	[JsonIgnore] public virtual bool IsStackable => ItemData.IsStackable;
+	[JsonIgnore] public virtual int StackSize => ItemData.StackSize;
+	
 	public T GetArbitraryData<T>( string key )
 	{
 		return TryGetArbitraryData<T>( key, out var value ) ? value : default;
@@ -209,6 +178,11 @@ public class PersistentItem
 		
 		return carriable;
 		
+	}
+
+	public async Task<Package> GetPackage()
+	{
+		return await Package.Fetch( PackageIdent, false );
 	}
 	
 }
