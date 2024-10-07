@@ -1,0 +1,146 @@
+{
+  "RootObject": {
+    "__guid": "3677dd18-4653-4a7b-81b9-f4eac26399a8",
+    "Flags": 0,
+    "Name": "poofer_carry",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.BaseCarriable",
+        "__guid": "d6dc6633-e957-418a-8731-531103f1d3a8",
+        "ItemData": "items/tools/poofer/poofer.tool",
+        "OnUseDownAction": {
+          "__version": 8,
+          "__guid": "20cd0df5-a9e3-4b24-b129-4605389dd658",
+          "__changeId": 16,
+          "UserData": {
+            "Title": "On Use Down Action",
+            "ReferencedComponentTypes": []
+          },
+          "Variables": [],
+          "Nodes": [
+            {
+              "Id": 0,
+              "Type": "input"
+            },
+            {
+              "Id": 1,
+              "Type": "particlemanager.instance",
+              "UserData": {
+                "Position": "-24,120"
+              }
+            },
+            {
+              "Id": 3,
+              "Type": "call",
+              "Properties": {
+                "_isStatic": false,
+                "_name": "BroadcastPoofAt",
+                "_type": "Braxnet.ParticleManager"
+              },
+              "UserData": {
+                "Position": "348,48"
+              }
+            },
+            {
+              "Id": 4,
+              "Type": "property",
+              "Properties": {
+                "_name": "Transform",
+                "_type": "Sandbox.GameObject"
+              },
+              "UserData": {
+                "Position": "-204,60"
+              }
+            },
+            {
+              "Id": 5,
+              "Type": "property",
+              "Properties": {
+                "_name": "Position",
+                "_type": "Sandbox.GameTransform"
+              },
+              "UserData": {
+                "Position": "-0,60"
+              }
+            }
+          ],
+          "Links": [
+            {
+              "SrcId": 0,
+              "SrcName": "_signal",
+              "DstId": 3,
+              "DstName": "_signal"
+            },
+            {
+              "SrcId": 1,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 5,
+              "SrcName": "_result",
+              "DstId": 3,
+              "DstName": "position"
+            },
+            {
+              "SrcId": 0,
+              "SrcName": "_target",
+              "DstId": 4,
+              "DstName": "_target"
+            },
+            {
+              "SrcId": 4,
+              "SrcName": "_result",
+              "DstId": 5,
+              "DstName": "_target"
+            }
+          ]
+        }
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "f38368f2-e921-48e0-9eb8-20f2a7bea330",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "4c57924b-fc30-436d-9dbf-2f14e692ce7c",
+            "Flags": 0,
+            "Name": "Object",
+            "Position": "0,0,7.441934",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "ba76c99e-dab4-46ad-9065-8e8da497dca2",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/editor/omni.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

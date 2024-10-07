@@ -1,0 +1,78 @@
+{
+  "RootObject": {
+    "__guid": "7f582584-7591-4df8-bf9c-ba501d003958",
+    "Flags": 0,
+    "Name": "poofer_dropped",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.BaseCarriable",
+        "__guid": "f9d7e01d-0232-47ed-89a8-c93f24552137",
+        "ItemData": "items/tools/poofer/poofer.tool"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "fe18dfa4-525b-4e41-9c19-05a70c5431a0",
+        "Center": "0,0,8",
+        "IsTrigger": false,
+        "Scale": "16,16,16",
+        "Static": false
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "a706e519-887e-4bb8-9193-d0e300ba7a17",
+        "CanPickupSimple": true,
+        "ItemData": "items/tools/poofer/poofer.tool",
+        "Prefab": "items/tools/poofer/poofer_dropped.prefab",
+        "Size": "1,1"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "41eb2442-017a-4d64-8ed8-f441dfdcff41",
+        "Layer": 0
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "c1520189-3d47-4bc4-96c7-0c1b7e4d2b84",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "e9f19582-4b5d-4700-9b3d-8325c879c639",
+            "Flags": 0,
+            "Name": "Object",
+            "Position": "0,0,7.441934",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "247b7c0d-12d5-45c0-a7b9-c4a3fc85cce1",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/editor/omni.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}
