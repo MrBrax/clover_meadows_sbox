@@ -1,0 +1,83 @@
+{
+  "RootObject": {
+    "__guid": "6176b4be-a82d-46c5-8f59-415385718318",
+    "Flags": 0,
+    "Name": "vdog",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.Rigidbody",
+        "__guid": "f3545bdc-0481-40d5-b86f-5a2cd0eef4e1",
+        "AngularDamping": 0,
+        "Gravity": true,
+        "LinearDamping": 0,
+        "Locking": {},
+        "MassCenterOverride": "0,0,0",
+        "MassOverride": 10,
+        "MotionEnabled": true,
+        "OverrideMassCenter": false,
+        "RigidbodyFlags": 0,
+        "StartAsleep": false
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "55b1e9aa-98bb-4e6f-acab-20aebba484fc",
+        "Center": "0,0,21",
+        "IsTrigger": false,
+        "Scale": "16,32,42",
+        "Static": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "972f8ebc-c325-40ac-97fa-fea3a7e3f78b",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "2e014716-1728-4d1b-8d0d-16ec5255c153",
+            "Flags": 0,
+            "Name": "Object",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.SkinnedModelRenderer",
+                "__guid": "9b1e13a6-7f08-4d7c-87e6-b74611d40e87",
+                "BodyGroups": 18446744073709551615,
+                "CreateBoneObjects": false,
+                "Model": "models/npc/vdog/vdog.vmdl",
+                "Morphs": {},
+                "Parameters": {
+                  "bools": {},
+                  "ints": {},
+                  "floats": {},
+                  "vectors": {},
+                  "rotations": {}
+                },
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1",
+                "UseAnimGraph": true
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

@@ -273,6 +273,16 @@
         "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000002384186",
         "__Prefab": "items/misc/soccerball/soccerball.prefab",
         "__PrefabVariables": {}
+      },
+      {
+        "__guid": "b20a93da-4055-40d3-8822-cff373472cc6",
+        "Flags": 0,
+        "Name": "vdog",
+        "Position": "1792,704,0.00000655258",
+        "Rotation": "-0.00000001490117,-0.00000002580957,0.5,-0.8660252",
+        "Enabled": true,
+        "__Prefab": "npc/vdog.prefab",
+        "__PrefabVariables": {}
       }
     ],
     "__variables": []
