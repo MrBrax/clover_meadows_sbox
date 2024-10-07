@@ -1,0 +1,11 @@
+{
+  "Name": "Soccer ball",
+  "Description": null,
+  "Prefab": {
+    "_type": "gameobject",
+    "prefab": "items/misc/soccerball/soccerball.prefab"
+  },
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}

@@ -265,6 +265,16 @@
         "Enabled": true,
         "__Prefab": "buildings/bridge/bridge.prefab",
         "__PrefabVariables": {}
+      },
+      {
+        "__guid": "58a6b6d5-b1b5-46b2-b70d-559b970e8f1d",
+        "Flags": 0,
+        "Name": "soccerball",
+        "Position": "1664,511.9997,12",
+        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000002384186",
+        "Enabled": true,
+        "__Prefab": "items/misc/soccerball/soccerball.prefab",
+        "__PrefabVariables": {}
       }
     ],
     "__variables": []

@@ -1,0 +1,83 @@
+{
+  "RootObject": {
+    "__guid": "794ad176-3a5e-4f69-b70a-aafa883588a7",
+    "Flags": 0,
+    "Name": "soccerball",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.Rigidbody",
+        "__guid": "767ed163-3600-4bbb-b422-a2857e6abba4",
+        "AngularDamping": 0,
+        "Gravity": true,
+        "LinearDamping": 0.1,
+        "Locking": {},
+        "MassCenterOverride": "0,0,0",
+        "MassOverride": 10,
+        "MotionEnabled": true,
+        "OverrideMassCenter": false,
+        "RigidbodyFlags": 0,
+        "StartAsleep": false
+      },
+      {
+        "__type": "Sandbox.SphereCollider",
+        "__guid": "9cd63b19-47f7-43d3-8ee3-5e335fd50021",
+        "Center": "0,0,0",
+        "IsTrigger": false,
+        "Radius": 8,
+        "Static": false,
+        "Surface": "surfaces/rubber.surface"
+      },
+      {
+        "__type": "Clover.Items.WorldObject",
+        "__guid": "f85759c1-2438-494b-bbe6-20b4cb218fee",
+        "ObjectData": "items/misc/soccerball/soccerball.odata",
+        "Prefab": "items/misc/soccerball/soccerball.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "c08780fd-04df-422c-94cb-72ecd42536c2",
+        "Layer": 0
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "67773bf3-dfd3-42c5-9d43-f74560998276",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true
+      },
+      {
+        "__guid": "d00d1ea6-2937-4864-9bf4-5cc843a2761f",
+        "Flags": 0,
+        "Name": "soccerball",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "3fd55fc0-8a1b-4262-98b1-615557aba0ff",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/misc/soccerball/soccerball.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}
