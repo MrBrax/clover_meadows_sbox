@@ -102,7 +102,18 @@ public class Shovel : BaseCarriable
 
 		return false;*/
 
-		return true;
+		// return true;
+		
+		var trace = Scene.Trace.Ray( worldPos + Vector3.Up * 16f, worldPos + Vector3.Down * 32f )
+			.WithTag( "terrain" ) 
+			.Run();
+
+		if ( !trace.Hit ) return false;
+
+		var surface = trace.Surface;
+		
+		return surface.ResourceName == "grass" || surface.ResourceName == "dirt";
+
 	}
 
 	private void HitItem( Vector2Int pos, WorldNodeLink floorItem )
