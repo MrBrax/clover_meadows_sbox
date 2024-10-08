@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Sandbox;
 
 namespace Clover;
@@ -9,7 +10,7 @@ public sealed class WorldLayerObject : Component
 	
 	[Property, Sync] public int Layer { get; private set; }
 	
-	public World World => WorldManager.Instance.GetWorld( Layer );
+	[JsonIgnore] public World World => WorldManager.Instance?.GetWorld( Layer );
 	
 	public void SetLayer( int layer, bool rebuildVisibility = false )
 	{
