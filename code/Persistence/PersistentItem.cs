@@ -44,9 +44,22 @@ public class PersistentItem
 	{
 		if ( ArbitraryData.TryGetValue( key, out var obj ) )
 		{
+			if ( obj == null )
+			{
+				value = default;
+				return false;
+			}
+			
+			// i don't even know why this started happening but apparently it sometimes doesn't need to deserialize
+			if ( obj is T t )
+			{
+				value = t;
+				return true;
+			}
+			
 			if ( obj is not JsonElement jsonElement )
 			{
-				Log.Error( $"Arbitrary data {key} is not a JsonElement" );
+				Log.Error( $"Arbitrary data {key} on {this} is not a JsonElement: {obj} ({obj.GetType()})" );
 				value = default;
 				return false;
 			}
