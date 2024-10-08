@@ -176,7 +176,8 @@ public class WorldItem : Component, IPickupable
 
 		foreach ( var pos in gridPositions )
 		{
-			if ( WorldLayerObject.World.GetItems( pos ).ToList().FirstOrDefault()?.GridPlacement == World.ItemPlacement.OnTop &&
+			// if this item has an item on top of it then it can't be picked up
+			if ( WorldLayerObject.World.GetItems( pos ).Any( x => x.GridPlacement == World.ItemPlacement.OnTop ) &&
 			     GridPlacement == World.ItemPlacement.Floor )
 			{
 				Log.Warning( $"An item is on top of this item" );

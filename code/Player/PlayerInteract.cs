@@ -106,12 +106,14 @@ public class PlayerInteract : Component
 			{
 				if ( collider.GameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 				{
+					// only allow picking up items on the floor or on top of other items
 					if ( worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
 					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop )
 					{
 						continue;
 					}
 					
+					// don't allow picking up items that have items on top of them
 					if ( worldItem.HasItemOnTop() )
 					{
 						continue;
