@@ -3,6 +3,7 @@ using Clover.Carriable;
 using Clover.Components;
 using Clover.Inventory;
 using Clover.Persistence;
+using Sandbox.Utility;
 
 namespace Clover.Data;
 
@@ -11,41 +12,46 @@ namespace Clover.Data;
 [Icon( "weekend" )]
 public class ItemData : GameResource
 {
+	[Property] public string Id { get; set; }
+
 	[Property] public string Name { get; set; }
 
 	[Property, TextArea] public string Description { get; set; }
 
-	[Property, Group("World")] public int Width { get; set; } = 1;
-	[Property, Group("World")] public int Height { get; set; } = 1;
+	[Property, Group( "World" )] public int Width { get; set; } = 1;
+	[Property, Group( "World" )] public int Height { get; set; } = 1;
 
-	[Property, Group("World")] // default to floor and underground
+	[Property, Group( "World" )] // default to floor and underground
 	public World.ItemPlacement Placements { get; set; } = World.ItemPlacement.Floor | World.ItemPlacement.Underground;
 
-	[Property, Group("Inventory")] public bool CanDrop { get; set; } = true;
-	[Property, Group("Inventory")] public bool CanPlace { get; set; } = true;
-	[Property, Group("Inventory")] public bool DisablePickup { get; set; } = false;
+	[Property, Group( "Inventory" )] public bool CanDrop { get; set; } = true;
+	[Property, Group( "Inventory" )] public bool CanPlace { get; set; } = true;
+	[Property, Group( "Inventory" )] public bool DisablePickup { get; set; } = false;
 
-	[Property, Group("Inventory")] public bool IsStackable { get; set; } = false;
+	[Property, Group( "Inventory" )] public bool IsStackable { get; set; } = false;
 
 	[Property, ShowIf( nameof(IsStackable), true )]
 	public int StackSize { get; set; } = 1;
 
-	[Property, Group("Scenes")] public GameObject ModelScene { get; set; }
-	[Property, Group("Scenes")] public GameObject DropScene { get; set; }
-	[Property, Group("Scenes")] public GameObject PlaceScene { get; set; }
-	[Property, ReadOnly, Group("Scenes")] public virtual GameObject DefaultTypeScene => PlaceScene;
+	[Property, Group( "Scenes" )] public GameObject ModelScene { get; set; }
+	[Property, Group( "Scenes" )] public GameObject DropScene { get; set; }
+	[Property, Group( "Scenes" )] public GameObject PlaceScene { get; set; }
+
+	[Property, ReadOnly, Group( "Scenes" )]
+	public virtual GameObject DefaultTypeScene => PlaceScene;
 
 	[Property, ImageAssetPath] public string Icon { get; set; }
-	
-	[Property, Group("Object")] // TODO: move this to yet another class?
+
+	[Property, Group( "Object" )] // TODO: move this to yet another class?
 	public ObjectData ObjectData { get; set; }
-	
+
 	public bool HideInSpawnMenu { get; set; }
 
 
 	public static T GetById<T>( string id ) where T : ItemData
 	{
-		return ResourceLibrary.GetAll<T>().FirstOrDefault( i => i.ResourceName == id );
+		return ResourceLibrary.GetAll<T>().FirstOrDefault( i => i.ResourceName == id || i.ResourcePath == id || i.Id == id ) ??
+		       throw new Exception( $"Item data not found: {id}" );
 	}
 
 	public virtual string GetIcon()
@@ -125,7 +131,7 @@ public class ItemData : GameResource
 
 	public bool IsSameAs( ItemData item )
 	{
-		return item != null && item.ResourcePath == ResourcePath;
+		return item != null && (item.ResourcePath == ResourcePath || item.GetIdentifier() == GetIdentifier());
 	}
 
 	public GameObject SpawnPlaced()
@@ -156,7 +162,7 @@ public class ItemData : GameResource
 	public virtual IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
 	{
 		// yield break;
-		
+
 		if ( ObjectData.IsValid() )
 		{
 			yield return new ItemAction
@@ -218,14 +224,28 @@ public class ItemData : GameResource
 
 	public static ItemData Get( string id )
 	{
-		return ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == id || x.ResourcePath == id ) ?? throw new Exception( $"Item data not found: {id}" );
+		return ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == id || x.ResourcePath == id || x.Id == id ) ??
+		       throw new Exception( $"Item data not found: {id}" );
 	}
 
 	public PersistentItem CreatePersistentItem()
 	{
-		return new PersistentItem
+		return new PersistentItem { ItemId = GetIdentifier(), };
+	}
+
+	protected override void PostLoad()
+	{
+		base.PostLoad();
+		if ( string.IsNullOrEmpty( Id ) )
 		{
-			ItemId = ResourceName,
-		};
+			// create id based on path
+			// TODO: is this a good idea?
+			Id = $"{ResourceName}:{Crc64.FromString( ResourcePath )}";
+		}
+	}
+
+	public string GetIdentifier()
+	{
+		return Id;
 	}
 }

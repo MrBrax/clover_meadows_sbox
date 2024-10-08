@@ -141,12 +141,12 @@ public class PersistentItem
 		
 		if ( gameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
-			persistentItem.ItemId = worldItem.ItemData.ResourceName;
+			persistentItem.ItemId = worldItem.ItemData.GetIdentifier();
 		}
 		
 		if ( gameObject.Components.TryGet<BaseCarriable>( out var carriable ) )
 		{
-			persistentItem.ItemId ??= carriable.ItemData.ResourceName;
+			persistentItem.ItemId ??= carriable.ItemData.GetIdentifier();
 		}
 
 		if ( gameObject.Components.TryGet<Persistent>( out var persistent ) )

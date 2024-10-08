@@ -36,7 +36,7 @@ public class WorldObject : Component, IPickupable
 		Assert.NotNull( ObjectData.PickupData, "ObjectData.PickupData is null" );
 
 		var item = OnObjectSave().Item;
-		item.ItemId = ObjectData.PickupData.ResourceName;
+		item.ItemId = ObjectData.PickupData.GetIdentifier();
 
 		if ( player.Inventory.PickUpItem( item ) )
 		{
