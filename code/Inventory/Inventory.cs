@@ -138,7 +138,7 @@ public class Inventory : Component
 			throw new System.Exception( "Failed to create inventory item" );
 		}
 
-		item.ObjectId = gameObject.ObjectData.ResourceName;
+		item.ItemId = gameObject.ObjectData.PickupData.ResourceName;
 
 		PickUpItem( item );
 

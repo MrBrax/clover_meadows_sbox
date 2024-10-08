@@ -37,7 +37,6 @@ public class WorldObject : Component, IPickupable
 
 		var item = OnObjectSave().Item;
 		item.ItemId = ObjectData.PickupData.ResourceName;
-		item.ObjectId = ObjectData.ResourceName;
 
 		if ( player.Inventory.PickUpItem( item ) )
 		{
