@@ -48,7 +48,7 @@ public class ItemData : GameResource
 
 	public virtual string GetIcon()
 	{
-		return Icon ?? "tools/images/common/icon_error.png";
+		return Icon ?? "ui/icons/default_item.png";
 	}
 
 	public virtual Texture GetIconTexture()
