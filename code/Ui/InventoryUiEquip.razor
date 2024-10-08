@@ -8,6 +8,11 @@
 	@if ( Tool != null )
 	{
 		<img src=@Tool.ItemData.GetIcon() />
+		<div class="durability-bar">
+			<div class="durability-bar-fill" style="width: @( $"{Tool.Durability}%" )">
+				<div class="durability-bar-text">@Tool.Durability</div>
+			</div>
+		</div>
 	}
 	else
 	{

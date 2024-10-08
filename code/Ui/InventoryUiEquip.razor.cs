@@ -40,7 +40,7 @@ public partial class InventoryUiEquip : IEquipChanged
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( Inventory, Slot, Tool );
+		return HashCode.Combine( Inventory, Slot, Tool, Tool?.Durability );
 	}
 
 	protected override void OnRightClick( MousePanelEvent e )

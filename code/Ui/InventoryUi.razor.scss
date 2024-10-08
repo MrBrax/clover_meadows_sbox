@@ -53,6 +53,8 @@ InventoryUi {
                 pointer-events: all;
 
                 transition: background-color 0.2s ease, border-color 0.2s ease;
+                
+                position: relative;
 
                 &.has-item {
                     background-color: rgba(255, 255, 255, 0.5);
@@ -180,24 +182,6 @@ InventoryUi {
 
             }
 
-        }
-    }
-    
-    .durability-bar {
-        position: absolute;
-        top: 5px;
-        left: 5px;
-        right: 5px;
-        height: 20px;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 10px;
-        overflow: hidden;
-        
-        .durability-bar-fill {
-            height: 100%;
-            background-color: rgba(59, 143, 227, 0.8);
-            transition: width 0.2s ease;
-            border-radius: 10px;
         }
     }
 
