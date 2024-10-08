@@ -85,7 +85,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 				return;
 			}
 
-			// Logger.Warn( "Can't place item on this position." );
+			Log.Warning( $"Can't place {GetItem().GetName()} on top of {floorItem.GetName()}" );
 			//x NodeManager.UserInterface.ShowWarning( "Can't place item on this position." );
 			return;
 		}
