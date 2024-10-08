@@ -82,7 +82,7 @@ public sealed partial class World : Component
 
 	private Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
 
-	private Dictionary<Vector2Int, WorldNodeLink> _nodeLinkGridMap = new();
+	private Dictionary<string, WorldNodeLink> _nodeLinkGridMap = new();
 
 	[Sync] public int Layer { get; set; }
 
@@ -551,7 +551,7 @@ public sealed partial class World : Component
 		// add node link to grid map
 		foreach ( var pos in nodeLink.GetGridPositions( true ) )
 		{
-			_nodeLinkGridMap[pos] = nodeLink;
+			_nodeLinkGridMap[$"{pos.x},{pos.y}:{placement}"] = nodeLink;
 		}
 
 		// nodeLink.OnNodeAdded();
@@ -862,7 +862,7 @@ public sealed partial class World : Component
 	{
 		base.OnUpdate();
 
-		return;
+		if ( !ShowGridInfo ) return;
 
 		if ( !Game.IsEditor || Gizmo.Camera == null || Layer != WorldManager.Instance.ActiveWorldIndex ) return;
 
@@ -883,7 +883,12 @@ public sealed partial class World : Component
 
 		foreach ( var item in _nodeLinkGridMap )
 		{
-			Gizmo.Draw.Text( $"{item.Key} {item.Value.GetName()}", new Transform( ItemGridToWorld( item.Key ) ) );
+			var pos = item.Key.Split( ':' )[0].Split( ',' ).Select( int.Parse ).ToArray();
+			Gizmo.Draw.Text( $"{item.Key} {item.Value.GetName()}", new Transform( ItemGridToWorld( new Vector2Int( pos[0], pos[1] ) ) ) );
 		}
 	}
+	
+	[ConVar("clover_show_grid_info")]
+	public static bool ShowGridInfo { get; set; }
+	
 }
