@@ -163,7 +163,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// equip the item
 		if ( toolData != null )
 		{
-			var tool = toolData.SpawnCarriable();
+			var tool = GetItem().SpawnCarriable();
 			InventoryContainer.Player.Equips.SetEquippedItem( slot, tool.GameObject );
 		}
 
