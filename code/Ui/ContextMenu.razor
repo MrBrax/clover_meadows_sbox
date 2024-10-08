@@ -89,7 +89,31 @@
 		{
 			Delete();
 		}
+
+		var margin = 20;
+		var screenSize = Screen.Size * ScaleFromScreen;
+		var size = Content.Box.Rect.Size * ScaleFromScreen;
+	
+		if ( Position.x + size.x > screenSize.x )
+		{
+			Position = new Vector2( screenSize.x - size.x - margin, Position.y );
+		}
 		
+		if ( Position.y + size.y > screenSize.y )
+		{
+			Position = new Vector2( Position.x, screenSize.y - size.y - margin );
+		}
+		
+		if ( Position.x < margin )
+		{
+			Position = new Vector2( margin, Position.y );
+		}
+		
+		if ( Position.y < margin )
+		{
+			Position = new Vector2( Position.x, margin );
+		}
+
 	}
 
 	public override void Delete( bool immediate = false )
