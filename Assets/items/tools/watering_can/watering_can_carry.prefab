@@ -1,0 +1,63 @@
+{
+  "RootObject": {
+    "__guid": "98c9c396-6851-4954-ad83-988801637930",
+    "Flags": 0,
+    "Name": "watering_can_carry",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.WateringCan",
+        "__guid": "e0201162-8019-4f60-b93f-3374df7f6ba9",
+        "ItemData": "items/tools/watering_can/watering_can.tool",
+        "UseTime": 1
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "f00e68e2-38ce-426a-90a8-0ab4acca4093",
+        "Flags": 0,
+        "Name": "Model",
+        "Position": "0,0,1",
+        "Scale": "0.7,0.7,0.7",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "e058eac5-8f2f-4c10-aa14-97d165af580c",
+            "Flags": 0,
+            "Name": "Object",
+            "Position": "8.323166,-0.000001281317,-12.63191",
+            "Scale": "1.2,1.2,1.2",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "520f4f52-f977-4d6d-91af-ddfbe0a140df",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/props/wateringcans/wateringcanmetallarge.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "facepunch.watering_can_03#45573"
+  ],
+  "IsValid": true,
+  "__version": 1
+}

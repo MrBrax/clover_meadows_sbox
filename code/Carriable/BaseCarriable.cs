@@ -20,17 +20,19 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 
 	[Property] public ToolData ItemData { get; set; }
 	
+	[Property] public float UseTime { get; set; } = 1f;
+	
 	public delegate void OnEquipActionEvent( GameObject holder );
-	[Property] public OnEquipActionEvent OnEquipAction { get; set; }
+	[Property, Group("Actions")] public OnEquipActionEvent OnEquipAction { get; set; }
 	
 	public delegate void OnUnequipActionEvent();
-	[Property] public OnUnequipActionEvent OnUnequipAction { get; set; }
+	[Property, Group("Actions")] public OnUnequipActionEvent OnUnequipAction { get; set; }
 	
 	public delegate void OnUseDownActionEvent();
-	[Property] public OnUseDownActionEvent OnUseDownAction { get; set; }
+	[Property, Group("Actions")] public OnUseDownActionEvent OnUseDownAction { get; set; }
 	
 	public delegate void OnUseUpActionEvent();
-	[Property] public OnUseUpActionEvent OnUseUpAction { get; set; }
+	[Property, Group("Actions")] public OnUseUpActionEvent OnUseUpAction { get; set; }
 
 	public void SetHolder( GameObject holder )
 	{
@@ -45,6 +47,11 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 	public virtual float CustomPlayerSpeed()
 	{
 		return 1;
+	}
+	
+	public virtual bool ShouldDisableMovement()
+	{
+		return false;
 	}
 
 	public virtual void OnEquip( GameObject holder )
