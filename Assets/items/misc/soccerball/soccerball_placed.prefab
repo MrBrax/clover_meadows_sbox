@@ -1,0 +1,66 @@
+{
+  "RootObject": {
+    "__guid": "794ad176-3a5e-4f69-b70a-aafa883588a7",
+    "Flags": 0,
+    "Name": "soccerball_placed",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.SphereCollider",
+        "__guid": "9cd63b19-47f7-43d3-8ee3-5e335fd50021",
+        "Center": "0,0,0",
+        "IsTrigger": false,
+        "Radius": 8,
+        "Static": false,
+        "Surface": "surfaces/rubber.surface"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "c08780fd-04df-422c-94cb-72ecd42536c2",
+        "Layer": 0
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "2e229e2f-b470-4e0d-89d7-6c56dcaa4dd1",
+        "CanPickupSimple": true,
+        "ItemData": "items/misc/soccerball/soccerball.item",
+        "Prefab": "items/misc/soccerball/soccerball_placed.prefab",
+        "Size": "1,1"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "d00d1ea6-2937-4864-9bf4-5cc843a2761f",
+        "Flags": 0,
+        "Name": "soccerball",
+        "Position": "0,0,7",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "3fd55fc0-8a1b-4262-98b1-615557aba0ff",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/misc/soccerball/soccerball.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

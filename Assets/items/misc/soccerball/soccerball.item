@@ -1,0 +1,27 @@
+{
+  "Name": "Soccer ball",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "Placements": "Floor, Underground",
+  "CanDrop": true,
+  "CanPlace": true,
+  "DisablePickup": false,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": null,
+  "DropScene": null,
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/soccerball/soccerball_placed.prefab"
+  },
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/soccerball/soccerball_placed.prefab"
+  },
+  "Icon": null,
+  "ObjectData": "items/misc/soccerball/soccerball.odata",
+  "__references": [],
+  "IsValid": true,
+  "__version": 0
+}

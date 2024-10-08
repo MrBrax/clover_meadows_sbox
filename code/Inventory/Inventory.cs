@@ -1,4 +1,5 @@
 ﻿using Braxnet;
+using Clover.Items;
 using Clover.Persistence;
 using Clover.Player;
 
@@ -6,11 +7,10 @@ namespace Clover.Inventory;
 
 public class Inventory : Component
 {
-	
 	[RequireComponent] public PlayerCharacter Player { get; private set; }
-	
+
 	[Property, ReadOnly] public int ItemCount => Container.Slots.Count;
-	
+
 	public InventoryContainer Container { get; private set; } = new();
 
 	protected override void OnAwake()
@@ -19,16 +19,26 @@ public class Inventory : Component
 		Container.Owner = GameObject;
 	}
 
-	public void PickUpItem( PersistentItem item )
+	public bool PickUpItem( PersistentItem item )
 	{
-		Container.AddItem( item, true );
+		try
+		{
+			Container.AddItem( item, true );
+		}
+		catch ( InventoryFullException e )
+		{
+			Log.Warning( e.Message );
+			return false;
+		}
+
+		return true;
 	}
-	
+
 	public void PickUpItem( GameObject gameObject )
 	{
 		PickUpItem( WorldManager.Instance.ActiveWorld.GetItem( gameObject ) );
 	}
-	
+
 	public async void PickUpItem( WorldNodeLink nodeLink )
 	{
 		if ( string.IsNullOrWhiteSpace( nodeLink.ItemId ) ) throw new System.Exception( "Item data is null" );
@@ -43,7 +53,6 @@ public class Inventory : Component
 
 		// var inventoryItem = PersistentItem.Create( nodeLink );
 		var inventoryItem = new PersistentItem();
-		
 
 		if ( inventoryItem == null )
 		{
@@ -90,11 +99,11 @@ public class Inventory : Component
 			PickUpItem( inventoryItem );
 
 		} ) );*/
-		
+
 		Player.InCutscene = true;
 		Player.CutsceneTarget = Vector3.Zero;
 		Player.CharacterController.Velocity = Vector3.Zero;
-		
+
 		nodeLink.IsBeingPickedUp = true;
 
 		var tween = TweenManager.CreateTween();
@@ -103,18 +112,36 @@ public class Inventory : Component
 		scale.Parallel = true;
 
 		await tween.Wait();
-		
+
 		PickUpItem( inventoryItem );
 
 		Sound.Play( "sounds/interact/item_pickup.sound", WorldPosition );
 		Log.Info( WorldPosition );
-		
-		nodeLink.Remove();
-		
-		Player.InCutscene = false;
-		
-		Player.Save();
 
+		nodeLink.Remove();
+
+		Player.InCutscene = false;
+
+		Player.Save();
 	}
-	
+
+	public void PickUpItem( WorldObject gameObject )
+	{
+		if ( gameObject.IsBeingPickedUp ) return;
+
+		gameObject.IsBeingPickedUp = true;
+
+		var item = new PersistentItem();
+
+		if ( item == null )
+		{
+			throw new System.Exception( "Failed to create inventory item" );
+		}
+
+		item.ObjectId = gameObject.ObjectData.ResourceName;
+
+		PickUpItem( item );
+
+		gameObject.DestroyGameObject();
+	}
 }

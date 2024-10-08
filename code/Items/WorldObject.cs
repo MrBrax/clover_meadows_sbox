@@ -21,14 +21,29 @@ public class WorldObject : Component, IPickupable
 
 	[Property] public ObjectData ObjectData { get; set; }
 	
+	public bool IsBeingPickedUp { get; set; }
+	
 	public bool CanPickup( PlayerCharacter player )
 	{
-		throw new System.NotImplementedException();
+		return ObjectData.CanPickup;
 	}
 
 	public void OnPickup( PlayerCharacter player )
 	{
-		throw new System.NotImplementedException();
+		// player.Inventory.PickUpItem( this );
+		
+		Assert.NotNull( ObjectData, "ObjectData is null" );
+		Assert.NotNull( ObjectData.PickupData, "ObjectData.PickupData is null" );
+
+		var item = OnObjectSave().Item;
+		item.ItemId = ObjectData.PickupData.ResourceName;
+		item.ObjectId = ObjectData.ResourceName;
+
+		if ( player.Inventory.PickUpItem( item ) )
+		{
+			GameObject.Destroy();
+		}
+
 	}
 
 	public PersistentWorldObject OnObjectSave()

@@ -2,13 +2,13 @@ using System;
 using System.Resources;
 using Clover.Components;
 using Clover.Data;
+using Clover.Items;
 using Clover.Persistence;
 
 namespace Clover.Inventory;
 
 public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 {
-
 	public void Drop()
 	{
 		Log.Info( "Dropping item" );
@@ -21,7 +21,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		{
 			// Inventory.World.SpawnDroppedItem( _item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
 			// InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, position, playerRotation, World.ItemPlacement.Floor, true );
-			InventoryContainer.Player.World.SpawnDroppedNode( PersistentItem, position, playerRotation, World.ItemPlacement.Floor );
+			InventoryContainer.Player.World.SpawnDroppedNode( PersistentItem, position, playerRotation,
+				World.ItemPlacement.Floor );
 		}
 		catch ( Exception e )
 		{
@@ -35,7 +36,6 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		Sound.Play( "sounds/interact/item_drop.sound", InventoryContainer.Owner.WorldPosition );
 
 		TakeOneOrDelete();
-
 	}
 
 	public void Place()
@@ -55,8 +55,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			var placeableNodes = floorItem.GetPlaceableNodes();
 			if ( placeableNodes.Any() )
 			{
-
-				var onTopItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
+				var onTopItem =
+					InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
 				if ( onTopItem != null )
 				{
 					Log.Warning( "On top item already exists." );
@@ -67,7 +67,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 				{
 					// InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
 					// 	false );
-					InventoryContainer.Player.World.SpawnPlacedNode( PersistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop );
+					InventoryContainer.Player.World.SpawnPlacedNode( PersistentItem, aimingGridPosition, playerRotation,
+						World.ItemPlacement.OnTop );
 				}
 				catch ( System.Exception e )
 				{
@@ -94,7 +95,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			// 	playerRotation );
 			// InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.Floor,
 			// 	false );
-			InventoryContainer.Player.World.SpawnPlacedNode( PersistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.Floor );
+			InventoryContainer.Player.World.SpawnPlacedNode( PersistentItem, aimingGridPosition, playerRotation,
+				World.ItemPlacement.Floor );
 		}
 		catch ( System.Exception e )
 		{
@@ -111,7 +113,6 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Equip()
 	{
-
 		Components.Equips.EquipSlot slot;
 
 		// get slot from item
@@ -136,7 +137,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}*/
 
 		slot = Equips.EquipSlot.Tool; // TODO: get slot from item
-		
+
 		if ( PersistentItem.ItemData is not ToolData toolData )
 		{
 			Log.Error( "Item is not a tool" ); // TODO: handle other types of items
@@ -147,7 +148,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		PersistentItem currentEquip = null;
 		if ( InventoryContainer.Player.Equips.HasEquippedItem( slot ) )
 		{
-			currentEquip = Persistence.PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( slot ) );
+			currentEquip =
+				Persistence.PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( slot ) );
 		}
 
 		/*if ( _persistentItem is Persistence.BaseCarriable carriable )
@@ -160,7 +162,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			var clothingNode = clothingItem.Create();
 			InventoryContainer.Player.Equips.SetEquippedItem( slot, clothingNode );
 		}*/
-		
+
 		// equip the item
 		if ( toolData != null )
 		{
@@ -180,14 +182,13 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		InventoryContainer.Player.Save();
-
 	}
-	
+
 	/*
 	public void Bury()
 	{
 		Logger.Info( "Burying item" );
-		
+
 		var pos = InventoryContainer.Player.Interact.GetAimingGridPosition();
 		var floorItem = InventoryContainer.Player.World.GetItem( pos, World.ItemPlacement.Floor );
 		if ( floorItem.Node is not Hole hole )
@@ -205,7 +206,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// spawn dirt on top
 		InventoryContainer.Player.World.SpawnNode( ResourceManager.LoadItemFromId<ItemData>( "buried_item" ), pos,
 			World.ItemRotation.North, World.ItemPlacement.Floor, false );
-		
+
 		Logger.Info( "Item buried" );
 
 		TakeOneOrDelete();
@@ -358,7 +359,6 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Split( int amount )
 	{
-
 		if ( Amount <= 1 )
 		{
 			//x NodeManager.UserInterface.ShowWarning( "Can't split a single item." );
@@ -387,7 +387,6 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		var slot = InventoryContainer.AddItem( newItem );
 		slot.SetAmount( amount );
-
 	}
 
 	/*public void Open()
@@ -408,4 +407,26 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 	}
 	*/
 
+	public void SpawnObject()
+	{
+		var objectData = PersistentItem.ItemData.ObjectData;
+
+		if ( objectData == null )
+		{
+			Log.Error( "Item does not have an object data" );
+			return;
+		}
+
+		var gameObject = objectData.Prefab.Clone();
+
+		var worldObject = gameObject.GetComponent<WorldObject>();
+		worldObject.WorldLayerObject.SetLayer( InventoryContainer.Player.WorldLayerObject.Layer, true );
+		
+		var size = gameObject.GetBounds().Size.Length;
+
+		worldObject.WorldPosition = InventoryContainer.Player.WorldPosition +
+		                            InventoryContainer.Player.Model.WorldRotation.Forward * size;
+		
+		TakeOneOrDelete();
+	}
 }

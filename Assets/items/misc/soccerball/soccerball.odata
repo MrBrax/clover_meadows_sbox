@@ -5,6 +5,8 @@
     "_type": "gameobject",
     "prefab": "items/misc/soccerball/soccerball.prefab"
   },
+  "CanPickup": true,
+  "PickupData": "items/misc/soccerball/soccerball.item",
   "__references": [],
   "IsValid": true,
   "__version": 0

@@ -6,7 +6,7 @@ using Clover.Persistence;
 
 namespace Clover.Data;
 
-[GameResource( "Item", "item", "item" )]
+[GameResource( "Item", "item", "item", Icon = "weekend" )]
 [Category( "Clover/Items" )]
 [Icon( "weekend" )]
 public class ItemData : GameResource
@@ -36,6 +36,9 @@ public class ItemData : GameResource
 	[Property, ReadOnly, Group("Scenes")] public virtual GameObject DefaultTypeScene => PlaceScene;
 
 	[Property, ImageAssetPath] public string Icon { get; set; }
+	
+	[Property, Group("Object")] // TODO: move this to yet another class?
+	public ObjectData ObjectData { get; set; }
 
 
 	public static T GetById<T>( string id ) where T : ItemData
@@ -148,6 +151,18 @@ public class ItemData : GameResource
 	public virtual IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
 	{
 		// yield break;
+		
+		if ( ObjectData.IsValid() )
+		{
+			yield return new ItemAction
+			{
+				Name = "Spawn",
+				Action = () =>
+				{
+					slot.SpawnObject();
+				}
+			};
+		}
 
 		var player = slot.InventoryContainer.Player;
 		if ( player != null )
