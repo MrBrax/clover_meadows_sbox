@@ -1,0 +1,57 @@
+{
+  "RootObject": {
+    "__guid": "280dfe7d-da07-4549-bdc9-68f3c67849bf",
+    "Flags": 0,
+    "Name": "dropped_item",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "93d59121-15e8-4c84-8e56-7170310585aa",
+        "CanPickupSimple": false,
+        "ItemData": "items/misc/dropped_item/dropped_item.item",
+        "Prefab": "items/misc/dropped_item/dropped_item.prefab",
+        "Size": "1,1"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "9e93bbfa-81e5-47b5-97cd-58dc07d0d7ba",
+        "Layer": 0
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "2d11d118-3ef7-4027-9f81-95cd5bf3df42",
+        "Flags": 0,
+        "Name": "Object",
+        "Position": "0,0,8",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "eabcb34b-43c2-4e88-bb64-9660116eb89a",
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/editor/env_cubemap.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

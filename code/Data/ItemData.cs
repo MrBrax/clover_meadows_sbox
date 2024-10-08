@@ -22,6 +22,7 @@ public class ItemData : GameResource
 	public World.ItemPlacement Placements { get; set; } = World.ItemPlacement.Floor | World.ItemPlacement.Underground;
 
 	[Property, Group("Inventory")] public bool CanDrop { get; set; } = true;
+	[Property, Group("Inventory")] public bool CanPlace { get; set; } = true;
 	[Property, Group("Inventory")] public bool DisablePickup { get; set; } = false;
 
 	[Property, Group("Inventory")] public bool IsStackable { get; set; } = false;

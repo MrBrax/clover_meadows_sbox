@@ -1,0 +1,112 @@
+{
+  "RootObject": {
+    "__guid": "bb0c44e2-500a-4733-9aa1-68bd6e07739b",
+    "Flags": 0,
+    "Name": "hyacinth",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "84a1c66a-2b3d-4a57-9188-8100f78d837e",
+        "CanPickupSimple": false,
+        "ItemData": "items/plants/flowers/hyacinth/hyacinth.plant",
+        "Prefab": "items/plants/flowers/hyacinth/hyacinth.prefab",
+        "Size": "1,1"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "dbd02bcb-c8a9-4a5c-82e0-ace81ba91140",
+        "Layer": 0
+      },
+      {
+        "__type": "Clover.Items.Plant",
+        "__guid": "c84b0141-d41c-4733-968b-075f5e1ec14e",
+        "Model": {
+          "_type": "gameobject",
+          "go": "6f92f6ac-4699-4159-9a02-b7418f8e1124"
+        },
+        "SeedHole": {
+          "_type": "gameobject",
+          "go": "7b76f11a-a87c-4c12-a158-eca184d3ddcd"
+        }
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "7b76f11a-a87c-4c12-a158-eca184d3ddcd",
+        "Flags": 0,
+        "Name": "Hole",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "038dbc02-340b-47c6-ad15-146f7e160a8b",
+            "Flags": 0,
+            "Name": "Plane",
+            "Position": "0,0,0.2",
+            "Scale": "0.32,0.32,0.32",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "2efeca56-7e86-41cd-8bf7-859c32c45d1b",
+                "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "items/plants/flowers/seed_hole.vmat",
+                "Model": "models/dev/plane.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__guid": "6f92f6ac-4699-4159-9a02-b7418f8e1124",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "a98880e3-022f-4d1d-9e3e-ac5166dcda7c",
+            "Flags": 0,
+            "Name": "patch_flowers_b",
+            "Scale": "0.3,0.3,0.3",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "b04e8863-40ba-4f50-97b3-11b42fb3dbaa",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/rust_nature/overgrowth/patch_flowers_b.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "0.1947,0.41536,0.93023,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "rust.patch_flowers_b#25090"
+  ],
+  "IsValid": true,
+  "__version": 1
+}

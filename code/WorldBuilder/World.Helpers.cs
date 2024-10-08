@@ -75,7 +75,7 @@ public sealed partial class World
 			_ => gridPos
 		};
 	}
-	
+
 	public static Direction Get4Direction( float angle )
 	{
 		var snapAngle = MathF.Round( angle / 90 ) * 90;
@@ -95,5 +95,21 @@ public sealed partial class World
 
 		return Direction.North;
 	}
-	
+
+	public IList<Vector2Int> GetNeighbors( Vector2Int gridPosition )
+	{
+		var neighbors = new List<Vector2Int>
+		{
+			new(gridPosition.x, gridPosition.y - 1),
+			new(gridPosition.x, gridPosition.y + 1),
+			new(gridPosition.x - 1, gridPosition.y),
+			new(gridPosition.x + 1, gridPosition.y),
+			new(gridPosition.x - 1, gridPosition.y - 1),
+			new(gridPosition.x + 1, gridPosition.y - 1),
+			new(gridPosition.x - 1, gridPosition.y + 1),
+			new(gridPosition.x + 1, gridPosition.y + 1)
+		};
+
+		return neighbors;
+	}
 }

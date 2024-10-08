@@ -35,9 +35,9 @@ public class PersistentItem
 	[JsonIgnore] public virtual bool IsStackable => ItemData.IsStackable;
 	[JsonIgnore] public virtual int StackSize => ItemData.StackSize;
 	
-	public T GetArbitraryData<T>( string key )
+	public T GetArbitraryData<T>( string key, T defaultValue = default )
 	{
-		return TryGetArbitraryData<T>( key, out var value ) ? value : default;
+		return TryGetArbitraryData<T>( key, out var value ) ? value : defaultValue;
 	}
 
 	public bool TryGetArbitraryData<T>( string key, out T value )

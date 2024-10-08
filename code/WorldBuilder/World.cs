@@ -442,7 +442,19 @@ public sealed partial class World : Component
 	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector2Int position, ItemRotation rotation,
 		ItemPlacement placement )
 	{
-		/*if ( IsOutsideGrid( position ) )
+		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation, placement );
+	}
+
+	public WorldNodeLink SpawnDroppedNode( ItemData itemData, Vector2Int position, ItemRotation rotation,
+		ItemPlacement placement )
+	{
+		return SpawnNode( itemData, ItemPlacementType.Dropped, position, rotation, placement );
+	}
+	
+	public WorldNodeLink SpawnCustomNode( ItemData itemData, GameObject scene, Vector2Int position, ItemRotation rotation,
+		ItemPlacement placement )
+	{
+		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
@@ -457,12 +469,12 @@ public sealed partial class World : Component
 			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
 		}
 
-		if ( itemData.PlaceScene == null )
+		if ( scene == null )
 		{
-			throw new Exception( $"Item {itemData.Name} has no place scene" );
+			throw new Exception( $"Item {itemData.Name} has no scene" );
 		}
-
-		var gameObject = itemData.PlaceScene.Clone();
+		
+		var gameObject = scene.Clone();
 
 		var nodeLink = AddItem( position, rotation, placement, gameObject );
 
@@ -472,18 +484,12 @@ public sealed partial class World : Component
 		nodeLink.CalculateSize();
 
 		UpdateTransform( nodeLink );
+		
+		// nodeLink.OnNodeAdded();
 
-		gameObject.NetworkSpawn();
+		scene.NetworkSpawn();
 
-		return nodeLink;*/
-
-		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation, placement );
-	}
-
-	public WorldNodeLink SpawnDroppedNode( ItemData itemData, Vector2Int position, ItemRotation rotation,
-		ItemPlacement placement )
-	{
-		return SpawnNode( itemData, ItemPlacementType.Dropped, position, rotation, placement );
+		return nodeLink;
 	}
 
 	private WorldNodeLink SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector2Int position,
@@ -506,7 +512,7 @@ public sealed partial class World : Component
 			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
 		}
 
-		GameObject scene = placementType switch
+		var scene = placementType switch
 		{
 			ItemPlacementType.Placed => itemData.PlaceScene,
 			ItemPlacementType.Dropped => itemData.DropScene,
@@ -524,6 +530,12 @@ public sealed partial class World : Component
 
 		nodeLink.ItemId = itemData.ResourceName;
 		nodeLink.PlacementType = ItemPlacementType.Placed;
+		
+		// replace itemdata with the one from the item, mainly for dropped items
+		if ( nodeLink.Node.Components.TryGet<WorldItem>( out var worldItem ) )
+		{
+			worldItem.ItemData = itemData;
+		}
 
 		nodeLink.CalculateSize();
 
@@ -536,6 +548,8 @@ public sealed partial class World : Component
 		{
 			_nodeLinkGridMap[pos] = nodeLink;
 		}
+		
+		// nodeLink.OnNodeAdded();
 
 		gameObject.NetworkSpawn();
 
