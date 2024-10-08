@@ -60,7 +60,7 @@ public sealed class PlayerCharacter : Component
 	public void ModelLookAt( Vector3 position )
 	{
 		var dir = (position - WorldPosition).Normal;
-		dir.y = 0;
+		dir.z = 0;
 		Model.WorldRotation = Rotation.LookAt( dir, Vector3.Up );
 		PlayerController.Yaw = Model.WorldRotation.Yaw();
 	}

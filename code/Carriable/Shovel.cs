@@ -172,6 +172,7 @@ public class Shovel : BaseCarriable
 			// Inventory.World.Save();
 
 			Player.SnapToGrid();
+			Player.ModelLookAt( Player.World.ItemGridToWorld( pos ) );
 
 			Durability--;
 			// Inventory.Player.Save();
