@@ -57,7 +57,7 @@ public class PersistentItem
 				return false;
 			}
 
-			value = JsonSerializer.Deserialize<T>( jsonElement.GetRawText() );
+			value = JsonSerializer.Deserialize<T>( jsonElement.GetRawText(), GameManager.JsonOptions );
 
 			return true;
 		}
