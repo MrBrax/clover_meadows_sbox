@@ -14,7 +14,6 @@
     gap: 10px;
 	
 	min-width: 300px;
-	overflow-y: scroll;
 
     h1 {
         font-size: 30px;
@@ -36,6 +35,7 @@
 		flex-direction: column;
 		gap: 10px;
 		flex-shrink: 0;
+		overflow-y: scroll;
 	}
 	
 	button {

@@ -17,6 +17,8 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 
 	public GameObject Holder { get; set; }
 	public PlayerCharacter Player => Holder.GetComponent<PlayerCharacter>();
+	
+	[Property] public GameObject Model { get; set; }
 
 	[Property] public ToolData ItemData { get; set; }
 	

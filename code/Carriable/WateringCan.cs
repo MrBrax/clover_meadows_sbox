@@ -6,25 +6,27 @@ namespace Clover.Carriable;
 
 public sealed class WateringCan : BaseCarriable
 {
-	
-	[Property] public GameObject WaterParticles { get; set; }
-	
+	[Property] public ParticleConeEmitter WaterParticles { get; set; }
+
 	[Property] public SoundEvent WateringSound { get; set; }
-	
+
 	private SoundHandle _wateringSoundHandle;
 
 	protected override void OnAwake()
 	{
 		base.OnAwake();
-		WaterParticles.Enabled = false;
+		if ( WaterParticles != null )
+		{
+			WaterParticles.Enabled = false;
+		}
 	}
 
 	public override bool ShouldDisableMovement()
 	{
-		return WaterParticles.Enabled;
+		return WaterParticles?.Enabled ?? false;
 	}
-	
-	
+
+
 	public override void OnUseDown()
 	{
 		if ( !CanUse() )
@@ -33,7 +35,7 @@ public sealed class WateringCan : BaseCarriable
 		}
 
 		base.OnUseDown();
-		
+
 		NextUse = UseTime;
 
 		var pos = Player.GetAimingGridPosition();
@@ -55,47 +57,64 @@ public sealed class WateringCan : BaseCarriable
 		}
 
 		_ = PourWaterAsync();
-
 	}
-	
+
 	private async void WaterItem( WorldNodeLink floorItem )
 	{
 		Log.Info( "Watering item." );
 		// (floorItem.Node as IWaterable)?.OnWater( this );
-		
+
 		if ( !floorItem.Node.Components.TryGet<IWaterable>( out var waterable ) )
 		{
 			Log.Warning( "Item is not waterable." );
 			return;
 		}
+		
+		waterable.OnWater( this );
+
+		Durability--;
 
 		await PourWaterAsync();
 		Log.Info( "Item watered." );
 	}
-	
+
 	public void StartEmitting()
 	{
-		WaterParticles.Enabled = true;
+		if ( WaterParticles != null )
+		{
+			WaterParticles.Enabled = true;
+		}
 	}
 
 	public void StopEmitting()
 	{
-		WaterParticles.Enabled = false;
+		if ( WaterParticles != null )
+		{
+			WaterParticles.Enabled = false;
+		}
 	}
-	
+
 	private async Task PourWaterAsync()
 	{
 		Log.Info( "Wasting water." );
-		
+
 		// GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "watering" );
 		// GetNode<AudioStreamPlayer3D>( "Watering" ).Play();
+		StartEmitting();
+
+		Model.LocalRotation = Rotation.FromPitch( -20 );
+		
 		_wateringSoundHandle = Sound.Play( WateringSound, WorldPosition );
 		// await ToSignal( GetTree().CreateTimer( UseTime ), Timer.SignalName.Timeout );
 		await Task.DelayRealtimeSeconds( UseTime );
-		
+
 		// GetNode<AudioStreamPlayer3D>( "Watering" ).Stop();
-		_wateringSoundHandle.Stop();
+		_wateringSoundHandle?.Stop();
+		
+		StopEmitting();
+		
+		Model.LocalRotation = Rotation.Identity;
+		
 		Log.Info( "Water wasted." );
 	}
-	
 }
