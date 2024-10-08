@@ -29,7 +29,7 @@ public sealed partial class World : Component
 
 		[Icon( "dashboard" ), Description( "Special case for decals" )]
 		FloorDecal = 1 << 4,
-		
+
 		Rug = 1 << 5,
 	}
 
@@ -423,7 +423,7 @@ public sealed partial class World : Component
 		}
 
 		if ( heightTopLeft.AlmostEqual( 0f ) ) heightTopLeft = 0f;
-		
+
 		if ( Data.MaxItemAltitude > 0 && heightTopLeft > Data.MaxItemAltitude )
 		{
 			Log.Warning( $"Height at {position} is too high: {heightTopLeft}" );
@@ -450,8 +450,9 @@ public sealed partial class World : Component
 	{
 		return SpawnNode( itemData, ItemPlacementType.Dropped, position, rotation, placement );
 	}
-	
-	public WorldNodeLink SpawnCustomNode( ItemData itemData, GameObject scene, Vector2Int position, ItemRotation rotation,
+
+	public WorldNodeLink SpawnCustomNode( ItemData itemData, GameObject scene, Vector2Int position,
+		ItemRotation rotation,
 		ItemPlacement placement )
 	{
 		if ( IsOutsideGrid( position ) )
@@ -473,7 +474,7 @@ public sealed partial class World : Component
 		{
 			throw new Exception( $"Item {itemData.Name} has no scene" );
 		}
-		
+
 		var gameObject = scene.Clone();
 
 		var nodeLink = AddItem( position, rotation, placement, gameObject );
@@ -484,7 +485,7 @@ public sealed partial class World : Component
 		nodeLink.CalculateSize();
 
 		UpdateTransform( nodeLink );
-		
+
 		// nodeLink.OnNodeAdded();
 
 		scene.NetworkSpawn();
@@ -512,10 +513,14 @@ public sealed partial class World : Component
 			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
 		}
 
+		var defaultDropScene =
+			SceneUtility.GetPrefabScene(
+				ResourceLibrary.Get<PrefabFile>( "items/misc/dropped_item/dropped_item.prefab" ) );
+
 		var scene = placementType switch
 		{
 			ItemPlacementType.Placed => itemData.PlaceScene,
-			ItemPlacementType.Dropped => itemData.DropScene,
+			ItemPlacementType.Dropped => itemData.DropScene ?? defaultDropScene,
 			_ => throw new ArgumentOutOfRangeException( nameof(placementType), placementType, null )
 		};
 
@@ -530,7 +535,7 @@ public sealed partial class World : Component
 
 		nodeLink.ItemId = itemData.ResourceName;
 		nodeLink.PlacementType = ItemPlacementType.Placed;
-		
+
 		// replace itemdata with the one from the item, mainly for dropped items
 		if ( nodeLink.Node.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
@@ -548,7 +553,7 @@ public sealed partial class World : Component
 		{
 			_nodeLinkGridMap[pos] = nodeLink;
 		}
-		
+
 		// nodeLink.OnNodeAdded();
 
 		gameObject.NetworkSpawn();

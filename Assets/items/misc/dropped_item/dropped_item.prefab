@@ -8,7 +8,7 @@
       {
         "__type": "Clover.Items.WorldItem",
         "__guid": "93d59121-15e8-4c84-8e56-7170310585aa",
-        "CanPickupSimple": false,
+        "CanPickupSimple": true,
         "ItemData": "items/misc/dropped_item/dropped_item.item",
         "Prefab": "items/misc/dropped_item/dropped_item.prefab",
         "Size": "1,1"
@@ -17,6 +17,19 @@
         "__type": "Clover.WorldLayerObject",
         "__guid": "9e93bbfa-81e5-47b5-97cd-58dc07d0d7ba",
         "Layer": 0
+      },
+      {
+        "__type": "Sandbox.HullCollider",
+        "__guid": "15b21de2-e9e0-4927-a8b4-46f5ad77f363",
+        "BoxSize": "16,16,50",
+        "Center": "0,0,25",
+        "Height": 50,
+        "IsTrigger": false,
+        "Radius": 14,
+        "Radius2": 0,
+        "Slices": 16,
+        "Static": false,
+        "Type": "Cylinder"
       }
     ],
     "Children": [

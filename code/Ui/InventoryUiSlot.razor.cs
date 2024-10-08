@@ -240,7 +240,7 @@ public partial class InventoryUiSlot
 		}
 		
 
-		if ( item.ItemData.PlaceScene != null && item.ItemData.CanDrop )
+		if ( item.ItemData.PlaceScene != null && item.ItemData.CanPlace )
 		{
 			_contextMenu.AddItem( "Place", () =>
 			{
@@ -248,7 +248,7 @@ public partial class InventoryUiSlot
 			} );
 		}
 
-		if ( item.ItemData.DropScene != null && item.ItemData.CanDrop )
+		if ( item.ItemData.CanDrop )
 		{
 			_contextMenu.AddItem( "Drop", () =>
 			{
