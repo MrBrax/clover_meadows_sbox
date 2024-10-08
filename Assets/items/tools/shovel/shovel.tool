@@ -9,6 +9,7 @@
   "Height": 1,
   "Placements": "Floor, Underground",
   "CanDrop": true,
+  "CanPlace": true,
   "DisablePickup": false,
   "IsStackable": false,
   "StackSize": 1,
@@ -19,7 +20,8 @@
   },
   "PlaceScene": null,
   "DefaultTypeScene": null,
-  "Icon": null,
+  "Icon": "items/tools/shovel/shovel_icon.png",
+  "ObjectData": null,
   "__references": [],
   "IsValid": true,
   "__version": 0

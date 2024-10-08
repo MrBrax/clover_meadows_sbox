@@ -5,7 +5,7 @@ using Clover.Persistence;
 
 namespace Clover.Data;
 
-[GameResource("Tool", "tool", "tool")]
+[GameResource("Tool", "tool", "tool", Icon = "build")]
 public class ToolData : ItemData
 {
 	
