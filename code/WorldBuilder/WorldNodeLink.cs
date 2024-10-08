@@ -28,7 +28,7 @@ public class WorldNodeLink
 
 	public ItemData ItemData
 	{
-		get => ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == ItemId );
+		get => ItemData.Get( ItemId );
 	}
 
 	public bool IsBeingPickedUp { get; set; }

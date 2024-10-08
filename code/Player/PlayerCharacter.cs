@@ -75,23 +75,6 @@ public sealed partial class PlayerCharacter : Component
 	{
 		base.OnFixedUpdate();
 
-		if ( Input.Released( "Duck" ) )
-		{
-			try
-			{
-				WorldManager.Instance.ActiveWorld.SpawnPlacedNode(
-					ResourceLibrary.GetAll<ItemData>().FirstOrDefault(),
-					GetAimingGridPosition(),
-					World.ItemRotation.North,
-					World.ItemPlacement.Floor
-				);
-			}
-			catch ( Exception e )
-			{
-				Log.Error( e.Message );
-			}
-		}
-
 		if ( Input.Pressed( "use" ) && IsSitting )
 		{
 			Seat.Occupant = null;

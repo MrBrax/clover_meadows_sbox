@@ -218,7 +218,7 @@ public class ItemData : GameResource
 
 	public static ItemData Get( string id )
 	{
-		return ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == id ) ?? throw new Exception( $"Item data not found: {id}" );
+		return ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == id || x.ResourcePath == id ) ?? throw new Exception( $"Item data not found: {id}" );
 	}
 
 	public PersistentItem CreatePersistentItem()
