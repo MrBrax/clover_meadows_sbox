@@ -305,7 +305,16 @@ public sealed partial class World : Component
 					return false;
 				}
 			}
+			
+			if ( _nodeLinkGridMap.TryGetValue( $"{pos.x},{pos.y}:{placement}", out var nodeLink ) )
+			{
+				Log.Warning( $"Found item at {pos} with placement {placement} in grid map, but not in items" );
+				return false;
+			}
+			
 		}
+		
+		Log.Info( $"Item {itemData.Name} can be placed at {position} with rotation {rotation} and placement {placement}" );
 
 		return true;
 	}
