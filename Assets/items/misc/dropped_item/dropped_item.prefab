@@ -37,14 +37,13 @@
         "__guid": "2d11d118-3ef7-4027-9f81-95cd5bf3df42",
         "Flags": 0,
         "Name": "Object",
-        "Position": "0,0,8",
         "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "eabcb34b-43c2-4e88-bb64-9660116eb89a",
             "BodyGroups": 18446744073709551615,
-            "Model": "models/editor/env_cubemap.vmdl",
+            "Model": "items/misc/gift/gift.vmdl",
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
