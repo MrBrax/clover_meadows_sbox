@@ -12,7 +12,9 @@
 		@if ( Slot.PersistentItem.ItemData is ToolData toolData )
 		{
 			<div class="durability-bar">
-				<div class="durability-bar-fill" style="width: @( $"{Slot.PersistentItem.GetArbitraryData<int>( "Durability" )}%" )"></div>
+				<div class="durability-bar-fill" style="width: @( $"{Slot.PersistentItem.GetArbitraryData<int>( "Durability" )}%" )">
+					<div class="durability-bar-text">@($"{Slot.PersistentItem.GetArbitraryData<int>( "Durability" )}")</div>
+				</div>
 			</div>
 		}
 	}
