@@ -33,6 +33,8 @@ public class WorldNodeLink
 
 	public bool IsBeingPickedUp { get; set; }
 
+	public bool IsDroppedItem => PrefabPath == "items/misc/dropped_item/dropped_item.prefab";
+
 	public WorldNodeLink( World world, GameObject item )
 	{
 		World = world;
@@ -48,6 +50,11 @@ public class WorldNodeLink
 		if ( itemData == null )
 		{
 			throw new Exception( $"Item data not found on {this} ({ItemId})" );
+		}
+
+		if ( IsDroppedItem )
+		{
+			return new List<Vector2Int> { global ? GridPosition : Vector2Int.Zero };
 		}
 
 		return itemData.GetGridPositions( GridRotation, GridPosition );

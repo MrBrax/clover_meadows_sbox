@@ -634,13 +634,21 @@ public sealed partial class World : Component
 		var newPosition = ItemGridToWorld( position );
 		var newRotation = GetRotation( nodeLink.GridRotation );
 
-		Vector3 offset = Vector3.Zero;
+		var offset = Vector3.Zero;
 
 		var itemData = nodeLink.ItemData;
 		if ( itemData != null )
 		{
 			var itemWidth = itemData.Width - 1;
 			var itemHeight = itemData.Height - 1;
+			
+			// Log.Info( nodeLink.PrefabPath );
+			if ( nodeLink.IsDroppedItem )
+			{
+				itemWidth = 0;
+				itemHeight = 0;
+				Log.Info( $"Forcing item size to 1x1 for {nodeLink.GetName()} - dropped item" );
+			}
 
 			// "rotate" the offset based on the item's rotation
 			if ( nodeLink.GridRotation == ItemRotation.North )
