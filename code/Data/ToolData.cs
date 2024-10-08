@@ -25,6 +25,11 @@ public class ToolData : ItemData
 	
 	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
 	{
-		yield return new ItemAction { Name = "Equip", Action = slot.Equip };
+		yield return new ItemAction
+		{
+			Name = "Equip", 
+			Icon = "build",
+			Action = slot.Equip
+		};
 	}
 }

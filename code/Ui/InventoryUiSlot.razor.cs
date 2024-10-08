@@ -233,7 +233,7 @@ public partial class InventoryUiSlot
 		
 		foreach ( var action in item.ItemData.GetActions( Slot ) )
 		{
-			_contextMenu.AddItem( action.Name, () =>
+			_contextMenu.AddItem( action.Name, action.Icon, () =>
 			{
 				action.Action();
 			} );
@@ -242,7 +242,7 @@ public partial class InventoryUiSlot
 
 		if ( item.ItemData.PlaceScene != null && item.ItemData.CanPlace )
 		{
-			_contextMenu.AddItem( "Place", () =>
+			_contextMenu.AddItem( "Place", "file_download", () =>
 			{
 				Slot.Place();
 			} );
@@ -250,7 +250,7 @@ public partial class InventoryUiSlot
 
 		if ( item.ItemData.CanDrop )
 		{
-			_contextMenu.AddItem( "Drop", () =>
+			_contextMenu.AddItem( "Drop", "work", () =>
 			{
 				Slot.Drop();
 			} );

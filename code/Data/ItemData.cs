@@ -142,9 +142,12 @@ public class ItemData : GameResource
 		return scene.Clone();
 	}
 
+	// TODO: why both ItemAction and ContextMenuItem?
 	public struct ItemAction
 	{
 		public string Name;
+		public string Icon;
+		public string Image;
 		public Action Action;
 	}
 
@@ -157,6 +160,7 @@ public class ItemData : GameResource
 			yield return new ItemAction
 			{
 				Name = "Spawn",
+				Icon = "add",
 				Action = () =>
 				{
 					slot.SpawnObject();
@@ -180,6 +184,7 @@ public class ItemData : GameResource
 						yield return new ItemAction
 						{
 							Name = "Bury",
+							Icon = "file_upload",
 							Action = () =>
 							{
 								shovel.BuryItem( slot, hole );

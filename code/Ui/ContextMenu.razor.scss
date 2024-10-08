@@ -26,7 +26,7 @@ ContextMenu {
     min-width: 300px;
 
     font-family: Itim;
-    font-size: 40px;
+    font-size: 30px;
 
     border-radius: 20px;
 
@@ -52,30 +52,45 @@ ContextMenu {
     }
 
     .context-menu-title {
-        background-color: #0c83dd;
+        // background-color: #0c83dd;
+        background-image: linear-gradient(90deg, #0c83dd, #156eb1);
         color: white;
         padding: 10px 30px;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
         font-weight: bold;
-        font-size: 50px;
+        font-size: 40px;
         text-stroke: 10px #439dd6;
+        
+        justify-content: center;
     }
 
 
     button {
         pointer-events: all;
-        padding: 20px 30px;
+        padding: 15px 20px;
 
         cursor: pointer;
 
         background-color: white;
 
-        // transition: all 0.05s ease;
+        transition: all 0.05s ease;
+        
+        gap: 10px;
+        
+        align-items: center;
+        
+        .icon {
+            color: #add2ff;
+        }
+        
+        color: #164b97;
 
         &:hover {
-            background-color: #f0f0f0;
+            background-color: #ecf5fd;
             padding-left: 30px;
+            color: #000;
+            sound-in: "sounds/ui/button_hover.sound";
         }
 
         &:active {

@@ -8,12 +8,20 @@
 <root>
 	<div class="context-background" @onclick=@Close @onmousedown=@Close @onrightclick=@Close>
 	</div>
-	<div class="context-menu" style="left: @Position.x; top: @Position.y;" @ref=" Content">
+	<div class="context-menu" style="left: @Position.x; top: @Position.y;" @ref="Content">
 		<div class="context-menu-title">@Title</div>
 		@foreach ( var item in _items )
 		{
 			<button @onclick=@( () => item.Action() )>
-				@item.Text
+				@if ( !string.IsNullOrEmpty( item.Icon ) )
+				{
+					<i class="icon">@item.Icon</i>
+				}
+				else if ( !string.IsNullOrEmpty( item.Image ) )
+				{
+					<img src="@item.Image" />
+				}
+				<span>@item.Text</span>
 			</button>
 		}
 
@@ -33,7 +41,17 @@
 	public struct ContextMenuItem
 	{
 		public string Text;
+		public string Icon;
+		public string Image;
 		public Action Action;
+		
+		public ContextMenuItem( string text, string icon, Action action )
+		{
+			Text = text;
+			Icon = icon;
+			Image = null;
+			Action = action;
+		}
 	}
 	
 	private List<ContextMenuItem> _items = new List<ContextMenuItem>();
@@ -59,24 +77,19 @@
 
 	public void AddItem( string text, Action action )
 	{
-		/*if ( !Content.IsValid() )
-		{
-			Log.Error( "Content is not valid" );
-			return;
-		}
-
-		var button = new Button( text );
-		button.AddEventListener( "click", ( e ) =>
-		{
-			action();
-			Close( e );
-		} );
-		Content.AddChild( button );
-		StateHasChanged();*/
-		
 		_items.Add( new ContextMenuItem()
 		{
 			Text = text,
+			Action = action
+		} );
+	}
+	
+	public void AddItem( string text, string icon, Action action )
+	{
+		_items.Add( new ContextMenuItem()
+		{
+			Text = text,
+			Icon = icon,
 			Action = action
 		} );
 	}
