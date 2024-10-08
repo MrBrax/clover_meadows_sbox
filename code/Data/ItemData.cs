@@ -39,6 +39,8 @@ public class ItemData : GameResource
 	
 	[Property, Group("Object")] // TODO: move this to yet another class?
 	public ObjectData ObjectData { get; set; }
+	
+	public bool HideInSpawnMenu { get; set; }
 
 
 	public static T GetById<T>( string id ) where T : ItemData

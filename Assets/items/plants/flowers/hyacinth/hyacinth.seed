@@ -1,15 +1,12 @@
 {
-  "PlantedScene": {
-    "_type": "gameobject",
-    "prefab": "items/plants/flowers/hyacinth/hyacinth.prefab"
-  },
-  "Name": "Hyacinth",
+  "SpawnedItemData": null,
+  "Name": null,
   "Description": null,
   "Width": 1,
   "Height": 1,
-  "Placements": "Floor",
+  "Placements": "Floor, Underground",
   "CanDrop": true,
-  "CanPlace": false,
+  "CanPlace": true,
   "DisablePickup": false,
   "IsStackable": false,
   "StackSize": 1,
@@ -19,6 +16,7 @@
   "DefaultTypeScene": null,
   "Icon": null,
   "ObjectData": null,
+  "HideInSpawnMenu": false,
   "__references": [],
   "IsValid": true,
   "__version": 0

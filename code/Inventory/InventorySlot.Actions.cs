@@ -426,4 +426,46 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		
 		TakeOneOrDelete();
 	}
+
+	public void Plant()
+	{
+		if ( PersistentItem.ItemData is not SeedData seedData )
+		{
+			Log.Error( "Item is not a seed" );
+			return;
+		}
+		
+		var aimingGridPosition = InventoryContainer.Player.GetAimingGridPosition();
+		var floorItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
+		if ( floorItem == null || floorItem.ItemData.ResourceName != "hole" )
+		{
+			Log.Warning( "No hole found" );
+			return;
+		}
+		
+		var spawnedItemData = seedData.SpawnedItemData;
+		
+		if ( spawnedItemData == null )
+		{
+			Log.Error( "Seed does not have a spawned item data" );
+			return;
+		}
+		
+		floorItem.Remove();
+		
+		if ( spawnedItemData is PlantData plantData )
+		{
+			InventoryContainer.Player.World.SpawnCustomNode( plantData, plantData.PlantedScene, aimingGridPosition,
+				World.ItemRotation.North, World.ItemPlacement.Floor );
+		}
+		else
+		{
+			Log.Error( "Spawned item data is not a plant data" );
+			return;
+		}
+		
+		TakeOneOrDelete();
+		
+		
+	}
 }

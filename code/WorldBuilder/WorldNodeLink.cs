@@ -255,6 +255,9 @@ public class WorldNodeLink
 		
 	}
 
+	/// <summary>
+	///  Removes this item from the world.
+	/// </summary>
 	public void Remove()
 	{
 		World.RemoveItem( this );
