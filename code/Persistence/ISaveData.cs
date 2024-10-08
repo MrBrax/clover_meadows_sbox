@@ -1,5 +1,8 @@
-﻿namespace Clover.Persistence;
+﻿using System;
 
+namespace Clover.Persistence;
+
+[Obsolete( "Use IPersistent instead" )]
 public interface ISaveData
 {
 	
