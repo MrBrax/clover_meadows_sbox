@@ -88,7 +88,8 @@ public class WorldNodeLink
 
 	public PlaceableNode GetPlaceableNodeAtGridPosition( Vector2Int position )
 	{
-		return GetPlaceableNodes().FirstOrDefault( n => GridPosition == World.WorldToItemGrid( n.WorldPosition ) );
+		// return GetPlaceableNodes().FirstOrDefault( n => GridPosition == World.WorldToItemGrid( n.WorldPosition ) );
+		return GetPlaceableNodes().MinBy( n => (n.WorldPosition - position).LengthSquared );
 	}
 
 	/*public PersistentItem GetPersistentItem()

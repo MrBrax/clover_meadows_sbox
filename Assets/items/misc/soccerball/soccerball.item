@@ -3,7 +3,7 @@
   "Description": null,
   "Width": 1,
   "Height": 1,
-  "Placements": "Floor, Underground",
+  "Placements": "OnTop, Floor, Underground",
   "CanDrop": true,
   "CanPlace": true,
   "DisablePickup": false,

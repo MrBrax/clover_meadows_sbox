@@ -81,8 +81,14 @@ public sealed partial class World : Component
 	[Sync] private Dictionary<Vector2Int, float> _tileHeights { get; set; } = new();
 
 	private Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
+	
+	public record struct NodeLinkMapKey
+	{
+		public Vector2Int Position;
+		public ItemPlacement Placement;
+	}
 
-	private Dictionary<string, WorldNodeLink> _nodeLinkGridMap = new();
+	private Dictionary<NodeLinkMapKey, WorldNodeLink> _nodeLinkGridMap = new();
 
 	[Sync] public int Layer { get; set; }
 
@@ -182,55 +188,65 @@ public sealed partial class World : Component
 		}
 
 		HashSet<WorldNodeLink> foundItems = new();
-
-		// var gridPosString = Vector2IToString( gridPos );
-
-		// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + Vector3.Up * 5f, new Color( 1, 1, 1 ), 3f );
-
+		
+		Log.Info( $"Getting items at {gridPos}" );
+		
 		// get items at exact grid position
 		if ( Items.TryGetValue( gridPos, out var dict ) )
 		{
 			foreach ( var item in dict.Values )
 			{
-				yield return item;
+				Log.Info( $"Found item {item.GetName()} at {gridPos} with exact placement" );
 				foundItems.Add( item );
+				yield return item;
 			}
 		}
 
-		// get items that are intersecting this grid position
-		foreach ( var item in Items.Values.SelectMany( d => d.Values ) )
+		foreach ( var entry in _nodeLinkGridMap.Where( x => x.Key.Position == gridPos ) )
 		{
-			/*if ( item.GridSize.X == 1 && item.GridSize.Y == 1 )
+			Log.Info( $"Found item {entry.Value.GetName()} at {gridPos} in grid map" );
+			foundItems.Add( entry.Value );
+			yield return entry.Value;
+		}
+
+		// get items that are intersecting this grid position
+		/*foreach ( var item in Items.Values.SelectMany( d => d.Values ) )
+		{
+			if ( item.Size is { x: 1, y: 1 } )
 			{
-				// Logger.Info( "GetItems", $"Item {item} is 1x1" );
+				Log.Info( $"Item {item.GetName()} is 1x1 so it won't intersect" );
 				continue;
-			}*/
+			}
 
 			var itemGridPositions = item.GetGridPositions( true );
 
-			/* foreach ( var pos in itemGridPositions )
+			foreach ( var pos in itemGridPositions )
 			{
-				Logger.Info( "GetItems", $" - Item {item} has grid position {pos}" );
-			} */
+				Log.Info( $" - Item {item.GetName()} has grid position {pos}" );
+			}
 
 			if ( itemGridPositions.Contains( gridPos ) )
 			{
 				if ( foundItems.Contains( item ) )
 				{
-					// Logger.Info( "GetItems", $"Item {item} is already found" );
+					Log.Info( $"Item {item.GetName()} is already found" );
 					continue;
 				}
 
-				yield return item;
+				Log.Info( $"Found intersecting item {item} at {gridPos}" );
 				foundItems.Add( item );
+				yield return item;
 			}
 
 			/*var positions = item.GetGridPositions( true );
 			if ( positions.Contains( gridPos ) )
 			{
 				yield return item;
-			}*/
+			}#1#
+			
 		}
+		
+		Log.Info( $"Found {foundItems.Count} items at {gridPos}" );*/
 	}
 
 	/// <summary>
@@ -306,7 +322,13 @@ public sealed partial class World : Component
 				}
 			}
 			
-			if ( _nodeLinkGridMap.TryGetValue( $"{pos.x},{pos.y}:{placement}", out var nodeLink ) )
+			/*if ( _nodeLinkGridMap.TryGetValue( $"{pos.x},{pos.y}:{placement}", out var nodeLink ) )
+			{
+				Log.Warning( $"Found item at {pos} with placement {placement} in grid map, but not in items" );
+				return false;
+			}*/
+			
+			if ( _nodeLinkGridMap.TryGetValue( new NodeLinkMapKey { Position = pos, Placement = placement }, out var nodeLink ) )
 			{
 				Log.Warning( $"Found item at {pos} with placement {placement} in grid map, but not in items" );
 				return false;
@@ -560,7 +582,8 @@ public sealed partial class World : Component
 		// add node link to grid map
 		foreach ( var pos in nodeLink.GetGridPositions( true ) )
 		{
-			_nodeLinkGridMap[$"{pos.x},{pos.y}:{placement}"] = nodeLink;
+			// _nodeLinkGridMap[$"{pos.x},{pos.y}:{placement}"] = nodeLink;
+			_nodeLinkGridMap[new NodeLinkMapKey { Position = pos, Placement = placement }] = nodeLink;
 		}
 
 		// nodeLink.OnNodeAdded();
@@ -900,12 +923,40 @@ public sealed partial class World : Component
 
 		foreach ( var item in _nodeLinkGridMap )
 		{
-			var pos = item.Key.Split( ':' )[0].Split( ',' ).Select( int.Parse ).ToArray();
-			Gizmo.Draw.Text( $"{item.Key} {item.Value.GetName()}", new Transform( ItemGridToWorld( new Vector2Int( pos[0], pos[1] ) ) ) );
+			// var pos = item.Key.Split( ':' )[0].Split( ',' ).Select( int.Parse ).ToArray();
+			var offset = item.Key.Placement == ItemPlacement.OnTop ? Vector3.Up * 32f : Vector3.Zero;
+			Gizmo.Draw.Text( $"{item.Key.Position} {item.Key.Placement} | {item.Value.GetName()}", new Transform( ItemGridToWorld( item.Key.Position ) + offset ) );
 		}
+
+		/*foreach ( var entry in Items )
+		{
+			foreach ( var item in entry.Value.Values )
+			{
+				Gizmo.Draw.Text( item.GridPlacement + "\n" + item.GetName(), new Transform( ItemGridToWorld( item.GridPosition ) ) );
+			}
+			
+		}*/
+		
 	}
 	
 	[ConVar("clover_show_grid_info")]
 	public static bool ShowGridInfo { get; set; }
+
+	[ConCmd( "clover_dump_items" )]
+	public static void CmdDumpItems()
+	{
+		var world = WorldManager.Instance.ActiveWorld;
+
+		foreach ( var entry in world.Items )
+		{
+			Log.Info( $"Items at {entry.Key}:" );
+			
+			foreach ( var item in entry.Value )
+			{
+				Log.Info( $" - {item.Key}: {item.Value.GetName()}" );
+			}
+
+		}
+	}
 	
 }

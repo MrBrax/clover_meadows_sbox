@@ -96,7 +96,11 @@ public class PlayerInteract : Component
 
 	private IPickupable GetPickupableNode()
 	{
-		foreach ( var collider in InteractCollider.Touching )
+		var touchingItems = InteractCollider.Touching;
+		
+		
+		
+		foreach ( var collider in touchingItems )
 		{
 			if ( collider.GameObject.Components.TryGet<IPickupable>( out var pickupable ) )
 			{
@@ -104,6 +108,11 @@ public class PlayerInteract : Component
 				{
 					if ( worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
 					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop )
+					{
+						continue;
+					}
+					
+					if ( worldItem.HasItemOnTop() )
 					{
 						continue;
 					}

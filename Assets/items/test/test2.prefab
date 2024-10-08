@@ -25,31 +25,6 @@
         "IsTrigger": false,
         "Scale": "32,64,32",
         "Static": true
-      },
-      {
-        "__type": "Clover.Interactable.Light",
-        "__guid": "019f62e8-f1ad-4fbe-8061-b35cecc519fc",
-        "__enabled": false,
-        "IsOn": true,
-        "LightSwitchSound": "sounds/interact/lightswitch.sound",
-        "Targets": [
-          {
-            "_type": "gameobject",
-            "go": "5afd13e9-9ffc-47f7-a8b0-c0f7313c28fa"
-          }
-        ]
-      },
-      {
-        "__type": "Clover.Interactable.Sittable",
-        "__guid": "f1ce8783-5d5f-4f1f-83ab-fd4ea18c7b3b",
-        "Seats": [
-          {
-            "_type": "component",
-            "component_id": "949903b6-4df9-4b3f-b90f-d1463c2cd619",
-            "go": "26a9bc1d-0411-48e3-a12c-d34b1e59dd3a",
-            "component_type": "SittableNode"
-          }
-        ]
       }
     ],
     "Children": [
@@ -77,33 +52,28 @@
         ]
       },
       {
-        "__guid": "5afd13e9-9ffc-47f7-a8b0-c0f7313c28fa",
+        "__guid": "1cfa2e8b-9cad-4945-a6d5-52fa0b5c31c7",
         "Flags": 0,
-        "Name": "Point Light",
-        "Position": "0,0,16",
-        "Tags": "light_point,light",
+        "Name": "Object",
+        "Position": "0,16,31",
+        "Enabled": true,
         "Components": [
           {
-            "__type": "Sandbox.PointLight",
-            "__guid": "05294f53-136f-4d4f-a33c-fa551f944256",
-            "Attenuation": 1,
-            "FogMode": "Enabled",
-            "FogStrength": 1,
-            "LightColor": "0.91373,0.98039,1,1",
-            "Radius": 400,
-            "Shadows": true
+            "__type": "Clover.Components.PlaceableNode",
+            "__guid": "5351e3fa-1b8e-4e41-b3c5-5300f98ff125"
           }
         ]
       },
       {
-        "__guid": "26a9bc1d-0411-48e3-a12c-d34b1e59dd3a",
+        "__guid": "bbb040e9-3251-4a9e-b4e1-2d05cd347c45",
         "Flags": 0,
-        "Name": "Seat",
-        "Position": "-2.464873,0,11.35362",
+        "Name": "Object (1)",
+        "Position": "0,-16,31",
+        "Enabled": true,
         "Components": [
           {
-            "__type": "Clover.Components.SittableNode",
-            "__guid": "949903b6-4df9-4b3f-b90f-d1463c2cd619"
+            "__type": "Clover.Components.PlaceableNode",
+            "__guid": "0d90091e-9783-4858-a685-d2e5cbff5b93"
           }
         ]
       }

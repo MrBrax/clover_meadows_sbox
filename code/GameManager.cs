@@ -36,6 +36,9 @@ public class GameManager : Component
 			return;
 		}
 		_lastSave = 0f;
+
+		if ( !AutoSave ) return;
+		
 		foreach( var world in WorldManager.Instance.Worlds )
 		{
 			world.Value.Save();
@@ -43,6 +46,9 @@ public class GameManager : Component
 
 		PlayerCharacter.Local?.Save();
 	}
+	
+	[ConVar("clover_autosave")]
+	public static bool AutoSave { get; set; } = true;
 
 	protected override void OnFixedUpdate()
 	{

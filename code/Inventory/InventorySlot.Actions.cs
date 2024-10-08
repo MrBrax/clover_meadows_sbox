@@ -19,20 +19,17 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		try
 		{
-			// Inventory.World.SpawnDroppedItem( _item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
-			// InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, position, playerRotation, World.ItemPlacement.Floor, true );
+			
 			InventoryContainer.Player.World.SpawnDroppedNode( PersistentItem, position, playerRotation,
 				World.ItemPlacement.Floor );
 		}
 		catch ( Exception e )
 		{
-			// Logger.Info( e );
 			//x NodeManager.UserInterface.ShowWarning( e.Message );
 			Log.Error( e.Message );
 			return;
 		}
-
-		//x InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
+		
 		Sound.Play( "sounds/interact/item_drop.sound", InventoryContainer.Owner.WorldPosition );
 
 		TakeOneOrDelete();
@@ -62,11 +59,15 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 					Log.Warning( "On top item already exists." );
 					return;
 				}
-
+				
+				if ( GetItem().ItemData.Width > 1 || GetItem().ItemData.Height > 1 )
+				{
+					Log.Warning( "Can't place a large item on top of another item." );
+					return;
+				}
+				
 				try
 				{
-					// InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
-					// 	false );
 					InventoryContainer.Player.World.SpawnPlacedNode( PersistentItem, aimingGridPosition, playerRotation,
 						World.ItemPlacement.OnTop );
 				}
@@ -91,10 +92,6 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		try
 		{
-			// Inventory.World.SpawnPlacedItem<PlacedItem>( _item.GetItemData(), position, World.ItemPlacement.Floor,
-			// 	playerRotation );
-			// InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.Floor,
-			// 	false );
 			InventoryContainer.Player.World.SpawnPlacedNode( PersistentItem, aimingGridPosition, playerRotation,
 				World.ItemPlacement.Floor );
 		}

@@ -7,7 +7,7 @@ using Clover.Player;
 namespace Clover.Items;
 
 [Category( "Clover/Items" )]
-[Icon("outlet")]
+[Icon( "outlet" )]
 public class WorldItem : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
@@ -46,7 +46,10 @@ public class WorldItem : Component, IPickupable
 	[JsonIgnore] public TilePositionChanged OnTilePositionChanged;*/
 
 	public Vector2Int GridPosition => NodeLink?.GridPosition ?? Vector2Int.Zero;
-	[Property, ReadOnly] public Vector2Int Size => NodeLink?.Size ?? new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
+
+	[Property, ReadOnly]
+	public Vector2Int Size => NodeLink?.Size ?? new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
+
 	public World.ItemPlacement GridPlacement => NodeLink?.GridPlacement ?? World.ItemPlacement.Floor;
 	public World.ItemPlacementType GridPlacementType => NodeLink?.PlacementType ?? World.ItemPlacementType.Placed;
 	public World.ItemRotation GridRotation => NodeLink?.GridRotation ?? World.ItemRotation.North;
@@ -85,7 +88,8 @@ public class WorldItem : Component, IPickupable
 		// Log.Info( $"WorldItem {GameObject.Name} has prefab source {GameObject.PrefabInstanceSource}, backup is {Prefab}" );
 		if ( !string.IsNullOrEmpty( GameObject.PrefabInstanceSource ) && GameObject.PrefabInstanceSource != Prefab )
 		{
-			Log.Error( $"WorldItem {GameObject.Name} has prefab source {GameObject.PrefabInstanceSource}, backup is {Prefab}" );
+			Log.Error(
+				$"WorldItem {GameObject.Name} has prefab source {GameObject.PrefabInstanceSource}, backup is {Prefab}" );
 			Prefab = GameObject.PrefabInstanceSource;
 		}
 	}
@@ -106,7 +110,7 @@ public class WorldItem : Component, IPickupable
 	protected override void DrawGizmos()
 	{
 		base.DrawGizmos();
-		
+
 		if ( Gizmo.Camera == null ) return;
 
 		if ( ItemData == null ) return;
@@ -137,19 +141,50 @@ public class WorldItem : Component, IPickupable
 		base.OnUpdate();
 		DrawGizmos();
 	}*/
-	
+
 	/*protected override void OnUpdate()
 	{
 		base.OnUpdate();
 		if ( Gizmo.Camera == null ) return;
 		Gizmo.Draw.Text( WorldPosition.ToString(), new Transform( WorldPosition ) );
 	}*/
-	
+
 	[Property] public bool CanPickupSimple { get; set; }
-	
+
 	public bool CanPickup( PlayerCharacter player )
 	{
+		/*if ( WorldLayerObject.World.GetItems( GridPosition ).ToList().FirstOrDefault()?.GridPlacement ==
+		    World.ItemPlacement.OnTop && GridPlacement == World.ItemPlacement.Floor )
+		{
+			Log.Warning( $"Item {this} is on top of another item" );
+			return false;
+		}*/
+
+		if ( HasItemOnTop() )
+		{
+			return false;
+		}
+
+		Log.Info( $"CanPickupSimple {GameObject}: {CanPickupSimple}" );
+
 		return CanPickupSimple;
+	}
+
+	public bool HasItemOnTop()
+	{
+		var gridPositions = NodeLink.GetGridPositions( true );
+
+		foreach ( var pos in gridPositions )
+		{
+			if ( WorldLayerObject.World.GetItems( pos ).ToList().FirstOrDefault()?.GridPlacement == World.ItemPlacement.OnTop &&
+			     GridPlacement == World.ItemPlacement.Floor )
+			{
+				Log.Warning( $"An item is on top of this item" );
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public void OnPickup( PlayerCharacter player )

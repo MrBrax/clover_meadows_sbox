@@ -135,7 +135,8 @@ public sealed partial class World
 
 			foreach ( var pos in nodeLink.GetGridPositions( true ) )
 			{
-				_nodeLinkGridMap[$"{pos.x},{pos.y}:{nodeLink.GridPlacement}"] = nodeLink;
+				// _nodeLinkGridMap[$"{pos.x},{pos.y}:{nodeLink.GridPlacement}"] = nodeLink;
+				_nodeLinkGridMap[ new NodeLinkMapKey() { Position = pos, Placement = nodeLink.GridPlacement } ] = nodeLink;
 			}
 
 			gameObject.NetworkSpawn();
