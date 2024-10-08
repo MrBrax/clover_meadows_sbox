@@ -1,3 +1,4 @@
+@using Clover.Data
 @using Sandbox;
 @using Sandbox.UI;
 @inherits Panel
@@ -8,5 +9,11 @@
 	{
 		<img class="icon" src=@Slot.GetIcon()/>
 		<div class="name">@Slot.GetName()</div>
+		@if ( Slot.PersistentItem.ItemData is ToolData toolData )
+		{
+			<div class="durability-bar">
+				<div class="durability-bar-fill" style="width: @( $"{Slot.PersistentItem.GetArbitraryData<int>( "Durability" )}%" )"></div>
+			</div>
+		}
 	}
 </root>
