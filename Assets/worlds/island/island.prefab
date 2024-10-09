@@ -80,7 +80,7 @@
         "Flags": 0,
         "Name": "Sun",
         "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
-        "Tags": "light_directional,light",
+        "Tags": "light,light_directional",
         "Enabled": true,
         "Components": [
           {
@@ -301,29 +301,24 @@
         ]
       },
       {
-        "__guid": "3d5718dc-eb9f-4235-9fd1-b018337bc8b9",
+        "__guid": "862cdd44-1b74-4eb0-9a9c-1f83a6009857",
+        "Flags": 0,
+        "Name": "salmon",
+        "Position": "2633.885,1622.373,2.000542",
+        "Rotation": "0,0.0000000004656613,0.9999488,0.01011505",
+        "Enabled": true,
+        "__Prefab": "animals/fish/salmon/salmon.prefab",
+        "__PrefabVariables": {}
+      },
+      {
+        "__guid": "6b18e493-2ad5-47c0-aa6c-101229e9eb38",
         "Flags": 0,
         "Name": "fish_shadow",
-        "Position": "2677.637,1754.252,-17.57247",
-        "Rotation": "-0.00000007766154,-0.0000000443002,0.8673959,-0.4976188",
-        "Scale": "2,2,2",
+        "Position": "2683.752,1695.872,-17.27463",
+        "Rotation": "0,0.0000000004656613,0.9999488,0.01011505",
         "Enabled": true,
-        "Components": [
-          {
-            "__type": "Sandbox.ModelRenderer",
-            "__guid": "75a32082-2492-409e-bc0e-43bc9f935767",
-            "BodyGroups": 18446744073709551615,
-            "Model": "animals/fish/fish_shadow.vmdl",
-            "RenderOptions": {
-              "GameLayer": true,
-              "OverlayLayer": false,
-              "BloomLayer": false,
-              "AfterUILayer": false
-            },
-            "RenderType": "On",
-            "Tint": "1,1,1,1"
-          }
-        ]
+        "__Prefab": "animals/fish/fish_shadow.prefab",
+        "__PrefabVariables": {}
       }
     ],
     "__variables": []

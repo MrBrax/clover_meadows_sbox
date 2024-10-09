@@ -1,0 +1,51 @@
+{
+  "RootObject": {
+    "__guid": "e63464cf-4130-4702-890a-d1ed764fc19e",
+    "Flags": 0,
+    "Name": "fish_shadow",
+    "Enabled": true,
+    "Children": [
+      {
+        "__guid": "e0a29e90-6085-4699-b83c-eefca8eaa8f9",
+        "Flags": 0,
+        "Name": "fish_shadow",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "8892aebc-25af-4c49-b641-e1453e3bd2d0",
+            "BodyGroups": 18446744073709551615,
+            "Model": "animals/fish/fish_shadow.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "Clover.Animals.CatchableFish",
+            "__guid": "0c3d995a-82b7-485c-a4cd-05158ff78085",
+            "Data": "animals/fish/salmon/salmon.fish"
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "6be1faae-7ec8-47c6-a7f1-30d2e5c0056f",
+            "Layer": 0
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}
