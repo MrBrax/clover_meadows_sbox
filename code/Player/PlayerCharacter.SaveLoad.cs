@@ -13,6 +13,8 @@ public sealed partial class PlayerCharacter
 
 	public void Save()
 	{
+		Log.Info( $"Saving player {PlayerId}" );
+		
 		Scene.RunEvent<IPlayerSaved>( x => x.PrePlayerSave( this ) );
 
 		SaveData ??= new PlayerSaveData( PlayerId );
@@ -24,6 +26,7 @@ public sealed partial class PlayerCharacter
 		{
 			SaveData.InventorySlots.Add( slot );
 		}
+		Log.Info( $"Saved {SaveData.InventorySlots.Count} inventory slots" );
 
 		SaveData.EquippedItems.Clear();
 		foreach ( var (slot, item) in Equips.EquippedItems )
@@ -31,6 +34,7 @@ public sealed partial class PlayerCharacter
 			var persistentItem = PersistentItem.Create( item );
 			SaveData.EquippedItems.Add( slot, persistentItem );
 		}
+		Log.Info( $"Saved {SaveData.EquippedItems.Count} equipped items" );
 
 		SaveData.Clovers = Clovers;
 
