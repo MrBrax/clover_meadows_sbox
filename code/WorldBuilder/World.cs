@@ -81,7 +81,7 @@ public sealed partial class World : Component
 	[Sync] private Dictionary<Vector2Int, float> _tileHeights { get; set; } = new();
 
 	private Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
-	
+
 	public record struct NodeLinkMapKey
 	{
 		public Vector2Int Position;
@@ -188,9 +188,9 @@ public sealed partial class World : Component
 		}
 
 		HashSet<WorldNodeLink> foundItems = new();
-		
+
 		Log.Info( $"Getting items at {gridPos}" );
-		
+
 		// get items at exact grid position
 		if ( Items.TryGetValue( gridPos, out var dict ) )
 		{
@@ -243,9 +243,9 @@ public sealed partial class World : Component
 			{
 				yield return item;
 			}#1#
-			
+
 		}
-		
+
 		Log.Info( $"Found {foundItems.Count} items at {gridPos}" );*/
 	}
 
@@ -287,16 +287,22 @@ public sealed partial class World : Component
 	/// <param name="placement"></param>
 	/// <returns></returns>
 	/// <exception cref="Exception"></exception>
-	public bool CanPlaceItem( ItemData itemData, Vector2Int position, ItemRotation rotation, ItemPlacement placement )
+	public bool CanPlaceItem( List<Vector2Int> positions, ItemPlacement placement )
 	{
-		if ( IsOutsideGrid( position ) )
+		/*if ( IsOutsideGrid( position ) )
 		{
 			// throw new Exception( $"Position {position} is outside the grid" );
 			Log.Warning( $"Position {position} is outside the grid" );
 			return false;
+		}*/
+
+		if ( positions.Any( IsOutsideGrid ) )
+		{
+			Log.Warning( $"One or more positions are outside the grid" );
+			return false;
 		}
 
-		var positions = itemData.GetGridPositions( rotation, position );
+		// var positions = itemData.GetGridPositions( rotation, position );
 
 		// check any nearby items
 		foreach ( var pos in positions )
@@ -321,22 +327,22 @@ public sealed partial class World : Component
 					return false;
 				}
 			}
-			
+
 			/*if ( _nodeLinkGridMap.TryGetValue( $"{pos.x},{pos.y}:{placement}", out var nodeLink ) )
 			{
 				Log.Warning( $"Found item at {pos} with placement {placement} in grid map, but not in items" );
 				return false;
 			}*/
-			
-			if ( _nodeLinkGridMap.TryGetValue( new NodeLinkMapKey { Position = pos, Placement = placement }, out var nodeLink ) )
+
+			if ( _nodeLinkGridMap.TryGetValue( new NodeLinkMapKey { Position = pos, Placement = placement },
+				    out var nodeLink ) )
 			{
 				Log.Warning( $"Found item at {pos} with placement {placement} in grid map, but not in items" );
 				return false;
 			}
-			
 		}
-		
-		Log.Info( $"Item {itemData.Name} can be placed at {position} with rotation {rotation} and placement {placement}" );
+
+		// Log.Info( $"Item {itemData.Name} can be placed at {position} with rotation {rotation} and placement {placement}" );
 
 		return true;
 	}
@@ -496,7 +502,9 @@ public sealed partial class World : Component
 			throw new Exception( $"Item {itemData.Name} does not support placement {placement}" );
 		}
 
-		if ( !CanPlaceItem( itemData, position, rotation, placement ) )
+		var positions = itemData.GetGridPositions( rotation, position );
+
+		if ( !CanPlaceItem( positions, placement ) )
 		{
 			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
 		}
@@ -539,10 +547,6 @@ public sealed partial class World : Component
 			throw new Exception( $"Item {itemData.Name} does not support placement {placement}" );
 		}
 
-		if ( !CanPlaceItem( itemData, position, rotation, placement ) )
-		{
-			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
-		}
 
 		var defaultDropScene =
 			SceneUtility.GetPrefabScene(
@@ -558,6 +562,16 @@ public sealed partial class World : Component
 		if ( scene == null )
 		{
 			throw new Exception( $"Item {(itemData.Name ?? itemData.ResourceName)} has no {placementType} scene" );
+		}
+
+		// dropped items are always 1x1
+		var positions = placementType == ItemPlacementType.Dropped
+			? new List<Vector2Int> { position }
+			: itemData.GetGridPositions( rotation, position );
+
+		if ( !CanPlaceItem( positions, placement ) )
+		{
+			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
 		}
 
 		var gameObject = scene.Clone();
@@ -673,7 +687,7 @@ public sealed partial class World : Component
 		{
 			var itemWidth = itemData.Width - 1;
 			var itemHeight = itemData.Height - 1;
-			
+
 			// Log.Info( nodeLink.PrefabPath );
 			if ( nodeLink.IsDroppedItem )
 			{
@@ -925,22 +939,21 @@ public sealed partial class World : Component
 		{
 			// var pos = item.Key.Split( ':' )[0].Split( ',' ).Select( int.Parse ).ToArray();
 			var offset = item.Key.Placement == ItemPlacement.OnTop ? Vector3.Up * 32f : Vector3.Zero;
-			Gizmo.Draw.Text( $"{item.Key.Position} {item.Key.Placement} | {item.Value.GetName()}", new Transform( ItemGridToWorld( item.Key.Position ) + offset ) );
+			Gizmo.Draw.Text( $"{item.Key.Position} {item.Key.Placement} | {item.Value.GetName()}",
+				new Transform( ItemGridToWorld( item.Key.Position ) + offset ) );
 		}
 
-		/*foreach ( var entry in Items )
+		foreach ( var entry in Items )
 		{
 			foreach ( var item in entry.Value.Values )
 			{
-				Gizmo.Draw.Text( item.GridPlacement + "\n" + item.GetName(), new Transform( ItemGridToWorld( item.GridPosition ) ) );
+				Gizmo.Draw.Text( item.GridPlacement + "\n" + item.GetName(),
+					new Transform( ItemGridToWorld( item.GridPosition ) ) );
 			}
-			
-		}*/
-		
+		}
 	}
-	
-	[ConVar("clover_show_grid_info")]
-	public static bool ShowGridInfo { get; set; }
+
+	[ConVar( "clover_show_grid_info" )] public static bool ShowGridInfo { get; set; }
 
 	[ConCmd( "clover_dump_items" )]
 	public static void CmdDumpItems()
@@ -950,12 +963,11 @@ public sealed partial class World : Component
 		foreach ( var entry in world.Items )
 		{
 			Log.Info( $"Items at {entry.Key}:" );
-			
+
 			foreach ( var item in entry.Value )
 			{
 				Log.Info( $" - {item.Key}: {item.Value.GetName()}" );
 			}
-
 		}
 	}
 
