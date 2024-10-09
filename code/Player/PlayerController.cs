@@ -3,6 +3,8 @@ using Sandbox;
 using Sandbox.Citizen;
 using System.Drawing;
 using System.Runtime;
+using Clover.Carriable;
+using Clover.Components;
 using Clover.Player;
 
 public class PlayerController : Component
@@ -220,5 +222,11 @@ public class PlayerController : Component
 		{
 			WishVelocity *= 110.0f;
 		}
+		
+		if ( Player.Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) )
+		{
+			WishVelocity *= tool.CustomPlayerSpeed();
+		}
+		
 	}
 }

@@ -57,6 +57,18 @@ public class Equips : Component
 	{
 		return EquippedItems.TryGetValue( slot, out item );
 	}
+	
+	public bool TryGetEquippedItem<T>( EquipSlot slot, out T item ) where T : Component
+	{
+		if ( EquippedItems.TryGetValue( slot, out var gameObject ) )
+		{
+			item = gameObject.GetComponent<T>();
+			return item.IsValid();
+		}
+
+		item = null;
+		return false;
+	}
 
 	public void SetEquippedItem( EquipSlot slot, GameObject item )
 	{
