@@ -515,6 +515,10 @@ public sealed partial class World : Component
 		}
 
 		var gameObject = scene.Clone();
+		if ( !gameObject.IsValid() )
+		{
+			throw new Exception( $"Failed to clone scene for {itemData.Name}" );
+		}
 
 		var nodeLink = AddItem( position, rotation, placement, gameObject );
 
@@ -527,7 +531,7 @@ public sealed partial class World : Component
 
 		// nodeLink.OnNodeAdded();
 
-		scene.NetworkSpawn();
+		gameObject.NetworkSpawn();
 
 		return nodeLink;
 	}
