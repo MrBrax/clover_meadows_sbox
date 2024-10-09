@@ -119,6 +119,17 @@ public class WorldItem : Component, IPickupable
 		Gizmo.Draw.Text( WorldPosition.ToString(), new Transform( WorldPosition ) );
 	}*/
 
+	protected override void OnUpdate()
+	{
+		base.OnUpdate();
+
+		if ( NodeLink.IsValid() && NodeLink.IsDroppedItem )
+		{
+			Gizmo.Draw.Text( $"Dropped: {NodeLink.GetName()}", new Transform( WorldPosition + Vector3.Up * 20 ) );
+		}
+		
+	}
+
 	[Property] public bool CanPickupSimple { get; set; }
 
 	public bool CanPickup( PlayerCharacter player )
