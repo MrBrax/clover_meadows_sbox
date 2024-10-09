@@ -15,6 +15,8 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 	[Property] public GameObject Model { get; set; }
 	[Property] public GameObject SeedHole { get; set; } // TODO: better name
 	
+	[Property] public GameObject WateredParticles { get; set; }
+	
 	// [Property] public PlantData PlantData { get; set; }
 	public PlantData PlantData => WorldItem.ItemData as PlantData;
 	
@@ -87,6 +89,7 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 		Log.Info( "Watering plant" );
 		LastWatered = DateTime.Now;
 		Water = 1f;
+		UpdateVisuals();
 	}
 
 	public bool CanDig()
@@ -133,12 +136,18 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 	{
 		if ( Model.IsValid() )
 		{
-			Model.LocalScale = new Vector3( Growth / 1f, Growth / 1f, Growth / 1f );
+			var growth = Math.Clamp( Growth, 0.2f, 1f );
+			Model.LocalScale = new Vector3( growth, growth, growth );
 		}
 
 		if ( SeedHole.IsValid() )
 		{
 			SeedHole.Enabled = Growth < 0.2f;
+		}
+		
+		if ( WateredParticles.IsValid() )
+		{
+			WateredParticles.Enabled = Water > 0.9f;
 		}
 	}
 	

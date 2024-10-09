@@ -28,6 +28,10 @@
         "SeedHole": {
           "_type": "gameobject",
           "go": "7b76f11a-a87c-4c12-a158-eca184d3ddcd"
+        },
+        "WateredParticles": {
+          "_type": "gameobject",
+          "go": "946b2b2f-1313-43c0-93e3-9085fd0100cb"
         }
       }
     ],
@@ -95,6 +99,16 @@
             ]
           }
         ]
+      },
+      {
+        "__guid": "946b2b2f-1313-43c0-93e3-9085fd0100cb",
+        "Flags": 0,
+        "Name": "WateredParticles",
+        "Position": "0,0,12",
+        "Tags": "particles",
+        "Enabled": true,
+        "__Prefab": "particles/watered.prefab",
+        "__PrefabVariables": {}
       }
     ],
     "__variables": []
