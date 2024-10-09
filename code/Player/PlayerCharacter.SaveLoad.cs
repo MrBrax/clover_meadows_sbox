@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
+using Clover.Carriable;
 using Clover.Data;
 using Clover.Persistence;
 
@@ -14,7 +15,7 @@ public sealed partial class PlayerCharacter
 	public void Save()
 	{
 		Log.Info( $"Saving player {PlayerId}" );
-		
+
 		Scene.RunEvent<IPlayerSaved>( x => x.PrePlayerSave( this ) );
 
 		SaveData ??= new PlayerSaveData( PlayerId );
@@ -26,6 +27,7 @@ public sealed partial class PlayerCharacter
 		{
 			SaveData.InventorySlots.Add( slot );
 		}
+
 		Log.Info( $"Saved {SaveData.InventorySlots.Count} inventory slots" );
 
 		SaveData.EquippedItems.Clear();
@@ -34,6 +36,7 @@ public sealed partial class PlayerCharacter
 			var persistentItem = PersistentItem.Create( item );
 			SaveData.EquippedItems.Add( slot, persistentItem );
 		}
+
 		Log.Info( $"Saved {SaveData.EquippedItems.Count} equipped items" );
 
 		SaveData.Clovers = Clovers;
@@ -111,8 +114,18 @@ public sealed partial class PlayerCharacter
 		{
 			if ( item.ItemData is ToolData toolData )
 			{
-				// var carriableNode = toolData.SpawnCarriable();
-				var carriableNode = item.SpawnCarriable();
+				BaseCarriable carriableNode;
+				// var carriableNode = item.SpawnCarriable();
+
+				try
+				{
+					carriableNode = item.SpawnCarriable();
+				}
+				catch ( Exception e )
+				{
+					Log.Error( $"Failed to spawn carriable: {e.Message}" );
+					continue;
+				}
 
 				if ( carriableNode == null )
 				{

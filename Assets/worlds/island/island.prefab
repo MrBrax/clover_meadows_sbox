@@ -283,6 +283,22 @@
         "Enabled": true,
         "__Prefab": "npc/vdog.prefab",
         "__PrefabVariables": {}
+      },
+      {
+        "__guid": "700eadb7-971a-4a30-aa3a-c423dedd491c",
+        "Flags": 0,
+        "Name": "Water",
+        "Tags": "water",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "edc1eab3-7fbb-4b7f-9b65-67e281baf9be",
+            "IsTrigger": false,
+            "Model": "worlds/island/island_water.vmdl",
+            "Static": true
+          }
+        ]
       }
     ],
     "__variables": []

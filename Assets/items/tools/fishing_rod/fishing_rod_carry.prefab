@@ -8,7 +8,15 @@
       {
         "__type": "Clover.Carriable.FishingRod",
         "__guid": "f4df98e0-6a0c-4268-832a-8ef00fab178d",
+        "BobberPrefab": {
+          "_type": "gameobject",
+          "prefab": "items/tools/fishing_rod/bobber.prefab"
+        },
         "ItemData": "items/tools/fishing_rod/fishing_rod.tool",
+        "LineStartPoint": {
+          "_type": "gameobject",
+          "go": "b54d4531-4e91-442d-b34c-fd4850d69820"
+        },
         "Model": {
           "_type": "gameobject",
           "go": "f00e68e2-38ce-426a-90a8-0ab4acca4093"
@@ -46,6 +54,14 @@
                 "Tint": "1,1,1,1"
               }
             ]
+          },
+          {
+            "__guid": "b54d4531-4e91-442d-b34c-fd4850d69820",
+            "Flags": 0,
+            "Name": "LineStart",
+            "Position": "-79.52894,0.000002106033,78.59827",
+            "Scale": "1.428571,1.428571,1.428571",
+            "Enabled": true
           }
         ]
       }

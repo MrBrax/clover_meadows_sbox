@@ -1,5 +1,8 @@
 {
-  "CarryScene": null,
+  "CarryScene": {
+    "_type": "gameobject",
+    "prefab": "items/tools/fishing_rod/fishing_rod_carry.prefab"
+  },
   "Id": "fishing_rod:11380121081117751849",
   "Name": "Fishing rod",
   "Description": null,
@@ -12,7 +15,10 @@
   "IsStackable": false,
   "StackSize": 1,
   "ModelScene": null,
-  "DropScene": null,
+  "DropScene": {
+    "_type": "gameobject",
+    "prefab": "items/tools/fishing_rod/fishing_rod_dropped.prefab"
+  },
   "PlaceScene": null,
   "DefaultTypeScene": null,
   "Icon": null,

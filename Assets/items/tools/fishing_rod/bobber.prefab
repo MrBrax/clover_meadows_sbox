@@ -1,0 +1,65 @@
+{
+  "RootObject": {
+    "__guid": "ff35a799-45c2-427f-93e2-65dc8bc49715",
+    "Flags": 0,
+    "Name": "bobber",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Objects.FishingBobber",
+        "__guid": "53507d65-244b-49b3-8df1-746cc3d839ce"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "6679dc83-45ca-4479-aaeb-0dadea82918e",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "88c31cd7-2c84-4592-b5e8-367581dbc6b6",
+            "Flags": 0,
+            "Name": "bobber",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.SkinnedModelRenderer",
+                "__guid": "fa20384f-88bf-44d8-8ad2-f91969529b91",
+                "BodyGroups": 18446744073709551615,
+                "CreateBoneObjects": false,
+                "Model": "items/tools/fishing_rod/bobber.vmdl",
+                "Morphs": {},
+                "Parameters": {
+                  "bools": {},
+                  "ints": {},
+                  "floats": {},
+                  "vectors": {},
+                  "rotations": {}
+                },
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1",
+                "UseAnimGraph": true
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

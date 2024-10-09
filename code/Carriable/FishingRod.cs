@@ -113,7 +113,7 @@ public class FishingRod : BaseCarriable
 
 		if ( !CheckForWater( GetCastPosition() ) )
 		{
-			Log.Warning( $"No water found at {GetCastPosition()}." );
+			Log.Warning( $"CAST: No water found at {GetCastPosition()}." );
 			return;
 		}
 
@@ -167,7 +167,7 @@ public class FishingRod : BaseCarriable
 		_hasCasted = true;
 	}
 
-	private const float WaterCheckHeight = 3f;
+	private const float WaterCheckHeight = 64f;
 
 	private bool CheckForWater( Vector3 position )
 	{

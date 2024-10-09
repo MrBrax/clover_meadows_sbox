@@ -8,7 +8,7 @@
       {
         "__type": "Clover.Animals.CatchableFish",
         "__guid": "c608bd9f-abf2-4f90-86e4-5afe5276e7ac",
-        "Data": "animals/fish/salmon/salmon.fish"
+        "Data": null
       },
       {
         "__type": "Clover.WorldLayerObject",
