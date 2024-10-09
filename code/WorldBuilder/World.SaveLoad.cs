@@ -138,6 +138,8 @@ public sealed partial class World
 				// _nodeLinkGridMap[$"{pos.x},{pos.y}:{nodeLink.GridPlacement}"] = nodeLink;
 				_nodeLinkGridMap[ new NodeLinkMapKey() { Position = pos, Placement = nodeLink.GridPlacement } ] = nodeLink;
 			}
+			
+			gameObject.SetParent( GameObject ); // TODO: should items be parented to the world?
 
 			gameObject.NetworkSpawn();
 		}
@@ -160,6 +162,8 @@ public sealed partial class World
 			
 			worldObjectComponent.WorldLayerObject.SetLayer( Layer );
 			worldObjectComponent.OnObjectLoad( worldObject );
+			
+			gameObject.SetParent( GameObject ); // TODO: should items be parented to the world?
 			
 			gameObject.NetworkSpawn();
 		}
