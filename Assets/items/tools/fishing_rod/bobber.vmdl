@@ -11,8 +11,18 @@
 				[
 					{
 						_class = "DefaultMaterialGroup"
-						remaps = [  ]
-						use_global_default = true
+						remaps = 
+						[
+							{
+								from = "bobber_red.vmat"
+								to = "materials/dev/primary_red.vmat"
+							},
+							{
+								from = "bobber_white.vmat"
+								to = "materials/dev/primary_white.vmat"
+							},
+						]
+						use_global_default = false
 						global_default_material = "materials/default.vmat"
 					},
 				]
