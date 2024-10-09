@@ -9,6 +9,8 @@ public class FishingBobber : Component
 	[Property] public SoundEvent SplashSound { get; set; }
 	
 	[Property] public SkinnedModelRenderer Bobber { get; set; }
+	
+	[Property] public GameObject Tip { get; set; }
 
 	// public CatchableFish Fish;
 

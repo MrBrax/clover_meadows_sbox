@@ -14,7 +14,11 @@
           "go": "88c31cd7-2c84-4592-b5e8-367581dbc6b6",
           "component_type": "SkinnedModelRenderer"
         },
-        "SplashSound": "sounds/fishing/bobber.sound"
+        "SplashSound": "sounds/fishing/bobber.sound",
+        "Tip": {
+          "_type": "gameobject",
+          "go": "2943fb5a-e0c0-4d43-a819-a84afe9c10d9"
+        }
       }
     ],
     "Children": [
@@ -35,7 +39,7 @@
                 "__guid": "fa20384f-88bf-44d8-8ad2-f91969529b91",
                 "AnimationGraph": "items/tools/fishing_rod/bobber.vanmgrph",
                 "BodyGroups": 18446744073709551615,
-                "CreateBoneObjects": false,
+                "CreateBoneObjects": true,
                 "Model": "items/tools/fishing_rod/bobber.vmdl",
                 "Morphs": {},
                 "Parameters": {
@@ -54,6 +58,25 @@
                 "RenderType": "On",
                 "Tint": "1,1,1,1",
                 "UseAnimGraph": true
+              }
+            ],
+            "Children": [
+              {
+                "__guid": "0b0bcc30-e15f-47a7-972f-65722815cb89",
+                "Flags": 4,
+                "Name": "Bone",
+                "Rotation": "0.4999998,0.4999998,0.4999998,0.5000005",
+                "Enabled": true,
+                "Children": [
+                  {
+                    "__guid": "2943fb5a-e0c0-4d43-a819-a84afe9c10d9",
+                    "Flags": 0,
+                    "Name": "tip",
+                    "Position": "-0.000001996344,3.044828,0.000001814858",
+                    "Rotation": "-0.4999999,-0.4999998,-0.4999999,0.5000006",
+                    "Enabled": true
+                  }
+                ]
               }
             ]
           }

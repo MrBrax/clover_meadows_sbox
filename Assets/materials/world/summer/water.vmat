@@ -4,8 +4,8 @@ Layer0
 {
 	shader "shaders/complex.shader"
 
-	//---- Translucent ----
-	F_TRANSLUCENT 1
+	//---- Detail Texture ----
+	F_DETAIL_TEXTURE 1 // Mod2X
 
 	//---- Ambient Occlusion ----
 	g_flAmbientOcclusionDirectDiffuse "0.000"
@@ -15,7 +15,16 @@ Layer0
 	//---- Color ----
 	g_flModelTintAmount "1.000"
 	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
-	TextureColor "[0.388235 0.584314 1.000000 0.000000]"
+	TextureColor "[0.196078 0.411765 0.843137 0.000000]"
+
+	//---- Detail Texture ----
+	g_flDetailBlendFactor "0.227"
+	g_flDetailBlendToFull "0.000"
+	g_flDetailTexCoordRotation "0.000"
+	g_vDetailTexCoordOffset "[0.000 0.000]"
+	g_vDetailTexCoordScale "[0.100 0.100]"
+	TextureDetail "materials/default/default_noise.tga"
+	TextureDetailMask "materials/default/default_detailmask.tga"
 
 	//---- Fade ----
 	g_flFadeExponent "1.000"
@@ -39,8 +48,4 @@ Layer0
 	g_vTexCoordOffset "[0.000 0.000]"
 	g_vTexCoordScale "[1.000 1.000]"
 	g_vTexCoordScrollSpeed "[0.000 0.000]"
-
-	//---- Translucent ----
-	g_flOpacityScale "1.000"
-	TextureTranslucency "[0.196000 0.196000 0.196000 0.000000]"
 }

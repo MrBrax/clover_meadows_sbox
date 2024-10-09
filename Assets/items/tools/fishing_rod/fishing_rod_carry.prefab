@@ -15,6 +15,12 @@
         "CastSound": "sounds/fishing/cast.sound",
         "HookSound": "sounds/fishing/cast.sound",
         "ItemData": "items/tools/fishing_rod/fishing_rod.tool",
+        "LineRenderer": {
+          "_type": "component",
+          "component_id": "5ef643cd-e018-4ad7-8575-ae8067d24e59",
+          "go": "3c103c96-e2ac-4720-8c2b-bc34d454be2a",
+          "component_type": "LineRenderer"
+        },
         "LineStartPoint": {
           "_type": "gameobject",
           "go": "b54d4531-4e91-442d-b34c-fd4850d69820"
@@ -70,6 +76,62 @@
             "Position": "-79.52894,0.000002106033,78.59827",
             "Scale": "1.428571,1.428571,1.428571",
             "Enabled": true
+          }
+        ]
+      },
+      {
+        "__guid": "3c103c96-e2ac-4720-8c2b-bc34d454be2a",
+        "Flags": 0,
+        "Name": "Line",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.LineRenderer",
+            "__guid": "5ef643cd-e018-4ad7-8575-ae8067d24e59",
+            "CastShadows": true,
+            "Color": {
+              "color": [
+                {
+                  "t": 0.5,
+                  "c": "0.02326,0.02326,0.02326,1"
+                }
+              ],
+              "alpha": []
+            },
+            "EndCap": "None",
+            "Face": "Camera",
+            "Opaque": true,
+            "Points": [
+              {
+                "_type": "gameobject",
+                "go": "b54d4531-4e91-442d-b34c-fd4850d69820"
+              },
+              null,
+              null
+            ],
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "SplineBias": -0.03,
+            "SplineContinuity": -0.03,
+            "SplineInterpolation": 15,
+            "SplineTension": -0.1,
+            "StartCap": "None",
+            "UseVectorPoints": false,
+            "VectorPoints": [],
+            "Width": {
+              "rangey": "0,0.3",
+              "frames": [
+                {
+                  "x": 0.5,
+                  "y": 1
+                }
+              ]
+            },
+            "Wireframe": false
           }
         ]
       }
