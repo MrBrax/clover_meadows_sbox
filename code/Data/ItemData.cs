@@ -43,6 +43,7 @@ public class ItemData : GameResource
 	[Property, ImageAssetPath] public string Icon { get; set; }
 
 	[Property, Group( "Object" )] // TODO: move this to yet another class?
+	[Description( "Custom world object to spawn. Don't use this unless you know what you're doing." )]
 	public ObjectData ObjectData { get; set; }
 
 	public bool HideInSpawnMenu { get; set; }

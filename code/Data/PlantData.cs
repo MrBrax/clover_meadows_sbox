@@ -7,7 +7,7 @@ namespace Clover.Data;
 public class PlantData : ItemData
 {
 	
-	[Property] public GameObject PlantedScene { get; set; }
+	[Property, Group("Plant")] public GameObject PlantedScene { get; set; }
 	
 	/*public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
 	{
