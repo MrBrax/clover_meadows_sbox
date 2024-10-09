@@ -389,24 +389,24 @@ public class CatchableFish : Component
 		var randomPoint = WorldPosition + new Vector3( Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ), 0,
 			Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ) );
 		
-		var traceWater = Scene.Trace.Ray( randomPoint + Vector3.Up * 1f, randomPoint + Vector3.Down * 1f )
+		var traceWater = Scene.Trace.Ray( randomPoint + Vector3.Up * 16f, randomPoint + Vector3.Down * 32f )
 			.WithTag( "water" )
 			.Run();
 		
 		if ( !traceWater.Hit )
 		{
-			// Log.Trace( $"No water found at {randomPoint}." );
+			Log.Warning( $"No water found at {randomPoint}." );
 			// this will just try again
 			return;
 		}
 		
-		var traceTerrain = Scene.Trace.Ray( randomPoint + Vector3.Up * 1f, randomPoint + Vector3.Down * 1f )
+		var traceTerrain = Scene.Trace.Ray( randomPoint + Vector3.Up * 16f, randomPoint + Vector3.Down * 32f )
 			.WithTag( "terrain" )
 			.Run();
 		
 		if ( traceTerrain.Hit )
 		{
-			Log.Trace( $"Terrain found at {randomPoint}." );
+			Log.Warning( $"Terrain found at {randomPoint}." );
 			// this will just try again
 			return;
 		}
@@ -417,7 +417,7 @@ public class CatchableFish : Component
 		
 		if ( trace.Hit )
 		{
-			Log.Trace( $"Terrain found between {WorldPosition} and {randomPoint}." );
+			Log.Warning( $"Terrain found between {WorldPosition} and {randomPoint}." );
 			// this will just try again
 			return;
 		}
