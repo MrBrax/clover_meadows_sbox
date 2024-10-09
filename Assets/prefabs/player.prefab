@@ -220,7 +220,6 @@
         "Flags": 0,
         "Name": "Cursor",
         "Position": "64,0,0",
-        "Enabled": true,
         "Children": [
           {
             "__guid": "8bb9b265-16de-4fb1-9877-755440b241a8",
