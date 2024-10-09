@@ -1,0 +1,73 @@
+{
+  "RootObject": {
+    "__guid": "90fb7a38-5b8b-47c7-8a41-e128642f4451",
+    "Flags": 0,
+    "Name": "gift_placed",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "44346d6e-6340-42d7-a9eb-eee824e8f631",
+        "CanPickupSimple": false,
+        "ItemData": "items/misc/gift/gift.item",
+        "Prefab": "items/misc/gift/gift_placed.prefab",
+        "Size": "1,1"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "6f9e9c71-6283-4223-a875-d4d165dfdffe",
+        "Layer": 0
+      },
+      {
+        "__type": "Clover.Items.Gift",
+        "__guid": "3b5885a1-fc65-4bd6-be98-9dfa4d8d7419"
+      },
+      {
+        "__type": "Sandbox.HullCollider",
+        "__guid": "67a09eff-2f23-4299-944f-63d429ea8130",
+        "BoxSize": "50,50,50",
+        "Center": "0,0,25",
+        "Height": 50,
+        "IsTrigger": false,
+        "Radius": 14,
+        "Radius2": 0,
+        "Slices": 16,
+        "Static": true,
+        "Type": "Cylinder"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "babbc823-647d-4133-933a-21e9f037941b",
+        "Flags": 0,
+        "Name": "gift",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "906248bb-a170-4d71-828b-4479ae9c689f",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/misc/gift/gift.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

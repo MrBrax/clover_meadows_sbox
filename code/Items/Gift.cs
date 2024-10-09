@@ -1,4 +1,5 @@
-﻿using Clover.Interactable;
+﻿using Clover.Data;
+using Clover.Interactable;
 using Clover.Persistence;
 using Clover.Player;
 
@@ -6,11 +7,20 @@ namespace Clover.Items;
 
 public class Gift : Component, IInteract, IPersistent
 {
+	
+	[RequireComponent] public WorldItem WorldItem { get; private set; }
 
 	private IList<PersistentItem> Items { get; set; } = new List<PersistentItem>();
 	
 	public void StartInteract( PlayerCharacter player )
 	{
+
+		if ( Items.Count == 0 )
+		{
+			Log.Warning( "No items to pick up" );
+			return;
+		}
+		
 		var freeSlots = player.Inventory.Container.FreeSlots;
 		if ( freeSlots < Items.Count )
 		{
@@ -23,7 +33,7 @@ public class Gift : Component, IInteract, IPersistent
 			player.Inventory.PickUpItem( item );
 		}
 		
-		GameObject.Destroy();
+		WorldItem.NodeLink.Remove();
 	}
 
 	public void FinishInteract( PlayerCharacter player )
@@ -38,7 +48,6 @@ public class Gift : Component, IInteract, IPersistent
 
 	public void OnLoad( PersistentItem item )
 	{
-		// TODO: Check if we can arbitrarily deserialize complex types
 		Items = item.GetArbitraryData<IList<PersistentItem>>( "Items" );
 	}
 }
