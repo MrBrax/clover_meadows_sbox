@@ -33,9 +33,10 @@ public class FishingRod : BaseCarriable
 
 	[Property] public LineRenderer LineRenderer { get; set; }
 
-	private FishingBobber Bobber;
+	public float LineLength = 500f;
 
-	private bool _hasCasted = false;
+
+	public bool HasCasted = false;
 	private bool _isCasting = false;
 	private bool _isBusy = false;
 
@@ -46,17 +47,19 @@ public class FishingRod : BaseCarriable
 	private const float CastDistance = 192f;
 	private const float WaterCheckHeight = 64f;
 
-	public class CurrentFishData
+	/*public class CurrentFishData
 	{
 		public FishData Data;
 		public float Weight;
 		public float Stamina;
 		public float StaminaMax;
-	}
+	}*/
 
-	public CurrentFishData CurrentFish = null;
+	private FishingBobber Bobber;
+	public CatchableFish CurrentFish;
 
-	public float Stamina;
+	public float Stamina = 100f;
+	public float LineStrength = 100f;
 
 	protected override void OnStart()
 	{
@@ -83,14 +86,16 @@ public class FishingRod : BaseCarriable
 			return;
 		}
 
-		if ( _hasCasted && !Bobber.IsValid() )
+		if ( HasCasted && !Bobber.IsValid() )
 		{
 			Log.Warning( "Bobber is not valid." );
-			_hasCasted = false;
+			HasCasted = false;
 		}
 
-		if ( _hasCasted )
+		if ( HasCasted )
 		{
+			Log.Info( "Casted" );
+
 			/*if ( Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.FoundBobber )
 			{
 				Bobber.Fish.TryHook();
@@ -110,16 +115,26 @@ public class FishingRod : BaseCarriable
 				ReelIn();
 			}*/
 
-			if ( CurrentFish != null )
+			/*if ( CurrentFish != null )
 			{
 				Fight();
 				return;
+			}
+
+			ReelIn( 32f );*/
+
+			if ( Stamina <= 5 ) return;
+
+			if ( Bobber.Fish.IsValid() )
+			{
+				Bobber.Fish.OnLinePull();
 			}
 
 			ReelIn( 32f );
 		}
 		else
 		{
+			Log.Info( "Casting." );
 			Cast();
 		}
 	}
@@ -161,7 +176,7 @@ public class FishingRod : BaseCarriable
 			}
 		}*/
 
-		if ( _hasCasted && CurrentFish == null && CanUse() )
+		/*if ( _hasCasted && CurrentFish == null && CanUse() )
 		{
 			if ( Input.AnalogMove.x < 0 )
 			{
@@ -178,10 +193,29 @@ public class FishingRod : BaseCarriable
 				ReelIn( 4f, Vector3.Right );
 				NextUse = 0.3f;
 			}
-		}
+		}*/
 
 		_reelSound.Volume = _reelSound.Volume.LerpTo( 0f, Sandbox.Utility.Easing.QuadraticIn( Time.Delta * 15f ) );
 		// _reelSound.Pitch = _reelSound.Pitch.LerpTo( 1f, Time.Delta * 3f );
+
+		if ( Stamina < 100f )
+		{
+			// Stamina = Stamina.LerpTo( 100f, Time.Delta * 5f );
+			Stamina += Time.Delta * 7.5f;
+			
+			if ( Bobber.IsValid() && Bobber.Fish.IsValid() )
+			{
+				if ( Bobber.Fish.Stamina <= 0 )
+				{
+					Stamina += Time.Delta * 17f;
+				}
+			}
+		}
+
+		if ( LineStrength <= 0 )
+		{
+			ResetAll();
+		}
 	}
 
 	private Vector3 GetCastPosition()
@@ -191,7 +225,7 @@ public class FishingRod : BaseCarriable
 
 	public override bool ShouldDisableMovement()
 	{
-		return _hasCasted || _isCasting;
+		return HasCasted || _isCasting;
 	}
 
 	private async void Cast()
@@ -246,6 +280,7 @@ public class FishingRod : BaseCarriable
 			LineRenderer?.Points.Add( Bobber.Tip );
 
 			Bobber.WorldPosition = LineStartPoint.WorldPosition;
+			Bobber.WorldRotation = Rotation.FromYaw( Player.Model.WorldRotation.Yaw() );
 
 			CameraMan.Instance.Targets.Add( Bobber.GameObject );
 
@@ -279,15 +314,15 @@ public class FishingRod : BaseCarriable
 
 		_isCasting = false;
 
-		_hasCasted = true;
+		HasCasted = true;
 
 		Stamina = 100f;
 	}
 
 
-	private bool CheckForWater( Vector3 position )
+	public static bool CheckForWater( Vector3 position )
 	{
-		var traceWater = Scene.Trace.Ray( position, position + Vector3.Down * WaterCheckHeight )
+		var traceWater = Game.ActiveScene.Trace.Ray( position, position + Vector3.Down * WaterCheckHeight )
 			.WithTag( "water" )
 			.Run();
 
@@ -297,7 +332,8 @@ public class FishingRod : BaseCarriable
 			return false;
 		}
 
-		var traceTerrain = Scene.Trace.Ray( traceWater.HitPosition, traceWater.HitPosition + Vector3.Down * 1f )
+		var traceTerrain = Game.ActiveScene.Trace
+			.Ray( traceWater.HitPosition, traceWater.HitPosition + Vector3.Down * 1f )
 			.WithTag( "terrain" )
 			.Run();
 
@@ -343,10 +379,12 @@ public class FishingRod : BaseCarriable
 
 	private void ResetAll()
 	{
-		_hasCasted = false;
+		HasCasted = false;
 		_isCasting = false;
 		_isBusy = false;
 		// _reelSound?.Stop();
+		Stamina = 100f;
+		LineStrength = 100f;
 		DestroyBobber();
 	}
 
@@ -379,7 +417,13 @@ public class FishingRod : BaseCarriable
 		if ( !CheckForWater( reelPosition ) || dist < 32f )
 		{
 			Log.Info( "Reel position too close or not in water. Reeling in." );
-			ResetAll();
+			// ResetAll();
+
+			if ( dist < 32 && Bobber.Fish.IsValid() )
+			{
+				CatchFish( Bobber.Fish );
+			}
+
 			return;
 		}
 
@@ -387,7 +431,9 @@ public class FishingRod : BaseCarriable
 
 		reelPosition.z = waterSurface.z;
 
-		Model.LocalRotation = Rotation.FromPitch( (dist * -0.5f) + 90f );
+		var pitch = Math.Clamp( (dist * -0.5f) + 90f, -20f, 100f );
+		Log.Info( $"Reeling in. Distance: {dist}, Pitch: {pitch} ({(dist * -0.5f) + 90f})" );
+		Model.LocalRotation = Rotation.FromPitch( pitch );
 
 		var tween = TweenManager.CreateTween();
 		tween.AddPosition( Bobber.GameObject, reelPosition, 0.4f ).SetEasing( Sandbox.Utility.Easing.QuadraticOut );
@@ -396,6 +442,14 @@ public class FishingRod : BaseCarriable
 		// _reelSound.Pitch = 2f;
 
 		NextUse = 0.5f;
+
+		Stamina -= amount * 0.5f;
+		LineStrength -= 2f;
+
+		if ( Bobber.Fish.IsValid() )
+		{
+			Bobber.Fish.Stamina -= amount * 0.01f;
+		}
 	}
 
 	public void Fight()
@@ -475,7 +529,8 @@ public class FishingRod : BaseCarriable
 			GiveTrash( trash );*/
 		}
 
-		ReelIn( 128f );
+		// ReelIn( 128f );
+		ResetAll();
 	}
 
 	/*private void GiveFish( Fish fish )

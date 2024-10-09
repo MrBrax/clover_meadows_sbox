@@ -1,4 +1,5 @@
 ﻿using System;
+using Clover.Carriable;
 using Clover.Data;
 using Clover.Objects;
 
@@ -14,7 +15,7 @@ public class CatchableFish : Component
 		TryingToEat = 3,
 		Fighting = 4
 	}
-	
+
 	[Property] public SkinnedModelRenderer Renderer { get; set; }
 
 	[Property] public FishData Data { get; set; }
@@ -24,28 +25,35 @@ public class CatchableFish : Component
 	[Property] public SoundEvent ChompSound { get; set; }
 	[Property] public SoundEvent CatchSound { get; set; }
 
-	private const float _bobberMaxDistance = 64f;
+	private const float _bobberMaxDistance = 40f;
 	private const float _bobberDiscoverAngle = 45f;
 
 	private Vector3 _velocity = Vector3.Zero;
 	private const float _maxSwimSpeed = 8f;
+	private const float _maxSwimSpeedPanic = 40f;
 	private const float _swimAcceleration = 0.1f;
 	private const float _swimDeceleration = 0.5f;
 
-	private const float _catchMsecWindow = 1500f;
-	private const float _maxNibbles = 6;
+	// private const float _catchMsecWindow = 1500f;
 
-	private float _lastNibble;
-	private bool _isNibbleDeep;
-	private float _stamina;
 	private TimeUntil _nextSplashSound = 0;
-	private int _nibbles = 0;
 
 	public FishState State { get; set; } = FishState.Idle;
 
 	public FishingBobber Bobber { get; set; }
 
 	public Rotation WishedRotation { get; set; }
+
+
+	public RangedFloat NibbleTime = new(0.5f, 2f);
+
+	public float CurrentNibbleTime;
+
+	public TimeUntil NextNibble;
+
+	public bool IsNibbling => CurrentNibbleTime > NextNibble.Passed;
+
+	public float Stamina;
 
 	public void SetState( FishState state )
 	{
@@ -82,7 +90,7 @@ public class CatchableFish : Component
 				break;
 		}
 
-		Animate();
+		// Animate();
 
 		WorldRotation = Rotation.Lerp( WorldRotation, WishedRotation, Time.Delta * 2f );
 	}
@@ -93,13 +101,65 @@ public class CatchableFish : Component
 		{
 			// GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
 			GameObject.PlaySound( SplashSound );
-			_nextSplashSound = Random.Shared.Float( 0.8f, 1.2f );
+			_nextSplashSound = Random.Shared.Float( 0.2f, 0.5f ) + ( Stamina / 50f );
 		}
 
-		if ( !ActionDone ) return;
+		if ( !Bobber.IsValid() )
+		{
+			Log.Warning( "Bobber is not valid." );
+			SetState( FishState.Idle );
+			return;
+		}
+		
+		var fleePosition = Bobber.WorldPosition + Bobber.WorldRotation.Forward * 64f;
+		// fleePosition += Bobber.WorldRotation.Right * Random.Shared.Float( -32f, 32f );
+		fleePosition += Bobber.WorldRotation.Right * ( ( Sandbox.Utility.Noise.Perlin( Time.Now * 20f ) * 64f ) - 32f);
+		
+		// Gizmo.Draw.Arrow( fleePosition + Vector3.Up * 16f, fleePosition + Vector3.Down * 16f );
+		// Gizmo.Draw.LineSphere( fleePosition, 8f );
+		
+		if ( !FishingRod.CheckForWater( fleePosition + Vector3.Up * 8f ) )
+		{
+			return;
+		}
 
-		Log.Info( "Time ran out, fish got away." );
-		FailCatch();
+		var distance = WorldPosition.Distance( Bobber.Rod.WorldPosition );
+		
+		if ( distance > Bobber.Rod.LineLength )
+		{
+			fleePosition = Bobber.WorldPosition;
+			Bobber.Rod.LineStrength -= Time.Delta * 0.3f;
+		}
+
+		var swimSpeed = _maxSwimSpeedPanic;
+		
+		if ( distance < 96f )
+		{
+			swimSpeed = _maxSwimSpeedPanic * ( distance / 40f );
+		}
+		
+		if ( Stamina <= 0 )
+		{
+			swimSpeed *= 0.1f;
+		}
+		
+		Bobber.WorldPosition += (fleePosition - Bobber.WorldPosition).Normal * swimSpeed * Time.Delta;
+		
+		WorldPosition = Bobber.WorldPosition;
+
+		Stamina -= Time.Delta * 0.1f;
+		
+		Bobber.Rod.LineStrength -= Time.Delta * 0.1f;
+		
+		// Gizmo.Draw.Text( Stamina.ToString(), new Transform( WorldPosition + Vector3.Up * 32f ) );
+		
+		/*if ( Stamina <= 0 )
+		{
+			CatchFish();
+		}*/
+
+		// Log.Info( "Fighting the fish." );
+
 	}
 
 	private void Animate()
@@ -113,37 +173,34 @@ public class CatchableFish : Component
 		{
 			AnimationPlayer.Play( "idle" );
 		}*/
-		
-		Renderer.Set( "swimming", State == FishState.Swimming );
-		
+
+		// Renderer.Set( "swimming", State == FishState.Swimming );
 	}
 
 	public void TryHook()
 	{
 		// if last nibble is within the catch window, catch the fish
-		if ( _isNibbleDeep )
+		if ( IsNibbling )
 		{
-			if ( Time.Now - _lastNibble < _catchMsecWindow )
+			if ( Random.Shared.Float() <= 0.7f )
 			{
 				HookFish();
-				return;
 			}
 			else
 			{
-				Log.Info( "Catch window missed." );
-				FailCatch();
-				return;
+				Scare();
 			}
-
-			// TODO: remove fish?
-			_isNibbleDeep = false;
-			_lastNibble = 0;
 		}
 		else
 		{
 			Log.Info( "Nibble was not deep enough." );
-			FailCatch();
+			Scare();
 		}
+	}
+
+	private void Scare()
+	{
+		// throw new NotImplementedException();
 	}
 
 	private void FoundBobber()
@@ -158,11 +215,11 @@ public class CatchableFish : Component
 			return;
 		}
 
-		if ( _isNibbleDeep )
+		/*if ( _isNibbleDeep )
 		{
 			FailCatch();
 			return;
-		}
+		}*/
 
 		var bobberPosition = Bobber.WorldPosition.WithZ( 0 );
 		var fishPosition = WorldPosition.WithZ( 0 );
@@ -179,43 +236,19 @@ public class CatchableFish : Component
 		if ( distance > 3f )
 		{
 			var speed = _maxSwimSpeed * distance / 8f;
-			
+
 			// move towards the bobber
 			WorldPosition += moveDirection * speed * Time.Delta;
 			return;
 		}
 
-		// _actionDuration = (float)GD.RandRange( 2000, 5000 );
-		_actionDuration = Random.Shared.Float( 2, 5 );
-		_lastAction = Time.Now;
+		if ( !NextNibble ) return;
 
-		// random chance to try to eat the bobber
-		/* if ( GD.RandRange( 0, 100 ) < 10 )
-		{
-			Log.Info("Trying to eat the bobber." );
-			_lastNibble = Time.Now;
-			GetNode<AudioStreamPlayer3D>( "Chomp" ).Play();
-			return;
-		} */
+		CurrentNibbleTime = NibbleTime.GetValue();
 
-		// _isNibbleDeep = GD.RandRange( 0, 100 ) < 30 || _nibbles >= _maxNibbles;
-		_isNibbleDeep = Random.Shared.Float() > 0.7f || _nibbles >= _maxNibbles;
-		_lastNibble = Time.Now;
+		NextNibble = Random.Shared.Float( 3f, 8f );
 
-		if ( _isNibbleDeep )
-		{
-			// GetNode<AudioStreamPlayer3D>( "Chomp" ).Play();
-			GameObject.PlaySound( ChompSound );
-		}
-		else
-		{
-			// GetNode<AudioStreamPlayer3D>( "Nibble" ).Play();
-			GameObject.PlaySound( NibbleSound );
-		}
-
-		_nibbles++;
-
-		// Log.Info($"Found bobber, waiting for {_actionDuration} msec." );
+		Sound.Play( NibbleSound, WorldPosition );
 	}
 
 	private void FailCatch()
@@ -230,28 +263,27 @@ public class CatchableFish : Component
 	{
 		Log.Info( "Hooked the fish." );
 		SetState( FishState.Fighting );
-		Bobber.Fish = this;
 
 		switch ( Data?.Size )
 		{
 			case FishData.FishSize.Tiny:
 				// _stamina = GD.RandRange( 2, 7 );
-				_stamina = Random.Shared.Float( 2, 7 );
+				Stamina = Random.Shared.Float( 2, 7 );
 				break;
 			case FishData.FishSize.Small:
 				// _stamina = GD.RandRange( 5, 10 );
-				_stamina = Random.Shared.Float( 5, 10 );
+				Stamina = Random.Shared.Float( 5, 10 );
 				break;
 			case FishData.FishSize.Medium:
 				// _stamina = GD.RandRange( 8, 15 );
-				_stamina = Random.Shared.Float( 8, 15 );
+				Stamina = Random.Shared.Float( 8, 15 );
 				break;
 			case FishData.FishSize.Large:
 				// _stamina = GD.RandRange( 10, 20 );
-				_stamina = Random.Shared.Float( 10, 20 );
+				Stamina = Random.Shared.Float( 10, 20 );
 				break;
 			default:
-				_stamina = 10;
+				Stamina = 10;
 				break;
 		}
 
@@ -488,6 +520,8 @@ public class CatchableFish : Component
 			return;
 		}
 
+		if ( !bobber.IsInWater ) return;
+
 		var bobberPosition = bobber.WorldPosition.WithZ( 0 );
 		var fishPosition = WorldPosition.WithZ( 0 );
 
@@ -512,17 +546,33 @@ public class CatchableFish : Component
 		Bobber = bobber;
 		Bobber.Fish = this;
 
+		Log.Info( "Found the bobber." );
+
 		SetState( FishState.FoundBobber );
 	}
 
-	public void Pull()
+	public void OnLinePull()
 	{
-		if ( State != FishState.Fighting ) return;
+		/*if ( State != FishState.Fighting ) return;
 		_stamina -= 1;
 		Log.Info( $"Pulled the fish, stamina left: {_stamina}." );
 		if ( _stamina <= 0 )
 		{
 			CatchFish();
+		}*/
+
+		if ( State == FishState.FoundBobber )
+		{
+			if ( IsNibbling )
+			{
+				TryHook();
+			}
+			else
+			{
+				Scare();
+			}
+
+			return;
 		}
 	}
 
@@ -546,5 +596,13 @@ public class CatchableFish : Component
 		}
 
 		WorldScale = new Vector3( scale, scale, scale );
+	}
+
+	protected override void OnUpdate()
+	{
+		base.OnUpdate();
+
+		// Gizmo.Draw.LineSphere( WorldPosition, 8f );
+		// Gizmo.Draw.Arrow( WorldPosition, WorldPosition + WorldRotation.Forward * 32f );
 	}
 }

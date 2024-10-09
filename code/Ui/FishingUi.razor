@@ -1,0 +1,24 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Clover.Ui
+
+<root>
+	@if ( !IsFishing ) return;
+	<div class="fishing-ui">
+		<div class="entry">
+			<div class="fishing-bar stamina">
+				<div class="fishing-bar-fill" style="width: @( Rod.Stamina )%"></div>
+			</div>
+			<div class="fishing-bar-label">STAMINA</div>
+		</div>
+
+		<div class="entry">
+			<div class="fishing-bar line">
+				<div class="fishing-bar-fill" style="width: @( Rod.LineStrength )%"></div>
+			</div>
+			<div class="fishing-bar-label">LINE</div>
+		</div>
+	</div>
+
+</root>

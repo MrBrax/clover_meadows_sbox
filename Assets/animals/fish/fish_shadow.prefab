@@ -12,12 +12,7 @@
         "ChompSound": "sounds/fishing/bite.sound",
         "Data": "animals/fish/salmon/salmon.fish",
         "NibbleSound": "sounds/fishing/nibble.sound",
-        "Renderer": {
-          "_type": "component",
-          "component_id": "8892aebc-25af-4c49-b641-e1453e3bd2d0",
-          "go": "e0a29e90-6085-4699-b83c-eefca8eaa8f9",
-          "component_type": "SkinnedModelRenderer"
-        },
+        "Renderer": null,
         "SplashSound": "sounds/fishing/catch.sound"
       },
       {
@@ -28,34 +23,27 @@
     ],
     "Children": [
       {
-        "__guid": "e0a29e90-6085-4699-b83c-eefca8eaa8f9",
+        "__guid": "92a32fe1-56b6-42b3-95f4-7c0a2fbf904b",
         "Flags": 0,
-        "Name": "fish_shadow",
+        "Name": "Object",
+        "Position": "0,0,1",
+        "Scale": "0.3,0.3,0.16",
         "Enabled": true,
         "Components": [
           {
-            "__type": "Sandbox.SkinnedModelRenderer",
-            "__guid": "8892aebc-25af-4c49-b641-e1453e3bd2d0",
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "34e24b4b-a8e2-4040-9152-f91d0d5f1394",
             "BodyGroups": 18446744073709551615,
-            "CreateBoneObjects": false,
-            "Model": "animals/fish/fish_shadow.vmdl",
-            "Morphs": {},
-            "Parameters": {
-              "bools": {},
-              "ints": {},
-              "floats": {},
-              "vectors": {},
-              "rotations": {}
-            },
+            "MaterialOverride": "materials/particles/particle_smokegrenade.vmat",
+            "Model": "models/dev/plane.vmdl",
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
               "BloomLayer": false,
               "AfterUILayer": false
             },
-            "RenderType": "On",
-            "Tint": "1,1,1,1",
-            "UseAnimGraph": true
+            "RenderType": "Off",
+            "Tint": "0.03825,0.28326,0.48372,1"
           }
         ]
       }

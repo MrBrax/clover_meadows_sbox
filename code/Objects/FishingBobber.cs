@@ -12,9 +12,11 @@ public class FishingBobber : Component
 	
 	[Property] public GameObject Tip { get; set; }
 
-	// public CatchableFish Fish;
+	public CatchableFish Fish;
 
 	public FishingRod Rod;
+	
+	public bool IsInWater { get; set; }
 
 	public void OnHitWater()
 	{
@@ -22,6 +24,7 @@ public class FishingBobber : Component
 		// GetNode<AnimationPlayer>( "fish_bobber/AnimationPlayer" ).Play( "bobbing" );
 		GameObject.PlaySound( SplashSound );
 		Bobber.Set("bobbing", true);
+		IsInWater = true;
 	}
 
 	protected override void OnDestroy()
@@ -29,5 +32,12 @@ public class FishingBobber : Component
 		base.OnDestroy();
 		
 		CameraMan.Instance?.Targets.Remove( GameObject );
+	}
+
+	protected override void OnUpdate()
+	{
+		base.OnUpdate();
+
+		// Gizmo.Draw.Arrow( WorldPosition, WorldPosition + WorldRotation.Forward * 32f );
 	}
 }

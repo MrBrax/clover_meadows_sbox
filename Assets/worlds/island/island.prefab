@@ -299,6 +299,16 @@
             "Static": true
           }
         ]
+      },
+      {
+        "__guid": "1799fdb5-b5b9-4e20-80ea-1c14ea4eafee",
+        "Flags": 0,
+        "Name": "fish_shadow",
+        "Position": "2668.457,1717.748,-15",
+        "Rotation": "-0.00000002980232,0.000000000349246,0.9999961,0.002798625",
+        "Enabled": true,
+        "__Prefab": "animals/fish/fish_shadow.prefab",
+        "__PrefabVariables": {}
       }
     ],
     "__variables": []
