@@ -282,7 +282,7 @@ public class FishingRod : BaseCarriable
 
 		if ( !isTrash )
 		{
-			var carryableFish = fishInWater.Data.CarryScene.Instantiate<Fish>();
+			/*var carryableFish = fishInWater.Data.CarryScene.Instantiate<Fish>();
 			Player.World.AddChild( carryableFish );
 			carryableFish.GlobalTransform = fishInWater.GlobalTransform;
 
@@ -294,14 +294,14 @@ public class FishingRod : BaseCarriable
 				.SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
 			// tween.TweenCallback( Callable.From( carryableFish.QueueFree ) );
 			await ToSignal( tween, Tween.SignalName.Finished );
-			GiveFish( carryableFish );
+			GiveFish( carryableFish );*/
 		}
 		else
 		{
-			var trashItemData =
+			/*var trashItemData =
 				Loader.LoadResource<ItemData>( ResourceManager.Instance.GetItemPathByName( "item:shoe" ) );
 			var trash = trashItemData.DropScene.Instantiate<DroppedItem>();
-			Player.World.AddChild( trash );
+			// Player.World.AddChild( trash );
 			trash.GlobalTransform = fishInWater.GlobalTransform;
 			trash.DisableCollisions();
 
@@ -313,13 +313,13 @@ public class FishingRod : BaseCarriable
 				.SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
 			// tween.TweenCallback( Callable.From( carryableFish.QueueFree ) );
 			await ToSignal( tween, Tween.SignalName.Finished );
-			GiveTrash( trash );
+			GiveTrash( trash );*/
 		}
 
 		ReelIn();
 	}
 
-	private void GiveFish( Fish fish )
+	/*private void GiveFish( Fish fish )
 	{
 		var playerInventory = Player.Inventory;
 
@@ -337,9 +337,9 @@ public class FishingRod : BaseCarriable
 		playerInventory.PickUpItem( carry );
 
 		fish.QueueFree();
-	}
+	}*/
 
-	private void GiveTrash( DroppedItem trash )
+	/*private void GiveTrash( DroppedItem trash )
 	{
 		var playerInventory = Player.Inventory;
 
@@ -357,7 +357,7 @@ public class FishingRod : BaseCarriable
 		playerInventory.PickUpItem( carry );
 
 		trash.QueueFree();
-	}
+	}*/
 
 	public void FishGotAway()
 	{

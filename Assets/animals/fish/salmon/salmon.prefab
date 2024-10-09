@@ -21,60 +21,7 @@
         "__guid": "69fae2b4-05e5-4d1e-ae8c-57569f0743dd",
         "Flags": 0,
         "Name": "Object",
-        "Enabled": true,
-        "Components": [
-          {
-            "__type": "Sandbox.States.StateMachineComponent",
-            "__guid": "65293689-a13a-460d-9ca7-4fb45a0391f9",
-            "Serialized": {
-              "States": [
-                {
-                  "Name": "Idle",
-                  "UserData": {
-                    "Position": "-352,-224"
-                  }
-                },
-                {
-                  "Id": 1,
-                  "Name": "Swimming",
-                  "UserData": {
-                    "Position": "160,-160"
-                  }
-                },
-                {
-                  "Id": 2,
-                  "Name": "FoundBobber",
-                  "UserData": {
-                    "Position": "-224,32"
-                  }
-                },
-                {
-                  "Id": 3,
-                  "Name": "Nibble",
-                  "UserData": {
-                    "Position": "128,128"
-                  }
-                },
-                {
-                  "Id": 4,
-                  "Name": "Fighting",
-                  "UserData": {
-                    "Position": "-64,320"
-                  }
-                }
-              ],
-              "Transitions": [
-                {
-                  "Id": 5,
-                  "TargetId": 1,
-                  "MinDelay": 1,
-                  "MaxDelay": 8
-                }
-              ],
-              "InitialStateId": 0
-            }
-          }
-        ]
+        "Enabled": true
       }
     ],
     "__variables": []
