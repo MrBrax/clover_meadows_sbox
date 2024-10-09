@@ -35,6 +35,11 @@ public partial class DebugWindow
 	{
 		var pItem = item.CreatePersistentItem();
 		
+		if ( pItem.ItemData is ToolData toolData )
+		{
+			pItem.SetArbitraryData( "Durability", 100 );
+		}
+		
 		PlayerCharacter.Local.Inventory.PickUpItem( pItem );
 		
 		Sound.Play( "sounds/interact/item_pickup.sound", PlayerCharacter.Local.WorldPosition );
