@@ -168,7 +168,15 @@ public class PersistentItem
 
 		return persistentItem;
 	}
-	
+
+	public static PersistentItem Create( ItemData itemData )
+	{
+		return new PersistentItem
+		{
+			ItemId = itemData.GetIdentifier()
+		};
+	}
+
 	public BaseCarriable SpawnCarriable()
 	{
 		if ( ItemData is not ToolData toolData ) throw new Exception( $"ItemData is not a ToolData for {ItemId}" );
