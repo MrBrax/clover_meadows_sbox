@@ -27,15 +27,15 @@
 							},
 							{
 								from = "lake.vmat"
-								to = "materials/water/water_pond_a.vmat"
+								to = "materials/world/summer/water.vmat"
 							},
 							{
 								from = "ocean.001.vmat"
-								to = "materials/water/water_pond_a.vmat"
+								to = "materials/world/summer/water.vmat"
 							},
 							{
 								from = "river.vmat"
-								to = "materials/water/water_pond_a.vmat"
+								to = "materials/world/summer/water.vmat"
 							},
 							{
 								from = "road.vmat"
@@ -51,7 +51,7 @@
 							},
 							{
 								from = "waterfall.vmat"
-								to = "materials/water/water_pond_a.vmat"
+								to = "materials/world/summer/water.vmat"
 							},
 							{
 								from = "city_temp.vmat"

@@ -75,7 +75,7 @@
 		]
 		model_archetype = ""
 		primary_associated_entity = ""
-		anim_graph_name = ""
+		anim_graph_name = "animals/fish/fish_shadow.vanmgrph"
 		base_model_name = ""
 	}
 }

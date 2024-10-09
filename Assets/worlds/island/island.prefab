@@ -301,16 +301,6 @@
         ]
       },
       {
-        "__guid": "862cdd44-1b74-4eb0-9a9c-1f83a6009857",
-        "Flags": 0,
-        "Name": "salmon",
-        "Position": "2633.885,1622.373,2.000542",
-        "Rotation": "0,0.0000000004656613,0.9999488,0.01011505",
-        "Enabled": true,
-        "__Prefab": "animals/fish/salmon/salmon.prefab",
-        "__PrefabVariables": {}
-      },
-      {
         "__guid": "6b18e493-2ad5-47c0-aa6c-101229e9eb38",
         "Flags": 0,
         "Name": "fish_shadow",

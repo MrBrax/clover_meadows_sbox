@@ -1,0 +1,42 @@
+{
+  "RootObject": {
+    "__guid": "2ef74c17-7233-43ba-ae73-d11b457ffb25",
+    "Flags": 0,
+    "Name": "salmon_model",
+    "Enabled": true,
+    "Children": [
+      {
+        "__guid": "0440a6d2-26ee-4edb-b346-b1a6b485f521",
+        "Flags": 0,
+        "Name": "salmon",
+        "Scale": "2,2,2",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "af7cf03e-ef3f-450a-b9f0-f6e7c1e3c6bf",
+            "BodyGroups": 18446744073709551615,
+            "Model": "animals/fish/salmon/salmon.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "IsValid": true,
+  "__version": 1
+}

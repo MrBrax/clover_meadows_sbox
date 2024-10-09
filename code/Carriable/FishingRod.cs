@@ -12,10 +12,13 @@ public class FishingRod : BaseCarriable
 	// [Property] public GameObject 
 
 	[Property] public GameObject LineStartPoint { get; set; }
-	
+
 	[Property] public SoundEvent CastSound { get; set; }
 	[Property] public SoundEvent ReelSound { get; set; }
 	[Property] public SoundEvent HookSound { get; set; }
+	[Property] public SoundEvent SplashSound { get; set; }
+
+	[Property] public GameObject SplashParticle { get; set; }
 
 	private FishingBobber Bobber;
 
@@ -24,7 +27,7 @@ public class FishingRod : BaseCarriable
 	private bool _isBusy = false;
 
 	private float _trashChance = 0.1f; // TODO: base this on luck?
-	
+
 	private SoundHandle _reelSound;
 
 	public override void OnUseDown()
@@ -34,7 +37,7 @@ public class FishingRod : BaseCarriable
 			Log.Warning( "Cannot use." );
 			return;
 		}
-		
+
 		NextUse = 1f;
 
 		if ( _isCasting )
@@ -54,12 +57,16 @@ public class FishingRod : BaseCarriable
 			if ( Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.FoundBobber )
 			{
 				Bobber.Fish.TryHook();
+				NextUse = 0.1f;
 			}
 			else if ( Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.Fighting )
 			{
 				Bobber.Fish.Pull();
-				_reelSound = GameObject.PlaySound( ReelSound );
+				if ( !_reelSound.IsValid() ) _reelSound = GameObject.PlaySound( ReelSound );
 				_reelSound.Pitch = 0.8f + Random.Shared.Float() * 0.4f;
+				NextUse = 0.1f;
+				
+				SplashParticle.Clone( Bobber.WorldPosition, Rotation.FromPitch( -90f ) );
 			}
 			else
 			{
@@ -139,21 +146,25 @@ public class FishingRod : BaseCarriable
 		// wait for the animation to finish
 		// await ToSignal( GetNode<AnimationPlayer>( "AnimationPlayer" ), AnimationPlayer.SignalName.AnimationFinished );
 		// await Task.DelayRealtimeSeconds( 0.5f );
-		
+
 		var tween1 = TweenManager.CreateTween();
-		tween1.AddLocalRotation( Model, Rotation.FromPitch( 90f ), 0.5f ).SetEasing( Sandbox.Utility.Easing.QuadraticOut );
-		tween1.AddLocalRotation( Model, Rotation.FromPitch( 0f ), 0.3f ).SetEasing( Sandbox.Utility.Easing.QuadraticIn );
+		tween1.AddLocalRotation( Model, Rotation.FromPitch( 90f ), 0.5f )
+			.SetEasing( Sandbox.Utility.Easing.QuadraticOut );
+		tween1.AddLocalRotation( Model, Rotation.FromPitch( 0f ), 0.3f )
+			.SetEasing( Sandbox.Utility.Easing.QuadraticIn );
 		await tween1.Wait();
-		
+
 		GameObject.PlaySound( CastSound );
-		
+
 		var tween2 = TweenManager.CreateTween();
-		tween2.AddLocalRotation( Model, Rotation.FromPitch( -20f ), 0.3f ).SetEasing( Sandbox.Utility.Easing.QuadraticOut );
+		tween2.AddLocalRotation( Model, Rotation.FromPitch( -20f ), 0.3f )
+			.SetEasing( Sandbox.Utility.Easing.QuadraticOut );
 		await tween2.Wait();
-		
+
 		var tween3 = TweenManager.CreateTween();
-		tween3.AddLocalRotation( Model, Rotation.FromPitch( 0f ), 0.3f ).SetEasing( Sandbox.Utility.Easing.QuadraticIn );
-		
+		tween3.AddLocalRotation( Model, Rotation.FromPitch( 0f ), 0.3f )
+			.SetEasing( Sandbox.Utility.Easing.QuadraticIn );
+
 		// Model.LocalRotation = Rotation.FromPitch( 0f );
 
 		if ( !Bobber.IsValid() )
@@ -171,7 +182,7 @@ public class FishingRod : BaseCarriable
 			// Player.World.AddChild( Bobber );
 
 			Bobber.WorldPosition = LineStartPoint.WorldPosition;
-			
+
 			CameraMan.Instance.Targets.Add( Bobber.GameObject );
 
 			// tween the bobber to the water in an arc
@@ -183,7 +194,7 @@ public class FishingRod : BaseCarriable
 			} ), 0f, 1f, 0.5f ).SetEase( Tween.EaseType.Out );
 
 			await ToSignal( tween, Tween.SignalName.Finished );*/
-			
+
 			var tween = TweenManager.CreateTween();
 			tween.AddPosition( Bobber.GameObject, waterPosition, 0.5f ).SetEasing( Sandbox.Utility.Easing.QuadraticIn );
 			await tween.Wait();
@@ -193,6 +204,7 @@ public class FishingRod : BaseCarriable
 			/*var splash = SplashScene.Instantiate<Node3D>();
 			Player.World.AddChild( splash );
 			splash.GlobalPosition = waterPosition;*/
+			SplashParticle.Clone( waterPosition, Rotation.FromPitch( -90f ) );
 		}
 		else
 		{
@@ -279,8 +291,9 @@ public class FishingRod : BaseCarriable
 			Log.Warning( $"No water found at {position}." );
 			return Vector3.Zero;
 		}*/
-		
-		var traceWater = Scene.Trace.Ray( position + Vector3.Up * WaterCheckHeight, position + Vector3.Down * (WaterCheckHeight * 2) )
+
+		var traceWater = Scene.Trace.Ray( position + Vector3.Up * WaterCheckHeight,
+				position + Vector3.Down * (WaterCheckHeight * 2) )
 			.WithTag( "water" )
 			.Run();
 
@@ -309,7 +322,7 @@ public class FishingRod : BaseCarriable
 		// ClearLine();
 
 		// GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "RESET" );
-		
+
 		_reelSound?.Stop();
 	}
 
@@ -324,7 +337,7 @@ public class FishingRod : BaseCarriable
 		Log.Info( "Caught fish." );
 		NextUse = 3f;
 		// GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
-		// GameObject.PlaySound( 
+		GameObject.PlaySound( SplashSound );
 		// GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "catch" );
 
 		// var isTrash = GD.Randf() < _trashChance;
@@ -345,6 +358,26 @@ public class FishingRod : BaseCarriable
 			// tween.TweenCallback( Callable.From( carryableFish.QueueFree ) );
 			await ToSignal( tween, Tween.SignalName.Finished );
 			GiveFish( carryableFish );*/
+
+			var data = fishInWater.Data;
+
+			var model = data.ModelScene.Clone();
+
+			model.WorldPosition = fishInWater.WorldPosition;
+			model.WorldRotation = fishInWater.WorldRotation;
+
+			fishInWater.DestroyGameObject();
+
+			var tween = TweenManager.CreateTween();
+			tween.AddPosition( model, Player.WorldPosition + Vector3.Up * 16f, 0.5f )
+				.SetEasing( Sandbox.Utility.Easing.QuadraticOut );
+			await tween.Wait();
+
+			model.Destroy();
+
+			var item = PersistentItem.Create( data );
+
+			Player.Inventory.PickUpItem( item );
 		}
 		else
 		{

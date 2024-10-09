@@ -28,4 +28,9 @@ public class FishData : AnimalData
 
 	[Property] public FishSize Size { get; set; } = FishSize.Small;
 	
+	public override string GetIcon()
+	{
+		return Icon ?? "ui/icons/default_fish.png";
+	}
+	
 }

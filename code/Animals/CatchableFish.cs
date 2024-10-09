@@ -14,6 +14,8 @@ public class CatchableFish : Component
 		TryingToEat = 3,
 		Fighting = 4
 	}
+	
+	[Property] public SkinnedModelRenderer Renderer { get; set; }
 
 	[Property] public FishData Data { get; set; }
 
@@ -22,11 +24,11 @@ public class CatchableFish : Component
 	[Property] public SoundEvent ChompSound { get; set; }
 	[Property] public SoundEvent CatchSound { get; set; }
 
-	private const float _bobberMaxDistance = 2f;
+	private const float _bobberMaxDistance = 64f;
 	private const float _bobberDiscoverAngle = 45f;
 
 	private Vector3 _velocity = Vector3.Zero;
-	private const float _maxSwimSpeed = 0.8f;
+	private const float _maxSwimSpeed = 8f;
 	private const float _swimAcceleration = 0.1f;
 	private const float _swimDeceleration = 0.5f;
 
@@ -111,6 +113,9 @@ public class CatchableFish : Component
 		{
 			AnimationPlayer.Play( "idle" );
 		}*/
+		
+		Renderer.Set( "swimming", State == FishState.Swimming );
+		
 	}
 
 	public void TryHook()
@@ -164,19 +169,19 @@ public class CatchableFish : Component
 
 		// rotate towards the bobber
 		var moveDirection = (bobberPosition - fishPosition).Normal;
-		var targetRotation = MathF.Atan2( moveDirection.x, moveDirection.y );
-		// var currentRotation = Rotation.Y;
-		// var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * 2 );
 
-		// WishedRotation = new Vector3( 0, float.IsNaN( targetRotation ) ? 0 : targetRotation, 0 );
-		WishedRotation = Rotation.FromYaw( float.IsNaN( targetRotation ) ? 0 : targetRotation );
+		var newRotation = Rotation.LookAt( (bobberPosition - fishPosition), Vector3.Up );
+
+		WishedRotation = newRotation;
 
 		var distance = fishPosition.Distance( bobberPosition );
 
-		if ( distance > 0.3f )
+		if ( distance > 3f )
 		{
+			var speed = _maxSwimSpeed * distance / 8f;
+			
 			// move towards the bobber
-			WorldPosition += moveDirection * _maxSwimSpeed * Time.Delta;
+			WorldPosition += moveDirection * speed * Time.Delta;
 			return;
 		}
 
@@ -217,6 +222,7 @@ public class CatchableFish : Component
 	{
 		Log.Info( "Failed to catch the fish." );
 		Bobber.Rod.FishGotAway();
+		DestroyGameObject();
 		// QueueFree();
 	}
 
@@ -263,7 +269,7 @@ public class CatchableFish : Component
 		// SetState( FishState.Caught );
 	}
 
-	private int _swimRandomRadius = 6;
+	private float _swimRandomRadius = 128f;
 
 	private Vector3 _swimStartPos;
 	private Vector3 _swimTarget;
@@ -299,18 +305,21 @@ public class CatchableFish : Component
 			Log.Trace( $"New swim target: {_swimTarget}." );
 		}
 
-
 		// move towards the target smoothly
-		var moveDirection = (_swimTarget - WorldPosition).Normal;
+		// var moveDirection = (_swimTarget - WorldPosition).Normal;
 		var swimDistance = _swimTarget.Distance( _swimStartPos );
 		_swimProgress += Time.Delta * (_maxSwimSpeed / swimDistance);
 
 		Vector3 preA = _swimStartPos;
 		Vector3 postB = _swimTarget;
 
+		// Gizmo.Draw.LineSphere( preA, 8f );
+		// Gizmo.Draw.LineSphere( postB, 8f );
+		// Gizmo.Draw.Arrow( preA + Vector3.Up * 8f, postB + Vector3.Up * 8f );
+
 		if ( preA.Distance( postB ) < 0.01f )
 		{
-			// Log.Info("preA is equal to postB." );
+			Log.Info( "Swim target is too close." );
 			SetState( FishState.Idle );
 			return;
 		}
@@ -322,10 +331,12 @@ public class CatchableFish : Component
 		WorldPosition = interp;
 
 		// rotate towards the target
-		var targetRotation = MathF.Atan2( moveDirection.x, moveDirection.y );
+		// var targetRotation = MathF.Atan2( moveDirection.x, moveDirection.y );
 
 		// var newRotation = new Vector3( 0, float.IsNaN( targetRotation ) ? 0 : targetRotation, 0 );
-		var newRotation = Rotation.FromYaw( float.IsNaN( targetRotation ) ? 0 : targetRotation );
+		// var newRotation = Rotation.FromYaw( float.IsNaN( targetRotation ) ? 0 : targetRotation );
+
+		var newRotation = Rotation.LookAt( (_swimTarget - _swimStartPos), Vector3.Up );
 
 		WishedRotation = newRotation;
 
@@ -385,36 +396,40 @@ public class CatchableFish : Component
 			// this will just try again
 			return;
 		}*/
-		
-		var randomPoint = WorldPosition + new Vector3( Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ), 0,
-			Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ) );
-		
+
+		var randomPoint = WorldPosition + new Vector3(
+			Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ),
+			Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ),
+			0 );
+
 		var traceWater = Scene.Trace.Ray( randomPoint + Vector3.Up * 16f, randomPoint + Vector3.Down * 32f )
 			.WithTag( "water" )
 			.Run();
-		
+
+		Gizmo.Draw.Line( randomPoint + Vector3.Up * 16f, randomPoint + Vector3.Down * 32f );
+
 		if ( !traceWater.Hit )
 		{
 			Log.Warning( $"No water found at {randomPoint}." );
 			// this will just try again
 			return;
 		}
-		
+
 		var traceTerrain = Scene.Trace.Ray( randomPoint + Vector3.Up * 16f, randomPoint + Vector3.Down * 32f )
 			.WithTag( "terrain" )
 			.Run();
-		
+
 		if ( traceTerrain.Hit )
 		{
 			Log.Warning( $"Terrain found at {randomPoint}." );
 			// this will just try again
 			return;
 		}
-		
+
 		var trace = Scene.Trace.Ray( WorldPosition, randomPoint )
 			.WithTag( "terrain" )
 			.Run();
-		
+
 		if ( trace.Hit )
 		{
 			Log.Warning( $"Terrain found between {WorldPosition} and {randomPoint}." );
@@ -466,8 +481,8 @@ public class CatchableFish : Component
 		}
 
 		// var bobber = GetTree().GetNodesInGroup<FishingBobber>( "fishing_bobber" ).FirstOrDefault();
-		var bobber = Scene.GetAllComponents<FishingBobber>().FirstOrDefault();
-		
+		var bobber = Scene.GetAllComponents<FishingBobber>().FirstOrDefault( x => !x.IsProxy );
+
 		if ( !bobber.IsValid() )
 		{
 			return;
@@ -488,7 +503,7 @@ public class CatchableFish : Component
 		var direction = (bobberPosition - WorldPosition).Normal;
 		var angle = MathX.RadianToDegree( MathF.Acos( direction.Dot( WorldRotation.Forward ) ) );
 
-		/* if ( angle > _bobberDiscoverAngle )
+		/*if ( angle > _bobberDiscoverAngle )
 		{
 			Log.Info($"Bobber is not in view ({angle})." );
 			return;

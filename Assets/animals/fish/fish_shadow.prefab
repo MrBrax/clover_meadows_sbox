@@ -4,6 +4,28 @@
     "Flags": 0,
     "Name": "fish_shadow",
     "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Animals.CatchableFish",
+        "__guid": "558e9471-7cb0-4d03-a543-8be0f3fa3667",
+        "CatchSound": "sounds/fishing/catch.sound",
+        "ChompSound": "sounds/fishing/bite.sound",
+        "Data": "animals/fish/salmon/salmon.fish",
+        "NibbleSound": "sounds/fishing/nibble.sound",
+        "Renderer": {
+          "_type": "component",
+          "component_id": "8892aebc-25af-4c49-b641-e1453e3bd2d0",
+          "go": "e0a29e90-6085-4699-b83c-eefca8eaa8f9",
+          "component_type": "SkinnedModelRenderer"
+        },
+        "SplashSound": "sounds/fishing/catch.sound"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "a0e65d65-f4b1-4bd3-9ca2-262ef2f67472",
+        "Layer": 0
+      }
+    ],
     "Children": [
       {
         "__guid": "e0a29e90-6085-4699-b83c-eefca8eaa8f9",
@@ -12,10 +34,19 @@
         "Enabled": true,
         "Components": [
           {
-            "__type": "Sandbox.ModelRenderer",
+            "__type": "Sandbox.SkinnedModelRenderer",
             "__guid": "8892aebc-25af-4c49-b641-e1453e3bd2d0",
             "BodyGroups": 18446744073709551615,
+            "CreateBoneObjects": false,
             "Model": "animals/fish/fish_shadow.vmdl",
+            "Morphs": {},
+            "Parameters": {
+              "bools": {},
+              "ints": {},
+              "floats": {},
+              "vectors": {},
+              "rotations": {}
+            },
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -23,17 +54,8 @@
               "AfterUILayer": false
             },
             "RenderType": "On",
-            "Tint": "1,1,1,1"
-          },
-          {
-            "__type": "Clover.Animals.CatchableFish",
-            "__guid": "0c3d995a-82b7-485c-a4cd-05158ff78085",
-            "Data": "animals/fish/salmon/salmon.fish"
-          },
-          {
-            "__type": "Clover.WorldLayerObject",
-            "__guid": "6be1faae-7ec8-47c6-a7f1-30d2e5c0056f",
-            "Layer": 0
+            "Tint": "1,1,1,1",
+            "UseAnimGraph": true
           }
         ]
       }
