@@ -10,7 +10,7 @@ public class FishingBobber : Component
 	
 	[Property] public SkinnedModelRenderer Bobber { get; set; }
 
-	public CatchableFish Fish;
+	// public CatchableFish Fish;
 
 	public FishingRod Rod;
 
