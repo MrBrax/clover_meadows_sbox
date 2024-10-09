@@ -171,6 +171,8 @@ public class FishingRod : BaseCarriable
 			// Player.World.AddChild( Bobber );
 
 			Bobber.WorldPosition = LineStartPoint.WorldPosition;
+			
+			CameraMan.Instance.Targets.Add( Bobber.GameObject );
 
 			// tween the bobber to the water in an arc
 			/*var tween = GetTree().CreateTween();

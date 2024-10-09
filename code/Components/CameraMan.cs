@@ -5,8 +5,12 @@ using Sandbox;
 [Icon( "camera" )]
 public sealed class CameraMan : Component
 {
-	// [RequireComponent] public CameraComponent CameraComponent { get; set; }
+	
+	public static CameraMan Instance { get; private set; }
+	
 	[Property] public GameObject CameraPrefab { get; set; }
+	
+	public List<GameObject> Targets { get; set; } = new();
 
 	private IEnumerable<CameraNode> _cameraNodes => Scene.GetAllComponents<CameraNode>().Where( x => !x.IsProxy );
 
@@ -19,6 +23,19 @@ public sealed class CameraMan : Component
 	public float LerpSpeed = 5;
 
 	private CameraComponent CameraComponent;
+
+	protected override void OnAwake()
+	{
+		base.OnAwake();
+		// if ( IsProxy ) return;
+		Instance = this;
+	}
+
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+		Instance = null;
+	}
 
 	protected override void OnStart()
 	{
@@ -46,10 +63,26 @@ public sealed class CameraMan : Component
 		_positionLerp = Vector3.Lerp( _positionLerp, MainCameraNode.WorldPosition, Time.Delta * LerpSpeed );
 		_rotationLerp = Rotation.Lerp( _rotationLerp, MainCameraNode.WorldRotation, Time.Delta * LerpSpeed );
 		_fovLerp = _fovLerp.LerpTo( MainCameraNode.FieldOfView, Time.Delta * LerpSpeed );
+		
+		var midpoint = GetTargetsMidpoint();
+		_rotationLerp = Rotation.Lerp( _rotationLerp, Rotation.LookAt( midpoint - _positionLerp, Vector3.Up ), Time.Delta * LerpSpeed );
 
 		CameraComponent.WorldPosition = _positionLerp;
 		CameraComponent.WorldRotation = _rotationLerp;
 		CameraComponent.FieldOfView = _fovLerp;
+	}
+	
+	public Vector3 GetTargetsMidpoint()
+	{
+		if ( Targets.Count == 0 ) return Vector3.Zero;
+
+		var midpoint = Vector3.Zero;
+		foreach ( var target in Targets )
+		{
+			midpoint += target.WorldPosition;
+		}
+
+		return midpoint / Targets.Count;
 	}
 
 	public void SnapTo( Vector3 transformPosition, Rotation transformRotation )

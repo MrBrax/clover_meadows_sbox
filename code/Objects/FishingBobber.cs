@@ -21,4 +21,11 @@ public class FishingBobber : Component
 		GameObject.PlaySound( SplashSound );
 		Bobber.Set("bobbing", true);
 	}
+
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+		
+		CameraMan.Instance?.Targets.Remove( GameObject );
+	}
 }

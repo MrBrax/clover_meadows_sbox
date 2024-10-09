@@ -23,6 +23,7 @@ public sealed partial class PlayerCharacter : Component
 	[RequireComponent] public PlayerController PlayerController { get; set; }
 	[RequireComponent] public Inventory.Inventory Inventory { get; set; }
 	[RequireComponent] public Equips Equips { get; set; }
+	[RequireComponent] public CameraController CameraController { get; set; }
 
 	[Property] public int Clovers { get; set; }
 
@@ -55,6 +56,11 @@ public sealed partial class PlayerCharacter : Component
 		{
 			Save();
 		};
+
+		if ( !IsProxy )
+		{
+			CameraMan.Instance.Targets.Add( GameObject );
+		}
 	}
 
 	public void ModelLookAt( Vector3 position )
