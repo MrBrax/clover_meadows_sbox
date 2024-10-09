@@ -12,6 +12,8 @@
           "_type": "gameobject",
           "prefab": "items/tools/fishing_rod/bobber.prefab"
         },
+        "CastSound": "sounds/fishing/cast.sound",
+        "HookSound": "sounds/fishing/catch.sound",
         "ItemData": "items/tools/fishing_rod/fishing_rod.tool",
         "LineStartPoint": {
           "_type": "gameobject",
@@ -21,6 +23,7 @@
           "_type": "gameobject",
           "go": "f00e68e2-38ce-426a-90a8-0ab4acca4093"
         },
+        "ReelSound": "sounds/fishing/reel.sound",
         "UseTime": 1
       }
     ],

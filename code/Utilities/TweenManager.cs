@@ -5,16 +5,15 @@ namespace Braxnet;
 
 public sealed class TweenManager : GameObjectSystem
 {
-	
 	public static TweenManager Instance => Game.ActiveScene.GetSystem<TweenManager>();
-	
+
 	private List<Tween> _tweens = new();
 
 	public TweenManager( Scene scene ) : base( scene )
 	{
 		Listen( Stage.StartUpdate, 0, Update, "Tween" );
 	}
-	
+
 	public void RemoveTween( Tween tween )
 	{
 		_tweens.Remove( tween );
@@ -250,7 +249,7 @@ public sealed class ScaleTween : BaseTween
 		}*/
 
 		GameObject.WorldScale = Vector3.Lerp( StartScale, EndScale, GetFraction() );
-		
+
 		// ( $"{GameObject.Name} {GameObject.WorldScale.z} {GetFraction()}" );
 
 		if ( IsFinished )
@@ -264,11 +263,12 @@ public sealed class RotationTween : BaseTween
 {
 	public Rotation StartRotation;
 	public Rotation EndRotation;
+	public bool Local;
 
 	public override void Setup()
 	{
 		base.Setup();
-		StartRotation = GameObject.WorldRotation;
+		StartRotation = Local ? GameObject.LocalRotation : GameObject.WorldRotation;
 	}
 
 	public override void Update()
@@ -290,7 +290,14 @@ public sealed class RotationTween : BaseTween
 
 		var frac = GetFraction();
 
-		GameObject.WorldRotation = Rotation.Lerp( StartRotation, EndRotation, frac );
+		if ( Local )
+		{
+			GameObject.LocalRotation = Rotation.Lerp( StartRotation, EndRotation, frac );
+		}
+		else
+		{
+			GameObject.WorldRotation = Rotation.Lerp( StartRotation, EndRotation, frac );
+		}
 
 		if ( StartRotation.Distance( EndRotation ).AlmostEqual( 0 ) && frac < 0.9f )
 		{
@@ -358,6 +365,14 @@ public sealed class Tween
 		return tween;
 	}
 
+	public RotationTween AddLocalRotation( GameObject model, Rotation rotation, float duration )
+	{
+		var tween = new RotationTween { GameObject = model, Duration = duration, EndRotation = rotation, Local = true };
+		_propertyTweens.Add( tween );
+		// tween.Setup();
+		return tween;
+	}
+
 	public void Update()
 	{
 		/*foreach ( var tween in _propertyTweens.ToList() )
@@ -380,9 +395,9 @@ public sealed class Tween
 			TweenManager.Instance.RemoveTween( this );
 			return;
 		}
-		
+
 		// Log.Info( $"Tween has {_propertyTweens.Count} tweens" );
-		
+
 		// separately handle parallel tweens
 		var parallelTweens = _propertyTweens.Where( x => x.Parallel ).ToList();
 		foreach ( var tween in parallelTweens )
@@ -423,7 +438,7 @@ public sealed class Tween
 		{
 			currentTween.Cleanup();
 			_propertyTweens.Remove( currentTween );
-			
+
 			// Log.Info( $"Sync tween finished, {_propertyTweens.Count} tweens left" );
 
 			/*if ( _propertyTweens.Count > 0 )
@@ -431,7 +446,6 @@ public sealed class Tween
 				_currentTweenIndex = Math.Clamp( _currentTweenIndex + 1, 0, _propertyTweens.Count - 1 );
 			}*/
 		}
-
 	}
 
 	public async Task Wait()

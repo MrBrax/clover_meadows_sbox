@@ -299,6 +299,31 @@
             "Static": true
           }
         ]
+      },
+      {
+        "__guid": "3d5718dc-eb9f-4235-9fd1-b018337bc8b9",
+        "Flags": 0,
+        "Name": "fish_shadow",
+        "Position": "2677.637,1754.252,-17.57247",
+        "Rotation": "-0.00000007766154,-0.0000000443002,0.8673959,-0.4976188",
+        "Scale": "2,2,2",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "75a32082-2492-409e-bc0e-43bc9f935767",
+            "BodyGroups": 18446744073709551615,
+            "Model": "animals/fish/fish_shadow.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
       }
     ],
     "__variables": []

@@ -7,7 +7,14 @@
     "Components": [
       {
         "__type": "Clover.Objects.FishingBobber",
-        "__guid": "53507d65-244b-49b3-8df1-746cc3d839ce"
+        "__guid": "53507d65-244b-49b3-8df1-746cc3d839ce",
+        "Bobber": {
+          "_type": "component",
+          "component_id": "fa20384f-88bf-44d8-8ad2-f91969529b91",
+          "go": "88c31cd7-2c84-4592-b5e8-367581dbc6b6",
+          "component_type": "SkinnedModelRenderer"
+        },
+        "SplashSound": "sounds/fishing/bobber.sound"
       }
     ],
     "Children": [
@@ -26,6 +33,7 @@
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
                 "__guid": "fa20384f-88bf-44d8-8ad2-f91969529b91",
+                "AnimationGraph": "items/tools/fishing_rod/bobber.vanmgrph",
                 "BodyGroups": 18446744073709551615,
                 "CreateBoneObjects": false,
                 "Model": "items/tools/fishing_rod/bobber.vmdl",

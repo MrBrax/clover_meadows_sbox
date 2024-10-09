@@ -13,7 +13,7 @@
 						_class = "DefaultMaterialGroup"
 						remaps = [  ]
 						use_global_default = true
-						global_default_material = "materials/default.vmat"
+						global_default_material = "materials/effects/black.vmat"
 					},
 				]
 			},
@@ -23,7 +23,7 @@
 				[
 					{
 						_class = "RenderMeshFile"
-						filename = "items/tools/fishing_rod/bobber.fbx"
+						filename = "animals/fish/fish_shadow.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
 						import_scale = 1.0
@@ -36,7 +36,7 @@
 							exclude_by_default = true
 							exception_list = 
 							[
-								"fish_bobber",
+								"fish_shadow",
 							]
 						}
 					},
@@ -48,13 +48,13 @@
 				[
 					{
 						_class = "AnimFile"
-						name = "bobber"
+						name = "fish_shadow"
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""
 						fade_in_time = 0.2
 						fade_out_time = 0.2
-						looping = true
+						looping = false
 						delta = false
 						worldSpace = false
 						hidden = false
@@ -62,11 +62,11 @@
 						disable_compression = false
 						disable_interpolation = false
 						enable_scale = false
-						source_filename = "items/tools/fishing_rod/bobber.fbx"
+						source_filename = "animals/fish/fish_shadow.fbx"
 						start_frame = -1
 						end_frame = -1
 						framerate = -1.0
-						take = 0
+						take = 5
 						reverse = false
 					},
 				]
