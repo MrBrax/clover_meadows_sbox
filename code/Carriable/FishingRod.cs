@@ -1,6 +1,7 @@
 ﻿using System;
 using Clover.Animals;
 using Clover.Objects;
+using Clover.Persistence;
 
 namespace Clover.Carriable;
 
@@ -11,7 +12,7 @@ public class FishingRod : BaseCarriable
 
 	[Property] public GameObject LineStartPoint { get; set; }
 
-	private FishingBobber _bobber;
+	private FishingBobber Bobber;
 
 	private bool _hasCasted = false;
 	private bool _isCasting = false;
@@ -26,12 +27,12 @@ public class FishingRod : BaseCarriable
 
 		if ( _isCasting ) return;
 
-		if ( _hasCasted && !_bobber.IsValid() )
+		if ( _hasCasted && !Bobber.IsValid() )
 		{
 			Log.Warning( "Bobber is not valid." );
 			_hasCasted = false;
 		}
-		
+
 		/*if ( _hasCasted )
 		{
 			if ( _bobber.Fish.IsValid() && _bobber.Fish.State == CatchableFish.FishState.FoundBobber )
@@ -54,11 +55,10 @@ public class FishingRod : BaseCarriable
 			Cast();
 		}*/
 	}
-	
-	public override void _Process( double delta )
-	{
 
-		/*if ( IsInstanceValid( Bobber ) )
+	protected override void OnFixedUpdate()
+	{
+		/*if ( _bobber.IsValid() )
 		{
 
 			if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == CatchableFish.FishState.Fighting )
@@ -72,10 +72,10 @@ public class FishingRod : BaseCarriable
 				CreateLine( true );
 			}
 		}*/
-		
-		if ( _bobber.IsValid() )
+
+		if ( Bobber.IsValid() )
 		{
-			if ( _bobber.Fish.IsValid() && _bobber.Fish.State == CatchableFish.FishState.Fighting )
+			if ( Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.Fighting )
 			{
 				// GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "fight" );
 				// CreateLine( false );
@@ -85,9 +85,8 @@ public class FishingRod : BaseCarriable
 				// CreateLine( true );
 			}
 		}
-
 	}
-	
+
 	private Vector3 GetCastPosition()
 	{
 		return Player.WorldPosition + Player.Model.WorldRotation.Forward * 64f;
@@ -97,7 +96,7 @@ public class FishingRod : BaseCarriable
 	{
 		return _hasCasted || _isCasting;
 	}
-	
+
 	private async void Cast()
 	{
 		Log.Info( "Casting." );
@@ -112,12 +111,13 @@ public class FishingRod : BaseCarriable
 		_isCasting = true;
 
 		// play the cast animation
-		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "cast" );
+		// GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "cast" );
 
 		// wait for the animation to finish
-		await ToSignal( GetNode<AnimationPlayer>( "AnimationPlayer" ), AnimationPlayer.SignalName.AnimationFinished );
+		// await ToSignal( GetNode<AnimationPlayer>( "AnimationPlayer" ), AnimationPlayer.SignalName.AnimationFinished );
+		await Task.DelayRealtimeSeconds( 0.5f );
 
-		if ( !IsInstanceValid( Bobber ) )
+		if ( !Bobber.IsValid() )
 		{
 			/* var waterPosition = GetWaterSurface( GetCastPosition() );
 			Bobber = BobberScene.Instantiate<FishingBobber>();
@@ -127,26 +127,28 @@ public class FishingRod : BaseCarriable
 
 			var waterPosition = GetWaterSurface( GetCastPosition() );
 
-			Bobber = BobberScene.Instantiate<FishingBobber>();
+			Bobber = BobberPrefab.Clone().Components.Get<FishingBobber>();
 			Bobber.Rod = this;
-			Player.World.AddChild( Bobber );
+			// Player.World.AddChild( Bobber );
 
-			Bobber.GlobalPosition = LinePoint.GlobalPosition;
+			Bobber.WorldPosition = LineStartPoint.WorldPosition;
 
 			// tween the bobber to the water in an arc
-			var tween = GetTree().CreateTween();
+			/*var tween = GetTree().CreateTween();
 			tween.TweenMethod( Callable.From<float>( ( float i ) =>
 			{
-				Bobber.GlobalPosition = LinePoint.GlobalPosition.CubicInterpolate( waterPosition, LinePoint.GlobalPosition + Vector3.Down * 1f, waterPosition + Vector3.Down * 10f, i );
+				Bobber.GlobalPosition = LinePoint.GlobalPosition.CubicInterpolate( waterPosition,
+					LinePoint.GlobalPosition + Vector3.Down * 1f, waterPosition + Vector3.Down * 10f, i );
 			} ), 0f, 1f, 0.5f ).SetEase( Tween.EaseType.Out );
 
-			await ToSignal( tween, Tween.SignalName.Finished );
+			await ToSignal( tween, Tween.SignalName.Finished );*/
+			await Task.DelayRealtimeSeconds( 0.5f );
 
 			Bobber.OnHitWater();
 
-			var splash = SplashScene.Instantiate<Node3D>();
+			/*var splash = SplashScene.Instantiate<Node3D>();
 			Player.World.AddChild( splash );
-			splash.GlobalPosition = waterPosition;
+			splash.GlobalPosition = waterPosition;*/
 		}
 
 		// CreateLine();
@@ -154,19 +156,18 @@ public class FishingRod : BaseCarriable
 		_isCasting = false;
 
 		_hasCasted = true;
-
 	}
-	
+
 	private const float WaterCheckHeight = 3f;
 
 	private bool CheckForWater( Vector3 position )
 	{
-
-		var spaceState = GetWorld3D().DirectSpaceState;
+		/*var spaceState = GetWorld3D().DirectSpaceState;
 
 		var traceWater =
 			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( position, position + (Vector3.Down * WaterCheckHeight), World.WaterLayer ) );
+				PhysicsRayQueryParameters3D.Create( position, position + (Vector3.Down * WaterCheckHeight),
+					World.WaterLayer ) );
 
 		if ( traceWater == null )
 		{
@@ -176,33 +177,35 @@ public class FishingRod : BaseCarriable
 
 		var traceTerrain =
 			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( traceWater.Position, traceWater.Position + (Vector3.Down * 1f), World.TerrainLayer ) );
+				PhysicsRayQueryParameters3D.Create( traceWater.Position, traceWater.Position + (Vector3.Down * 1f),
+					World.TerrainLayer ) );
 
 		if ( traceTerrain != null )
 		{
 			Log.Warning( $"Terrain found at {position}." );
 			return false;
-		}
+		}*/
 
-		/* var traceTerrain =
-			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( position, position + Vector3.Down * (WaterCheckHeight * 2), World.TerrainLayer ) );
+		var traceWater = Scene.Trace.Ray( position, position + Vector3.Down * WaterCheckHeight )
+			.WithTag( "water" )
+			.Run();
 
-		if ( traceTerrain != null )
-		{
-			Log.Warning( $"Terrain found at {position}." );
-			return false;
-		}
-
-		var traceWater =
-			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( position, position + Vector3.Down * (WaterCheckHeight * 2), World.WaterLayer ) );
-
-		if ( traceWater == null )
+		if ( !traceWater.Hit )
 		{
 			Log.Warning( $"No water found at {position}." );
 			return false;
-		} */
+		}
+
+		var traceTerrain = Scene.Trace.Ray( traceWater.HitPosition, traceWater.HitPosition + Vector3.Down * 1f )
+			.WithTag( "terrain" )
+			.Run();
+
+		if ( traceTerrain.Hit )
+		{
+			Log.Warning( $"Terrain found at {position}." );
+			return false;
+		}
+
 
 		// TODO: check if it's the waterfall or something
 		/* if ( traceWater.Normal != Vector3.Up )
@@ -212,62 +215,73 @@ public class FishingRod : BaseCarriable
 		} */
 
 		return true;
-
 	}
 
 	public Vector3 GetWaterSurface( Vector3 position )
 	{
-		var spaceState = GetWorld3D().DirectSpaceState;
+		/*var spaceState = GetWorld3D().DirectSpaceState;
 
 		var traceWater =
 			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( position + Vector3.Up * WaterCheckHeight, position + Vector3.Down * (WaterCheckHeight * 2), World.WaterLayer ) );
+				PhysicsRayQueryParameters3D.Create( position + Vector3.Up * WaterCheckHeight,
+					position + Vector3.Down * (WaterCheckHeight * 2), World.WaterLayer ) );
 
 		if ( traceWater == null )
 		{
 			Log.Warning( $"No water found at {position}." );
 			return Vector3.Zero;
+		}*/
+		
+		var traceWater = Scene.Trace.Ray( position + Vector3.Up * WaterCheckHeight, position + Vector3.Down * (WaterCheckHeight * 2) )
+			.WithTag( "water" )
+			.Run();
+
+		if ( !traceWater.Hit )
+		{
+			Log.Warning( $"No water found at {position}." );
+			return Vector3.Zero;
 		}
 
-		return traceWater.Position;
+		return traceWater.HitPosition;
 	}
 
 	private void ReelIn()
 	{
 		Log.Info( "Reeling in." );
-		if ( IsInstanceValid( Bobber ) )
+		if ( Bobber.IsValid() )
 		{
 			Log.Info( "Freeing bobber." );
-			Bobber.QueueFree();
+			Bobber.DestroyGameObject();
 			Bobber = null;
 		}
 
 		_hasCasted = false;
 
 		// ((ImmediateMesh)LineMesh.Mesh).ClearSurfaces();
-		ClearLine();
+		// ClearLine();
 
-		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "RESET" );
+		// GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "RESET" );
 	}
 
 	public async void CatchFish( CatchableFish fishInWater )
 	{
-		if ( !IsInstanceValid( fishInWater ) )
+		if ( !fishInWater.IsValid() )
 		{
 			Log.Warning( "Fish is not valid." );
 			return;
 		}
 
 		Log.Info( "Caught fish." );
-		_timeUntilUse = 3f;
-		GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
-		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "catch" );
+		NextUse = 3f;
+		// GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
+		// GameObject.PlaySound( 
+		// GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "catch" );
 
-		var isTrash = GD.Randf() < _trashChance;
+		// var isTrash = GD.Randf() < _trashChance;
+		var isTrash = Random.Shared.Float() < _trashChance;
 
 		if ( !isTrash )
 		{
-
 			var carryableFish = fishInWater.Data.CarryScene.Instantiate<Fish>();
 			Player.World.AddChild( carryableFish );
 			carryableFish.GlobalTransform = fishInWater.GlobalTransform;
@@ -276,16 +290,16 @@ public class FishingRod : BaseCarriable
 
 			// tween the fish to the player
 			var tween = GetTree().CreateTween();
-			tween.TweenProperty( carryableFish, "position", Player.GlobalPosition + Vector3.Up * 0.5f, 0.5f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
+			tween.TweenProperty( carryableFish, "position", Player.GlobalPosition + Vector3.Up * 0.5f, 0.5f )
+				.SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
 			// tween.TweenCallback( Callable.From( carryableFish.QueueFree ) );
 			await ToSignal( tween, Tween.SignalName.Finished );
 			GiveFish( carryableFish );
-
 		}
 		else
 		{
-
-			var trashItemData = Loader.LoadResource<ItemData>( ResourceManager.Instance.GetItemPathByName( "item:shoe" ) );
+			var trashItemData =
+				Loader.LoadResource<ItemData>( ResourceManager.Instance.GetItemPathByName( "item:shoe" ) );
 			var trash = trashItemData.DropScene.Instantiate<DroppedItem>();
 			Player.World.AddChild( trash );
 			trash.GlobalTransform = fishInWater.GlobalTransform;
@@ -295,11 +309,11 @@ public class FishingRod : BaseCarriable
 
 			// tween the trash to the player
 			var tween = GetTree().CreateTween();
-			tween.TweenProperty( trash, "position", Player.GlobalPosition + Vector3.Up * 0.5f, 0.5f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
+			tween.TweenProperty( trash, "position", Player.GlobalPosition + Vector3.Up * 0.5f, 0.5f )
+				.SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
 			// tween.TweenCallback( Callable.From( carryableFish.QueueFree ) );
 			await ToSignal( tween, Tween.SignalName.Finished );
 			GiveTrash( trash );
-
 		}
 
 		ReelIn();
@@ -307,7 +321,6 @@ public class FishingRod : BaseCarriable
 
 	private void GiveFish( Fish fish )
 	{
-
 		var playerInventory = Player.Inventory;
 
 		if ( playerInventory == null )
@@ -324,12 +337,10 @@ public class FishingRod : BaseCarriable
 		playerInventory.PickUpItem( carry );
 
 		fish.QueueFree();
-
 	}
 
 	private void GiveTrash( DroppedItem trash )
 	{
-
 		var playerInventory = Player.Inventory;
 
 		if ( playerInventory == null )
@@ -346,13 +357,12 @@ public class FishingRod : BaseCarriable
 		playerInventory.PickUpItem( carry );
 
 		trash.QueueFree();
-
 	}
 
 	public void FishGotAway()
 	{
 		Log.Info( "Fish got away." );
-		_timeUntilUse = 2f;
+		NextUse = 2f;
 		ReelIn();
 	}
 }
