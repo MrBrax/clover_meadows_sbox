@@ -84,6 +84,7 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 
 	public void OnWater( WateringCan wateringCan )
 	{
+		Log.Info( "Watering plant" );
 		LastWatered = DateTime.Now;
 		Water = 1f;
 	}
@@ -114,6 +115,8 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 		Growth = item.GetArbitraryData<float>( "Growth" );
 		Wilt = item.GetArbitraryData<float>( "Wilt" );
 		Water = item.GetArbitraryData<float>( "Water" );
+		
+		UpdateVisuals();
 	}
 
 	protected override void OnFixedUpdate()
@@ -128,12 +131,12 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 	
 	private void UpdateVisuals()
 	{
-		if ( Model != null )
+		if ( Model.IsValid() )
 		{
 			Model.LocalScale = new Vector3( Growth / 1f, Growth / 1f, Growth / 1f );
 		}
 
-		if ( SeedHole != null )
+		if ( SeedHole.IsValid() )
 		{
 			SeedHole.Enabled = Growth < 0.2f;
 		}
