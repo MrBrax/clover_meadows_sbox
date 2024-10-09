@@ -22,10 +22,19 @@ public class FishingRod : BaseCarriable
 
 	public override void OnUseDown()
 	{
-		if ( !CanUse() ) return;
+		if ( !CanUse() )
+		{
+			Log.Warning( "Cannot use." );
+			return;
+		}
+		
 		NextUse = 1f;
 
-		if ( _isCasting ) return;
+		if ( _isCasting )
+		{
+			Log.Warning( "Already casting." );
+			return;
+		}
 
 		if ( _hasCasted && !Bobber.IsValid() )
 		{
@@ -33,15 +42,15 @@ public class FishingRod : BaseCarriable
 			_hasCasted = false;
 		}
 
-		/*if ( _hasCasted )
+		if ( _hasCasted )
 		{
-			if ( _bobber.Fish.IsValid() && _bobber.Fish.State == CatchableFish.FishState.FoundBobber )
+			if ( Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.FoundBobber )
 			{
-				_bobber.Fish.TryHook();
+				Bobber.Fish.TryHook();
 			}
-			else if ( _bobber.Fish.IsValid() && _bobber.Fish.State == CatchableFish.FishState.Fighting )
+			else if ( Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.Fighting )
 			{
-				_bobber.Fish.Pull();
+				Bobber.Fish.Pull();
 				// GetNode<AudioStreamPlayer3D>( "Reel" ).Play();
 				// GetNode<AudioStreamPlayer3D>( "Reel" ).PitchScale = 0.8f + GD.Randf() * 0.4f;
 			}
@@ -53,7 +62,7 @@ public class FishingRod : BaseCarriable
 		else
 		{
 			Cast();
-		}*/
+		}
 	}
 
 	protected override void OnFixedUpdate()

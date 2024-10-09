@@ -1,0 +1,65 @@
+{
+  "RootObject": {
+    "__guid": "98c9c396-6851-4954-ad83-988801637930",
+    "Flags": 0,
+    "Name": "fishing_rod_carry",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.FishingRod",
+        "__guid": "f4df98e0-6a0c-4268-832a-8ef00fab178d",
+        "ItemData": "items/tools/fishing_rod/fishing_rod.tool",
+        "Model": {
+          "_type": "gameobject",
+          "go": "f00e68e2-38ce-426a-90a8-0ab4acca4093"
+        },
+        "UseTime": 1
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "f00e68e2-38ce-426a-90a8-0ab4acca4093",
+        "Flags": 0,
+        "Name": "Model",
+        "Scale": "0.7,0.7,0.7",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "e058eac5-8f2f-4c10-aa14-97d165af580c",
+            "Flags": 0,
+            "Name": "Object",
+            "Rotation": "0.3826835,-0.00000001672763,-0.9238795,-0.00000004038406",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "520f4f52-f977-4d6d-91af-ddfbe0a140df",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/tools/basic_fishingrod.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "fish.basic_fishingrod#23056"
+  ],
+  "IsValid": true,
+  "__version": 1
+}
