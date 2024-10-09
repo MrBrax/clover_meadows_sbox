@@ -153,8 +153,8 @@
       {
         "__guid": "7eabb8c4-08e8-4de0-b100-1cfaf1e6786f",
         "Flags": 0,
-        "Name": "Entrance (1)",
-        "Position": "1664,256,-0.00004251624",
+        "Name": "WorldPlayerSpawn",
+        "Position": "2589.039,1580.303,-0.0001793098",
         "Rotation": "0,0,0.0000001509958,-1",
         "Enabled": true,
         "Components": [
