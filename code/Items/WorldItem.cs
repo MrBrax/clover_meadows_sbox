@@ -8,42 +8,12 @@ namespace Clover.Items;
 
 [Category( "Clover/Items" )]
 [Icon( "outlet" )]
+[Description("Has to be added to items placed in the world, otherwise they will not be saved.")]
 public class WorldItem : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
 	public WorldNodeLink NodeLink => WorldLayerObject?.World?.GetItem( GameObject );
-
-	private Vector2Int _tilePosition { get; set; }
-
-	/*[Property, ReadOnly, Sync]
-	public Vector2Int TilePosition
-	{
-		get => _tilePosition;
-		set
-		{
-			if ( Scene.IsEditor || value == Vector2Int.Zero ) // TODO: don't make zero a special case
-			{
-				_tilePosition = value;
-				return;
-			}
-
-			var oldPosition = _tilePosition;
-
-			// Log.Info( $"Setting tile position of {GameObject.Name} to {value}" );
-			_tilePosition = value;
-			// WorldPosition = new Vector3( value.x * 32, value.y * 32, 0 );
-			WorldPosition = WorldManager.Instance.GetWorld( WorldLayerObject.Layer ).ItemGridToWorld( value );
-			// LevelManager.Instance?.OnWorldObjectMoved( this, oldPosition, value );
-			// OnTilePositionChanged?.Invoke( _tilePosition, value );
-		}
-	}
-
-	[Property, ReadOnly, Sync]
-	public Vector2Int Size { get; set; } = new(1, 1);*/
-
-	/*public delegate void TilePositionChanged( Vector2Int oldPosition, Vector2Int newPosition );
-	[JsonIgnore] public TilePositionChanged OnTilePositionChanged;*/
 
 	public Vector2Int GridPosition => NodeLink?.GridPosition ?? Vector2Int.Zero;
 
@@ -153,21 +123,7 @@ public class WorldItem : Component, IPickupable
 
 	public bool CanPickup( PlayerCharacter player )
 	{
-		/*if ( WorldLayerObject.World.GetItems( GridPosition ).ToList().FirstOrDefault()?.GridPlacement ==
-		    World.ItemPlacement.OnTop && GridPlacement == World.ItemPlacement.Floor )
-		{
-			Log.Warning( $"Item {this} is on top of another item" );
-			return false;
-		}*/
-
-		if ( HasItemOnTop() )
-		{
-			return false;
-		}
-
-		Log.Info( $"CanPickupSimple {GameObject}: {CanPickupSimple}" );
-
-		return CanPickupSimple;
+		return !HasItemOnTop() && CanPickupSimple;
 	}
 
 	public bool HasItemOnTop()
@@ -188,6 +144,12 @@ public class WorldItem : Component, IPickupable
 		return false;
 	}
 
+	/// <summary>
+	///  Called when the player picks up this item, mostly so you don't have to add IPickupable to every item.
+	///  This will just call the Inventory.PickUpItem method on the node link.
+	///  ALL IPickupable items will be iterated through when trying to pick up something.
+	/// </summary>
+	/// <param name="player"></param>
 	public void OnPickup( PlayerCharacter player )
 	{
 		player.Inventory.PickUpItem( NodeLink );

@@ -7,7 +7,7 @@ using Clover.Persistence;
 
 namespace Clover;
 
-public class WorldNodeLink
+public class WorldNodeLink : IValid
 {
 	[JsonIgnore] public World World;
 	[JsonIgnore] public GameObject Node;
@@ -34,6 +34,8 @@ public class WorldNodeLink
 	public bool IsBeingPickedUp { get; set; }
 
 	public bool IsDroppedItem => PrefabPath == "items/misc/dropped_item/dropped_item.prefab";
+	
+	public bool IsValid => World != null && World.HasNodeLink( this );
 
 	public WorldNodeLink( World world, GameObject item )
 	{
@@ -262,4 +264,5 @@ public class WorldNodeLink
 	{
 		World.RemoveItem( this );
 	}
+	
 }

@@ -958,5 +958,9 @@ public sealed partial class World : Component
 
 		}
 	}
-	
+
+	public bool HasNodeLink( WorldNodeLink node )
+	{
+		return _nodeLinkMap.ContainsKey( node.Node );
+	}
 }

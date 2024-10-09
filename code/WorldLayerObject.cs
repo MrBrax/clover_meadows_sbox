@@ -5,9 +5,13 @@ namespace Clover;
 
 [Category( "Clover" )]
 [Icon( "visibility" )]
+[Description( "Handles the visibility of the object based on the world layer." )]
 public sealed class WorldLayerObject : Component
 {
 	
+	/// <summary>
+	///  The layer of the world this object is in. It's just the index of the world in the WorldManager.
+	/// </summary>
 	[Property, Sync] public int Layer { get; private set; }
 	
 	[JsonIgnore] public World World => WorldManager.Instance?.GetWorld( Layer );
@@ -33,6 +37,9 @@ public sealed class WorldLayerObject : Component
 
 	}
 
+	/// <summary>
+	///  Visibility is based on render tags on the camera. This method adds or removes the tags based on the layer.
+	/// </summary>
 	public void RebuildVisibility()
 	{
 		Tags.Remove( "worldlayer_invisible" );
