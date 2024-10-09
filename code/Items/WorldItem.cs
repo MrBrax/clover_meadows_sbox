@@ -123,6 +123,7 @@ public class WorldItem : Component, IPickupable
 	{
 		base.OnUpdate();
 
+		if ( Gizmo.Camera == null ) return;
 		if ( NodeLink.IsValid() && NodeLink.IsDroppedItem )
 		{
 			Gizmo.Draw.Text( $"Dropped: {NodeLink.GetName()}", new Transform( WorldPosition + Vector3.Up * 20 ) );
