@@ -133,6 +133,7 @@ public class CatchableFish : Component
 
 		var swimSpeed = _maxSwimSpeedPanic;
 		
+		// TODO: properly adjust this based on distance and stamina
 		if ( distance < 96f )
 		{
 			swimSpeed = _maxSwimSpeedPanic * ( distance / 40f );

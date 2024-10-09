@@ -322,7 +322,7 @@ public class FishingRod : BaseCarriable
 
 	public static bool CheckForWater( Vector3 position )
 	{
-		var traceWater = Game.ActiveScene.Trace.Ray( position, position + Vector3.Down * WaterCheckHeight )
+		var traceWater = Game.ActiveScene.Trace.Ray( position + Vector3.Up * 8f, position + Vector3.Down * WaterCheckHeight )
 			.WithTag( "water" )
 			.Run();
 
@@ -419,7 +419,7 @@ public class FishingRod : BaseCarriable
 			Log.Info( "Reel position too close or not in water. Reeling in." );
 			// ResetAll();
 
-			if ( dist < 32 && Bobber.Fish.IsValid() )
+			if ( dist < 32 && Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.Fighting )
 			{
 				CatchFish( Bobber.Fish );
 			}

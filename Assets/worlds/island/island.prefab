@@ -301,14 +301,372 @@
         ]
       },
       {
-        "__guid": "1799fdb5-b5b9-4e20-80ea-1c14ea4eafee",
+        "__guid": "07563dca-2206-4501-99ca-de6bca486ac9",
         "Flags": 0,
-        "Name": "fish_shadow",
-        "Position": "2668.457,1717.748,-15",
-        "Rotation": "-0.00000002980232,0.000000000349246,0.9999961,0.002798625",
+        "Name": "FishSpawn",
+        "Position": "2752,1520,-16",
         "Enabled": true,
-        "__Prefab": "animals/fish/fish_shadow.prefab",
-        "__PrefabVariables": {}
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "45a9c22f-40e1-47a3-b5c9-9998a127b22a",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "9e36acfb-431b-489e-8445-247a3fe5b6c8",
+        "Flags": 0,
+        "Name": "FishSpawn (8)",
+        "Position": "2640,2576,-16.00001",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "53a51d08-cb65-485f-9c68-d20c09612cb2",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "86b5252d-38b5-49b8-bc87-5d25e36bb87b",
+        "Flags": 0,
+        "Name": "FishSpawn (9)",
+        "Position": "2416,2784,-15.99997",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "837955ac-39e5-4559-91eb-f473946f7ba1",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "5ff12b12-493e-49dd-a263-56503631f8e3",
+        "Flags": 0,
+        "Name": "FishSpawn (10)",
+        "Position": "2080,2800,-15.99988",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "01caa712-5312-4014-9ba4-6dee662efcdf",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "81198083-65de-47be-b405-b787bc4d2244",
+        "Flags": 0,
+        "Name": "FishSpawn (11)",
+        "Position": "1488,2800,-15.99988",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "c6867b6c-4b33-45ea-bedb-6db21aa71110",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "32d817a1-4c72-4ef7-94e8-dab5f8a9e0cc",
+        "Flags": 0,
+        "Name": "FishSpawn (12)",
+        "Position": "1024,2800,-15.99988",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "9d53cabf-4755-49c6-ac91-7b40759ea83a",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "cf2b7223-9271-4810-b0f7-c7af3823b15d",
+        "Flags": 0,
+        "Name": "FishSpawn (13)",
+        "Position": "400,2800,-15.99988",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "c12ceba2-a99b-4e80-a1d0-9085fcfdb80c",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "a13ad25d-e90e-4d09-bb7e-6b1bd1c28563",
+        "Flags": 0,
+        "Name": "FishSpawn (4)",
+        "Position": "2544,1824,-16.00001",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "414a22b6-1aac-4e9e-9c59-46ed99e44013",
+            "Location": "Pond",
+            "SpawnRadius": 144,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "a091a5e8-4c05-48c7-9bfc-061c9e5bfcaf",
+        "Flags": 0,
+        "Name": "FishSpawn (5)",
+        "Position": "2496,2240,-15.99998",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "fd47a85c-57db-42e4-970d-e9886bc8b3df",
+            "Location": "Pond",
+            "SpawnRadius": 144,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "7fda381a-5cd8-4de0-9913-fe67f1c70ae6",
+        "Flags": 0,
+        "Name": "FishSpawn (6)",
+        "Position": "2848,1872,-15.99996",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "2ba4e1e2-ce05-41b8-9ecd-4f2e18afd8e3",
+            "Location": "Pond",
+            "SpawnRadius": 144,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "fbdc12d7-756f-4c5a-b419-8a8f63d83eb8",
+        "Flags": 0,
+        "Name": "FishSpawn (7)",
+        "Position": "2816,2288,-15.99996",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "cfe42b5e-d991-4078-9b0d-6aa9517a2e2a",
+            "Location": "Pond",
+            "SpawnRadius": 144,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "3b75c554-3ddd-4846-b643-02c492eb800f",
+        "Flags": 0,
+        "Name": "FishSpawn (1)",
+        "Position": "2944,1312,-15.99999",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "7ac15653-fa31-4fca-a67f-c3c32f05df73",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "32676739-c0dc-48ea-8204-02f294b3ffd2",
+        "Flags": 0,
+        "Name": "FishSpawn (2)",
+        "Position": "3216,1280,-15.99992",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "152f9610-c0a9-4900-a129-9f2667f713c4",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "daebac30-cf5e-4252-a1a1-8ab81ce91509",
+        "Flags": 0,
+        "Name": "FishSpawn (3)",
+        "Position": "3456,1296,-15.99986",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "8862dc93-42f9-4b3d-a778-4896447ec5b3",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "1717607a-b4aa-4aba-81a5-c6e20aaea002",
+        "Flags": 0,
+        "Name": "FishSpawn (14)",
+        "Position": "3728,1280,-15.99984",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "e2ba2964-b3a9-49e8-8d84-969e05890ce6",
+            "Location": "River",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "7e7f60cf-cd12-4cc5-b3d2-8edc4ccc466e",
+        "Flags": 0,
+        "Name": "FishSpawn (15)",
+        "Position": "3968,1056,-15.99983",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "a5288bc9-59d2-4c6d-9003-efcd44a2bd5c",
+            "Location": "Sea",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "7c2995fe-d909-4d2c-832c-fd78ae964638",
+        "Flags": 0,
+        "Name": "FishSpawn (16)",
+        "Position": "3968,720,-15.99983",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "dacb2923-dda4-477b-b757-f841c44be09e",
+            "Location": "Sea",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "e95531b1-fd15-4111-ac7f-4984413e7f2d",
+        "Flags": 0,
+        "Name": "FishSpawn (17)",
+        "Position": "3968,256,-15.99983",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "01c627e3-da40-4adf-85c0-12b093d8c1a3",
+            "Location": "Sea",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "6f7eeda5-5eaf-45d4-b787-722928830212",
+        "Flags": 0,
+        "Name": "FishSpawn (18)",
+        "Position": "3968,1632,-15.99983",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "0e00b273-b3f2-43ce-9967-288b3acb9318",
+            "Location": "Sea",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "9a12ec3b-90b4-4acb-b635-2579bb20d630",
+        "Flags": 0,
+        "Name": "FishSpawn (19)",
+        "Position": "3968,2128,-15.99983",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "2d3f6e13-b34e-4875-b75a-c9b521588762",
+            "Location": "Sea",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "7f5ecd21-953f-4ed6-aa17-c75805e6b789",
+        "Flags": 0,
+        "Name": "FishSpawn (20)",
+        "Position": "3968,2672,-15.99983",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "253d8d09-b0c2-4681-90ee-2862a2282874",
+            "Location": "Sea",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "e849e649-872d-4bfa-96c8-c08b90c46a45",
+        "Flags": 0,
+        "Name": "FishSpawn (21)",
+        "Position": "3968,3232,-15.99983",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "bbf6bd27-add3-4a17-b722-8f943503b3fe",
+            "Location": "Sea",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "dcb48710-dd42-4270-842e-d650b6b4502f",
+        "Flags": 0,
+        "Name": "FishSpawn (22)",
+        "Position": "3968,3792,-15.99983",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.FishSpot",
+            "__guid": "fba6bbbb-b82b-4b7b-bfb1-0a11b71f341c",
+            "Location": "Sea",
+            "SpawnRadius": 128,
+            "SpecialFish": []
+          }
+        ]
       }
     ],
     "__variables": []
