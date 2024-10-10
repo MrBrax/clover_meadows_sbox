@@ -47,13 +47,15 @@ public sealed partial class PlayerCharacter : Component
 
 	protected override void OnStart()
 	{
-		base.OnStart();
+		if ( IsProxy ) return;
+		
 		GameObject.BreakFromPrefab();
 
 		Load();
 
 		OnWorldChanged += ( world ) =>
 		{
+			if ( IsProxy ) return;
 			Save();
 		};
 

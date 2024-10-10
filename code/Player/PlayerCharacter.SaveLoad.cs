@@ -14,6 +14,13 @@ public sealed partial class PlayerCharacter
 
 	public void Save()
 	{
+
+		if ( IsProxy )
+		{
+			Log.Error( "Cannot save proxy player. Fix this call." );
+			return;
+		}
+		
 		Log.Info( $"Saving player {PlayerId}" );
 
 		Scene.RunEvent<IPlayerSaved>( x => x.PrePlayerSave( this ) );

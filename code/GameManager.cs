@@ -38,10 +38,13 @@ public class GameManager : Component
 		_lastSave = 0f;
 
 		if ( !AutoSave ) return;
-		
-		foreach( var world in WorldManager.Instance.Worlds )
+
+		if ( Networking.IsHost )
 		{
-			world.Value.Save();
+			foreach ( var world in WorldManager.Instance.Worlds )
+			{
+				world.Value.Save();
+			}
 		}
 
 		PlayerCharacter.Local?.Save();

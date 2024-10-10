@@ -323,7 +323,7 @@ public class FishingRod : BaseCarriable
 
 		if ( !traceWater.Hit )
 		{
-			Log.Warning( $"No water found at {position}." );
+			// Log.Warning( $"No water found at {position}." );
 			return false;
 		}
 
@@ -334,7 +334,7 @@ public class FishingRod : BaseCarriable
 
 		if ( traceTerrain.Hit )
 		{
-			Log.Warning( $"Terrain found at {position}." );
+			// Log.Warning( $"Terrain found at {position}." );
 			return false;
 		}
 

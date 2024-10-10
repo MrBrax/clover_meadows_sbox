@@ -15,6 +15,13 @@ public sealed partial class World
 
 	public void Save()
 	{
+
+		if ( IsProxy )
+		{
+			Log.Error( "Cannot save proxy world. Fix this call." );
+			return;
+		}
+		
 		Log.Info( $"Saving world {Data.ResourceName}" );
 		
 		Scene.RunEvent<IWorldSaved>( x => x.PreWorldSaved( this ) );
