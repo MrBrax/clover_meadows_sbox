@@ -33,6 +33,6 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( TimeManager.Instance.Time );
+		return HashCode.Combine( TimeManager.Time );
 	}
 }

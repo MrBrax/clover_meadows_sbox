@@ -1,4 +1,5 @@
 using Clover.Player;
+using Clover.WorldBuilder;
 using Sandbox;
 
 namespace Clover;
@@ -24,5 +25,7 @@ public sealed class NodeManager : Component
 	
 	public static WorldManager WorldManager => Game.ActiveScene.GetAllComponents<WorldManager>().FirstOrDefault();
 	public static PlayerCharacter Player => Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault();
+	public static TimeManager TimeManager => Game.ActiveScene.GetAllComponents<TimeManager>().FirstOrDefault();
+	public static WeatherManager WeatherManager => Game.ActiveScene.GetAllComponents<WeatherManager>().FirstOrDefault();
 	
 }

@@ -14,7 +14,7 @@ public class TimeManager : Component
 	[ConVar( "clover_time_scale")]
 	public static int Speed { get; set; } = 1;
 	
-	public DateTime Time => Speed != 1 ? DateTime.Now.AddSeconds( Sandbox.Time.Now * Speed ) : DateTime.Now;
+	public static DateTime Time => Speed != 1 ? DateTime.Now.AddSeconds( Sandbox.Time.Now * Speed ) : DateTime.Now;
 
 	private const float SecondsPerDay = 86400f;
 
@@ -28,8 +28,8 @@ public class TimeManager : Component
 
 	[Property] public SoundEvent HourChime { get; set; }
 
-	public bool IsNight => Time.Hour is < 6 or > 18;
-	public bool IsDay => !IsNight;
+	public static bool IsNight => Time.Hour is < 6 or > 18;
+	public static bool IsDay => !IsNight;
 
 	protected override void OnStart()
 	{
