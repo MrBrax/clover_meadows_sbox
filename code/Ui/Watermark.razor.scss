@@ -10,7 +10,8 @@ Watermark
 	font-family: Itim;
 	font-size: 30px;
 	
-	text-stroke: 5px #656565;
+	// text-stroke: 5px #656565;
+	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 	
 	.watermark-container {
 		flex-direction: column;
