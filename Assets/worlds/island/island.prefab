@@ -305,6 +305,7 @@
         "Flags": 0,
         "Name": "FishSpawn",
         "Position": "2752,1520,-16",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -320,6 +321,7 @@
         "Flags": 0,
         "Name": "FishSpawn (8)",
         "Position": "2640,2576,-16.00001",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -335,6 +337,7 @@
         "Flags": 0,
         "Name": "FishSpawn (9)",
         "Position": "2416,2784,-15.99997",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -350,6 +353,7 @@
         "Flags": 0,
         "Name": "FishSpawn (10)",
         "Position": "2080,2800,-15.99988",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -365,6 +369,7 @@
         "Flags": 0,
         "Name": "FishSpawn (11)",
         "Position": "1488,2800,-15.99988",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -380,6 +385,7 @@
         "Flags": 0,
         "Name": "FishSpawn (12)",
         "Position": "1024,2800,-15.99988",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -395,6 +401,7 @@
         "Flags": 0,
         "Name": "FishSpawn (13)",
         "Position": "400,2800,-15.99988",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -410,6 +417,7 @@
         "Flags": 0,
         "Name": "FishSpawn (4)",
         "Position": "2544,1824,-16.00001",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -425,6 +433,7 @@
         "Flags": 0,
         "Name": "FishSpawn (5)",
         "Position": "2496,2240,-15.99998",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -440,6 +449,7 @@
         "Flags": 0,
         "Name": "FishSpawn (6)",
         "Position": "2848,1872,-15.99996",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -455,6 +465,7 @@
         "Flags": 0,
         "Name": "FishSpawn (7)",
         "Position": "2816,2288,-15.99996",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -470,6 +481,7 @@
         "Flags": 0,
         "Name": "FishSpawn (1)",
         "Position": "2944,1312,-15.99999",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -485,6 +497,7 @@
         "Flags": 0,
         "Name": "FishSpawn (2)",
         "Position": "3216,1280,-15.99992",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -500,6 +513,7 @@
         "Flags": 0,
         "Name": "FishSpawn (3)",
         "Position": "3456,1296,-15.99986",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -515,6 +529,7 @@
         "Flags": 0,
         "Name": "FishSpawn (14)",
         "Position": "3728,1280,-15.99984",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -530,6 +545,7 @@
         "Flags": 0,
         "Name": "FishSpawn (15)",
         "Position": "3968,1056,-15.99983",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -545,6 +561,7 @@
         "Flags": 0,
         "Name": "FishSpawn (16)",
         "Position": "3968,720,-15.99983",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -560,6 +577,7 @@
         "Flags": 0,
         "Name": "FishSpawn (17)",
         "Position": "3968,256,-15.99983",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -575,6 +593,7 @@
         "Flags": 0,
         "Name": "FishSpawn (18)",
         "Position": "3968,1632,-15.99983",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -590,6 +609,7 @@
         "Flags": 0,
         "Name": "FishSpawn (19)",
         "Position": "3968,2128,-15.99983",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -605,6 +625,7 @@
         "Flags": 0,
         "Name": "FishSpawn (20)",
         "Position": "3968,2672,-15.99983",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -620,6 +641,7 @@
         "Flags": 0,
         "Name": "FishSpawn (21)",
         "Position": "3968,3232,-15.99983",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -635,6 +657,7 @@
         "Flags": 0,
         "Name": "FishSpawn (22)",
         "Position": "3968,3792,-15.99983",
+        "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
@@ -651,7 +674,6 @@
         "Name": "fish_shadow",
         "Position": "2694.312,1613.142,-16",
         "Rotation": "-0.00000002980232,0,0.9999999,0",
-        "Enabled": true,
         "__Prefab": "animals/fish/fish_shadow.prefab",
         "__PrefabVariables": {}
       }
