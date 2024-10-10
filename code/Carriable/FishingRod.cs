@@ -172,6 +172,8 @@ public class FishingRod : BaseCarriable
 				// CreateLine( true );
 			}
 		}*/
+
+		if ( IsProxy ) return;
 		
 		if ( _lineSlackDummy.IsValid() )
 		{
@@ -248,6 +250,7 @@ public class FishingRod : BaseCarriable
 		if ( !CheckForWater( GetCastPosition() ) )
 		{
 			Log.Warning( $"CAST: No water found at {GetCastPosition()}." );
+			ResetAll();
 			return;
 		}
 
@@ -325,6 +328,8 @@ public class FishingRod : BaseCarriable
 		else
 		{
 			Log.Error( "Bobber is already valid." );
+			ResetAll();
+			return;
 		}
 
 		// CreateLine();
@@ -339,7 +344,7 @@ public class FishingRod : BaseCarriable
 
 	public static bool CheckForWater( Vector3 position )
 	{
-		var traceWater = Game.ActiveScene.Trace.Ray( position + Vector3.Up * 8f, position + Vector3.Down * WaterCheckHeight )
+		var traceWater = Game.ActiveScene.Trace.Ray( position + Vector3.Up * 32f, position + Vector3.Down * WaterCheckHeight )
 			.WithTag( "water" )
 			.Run();
 
@@ -350,7 +355,7 @@ public class FishingRod : BaseCarriable
 		}
 
 		var traceTerrain = Game.ActiveScene.Trace
-			.Ray( traceWater.HitPosition, traceWater.HitPosition + Vector3.Down * 1f )
+			.Ray( traceWater.HitPosition + Vector3.Up * 32f, traceWater.HitPosition + Vector3.Down * 16f )
 			.WithTag( "terrain" )
 			.Run();
 
@@ -405,6 +410,7 @@ public class FishingRod : BaseCarriable
 		_isBusy = false;
 		Stamina = 100f;
 		LineStrength = 100f;
+		Model.LocalRotation = Rotation.FromPitch( 0f );
 		DestroyBobber();
 	}
 
@@ -441,9 +447,12 @@ public class FishingRod : BaseCarriable
 
 			if ( dist < 32 && Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.Fighting )
 			{
+				Log.Info( "Reeling in, fish is fighting." );
 				CatchFish( Bobber.Fish );
 				return;
 			}
+			
+			Log.Info( "Reeling in, too close or not in water." );
 			
 			ResetAll();
 
@@ -599,7 +608,7 @@ public class FishingRod : BaseCarriable
 	public void FishGotAway()
 	{
 		Log.Info( "Fish got away." );
-		NextUse = 2f;
+		NextUse = 1f;
 		ReelIn( 128f );
 	}
 
