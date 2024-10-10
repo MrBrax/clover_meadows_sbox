@@ -21,7 +21,8 @@ public class Fader : Component
 		base.OnStart();
 		FadeFromBlack();
 	}
-
+	
+	
 	public async Task FadeFromBlack( bool playSound = false )
 	{
 		Log.Info( "Fading out." );
@@ -59,6 +60,19 @@ public class Fader : Component
 		
 		await Task.DelayRealtimeSeconds( FadeTime );
 	}
+	
+	[Broadcast]
+	public void FadeToBlackRpc()
+	{
+		FadeToBlack();
+	}
+	
+	[Broadcast]
+	public void FadeFromBlackRpc()
+	{
+		FadeFromBlack();
+	}
+	
 
 	protected override void OnUpdate()
 	{

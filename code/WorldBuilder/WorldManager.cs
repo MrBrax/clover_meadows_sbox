@@ -51,14 +51,27 @@ public class WorldManager : Component
 
 	public World GetWorld( string id )
 	{
-		// return Worlds.FirstOrDefault( w => w.WorldId == id );
-		return Worlds.Values.FirstOrDefault( w => w.Data.ResourceName == id );
+		var val = Worlds.Values.FirstOrDefault( w => w.Data.ResourceName == id );
+		if ( !val.IsValid() )
+		{
+			Log.Warning( $"World not found: {id}, searching scene..." );
+			val = Scene.GetAllComponents<World>().FirstOrDefault( w => w.Data.ResourceName == id );
+		}
+
+		return val;
 	}
 
 	public World GetWorld( int index )
 	{
-		// return CollectionExtensions.GetValueOrDefault( Worlds, index );
-		return Worlds.TryGetValue( index, out var world ) ? world : null;
+		// return Worlds.TryGetValue( index, out var world ) ? world : null;
+		var val = Worlds.Values.FirstOrDefault( w => w.Layer == index );
+		if ( !val.IsValid() )
+		{
+			Log.Warning( $"World not found at index: {index}, searching scene..." );
+			val = Scene.GetAllComponents<World>().FirstOrDefault( w => w.Layer == index );
+		}
+		
+		return val;
 	}
 
 	public void SetActiveWorld( int index )
@@ -221,6 +234,12 @@ public class WorldManager : Component
 	{
 		Log.Info( $"World loaded: {id}" );
 		var world = GetWorld( id );
+		
+		if ( !world.IsValid() )
+		{
+			Log.Error( $"World not found: {id}" );
+			return;
+		}
 		
 		WorldLoaded?.Invoke( world );
 		world.OnWorldLoaded();

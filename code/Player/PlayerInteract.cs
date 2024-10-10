@@ -19,9 +19,11 @@ public class PlayerInteract : Component
 
 	protected override void OnAwake()
 	{
-		base.OnAwake();
-
-		Cursor.Parent = null;
+		if ( IsProxy ) return;
+		if ( Cursor != null )
+		{
+			Cursor.Parent = null;
+		}
 	}
 
 	protected override void OnDestroy()
@@ -36,7 +38,7 @@ public class PlayerInteract : Component
 
 	protected override void OnFixedUpdate()
 	{
-		base.OnFixedUpdate();
+		if ( IsProxy ) return;
 
 		if ( Input.Pressed( "use" ) )
 		{

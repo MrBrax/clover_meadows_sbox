@@ -17,6 +17,7 @@ public class FishSpot : Component
 
 	protected override void OnStart()
 	{
+		if ( IsProxy || !Networking.IsHost ) return;
 		if ( Random.Shared.Float() > 0.5f ) SpawnFish();
 	}
 	
@@ -24,6 +25,7 @@ public class FishSpot : Component
 
 	protected override void OnFixedUpdate()
 	{
+		if ( IsProxy || !Networking.IsHost ) return;
 		if ( _lastSpawn > 60 )
 		{
 			_lastSpawn = 0;

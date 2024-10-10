@@ -141,12 +141,14 @@ public class PlayerController : Component
 				Player.ModelLookAt( target );
 
 				// Gizmo.Draw.LineSphere( target, 10.0f );
+				
+				// Gizmo.Draw.Arrow( Player.WorldPosition, target );
 
 				if ( (target - Player.WorldPosition).Length < 10.0f )
 				{
 					// Player.CutsceneTarget = null;
 					CharacterController.Velocity = Vector3.Zero;
-					Log.Info( "Cutscene target reached" );
+					// Log.Info( "Cutscene target reached" );
 				}
 
 				CharacterController.Move();

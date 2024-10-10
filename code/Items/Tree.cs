@@ -41,6 +41,7 @@ public class Tree : Component, IPersistent, IInteract
 
 	protected override void OnAwake()
 	{
+		if ( IsProxy ) return;
 		base.OnAwake();
 		if ( StumpModel.IsValid() ) StumpModel.Enabled = false;
 	}
@@ -208,7 +209,7 @@ public class Tree : Component, IPersistent, IInteract
 
 	protected override void OnFixedUpdate()
 	{
-		base.OnFixedUpdate();
+		if ( IsProxy ) return;
 		if ( FruitData == null ) return;
 		CheckGrowth();
 	}

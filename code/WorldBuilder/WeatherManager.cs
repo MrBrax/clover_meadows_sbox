@@ -121,6 +121,7 @@ public class WeatherManager : Component
 
 		NodeManager.WorldManager.WorldLoaded += ( world ) =>
 		{
+			if ( IsProxy || !Networking.IsHost ) return;
 			IsInside = world.Data.IsInside;
 			Setup( true );
 		};

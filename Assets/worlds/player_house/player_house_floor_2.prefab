@@ -103,43 +103,6 @@
             "__guid": "32652b18-3931-4d82-af6b-7fec3c363f0f",
             "Center": "0,0,0",
             "IsTrigger": true,
-            "OnTriggerEnter": {
-              "__version": 8,
-              "__guid": "ec39f0e3-d37c-4035-a10a-4a3d154e304e",
-              "__changeId": 8,
-              "UserData": {
-                "Title": "On Trigger Enter",
-                "ReferencedComponentTypes": []
-              },
-              "Variables": [],
-              "Nodes": [
-                {
-                  "Id": 0,
-                  "Type": "input"
-                },
-                {
-                  "Id": 1,
-                  "Type": "log.info",
-                  "UserData": {
-                    "Position": "288,36"
-                  }
-                }
-              ],
-              "Links": [
-                {
-                  "SrcId": 0,
-                  "SrcName": "_signal",
-                  "DstId": 1,
-                  "DstName": "_signal"
-                },
-                {
-                  "Id": 2,
-                  "Value": "asdf",
-                  "DstId": 1,
-                  "DstName": "format"
-                }
-              ]
-            },
             "Scale": "21.13332,76.00003,50",
             "Static": false
           },
@@ -179,6 +142,5 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }

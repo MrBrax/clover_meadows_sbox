@@ -25,7 +25,7 @@ public sealed partial class PlayerCharacter : Component
 	[RequireComponent] public Equips Equips { get; set; }
 	[RequireComponent] public CameraController CameraController { get; set; }
 
-	[Property] public int Clovers { get; set; }
+	[Property, Sync] public int Clovers { get; set; }
 
 	[Property] public GameObject Model { get; set; }
 
@@ -40,7 +40,7 @@ public sealed partial class PlayerCharacter : Component
 
 	public Action<World> OnWorldChanged { get; set; }
 
-	public bool InCutscene { get; set; }
+	[Sync] public bool InCutscene { get; set; }
 	public Vector3? CutsceneTarget { get; set; }
 
 	public string LastEntrance { get; set; }
@@ -79,6 +79,8 @@ public sealed partial class PlayerCharacter : Component
 
 	protected override void OnFixedUpdate()
 	{
+		if ( IsProxy ) return;
+		
 		base.OnFixedUpdate();
 
 		if ( Input.Pressed( "use" ) && IsSitting )
@@ -93,12 +95,26 @@ public sealed partial class PlayerCharacter : Component
 		if ( WorldPosition.z < -500f )
 		{
 			Log.Error( $"Player fell off the world: {WorldPosition} in world {World}" );
-			TeleportTo( LastEntrance );
+			if ( !string.IsNullOrEmpty( LastEntrance ) )
+			{
+				TeleportTo( LastEntrance );
+			}
+			else
+			{
+				Log.Error( "No last entrance found" );
+			}
 		}
 		else if ( World != null && WorldPosition.z < World.WorldPosition.z - 500f )
 		{
 			Log.Error( $"Player fell off the world: {WorldPosition} in world {World}" );
-			TeleportTo( LastEntrance );
+			if ( !string.IsNullOrEmpty( LastEntrance ) )
+			{
+				TeleportTo( LastEntrance );
+			}
+			else
+			{
+				Log.Error( "No last entrance found" );
+			}
 		}
 	}
 
@@ -126,8 +142,17 @@ public sealed partial class PlayerCharacter : Component
 		Gizmo.Draw.Arrow( WorldPosition + Vector3.Up * 16f, WorldPosition + Vector3.Up * 16 + Model.WorldRotation.Forward * 32f );
 	}*/
 
+	[Authority]
 	public void TeleportTo( string entrance )
 	{
+		Log.Info( $"Teleporting to entrance: {entrance}" );
+		
+		if ( !World.IsValid() )
+		{
+			Log.Error( "World is not valid" );
+			return;
+		}
+		
 		var spawnPoint = World.GetEntrance( entrance );
 		if ( spawnPoint.IsValid() )
 		{
@@ -143,6 +168,7 @@ public sealed partial class PlayerCharacter : Component
 	[Authority]
 	public void TeleportTo( Vector3 pos, Rotation rot )
 	{
+		Log.Info( $"Teleporting to {pos} {rot}" );
 		WorldPosition = pos;
 		// WorldRotation = rot;
 		Transform.ClearInterpolation();
@@ -164,7 +190,8 @@ public sealed partial class PlayerCharacter : Component
 		if ( IsSitting ) return false;
 		if ( InCutscene ) return false;
 		if ( Components.TryGet<VehicleRider>( out var rider ) && rider.Vehicle.IsValid() ) return false;
-		if ( Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) && tool.ShouldDisableMovement() ) return false;
+		if ( Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) &&
+		     tool.ShouldDisableMovement() ) return false;
 		return true;
 	}
 
@@ -181,6 +208,22 @@ public sealed partial class PlayerCharacter : Component
 
 	public void SetCarriableVisibility( bool state )
 	{
+	}
+
+	[Authority]
+	public void StartCutscene( Vector3 target )
+	{
+		Log.Info( $"Starting cutscene to {target}" );
+		CutsceneTarget = target;
+		InCutscene = true;
+	}
+
+	[Authority]
+	public void EndCutscene()
+	{
+		Log.Info( "Ending cutscene" );
+		CutsceneTarget = null;
+		InCutscene = false;
 	}
 }
 

@@ -56,6 +56,7 @@
       "Flags": 0,
       "Name": "WorldManager",
       "Enabled": true,
+      "NetworkMode": 1,
       "Components": [
         {
           "__type": "Clover.WorldManager",

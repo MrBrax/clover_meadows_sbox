@@ -27,12 +27,12 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 
 	void ITriggerListener.OnTriggerEnter( Collider other )
 	{
-		if ( IsProxy ) return;
+		if ( IsProxy || !Networking.IsHost ) return;
 
 		var player = other.GetComponent<PlayerCharacter>();
 		if ( !player.IsValid() )
 		{
-			Log.Warning( "AreaTrigger: OnTriggerEnter: Not a player" );
+			Log.Warning( $"AreaTrigger: OnTriggerEnter: Not a player: {other}" );
 			return;
 		}
 
@@ -43,7 +43,11 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 	{
 		var w = await WorldManager.Instance.GetWorldOrLoad( DestinationWorldData );
 
-		if ( player.InCutscene ) return;
+		if ( player.InCutscene )
+		{
+			Log.Warning( "AreaTrigger: OnTriggerEnter: Player is in cutscene" );
+			return;
+		}
 
 		var entrance = w.GetEntrance( DestinationEntranceId );
 
@@ -52,11 +56,20 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			var currentWorld = WorldManager.Instance.GetWorld( WorldLayerObject.Layer );
 
 			currentWorld.Save();
+			
+			player.StartCutscene( WorldPosition + WorldRotation.Forward * 64f );
 
-			player.CutsceneTarget = WorldPosition + WorldRotation.Forward * 64f;
-			player.InCutscene = true;
+			if ( !player.Network.Owner.IsHost )
+			{
+				await Task.DelayRealtimeSeconds( 1f ); // Wait for the host to load the world
+			}
 
-			await Fader.Instance.FadeToBlack( true );
+			// await Fader.Instance.FadeToBlack( true );
+			using( Rpc.FilterInclude( player.Network.Owner ) )
+			{
+				Fader.Instance.FadeToBlackRpc();
+			}
+			await Task.DelayRealtimeSeconds( Fader.Instance.FadeTime );
 
 			player.SetLayer( entrance.WorldLayerObject.Layer );
 			player.TeleportTo( entrance.EntranceId );
@@ -69,18 +82,23 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 				WorldManager.Instance.UnloadWorld( currentWorld );
 			}
 			
-			player.CutsceneTarget = entrance.WorldPosition + entrance.WorldRotation.Forward * 64f;
+			await GameTask.DelayRealtimeSeconds( 0.25f );
 
+			player.StartCutscene( entrance.WorldPosition + entrance.WorldRotation.Forward * 64f );
 			
-			await Fader.Instance.FadeFromBlack( true );
+			// await Fader.Instance.FadeFromBlack( true );
+			using( Rpc.FilterInclude( player.Network.Owner ) )
+			{
+				Fader.Instance.FadeFromBlackRpc();
+			}
 			
+			await GameTask.DelayRealtimeSeconds( Fader.Instance.FadeTime );
+
 			// await GameTask.DelayRealtimeSeconds( 0.25f );
-			
-			player.InCutscene = false;
-			
+
+			player.EndCutscene();
+
 			Log.Info( $"areatrigger finished" );
-			
-			
 		}
 		else
 		{
