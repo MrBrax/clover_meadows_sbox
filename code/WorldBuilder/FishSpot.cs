@@ -129,6 +129,8 @@ public class FishSpot : Component
 				fish.WorldPosition = randomPosition;
 				fish.SetSize( fishData.Size );
 				fish.Weight = fishData.Weight.GetValue();
+
+				gameObject.NetworkSpawn();
 				
 				Log.Info( $"Spawned fish {fishData.Name} at {randomPosition}." );
 				
