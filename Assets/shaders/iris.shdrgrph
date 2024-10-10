@@ -16,7 +16,7 @@
         "Output": "Result"
       },
       "Opacity": {
-        "Identifier": "11",
+        "Identifier": "12",
         "Output": "Result"
       }
     },
@@ -58,12 +58,12 @@
       "Identifier": "5",
       "Position": "264,-60",
       "A": {
-        "Identifier": "8",
-        "Output": "Result"
-      },
-      "B": {
         "Identifier": "9",
         "Output": "XY"
+      },
+      "B": {
+        "Identifier": "8",
+        "Output": "Result"
       }
     },
     {
@@ -85,12 +85,12 @@
       "_class": "Float",
       "Min": 0,
       "Max": 1,
-      "Value": 0.50883657,
+      "Value": 0.39864045,
       "Name": "Progress",
       "IsAttribute": false,
       "UI": {},
       "Identifier": "7",
-      "Position": "300,120"
+      "Position": "228,120"
     },
     {
       "_class": "Float2",
@@ -134,7 +134,7 @@
       "DefaultInput": 0,
       "DefaultEdge": 0,
       "Identifier": "11",
-      "Position": "504,0",
+      "Position": "528,-48",
       "Input": {
         "Identifier": "5",
         "Output": "Result"
@@ -143,6 +143,49 @@
         "Identifier": "7",
         "Output": "Result"
       }
+    },
+    {
+      "_class": "SmoothStep",
+      "Identifier": "12",
+      "Position": "528,96",
+      "Input": {
+        "Identifier": "5",
+        "Output": "Result"
+      },
+      "Edge1": {
+        "Identifier": "7",
+        "Output": "Result"
+      },
+      "Edge2": {
+        "Identifier": "13",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "Add",
+      "DefaultA": 0,
+      "DefaultB": 1,
+      "Identifier": "13",
+      "Position": "432,240",
+      "A": {
+        "Identifier": "7",
+        "Output": "Result"
+      },
+      "B": {
+        "Identifier": "14",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 0.005,
+      "Name": "",
+      "IsAttribute": false,
+      "UI": {},
+      "Identifier": "14",
+      "Position": "192,300"
     }
   ]
 }
