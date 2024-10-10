@@ -31,6 +31,7 @@ public class WeatherManager : Component
 	
 	[Property] public Rain RainComponent { get; set; }
 	[Property] public Fog FogComponent { get; set; }
+	[Property] public Wind WindComponent { get; set; }
 	
 	public bool IsInside { get; set; } = false;
 	public bool PrecipitationEnabled { get; private set; }
@@ -298,14 +299,16 @@ public class WeatherManager : Component
 		WindEnabled = level > 0;
 		if ( WindEnabled && IsInside ) return; // no wind inside
 										 // GetNode<Wind>( "Wind" ).SetEnabledSmooth( state );
-		if ( instant )
+		/*if ( instant )
 		{
 			// GetNode<Wind>( "Wind" ).SetEnabled( state );
 		}
 		else
 		{
 			// GetNode<Wind>( "Wind" ).SetEnabledSmooth( state );
-		}
+		}*/
+		
+		WindComponent.SetEnabled( level > 0, !instant );
 	}
 
 	private void SetFog( int level, bool instant = false )

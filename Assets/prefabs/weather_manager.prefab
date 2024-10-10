@@ -442,6 +442,48 @@
             ]
           }
         ]
+      },
+      {
+        "__guid": "5587cfea-42ca-4963-94f1-1feb18c044ba",
+        "Flags": 0,
+        "Name": "Wind",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "e0e9bc88-c334-42a6-adb8-56371f0faa5c",
+            "Flags": 0,
+            "Name": "Sound",
+            "Position": "0,0,64",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.SoundPointComponent",
+                "__guid": "335f4de0-2ff3-4e1b-b1e1-404872719f20",
+                "DistanceAttenuation": false,
+                "DistanceAttenuationOverride": true,
+                "Force2d": true,
+                "MaxRepeatTime": 1,
+                "MinRepeatTime": 1,
+                "Occlusion": false,
+                "OcclusionOverride": true,
+                "OcclusionRadius": 32,
+                "Pitch": 1,
+                "PlayOnStart": true,
+                "ReflectionOverride": true,
+                "Reflections": false,
+                "Repeat": false,
+                "SoundEvent": "sounds/weather/wind/wind.sound",
+                "SoundOverride": true,
+                "StopOnNew": false,
+                "TargetMixer": {
+                  "Name": "unknown",
+                  "Id": "00000000-0000-0000-0000-000000000000"
+                },
+                "Volume": 1
+              }
+            ]
+          }
+        ]
       }
     ],
     "__variables": []

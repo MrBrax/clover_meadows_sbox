@@ -1,10 +1,11 @@
-﻿namespace Clover.WorldBuilder.Weather;
+﻿using System;
+
+namespace Clover.WorldBuilder.Weather;
 
 public class Rain : WeatherBase
 {
-	
 	[Property] public ParticleEmitter Emitter { get; set; }
-	
+
 	[Property] public SoundPointComponent Sound { get; set; }
 
 	public override void SetEnabled( bool state, bool smooth = false )
@@ -17,7 +18,7 @@ public class Rain : WeatherBase
 	public override void SetLevel( int level, bool smooth = false )
 	{
 		base.SetLevel( level, smooth );
-		
+
 		switch ( level )
 		{
 			case 0:
@@ -44,11 +45,13 @@ public class Rain : WeatherBase
 				Emitter.Rate = 500;
 				break;
 		}
-		
 	}
 
 	public void SetWind( float direction, float windSpeed )
 	{
-		
+		Emitter.GetComponent<ParticleEffect>().ForceDirection = new Vector3( 
+			MathF.Cos( direction ) * ( windSpeed * 50f ),
+			MathF.Sin( direction ) * ( windSpeed * 50f ), 
+			-400f );
 	}
 }
