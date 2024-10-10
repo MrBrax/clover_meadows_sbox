@@ -5,11 +5,10 @@ using Sandbox;
 [Icon( "camera" )]
 public sealed class CameraMan : Component
 {
-	
 	public static CameraMan Instance { get; private set; }
-	
+
 	[Property] public GameObject CameraPrefab { get; set; }
-	
+
 	public List<GameObject> Targets { get; set; } = new();
 
 	private IEnumerable<CameraNode> _cameraNodes => Scene.GetAllComponents<CameraNode>().Where( x => !x.IsProxy );
@@ -40,7 +39,7 @@ public sealed class CameraMan : Component
 	protected override void OnStart()
 	{
 		base.OnStart();
-		
+
 		if ( !CameraPrefab.IsValid() ) throw new Exception( "CameraPrefab is not valid" );
 
 		var camera = CameraPrefab.Clone();
@@ -60,18 +59,30 @@ public sealed class CameraMan : Component
 		if ( !MainCameraNode.IsValid() ) return;
 		if ( !CameraComponent.IsValid() ) return;
 
+		var wishedRot = Rotation.Identity;
+
+		if ( Targets.Count > 0 )
+		{
+			var midpoint = GetTargetsMidpoint();
+			wishedRot = Rotation.LookAt( midpoint - MainCameraNode.WorldPosition, Vector3.Up );
+		}
+		else
+		{
+			wishedRot = MainCameraNode.WorldRotation;
+		}
+
 		_positionLerp = Vector3.Lerp( _positionLerp, MainCameraNode.WorldPosition, Time.Delta * LerpSpeed );
-		_rotationLerp = Rotation.Lerp( _rotationLerp, MainCameraNode.WorldRotation, Time.Delta * LerpSpeed );
+		_rotationLerp = Rotation.Lerp( _rotationLerp, wishedRot, Time.Delta * LerpSpeed );
 		_fovLerp = _fovLerp.LerpTo( MainCameraNode.FieldOfView, Time.Delta * LerpSpeed );
-		
-		var midpoint = GetTargetsMidpoint();
-		_rotationLerp = Rotation.Lerp( _rotationLerp, Rotation.LookAt( midpoint - _positionLerp, Vector3.Up ), Time.Delta * LerpSpeed );
+
+		// var midpoint = GetTargetsMidpoint();
+		// _rotationLerp = Rotation.Lerp( _rotationLerp, Rotation.LookAt( midpoint - _positionLerp, Vector3.Up ), Time.Delta * LerpSpeed );
 
 		CameraComponent.WorldPosition = _positionLerp;
 		CameraComponent.WorldRotation = _rotationLerp;
 		CameraComponent.FieldOfView = _fovLerp;
 	}
-	
+
 	public Vector3 GetTargetsMidpoint()
 	{
 		if ( Targets.Count == 0 ) return Vector3.Zero;
