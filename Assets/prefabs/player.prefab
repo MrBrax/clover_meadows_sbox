@@ -40,6 +40,9 @@
       {
         "__type": "CameraController",
         "__guid": "325fe11a-c69d-4bc4-b107-0822cff14d19",
+        "CameraErrorSound": "sounds/camera/camera_error.sound",
+        "CameraInSound": "sounds/camera/camera_in.sound",
+        "CameraOutSound": "sounds/camera/camera_out.sound",
         "MainCameraNode": {
           "_type": "component",
           "component_id": "2fb1ce16-d463-4554-980e-59a3a3a2e355",
