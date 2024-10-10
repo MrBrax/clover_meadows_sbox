@@ -1,4 +1,6 @@
-﻿using Clover.Player;
+﻿using System;
+using Clover.Player;
+using Clover.WorldBuilder;
 using Sandbox.UI;
 
 namespace Clover;
@@ -27,5 +29,10 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 	public void PostWorldSaved( World world )
 	{
 		
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( TimeManager.Instance.Time );
 	}
 }

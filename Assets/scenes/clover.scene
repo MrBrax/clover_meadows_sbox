@@ -199,6 +199,26 @@
           }
         }
       ]
+    },
+    {
+      "__guid": "f1e9442f-52d4-4de1-9fb6-b3df6e944725",
+      "Flags": 0,
+      "Name": "WeatherManager",
+      "Position": "2474.286,1534.951,46.55483",
+      "Enabled": true
+    },
+    {
+      "__guid": "a1555b1a-0a74-410e-b8e1-4b81ef74aaed",
+      "Flags": 0,
+      "Name": "TimeManager",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Clover.WorldBuilder.TimeManager",
+          "__guid": "6bcba752-8450-49ec-b17a-cfa20ee2f5f9",
+          "HourChime": "sounds/chime/chime_hour.sound"
+        }
+      ]
     }
   ],
   "SceneProperties": {

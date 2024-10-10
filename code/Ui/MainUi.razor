@@ -1,3 +1,4 @@
+@using Clover.WorldBuilder
 @using Sandbox;
 @using Sandbox.UI;
 @inherits PanelComponent
@@ -6,5 +7,8 @@
 <root>
 	<div class="is-saving" @ref="IsSavingPanel">
 		<i class="icon">save</i>
+	</div>
+	<div class="date">
+		@TimeManager.Instance.Time.ToString("HH:mm")
 	</div>
 </root>

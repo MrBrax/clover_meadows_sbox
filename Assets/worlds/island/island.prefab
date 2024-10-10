@@ -80,7 +80,7 @@
         "Flags": 0,
         "Name": "Sun",
         "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
-        "Tags": "light,light_directional",
+        "Tags": "light,light_directional,sun",
         "Enabled": true,
         "Components": [
           {

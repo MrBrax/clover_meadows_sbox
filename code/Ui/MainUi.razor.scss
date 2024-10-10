@@ -24,6 +24,16 @@ MainUi
 		}
 	}
 	
+	.date {
+		position: absolute;
+		bottom: 50px;
+		left: 50px;
+		color: white;
+		font-family: Itim;
+		font-size: 40px;
+		text-stroke: 10px gray;
+	}
+	
 }
 
 @keyframes saving {
