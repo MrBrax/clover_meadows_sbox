@@ -45,6 +45,8 @@ public sealed class CameraMan : Component
 		var camera = CameraPrefab.Clone();
 		camera.NetworkMode = NetworkMode.Never;
 		CameraComponent = camera.GetComponent<CameraComponent>();
+		
+		camera.BreakFromPrefab();
 
 		if ( MainCameraNode.IsValid() )
 		{

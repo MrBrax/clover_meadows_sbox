@@ -80,7 +80,7 @@
         "Flags": 0,
         "Name": "Sun",
         "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
-        "Tags": "light,light_directional,sun",
+        "Tags": "light,light_directional",
         "Enabled": true,
         "Components": [
           {
@@ -134,7 +134,7 @@
         "__guid": "e1aced0c-48bc-4b75-8f9a-5fd165fa5e02",
         "Flags": 0,
         "Name": "Entrance",
-        "Position": "1328,528.0001,-0.0000684095",
+        "Position": "1312,528.0001,-0.0000684095",
         "Rotation": "0,0,0.0000001509958,-1",
         "Enabled": true,
         "Components": [
@@ -154,7 +154,7 @@
         "__guid": "7eabb8c4-08e8-4de0-b100-1cfaf1e6786f",
         "Flags": 0,
         "Name": "WorldPlayerSpawn",
-        "Position": "2629.693,1605.882,-0.0001608893",
+        "Position": "2589.039,1580.303,-0.0001793098",
         "Rotation": "0,0,0.0000001509958,-1",
         "Enabled": true,
         "Components": [
@@ -174,7 +174,8 @@
         "__guid": "ad737830-b14b-447c-bb77-01ba3a70d202",
         "Flags": 0,
         "Name": "HouseTrigger",
-        "Position": "1264,528,16",
+        "Position": "1280,528,16",
+        "Rotation": "0,0,1,-0.00000004371139",
         "Tags": "trigger",
         "Enabled": true,
         "Components": [
@@ -667,15 +668,6 @@
             "SpecialFish": []
           }
         ]
-      },
-      {
-        "__guid": "e430a12c-a1c4-4532-93ae-d8c098de0c5a",
-        "Flags": 0,
-        "Name": "fish_shadow",
-        "Position": "2694.312,1613.142,-16",
-        "Rotation": "-0.00000002980232,0,0.9999999,0",
-        "__Prefab": "animals/fish/fish_shadow.prefab",
-        "__PrefabVariables": {}
       }
     ],
     "__variables": []
@@ -686,6 +678,5 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }

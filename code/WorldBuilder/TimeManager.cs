@@ -157,7 +157,7 @@ public class TimeManager : Component
 		}
 		else
 		{
-			Log.Warning( "Sun not found." );
+			// Log.Warning( "Sun not found." );
 		}
 		/*
 		if ( IsInstanceValid( _environment ) )

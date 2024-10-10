@@ -10,16 +10,15 @@ using Clover.Player;
 public class PlayerController : Component
 {
 	[RequireComponent] public PlayerCharacter Player { get; set; }
+	[RequireComponent] public CharacterController CharacterController { get; set; }
 	[Property] public Vector3 Gravity { get; set; } = new Vector3( 0, 0, 800 );
 
 	public Vector3 WishVelocity { get; private set; }
 
-	[Sync]
-	public float Yaw { get; set; }
-	
+	[Sync] public float Yaw { get; set; }
 
-	[Sync]
-	public bool IsRunning { get; set; }
+
+	[Sync] public bool IsRunning { get; set; }
 
 	protected override void OnEnabled()
 	{
@@ -39,12 +38,12 @@ public class PlayerController : Component
 
 	protected override void OnUpdate()
 	{
-		
 		if ( Player.Model.IsValid() )
 		{
-			Player.Model.WorldRotation = Rotation.Lerp( Player.Model.WorldRotation, Rotation.From( 0, Yaw, 0 ), Time.Delta * 10.0f );
+			Player.Model.WorldRotation = Rotation.Lerp( Player.Model.WorldRotation, Rotation.From( 0, Yaw, 0 ),
+				Time.Delta * 10.0f );
 		}
-		
+
 		// Eye input
 		/*if ( !IsProxy )
 		{
@@ -129,15 +128,42 @@ public class PlayerController : Component
 		if ( IsProxy )
 			return;
 		
+
+		if ( Player.InCutscene )
+		{
+			if ( Player.CutsceneTarget.HasValue )
+			{
+				var target = Player.CutsceneTarget.Value;
+				var direction = (target - Player.WorldPosition).Normal;
+
+				CharacterController.Velocity = direction * 100.0f;
+
+				Player.ModelLookAt( target );
+
+				// Gizmo.Draw.LineSphere( target, 10.0f );
+
+				if ( (target - Player.WorldPosition).Length < 10.0f )
+				{
+					// Player.CutsceneTarget = null;
+					CharacterController.Velocity = Vector3.Zero;
+					Log.Info( "Cutscene target reached" );
+				}
+
+				CharacterController.Move();
+			}
+
+			return;
+		}
+
 		if ( !Player.ShouldMove() )
 		{
 			return;
 		}
-		
+
 		BuildWishVelocity();
 
 		var cc = GameObject.Components.Get<CharacterController>();
-		
+
 		if ( !cc.IsValid() )
 		{
 			// Log.Error( "CharacterController is not valid" );
@@ -157,7 +183,6 @@ public class PlayerController : Component
 			// OnJump( fJumps, "Hello", new object[] { Time.Now.ToString(), 43.0f }, Vector3.Random );
 
 			fJumps += 1.0f;
-
 		}
 
 		if ( cc.IsOnGround )
@@ -199,12 +224,12 @@ public class PlayerController : Component
 				Log.Error( "Player.Model is not valid" );
 				return;
 			}
-			
+
 			var inputYaw = MathF.Atan2( input.y, input.x ).RadianToDegree();
 			// Player.Model.WorldRotation = Rotation.Lerp( Player.Model.WorldRotation, Rotation.From( 0, yaw + 180, 0 ), Time.Delta * 10.0f );
 			// Yaw = yaw + 180;
 			Yaw = Yaw.LerpDegreesTo( inputYaw + 180, Time.Delta * 10.0f );
-			
+
 			// WishedRotation = Rotation.LookAt( input, Vector3.Up );
 			var forward = Player.Model.WorldRotation.Forward;
 			WishVelocity = forward.Normal;
@@ -222,11 +247,10 @@ public class PlayerController : Component
 		{
 			WishVelocity *= 110.0f;
 		}
-		
+
 		if ( Player.Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) )
 		{
 			WishVelocity *= tool.CustomPlayerSpeed();
 		}
-		
 	}
 }

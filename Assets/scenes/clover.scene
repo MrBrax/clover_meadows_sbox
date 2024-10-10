@@ -220,6 +220,22 @@
           "HourChime": "sounds/chime/chime_hour.sound"
         }
       ]
+    },
+    {
+      "__guid": "4e4e74a4-a6bc-4ce1-b854-488e66eb1e68",
+      "Flags": 0,
+      "Name": "Fader",
+      "Position": "2583.411,1796.942,-114.3771",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Clover.Components.Fader",
+          "__guid": "9d44cea2-d05a-48ab-b8e6-486945ab8deb",
+          "FadeFromBlackSound": "sounds/camera/camera_out.sound",
+          "FadeTime": 1,
+          "FadeToBlackSound": "sounds/camera/camera_in.sound"
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -248,6 +264,5 @@
   "Description": "",
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }

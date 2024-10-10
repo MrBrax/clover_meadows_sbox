@@ -127,7 +127,7 @@
         "__guid": "f88734aa-50ac-49fa-80bb-f44c691d96c0",
         "Flags": 0,
         "Name": "Entrance",
-        "Position": "496,320,0",
+        "Position": "544,320,0",
         "Rotation": "0,0,1,-0.00000004371139",
         "Enabled": true,
         "Components": [
@@ -281,7 +281,7 @@
                   "DstName": "_signal"
                 },
                 {
-                  "Id": 2,
+                  "Id": 3,
                   "Value": "asdf",
                   "DstId": 1,
                   "DstName": "format"
@@ -506,7 +506,7 @@
               ]
             },
             "SmoothingAngle": 40,
-            "Static": false
+            "Static": true
           }
         ]
       },
@@ -609,7 +609,7 @@
               ]
             },
             "SmoothingAngle": 40,
-            "Static": false
+            "Static": true
           }
         ]
       }
@@ -622,6 +622,5 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }

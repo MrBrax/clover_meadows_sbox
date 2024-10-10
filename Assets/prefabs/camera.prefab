@@ -76,9 +76,46 @@
         "Intensity": 8,
         "Quality": "High",
         "Radius": 32
+      },
+      {
+        "__type": "Clover.Components.IrisTransition",
+        "__guid": "3344a9b9-f013-4c1a-af86-584295440693",
+        "IrisModel": {
+          "_type": "component",
+          "component_id": "dc4e50ac-456c-47f8-838a-74bfaf89c458",
+          "go": "c57a55e5-d342-4045-a3da-1926e89dcd32",
+          "component_type": "ModelRenderer"
+        }
       }
     ],
-    "Children": [],
+    "Children": [
+      {
+        "__guid": "c57a55e5-d342-4045-a3da-1926e89dcd32",
+        "Flags": 0,
+        "Name": "Iris",
+        "Position": "32,0,0",
+        "Rotation": "0,-0.7071068,0,0.7071068",
+        "Scale": "0.7,0.7,1",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "dc4e50ac-456c-47f8-838a-74bfaf89c458",
+            "BodyGroups": 18446744073709551615,
+            "MaterialOverride": "materials/iris_transition.vmat",
+            "Model": "models/dev/plane.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": true,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
     "__variables": []
   },
   "ShowInMenu": false,
@@ -87,6 +124,5 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }

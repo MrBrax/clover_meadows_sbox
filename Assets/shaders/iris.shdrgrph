@@ -1,0 +1,148 @@
+{
+  "Model": "models/dev/plane.vmdl",
+  "Description": "",
+  "BlendMode": "Masked",
+  "nodes": [
+    {
+      "_class": "Result",
+      "DefaultOpacity": 1,
+      "DefaultRoughness": 1,
+      "DefaultMetalness": 0,
+      "DefaultAmbientOcclusion": 0,
+      "Identifier": "0",
+      "Position": "792,-216",
+      "Albedo": {
+        "Identifier": "1",
+        "Output": "Result"
+      },
+      "Opacity": {
+        "Identifier": "11",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "TextureSampler",
+      "Image": "materials/cable/black_color.tga",
+      "Sampler": {},
+      "UI": {
+        "Default": "1,1,1,1",
+        "ShowExtension": true,
+        "SrgbRead": true
+      },
+      "Identifier": "1",
+      "Position": "-216,-300"
+    },
+    {
+      "_class": "TextureCoord",
+      "UseSecondaryCoord": false,
+      "Tiling": "1,1",
+      "Identifier": "2",
+      "Position": "-732,168"
+    },
+    {
+      "_class": "SplitVector",
+      "Identifier": "3",
+      "Position": "-504,-24",
+      "Input": {
+        "Identifier": "4",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "ScreenCoordinate",
+      "Identifier": "4",
+      "Position": "-732,-24"
+    },
+    {
+      "_class": "Distance",
+      "Identifier": "5",
+      "Position": "264,-60",
+      "A": {
+        "Identifier": "8",
+        "Output": "Result"
+      },
+      "B": {
+        "Identifier": "9",
+        "Output": "XY"
+      }
+    },
+    {
+      "_class": "Divide",
+      "DefaultA": 0,
+      "DefaultB": 1,
+      "Identifier": "6",
+      "Position": "-300,-24",
+      "A": {
+        "Identifier": "3",
+        "Output": "X"
+      },
+      "B": {
+        "Identifier": "3",
+        "Output": "Y"
+      }
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 0.50883657,
+      "Name": "Progress",
+      "IsAttribute": false,
+      "UI": {},
+      "Identifier": "7",
+      "Position": "300,120"
+    },
+    {
+      "_class": "Float2",
+      "Min": "0,0",
+      "Max": "1,1",
+      "Value": "0.5,0.5",
+      "Name": "",
+      "IsAttribute": false,
+      "UI": {},
+      "Identifier": "8",
+      "Position": "-96,-60"
+    },
+    {
+      "_class": "CombineVector",
+      "DefaultX": 0,
+      "DefaultY": 0,
+      "DefaultZ": 0,
+      "DefaultW": 0,
+      "Identifier": "9",
+      "Position": "12,168",
+      "X": {
+        "Identifier": "10",
+        "Output": "X"
+      },
+      "Y": {
+        "Identifier": "10",
+        "Output": "Y"
+      }
+    },
+    {
+      "_class": "SplitVector",
+      "Identifier": "10",
+      "Position": "-504,168",
+      "Input": {
+        "Identifier": "2",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "Step",
+      "DefaultInput": 0,
+      "DefaultEdge": 0,
+      "Identifier": "11",
+      "Position": "504,0",
+      "Input": {
+        "Identifier": "5",
+        "Output": "Result"
+      },
+      "Edge": {
+        "Identifier": "7",
+        "Output": "Result"
+      }
+    }
+  ]
+}

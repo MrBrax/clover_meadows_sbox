@@ -1,4 +1,5 @@
-﻿using Clover.Player;
+﻿using Clover.Components;
+using Clover.Player;
 
 namespace Clover;
 
@@ -42,6 +43,8 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 	{
 		var w = await WorldManager.Instance.GetWorldOrLoad( DestinationWorldData );
 
+		if ( player.InCutscene ) return;
+
 		var entrance = w.GetEntrance( DestinationEntranceId );
 
 		if ( entrance.IsValid() )
@@ -49,6 +52,11 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			var currentWorld = WorldManager.Instance.GetWorld( WorldLayerObject.Layer );
 
 			currentWorld.Save();
+
+			player.CutsceneTarget = WorldPosition + WorldRotation.Forward * 64f;
+			player.InCutscene = true;
+
+			await Fader.Instance.FadeToBlack( true );
 
 			player.SetLayer( entrance.WorldLayerObject.Layer );
 			player.TeleportTo( entrance.EntranceId );
@@ -60,6 +68,19 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			{
 				WorldManager.Instance.UnloadWorld( currentWorld );
 			}
+			
+			player.CutsceneTarget = entrance.WorldPosition + entrance.WorldRotation.Forward * 64f;
+
+			
+			await Fader.Instance.FadeFromBlack( true );
+			
+			// await GameTask.DelayRealtimeSeconds( 0.25f );
+			
+			player.InCutscene = false;
+			
+			Log.Info( $"areatrigger finished" );
+			
+			
 		}
 		else
 		{
