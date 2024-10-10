@@ -8,19 +8,20 @@ namespace Clover.Items;
 
 [Category( "Clover/Items" )]
 [Icon( "outlet" )]
-[Description("Has to be added to items placed in the world, otherwise they will not be saved.")]
+[Description( "Has to be added to items placed in the world, otherwise they will not be saved." )]
 public class WorldItem : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
-	public WorldNodeLink NodeLink => WorldLayerObject?.World?.GetItem( GameObject );
+	public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World.GetItem( GameObject ) : null;
 
 	public Vector2Int GridPosition => NodeLink?.GridPosition ?? Vector2Int.Zero;
 
 	[Property, ReadOnly]
-	public Vector2Int Size => NodeLink?.Size ?? new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
+	public Vector2Int Size =>
+		!Scene.IsEditor ? NodeLink.Size : new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
 
-	public World.ItemPlacement GridPlacement => NodeLink?.GridPlacement ?? World.ItemPlacement.Floor;
+	public World.ItemPlacement GridPlacement => !Scene.IsEditor ? NodeLink.GridPlacement : World.ItemPlacement.Floor;
 	public World.ItemPlacementType GridPlacementType => NodeLink?.PlacementType ?? World.ItemPlacementType.Placed;
 	public World.ItemRotation GridRotation => NodeLink?.GridRotation ?? World.ItemRotation.North;
 
@@ -93,6 +94,13 @@ public class WorldItem : Component, IPickupable
 			return;
 		}
 
+		if ( Scene != GameObject )
+		{
+			Gizmo.Draw.Color = Color.Red;
+			Gizmo.Draw.Text( "NOT AT ROOT", new Transform( WorldPosition ), "Roboto", 24f );
+			Gizmo.Draw.Color = Color.White;
+		}
+
 		var gridSize = World.GridSize;
 
 		/*var mins = new Vector3( GridPosition.x * gridSize, GridPosition.y * gridSize, gridSize );
@@ -128,7 +136,6 @@ public class WorldItem : Component, IPickupable
 		{
 			Gizmo.Draw.Text( $"Dropped: {NodeLink.GetName()}", new Transform( WorldPosition + Vector3.Up * 20 ) );
 		}
-		
 	}
 
 	[Property] public bool CanPickupSimple { get; set; }
