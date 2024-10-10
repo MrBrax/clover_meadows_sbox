@@ -62,7 +62,7 @@ public class CatchableFish : Component, IFootstepEvent
 
 	public void SetState( FishState state )
 	{
-		Log.Info( $"Fish state changed to {state}." );
+		// Log.Info( $"Fish state changed to {state}." );
 		State = state;
 		/*_lastAction = Time.Now;
 		_actionDuration = 0;
@@ -502,7 +502,7 @@ public class CatchableFish : Component, IFootstepEvent
 
 		if ( !traceWater.Hit )
 		{
-			Log.Warning( $"No water found at {randomPoint}." );
+			// Log.Warning( $"No water found at {randomPoint}." );
 			// this will just try again
 			return;
 		}
@@ -513,7 +513,7 @@ public class CatchableFish : Component, IFootstepEvent
 
 		if ( traceTerrain.Hit )
 		{
-			Log.Warning( $"Terrain found at {randomPoint}." );
+			// Log.Warning( $"Terrain found at {randomPoint}." );
 			// this will just try again
 			return;
 		}
@@ -524,7 +524,7 @@ public class CatchableFish : Component, IFootstepEvent
 
 		if ( trace.Hit )
 		{
-			Log.Warning( $"Terrain found between {WorldPosition} and {randomPoint}." );
+			// Log.Warning( $"Terrain found between {WorldPosition} and {randomPoint}." );
 			// this will just try again
 			return;
 		}
