@@ -50,7 +50,7 @@ public class FishingRod : BaseCarriable
 	private const float MinCastDistance = 32f;
 	private const float MaxCastDistance = 192f;
 	private const float WaterCheckHeight = 64f;
-	
+
 	private float LineSlackDistance => Sandbox.Utility.Noise.Perlin( Time.Now * 10f ) * 16f;
 
 	private GameObject _lineSlackDummy;
@@ -85,7 +85,7 @@ public class FishingRod : BaseCarriable
 			Log.Warning( "Cannot use." );
 			return;
 		}
-		
+
 		if ( _isCasting )
 		{
 			Log.Warning( "Already casting." );
@@ -101,7 +101,7 @@ public class FishingRod : BaseCarriable
 		}
 
 		NextUse = 1f;
-		
+
 		if ( HasCasted && !Bobber.IsValid() )
 		{
 			Log.Warning( "Bobber is not valid." );
@@ -119,13 +119,12 @@ public class FishingRod : BaseCarriable
 
 			ReelIn( 32f );
 		}
-		
 	}
 
 	public override void OnUseUp()
 	{
 		base.OnUseUp();
-		
+
 		if ( _isWindup )
 		{
 			_isWindup = false;
@@ -133,7 +132,6 @@ public class FishingRod : BaseCarriable
 			NextUse = 0.5f;
 			Cast();
 		}
-		
 	}
 
 	protected override void OnDestroy()
@@ -145,44 +143,17 @@ public class FishingRod : BaseCarriable
 
 	protected override void OnFixedUpdate()
 	{
-		/*if ( _bobber.IsValid() )
-		{
-
-			if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == CatchableFish.FishState.Fighting )
-			{
-				GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "fight" );
-				CreateLine( false );
-			}
-			else
-			{
-
-				CreateLine( true );
-			}
-		}*/
-
-		/*if ( Bobber.IsValid() )
-		{
-			if ( Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.Fighting )
-			{
-				// GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "fight" );
-				// CreateLine( false );
-			}
-			else
-			{
-				// CreateLine( true );
-			}
-		}*/
-
 		if ( IsProxy ) return;
-		
+
 		if ( _lineSlackDummy.IsValid() )
 		{
-			_lineSlackDummy.WorldPosition = LineStartPoint.WorldPosition.LerpTo( Bobber.WorldPosition, 0.5f ) + Vector3.Down * LineSlackDistance;
+			_lineSlackDummy.WorldPosition = LineStartPoint.WorldPosition.LerpTo( Bobber.WorldPosition, 0.5f ) +
+			                                Vector3.Down * LineSlackDistance;
 		}
-		
+
 		if ( _isWindup )
 		{
-			var castDistance = Math.Clamp( 32f + ( _timeSinceWindup * 90f ), MinCastDistance, MaxCastDistance );
+			var castDistance = Math.Clamp( 32f + (_timeSinceWindup * 90f), MinCastDistance, MaxCastDistance );
 			// Log.Info( $"Windup: {castDistance}, {_timeSinceWindup}" );
 			Model.LocalRotation = Rotation.FromPitch( (castDistance / MaxCastDistance) * 90f );
 			return;
@@ -214,7 +185,7 @@ public class FishingRod : BaseCarriable
 		{
 			// Stamina = Stamina.LerpTo( 100f, Time.Delta * 5f );
 			Stamina += Time.Delta * 7.5f;
-			
+
 			if ( Bobber.IsValid() && Bobber.Fish.IsValid() )
 			{
 				if ( Bobber.Fish.Stamina <= 0 )
@@ -244,8 +215,8 @@ public class FishingRod : BaseCarriable
 	{
 		Log.Info( "Casting." );
 		if ( Player == null ) throw new Exception( "Player is null." );
-		
-		_castDistance = Math.Clamp( 32f + ( _timeSinceWindup * 90f ), MinCastDistance, MaxCastDistance );
+
+		_castDistance = Math.Clamp( 32f + (_timeSinceWindup * 90f), MinCastDistance, MaxCastDistance );
 
 		if ( !CheckForWater( GetCastPosition() ) )
 		{
@@ -300,8 +271,9 @@ public class FishingRod : BaseCarriable
 
 			// place slack dummy between the line start and the bobber
 			_lineSlackDummy = Scene.CreateObject();
-			_lineSlackDummy.WorldPosition = LineStartPoint.WorldPosition.LerpTo( Bobber.WorldPosition, 0.5f ) + Vector3.Down * LineSlackDistance;
-			
+			_lineSlackDummy.WorldPosition = LineStartPoint.WorldPosition.LerpTo( Bobber.WorldPosition, 0.5f ) +
+			                                Vector3.Down * LineSlackDistance;
+
 			LineRenderer?.Points.Insert( 1, _lineSlackDummy );
 
 			// tween the bobber to the water in an arc
@@ -344,7 +316,8 @@ public class FishingRod : BaseCarriable
 
 	public static bool CheckForWater( Vector3 position )
 	{
-		var traceWater = Game.ActiveScene.Trace.Ray( position + Vector3.Up * 32f, position + Vector3.Down * WaterCheckHeight )
+		var traceWater = Game.ActiveScene.Trace
+			.Ray( position + Vector3.Up * 32f, position + Vector3.Down * WaterCheckHeight )
 			.WithTag( "water" )
 			.Run();
 
@@ -398,7 +371,7 @@ public class FishingRod : BaseCarriable
 		if ( _lineSlackDummy.IsValid() ) LineRenderer?.Points.Remove( _lineSlackDummy );
 		Bobber?.DestroyGameObject();
 		Bobber = null;
-		
+
 		_lineSlackDummy?.Destroy();
 		_lineSlackDummy = null;
 	}
@@ -437,24 +410,43 @@ public class FishingRod : BaseCarriable
 		}
 
 		var reelPosition = Bobber.WorldPosition + reelDirection * amount;
+		
+		Gizmo.Draw.LineSphere( reelPosition, 8f );
 
 		var dist = reelPosition.Distance( WorldPosition );
 
-		if ( !CheckForWater( reelPosition ) || dist < 32f )
+		var reelPosInWater = CheckForWater( reelPosition );
+
+		if ( !reelPosInWater || dist < 32f )
 		{
 			// Log.Info( "Reel position too close or not in water. Reeling in." );
 			// ResetAll();
 
-			if ( dist < 32 && Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.Fighting )
+			if ( Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.Fighting )
 			{
-				Log.Info( "Reeling in, fish is fighting." );
-				CatchFish( Bobber.Fish );
-				return;
+				if ( dist < 35 || !reelPosInWater ) // TODO: why this again
+				{
+					if ( Bobber.Fish.Stamina <= 1 )
+					{
+						Log.Info( "Reeling in, fish is tired." );
+						CatchFish( Bobber.Fish );
+					}
+					else
+					{
+						Log.Info( "Reeling in, fish is fighting." );
+						LineStrength -= 2f;
+					}
+				}
+				else
+				{
+					Log.Info( "Fish too far away." );
+				}
 			}
-			
-			Log.Info( "Reeling in, too close or not in water." );
-			
-			ResetAll();
+			else
+			{
+				Log.Info( "Reeling in, too close or not in water." );
+				ResetAll();
+			}
 
 			return;
 		}

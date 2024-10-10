@@ -3,7 +3,6 @@
     "__guid": "4fe97cf0-8df2-419e-a719-046440034ad5",
     "Flags": 0,
     "Name": "splash",
-    "Rotation": "0,-0.7071068,0,0.7071068",
     "Tags": "particles",
     "Enabled": true,
     "Components": [
@@ -137,7 +136,7 @@
         "ConeFar": 50,
         "ConeNear": 1,
         "Delay": 0,
-        "DestroyOnEnd": false,
+        "DestroyOnEnd": true,
         "Duration": 5,
         "InVolume": false,
         "Loop": false,

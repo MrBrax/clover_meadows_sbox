@@ -58,7 +58,7 @@
 				[
 					{
 						_class = "AnimFile"
-						name = "bobber"
+						name = "bobbing"
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""
@@ -79,13 +79,36 @@
 						take = 0
 						reverse = false
 					},
+					{
+						_class = "AnimFile"
+						name = "fight"
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = false
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "items/tools/fishing_rod/bobber.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 1
+						reverse = false
+					},
 				]
 				default_root_bone_name = ""
 			},
 		]
 		model_archetype = ""
 		primary_associated_entity = ""
-		anim_graph_name = ""
+		anim_graph_name = "items/tools/fishing_rod/bobber.vanmgrph"
 		base_model_name = ""
 	}
 }

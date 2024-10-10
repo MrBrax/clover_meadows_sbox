@@ -17,14 +17,30 @@ public class FishingBobber : Component
 	public FishingRod Rod;
 	
 	public bool IsInWater { get; set; }
+	
+	// private TimeSince _lastNibble;
 
 	public void OnHitWater()
 	{
 		// GetNode<AudioStreamPlayer3D>( "BobberWater" ).Play();
 		// GetNode<AnimationPlayer>( "fish_bobber/AnimationPlayer" ).Play( "bobbing" );
 		GameObject.PlaySound( SplashSound );
-		Bobber.Set("bobbing", true);
+		// Bobber.Set("anim", 0);
+		// Bobber.Set("bobbing", true);
 		IsInWater = true;
+		
+		// Bobber.SceneModel.DirectPlayback.Play( "bobbing" );
+		// Log.Info( string.Join(",", Bobber.SceneModel.DirectPlayback.Animations ));
+	}
+
+	public void OnNibble()
+	{
+		Bobber.Set("nibble", true);
+	}
+	
+	public void OnFight()
+	{
+		Bobber.Set("fight", true);
 	}
 
 	protected override void OnDestroy()
@@ -34,10 +50,16 @@ public class FishingBobber : Component
 		CameraMan.Instance?.Targets.Remove( GameObject );
 	}
 
-	protected override void OnUpdate()
+	protected override void OnFixedUpdate()
 	{
-		base.OnUpdate();
+		base.OnFixedUpdate();
+		
+		if ( !IsInWater )
+			return;
 
-		// Gizmo.Draw.Arrow( WorldPosition, WorldPosition + WorldRotation.Forward * 32f );
+		/*if ( _lastNibble > 1 && Bobber.SceneModel.DirectPlayback.Name == "nibble" )
+		{
+			Bobber.SceneModel.DirectPlayback.Play( "bobbing" );
+		}*/
 	}
 }

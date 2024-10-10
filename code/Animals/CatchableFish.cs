@@ -1,11 +1,12 @@
 ﻿using System;
 using Clover.Carriable;
+using Clover.Components;
 using Clover.Data;
 using Clover.Objects;
 
 namespace Clover.Animals;
 
-public class CatchableFish : Component
+public class CatchableFish : Component, IFootstepEvent
 {
 	public enum FishState
 	{
@@ -29,9 +30,9 @@ public class CatchableFish : Component
 	private const float _bobberDiscoverAngle = 45f;
 
 	private Vector3 _velocity = Vector3.Zero;
-	private const float _maxSwimSpeed = 8f;
+	private const float _maxSwimSpeed = 30f;
 	private const float _maxSwimSpeedPanic = 40f;
-	private const float _swimAcceleration = 0.1f;
+	private const float _swimAcceleration = 1.5f;
 	private const float _swimDeceleration = 0.5f;
 
 	// private const float _catchMsecWindow = 1500f;
@@ -51,12 +52,15 @@ public class CatchableFish : Component
 
 	public TimeUntil NextNibble;
 
+	private TimeSince _lastPanic = 999;
+
 	public bool IsNibbling => CurrentNibbleTime > NextNibble.Passed;
 
 	public float Stamina;
 
 	public void SetState( FishState state )
 	{
+		Log.Info( $"Fish state changed to {state}." );
 		State = state;
 		/*_lastAction = Time.Now;
 		_actionDuration = 0;
@@ -101,7 +105,9 @@ public class CatchableFish : Component
 		{
 			// GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
 			GameObject.PlaySound( SplashSound );
-			_nextSplashSound = Random.Shared.Float( 0.2f, 0.5f ) + ( Stamina / 50f );
+			_nextSplashSound = (TimeUntil)Math.Clamp(  Random.Shared.Float( 0.2f, 0.5f ) + ( Stamina / 50f ), 0.1, 10f );
+			
+			Bobber.Rod.SplashParticle.Clone( WorldPosition, Rotation.FromPitch( -90f ) );
 		}
 
 		if ( !Bobber.IsValid() )
@@ -185,23 +191,35 @@ public class CatchableFish : Component
 		{
 			if ( Random.Shared.Float() <= 0.7f )
 			{
+				Bobber.OnFight();
 				HookFish();
 			}
 			else
 			{
-				Scare();
+				Scare( Bobber.WorldPosition );
 			}
 		}
 		else
 		{
 			Log.Info( "Nibble was not deep enough." );
-			Scare();
+			Scare( Bobber.WorldPosition );
 		}
 	}
 
-	private void Scare()
+	private void Scare( Vector3 source = default )
 	{
-		// throw new NotImplementedException();
+		if ( _lastPanic < 5f ) return;
+		Log.Info( "Scared the fish." );
+		// Gizmo.Draw.Line( WorldPosition, source );
+		// Gizmo.Draw.LineSphere( source, 8f );
+		// Gizmo.Draw.LineSphere( WorldPosition, 8f );
+		_lastPanic = 0;
+		// _swimProgress = 0;
+		_lastAction = Time.Now;
+		_actionDuration = 0;
+		FindSwimAwayFromTarget( source );
+		SetState( FishState.Swimming );
+		GameObject.PlaySound( SplashSound );
 	}
 
 	private void FoundBobber()
@@ -250,6 +268,7 @@ public class CatchableFish : Component
 		NextNibble = Random.Shared.Float( 3f, 8f );
 
 		Sound.Play( NibbleSound, WorldPosition );
+		Bobber.OnNibble();
 	}
 
 	private void FailCatch()
@@ -307,7 +326,7 @@ public class CatchableFish : Component
 	private Vector3 _swimStartPos;
 	private Vector3 _swimTarget;
 	private const int _swimTargetTries = 10;
-	private float _swimProgress;
+	// private float _swimProgress;
 
 	private void Swim()
 	{
@@ -332,50 +351,63 @@ public class CatchableFish : Component
 			}
 
 			_lastAction = Time.Now;
-			_swimStartPos = WorldPosition;
-			_swimProgress = 0;
+			// _swimStartPos = WorldPosition;
+			// _swimProgress = 0;
 
 			Log.Trace( $"New swim target: {_swimTarget}." );
+		}
+		
+		var swimSpeed = _maxSwimSpeed;
+		if ( _lastPanic < 5f )
+		{
+			// swimSpeed = 15f;
 		}
 
 		// move towards the target smoothly
 		// var moveDirection = (_swimTarget - WorldPosition).Normal;
-		var swimDistance = _swimTarget.Distance( _swimStartPos );
-		_swimProgress += Time.Delta * (_maxSwimSpeed / swimDistance);
+		// var swimDistance = _swimTarget.Distance( _swimStartPos );
+		
+		// _swimProgress += Time.Delta * (swimSpeed / swimDistance);
 
-		Vector3 preA = _swimStartPos;
-		Vector3 postB = _swimTarget;
+		// Vector3 preA = _swimStartPos;
+		// Vector3 postB = _swimTarget;
 
 		// Gizmo.Draw.LineSphere( preA, 8f );
 		// Gizmo.Draw.LineSphere( postB, 8f );
 		// Gizmo.Draw.Arrow( preA + Vector3.Up * 8f, postB + Vector3.Up * 8f );
 
-		if ( preA.Distance( postB ) < 0.01f )
+		var distance = WorldPosition.Distance( _swimTarget );
+		
+		var acceleration = _swimAcceleration;
+		
+		if ( distance < 16f )
 		{
-			Log.Info( "Swim target is too close." );
-			SetState( FishState.Idle );
-			return;
+			acceleration = _swimDeceleration;
 		}
 
-		// TODO: find the cubic interpolation function
-		// var interp = _swimStartPos.CubicInterpolate( _swimTarget, preA, postB, _swimProgress );
-		var interp = _swimStartPos.LerpTo( _swimTarget, _swimProgress );
+		var swimDirection = (_swimTarget - WorldPosition).Normal;
+		
+		_velocity += swimDirection * acceleration;
 
-		WorldPosition = interp;
+		if ( distance < 8f )
+		{
+			_velocity = _velocity.ClampLength( 8f );
+			
+		}
+		
+		_velocity = _velocity.ClampLength( swimSpeed );
+		
+		var newRotation = Rotation.LookAt( _velocity.Normal, Vector3.Up );
 
-		// rotate towards the target
-		// var targetRotation = MathF.Atan2( moveDirection.x, moveDirection.y );
-
-		// var newRotation = new Vector3( 0, float.IsNaN( targetRotation ) ? 0 : targetRotation, 0 );
-		// var newRotation = Rotation.FromYaw( float.IsNaN( targetRotation ) ? 0 : targetRotation );
-
-		var newRotation = Rotation.LookAt( (_swimTarget - _swimStartPos), Vector3.Up );
-
+		WorldPosition += _velocity * Time.Delta;
 		WishedRotation = newRotation;
 
 		// check if the fish has reached the target
-		var distance = WorldPosition.Distance( _swimTarget );
-		if ( distance < 0.01f )
+		
+		
+		/**/
+		
+		if ( distance < 4f )
 		{
 			Log.Trace( "Reached swim target." );
 			_swimTarget = Vector3.Zero;
@@ -386,50 +418,69 @@ public class CatchableFish : Component
 		CheckForBobber();
 	}
 
+	private void FindSwimAwayFromTarget( Vector3 source )
+	{
+		
+		var currentPos = WorldPosition;
+		var direction = (currentPos - source).Normal.WithZ( 0 );
+		
+		var basePoint = currentPos + direction * 128f;
+		
+		for ( var i = 0; i < 10; i++ )
+		{
+			var randomPoint = basePoint + new Vector3(
+				Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ),
+				Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ),
+				0 );
+
+			var traceWater = Scene.Trace.Ray( randomPoint + Vector3.Up * 16f, randomPoint + Vector3.Down * 32f )
+				.WithTag( "water" )
+				.Run();
+
+			// Gizmo.Draw.Line( randomPoint + Vector3.Up * 16f, randomPoint + Vector3.Down * 32f );
+
+			if ( !traceWater.Hit )
+			{
+				// Log.Warning( $"No water found at {randomPoint}." );
+				// this will just try again
+				continue;
+			}
+
+			var traceTerrain = Scene.Trace.Ray( randomPoint + Vector3.Up * 16f, randomPoint + Vector3.Down * 32f )
+				.WithTag( "terrain" )
+				.Run();
+
+			if ( traceTerrain.Hit )
+			{
+				// Log.Warning( $"Terrain found at {randomPoint}." );
+				// this will just try again
+				continue;
+			}
+
+			var trace = Scene.Trace.Ray( currentPos, randomPoint )
+				.WithTag( "terrain" )
+				.Run();
+
+			if ( trace.Hit )
+			{
+				// Log.Warning( $"Terrain found between {currentPos} and {randomPoint}." );
+				// this will just try again
+				continue;
+			}
+
+			Log.Info( $"Found a flee swim target: {randomPoint}." );
+			// Gizmo.Draw.LineSphere( randomPoint, 32f );
+			_swimTarget = randomPoint;
+			return;
+		}
+		
+		Log.Warning( "Failed to find a flee swim target." );
+		
+	}
+	
 	private void GetNewSwimTarget()
 	{
-		/*var randomPoint = WorldPosition + new Vector3( GD.RandRange( -_swimRandomRadius, _swimRandomRadius ), 0,
-			GD.RandRange( -_swimRandomRadius, _swimRandomRadius ) );
-
-		var spaceState = GetWorld3D().DirectSpaceState;
-
-		// check if the random point is in water
-		var traceWater =
-			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( randomPoint + Vector3.Up * 1f, randomPoint + Vector3.Down * 1f,
-					World.WaterLayer ) );
-
-		if ( traceWater == null )
-		{
-			// Log.Trace( $"No water found at {randomPoint}." );
-			// this will just try again
-			return;
-		}
-
-		// check if the random point is on terrain or at the edge of the water where there's a steep slant
-		var traceTerrain =
-			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( randomPoint + Vector3.Up * 1f, randomPoint + Vector3.Down * 1f,
-					World.TerrainLayer ) );
-
-		if ( traceTerrain != null )
-		{
-			Log.Trace( $"Terrain found at {randomPoint}." );
-			// this will just try again
-			return;
-		}
-
-		// check if there is terrain between the fish and the random point
-		var trace = new Trace( spaceState ).CastRay(
-			PhysicsRayQueryParameters3D.Create( GlobalTransform.Origin, randomPoint, World.TerrainLayer ) );
-
-		if ( trace != null )
-		{
-			Log.Trace( $"Terrain found between {GlobalTransform.Origin} and {randomPoint}." );
-			// this will just try again
-			return;
-		}*/
-
+		
 		var randomPoint = WorldPosition + new Vector3(
 			Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ),
 			Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ),
@@ -439,7 +490,7 @@ public class CatchableFish : Component
 			.WithTag( "water" )
 			.Run();
 
-		Gizmo.Draw.Line( randomPoint + Vector3.Up * 16f, randomPoint + Vector3.Down * 32f );
+		// Gizmo.Draw.Line( randomPoint + Vector3.Up * 16f, randomPoint + Vector3.Down * 32f );
 
 		if ( !traceWater.Hit )
 		{
@@ -570,7 +621,7 @@ public class CatchableFish : Component
 			}
 			else
 			{
-				Scare();
+				Scare( Bobber.WorldPosition );
 			}
 
 			return;
@@ -599,11 +650,23 @@ public class CatchableFish : Component
 		WorldScale = new Vector3( scale, scale, scale );
 	}
 
-	protected override void OnUpdate()
+	/*protected override void OnUpdate()
 	{
 		base.OnUpdate();
 
-		// Gizmo.Draw.LineSphere( WorldPosition, 8f );
-		// Gizmo.Draw.Arrow( WorldPosition, WorldPosition + WorldRotation.Forward * 32f );
+		Gizmo.Draw.LineSphere( WorldPosition, 8f );
+		Gizmo.Draw.Arrow( WorldPosition, WorldPosition + WorldRotation.Forward * 32f );
+		
+		Gizmo.Draw.Arrow( _swimTarget + Vector3.Up * 64f, _swimTarget );
+	}*/
+
+	public void OnFootstepEvent( SceneModel.FootstepEvent e )
+	{
+		if ( e.Transform.Position.Distance( WorldPosition ) < 128f )
+		{
+			Log.Info( $"Fish heard a footstep: {e.Volume}." );
+			// Scare( e.Transform.Position );
+		}
+	
 	}
 }

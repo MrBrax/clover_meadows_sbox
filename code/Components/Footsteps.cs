@@ -104,6 +104,13 @@ public class Footsteps : Component
 
 		var handle = Sound.Play( sound, tr.HitPosition + tr.Normal * 5 );
 		handle.Volume *= e.Volume;
+		
+		Scene.RunEvent<IFootstepEvent>( x => x.OnFootstepEvent( e ) );
 	}
 	
+}
+
+public interface IFootstepEvent
+{
+	void OnFootstepEvent( SceneModel.FootstepEvent e );
 }
