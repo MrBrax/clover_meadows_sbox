@@ -411,7 +411,7 @@ public class FishingRod : BaseCarriable
 
 		var reelPosition = Bobber.WorldPosition + reelDirection * amount;
 		
-		Gizmo.Draw.LineSphere( reelPosition, 8f );
+		// Gizmo.Draw.LineSphere( reelPosition, 8f );
 
 		var dist = reelPosition.Distance( WorldPosition );
 
