@@ -468,4 +468,9 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		
 		
 	}
+
+	public void Destroy()
+	{
+		TakeOneOrDelete();
+	}
 }

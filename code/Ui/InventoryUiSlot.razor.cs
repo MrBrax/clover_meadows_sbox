@@ -255,5 +255,10 @@ public partial class InventoryUiSlot
 				Slot.Drop();
 			} );
 		}
+		
+		_contextMenu.AddItem( "Destroy", "delete", () =>
+		{
+			Slot.Destroy();
+		} );
 	}
 }

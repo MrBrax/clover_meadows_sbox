@@ -204,22 +204,22 @@ public class ItemData : GameResource
 					}
 					else
 					{
-						Log.Warning( "No hole found" );
+						// Log.Warning( "No hole found" );
 					}
 				}
 				else
 				{
-					Log.Warning( "No shovel equipped" );
+					// Log.Warning( "No shovel equipped" );
 				}
 			}
 			else
 			{
-				Log.Warning( "Item does not support underground placement" );
+				// Log.Warning( "Item does not support underground placement" );
 			}
 		}
 		else
 		{
-			Log.Warning( "Player is null" );
+			// Log.Warning( "Player is null" );
 		}
 	}
 
