@@ -1,0 +1,91 @@
+{
+  "RootObject": {
+    "__guid": "0583a696-5811-4ab8-b691-397a7432b9dd",
+    "Flags": 0,
+    "Name": "flashlight_carry",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.Flashlight",
+        "__guid": "3dbb9be6-5cc3-40e1-bf43-2b4b7538d16d",
+        "ItemData": "items/tools/flashlight/flashlight.tool",
+        "Model": {
+          "_type": "gameobject",
+          "go": "5737a6bb-d427-42b2-881b-96e33f7ba401"
+        },
+        "UseTime": 1
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "5737a6bb-d427-42b2-881b-96e33f7ba401",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "fc8cb003-2324-446f-aebe-8a00c6f05994",
+            "Flags": 0,
+            "Name": "Object",
+            "Position": "0,0,1.135419",
+            "Rotation": "0,-0,-0.7071068,0.7071068",
+            "Scale": "4,4,4",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "e3586da7-50b7-40d5-adfe-151db352791e",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/3dmodelscc0/gadgetselectronics/flashlight/flashlight.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ],
+            "Children": [
+              {
+                "__guid": "50ee1b96-bcc0-4383-a640-69dcac0b8240",
+                "Flags": 0,
+                "Name": "Spot Light",
+                "Position": "0.0000005180881,-2.897359,0",
+                "Rotation": "0,0,-0.7071067,0.7071068",
+                "Tags": "light_spot,light",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpotLight",
+                    "__guid": "97e5fa77-3e79-4569-a109-c2a3a5c68dc1",
+                    "Attenuation": 1,
+                    "ConeInner": 15,
+                    "ConeOuter": 45,
+                    "Cookie": "materials/effects/lightcookies/dirt1.vtex",
+                    "FogMode": "Enabled",
+                    "FogStrength": 1,
+                    "LightColor": "0.91373,0.98039,1,1",
+                    "Radius": 500,
+                    "Shadows": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "titanovsky.flashlight#54429"
+  ],
+  "__version": 1
+}

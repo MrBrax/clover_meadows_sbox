@@ -1,0 +1,73 @@
+{
+  "RootObject": {
+    "__guid": "0583a696-5811-4ab8-b691-397a7432b9dd",
+    "Flags": 0,
+    "Name": "flashlight_dropped",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.Flashlight",
+        "__guid": "3dbb9be6-5cc3-40e1-bf43-2b4b7538d16d",
+        "UseTime": 1
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "00894f2d-25ae-4608-a15d-e54467487e0a",
+        "Layer": -1
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "2e4d1162-5019-44f6-99f9-ac7a65367222",
+        "CanPickupSimple": true,
+        "ItemData": "items/tools/flashlight/flashlight.tool",
+        "Prefab": "items/tools/flashlight/flashlight_dropped.prefab",
+        "Size": "1,1"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "5737a6bb-d427-42b2-881b-96e33f7ba401",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "fc8cb003-2324-446f-aebe-8a00c6f05994",
+            "Flags": 0,
+            "Name": "Object",
+            "Position": "0,0,1.135419",
+            "Rotation": "0,0,0.3826835,0.9238795",
+            "Scale": "4,4,4",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "e3586da7-50b7-40d5-adfe-151db352791e",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/3dmodelscc0/gadgetselectronics/flashlight/flashlight.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "titanovsky.flashlight#54429"
+  ],
+  "__version": 1
+}
