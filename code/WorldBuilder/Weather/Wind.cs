@@ -13,7 +13,7 @@ public class Wind : WeatherBase
 		Sound.Enabled = state;
 
 		Sound.TargetMixer = NodeManager.WeatherManager.IsInside
-			? Mixer.FindMixerByName( "InsideWeather" )
-			: Mixer.FindMixerByName( "OutsideWeather" );
+			? Mixer.FindMixerByName( "WeatherInside" )
+			: Mixer.FindMixerByName( "WeatherOutside" );
 	}
 }

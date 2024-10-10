@@ -19,6 +19,12 @@
           "component_id": "ef95e8c8-0f57-4e40-82bc-290d0ad8296f",
           "go": "5c31dd0a-9e95-40d8-9c66-d1ba85ec27ed",
           "component_type": "Rain"
+        },
+        "WindComponent": {
+          "_type": "component",
+          "component_id": "ea41ed15-8998-45d7-97bb-c0d7d6fcfe99",
+          "go": "5587cfea-42ca-4963-94f1-1feb18c044ba",
+          "component_type": "Wind"
         }
       }
     ],
@@ -448,6 +454,18 @@
         "Flags": 0,
         "Name": "Wind",
         "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.Weather.Wind",
+            "__guid": "ea41ed15-8998-45d7-97bb-c0d7d6fcfe99",
+            "Sound": {
+              "_type": "component",
+              "component_id": "335f4de0-2ff3-4e1b-b1e1-404872719f20",
+              "go": "e0e9bc88-c334-42a6-adb8-56371f0faa5c",
+              "component_type": "SoundPointComponent"
+            }
+          }
+        ],
         "Children": [
           {
             "__guid": "e0e9bc88-c334-42a6-adb8-56371f0faa5c",
@@ -494,6 +512,5 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }

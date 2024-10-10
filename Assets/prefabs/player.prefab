@@ -274,9 +274,8 @@
       {
         "__guid": "cfacd09d-d601-4a75-8d76-436d63139c5e",
         "Flags": 0,
-        "Name": "Object",
+        "Name": "Listener",
         "Position": "0,0,64",
-        "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.AudioListener",
@@ -294,6 +293,5 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }

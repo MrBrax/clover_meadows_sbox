@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Clover.Data;
 using Clover.Items;
@@ -93,15 +94,12 @@ public sealed partial class World : Component
 	[Sync] public int Layer { get; set; }
 
 	public string WorldId => Data.ResourceName;
+	
+	[JsonIgnore] public IEnumerable<PlayerCharacter> PlayersInWorld => Scene.GetAllComponents<PlayerCharacter>().Where( p => p.WorldLayerObject.Layer == Layer );
 
 	public bool ShouldUnloadOnExit
 	{
-		get
-		{
-			var playersInWorld = Scene.GetAllComponents<PlayerCharacter>()
-				.Count( p => p.WorldLayerObject.Layer == Layer );
-			return playersInWorld == 0;
-		}
+		get => !PlayersInWorld.Any();
 	}
 
 	protected override void OnAwake()

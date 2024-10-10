@@ -24,14 +24,24 @@ MainUi
 		}
 	}
 	
-	.date {
+	.status {
 		position: absolute;
 		bottom: 50px;
 		left: 50px;
 		color: white;
 		font-family: Itim;
-		font-size: 40px;
-		text-stroke: 10px gray;
+		font-size: 60px;
+		text-stroke: 5px gray;
+		
+		align-content: center;
+		align-items: center;
+		
+		gap: 10px;
+		
+		.weather Image {
+			width: 80px;
+			height: 80px;
+		}
 	}
 	
 }

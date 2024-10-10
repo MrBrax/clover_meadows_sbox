@@ -364,15 +364,15 @@ public class WeatherManager : Component
 		{
 			if ( weather.RainLevel > 0 )
 			{
-				return Texture.Load( FileSystem.Mounted, "res://icons/weather/partly-cloudy-day-rain.png" );
+				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/partly-cloudy-day-rain.png" );
 			}
 
 			if ( weather.FogLevel > 0 )
 			{
-				return Texture.Load( FileSystem.Mounted, "res://icons/weather/fog-day.png" );
+				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/fog-day.png" );
 			}
 
-			return Texture.Load( FileSystem.Mounted, "res://icons/weather/clear-day.png" );
+			return Texture.Load( FileSystem.Mounted, "ui/icons/weather/clear-day.png" );
 
 		}
 		else
@@ -380,32 +380,32 @@ public class WeatherManager : Component
 
 			if ( weather.Rain )
 			{
-				return Texture.Load( FileSystem.Mounted, "res://icons/weather/partly-cloudy-night-rain.png" );
+				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/partly-cloudy-night-rain.png" );
 			}
 
 			if ( weather.FogLevel > 0 )
 			{
-				return Texture.Load( FileSystem.Mounted, "res://icons/weather/fog-night.png" );
+				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/fog-night.png" );
 			}
 
-			return Texture.Load( FileSystem.Mounted, "res://icons/weather/clear-night.png" );
+			return Texture.Load( FileSystem.Mounted, "ui/icons/weather/clear-night.png" );
 
 		}
 
 		/* if ( weather.RainLevel > 0 )
 		{
-			return Texture.Load( FileSystem.Mounted, "res://icons/weather/rainy.png" );
+			return Texture.Load( FileSystem.Mounted, "ui/icons/weather/rainy.png" );
 		}
 		else if ( weather.Lightning )
 		{
-			return Texture.Load( FileSystem.Mounted, "res://icons/weather/thunderstorm.png" );
+			return Texture.Load( FileSystem.Mounted, "ui/icons/weather/thunderstorm.png" );
 		}
 		else if ( weather.Fog )
 		{
 			// return Texture.Load( FileSystem.Mounted, "res://assets/weather/fog.png" );
 		}*/
 
-		return Texture.Load( FileSystem.Mounted, "res://icons/weather/barometer.png" );
+		return Texture.Load( FileSystem.Mounted, "ui/icons/weather/barometer.png" );
 
 	}
 	

@@ -16,6 +16,8 @@ public class CatchableFish : Component, IFootstepEvent
 		TryingToEat = 3,
 		Fighting = 4
 	}
+	
+	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
 	[Property] public SkinnedModelRenderer Renderer { get; set; }
 
@@ -73,7 +75,13 @@ public class CatchableFish : Component, IFootstepEvent
 
 	protected override void OnFixedUpdate()
 	{
-		base.OnFixedUpdate();
+		
+		// don't simulate fish if there are no players in the world
+		if ( WorldLayerObject.World == null || !WorldLayerObject.World.PlayersInWorld.Any() )
+		{
+			// Log.Info( "No players in the world." );
+			return;
+		}
 
 		switch ( State )
 		{

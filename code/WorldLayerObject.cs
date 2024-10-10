@@ -8,14 +8,34 @@ namespace Clover;
 [Description( "Handles the visibility of the object based on the world layer." )]
 public sealed class WorldLayerObject : Component
 {
-	
+
 	/// <summary>
 	///  The layer of the world this object is in. It's just the index of the world in the WorldManager.
 	/// </summary>
-	[Property, Sync] public int Layer { get; private set; }
+	[Property, Sync]
+	public int Layer { get; private set; } = -1;
 	
 	[JsonIgnore] public World World => WorldManager.Instance?.GetWorld( Layer );
-	
+
+	protected override void OnStart()
+	{
+		
+		GameObject parentCheck = GameObject;
+		
+		while ( parentCheck != null )
+		{
+			if ( parentCheck.Components.TryGet<World>( out var world ) )
+			{
+				Layer = world.Layer;
+				// Log.Info( $"Found world layer {Layer} for {GameObject.Name}" );
+				break;
+			}
+
+			parentCheck = parentCheck.Parent;
+		}
+		
+	}
+
 	public void SetLayer( int layer, bool rebuildVisibility = false )
 	{
 		Layer = layer;

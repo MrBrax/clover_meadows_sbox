@@ -73,6 +73,12 @@ public class FishSpot : Component
 			
 			fishData = Random.Shared.FromList( fishes );
 			
+			if ( !fishData.IsValid() )
+			{
+				Log.Warning( $"No fish data found for location {Location}." );
+				return;
+			}
+			
 		}
 
 		if ( fishData == null )

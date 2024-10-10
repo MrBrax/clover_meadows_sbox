@@ -22,6 +22,7 @@ public class Footsteps : Component
 	}
 
 	private float _velocityTick;
+	private int _lastFoot;
 	
 	protected override void OnFixedUpdate()
 	{
@@ -35,8 +36,10 @@ public class Footsteps : Component
 
 				var dummyEvent = new SceneModel.FootstepEvent()
 				{
-					Transform = new Transform( WorldPosition ), Volume = 1, FootId = 0,
+					Transform = new Transform( WorldPosition ), Volume = 4, FootId = _lastFoot,
 				};
+				
+				_lastFoot = _lastFoot == 0 ? 1 : 0;
 				
 				_velocityTick += controller.Velocity.Length * Time.Delta;
 				
