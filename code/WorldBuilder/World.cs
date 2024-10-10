@@ -453,7 +453,7 @@ public sealed partial class World : Component
 		     Math.Abs( heightTopLeft - heightBottomLeft ) > heightTolerance ||
 		     Math.Abs( heightTopLeft - heightBottomRight ) > heightTolerance )
 		{
-			Log.Info(
+			Log.Trace(
 				$"Height difference at {position} is too high ({heightTopLeft}, {heightTopRight}, {heightBottomLeft}, {heightBottomRight})" );
 			worldPosition = Vector3.Zero;
 			return false;

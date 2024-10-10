@@ -111,7 +111,7 @@ public class CatchableFish : Component
 			return;
 		}
 		
-		var fleePosition = Bobber.WorldPosition + Bobber.WorldRotation.Forward * 64f;
+		var fleePosition = Bobber.WorldPosition + Bobber.WorldRotation.Forward * 32f;
 		// fleePosition += Bobber.WorldRotation.Right * Random.Shared.Float( -32f, 32f );
 		fleePosition += Bobber.WorldRotation.Right * ( ( Sandbox.Utility.Noise.Perlin( Time.Now * 20f ) * 64f ) - 32f);
 		
@@ -514,7 +514,7 @@ public class CatchableFish : Component
 		}
 
 		// var bobber = GetTree().GetNodesInGroup<FishingBobber>( "fishing_bobber" ).FirstOrDefault();
-		var bobber = Scene.GetAllComponents<FishingBobber>().FirstOrDefault( x => !x.IsProxy );
+		var bobber = Scene.GetAllComponents<FishingBobber>().FirstOrDefault( x => !x.IsProxy && !x.Fish.IsValid() );
 
 		if ( !bobber.IsValid() )
 		{

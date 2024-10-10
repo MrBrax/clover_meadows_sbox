@@ -388,7 +388,7 @@ public sealed class Tween
 
 		if ( _propertyTweens.Count == 0 )
 		{
-			Log.Info( "Tween finished" );
+			// Log.Info( "Tween finished" );
 			OnFinish?.Invoke();
 			_taskCompletionSource?.SetResult( true );
 			_taskCompletionSource = null;

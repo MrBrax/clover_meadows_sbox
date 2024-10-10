@@ -37,15 +37,23 @@ public class FishingRod : BaseCarriable
 
 
 	public bool HasCasted = false;
+	private bool _isWindup = false;
 	private bool _isCasting = false;
 	private bool _isBusy = false;
+	private TimeSince _timeSinceWindup;
+	private float _castDistance = 0f;
 
 	private float _trashChance = 0.1f; // TODO: base this on luck?
 
 	private SoundHandle _reelSound;
 
-	private const float CastDistance = 192f;
+	private const float MinCastDistance = 32f;
+	private const float MaxCastDistance = 192f;
 	private const float WaterCheckHeight = 64f;
+	
+	private float LineSlackDistance => Sandbox.Utility.Noise.Perlin( Time.Now * 10f ) * 16f;
+
+	private GameObject _lineSlackDummy;
 
 	/*public class CurrentFishData
 	{
@@ -77,15 +85,23 @@ public class FishingRod : BaseCarriable
 			Log.Warning( "Cannot use." );
 			return;
 		}
-
-		NextUse = 1f;
-
+		
 		if ( _isCasting )
 		{
 			Log.Warning( "Already casting." );
 			return;
 		}
 
+		if ( !HasCasted )
+		{
+			_isWindup = true;
+			_timeSinceWindup = 0f;
+			NextUse = 0f;
+			return;
+		}
+
+		NextUse = 1f;
+		
 		if ( HasCasted && !Bobber.IsValid() )
 		{
 			Log.Warning( "Bobber is not valid." );
@@ -94,35 +110,6 @@ public class FishingRod : BaseCarriable
 
 		if ( HasCasted )
 		{
-			Log.Info( "Casted" );
-
-			/*if ( Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.FoundBobber )
-			{
-				Bobber.Fish.TryHook();
-				NextUse = 0.1f;
-			}
-			else if ( Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.Fighting )
-			{
-				Bobber.Fish.Pull();
-				if ( !_reelSound.IsValid() ) _reelSound = GameObject.PlaySound( ReelSound );
-				_reelSound.Pitch = 0.8f + Random.Shared.Float() * 0.4f;
-				NextUse = 0.1f;
-
-				SplashParticle.Clone( Bobber.WorldPosition, Rotation.FromPitch( -90f ) );
-			}
-			else
-			{
-				ReelIn();
-			}*/
-
-			/*if ( CurrentFish != null )
-			{
-				Fight();
-				return;
-			}
-
-			ReelIn( 32f );*/
-
 			if ( Stamina <= 5 ) return;
 
 			if ( Bobber.Fish.IsValid() )
@@ -132,11 +119,21 @@ public class FishingRod : BaseCarriable
 
 			ReelIn( 32f );
 		}
-		else
+		
+	}
+
+	public override void OnUseUp()
+	{
+		base.OnUseUp();
+		
+		if ( _isWindup )
 		{
-			Log.Info( "Casting." );
+			_isWindup = false;
+			_isCasting = true;
+			NextUse = 0.5f;
 			Cast();
 		}
+		
 	}
 
 	protected override void OnDestroy()
@@ -175,8 +172,21 @@ public class FishingRod : BaseCarriable
 				// CreateLine( true );
 			}
 		}*/
+		
+		if ( _lineSlackDummy.IsValid() )
+		{
+			_lineSlackDummy.WorldPosition = LineStartPoint.WorldPosition.LerpTo( Bobber.WorldPosition, 0.5f ) + Vector3.Down * LineSlackDistance;
+		}
+		
+		if ( _isWindup )
+		{
+			var castDistance = Math.Clamp( 32f + ( _timeSinceWindup * 90f ), MinCastDistance, MaxCastDistance );
+			// Log.Info( $"Windup: {castDistance}, {_timeSinceWindup}" );
+			Model.LocalRotation = Rotation.FromPitch( (castDistance / MaxCastDistance) * 90f );
+			return;
+		}
 
-		/*if ( _hasCasted && CurrentFish == null && CanUse() )
+		if ( HasCasted && CanUse() )
 		{
 			if ( Input.AnalogMove.x < 0 )
 			{
@@ -193,7 +203,7 @@ public class FishingRod : BaseCarriable
 				ReelIn( 4f, Vector3.Right );
 				NextUse = 0.3f;
 			}
-		}*/
+		}
 
 		_reelSound.Volume = _reelSound.Volume.LerpTo( 0f, Sandbox.Utility.Easing.QuadraticIn( Time.Delta * 15f ) );
 		// _reelSound.Pitch = _reelSound.Pitch.LerpTo( 1f, Time.Delta * 3f );
@@ -220,7 +230,7 @@ public class FishingRod : BaseCarriable
 
 	private Vector3 GetCastPosition()
 	{
-		return Player.WorldPosition + Player.Model.WorldRotation.Forward * CastDistance;
+		return Player.WorldPosition + Player.Model.WorldRotation.Forward * _castDistance;
 	}
 
 	public override bool ShouldDisableMovement()
@@ -232,6 +242,8 @@ public class FishingRod : BaseCarriable
 	{
 		Log.Info( "Casting." );
 		if ( Player == null ) throw new Exception( "Player is null." );
+		
+		_castDistance = Math.Clamp( 32f + ( _timeSinceWindup * 90f ), MinCastDistance, MaxCastDistance );
 
 		if ( !CheckForWater( GetCastPosition() ) )
 		{
@@ -276,13 +288,18 @@ public class FishingRod : BaseCarriable
 			Bobber = BobberPrefab.Clone().Components.Get<FishingBobber>();
 			Bobber.Rod = this;
 
-
 			LineRenderer?.Points.Add( Bobber.Tip );
 
 			Bobber.WorldPosition = LineStartPoint.WorldPosition;
 			Bobber.WorldRotation = Rotation.FromYaw( Player.Model.WorldRotation.Yaw() );
 
 			CameraMan.Instance.Targets.Add( Bobber.GameObject );
+
+			// place slack dummy between the line start and the bobber
+			_lineSlackDummy = Scene.CreateObject();
+			_lineSlackDummy.WorldPosition = LineStartPoint.WorldPosition.LerpTo( Bobber.WorldPosition, 0.5f ) + Vector3.Down * LineSlackDistance;
+			
+			LineRenderer?.Points.Insert( 1, _lineSlackDummy );
 
 			// tween the bobber to the water in an arc
 			/*var tween = GetTree().CreateTween();
@@ -373,8 +390,12 @@ public class FishingRod : BaseCarriable
 	private void DestroyBobber()
 	{
 		if ( Bobber.IsValid() ) LineRenderer?.Points.Remove( Bobber.Tip );
+		if ( _lineSlackDummy.IsValid() ) LineRenderer?.Points.Remove( _lineSlackDummy );
 		Bobber?.DestroyGameObject();
 		Bobber = null;
+		
+		_lineSlackDummy?.Destroy();
+		_lineSlackDummy = null;
 	}
 
 	private void ResetAll()
@@ -382,7 +403,6 @@ public class FishingRod : BaseCarriable
 		HasCasted = false;
 		_isCasting = false;
 		_isBusy = false;
-		// _reelSound?.Stop();
 		Stamina = 100f;
 		LineStrength = 100f;
 		DestroyBobber();
@@ -416,13 +436,16 @@ public class FishingRod : BaseCarriable
 
 		if ( !CheckForWater( reelPosition ) || dist < 32f )
 		{
-			Log.Info( "Reel position too close or not in water. Reeling in." );
+			// Log.Info( "Reel position too close or not in water. Reeling in." );
 			// ResetAll();
 
 			if ( dist < 32 && Bobber.Fish.IsValid() && Bobber.Fish.State == CatchableFish.FishState.Fighting )
 			{
 				CatchFish( Bobber.Fish );
+				return;
 			}
+			
+			ResetAll();
 
 			return;
 		}
@@ -432,7 +455,7 @@ public class FishingRod : BaseCarriable
 		reelPosition.z = waterSurface.z;
 
 		var pitch = Math.Clamp( (dist * -0.5f) + 90f, -20f, 100f );
-		Log.Info( $"Reeling in. Distance: {dist}, Pitch: {pitch} ({(dist * -0.5f) + 90f})" );
+		// Log.Info( $"Reeling in. Distance: {dist}, Pitch: {pitch} ({(dist * -0.5f) + 90f})" );
 		Model.LocalRotation = Rotation.FromPitch( pitch );
 
 		var tween = TweenManager.CreateTween();

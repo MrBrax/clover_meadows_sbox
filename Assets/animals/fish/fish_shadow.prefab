@@ -12,7 +12,6 @@
         "ChompSound": "sounds/fishing/bite.sound",
         "Data": "animals/fish/salmon/salmon.fish",
         "NibbleSound": "sounds/fishing/nibble.sound",
-        "Renderer": null,
         "SplashSound": "sounds/fishing/catch.sound"
       },
       {
@@ -34,7 +33,7 @@
             "__type": "Sandbox.ModelRenderer",
             "__guid": "34e24b4b-a8e2-4040-9152-f91d0d5f1394",
             "BodyGroups": 18446744073709551615,
-            "MaterialOverride": "materials/particles/particle_smokegrenade.vmat",
+            "MaterialOverride": "animals/fish/fish_shadow.vmat",
             "Model": "models/dev/plane.vmdl",
             "RenderOptions": {
               "GameLayer": true,
@@ -43,7 +42,7 @@
               "AfterUILayer": false
             },
             "RenderType": "Off",
-            "Tint": "0,0.12023,0.2186,1"
+            "Tint": "1,1,1,0.4"
           }
         ]
       }
