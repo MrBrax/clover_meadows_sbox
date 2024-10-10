@@ -152,12 +152,12 @@ public class TimeManager : Component
 			Sun.WorldRotation = CalculateSunRotation( Sun );
 			// Sun.LightEnergy = CalculateSunEnergy( Sun );
 			Sun.LightColor = CalculateSunColor();
-			Sun.SkyColor = CalculateSunColor() * 0.4f;
+			Sun.SkyColor = CalculateSunColor() * ( IsDay ? 0.4f : 1f );
 			// GetTree().CallGroup( "debugdraw", "add_line", Sun.GlobalTransform.Origin, Sun.GlobalTransform.Origin + Sun.GlobalTransform.Basis.Z * 0.5f, new Color( 1, 1, 1 ), 0.2f );
 		}
 		else
 		{
-			// Log.Warning( "Sun not found." );
+			Log.Warning( "Sun not found." );
 		}
 		/*
 		if ( IsInstanceValid( _environment ) )

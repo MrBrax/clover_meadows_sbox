@@ -76,61 +76,6 @@
         ]
       },
       {
-        "__guid": "ab749490-8a65-460a-aa80-40ff6445bfbb",
-        "Flags": 0,
-        "Name": "Sun",
-        "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
-        "Tags": "light,light_directional",
-        "Enabled": true,
-        "Components": [
-          {
-            "__type": "Sandbox.DirectionalLight",
-            "__guid": "7383b3c4-2a93-4b06-b80b-19f329649545",
-            "FogMode": "Enabled",
-            "FogStrength": 1,
-            "LightColor": "0.94419,0.97767,1,1",
-            "Shadows": true,
-            "SkyColor": "0.2532,0.32006,0.35349,1"
-          }
-        ]
-      },
-      {
-        "__guid": "f846e901-669f-4e51-88bc-c9296e0ced83",
-        "Flags": 0,
-        "Name": "2D Skybox",
-        "Tags": "skybox",
-        "Enabled": true,
-        "Components": [
-          {
-            "__type": "Sandbox.SkyBox2D",
-            "__guid": "71f5b042-e1a2-4bd9-9060-cdf2149d6b2f",
-            "SkyIndirectLighting": true,
-            "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
-            "Tint": "1,1,1,1"
-          },
-          {
-            "__type": "Sandbox.EnvmapProbe",
-            "__guid": "de642693-5f3e-4268-b3fd-8a67fd985798",
-            "Texture": "textures/cubemaps/default2.vtex",
-            "Bounds": {
-              "Mins": "-512,-512,-512",
-              "Maxs": "512,512,512"
-            },
-            "DelayBetweenUpdates": 0.1,
-            "Feathering": 0.02,
-            "FrameInterval": 5,
-            "MaxDistance": 512,
-            "MultiBounce": false,
-            "Projection": "Sphere",
-            "RenderDynamically": false,
-            "TintColor": "1,1,1,1",
-            "UpdateStrategy": "OnEnabled",
-            "ZFar": 4096,
-            "ZNear": 16
-          }
-        ]
-      },
-      {
         "__guid": "e1aced0c-48bc-4b75-8f9a-5fd165fa5e02",
         "Flags": 0,
         "Name": "Entrance",
@@ -666,6 +611,35 @@
             "Location": "Sea",
             "SpawnRadius": 128,
             "SpecialFish": []
+          }
+        ]
+      },
+      {
+        "__guid": "5eb2e882-7828-4bf0-a504-eec61e268881",
+        "Flags": 0,
+        "Name": "envmap",
+        "Position": "1904,2112,-0.000005776402",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.EnvmapProbe",
+            "__guid": "1479559f-018a-4fe6-b620-be0587d7f18a",
+            "Texture": "textures/cubemaps/default2.vtex",
+            "Bounds": {
+              "Mins": "-2500,-2500,-512",
+              "Maxs": "2500,2500,512"
+            },
+            "DelayBetweenUpdates": 0.1,
+            "Feathering": 0.02,
+            "FrameInterval": 5,
+            "MaxDistance": 512,
+            "MultiBounce": false,
+            "Projection": "Sphere",
+            "RenderDynamically": true,
+            "TintColor": "1,1,1,1",
+            "UpdateStrategy": "OnEnabled",
+            "ZFar": 4096,
+            "ZNear": 16
           }
         ]
       }

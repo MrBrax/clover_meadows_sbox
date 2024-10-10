@@ -237,6 +237,41 @@
           "FadeToBlackSound": "sounds/camera/camera_in.sound"
         }
       ]
+    },
+    {
+      "__guid": "ebdc1818-e9c0-4019-abeb-a9aff9509da4",
+      "Flags": 0,
+      "Name": "2D Skybox",
+      "Tags": "skybox",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.SkyBox2D",
+          "__guid": "6b9c7009-5a8c-46e0-a390-54d1c618e5f6",
+          "SkyIndirectLighting": true,
+          "SkyMaterial": "materials/sky/atmosphere_sky.vmat",
+          "Tint": "1,1,1,1"
+        }
+      ]
+    },
+    {
+      "__guid": "a0eb9f3a-4cc5-4084-8e66-2f29281786d4",
+      "Flags": 0,
+      "Name": "Sun",
+      "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
+      "Tags": "light,light_directional,sun",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.DirectionalLight",
+          "__guid": "070eb5c8-4f9f-4915-8ca7-9c8cecf20950",
+          "FogMode": "Enabled",
+          "FogStrength": 1,
+          "LightColor": "0.94419,0.97767,1,1",
+          "Shadows": true,
+          "SkyColor": "0.2532,0.32006,0.35349,1"
+        }
+      ]
     }
   ],
   "SceneProperties": {
