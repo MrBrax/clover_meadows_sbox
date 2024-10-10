@@ -8,6 +8,12 @@
       {
         "__type": "Clover.WorldBuilder.WeatherManager",
         "__guid": "748ff583-4296-4da2-b3fa-7b032f6b16a8",
+        "FogComponent": {
+          "_type": "component",
+          "component_id": "9d72c890-e0cb-4820-964c-25771b3f2305",
+          "go": "0827e2ab-e08f-4489-af05-10b6c1c63433",
+          "component_type": "Fog"
+        },
         "RainComponent": {
           "_type": "component",
           "component_id": "ef95e8c8-0f57-4e40-82bc-290d0ad8296f",
@@ -31,6 +37,12 @@
               "component_id": "d7fd85ec-1c4d-4250-823f-66b4b4ea9314",
               "go": "03acf368-394c-4ae6-9ca4-7683006a3203",
               "component_type": "ParticleBoxEmitter"
+            },
+            "Sound": {
+              "_type": "component",
+              "component_id": "5c50f5fb-6b45-424f-b99e-7c855e122450",
+              "go": "6178113a-abce-4ccd-9b62-1161143aa330",
+              "component_type": "SoundPointComponent"
             }
           }
         ],
@@ -167,6 +179,40 @@
                 "TimeScale": 1,
                 "Tint": "1,1,1,1",
                 "Yaw": {}
+              }
+            ]
+          },
+          {
+            "__guid": "6178113a-abce-4ccd-9b62-1161143aa330",
+            "Flags": 0,
+            "Name": "Sound",
+            "Position": "0,0,64",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.SoundPointComponent",
+                "__guid": "5c50f5fb-6b45-424f-b99e-7c855e122450",
+                "DistanceAttenuation": false,
+                "DistanceAttenuationOverride": true,
+                "Force2d": true,
+                "MaxRepeatTime": 1,
+                "MinRepeatTime": 1,
+                "Occlusion": false,
+                "OcclusionOverride": true,
+                "OcclusionRadius": 32,
+                "Pitch": 1,
+                "PlayOnStart": true,
+                "ReflectionOverride": true,
+                "Reflections": false,
+                "Repeat": false,
+                "SoundEvent": "sounds/weather/rain/rain.sound",
+                "SoundOverride": true,
+                "StopOnNew": false,
+                "TargetMixer": {
+                  "Name": "unknown",
+                  "Id": "00000000-0000-0000-0000-000000000000"
+                },
+                "Volume": 1
               }
             ]
           }

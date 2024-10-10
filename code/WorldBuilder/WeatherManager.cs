@@ -30,6 +30,7 @@ public class WeatherManager : Component
 	}
 	
 	[Property] public Rain RainComponent { get; set; }
+	[Property] public Fog FogComponent { get; set; }
 	
 	public bool IsInside { get; set; } = false;
 	public bool PrecipitationEnabled { get; private set; }
@@ -318,14 +319,24 @@ public class WeatherManager : Component
 			GetNode<Rain>( "RainOutside" )?.SetFogState( state );
 		} */
 
-		if ( instant )
+		/*if ( instant )
 		{
 			// GetNode<Fog>( "Fog" ).SetEnabled( state );
 		}
 		else
 		{
 			// GetNode<Fog>( "Fog" ).SetEnabledSmooth( state );
+		}*/
+
+		if ( IsInside )
+		{
+			FogComponent.SetEnabled( false );
+			return;
 		}
+
+		FogComponent.SetEnabled( level > 0, !instant );
+		FogComponent.SetLevel( level, !instant );
+
 	}
 
 	private void SetCloudDensity( float density, bool instant = false )

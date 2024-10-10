@@ -4,11 +4,14 @@ public class Rain : WeatherBase
 {
 	
 	[Property] public ParticleEmitter Emitter { get; set; }
+	
+	[Property] public SoundPointComponent Sound { get; set; }
 
 	public override void SetEnabled( bool state, bool smooth = false )
 	{
 		base.SetEnabled( state, smooth );
 		Emitter.Enabled = state;
+		Sound.Enabled = state;
 	}
 
 	public override void SetLevel( int level, bool smooth = false )
