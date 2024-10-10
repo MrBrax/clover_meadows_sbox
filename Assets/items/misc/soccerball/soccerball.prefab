@@ -38,6 +38,11 @@
         "__type": "Clover.WorldLayerObject",
         "__guid": "c08780fd-04df-422c-94cb-72ecd42536c2",
         "Layer": 0
+      },
+      {
+        "__type": "Clover.Items.SoccerBall",
+        "__guid": "7f7b26e4-4af5-4fdd-ad7c-a72b472b33cc",
+        "KickSound": "items/misc/soccerball/kick.sound"
       }
     ],
     "Children": [
@@ -78,6 +83,5 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }
