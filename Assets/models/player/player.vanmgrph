@@ -1167,13 +1167,13 @@
 	}
 	m_previewModels = 
 	[
-		"models/player/kenney/character-female-b.vmdl",
+		"models/player/epic/sk_pig_guy_plasticity.vmdl",
 	]
 	m_boneMergeModels = [  ]
 	m_cameraSettings = 
 	{
 		m_flFov = 60.0
-		m_sLockBoneName = "torso"
+		m_sLockBoneName = "Base_HumanLThigh"
 		m_bLockCamera = false
 		m_bViewModelCamera = false
 	}
