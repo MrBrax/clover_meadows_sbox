@@ -61,7 +61,7 @@ public sealed class CameraMan : Component
 		if ( !MainCameraNode.IsValid() ) return;
 		if ( !CameraComponent.IsValid() ) return;
 
-		var wishedRot = Rotation.Identity;
+		Rotation wishedRot;
 
 		if ( Targets.Count > 1 && MainCameraNode.FollowTargets )
 		{
@@ -73,8 +73,6 @@ public sealed class CameraMan : Component
 			wishedRot = MainCameraNode.WorldRotation;
 		}
 		
-		Log.Info( string.Join( ", ", Targets.Select( x => x.Name ) ) );
-
 		_positionLerp = Vector3.Lerp( _positionLerp, MainCameraNode.WorldPosition, Time.Delta * LerpSpeed );
 		_rotationLerp = Rotation.Lerp( _rotationLerp, wishedRot, Time.Delta * LerpSpeed );
 		_fovLerp = _fovLerp.LerpTo( MainCameraNode.FieldOfView, Time.Delta * LerpSpeed );
