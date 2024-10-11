@@ -1,0 +1,12 @@
+{
+  "MasterVolume": "1",
+  "LoopedSounds": [
+    {
+      "SoundFile": "sounds/ambience/ambiance_night_loop_stereo.vsnd",
+      "Volume": "1"
+    }
+  ],
+  "StingSounds": [],
+  "__references": [],
+  "__version": 0
+}

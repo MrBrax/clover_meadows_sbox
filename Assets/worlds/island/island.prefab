@@ -89,7 +89,7 @@
             "EntranceId": "player_house_exit",
             "ExitDoor": {
               "_type": "component",
-              "component_id": "5dff3f2c-10c1-4def-969d-58615365f3af",
+              "component_id": "8c9c1fc9-3d72-4e55-aee6-cd9edb2b6ae1",
               "go": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
               "component_type": "Door"
             }
@@ -659,6 +659,24 @@
         "Enabled": true,
         "__Prefab": "buildings/door/door.prefab",
         "__PrefabVariables": {}
+      },
+      {
+        "__guid": "b718ccbd-a462-44da-8bf2-70aca573442d",
+        "Flags": 0,
+        "Name": "Ambi",
+        "Position": "1479.035,534.7845,79.31152",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SoundscapeTrigger",
+            "__guid": "c7fb627b-3fcb-4349-a33c-ea3917562332",
+            "BoxSize": "50,50,50",
+            "Radius": 500,
+            "Soundscape": "sounds/ambience/night.sndscape",
+            "StayActiveOnExit": true,
+            "Type": "Point"
+          }
+        ]
       }
     ],
     "__variables": []
