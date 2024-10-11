@@ -84,7 +84,7 @@
 						source_filename = "models/player/epic/sk_pig_guy_plasticity_idle.fbx"
 						start_frame = -1
 						end_frame = -1
-						framerate = -1.0
+						framerate = 15.0
 						take = 0
 						reverse = false
 					},
