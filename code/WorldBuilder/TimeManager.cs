@@ -174,6 +174,11 @@ public class TimeManager : Component, IWorldEvent
 		return color.WithAlpha( 1f );*/
 
 	}
+	
+	public Color CalculateFogColor()
+	{
+		return AmbientGradient.Evaluate( DayFraction ).WithAlpha( 0.2f );
+	}
 
 	private Rotation CalculateSunRotation( DirectionalLight sun )
 	{

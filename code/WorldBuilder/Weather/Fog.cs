@@ -32,31 +32,31 @@ public class Fog : WeatherBase
 				Emitter.Enabled = true;
 				Effect.Enabled = true;
 				Emitter.Rate = 1;
-				Volume.Strength = 0.1f;
+				Volume.Strength = 0.2f;
 				break;
 			case 2:
 				Emitter.Enabled = true;
 				Effect.Enabled = true;
 				Emitter.Rate = 3;
-				Volume.Strength = 0.2f;
+				Volume.Strength = 0.3f;
 				break;
 			case 3:
 				Emitter.Enabled = true;
 				Effect.Enabled = true;
 				Emitter.Rate = 5;
-				Volume.Strength = 0.3f;
+				Volume.Strength = 0.4f;
 				break;
 			case 4:
 				Emitter.Enabled = true;
 				Effect.Enabled = true;
 				Emitter.Rate = 8;
-				Volume.Strength = 0.4f;
+				Volume.Strength = 0.6f;
 				break;
 			case 5:
 				Emitter.Enabled = true;
 				Effect.Enabled = true;
 				Emitter.Rate = 12;
-				Volume.Strength = 0.5f;
+				Volume.Strength = 0.8f;
 				break;
 		}
 	}
@@ -64,7 +64,7 @@ public class Fog : WeatherBase
 	protected override void OnFixedUpdate()
 	{
 
-		var col = NodeManager.TimeManager.GetComputedSkyColor();
+		var col = NodeManager.TimeManager.CalculateFogColor();
 		
 		Effect.Color = col;
 

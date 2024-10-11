@@ -259,7 +259,6 @@
             "Flags": 0,
             "Name": "Particle",
             "Tags": "particles",
-            "Enabled": true,
             "Components": [
               {
                 "__type": "Sandbox.ParticleBoxEmitter",
