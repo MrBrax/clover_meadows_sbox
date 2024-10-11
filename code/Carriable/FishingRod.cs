@@ -74,7 +74,7 @@ public class FishingRod : BaseCarriable
 		base.OnStart();
 
 		_reelSound = GameObject.PlaySound( ReelSound );
-		_reelSound.Volume = 0f;
+		if ( _reelSound.IsValid() ) _reelSound.Volume = 0f;
 	}
 
 

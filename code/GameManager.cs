@@ -4,7 +4,7 @@ using Clover.Player;
 
 namespace Clover;
 
-public class GameManager : Component
+public class GameManager : Component, Component.INetworkListener
 {
 	public static GameManager Instance;
 
@@ -57,5 +57,20 @@ public class GameManager : Component
 	{
 		base.OnFixedUpdate();
 		SaveTimer();
+	}
+
+	public void OnConnected( Connection channel )
+	{
+		Log.Info( $"Player '{channel.DisplayName}' has joined the game" );
+	}
+	
+	public void OnDisconnected( Connection channel )
+	{
+		Log.Info( $"Player '{channel.DisplayName}' has left the game" );
+	}
+	
+	public void OnBecameHost( Connection channel )
+	{
+		Log.Info( $"Player '{channel.DisplayName}' has become the host" );
 	}
 }

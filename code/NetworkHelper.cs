@@ -63,11 +63,14 @@ public sealed class NetworkHelper : Component, Component.INetworkListener
 		// Notify any listeners that a player has spawned
 		Scene.RunEvent<IPlayerSpawned>( x => x.OnPlayerSpawned( player.GetComponent<PlayerCharacter>() ) );
 
-		if ( WorldManager.Instance.ActiveWorld != null )
+		var island = WorldManager.Island;
+
+		if ( island.IsValid() )
 		{
-			var spawnPoint = WorldManager.Instance.ActiveWorld.GetEntrance( "spawn" );
+			var spawnPoint = island.GetEntrance( "spawn" );
 			if ( spawnPoint.IsValid() )
 			{
+				player.GetComponent<PlayerCharacter>().SetLayer( island.Layer );
 				player.GetComponent<PlayerCharacter>().TeleportTo( spawnPoint.EntranceId );
 			}
 			else

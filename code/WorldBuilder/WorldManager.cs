@@ -8,6 +8,8 @@ namespace Clover;
 public class WorldManager : Component
 {
 	public static WorldManager Instance { get; private set; }
+	
+	public static World Island => Instance.GetWorld( "island" );
 
 	// [Property] public List<World> Worlds { get; set; } = new();
 	[Property, Sync, Change] public NetDictionary<int, World> Worlds { get; set; } = new();
@@ -120,7 +122,7 @@ public class WorldManager : Component
 		// rebuild object visibility
 		foreach ( var layerObject in Scene.GetAllComponents<WorldLayerObject>() )
 		{
-			layerObject.RebuildVisibility();
+			layerObject.RebuildVisibility( layerObject.Layer);
 		}
 	}
 

@@ -8,12 +8,22 @@ namespace Clover;
 [Description( "Handles the visibility of the object based on the world layer." )]
 public sealed class WorldLayerObject : Component
 {
+	
+	private int _layer = -1;
 
 	/// <summary>
 	///  The layer of the world this object is in. It's just the index of the world in the WorldManager.
 	/// </summary>
 	[Property, Sync]
-	public int Layer { get; private set; } = -1;
+	public int Layer
+	{
+		get => _layer;
+		set
+		{
+			_layer = value;
+			RebuildVisibility( value );
+		}
+	}
 	
 	[JsonIgnore] public World World => WorldManager.Instance?.GetWorld( Layer );
 
@@ -42,7 +52,7 @@ public sealed class WorldLayerObject : Component
 		
 		if ( rebuildVisibility )
 		{
-			RebuildVisibility();
+			RebuildVisibility( layer );
 		}
 	}
 
@@ -60,12 +70,13 @@ public sealed class WorldLayerObject : Component
 	/// <summary>
 	///  Visibility is based on render tags on the camera. This method adds or removes the tags based on the layer.
 	/// </summary>
-	public void RebuildVisibility()
+	[Broadcast]
+	public void RebuildVisibility( int layer )
 	{
 		Tags.Remove( "worldlayer_invisible" );
 		Tags.Remove( "worldlayer_visible" );
 			
-		if ( Layer == WorldManager.Instance.ActiveWorldIndex )
+		if ( layer == WorldManager.Instance.ActiveWorldIndex )
 		{
 			Tags.Add( "worldlayer_visible" );
 		}
