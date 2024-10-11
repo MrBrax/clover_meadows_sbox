@@ -1,3 +1,4 @@
+@using Clover.Player
 @using Clover.WorldBuilder
 @using Sandbox;
 @using Sandbox.UI;
@@ -11,5 +12,10 @@
 	<div class="status">
 		<div class="weather"><Image Texture=@NodeManager.WeatherManager.GetWeatherIcon() /></div>
 		<div class="time">@TimeManager.Time.ToString( "HH:mm" )</div>
+	</div>
+	
+	<div class="cutscene-bars @( PlayerCharacter.Local.InCutscene ? "active" : "" )">
+		<div class="bar top"></div>
+		<div class="bar bottom"></div>
 	</div>
 </root>
