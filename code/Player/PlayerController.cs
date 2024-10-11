@@ -239,14 +239,19 @@ public class PlayerController : Component, IEquipChanged
 				return;
 			}
 
-			var inputYaw = MathF.Atan2( input.y, input.x ).RadianToDegree();
+			/*var inputYaw = MathF.Atan2( input.y, input.x ).RadianToDegree();
 			// Player.Model.WorldRotation = Rotation.Lerp( Player.Model.WorldRotation, Rotation.From( 0, yaw + 180, 0 ), Time.Delta * 10.0f );
 			// Yaw = yaw + 180;
 			Yaw = Yaw.LerpDegreesTo( inputYaw + 180, Time.Delta * 10.0f );
 
 			// WishedRotation = Rotation.LookAt( input, Vector3.Up );
 			var forward = Player.Model.WorldRotation.Forward;
-			WishVelocity = forward.Normal;
+			WishVelocity = forward.Normal;*/
+
+			WishVelocity = (input * -1).Normal;
+			
+			Yaw = Yaw.LerpDegreesTo( MathF.Atan2( input.y * -1, input.x * -1).RadianToDegree(), Time.Delta * 7.0f );
+
 		}
 		else
 		{
