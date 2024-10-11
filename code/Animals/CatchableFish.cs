@@ -330,8 +330,7 @@ public class CatchableFish : Component, IFootstepEvent
 	}
 
 	private float _swimRandomRadius = 128f;
-
-	private Vector3 _swimStartPos;
+	
 	private Vector3 _swimTarget;
 	private const int _swimTargetTries = 10;
 	// private float _swimProgress;

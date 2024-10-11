@@ -37,7 +37,8 @@ public class Door : Component, IInteract
 	
 	public void StartInteract( PlayerCharacter player )
 	{
-		PlayerEnter( player );
+		if ( _isBusy ) return;
+		_ = PlayerEnter( player );
 	}
 
 	public void FinishInteract( PlayerCharacter player )

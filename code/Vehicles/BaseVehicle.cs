@@ -26,9 +26,6 @@ public class BaseVehicle : Component, IInteract
 	
 	[Property] public GameObject ExhaustParticles { get; set; }
 
-
-	private float Momentum;
-
 	private bool IsOn;
 
 	public Dictionary<SittableNode, GameObject> Occupants { get; set; } = new();

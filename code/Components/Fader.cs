@@ -19,7 +19,7 @@ public class Fader : Component
 	protected override void OnStart()
 	{
 		base.OnStart();
-		FadeFromBlack();
+		_ = FadeFromBlack();
 	}
 	
 	
@@ -64,13 +64,13 @@ public class Fader : Component
 	[Broadcast]
 	public void FadeToBlackRpc( bool playSound = false )
 	{
-		FadeToBlack( playSound );
+		_ = FadeToBlack( playSound );
 	}
 	
 	[Broadcast]
 	public void FadeFromBlackRpc( bool playSound = false )
 	{
-		FadeFromBlack( playSound );
+		_ = FadeFromBlack( playSound );
 	}
 	
 

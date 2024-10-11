@@ -410,7 +410,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 			// return Texture.Load( FileSystem.Mounted, "res://assets/weather/fog.png" );
 		}*/
 
-		return Texture.Load( FileSystem.Mounted, "ui/icons/weather/barometer.png" );
+		// return Texture.Load( FileSystem.Mounted, "ui/icons/weather/barometer.png" );
 
 	}
 

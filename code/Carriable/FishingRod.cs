@@ -39,7 +39,7 @@ public class FishingRod : BaseCarriable
 	public bool HasCasted = false;
 	private bool _isWindup = false;
 	private bool _isCasting = false;
-	private bool _isBusy = false;
+	// private bool _isBusy = false;
 	private TimeSince _timeSinceWindup;
 	private float _castDistance = 0f;
 
@@ -380,7 +380,7 @@ public class FishingRod : BaseCarriable
 	{
 		HasCasted = false;
 		_isCasting = false;
-		_isBusy = false;
+		// _isBusy = false;
 		Stamina = 100f;
 		LineStrength = 100f;
 		Model.LocalRotation = Rotation.FromPitch( 0f );
