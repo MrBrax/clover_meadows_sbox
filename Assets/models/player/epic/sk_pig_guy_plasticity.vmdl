@@ -126,6 +126,29 @@
 									Volume = 1.0
 								}
 							},
+							{
+								_class = "FootCycle Override"
+								children = 
+								[
+									{
+										_class = "Foot Cycle"
+										name = "cycle_left"
+										cyclestart = 0
+										heellift = 25
+										toelift = 0
+										heelland = 15
+										toeland = 0
+									},
+								]
+								footname = ""
+								locktolerance = 0.6
+								verticaltolerance = 2.0
+								sanitizetrajectories = false
+							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 15
+							},
 						]
 						activity_name = ""
 						activity_weight = 1
@@ -136,7 +159,7 @@
 						delta = false
 						worldSpace = false
 						hidden = false
-						anim_markup_ordered = false
+						anim_markup_ordered = true
 						disable_compression = false
 						disable_interpolation = false
 						enable_scale = false
@@ -185,6 +208,10 @@
 									Volume = 1.0
 								}
 							},
+							{
+								_class = "AnimStartLoop"
+								start_loop_frame = 8
+							},
 						]
 						activity_name = ""
 						activity_weight = 1
@@ -195,7 +222,7 @@
 						delta = false
 						worldSpace = false
 						hidden = false
-						anim_markup_ordered = false
+						anim_markup_ordered = true
 						disable_compression = false
 						disable_interpolation = false
 						enable_scale = false
@@ -244,6 +271,59 @@
 						mirror_z = false
 						flip_bone_forward = false
 						swap_left_and_right_bones = false
+					},
+				]
+			},
+			{
+				_class = "GameDataList"
+				children = 
+				[
+					{
+						_class = "Feet"
+						children = 
+						[
+							{
+								_class = "Foot"
+								name = "left"
+								anklebone = ""
+								toebone = "Base_HumanLFoot"
+								balloffset = [ 0.0, 0.0, 0.0 ]
+								heeloffset = [ 0.0, 0.0, 0.0 ]
+								autolevel = true
+								traceheight = 40.0
+								traceradius = 4.0
+							},
+							{
+								_class = "Foot"
+								name = "right"
+								anklebone = ""
+								toebone = "Base_HumanRFoot"
+								balloffset = [ 0.0, 0.0, 0.0 ]
+								heeloffset = [ 0.0, 0.0, 0.0 ]
+								autolevel = true
+								traceheight = 40.0
+								traceradius = 4.0
+							},
+						]
+						locktolerance = 0.6
+						heighttolerance = 2.0
+						sanitizetrajectories = true
+					},
+					{
+						_class = "MovementSettings"
+						movementsettings = 
+						{
+							name = ""
+							speeds = [  ]
+							runspeed = 300.0
+							walkspeed = 64.0
+							maxSpringTension = 100.0
+							springConstant = 10.0
+							useSmoothPaths = true
+							useMotionDamping = true
+							sharpStartAngle = 180.0
+							m_vTraceScale = [ 1.0, 1.0, 1.0 ]
+						}
 					},
 				]
 			},

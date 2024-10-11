@@ -743,13 +743,75 @@
 			{
 				key = 
 				{
+					m_id = 845127254
+				}
+				value = 
+				{
+					_class = "CBlend2DAnimNode"
+					m_sName = "Unnamed"
+					m_vecPosition = [ -48.0, -464.0 ]
+					m_nNodeID = 
+					{
+						m_id = 845127254
+					}
+					m_sNote = ""
+					m_items = 
+					[
+						{
+							_class = "CBlend2DItem"
+							m_tagSpans = [  ]
+							m_sequenceName = "walk"
+							m_blendValue = [ 64.0, 64.0 ]
+						},
+						{
+							_class = "CBlend2DItem"
+							m_tagSpans = [  ]
+							m_sequenceName = "run"
+							m_blendValue = [ 300.0, 300.0 ]
+						},
+						{
+							_class = "CBlend2DItem"
+							m_tagSpans = [  ]
+							m_sequenceName = "idle"
+							m_blendValue = [ 0.0, 0.0 ]
+						},
+					]
+					m_blendSourceX = "Parameter"
+					m_paramX = 
+					{
+						m_id = 1654757935
+					}
+					m_blendSourceY = "Parameter"
+					m_paramY = 
+					{
+						m_id = 1654757935
+					}
+					m_bLoop = true
+					m_bLockBlendOnReset = false
+					m_bLockWhenWaning = true
+					m_playbackSpeed = 1.0
+					m_damping = 
+					{
+						_class = "CAnimInputDamping"
+						m_speedFunction = "NoDamping"
+						m_fSpeedScale = 1.0
+						m_fMinSpeed = 10.0
+						m_fMaxTension = 1000.0
+						m_fTension = 100.0
+						m_fDamping = 5.0
+					}
+				}
+			},
+			{
+				key = 
+				{
 					m_id = 1061188962
 				}
 				value = 
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -464.0, -240.0 ]
+					m_vecPosition = [ -416.0, -336.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1061188962
@@ -770,7 +832,7 @@
 				{
 					_class = "CFootStepTriggerAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 192.0, -384.0 ]
+					m_vecPosition = [ 176.0, -384.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1142159528
@@ -780,7 +842,7 @@
 					{
 						m_nodeID = 
 						{
-							m_id = 1171278068
+							m_id = 845127254
 						}
 						m_outputID = 
 						{
@@ -812,7 +874,7 @@
 				{
 					_class = "CBlendAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 0.0, -288.0 ]
+					m_vecPosition = [ -48.0, -352.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1171278068
@@ -848,7 +910,7 @@
 								}
 							}
 							m_name = "walk"
-							m_blendValue = 5.0
+							m_blendValue = 64.0
 						},
 						{
 							m_inputConnection = 
@@ -863,7 +925,7 @@
 								}
 							}
 							m_name = "run"
-							m_blendValue = 10.0
+							m_blendValue = 300.0
 						},
 					]
 					m_blendValueSource = "Parameter"
@@ -880,7 +942,7 @@
 					{
 						_class = "CAnimInputDamping"
 						m_speedFunction = "NoDamping"
-						m_fSpeedScale = 1.0
+						m_fSpeedScale = 50.0
 						m_fMinSpeed = 10.0
 						m_fMaxTension = 1000.0
 						m_fTension = 100.0
@@ -1038,7 +1100,7 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -464.0, -192.0 ]
+					m_vecPosition = [ -416.0, -288.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1898971698
@@ -1059,7 +1121,7 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -464.0, -288.0 ]
+					m_vecPosition = [ -416.0, -384.0 ]
 					m_nNodeID = 
 					{
 						m_id = 2090438878
@@ -1090,7 +1152,7 @@
 				m_bAutoReset = false
 				m_fDefaultValue = 0.0
 				m_fMinValue = 0.0
-				m_fMaxValue = 10.0
+				m_fMaxValue = 300.0
 			},
 			{
 				_class = "CBoolAnimParameter"
@@ -1141,7 +1203,26 @@
 		m_MotorList = 
 		{
 			_class = "CAnimMotorList"
-			m_motors = [  ]
+			m_motors = 
+			[
+				{
+					_class = "CPlayerInputAnimMotor"
+					m_name = "PInput"
+					m_bDefault = true
+					m_sampleTimes = [ 1.0, 2.0 ]
+					m_bUseAcceleraion = true
+					m_flSpringConstant = 0.0
+					m_flAnticipationDistance = 0.0
+					m_anticipationPosParam = 
+					{
+						m_id = 4294967295
+					}
+					m_anticipationHeadingParam = 
+					{
+						m_id = 4294967295
+					}
+				},
+			]
 		}
 		m_MovementSettings = 
 		{

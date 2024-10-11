@@ -109,7 +109,7 @@ public class PlayerController : Component, IEquipChanged
 			}
 		}*/
 
-		var speed = CharacterController.Velocity.Length;
+		var speed = CharacterController.Velocity.Length * 2.54f;
 		Model.Set( "move_speed", speed );
 		Model.Set( "running", IsRunning );
 		// Model.Set( "holding", true );
