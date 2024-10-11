@@ -31,6 +31,9 @@ public class TimeManager : Component, IWorldEvent
 
 	public static bool IsNight => Time.Hour is < 6 or > 18;
 	public static bool IsDay => !IsNight;
+	
+	public static int DayStartHour => 6;
+	public static int DayEndHour => 18;
 
 	protected override void OnStart()
 	{
@@ -101,8 +104,9 @@ public class TimeManager : Component, IWorldEvent
 		{
 			Sun.WorldRotation = CalculateSunRotation( Sun );
 			// Sun.LightEnergy = CalculateSunEnergy( Sun );
-			Sun.LightColor = CalculateSunColor();
-			Sun.SkyColor = (CalculateSunColor() * (IsDay ? 0.4f : 1f)).WithAlpha( 1 );
+			Sun.LightColor = CalculateSunLightColor();
+			// Sun.SkyColor = (CalculateSunColor() * (IsDay ? 0.4f : 1f)).WithAlpha( 1 );
+			Sun.SkyColor = CalculateSunAmbientColor();
 			// GetTree().CallGroup( "debugdraw", "add_line", Sun.GlobalTransform.Origin, Sun.GlobalTransform.Origin + Sun.GlobalTransform.Basis.Z * 0.5f, new Color( 1, 1, 1 ), 0.2f );
 		}
 		else
@@ -132,9 +136,9 @@ public class TimeManager : Component, IWorldEvent
 		}
 	}
 
-	private float DayFraction => (float)(Time.Hour * 3600 + Time.Minute * 60 + Time.Second) / SecondsPerDay;
+	private float DayFraction => (Time.Hour * 3600 + Time.Minute * 60 + Time.Second) / SecondsPerDay;
 
-	private Color GetComputedSkyColor()
+	public Color GetComputedSkyColor()
 	{
 		var baseIndex = MathF.Floor( DayFraction * _skyColors.Count );
 		var nextIndex = (int)Math.Ceiling( DayFraction * _skyColors.Count ) % _skyColors.Count;
@@ -145,9 +149,21 @@ public class TimeManager : Component, IWorldEvent
 		return color;
 	}
 
-	private Color CalculateSunColor()
+	public Color CalculateSunLightColor()
 	{
 		return GetComputedSkyColor();
+	}
+	
+	public Color CalculateSunAmbientColor()
+	{
+		// daytime is *1, nighttime is *3. lerp between *1 and *3 based on time of day
+		
+		var baseAmbientColor = GetComputedSkyColor();
+		
+		var lerp = MathF.Sin( MathF.PI * DayFraction );
+		var color = Color.Lerp( baseAmbientColor, baseAmbientColor * 3f, lerp );
+		return color;
+		
 	}
 
 	private Rotation CalculateSunRotation( DirectionalLight sun )

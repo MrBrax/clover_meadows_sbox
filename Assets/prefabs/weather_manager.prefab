@@ -244,6 +244,12 @@
               "component_id": "c8d53daa-cd18-425b-829e-7e9accccd56a",
               "go": "43456c06-da7e-43b2-b131-20907328df09",
               "component_type": "ParticleBoxEmitter"
+            },
+            "Volume": {
+              "_type": "component",
+              "component_id": "748b4fbb-5352-44ff-ae8b-bf76e44ebef3",
+              "go": "d8fae390-16f3-4e43-8933-81994f58286f",
+              "component_type": "VolumetricFogVolume"
             }
           }
         ],
@@ -444,6 +450,24 @@
                 "Height": 300,
                 "StartDistance": 0,
                 "VerticalFalloffExponent": 1
+              }
+            ]
+          },
+          {
+            "__guid": "d8fae390-16f3-4e43-8933-81994f58286f",
+            "Flags": 0,
+            "Name": "Volume",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.VolumetricFogVolume",
+                "__guid": "748b4fbb-5352-44ff-ae8b-bf76e44ebef3",
+                "Bounds": {
+                  "Mins": "-250,-250,-32",
+                  "Maxs": "250,250,150"
+                },
+                "FalloffExponent": 1,
+                "Strength": 0.2
               }
             ]
           }
