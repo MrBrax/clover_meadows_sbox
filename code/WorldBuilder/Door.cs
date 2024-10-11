@@ -121,7 +121,7 @@ public class Door : Component, IInteract
 	
 	private void SetCollision( bool state )
 	{
-		var collider = DoorModel.GetComponent<Collider>( true );
+		var collider = DoorModel.GetComponent<BoxCollider>( true );
 		
 		if ( collider.IsValid() )
 		{

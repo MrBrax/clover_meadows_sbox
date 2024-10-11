@@ -127,7 +127,7 @@
         "__guid": "f88734aa-50ac-49fa-80bb-f44c691d96c0",
         "Flags": 0,
         "Name": "Entrance",
-        "Position": "544,320,0",
+        "Position": "528,320,0",
         "Rotation": "0,0,1,-0.00000004371139",
         "Enabled": true,
         "Components": [
@@ -176,6 +176,7 @@
             "__guid": "950e5c0a-111d-41be-a019-f34412e29a25",
             "DestinationEntranceId": "player_house_exit",
             "DestinationWorldData": "worlds/island/island.world",
+            "NoWalk": false,
             "UnloadPreviousWorld": true
           },
           {
@@ -207,6 +208,7 @@
             "__guid": "56fc5c55-aa52-458c-92b3-81a91a6aca31",
             "DestinationEntranceId": "entry",
             "DestinationWorldData": "worlds/player_house/player_house_floor_2.world",
+            "NoWalk": false,
             "UnloadPreviousWorld": true
           },
           {
@@ -640,6 +642,55 @@
             "FieldOfView": 70,
             "FollowTargets": true,
             "Priority": 0
+          }
+        ]
+      },
+      {
+        "__guid": "5124a1bb-f932-488d-be30-b0a711701739",
+        "Flags": 0,
+        "Name": "Envmap Probe",
+        "Position": "288,304,32",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.EnvmapProbe",
+            "__guid": "d72e5ff6-2175-431e-a298-1e42cab3ac7e",
+            "Texture": "textures/cubemaps/default2.vtex",
+            "Bounds": {
+              "Mins": "-500,-500,-200",
+              "Maxs": "500,500,200"
+            },
+            "DelayBetweenUpdates": 0.1,
+            "Feathering": 0.02,
+            "FrameInterval": 5,
+            "MaxDistance": 512,
+            "MultiBounce": false,
+            "Projection": "Box",
+            "RenderDynamically": false,
+            "TintColor": "1,1,1,1",
+            "UpdateStrategy": "OnEnabled",
+            "ZFar": 4096,
+            "ZNear": 16
+          }
+        ]
+      },
+      {
+        "__guid": "0ae1b050-207a-42b1-aebe-92dc9dfa2361",
+        "Flags": 0,
+        "Name": "Point Light",
+        "Position": "608,320,16",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "df7b05a8-4783-4147-b1db-fb5251150b1c",
+            "Attenuation": 2,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "14.91207,15.99148,16.32,1",
+            "Radius": 100,
+            "Shadows": true
           }
         ]
       }
