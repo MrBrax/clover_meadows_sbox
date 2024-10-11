@@ -28,7 +28,7 @@ public class Footsteps : Component
 		if ( timeSinceStep < 0.2f )
 			return;
 		
-		Log.Info( "Footstep event" );
+		// Log.Info( "Footstep event" );
 
 		var tr = Scene.Trace
 			.Ray( e.Transform.Position + Vector3.Up * 20, e.Transform.Position + Vector3.Up * -20 )
