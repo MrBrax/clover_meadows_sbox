@@ -11,13 +11,13 @@ public class PlayerController : Component
 {
 	[RequireComponent] public PlayerCharacter Player { get; set; }
 	[RequireComponent] public CharacterController CharacterController { get; set; }
-	
+
 	[Property] public SkinnedModelRenderer Model { get; set; }
-	
+
 	[Property] public CitizenAnimationHelper AnimationHelper { get; set; }
-	
+
 	[Property] public Vector3 Gravity { get; set; } = new Vector3( 0, 0, 800 );
-	
+
 	[Property] public float WalkSpeed { get; set; } = 110.0f;
 	[Property] public float RunSpeed { get; set; } = 180.0f;
 
@@ -109,7 +109,7 @@ public class PlayerController : Component
 			}
 		}*/
 
-		var speed = CharacterController.Velocity.Length / WalkSpeed;
+		var speed = CharacterController.Velocity.Length / 20f;
 		Model.Set( "move_speed", speed );
 		Model.Set( "running", IsRunning );
 		// Gizmo.Draw.Text( $"Speed: {speed}", new Transform( Player.WorldPosition + Vector3.Up * 32 ) );
@@ -121,7 +121,8 @@ public class PlayerController : Component
 			AnimationHelper.IsGrounded = CharacterController.IsOnGround;
 			AnimationHelper.MoveRotationSpeed = 1f;
 			// AnimationHelper.WithLook( EyeAngles.Forward, 1, 1, 1.0f );
-			AnimationHelper.MoveStyle = IsRunning ? CitizenAnimationHelper.MoveStyles.Run : CitizenAnimationHelper.MoveStyles.Walk;
+			AnimationHelper.MoveStyle =
+				IsRunning ? CitizenAnimationHelper.MoveStyles.Run : CitizenAnimationHelper.MoveStyles.Walk;
 		}
 	}
 
@@ -137,7 +138,7 @@ public class PlayerController : Component
 	{
 		if ( IsProxy )
 			return;
-		
+
 
 		if ( Player.InCutscene )
 		{
@@ -151,7 +152,7 @@ public class PlayerController : Component
 				Player.ModelLookAt( target );
 
 				// Gizmo.Draw.LineSphere( target, 10.0f );
-				
+
 				// Gizmo.Draw.Arrow( Player.WorldPosition, target );
 
 				if ( (target - Player.WorldPosition).Length < 10.0f )

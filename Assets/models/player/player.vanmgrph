@@ -15,7 +15,7 @@
 				{
 					_class = "CStateMachineAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -96.0, -112.0 ]
+					m_vecPosition = [ -64.0, 16.0 ]
 					m_nNodeID = 
 					{
 						m_id = 606563244
@@ -72,7 +72,7 @@
 							{
 								m_nodeID = 
 								{
-									m_id = 2090438878
+									m_id = 4294967295
 								}
 								m_outputID = 
 								{
@@ -176,7 +176,7 @@
 							{
 								m_nodeID = 
 								{
-									m_id = 1307672146
+									m_id = 4294967295
 								}
 								m_outputID = 
 								{
@@ -243,7 +243,7 @@
 							{
 								m_nodeID = 
 								{
-									m_id = 1898971698
+									m_id = 4294967295
 								}
 								m_outputID = 
 								{
@@ -290,6 +290,91 @@
 			{
 				key = 
 				{
+					m_id = 1171278068
+				}
+				value = 
+				{
+					_class = "CBlendAnimNode"
+					m_sName = "Unnamed"
+					m_vecPosition = [ -128.635925, -269.442474 ]
+					m_nNodeID = 
+					{
+						m_id = 1171278068
+					}
+					m_sNote = ""
+					m_children = 
+					[
+						{
+							m_inputConnection = 
+							{
+								m_nodeID = 
+								{
+									m_id = 2090438878
+								}
+								m_outputID = 
+								{
+									m_id = 4294967295
+								}
+							}
+							m_name = "idle"
+							m_blendValue = 0.0
+						},
+						{
+							m_inputConnection = 
+							{
+								m_nodeID = 
+								{
+									m_id = 1061188962
+								}
+								m_outputID = 
+								{
+									m_id = 4294967295
+								}
+							}
+							m_name = "walk"
+							m_blendValue = 5.0
+						},
+						{
+							m_inputConnection = 
+							{
+								m_nodeID = 
+								{
+									m_id = 1898971698
+								}
+								m_outputID = 
+								{
+									m_id = 4294967295
+								}
+							}
+							m_name = "run"
+							m_blendValue = 10.0
+						},
+					]
+					m_blendValueSource = "Parameter"
+					m_param = 
+					{
+						m_id = 1654757935
+					}
+					m_blendKeyType = "BlendKey_UserValue"
+					m_bLockBlendOnReset = false
+					m_bSyncCycles = true
+					m_bLoop = true
+					m_bLockWhenWaning = true
+					m_damping = 
+					{
+						_class = "CAnimInputDamping"
+						m_speedFunction = "NoDamping"
+						m_fSpeedScale = 1.0
+						m_fMinSpeed = 10.0
+						m_fMaxTension = 1000.0
+						m_fTension = 100.0
+						m_fDamping = 5.0
+					}
+				}
+			},
+			{
+				key = 
+				{
 					m_id = 1307672146
 				}
 				value = 
@@ -328,7 +413,7 @@
 				{
 					_class = "CRootAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 112.0, -112.0 ]
+					m_vecPosition = [ 368.0, -128.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1558846786
@@ -338,7 +423,7 @@
 					{
 						m_nodeID = 
 						{
-							m_id = 606563244
+							m_id = 1171278068
 						}
 						m_outputID = 
 						{
@@ -377,7 +462,7 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -352.0, -192.0 ]
+					m_vecPosition = [ -480.0, -256.0 ]
 					m_nNodeID = 
 					{
 						m_id = 2090438878
@@ -420,6 +505,18 @@
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
 				m_bUseMostRecentValue = false
 				m_bAutoReset = false
+				m_bDefaultValue = false
+			},
+			{
+				_class = "CBoolAnimParameter"
+				m_name = "attack"
+				m_id = 
+				{
+					m_id = 2093666730
+				}
+				m_previewButton = "ANIMPARAM_BUTTON_NONE"
+				m_bUseMostRecentValue = false
+				m_bAutoReset = true
 				m_bDefaultValue = false
 			},
 		]
