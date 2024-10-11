@@ -12,6 +12,9 @@ public class TimeManager : Component, IWorldEvent
 	// 	Game.ActiveScene.GetAllComponents<DirectionalLight>().FirstOrDefault( x => x.Tags.Has( "sun" ) );
 	[Property] public DirectionalLight Sun { get; set; }
 	[Property] public SkyBox2D SkyBox { get; set; }
+	
+	[Property] public Gradient SunlightGradient { get; set; }
+	[Property] public Gradient AmbientGradient { get; set; }
 
 	[ConVar( "clover_time_scale" )] public static int Speed { get; set; } = 1;
 
@@ -151,19 +154,25 @@ public class TimeManager : Component, IWorldEvent
 
 	public Color CalculateSunLightColor()
 	{
-		return GetComputedSkyColor();
+		// return GetComputedSkyColor();
+		
+		return SunlightGradient.Evaluate( DayFraction );
 	}
 	
 	public Color CalculateSunAmbientColor()
 	{
-		// daytime is *1, nighttime is *3. lerp between *1 and *3 based on time of day
+		
+		return AmbientGradient.Evaluate( DayFraction );
+		
+		/*// daytime is *1, nighttime is *3. lerp between *1 and *3 based on time of day
 		
 		var baseAmbientColor = GetComputedSkyColor();
 		
 		var lerp = MathF.Sin( MathF.PI * DayFraction );
-		var color = Color.Lerp( baseAmbientColor, baseAmbientColor * 5f, lerp );
-		return color;
+		var color = Color.Lerp( baseAmbientColor * 1f, baseAmbientColor * 1f, lerp );
 		
+		return color.WithAlpha( 1f );*/
+
 	}
 
 	private Rotation CalculateSunRotation( DirectionalLight sun )
