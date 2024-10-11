@@ -65,6 +65,31 @@
 					{
 						_class = "AnimFile"
 						name = "walk"
+						children = 
+						[
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 0
+								event_keys = 
+								{
+									Attachment = ""
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 18
+								event_keys = 
+								{
+									Attachment = ""
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+						]
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""
@@ -111,6 +136,31 @@
 					{
 						_class = "AnimFile"
 						name = "run"
+						children = 
+						[
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 0
+								event_keys = 
+								{
+									Attachment = ""
+									Foot = "0"
+									Volume = 1.0
+								}
+							},
+							{
+								_class = "AnimEvent"
+								event_class = "AE_FOOTSTEP"
+								event_frame = 15
+								event_keys = 
+								{
+									Attachment = ""
+									Foot = "1"
+									Volume = 1.0
+								}
+							},
+						]
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""
@@ -177,6 +227,25 @@
 						take = 13
 						reverse = false
 					},
+					{
+						_class = "AnimBindPose"
+						name = "bind"
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = false
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						frame_count = 1
+						frame_rate = 30
+					},
 				]
 				default_root_bone_name = ""
 			},
@@ -192,7 +261,7 @@
 						[
 							{
 								bone = "arm_right"
-								weight = 0.842105
+								weight = 0.894737
 							},
 							{
 								bone = "leg_right"
@@ -201,6 +270,58 @@
 						]
 						master_morph_weight = -1.0
 						morph_weights = [  ]
+					},
+				]
+			},
+			{
+				_class = "GameDataList"
+				children = 
+				[
+					{
+						_class = "Feet"
+						children = 
+						[
+							{
+								_class = "Foot"
+								name = "left"
+								anklebone = "leg_left"
+								toebone = ""
+								balloffset = [ 0.0, 0.0, 0.0 ]
+								heeloffset = [ 0.0, 0.0, 0.0 ]
+								autolevel = true
+								traceheight = 12.0
+								traceradius = 4.0
+							},
+							{
+								_class = "Foot"
+								name = "right"
+								anklebone = "leg_right"
+								toebone = ""
+								balloffset = [ 0.0, 0.0, 0.0 ]
+								heeloffset = [ 0.0, 0.0, 0.0 ]
+								autolevel = true
+								traceheight = 12.0
+								traceradius = 4.0
+							},
+						]
+						locktolerance = 0.6
+						heighttolerance = 2.0
+						sanitizetrajectories = true
+					},
+				]
+			},
+			{
+				_class = "AttachmentList"
+				children = 
+				[
+					{
+						_class = "Attachment"
+						name = "hold"
+						parent_bone = "arm_right"
+						relative_origin = [ -21.864159, -0.09768, 5.446818 ]
+						relative_angles = [ -0.000087, 0.0, 0.0 ]
+						weight = 1.0
+						ignore_rotation = false
 					},
 				]
 			},

@@ -110,7 +110,13 @@
       },
       {
         "__type": "Clover.Components.Footsteps",
-        "__guid": "0a84ccd3-8a96-4317-890f-8d98284a2035"
+        "__guid": "0a84ccd3-8a96-4317-890f-8d98284a2035",
+        "Source": {
+          "_type": "component",
+          "component_id": "d75a67a1-43f1-40da-9705-25901f0fad4a",
+          "go": "b3d17063-df2e-4889-b970-77faaeea7b6d",
+          "component_type": "SkinnedModelRenderer"
+        }
       },
       {
         "__type": "Sandbox.AudioListener",
@@ -228,7 +234,7 @@
                     "Flags": 0,
                     "Name": "Tool",
                     "Position": "-13.80112,-0.00001571841,3.61515",
-                    "Rotation": "0.5934681,0.3844414,0.3844414,-0.5934689",
+                    "Rotation": "0.1391961,0.6932704,0.6932713,-0.1391968",
                     "Enabled": true
                   }
                 ]
