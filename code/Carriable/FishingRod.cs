@@ -155,7 +155,7 @@ public class FishingRod : BaseCarriable
 		{
 			var castDistance = Math.Clamp( 32f + (_timeSinceWindup * 90f), MinCastDistance, MaxCastDistance );
 			// Log.Info( $"Windup: {castDistance}, {_timeSinceWindup}" );
-			Model.LocalRotation = Rotation.FromPitch( (castDistance / MaxCastDistance) * 90f );
+			SetRodAngle( (castDistance / MaxCastDistance) * 90f );
 			return;
 		}
 
@@ -383,7 +383,7 @@ public class FishingRod : BaseCarriable
 		// _isBusy = false;
 		Stamina = 100f;
 		LineStrength = 100f;
-		Model.LocalRotation = Rotation.FromPitch( 0f );
+		SetRodAngle( 0 );
 		DestroyBobber();
 	}
 
@@ -457,7 +457,7 @@ public class FishingRod : BaseCarriable
 
 		var pitch = Math.Clamp( (dist * -0.5f) + 90f, -20f, 100f );
 		// Log.Info( $"Reeling in. Distance: {dist}, Pitch: {pitch} ({(dist * -0.5f) + 90f})" );
-		Model.LocalRotation = Rotation.FromPitch( pitch );
+		SetRodAngle( pitch );
 
 		var tween = TweenManager.CreateTween();
 		tween.AddPosition( Bobber.GameObject, reelPosition, 0.4f ).SetEasing( Sandbox.Utility.Easing.QuadraticOut );
@@ -555,6 +555,14 @@ public class FishingRod : BaseCarriable
 
 		// ReelIn( 128f );
 		ResetAll();
+	}
+	
+	private void SetRodAngle( float angle )
+	{
+		// Model.LocalRotation = Rotation.FromPitch( angle * -1f );
+		var tween = TweenManager.CreateTween();
+		tween.AddLocalRotation( Model, Rotation.FromPitch( angle * -1f ), 0.1f )
+			.SetEasing( Sandbox.Utility.Easing.QuadraticOut );
 	}
 
 	/*private void GiveFish( Fish fish )
