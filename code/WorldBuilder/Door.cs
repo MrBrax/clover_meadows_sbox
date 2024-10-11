@@ -97,6 +97,8 @@ public class Door : Component, IInteract
 		if ( _isBeingUsed ) return;
 		
 		player.CharacterController.Velocity = Vector3.Zero;
+		
+		player.TeleportTo( WorldPosition + WorldRotation.Forward * 25f + WorldRotation.Left * 16f, WorldRotation * Rotation.FromYaw( 180 ) );
 
 		Open();
 		
