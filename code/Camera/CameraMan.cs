@@ -75,7 +75,10 @@ public sealed class CameraMan : Component
 		else
 		{
 			wishedRot = MainCameraNode.WorldRotation;
-			wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.3f;
+			if ( !MainCameraNode.Static )
+			{
+				wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.3f;
+			}
 		}
 
 		_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * LerpSpeed );

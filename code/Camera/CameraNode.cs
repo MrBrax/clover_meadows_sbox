@@ -11,6 +11,8 @@ public sealed class CameraNode : Component
 	
 	[Property] public bool FollowTargets { get; set; } = true;
 	
+	[Property] public bool Static { get; set; } = false;
+	
 	protected override void OnUpdate()
 	{
 

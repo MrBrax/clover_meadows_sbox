@@ -246,7 +246,7 @@
                   "DstName": "_signal"
                 },
                 {
-                  "Id": 2,
+                  "Id": 3,
                   "Value": "asdf",
                   "DstId": 1,
                   "DstName": "format"
@@ -597,7 +597,8 @@
             "__guid": "10865c93-9b81-4d45-94df-215e9d847d7a",
             "FieldOfView": 70,
             "FollowTargets": true,
-            "Priority": 0
+            "Priority": 0,
+            "Static": true
           }
         ]
       },
@@ -641,7 +642,8 @@
             "__guid": "950d56ba-21fe-41c2-94f7-d2c02d21faf2",
             "FieldOfView": 70,
             "FollowTargets": true,
-            "Priority": 0
+            "Priority": 0,
+            "Static": true
           }
         ]
       },
