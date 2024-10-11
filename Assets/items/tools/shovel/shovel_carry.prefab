@@ -11,7 +11,8 @@
         "DigSound": "items/tools/shovel/shovel_dig.sound",
         "FillSound": "items/tools/shovel/shovel_fill.sound",
         "HitSound": "items/tools/shovel/shovel_hit.sound",
-        "ItemData": "items/tools/shovel/shovel.tool"
+        "ItemData": "items/tools/shovel/shovel.tool",
+        "UseTime": 1
       }
     ],
     "Children": [
@@ -25,8 +26,8 @@
             "__guid": "a83de2bc-1f7d-47df-9e23-ec8472009980",
             "Flags": 0,
             "Name": "Object",
-            "Position": "0,7.966495,25.97393",
-            "Rotation": "0.4218444,-0.4218445,0.5674921,0.5674921",
+            "Position": "0,-7.943778,25.97393",
+            "Rotation": "-0.4218448,-0.4218445,-0.5674921,0.5674918",
             "Scale": "1.6,1.6,1.6",
             "Enabled": true,
             "Components": [
@@ -59,6 +60,5 @@
   "__references": [
     "titanovsky.spade#53827"
   ],
-  "IsValid": true,
   "__version": 1
 }

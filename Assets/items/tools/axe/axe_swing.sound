@@ -5,7 +5,7 @@
   "Decibels": 70,
   "SelectionMode": "Random",
   "Sounds": [
-    "sounds/kenney/ui/bong_001.vsnd"
+    "items/tools/axe/422498__nightflame__swinging-staff-whoosh-low-08.vsnd"
   ],
   "Occlusion": true,
   "AirAbsorption": true,
@@ -13,6 +13,5 @@
   "OcclusionRadius": 64,
   "DistanceAttenuation": true,
   "__references": [],
-  "IsValid": true,
   "__version": 0
 }

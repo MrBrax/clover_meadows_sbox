@@ -50,7 +50,7 @@
             "__guid": "e058eac5-8f2f-4c10-aa14-97d165af580c",
             "Flags": 0,
             "Name": "Object",
-            "Rotation": "0.3826835,-0.00000001672763,-0.9238795,-0.00000004038406",
+            "Rotation": "0.000000000000004641844,0.3826835,-0.000000000000001922715,0.9238795",
             "Enabled": true,
             "Components": [
               {
@@ -146,6 +146,5 @@
   "__references": [
     "fish.basic_fishingrod#23056"
   ],
-  "IsValid": true,
   "__version": 1
 }

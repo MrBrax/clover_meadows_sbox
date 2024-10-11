@@ -27,8 +27,8 @@
             "__guid": "fc8cb003-2324-446f-aebe-8a00c6f05994",
             "Flags": 0,
             "Name": "Object",
-            "Position": "0,0,1.135419",
-            "Rotation": "0,-0,-0.7071068,0.7071068",
+            "Position": "-1.289267,0.0000003073852,1.135419",
+            "Rotation": "0,0,0.7071068,0.7071068",
             "Scale": "4,4,4",
             "Enabled": true,
             "Components": [

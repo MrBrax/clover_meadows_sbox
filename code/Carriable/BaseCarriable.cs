@@ -120,4 +120,23 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 			Durability = durability;
 		}
 	}
+
+	protected override void DrawGizmos()
+	{
+		Gizmo.Draw.Arrow( Vector3.Zero, Vector3.Forward * 40f );
+		if ( WorldRotation != Rotation.Identity )
+		{
+			Gizmo.Draw.Text( "WRONG ROTATION", new Transform( ), "Roboto", 24f );
+		}
+		
+		if ( Model.IsValid() && Model.WorldPosition != Vector3.Zero )
+		{
+			Gizmo.Draw.Text( "MODEL WRONG POSITION", new Transform( ), "Roboto", 24f );
+		}
+		
+		if ( Model.IsValid() && Model.WorldRotation != Rotation.Identity )
+		{
+			Gizmo.Draw.Text( "MODEL WRONG ROTATION", new Transform( ), "Roboto", 24f );
+		}
+	}
 }

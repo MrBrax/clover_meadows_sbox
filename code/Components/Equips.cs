@@ -160,6 +160,19 @@ public class Equips : Component
 			}
 		}
 	}
+
+	protected override void DrawGizmos()
+	{
+		foreach ( var pair in AttachPoints )
+		{
+			if ( pair.Value.IsValid() )
+			{
+				Gizmo.Draw.LineSphere( pair.Value.WorldPosition, 4f );
+				Gizmo.Draw.Arrow( pair.Value.WorldPosition, pair.Value.WorldPosition + pair.Value.WorldRotation.Up * 32f );
+				Gizmo.Draw.Arrow( pair.Value.WorldPosition, pair.Value.WorldPosition + pair.Value.WorldRotation.Forward * 32f );
+			}
+		}
+	}
 }
 
 public interface IEquipChanged

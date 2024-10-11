@@ -7,7 +7,7 @@ using Clover.Carriable;
 using Clover.Components;
 using Clover.Player;
 
-public class PlayerController : Component
+public class PlayerController : Component, IEquipChanged
 {
 	[RequireComponent] public PlayerCharacter Player { get; set; }
 	[RequireComponent] public CharacterController CharacterController { get; set; }
@@ -112,6 +112,7 @@ public class PlayerController : Component
 		var speed = CharacterController.Velocity.Length / 20f;
 		Model.Set( "move_speed", speed );
 		Model.Set( "running", IsRunning );
+		// Model.Set( "holding", true );
 		// Gizmo.Draw.Text( $"Speed: {speed}", new Transform( Player.WorldPosition + Vector3.Up * 32 ) );
 
 		if ( AnimationHelper.IsValid() )
@@ -265,5 +266,19 @@ public class PlayerController : Component
 		{
 			WishVelocity *= tool.CustomPlayerSpeed();
 		}
+	}
+
+	public void OnEquippedItemChanged( GameObject owner, Equips.EquipSlot slot, GameObject item )
+	{
+		Log.Info( $"OnEquippedItemChanged: {owner} {slot} {item}" );
+		if ( owner != GameObject ) return;
+		Model.Set( "holding", item.IsValid() );
+	}
+
+	public void OnEquippedItemRemoved( GameObject owner, Equips.EquipSlot slot )
+	{
+		Log.Info( $"OnEquippedItemRemoved: {owner} {slot}" );
+		if ( owner != GameObject ) return;
+		Model.Set( "holding", false );
 	}
 }

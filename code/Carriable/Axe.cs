@@ -5,11 +5,10 @@ namespace Clover.Carriable;
 
 public class Axe : BaseCarriable
 {
-	
 	[Property] public SoundEvent SwingSound { get; set; }
-	
+
 	[Property] public SoundEvent HitTreeSound { get; set; }
-	
+
 	public override void OnUseDown()
 	{
 		base.OnUseDown();
@@ -17,14 +16,14 @@ public class Axe : BaseCarriable
 		if ( !CanUse() ) return;
 
 		NextUse = 1f;
-		
+
 		/*Log.Info( "Axe used down" );
-		
+
 		if ( SwingSound.IsValid() )
 		{
 			GameObject.PlaySound( SwingSound );
 		}*/
-		
+
 		var pos = Player.GetAimingGridPosition();
 
 		var worldItems = Player.World.GetItems( pos ).ToList();
@@ -32,7 +31,8 @@ public class Axe : BaseCarriable
 		if ( worldItems.Count == 0 )
 		{
 			Log.Info( "No items to axe" );
-			GameObject.PlaySound( SwingSound );
+			Player.PlayerController.Model.Set( "attack", true );
+			Task.DelayRealtimeSeconds( 0.3f ).ContinueWith( _ => GameObject?.PlaySound( SwingSound ) );
 			return;
 		}
 
@@ -54,7 +54,7 @@ public class Axe : BaseCarriable
 				HitItem( pos, floorItem );
 				return;
 			}*/
-			
+
 			if ( floorItem.Node.Components.TryGet<Tree>( out var tree ) )
 			{
 				if ( tree.IsFalling || tree.IsDroppingFruit )
@@ -63,6 +63,7 @@ public class Axe : BaseCarriable
 					GameObject.PlaySound( SwingSound );
 					return;
 				}
+
 				ChopTree( pos, floorItem, tree );
 				return;
 			}
@@ -71,13 +72,11 @@ public class Axe : BaseCarriable
 				HitItem( pos, floorItem );
 				return;
 			}
-			
 		}
 
 		Log.Info( "No floor item to interact with." );
-		
 	}
-	
+
 	private void HitItem( Vector2Int pos, WorldNodeLink floorItem )
 	{
 		Log.Info( "Hitting item." );
@@ -89,26 +88,26 @@ public class Axe : BaseCarriable
 		// GetNode<AudioStreamPlayer3D>( "TreeHit" ).Play();
 		GameObject.PlaySound( HitTreeSound );
 		Log.Info( "Chopping tree" );
-		
+
 		await tree.DropFruitAsync();
-		
+
 		Log.Info( "Dropped fruit" );
 
 		tree.StumpModel.Enabled = true;
 
 		var model = tree.TreeModel;
-		
+
 		var tween = TweenManager.CreateTween();
 		var treePositionTween = tween.AddRotation( model, Rotation.FromRoll( 90f ), 1f );
 		treePositionTween.SetEasing( Sandbox.Utility.Easing.ExpoIn );
 
 		// var treeSizeTween = tween.Parallel().TweenProperty( model, "scale", Vector3.Zero, 0.1f ).SetDelay( 0.9f );
 		// var treeOpacityTween = tween.Parallel().TweenProperty( model, "modulate:a", 0, 2f );
-		
+
 		Sound.Play( tree.FallSound );
-		
+
 		await Task.DelayRealtimeSeconds( 1 );
-		
+
 		Sound.Play( tree.FallGroundSound );
 
 		/*var particle = Loader.LoadResource<PackedScene>( "res://particles/poof.tscn" ).Instantiate<Node3D>();
@@ -126,9 +125,8 @@ public class Axe : BaseCarriable
 
 		// var stump = Loader.LoadResource<ItemData>( ResourceManager.Instance.GetItemPathByName( "item:tree_stump" ) );
 		// var stumpNode = World.SpawnNode( stump, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
-		
-		var stumpNode = tree.WorldItem.WorldLayerObject.World.SpawnPlacedNode( tree.StumpData, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
-		
+
+		var stumpNode = tree.WorldItem.WorldLayerObject.World.SpawnPlacedNode( tree.StumpData, pos,
+			World.ItemRotation.North, World.ItemPlacement.Floor );
 	}
-	
 }

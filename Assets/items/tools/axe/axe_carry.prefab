@@ -10,7 +10,12 @@
         "__guid": "e0201162-8019-4f60-b93f-3374df7f6ba9",
         "HitTreeSound": "items/trees/tree_shared/tree_axe_hit.sound",
         "ItemData": "items/tools/axe/axe.tool",
-        "SwingSound": "items/tools/axe/axe_swing.sound"
+        "Model": {
+          "_type": "gameobject",
+          "go": "f00e68e2-38ce-426a-90a8-0ab4acca4093"
+        },
+        "SwingSound": "items/tools/axe/axe_swing.sound",
+        "UseTime": 1
       }
     ],
     "Children": [
@@ -18,7 +23,6 @@
         "__guid": "f00e68e2-38ce-426a-90a8-0ab4acca4093",
         "Flags": 0,
         "Name": "Model",
-        "Position": "0,0,1",
         "Scale": "0.7,0.7,0.7",
         "Enabled": true,
         "Children": [
@@ -26,8 +30,8 @@
             "__guid": "e058eac5-8f2f-4c10-aa14-97d165af580c",
             "Flags": 0,
             "Name": "Object",
-            "Position": "5.262726,-0.00001822368,-12.40984",
-            "Rotation": "-0.1053983,-0.2168673,-0.02355932,0.9702086",
+            "Position": "-5.638877,3.255416,-15.36461",
+            "Rotation": "0.2168673,-0.1053983,0.9702086,0.02355927",
             "Scale": "1.2,1.2,1.2",
             "Enabled": true,
             "Components": [
@@ -60,6 +64,5 @@
   "__references": [
     "wujekfoliarz.axe#41177"
   ],
-  "IsValid": true,
   "__version": 1
 }
