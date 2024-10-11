@@ -718,7 +718,7 @@
 				{
 					_class = "CBlendAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -128.635925, -269.442474 ]
+					m_vecPosition = [ 0.0, -288.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1171278068
@@ -824,7 +824,7 @@
 				{
 					_class = "CAddAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 160.0, -304.0 ]
+					m_vecPosition = [ 288.0, -208.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1432491061
@@ -845,7 +845,7 @@
 					{
 						m_nodeID = 
 						{
-							m_id = 4294967295
+							m_id = 1794193953
 						}
 						m_outputID = 
 						{
@@ -870,7 +870,7 @@
 				{
 					_class = "CBoneMaskAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 400.0, -192.0 ]
+					m_vecPosition = [ 512.0, -224.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1552353951
@@ -892,7 +892,7 @@
 					{
 						m_nodeID = 
 						{
-							m_id = 93493298
+							m_id = 1432491061
 						}
 						m_outputID = 
 						{
@@ -923,7 +923,7 @@
 				{
 					_class = "CRootAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 640.0, -240.0 ]
+					m_vecPosition = [ 704.0, -240.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1558846786
@@ -940,6 +940,52 @@
 							m_id = 4294967295
 						}
 					}
+				}
+			},
+			{
+				key = 
+				{
+					m_id = 1794193953
+				}
+				value = 
+				{
+					_class = "CSubtractAnimNode"
+					m_sName = "Unnamed"
+					m_vecPosition = [ 112.0, -96.0 ]
+					m_nNodeID = 
+					{
+						m_id = 1794193953
+					}
+					m_sNote = ""
+					m_baseInputConnection = 
+					{
+						m_nodeID = 
+						{
+							m_id = 93493298
+						}
+						m_outputID = 
+						{
+							m_id = 4294967295
+						}
+					}
+					m_subtractInputConnection = 
+					{
+						m_nodeID = 
+						{
+							m_id = 2090438878
+						}
+						m_outputID = 
+						{
+							m_id = 4294967295
+						}
+					}
+					m_timingBehavior = "UseChild1"
+					m_flTimingBlend = 0.5
+					m_footMotionTiming = "Child1"
+					m_bResetBase = true
+					m_bResetSubtract = true
+					m_bApplyChannelsSeparately = true
+					m_bModelSpace = false
 				}
 			},
 			{
