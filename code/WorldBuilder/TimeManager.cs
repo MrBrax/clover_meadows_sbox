@@ -161,7 +161,7 @@ public class TimeManager : Component, IWorldEvent
 		var baseAmbientColor = GetComputedSkyColor();
 		
 		var lerp = MathF.Sin( MathF.PI * DayFraction );
-		var color = Color.Lerp( baseAmbientColor, baseAmbientColor * 3f, lerp );
+		var color = Color.Lerp( baseAmbientColor, baseAmbientColor * 5f, lerp );
 		return color;
 		
 	}
