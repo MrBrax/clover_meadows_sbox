@@ -1,4 +1,5 @@
 ﻿using System;
+using Sandbox.Audio;
 
 namespace Clover.WorldBuilder.Weather;
 
@@ -13,6 +14,13 @@ public class Rain : WeatherBase
 		base.SetEnabled( state, smooth );
 		Emitter.Enabled = state;
 		Sound.Enabled = state;
+		
+		if ( Sound.Enabled )
+		{
+			Sound.TargetMixer = NodeManager.WeatherManager.IsInside
+				? Mixer.FindMixerByName( "WeatherInside" )
+				: Mixer.FindMixerByName( "WeatherOutside" );
+		}
 	}
 
 	public override void SetLevel( int level, bool smooth = false )

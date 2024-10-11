@@ -298,8 +298,12 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 	private void SetWind( int level, bool instant = false )
 	{
 		WindEnabled = level > 0;
-		if ( WindEnabled && IsInside ) return; // no wind inside
-										 // GetNode<Wind>( "Wind" ).SetEnabledSmooth( state );
+		if ( WindEnabled && IsInside )
+		{
+			WindComponent.SetEnabled( false );
+			return; // no wind inside
+		}
+		// GetNode<Wind>( "Wind" ).SetEnabledSmooth( state );
 		/*if ( instant )
 		{
 			// GetNode<Wind>( "Wind" ).SetEnabled( state );
@@ -420,6 +424,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 	
 	public void OnWorldChanged( World world )
 	{
+		Log.Info( "IS INSIDE: " + world.Data.IsInside );
 		IsInside = world.Data.IsInside;
 		Setup( true );
 	}
