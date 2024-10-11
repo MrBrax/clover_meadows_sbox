@@ -87,12 +87,14 @@ public class Footsteps : Component
 
 	private void OnEvent( SceneModel.FootstepEvent e )
 	{
-		Log.Info( "Footstep event" );
 		if ( timeSinceStep < 0.2f )
 			return;
+		
+		Log.Info( "Footstep event" );
 
 		var tr = Scene.Trace
 			.Ray( e.Transform.Position + Vector3.Up * 20, e.Transform.Position + Vector3.Up * -20 )
+			.WithTag( "terrain" )
 			.Run();
 
 		if ( !tr.Hit )
