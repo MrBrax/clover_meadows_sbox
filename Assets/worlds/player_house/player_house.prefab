@@ -244,7 +244,7 @@
                   "DstName": "_signal"
                 },
                 {
-                  "Id": 3,
+                  "Id": 2,
                   "Value": "asdf",
                   "DstId": 1,
                   "DstName": "format"
@@ -258,27 +258,6 @@
             "__type": "Clover.WorldLayerObject",
             "__guid": "c26c2bcc-e180-4dc0-b6d8-beb7b493265e",
             "Layer": 0
-          }
-        ]
-      },
-      {
-        "__guid": "07aa325b-7c5e-42da-8674-e6c16a391a57",
-        "Flags": 0,
-        "Name": "int",
-        "Enabled": true,
-        "Components": [
-          {
-            "__type": "Sandbox.ModelRenderer",
-            "__guid": "399d05b1-8dbd-42a6-946a-27208096ccc3",
-            "BodyGroups": 18446744073709551615,
-            "RenderOptions": {
-              "GameLayer": true,
-              "OverlayLayer": false,
-              "BloomLayer": false,
-              "AfterUILayer": false
-            },
-            "RenderType": "On",
-            "Tint": "1,1,1,1"
           }
         ]
       },
