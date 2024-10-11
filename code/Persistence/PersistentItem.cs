@@ -28,11 +28,26 @@ public class PersistentItem
 	[JsonIgnore] public virtual bool IsStackable => ItemData.IsStackable;
 	[JsonIgnore] public virtual int StackSize => ItemData.StackSize;
 	
+	/// <summary>
+	///  Get arbitrary data from this item. If the key doesn't exist, it will return the default value.
+	///  Use <see cref="SetArbitraryData"/> to store arbitrary data.
+	/// </summary>
+	/// <param name="key"></param>
+	/// <param name="defaultValue"></param>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
 	public T GetArbitraryData<T>( string key, T defaultValue = default )
 	{
 		return TryGetArbitraryData<T>( key, out var value ) ? value : defaultValue;
 	}
 
+	/// <summary>
+	/// Same as <see cref="GetArbitraryData{T}"/> but returns false if the key doesn't exist.
+	/// </summary>
+	/// <param name="key"></param>
+	/// <param name="value"></param>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
 	public bool TryGetArbitraryData<T>( string key, out T value )
 	{
 		if ( ArbitraryData.TryGetValue( key, out var obj ) )
