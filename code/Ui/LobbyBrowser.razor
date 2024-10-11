@@ -1,0 +1,45 @@
+@using System
+@using Clover.Data
+@using Sandbox;
+@using Sandbox.Network
+@using Sandbox.UI;
+@inherits Panel
+@namespace Clover.Ui
+
+<root>
+	@if ( !Lobbies.Any() )
+	{
+		@foreach ( var lobby in Lobbies )
+		{
+			<div class="lobby">
+				<h2>@lobby.Name</h2>
+				<button @onclick=@( () => Networking.Connect( lobby.LobbyId ) )>Join</button>
+			</div>
+		}
+	}
+	@if ( _isRefreshing )
+	{
+		<div class="loading">Refreshing...</div>
+	}
+	<button @onclick=@( () => Refresh() )>Refresh</button>
+</root>
+
+@code {
+	
+	private List<LobbyInformation> Lobbies = new();
+	
+	private bool _isRefreshing = false;
+
+	private async void Refresh()
+	{
+		_isRefreshing = true;
+		Lobbies = await Networking.QueryLobbies();
+		_isRefreshing = false;
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( _isRefreshing, Lobbies );
+	}
+
+}
