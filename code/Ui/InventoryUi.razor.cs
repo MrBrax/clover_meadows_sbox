@@ -37,7 +37,7 @@ public partial class InventoryUi : IPlayerSpawned
 	{
 		if ( !SlotContainer.IsValid() )
 		{
-			Log.Error( "SlotContainer is null" );
+			// Log.Error( "SlotContainer is null" );
 			return;
 		}
 		
