@@ -12,9 +12,14 @@ public class PlayerController : Component
 	[RequireComponent] public PlayerCharacter Player { get; set; }
 	[RequireComponent] public CharacterController CharacterController { get; set; }
 	
+	[Property] public SkinnedModelRenderer Model { get; set; }
+	
 	[Property] public CitizenAnimationHelper AnimationHelper { get; set; }
 	
 	[Property] public Vector3 Gravity { get; set; } = new Vector3( 0, 0, 800 );
+	
+	[Property] public float WalkSpeed { get; set; } = 110.0f;
+	[Property] public float RunSpeed { get; set; } = 180.0f;
 
 	public Vector3 WishVelocity { get; private set; }
 
@@ -104,6 +109,10 @@ public class PlayerController : Component
 			}
 		}*/
 
+		var speed = CharacterController.Velocity.Length / WalkSpeed;
+		Model.Set( "move_speed", speed );
+		Model.Set( "running", IsRunning );
+		// Gizmo.Draw.Text( $"Speed: {speed}", new Transform( Player.WorldPosition + Vector3.Up * 32 ) );
 
 		if ( AnimationHelper.IsValid() )
 		{
@@ -244,11 +253,11 @@ public class PlayerController : Component
 
 		if ( Input.Down( "Run" ) )
 		{
-			WishVelocity *= 180.0f;
+			WishVelocity *= RunSpeed;
 		}
 		else
 		{
-			WishVelocity *= 110.0f;
+			WishVelocity *= WalkSpeed;
 		}
 
 		if ( Player.Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) )

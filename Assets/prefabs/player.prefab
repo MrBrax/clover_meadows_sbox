@@ -35,7 +35,15 @@
       {
         "__type": "PlayerController",
         "__guid": "99aba71e-aa75-4bc3-9014-e2be7fa4f4fd",
-        "Gravity": "0,0,800"
+        "Gravity": "0,0,800",
+        "Model": {
+          "_type": "component",
+          "component_id": "d75a67a1-43f1-40da-9705-25901f0fad4a",
+          "go": "b3d17063-df2e-4889-b970-77faaeea7b6d",
+          "component_type": "SkinnedModelRenderer"
+        },
+        "RunSpeed": 180,
+        "WalkSpeed": 110
       },
       {
         "__type": "CameraController",
@@ -127,8 +135,8 @@
             "__type": "Sandbox.SkinnedModelRenderer",
             "__guid": "d75a67a1-43f1-40da-9705-25901f0fad4a",
             "BodyGroups": 18446744073709551615,
-            "CreateBoneObjects": false,
-            "Model": "models/player/placeholder.vmdl",
+            "CreateBoneObjects": true,
+            "Model": "models/player/kenney/character-female-b.vmdl",
             "Morphs": {},
             "Parameters": {
               "bools": {},
@@ -144,19 +152,11 @@
               "AfterUILayer": false
             },
             "RenderType": "On",
-            "Tint": "0.83256,0.08906,0.08906,1",
+            "Tint": "1,1,1,1",
             "UseAnimGraph": true
           }
         ],
         "Children": [
-          {
-            "__guid": "0058772d-b32f-4f63-bdfa-1cbb5bc8482e",
-            "Flags": 0,
-            "Name": "Tool",
-            "Position": "-0.000007790257,-14.00411,20.06",
-            "Rotation": "0,0,1,-0.00000004371139",
-            "Enabled": true
-          },
           {
             "__guid": "3babed6e-289d-4418-bdfa-98de415a887a",
             "Flags": 0,
@@ -182,6 +182,63 @@
                 "IsTrigger": true,
                 "Scale": "24,24,50",
                 "Static": false
+              }
+            ]
+          },
+          {
+            "__guid": "78b690f8-0468-40e1-82b0-799b979b9b07",
+            "Flags": 4,
+            "Name": "leg_left",
+            "Position": "-1.839994,5.348545,11.27999",
+            "Rotation": "0.4999998,0.4999997,0.4999999,0.5000007",
+            "Enabled": true
+          },
+          {
+            "__guid": "d3cd5226-8047-4f4f-b260-387ff6bfad22",
+            "Flags": 4,
+            "Name": "leg_right",
+            "Position": "-1.840002,-5.348525,11.27998",
+            "Rotation": "0.4999998,0.4999997,0.4999999,0.5000007",
+            "Enabled": true
+          },
+          {
+            "__guid": "e8bfc785-e37e-4eaa-bfe5-cd2492da3615",
+            "Flags": 4,
+            "Name": "torso",
+            "Position": "-1.839998,0.000009279239,11.27998",
+            "Rotation": "0.4999998,0.4999997,0.4999999,0.5000007",
+            "Enabled": true,
+            "Children": [
+              {
+                "__guid": "2819eaf2-0da2-4a23-8f46-c24db78c844b",
+                "Flags": 4,
+                "Name": "arm_left",
+                "Position": "6.393391,7.13599,0.7360116",
+                "Enabled": true
+              },
+              {
+                "__guid": "13a187ec-96b3-47bb-8b66-14734bc37fcb",
+                "Flags": 4,
+                "Name": "arm_right",
+                "Position": "-6.393375,7.135983,0.736002",
+                "Enabled": true,
+                "Children": [
+                  {
+                    "__guid": "0058772d-b32f-4f63-bdfa-1cbb5bc8482e",
+                    "Flags": 0,
+                    "Name": "Tool",
+                    "Position": "-13.07292,-0.00001364378,3.36895",
+                    "Rotation": "-0.3535533,0.6123722,0.6123729,0.3535532",
+                    "Enabled": true
+                  }
+                ]
+              },
+              {
+                "__guid": "c55d6eb0-e7ed-4380-9c83-29d545b47011",
+                "Flags": 4,
+                "Name": "head",
+                "Position": "0.00001400521,10.68798,1.68889",
+                "Enabled": true
               }
             ]
           }
