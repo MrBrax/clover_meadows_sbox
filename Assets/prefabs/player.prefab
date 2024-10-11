@@ -317,7 +317,8 @@
                                     "__guid": "0058772d-b32f-4f63-bdfa-1cbb5bc8482e",
                                     "Flags": 0,
                                     "Name": "Tool",
-                                    "Rotation": "0,0.000001302995,0,1",
+                                    "Position": "-2.395234,-0.0004090412,-0.000003032167",
+                                    "Rotation": "-0.1692272,0.3468281,0.4045462,0.8291048",
                                     "Enabled": true
                                   }
                                 ]
@@ -364,7 +365,8 @@
             "__guid": "2fb1ce16-d463-4554-980e-59a3a3a2e355",
             "FieldOfView": 70,
             "FollowTargets": true,
-            "Priority": 1
+            "Priority": 1,
+            "Static": false
           }
         ]
       },
@@ -381,7 +383,8 @@
             "__guid": "4bfeaf52-03a5-4eb5-8679-5b0183a6aad9",
             "FieldOfView": 90,
             "FollowTargets": false,
-            "Priority": 0
+            "Priority": 0,
+            "Static": false
           }
         ]
       },

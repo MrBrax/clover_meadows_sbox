@@ -15,7 +15,7 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -672.0, -112.0 ]
+					m_vecPosition = [ -688.0, -96.0 ]
 					m_nNodeID = 
 					{
 						m_id = 82232133
@@ -257,7 +257,7 @@
 							{
 								m_nodeID = 
 								{
-									m_id = 82232133
+									m_id = 294660861
 								}
 								m_outputID = 
 								{
@@ -342,7 +342,7 @@
 				{
 					_class = "CBoneMaskAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -400.0, -96.0 ]
+					m_vecPosition = [ -400.0, -112.0 ]
 					m_nNodeID = 
 					{
 						m_id = 294660861

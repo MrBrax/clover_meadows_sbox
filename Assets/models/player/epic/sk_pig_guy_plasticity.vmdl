@@ -327,6 +327,26 @@
 					},
 				]
 			},
+			{
+				_class = "WeightListList"
+				children = 
+				[
+					{
+						_class = "WeightList"
+						name = "arm"
+						default_weight = 0.0
+						weights = 
+						[
+							{
+								bone = "Base_HumanRUpperarm"
+								weight = 1.0
+							},
+						]
+						master_morph_weight = -1.0
+						morph_weights = [  ]
+					},
+				]
+			},
 		]
 		model_archetype = ""
 		primary_associated_entity = ""
