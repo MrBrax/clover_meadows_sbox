@@ -142,7 +142,7 @@
             "__guid": "d75a67a1-43f1-40da-9705-25901f0fad4a",
             "BodyGroups": 18446744073709551615,
             "CreateBoneObjects": true,
-            "Model": "models/player/kenney/character-female-b.vmdl",
+            "Model": "models/player/epic/sk_pig_guy_plasticity.vmdl",
             "Morphs": {},
             "Parameters": {
               "bools": {},
@@ -192,59 +192,160 @@
             ]
           },
           {
-            "__guid": "78b690f8-0468-40e1-82b0-799b979b9b07",
+            "__guid": "dc620cbf-f6e5-4d37-a7ef-1bbf0b5259bd",
             "Flags": 4,
-            "Name": "leg_left",
-            "Position": "-1.839994,5.348545,11.27999",
-            "Rotation": "0.4999998,0.4999997,0.4999999,0.5000007",
-            "Enabled": true
-          },
-          {
-            "__guid": "d3cd5226-8047-4f4f-b260-387ff6bfad22",
-            "Flags": 4,
-            "Name": "leg_right",
-            "Position": "-1.840002,-5.348525,11.27998",
-            "Rotation": "0.4999998,0.4999997,0.4999999,0.5000007",
-            "Enabled": true
-          },
-          {
-            "__guid": "e8bfc785-e37e-4eaa-bfe5-cd2492da3615",
-            "Flags": 4,
-            "Name": "torso",
-            "Position": "-1.839998,0.000009279239,11.27998",
-            "Rotation": "0.4999998,0.4999997,0.4999999,0.5000007",
+            "Name": "Base_HumanLThigh",
+            "Position": "-0.2683256,2.503475,10.04478",
+            "Rotation": "0.5459144,0.4748445,-0.459507,0.5151246",
             "Enabled": true,
             "Children": [
               {
-                "__guid": "2819eaf2-0da2-4a23-8f46-c24db78c844b",
+                "__guid": "de30ae40-96fb-44a3-97e1-10cbdb0476c4",
                 "Flags": 4,
-                "Name": "arm_left",
-                "Position": "6.393391,7.13599,0.7360116",
+                "Name": "Base_HumanLCalf",
+                "Position": "4.759035,-0.000007688999,-0.0000007152557",
+                "Rotation": "0.0001919545,-0.001099168,-0.1092425,0.9940144",
                 "Enabled": true
-              },
+              }
+            ]
+          },
+          {
+            "__guid": "041aa8d0-d91a-46f7-a913-0f3099a166b5",
+            "Flags": 4,
+            "Name": "Base_HumanRThigh",
+            "Position": "-0.269226,-2.503659,10.04476",
+            "Rotation": "0.5152037,0.4594184,-0.4749457,0.5458263",
+            "Enabled": true,
+            "Children": [
               {
-                "__guid": "13a187ec-96b3-47bb-8b66-14734bc37fcb",
+                "__guid": "2c29296e-73a3-4bc9-8306-d60a01f09aaa",
                 "Flags": 4,
-                "Name": "arm_right",
-                "Position": "-6.393375,7.135983,0.736002",
+                "Name": "Base_HumanRCalf",
+                "Position": "4.759022,0.00000834465,-0.00001358986",
+                "Rotation": "-0.0002996649,0.0007721485,-0.1096901,0.9939655",
+                "Enabled": true
+              }
+            ]
+          },
+          {
+            "__guid": "33f3f587-97f9-48ca-bc0a-6a17376250f4",
+            "Flags": 4,
+            "Name": "Base_HumanSpine1",
+            "Position": "-0.8091111,0.000007006165,10.34746",
+            "Rotation": "-0.5140185,-0.4855765,-0.4856686,0.5139324",
+            "Enabled": true,
+            "Children": [
+              {
+                "__guid": "07a2a305-6de4-4c2f-b611-7d83962a97c5",
+                "Flags": 4,
+                "Name": "Base_HumanSpine2",
+                "Position": "7.36788,0.00000333786,-0.000001658569",
+                "Rotation": "-0.0000001316628,-0.000000146725,-0.01990383,0.9998019",
                 "Enabled": true,
                 "Children": [
                   {
-                    "__guid": "0058772d-b32f-4f63-bdfa-1cbb5bc8482e",
-                    "Flags": 0,
-                    "Name": "Tool",
-                    "Position": "-13.80112,-0.00001571841,3.61515",
-                    "Rotation": "0.1391961,0.6932704,0.6932713,-0.1391968",
-                    "Enabled": true
+                    "__guid": "d49118fb-de4c-4b06-bb48-64fd7ea3c906",
+                    "Flags": 4,
+                    "Name": "Base_HumanLCollarbone",
+                    "Position": "6.148428,1.08816,0.3219084",
+                    "Rotation": "0.001183349,-0.6968966,-0.1163153,0.7076755",
+                    "Enabled": true,
+                    "Children": [
+                      {
+                        "__guid": "b484a41d-19a0-498a-b91a-319a723f9cca",
+                        "Flags": 4,
+                        "Name": "Base_HumanLUpperarm",
+                        "Position": "3.592197,0.00001192093,-0.00002288818",
+                        "Rotation": "0.07301921,-0.008388191,0.08304483,0.9938316",
+                        "Enabled": true,
+                        "Children": [
+                          {
+                            "__guid": "4cef0936-4bef-4f27-8ce0-7976360f6a9a",
+                            "Flags": 4,
+                            "Name": "Base_HumanLForearm",
+                            "Position": "6.80475,-0.00001506507,-0.00004577637",
+                            "Rotation": "0.000002200161,0.0002150853,-0.0001173067,1",
+                            "Enabled": true,
+                            "Children": [
+                              {
+                                "__guid": "63e3a34d-1c81-4afb-bd8d-f765a545004e",
+                                "Flags": 4,
+                                "Name": "Base_HumanLPalm",
+                                "Position": "5.799787,-0.00001206994,-0.00004768372",
+                                "Rotation": "0.000002825655,-0.0001509982,0.00008156931,1",
+                                "Enabled": true
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "__guid": "e33b9eed-3e62-4fe3-83c6-d90f1acbd9ab",
+                    "Flags": 4,
+                    "Name": "Base_HumanRCollarbone",
+                    "Position": "6.14842,1.088161,-0.3219844",
+                    "Rotation": "-0.001184659,0.6968961,-0.1163136,0.7076762",
+                    "Enabled": true,
+                    "Children": [
+                      {
+                        "__guid": "289e41dc-c057-413b-bc8b-0a22171d7d9b",
+                        "Flags": 4,
+                        "Name": "Base_HumanRUpperarm",
+                        "Position": "3.592182,0.000001907349,-0.00003242493",
+                        "Rotation": "-0.07301692,0.008389227,0.08304542,0.9938318",
+                        "Enabled": true,
+                        "Children": [
+                          {
+                            "__guid": "eb255d84-5368-4f5c-87fb-e75e87636113",
+                            "Flags": 4,
+                            "Name": "Base_HumanRForearm",
+                            "Position": "6.804727,0.00002290308,-0.00002861023",
+                            "Rotation": "0.00000268879,-0.0002145232,-0.0001138745,1",
+                            "Enabled": true,
+                            "Children": [
+                              {
+                                "__guid": "712be3da-0164-4994-a33a-4ad49951df97",
+                                "Flags": 4,
+                                "Name": "Base_HumanRPalm",
+                                "Position": "5.799761,0.00003382564,-0.00003814697",
+                                "Rotation": "0.000002426443,0.0001522282,0.00008350602,1",
+                                "Enabled": true,
+                                "Children": [
+                                  {
+                                    "__guid": "0058772d-b32f-4f63-bdfa-1cbb5bc8482e",
+                                    "Flags": 0,
+                                    "Name": "Tool",
+                                    "Rotation": "0,0.000001302995,0,1",
+                                    "Enabled": true
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "__guid": "1dfcb805-8540-47b0-9420-33c8b11415e2",
+                    "Flags": 4,
+                    "Name": "Base_HumanNeck",
+                    "Position": "6.323492,-0.03751862,-0.0000385764",
+                    "Rotation": "-0.0000004169784,-0.0000002674697,-0.008450427,0.9999644",
+                    "Enabled": true,
+                    "Children": [
+                      {
+                        "__guid": "9532c205-24df-4fab-9043-9970e00f5bca",
+                        "Flags": 4,
+                        "Name": "Base_HumanHead",
+                        "Position": "7.611858,0.00000718236,-0.00002125216",
+                        "Enabled": true
+                      }
+                    ]
                   }
                 ]
-              },
-              {
-                "__guid": "c55d6eb0-e7ed-4380-9c83-29d545b47011",
-                "Flags": 4,
-                "Name": "head",
-                "Position": "0.00001400521,10.68798,1.68889",
-                "Enabled": true
               }
             ]
           }
