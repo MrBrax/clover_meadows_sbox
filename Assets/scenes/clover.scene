@@ -218,7 +218,19 @@
         {
           "__type": "Clover.WorldBuilder.TimeManager",
           "__guid": "6bcba752-8450-49ec-b17a-cfa20ee2f5f9",
-          "HourChime": "sounds/chime/chime_hour.sound"
+          "HourChime": "sounds/chime/chime_hour.sound",
+          "SkyBox": {
+            "_type": "component",
+            "component_id": "6b9c7009-5a8c-46e0-a390-54d1c618e5f6",
+            "go": "ebdc1818-e9c0-4019-abeb-a9aff9509da4",
+            "component_type": "SkyBox2D"
+          },
+          "Sun": {
+            "_type": "component",
+            "component_id": "070eb5c8-4f9f-4915-8ca7-9c8cecf20950",
+            "go": "a0eb9f3a-4cc5-4084-8e66-2f29281786d4",
+            "component_type": "DirectionalLight"
+          }
         }
       ]
     },

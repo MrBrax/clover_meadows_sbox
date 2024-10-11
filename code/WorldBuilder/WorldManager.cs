@@ -351,7 +351,7 @@ public class WorldManager : Component
 
 public interface IWorldEvent
 {
-	void OnWorldLoaded( World world );
-	void OnWorldUnloaded( World world );
-	void OnWorldChanged( World world );
+	void OnWorldLoaded( World world ) { }
+	void OnWorldUnloaded( World world ) { }
+	void OnWorldChanged( World world ) { }
 }

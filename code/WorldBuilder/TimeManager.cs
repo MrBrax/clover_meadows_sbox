@@ -3,17 +3,18 @@ using System.Collections.Immutable;
 
 namespace Clover.WorldBuilder;
 
-public class TimeManager : Component
+public class TimeManager : Component, IWorldEvent
 {
-	
-	public static TimeManager Instance => Game.ActiveScene.GetAllComponents<TimeManager>().FirstOrDefault(); // TODO: optimize
-	
-	public static DirectionalLight Sun =>
-		Game.ActiveScene.GetAllComponents<DirectionalLight>().FirstOrDefault( x => x.Tags.Has( "sun" ) );
+	public static TimeManager Instance =>
+		Game.ActiveScene.GetAllComponents<TimeManager>().FirstOrDefault(); // TODO: optimize
 
-	[ConVar( "clover_time_scale")]
-	public static int Speed { get; set; } = 1;
-	
+	// public static DirectionalLight Sun =>
+	// 	Game.ActiveScene.GetAllComponents<DirectionalLight>().FirstOrDefault( x => x.Tags.Has( "sun" ) );
+	[Property] public DirectionalLight Sun { get; set; }
+	[Property] public SkyBox2D SkyBox { get; set; }
+
+	[ConVar( "clover_time_scale" )] public static int Speed { get; set; } = 1;
+
 	public static DateTime Time => Speed != 1 ? DateTime.Now.AddSeconds( Sandbox.Time.Now * Speed ) : DateTime.Now;
 
 	private const float SecondsPerDay = 86400f;
@@ -33,21 +34,8 @@ public class TimeManager : Component
 
 	protected override void OnStart()
 	{
-		/* if ( Sun == null )
-		{
-			throw new System.Exception( "Sun not set." );
-		} */
-
 		OnNewHour += PlayChime;
-
-		/*NodeManager.WorldManager.WorldLoaded += ( world ) =>
-		{
-			FindSun();
-			FindEnvironment();
-		};
-
-		FindSun();*/
-
+		
 		_lastHour = Time.Hour;
 
 		/*OnNewMinute += ( minute ) =>
@@ -58,45 +46,7 @@ public class TimeManager : Component
 			}
 		};*/
 	}
-
-	/*private void FindEnvironment()
-	{
-		if ( NodeManager.WorldManager.ActiveWorld == null ) return;
-
-		var worldEnvironment = GetTree().GetNodesInGroup( "worldenvironment" );
-		if ( worldEnvironment.Count == 0 )
-		{
-			Logger.Warn( "DayNightCycle", "No WorldEnvironment found." );
-			return;
-		}
-
-		if ( worldEnvironment.Count > 1 )
-		{
-			Logger.Warn( "DayNightCycle", $"Multiple WorldEnvironments found: {worldEnvironment.Count}" );
-		}
-
-		_environment = worldEnvironment[0] as WorldEnvironment;
-	}*/
-
-	/*private void FindSun()
-	{
-		if ( NodeManager.WorldManager.ActiveWorld == null ) return;
-
-		var suns = GetTree().GetNodesInGroup( "sunlight" );
-		if ( suns.Count == 0 )
-		{
-			Logger.Warn( "DayNightCycle", "No sun found in sunlight group." );
-			return;
-		}
-
-		if ( suns.Count > 1 )
-		{
-			Logger.Warn( "DayNightCycle", $"Multiple suns found in sunlight group: {suns.Count}" );
-		}
-
-		Sun = suns[0] as DirectionalLight3D;
-	}*/
-
+	
 	private void PlayChime( int hour )
 	{
 		Log.Info( $"Playing chime for hours {hour}" );
@@ -152,12 +102,12 @@ public class TimeManager : Component
 			Sun.WorldRotation = CalculateSunRotation( Sun );
 			// Sun.LightEnergy = CalculateSunEnergy( Sun );
 			Sun.LightColor = CalculateSunColor();
-			Sun.SkyColor = (CalculateSunColor() * ( IsDay ? 0.4f : 1f )).WithAlpha( 1 );
+			Sun.SkyColor = (CalculateSunColor() * (IsDay ? 0.4f : 1f)).WithAlpha( 1 );
 			// GetTree().CallGroup( "debugdraw", "add_line", Sun.GlobalTransform.Origin, Sun.GlobalTransform.Origin + Sun.GlobalTransform.Basis.Z * 0.5f, new Color( 1, 1, 1 ), 0.2f );
 		}
 		else
 		{
-			Log.Warning( "Sun not found." );
+			// Log.Warning( "Sun not found." );
 		}
 		/*
 		if ( IsInstanceValid( _environment ) )
@@ -210,14 +160,14 @@ public class TimeManager : Component
 
 		var totalSeconds = hours * 3600 + minutes * 60 + seconds + msec / 1000f;
 		var totalSecondsInDay = 24 * 3600;
-		
+
 		var frac = totalSeconds / totalSecondsInDay;
 
 		var pitch = MathX.Lerp( -3, 183, frac );
 		var yaw = MathX.Lerp( 0, 180, frac );
 
 		var rotation = Rotation.From( pitch, yaw, 0 );
-		
+
 
 		return rotation;
 	}
@@ -251,6 +201,18 @@ public class TimeManager : Component
 	internal string GetTime()
 	{
 		return Time.ToString( "h:mm tt" );
+	}
+
+	public void OnWorldChanged( World world )
+	{
+		if ( Sun.IsValid() )
+		{
+			Sun.Enabled = !world.Data.IsInside;
+		}
+		if ( SkyBox.IsValid() )
+		{
+			SkyBox.Enabled = !world.Data.IsInside;
+		}
 	}
 }
 
