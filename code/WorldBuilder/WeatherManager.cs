@@ -4,7 +4,7 @@ using Clover.WorldBuilder.Weather;
 
 namespace Clover.WorldBuilder;
 
-public class WeatherManager : Component
+public class WeatherManager : Component, IWorldEvent, ITimeEvent
 {
 	
 	public enum WeatherEffects
@@ -114,7 +114,7 @@ public class WeatherManager : Component
 
 		Setup();
 
-		NodeManager.TimeManager.OnNewHour += ( hour ) =>
+		/*NodeManager.TimeManager.OnNewHour += ( hour ) =>
 		{
 			Setup();
 		};
@@ -124,7 +124,7 @@ public class WeatherManager : Component
 			if ( IsProxy || !Networking.IsHost ) return;
 			IsInside = world.Data.IsInside;
 			Setup( true );
-		};
+		};*/
 
 	}
 	
@@ -409,5 +409,28 @@ public class WeatherManager : Component
 		return Texture.Load( FileSystem.Mounted, "ui/icons/weather/barometer.png" );
 
 	}
+
+	public void OnWorldLoaded( World world )
+	{
+	}
+
+	public void OnWorldUnloaded( World world )
+	{
+	}
 	
+	public void OnWorldChanged( World world )
+	{
+		IsInside = world.Data.IsInside;
+		Setup( true );
+	}
+
+	public void OnNewHour( int hour )
+	{
+		Setup();
+	}
+
+	public void OnNewMinute( int minute )
+	{
+		
+	}
 }

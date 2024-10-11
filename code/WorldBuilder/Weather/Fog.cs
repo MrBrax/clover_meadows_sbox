@@ -28,27 +28,27 @@ public class Fog : WeatherBase
 			case 1:
 				Emitter.Enabled = true;
 				Effect.Enabled = true;
-				Emitter.Rate = 100;
+				Emitter.Rate = 1;
 				break;
 			case 2:
 				Emitter.Enabled = true;
 				Effect.Enabled = true;
-				Emitter.Rate = 200;
+				Emitter.Rate = 3;
 				break;
 			case 3:
 				Emitter.Enabled = true;
 				Effect.Enabled = true;
-				Emitter.Rate = 300;
+				Emitter.Rate = 5;
 				break;
 			case 4:
 				Emitter.Enabled = true;
 				Effect.Enabled = true;
-				Emitter.Rate = 400;
+				Emitter.Rate = 8;
 				break;
 			case 5:
 				Emitter.Enabled = true;
 				Effect.Enabled = true;
-				Emitter.Rate = 500;
+				Emitter.Rate = 12;
 				break;
 		}
 	}

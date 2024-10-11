@@ -63,7 +63,7 @@ public sealed class CameraMan : Component
 
 		var wishedRot = Rotation.Identity;
 
-		if ( Targets.Count > 0 )
+		if ( Targets.Count > 0 && MainCameraNode.FollowTargets )
 		{
 			var midpoint = GetTargetsMidpoint();
 			wishedRot = Rotation.LookAt( midpoint - MainCameraNode.WorldPosition, Vector3.Up );

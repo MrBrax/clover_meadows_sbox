@@ -9,6 +9,8 @@ public sealed class CameraNode : Component
 	
 	[Property] public float FieldOfView { get; set; } = 90;
 	
+	[Property] public bool FollowTargets { get; set; } = true;
+	
 	protected override void OnUpdate()
 	{
 

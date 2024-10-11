@@ -80,6 +80,7 @@ public class WorldManager : Component
 		ActiveWorldIndex = index;
 		RebuildVisibility();
 		ActiveWorldChanged?.Invoke( ActiveWorld );
+		Scene.RunEvent<IWorldEvent>( x => x.OnWorldChanged( ActiveWorld ) );
 	}
 
 	private void RebuildVisibility()
@@ -242,6 +243,7 @@ public class WorldManager : Component
 		}
 		
 		WorldLoaded?.Invoke( world );
+		Scene.RunEvent<IWorldEvent>( x => x.OnWorldLoaded( world ) );
 		world.OnWorldLoaded();
 
 		foreach ( var world2 in Worlds )
@@ -269,6 +271,7 @@ public class WorldManager : Component
 		Worlds.Remove( world.Layer );
 		RebuildVisibility();
 		WorldUnload?.Invoke( world );
+		Scene.RunEvent<IWorldEvent>( x => x.OnWorldUnloaded( world ) );
 	}
 
 	public void UnloadWorld( int index )
@@ -344,4 +347,11 @@ public class WorldManager : Component
 		return null;
 		
 	}
+}
+
+public interface IWorldEvent
+{
+	void OnWorldLoaded( World world );
+	void OnWorldUnloaded( World world );
+	void OnWorldChanged( World world );
 }

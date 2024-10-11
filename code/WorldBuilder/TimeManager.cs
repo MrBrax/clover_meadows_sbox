@@ -152,7 +152,7 @@ public class TimeManager : Component
 			Sun.WorldRotation = CalculateSunRotation( Sun );
 			// Sun.LightEnergy = CalculateSunEnergy( Sun );
 			Sun.LightColor = CalculateSunColor();
-			Sun.SkyColor = CalculateSunColor() * ( IsDay ? 0.4f : 1f );
+			Sun.SkyColor = (CalculateSunColor() * ( IsDay ? 0.4f : 1f )).WithAlpha( 1 );
 			// GetTree().CallGroup( "debugdraw", "add_line", Sun.GlobalTransform.Origin, Sun.GlobalTransform.Origin + Sun.GlobalTransform.Basis.Z * 0.5f, new Color( 1, 1, 1 ), 0.2f );
 		}
 		else
@@ -170,6 +170,7 @@ public class TimeManager : Component
 		{
 			_lastHour = hour;
 			OnNewHour?.Invoke( hour );
+			Scene.RunEvent<ITimeEvent>( x => x.OnNewHour( hour ) );
 		}
 
 		var minute = Time.Minute;
@@ -177,6 +178,7 @@ public class TimeManager : Component
 		{
 			_lastMinute = minute;
 			OnNewMinute?.Invoke( minute );
+			Scene.RunEvent<ITimeEvent>( x => x.OnNewMinute( minute ) );
 		}
 	}
 
@@ -250,4 +252,10 @@ public class TimeManager : Component
 	{
 		return Time.ToString( "h:mm tt" );
 	}
+}
+
+public interface ITimeEvent
+{
+	public void OnNewHour( int hour );
+	public void OnNewMinute( int minute );
 }

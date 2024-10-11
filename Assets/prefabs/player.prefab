@@ -198,6 +198,7 @@
             "__type": "CameraNode",
             "__guid": "2fb1ce16-d463-4554-980e-59a3a3a2e355",
             "FieldOfView": 90,
+            "FollowTargets": true,
             "Priority": 1
           }
         ]
@@ -214,6 +215,7 @@
             "__type": "CameraNode",
             "__guid": "4bfeaf52-03a5-4eb5-8679-5b0183a6aad9",
             "FieldOfView": 90,
+            "FollowTargets": false,
             "Priority": 0
           }
         ]
