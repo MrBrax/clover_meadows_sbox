@@ -575,6 +575,94 @@
             "Static": true
           }
         ]
+      },
+      {
+        "__guid": "16149dba-13f1-4157-aa51-1c23466ddd7e",
+        "Flags": 0,
+        "Name": "room1_camera_trigger",
+        "Position": "320,320,0.0001778322",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "6a856510-0ec3-4fa1-b92c-9f6d1e5a858d",
+            "Center": "0,0,64",
+            "IsTrigger": true,
+            "Scale": "224,224,128",
+            "Static": false
+          },
+          {
+            "__type": "Clover.Camera.CameraTrigger",
+            "__guid": "bca2de73-8757-4c6e-8566-a22a579d40ce",
+            "Camera": {
+              "_type": "component",
+              "component_id": "10865c93-9b81-4d45-94df-215e9d847d7a",
+              "go": "13734a6a-dc87-41f6-a314-4b60ca12b27e",
+              "component_type": "CameraNode"
+            }
+          }
+        ]
+      },
+      {
+        "__guid": "13734a6a-dc87-41f6-a314-4b60ca12b27e",
+        "Flags": 0,
+        "Name": "room1_camera",
+        "Position": "544,320,176",
+        "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "CameraNode",
+            "__guid": "10865c93-9b81-4d45-94df-215e9d847d7a",
+            "FieldOfView": 70,
+            "FollowTargets": true,
+            "Priority": 0
+          }
+        ]
+      },
+      {
+        "__guid": "5e508cbb-c02b-4934-bed1-336abcae9562",
+        "Flags": 0,
+        "Name": "room2_camera_trigger",
+        "Position": "320,96,0.0001778322",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "b7b6bbf8-be5b-49ee-ba29-920f1d823204",
+            "Center": "0,0,64",
+            "IsTrigger": true,
+            "Scale": "224,224,128",
+            "Static": false
+          },
+          {
+            "__type": "Clover.Camera.CameraTrigger",
+            "__guid": "cbc48a66-8deb-4a5c-804d-7a73cfa5aa0a",
+            "Camera": {
+              "_type": "component",
+              "component_id": "950d56ba-21fe-41c2-94f7-d2c02d21faf2",
+              "go": "360f3f61-3ebc-441e-960d-7e172608366a",
+              "component_type": "CameraNode"
+            }
+          }
+        ]
+      },
+      {
+        "__guid": "360f3f61-3ebc-441e-960d-7e172608366a",
+        "Flags": 0,
+        "Name": "room2_camera",
+        "Position": "544,96,176",
+        "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "CameraNode",
+            "__guid": "950d56ba-21fe-41c2-94f7-d2c02d21faf2",
+            "FieldOfView": 70,
+            "FollowTargets": true,
+            "Priority": 0
+          }
+        ]
       }
     ],
     "__variables": []

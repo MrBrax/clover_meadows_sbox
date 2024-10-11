@@ -9,7 +9,7 @@ public sealed class CameraMan : Component
 
 	[Property] public GameObject CameraPrefab { get; set; }
 
-	public List<GameObject> Targets { get; set; } = new();
+	public HashSet<GameObject> Targets { get; set; } = new();
 
 	private IEnumerable<CameraNode> _cameraNodes => Scene.GetAllComponents<CameraNode>().Where( x => !x.IsProxy );
 
@@ -63,7 +63,7 @@ public sealed class CameraMan : Component
 
 		var wishedRot = Rotation.Identity;
 
-		if ( Targets.Count > 0 && MainCameraNode.FollowTargets )
+		if ( Targets.Count > 1 && MainCameraNode.FollowTargets )
 		{
 			var midpoint = GetTargetsMidpoint();
 			wishedRot = Rotation.LookAt( midpoint - MainCameraNode.WorldPosition, Vector3.Up );
@@ -72,6 +72,8 @@ public sealed class CameraMan : Component
 		{
 			wishedRot = MainCameraNode.WorldRotation;
 		}
+		
+		Log.Info( string.Join( ", ", Targets.Select( x => x.Name ) ) );
 
 		_positionLerp = Vector3.Lerp( _positionLerp, MainCameraNode.WorldPosition, Time.Delta * LerpSpeed );
 		_rotationLerp = Rotation.Lerp( _rotationLerp, wishedRot, Time.Delta * LerpSpeed );

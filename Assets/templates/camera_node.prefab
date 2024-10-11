@@ -1,0 +1,26 @@
+{
+  "RootObject": {
+    "__guid": "5a8edd46-1fd9-465f-bb2d-5db2bb2b96ab",
+    "Flags": 0,
+    "Name": "camera_node",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "CameraNode",
+        "__guid": "271ccb04-bc62-4fce-a8f2-fbf73cbb486b",
+        "FieldOfView": 90,
+        "FollowTargets": true,
+        "Priority": 0
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": true,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

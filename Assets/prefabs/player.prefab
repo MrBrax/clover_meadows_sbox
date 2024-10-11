@@ -190,14 +190,14 @@
         "__guid": "57783f78-e71a-47e8-a8be-840fba4ba7e9",
         "Flags": 0,
         "Name": "Camera",
-        "Position": "168.897,0,181.5938",
-        "Rotation": "-0.3826835,-0.00000001672763,0.9238795,-0.00000004038406",
+        "Position": "200,0,160",
+        "Rotation": "0.3007058,-0.00000001314426,-0.9537169,-0.00000004168829",
         "Enabled": true,
         "Components": [
           {
             "__type": "CameraNode",
             "__guid": "2fb1ce16-d463-4554-980e-59a3a3a2e355",
-            "FieldOfView": 90,
+            "FieldOfView": 70,
             "FollowTargets": true,
             "Priority": 1
           }
