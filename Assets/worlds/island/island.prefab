@@ -79,14 +79,20 @@
         "__guid": "e1aced0c-48bc-4b75-8f9a-5fd165fa5e02",
         "Flags": 0,
         "Name": "Entrance",
-        "Position": "1312,528.0001,-0.0000684095",
+        "Position": "1296,528.0001,-0.0000684095",
         "Rotation": "0,0,0.0000001509958,-1",
         "Enabled": true,
         "Components": [
           {
             "__type": "Clover.WorldEntrance",
             "__guid": "a5caf789-5869-4fc1-9a97-2cf407fafde1",
-            "EntranceId": "player_house_exit"
+            "EntranceId": "player_house_exit",
+            "ExitDoor": {
+              "_type": "component",
+              "component_id": "5dff3f2c-10c1-4def-969d-58615365f3af",
+              "go": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
+              "component_type": "Door"
+            }
           },
           {
             "__type": "Clover.WorldLayerObject",
@@ -119,7 +125,7 @@
         "__guid": "ad737830-b14b-447c-bb77-01ba3a70d202",
         "Flags": 0,
         "Name": "HouseTrigger",
-        "Position": "1280,528,16",
+        "Position": "1232,528,16",
         "Rotation": "0,0,1,-0.00000004371139",
         "Tags": "trigger",
         "Enabled": true,
@@ -129,6 +135,7 @@
             "__guid": "37f7a268-98c4-42b0-b862-eae43eadc3cc",
             "DestinationEntranceId": "entry",
             "DestinationWorldData": "worlds/player_house/player_house.world",
+            "NoWalk": true,
             "UnloadPreviousWorld": false
           },
           {
@@ -136,7 +143,7 @@
             "__guid": "8404f1c7-43d4-49b2-8c70-d4fc0b31fcd7",
             "Center": "0,0,0",
             "IsTrigger": true,
-            "Scale": "50,50,50",
+            "Scale": "80,80,50",
             "Static": false
           },
           {
@@ -642,6 +649,16 @@
             "ZNear": 16
           }
         ]
+      },
+      {
+        "__guid": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
+        "Flags": 0,
+        "Name": "door",
+        "Position": "1278,512,1.000275",
+        "Rotation": "-0.00000000000003422443,-0.00000002980232,0.000000462459,-0.9999999",
+        "Enabled": true,
+        "__Prefab": "buildings/door/door.prefab",
+        "__PrefabVariables": {}
       }
     ],
     "__variables": []

@@ -26,9 +26,9 @@
         "Acceleration": 10,
         "Bounciness": 0.3,
         "GroundAngle": 45,
-        "Height": 50,
+        "Height": 40,
         "IgnoreLayers": "",
-        "Radius": 14,
+        "Radius": 12,
         "StepHeight": 14,
         "UseCollisionRules": true
       },
@@ -172,6 +172,7 @@
             "Name": "InteractBox",
             "Position": "20,0,0",
             "Rotation": "0,0,0.0000002781418,-1",
+            "Tags": "interactbox",
             "Enabled": true,
             "Components": [
               {

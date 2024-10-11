@@ -1,4 +1,7 @@
-﻿namespace Clover;
+﻿using Clover.Player;
+using Clover.WorldBuilder;
+
+namespace Clover;
 
 [Category( "Clover/World" )]
 [Icon( "world" )]
@@ -7,6 +10,8 @@ public class WorldEntrance : Component
 	
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	[Property] public string EntranceId { get; set; }
+	
+	[Property] public Door ExitDoor { get; set; }
 	
 	protected override void DrawGizmos()
 	{
@@ -17,4 +22,13 @@ public class WorldEntrance : Component
 		Gizmo.Hitbox.BBox( BBox.FromPositionAndSize( Vector3.Up * 25, new Vector3( 16, 16, 50 ) ) );
 		Gizmo.Draw.Text( EntranceId, new Transform( Vector3.Up * 50 ) );
 	}
+	
+	public void OnTeleportTo( PlayerCharacter player )
+	{
+		if ( ExitDoor.IsValid() )
+		{
+			ExitDoor.CloseAfter( 1f );
+		}
+	}
+	
 }

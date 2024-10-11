@@ -62,15 +62,15 @@ public class Fader : Component
 	}
 	
 	[Broadcast]
-	public void FadeToBlackRpc()
+	public void FadeToBlackRpc( bool playSound = false )
 	{
-		FadeToBlack();
+		FadeToBlack( playSound );
 	}
 	
 	[Broadcast]
-	public void FadeFromBlackRpc()
+	public void FadeFromBlackRpc( bool playSound = false )
 	{
-		FadeFromBlack();
+		FadeFromBlack( playSound );
 	}
 	
 

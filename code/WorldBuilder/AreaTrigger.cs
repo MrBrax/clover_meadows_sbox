@@ -13,6 +13,10 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 	[Property] public string DestinationEntranceId { get; set; }
 
 	[Property] public bool UnloadPreviousWorld { get; set; } = true;
+	
+	[Property] public bool NoWalk { get; set; }
+	
+	private HashSet<GameObject> _triggerQueue = new();
 
 
 	protected override void DrawGizmos()
@@ -36,7 +40,13 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			return;
 		}
 
-		Enter( player );
+		// Enter( player );
+		_triggerQueue.Add( other.GameObject );
+	}
+	
+	void ITriggerListener.OnTriggerExit( Collider other )
+	{
+		_triggerQueue.Remove( other.GameObject );
 	}
 
 	private async void Enter( PlayerCharacter player )
@@ -61,13 +71,14 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 
 			if ( !player.Network.Owner.IsHost )
 			{
+				Log.Info( $"areatrigger waiting for host" );
 				await Task.DelayRealtimeSeconds( 1f ); // Wait for the host to load the world
 			}
 
 			// await Fader.Instance.FadeToBlack( true );
 			using( Rpc.FilterInclude( player.Network.Owner ) )
 			{
-				Fader.Instance.FadeToBlackRpc();
+				Fader.Instance.FadeToBlackRpc( true );
 			}
 			await Task.DelayRealtimeSeconds( Fader.Instance.FadeTime );
 
@@ -89,7 +100,7 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			// await Fader.Instance.FadeFromBlack( true );
 			using( Rpc.FilterInclude( player.Network.Owner ) )
 			{
-				Fader.Instance.FadeFromBlackRpc();
+				Fader.Instance.FadeFromBlackRpc( true );
 			}
 			
 			await GameTask.DelayRealtimeSeconds( Fader.Instance.FadeTime );
@@ -104,5 +115,22 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 		{
 			Log.Warning( $"AreaTrigger: OnTriggerEnter: No entrance found with id: {DestinationEntranceId}" );
 		}
+	}
+
+	protected override void OnFixedUpdate()
+	{
+		if ( !Networking.IsHost ) return;
+
+		// hack to continually check for players in the trigger
+		foreach ( var go in _triggerQueue )
+		{
+			var player = go.GetComponent<PlayerCharacter>();
+			if ( player.IsValid() && !player.InCutscene )
+			{
+				Enter( player );
+				_triggerQueue.Remove( go );
+			}
+		}
+		
 	}
 }

@@ -1,4 +1,5 @@
 using System;
+using Clover.Player;
 using Sandbox;
 
 [Category( "Clover/Camera" )]
@@ -45,7 +46,7 @@ public sealed class CameraMan : Component
 		var camera = CameraPrefab.Clone();
 		camera.NetworkMode = NetworkMode.Never;
 		CameraComponent = camera.GetComponent<CameraComponent>();
-		
+
 		camera.BreakFromPrefab();
 
 		if ( MainCameraNode.IsValid() )
@@ -62,6 +63,9 @@ public sealed class CameraMan : Component
 		if ( !CameraComponent.IsValid() ) return;
 
 		Rotation wishedRot;
+		Vector3 wishedPos;
+
+		wishedPos = MainCameraNode.WorldPosition;
 
 		if ( Targets.Count > 1 && MainCameraNode.FollowTargets )
 		{
@@ -71,9 +75,10 @@ public sealed class CameraMan : Component
 		else
 		{
 			wishedRot = MainCameraNode.WorldRotation;
+			// wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.4f;
 		}
-		
-		_positionLerp = Vector3.Lerp( _positionLerp, MainCameraNode.WorldPosition, Time.Delta * LerpSpeed );
+
+		_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * LerpSpeed );
 		_rotationLerp = Rotation.Lerp( _rotationLerp, wishedRot, Time.Delta * LerpSpeed );
 		_fovLerp = _fovLerp.LerpTo( MainCameraNode.FieldOfView, Time.Delta * LerpSpeed );
 

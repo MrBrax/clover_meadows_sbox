@@ -1,0 +1,89 @@
+{
+  "RootObject": {
+    "__guid": "5d1e2171-813a-48bd-89c3-a4737df231b1",
+    "Flags": 0,
+    "Name": "door",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.WorldBuilder.Door",
+        "__guid": "36e5568b-0b1c-4488-94bf-96e7d9cef619",
+        "CloseSound": "buildings/door/door_close.sound",
+        "DoorCurve": [
+          {},
+          {
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "DoorModel": {
+          "_type": "gameobject",
+          "go": "16f1f769-5dba-48aa-8d84-7c12ee21cb47"
+        },
+        "HasOpenHours": false,
+        "HourClose": 24,
+        "HourOpen": 0,
+        "IsLocked": false,
+        "OpenSound": "buildings/door/door_open.sound",
+        "SqueakSound": "buildings/door/door_squeak.sound"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "16f1f769-5dba-48aa-8d84-7c12ee21cb47",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "55f4ccfd-16a7-4a21-a789-feb8bc9f10b7",
+            "Flags": 0,
+            "Name": "door",
+            "Tags": "door",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "e1025963-43dc-4cca-ac27-907aa6a1aa98",
+                "BodyGroups": 18446744073709551615,
+                "Model": "buildings/door/door.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "f0170400-c766-477c-8510-5450ca2ba964",
+                "__enabled": false,
+                "IsTrigger": false,
+                "Model": "buildings/door/door.vmdl",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "ae09a5a2-a7b2-4cbc-bf45-cb120bbbde4c",
+                "Center": "0,16,25",
+                "IsTrigger": false,
+                "Scale": "3,32,50",
+                "Static": false
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

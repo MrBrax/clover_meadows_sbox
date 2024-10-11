@@ -160,6 +160,7 @@ public sealed partial class PlayerCharacter : Component
 		{
 			TeleportTo( spawnPoint.WorldPosition, spawnPoint.WorldRotation );
 			LastEntrance = entrance;
+			spawnPoint.OnTeleportTo( this );
 		}
 		else
 		{

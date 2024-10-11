@@ -51,6 +51,7 @@ public class PlayerInteract : Component
 			}
 			else
 			{
+				Log.Warning( "No interactable found" );
 				Sound.Play( UseFailSound, WorldPosition );
 			}
 		}
@@ -134,22 +135,35 @@ public class PlayerInteract : Component
 
 		foreach ( var collider in InteractCollider.Touching )
 		{
-			if ( collider.GameObject.Components.TryGet<IInteract>( out var interactable ) )
-			{
-				if ( collider.GameObject.Components.TryGet<WorldItem>( out var worldItem ) )
-				{
-					if ( worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
-					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop &&
-					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Wall
-					   )
-					{
-						continue;
-					}
-				}
+			var checkGameObject = collider.GameObject;
+			
+			// Log.Info( $"# Checking base collider {checkGameObject.Name}" );
 
-				return interactable;
+			while ( checkGameObject != null )
+			{
+				// Log.Info( $" - Checking (parent?) {checkGameObject.Name}" );
+				if ( checkGameObject.Components.TryGet<IInteract>( out var interactable ) )
+				{
+					if ( checkGameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+					{
+						if ( worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
+						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop &&
+						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Wall
+						   )
+						{
+							continue;
+						}
+					}
+
+					return interactable;
+				}
+				
+				checkGameObject = checkGameObject.Parent;
+
 			}
 		}
+		
+		// Log.Info( "# Reached root, no interactable found." );
 
 		return null;
 	}
