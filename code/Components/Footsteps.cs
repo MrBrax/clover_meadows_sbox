@@ -3,28 +3,28 @@
 public class Footsteps : Component
 {
 	
-	// [Property] SkinnedModelRenderer Source { get; set; }
+	[Property] SkinnedModelRenderer Source { get; set; }
 	
 	protected override void OnEnabled()
 	{
-		/*if ( !Source.IsValid() )
+		if ( !Source.IsValid() )
 			return;
 
-		Source.OnFootstepEvent += OnEvent;*/
+		Source.OnFootstepEvent += OnEvent;
 	}
 
 	protected override void OnDisabled()
 	{
-		/*if ( !Source.IsValid() )
+		if ( !Source.IsValid() )
 			return;
 
-		Source.OnFootstepEvent -= OnEvent;*/
+		Source.OnFootstepEvent -= OnEvent;
 	}
 
 	private float _velocityTick;
 	private int _lastFoot;
 	
-	protected override void OnFixedUpdate()
+	/*protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
 		
@@ -57,7 +57,7 @@ public class Footsteps : Component
 			}
 		}
 		
-	}
+	}*/
 
 	TimeSince timeSinceStep;
 	
@@ -87,6 +87,7 @@ public class Footsteps : Component
 
 	private void OnEvent( SceneModel.FootstepEvent e )
 	{
+		Log.Info( "Footstep event" );
 		if ( timeSinceStep < 0.2f )
 			return;
 
@@ -106,7 +107,7 @@ public class Footsteps : Component
 		if ( sound is null ) return;
 
 		var handle = Sound.Play( sound, tr.HitPosition + tr.Normal * 5 );
-		handle.Volume *= e.Volume;
+		handle.Volume *= e.Volume * 3f;
 		
 		Scene.RunEvent<IFootstepEvent>( x => x.OnFootstepEvent( e ) );
 	}
