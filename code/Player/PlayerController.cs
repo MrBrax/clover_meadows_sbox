@@ -11,6 +11,9 @@ public class PlayerController : Component
 {
 	[RequireComponent] public PlayerCharacter Player { get; set; }
 	[RequireComponent] public CharacterController CharacterController { get; set; }
+	
+	[Property] public CitizenAnimationHelper AnimationHelper { get; set; }
+	
 	[Property] public Vector3 Gravity { get; set; } = new Vector3( 0, 0, 800 );
 
 	public Vector3 WishVelocity { get; private set; }
@@ -45,9 +48,9 @@ public class PlayerController : Component
 		}
 
 		// Eye input
-		/*if ( !IsProxy )
+		if ( !IsProxy )
 		{
-			var ee = EyeAngles;
+			/*var ee = EyeAngles;
 			ee += Input.AnalogLook * 0.5f;
 			ee.roll = 0;
 			EyeAngles = ee;
@@ -65,12 +68,10 @@ public class PlayerController : Component
 			{
 				cam.Transform.Position = Transform.Position + lookDir.Backward * 300 + Vector3.Up * 75.0f;
 				cam.WorldRotation = lookDir;
-			}
-
-
+			}*/
 
 			IsRunning = Input.Down( "Run" );
-		}*/
+		}
 
 		/*var cc = GameObject.Components.Get<CharacterController>();
 		if ( !cc.IsValid() ) return;
@@ -104,15 +105,15 @@ public class PlayerController : Component
 		}*/
 
 
-		/*if ( AnimationHelper.IsValid() )
+		if ( AnimationHelper.IsValid() )
 		{
-			AnimationHelper.WithVelocity( cc.Velocity );
+			AnimationHelper.WithVelocity( CharacterController.Velocity );
 			AnimationHelper.WithWishVelocity( WishVelocity );
-			AnimationHelper.IsGrounded = cc.IsOnGround;
-			AnimationHelper.MoveRotationSpeed = moveRotationSpeed;
-			AnimationHelper.WithLook( EyeAngles.Forward, 1, 1, 1.0f );
+			AnimationHelper.IsGrounded = CharacterController.IsOnGround;
+			AnimationHelper.MoveRotationSpeed = 1f;
+			// AnimationHelper.WithLook( EyeAngles.Forward, 1, 1, 1.0f );
 			AnimationHelper.MoveStyle = IsRunning ? CitizenAnimationHelper.MoveStyles.Run : CitizenAnimationHelper.MoveStyles.Walk;
-		}*/
+		}
 	}
 
 	/*[Broadcast]
