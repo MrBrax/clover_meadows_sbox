@@ -9,6 +9,12 @@
         "__type": "Clover.Carriable.Flashlight",
         "__guid": "3dbb9be6-5cc3-40e1-bf43-2b4b7538d16d",
         "ItemData": "items/tools/flashlight/flashlight.tool",
+        "Light": {
+          "_type": "component",
+          "component_id": "97e5fa77-3e79-4569-a109-c2a3a5c68dc1",
+          "go": "50ee1b96-bcc0-4383-a640-69dcac0b8240",
+          "component_type": "SpotLight"
+        },
         "Model": {
           "_type": "gameobject",
           "go": "5737a6bb-d427-42b2-881b-96e33f7ba401"
