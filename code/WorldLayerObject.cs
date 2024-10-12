@@ -73,6 +73,7 @@ public sealed class WorldLayerObject : Component
 	[Broadcast]
 	public void RebuildVisibility( int layer )
 	{
+		if ( Scene.IsEditor ) return;
 		Tags.Remove( "worldlayer_invisible" );
 		Tags.Remove( "worldlayer_visible" );
 			
