@@ -1,0 +1,12 @@
+﻿@using Clover.Components
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel
+@namespace Clover.Ui
+
+<root>
+	@if ( CloverBalance != null )
+	{
+		<Image class="clover" Texture=@GetCloverIcon() /><p>@CloverBalance.GetBalance()</p>
+	}
+</root>
