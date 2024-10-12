@@ -115,6 +115,7 @@ public class TimeManager : Component, IWorldEvent
 	{
 		if ( !IsProxy )
 		{
+			if ( GlobalTime == 0 ) _lastHour = DateTime.Now.Hour;
 			GlobalTime = DateTime.Now.ToOADate();
 		}
 		
