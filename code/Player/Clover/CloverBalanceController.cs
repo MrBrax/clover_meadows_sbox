@@ -7,21 +7,24 @@ public class CloverBalanceController : Component
 	private int Clovers { get; set; }
 
 	private List<string> Transactions { get; set; } = new List<string>();
+	private static readonly int StartingClovers = 100;
 
 	public CloverBalanceController(int? loadedClovers)
 	{
-		Clovers = loadedClovers ?? 100;
+		Clovers = loadedClovers ?? StartingClovers;
 	}
 
-	public void DeductClover( int deductAmount, string deductMessage = "" )
+	public bool DeductClover( int deductAmount, string deductMessage = "" )
 	{
-		if ( Clovers - deductAmount == 0 )
+		if ( Clovers - deductAmount < 0 )
 		{
-			return;
+			return false;
 		}
-
+		
 		Clovers -= deductAmount;
 		LogTransaction( deductAmount, deductMessage, TransactionLogType.Deducted );
+
+		return true;
 	}
 
 	public void AddClover( int addAmount, string addMessage = "" )
