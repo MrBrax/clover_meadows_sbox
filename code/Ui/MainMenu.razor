@@ -1,0 +1,37 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Clover.Ui
+
+<root>
+	@if ( State == MenuState.Title )
+	{
+		<div class="title">Clover Meadows</div>
+		<div class="menu-items">
+			<button @onclick=@( () => Scene.LoadFromFile( "scenes/clover.scene" ) )>test start</button>
+			<button @onclick=@( () => SetState( MenuState.SelectWorld ) )>Select World</button>
+			<button @onclick=@( () => SetState( MenuState.Settings ) )>Settings</button>
+			<button @onclick=@( () => Game.Close() )>Quit</button>
+		</div>
+	}
+	else if ( State == MenuState.SelectWorld )
+	{
+		<div class="title">Select World</div>
+		<div class="menu-items">
+			@foreach ( var world in Worlds )
+			{
+				<button>@world.Name</button>
+			}
+		</div>
+		<div class="menu-items">
+			<button @onclick=@( () => SetState( MenuState.Title ) )>Back</button>
+		</div>
+	}
+	else if ( State == MenuState.Settings )
+	{
+		<div class="title">Settings</div>
+		<div class="menu-items">
+			<button @onclick=@( () => SetState( MenuState.Title ) )>Back</button>
+		</div>
+	}
+</root>

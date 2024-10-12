@@ -22,7 +22,7 @@
     "PerMapRanking": false,
     "LeaderboardType": "None",
     "CsProjName": "",
-    "StartupScene": "scenes/clover.scene",
+    "StartupScene": "scenes/mainmenu.scene",
     "Compiler": {
       "RootNamespace": "Clover",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",

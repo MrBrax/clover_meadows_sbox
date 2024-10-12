@@ -1,0 +1,115 @@
+{
+  "__guid": "fb8f5a57-18bd-4eac-8caf-5576cc37bd81",
+  "GameObjects": [
+    {
+      "__guid": "a3e49cd1-e5e1-4f9c-a65d-0445dc943e4b",
+      "Flags": 0,
+      "Name": "Screen",
+      "Position": "149.3263,149.3264,-211.1794",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "d7bdce21-d7b5-49c7-9d5c-ab9721cca5b9",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ScaleStrategy": "ConsistentHeight",
+          "ZIndex": 100
+        },
+        {
+          "__type": "Clover.Ui.MainMenu",
+          "__guid": "89ba711e-1dd1-44a5-aa2a-9abfb3ebbdc4"
+        }
+      ]
+    },
+    {
+      "__guid": "440cfd83-0eb5-4bbf-b07b-1d8cb74f9b1e",
+      "Flags": 0,
+      "Name": "Camera",
+      "Position": "-192,0,0",
+      "Tags": "maincamera",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.CameraComponent",
+          "__guid": "4c7de97a-2573-423c-b80b-6f8569c3b815",
+          "BackgroundColor": "0.33333,0.46275,0.52157,1",
+          "ClearFlags": "All",
+          "FieldOfView": 60,
+          "IsMainCamera": true,
+          "Orthographic": false,
+          "OrthographicHeight": 1204,
+          "Priority": 1,
+          "RenderExcludeTags": "",
+          "RenderTags": "",
+          "TargetEye": "None",
+          "Viewport": "0,0,1,1",
+          "ZFar": 10000,
+          "ZNear": 10
+        }
+      ]
+    },
+    {
+      "__guid": "a5c036f1-cec4-4d93-9392-4b67336a9b20",
+      "Flags": 0,
+      "Name": "Object",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.SoundscapeTrigger",
+          "__guid": "e60aca0b-e61e-4e03-8748-e687afdaf1ce",
+          "BoxSize": "50,50,50",
+          "Radius": 500,
+          "Soundscape": "sounds/ambience/night.sndscape",
+          "StayActiveOnExit": true,
+          "Type": "Point"
+        }
+      ]
+    },
+    {
+      "__guid": "b98226c5-6b12-4e97-b68d-c3bd89eb77ad",
+      "Flags": 0,
+      "Name": "2D Skybox",
+      "Position": "1314.927,661.2189,-1.506866",
+      "Tags": "skybox",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.SkyBox2D",
+          "__guid": "06a9bf82-5783-4548-a37d-fbbd4f05ed3b",
+          "SkyIndirectLighting": true,
+          "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
+          "Tint": "1,1,1,1"
+        }
+      ]
+    }
+  ],
+  "SceneProperties": {
+    "FixedUpdateFrequency": 50,
+    "MaxFixedUpdates": 5,
+    "NetworkFrequency": 30,
+    "NetworkInterpolation": true,
+    "PhysicsSubSteps": 1,
+    "ThreadedAnimation": true,
+    "TimeScale": 1,
+    "UseFixedUpdate": true,
+    "NavMesh": {
+      "Enabled": false,
+      "IncludeStaticBodies": true,
+      "IncludeKeyframedBodies": true,
+      "EditorAutoUpdate": true,
+      "AgentHeight": 64,
+      "AgentRadius": 16,
+      "AgentStepSize": 18,
+      "AgentMaxSlope": 40,
+      "ExcludedBodies": "",
+      "IncludedBodies": ""
+    }
+  },
+  "Title": "mainmenu",
+  "Description": "",
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

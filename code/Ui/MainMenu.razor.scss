@@ -1,0 +1,46 @@
+MainMenu
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+	
+	flex-direction: column;
+	
+	gap: 50px;
+	
+	pointer-events: all;
+
+	.title
+	{
+		font-size: 70px;
+		font-family: Itim;
+		color: #fff;
+	}
+	
+	.menu-items {
+		flex-direction: column;
+		gap: 20px;
+		align-items: center;
+		
+		button {
+			padding: 10px 20px;
+			font-size: 30px;
+			font-family: Itim;
+			background-color: #0c83dd;
+			color: white;
+			border-radius: 20px;
+			cursor: pointer;
+			transition: all 0.1s ease;
+			
+			&:hover {
+				background-color: #156eb1;
+			}
+		}
+	}
+}
