@@ -8,7 +8,7 @@ namespace Clover.Items;
 
 [Category( "Clover/Items" )]
 [Icon( "outlet" )]
-[Description( "Has to be added to items placed in the world, otherwise they will not be saved." )]
+[Description( "Has to be added to items placed on the world grid, otherwise they will not be saved." )]
 public class WorldItem : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }

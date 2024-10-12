@@ -7,6 +7,10 @@ using Clover.Persistence;
 
 namespace Clover;
 
+/// <summary>
+///  This class represents a link between a world and an item in the world.
+///  All items placed on the grid in a world have one of these associated with them.
+/// </summary>
 public class WorldNodeLink : IValid
 {
 	[JsonIgnore] public World World;

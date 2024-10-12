@@ -6,6 +6,9 @@ using Sandbox.Diagnostics;
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
+[Icon( "outlet" )]
+[Description( "Has to be added to items placed not on the grid like physics objects, otherwise they will not be saved." )]
 public class WorldObject : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
