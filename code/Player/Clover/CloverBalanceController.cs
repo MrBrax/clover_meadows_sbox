@@ -2,16 +2,19 @@
 
 public class CloverBalanceController : Component
 {
-	
-	[Property, Sync] 
-	private int Clovers { get; set; }
+	[Property, Sync, ReadOnly] private int Clovers { get; set; }
 
 	private List<string> Transactions { get; set; } = new List<string>();
 	private static readonly int StartingClovers = 100;
 
-	public CloverBalanceController(int? loadedClovers)
+	internal void SetClovers( int clovers )
 	{
-		Clovers = loadedClovers ?? StartingClovers;
+		Clovers = clovers;
+	}
+	
+	internal void SetStartingClovers()
+	{
+		Clovers = StartingClovers;
 	}
 
 	public bool DeductClover( int deductAmount, string deductMessage = "" )
@@ -20,7 +23,7 @@ public class CloverBalanceController : Component
 		{
 			return false;
 		}
-		
+
 		Clovers -= deductAmount;
 		LogTransaction( deductAmount, deductMessage, TransactionLogType.Deducted );
 
@@ -38,15 +41,16 @@ public class CloverBalanceController : Component
 		return Clovers;
 	}
 
-	private void LogTransaction(int amount, string transactionMessage, TransactionLogType transactionLogType)
+	private void LogTransaction( int amount, string transactionMessage, TransactionLogType transactionLogType )
 	{
 		var logMessage =
 			$"{amount} {transactionLogType.ToString().ToLower()}";
-		
+
 		if ( !string.IsNullOrEmpty( transactionMessage ) )
 		{
 			logMessage += $" | Transaction: {transactionMessage}";
 		}
+
 		Transactions.Add( logMessage );
 	}
 

@@ -59,9 +59,22 @@ public sealed partial class PlayerCharacter
 
 		Scene.RunEvent<IPlayerSaved>( x => x.PostPlayerSave( this ) );
 	}
+	
+	public void NewGame()
+	{
+		PlayerName = Network.Owner.DisplayName;
+		CloverBalanceController.SetStartingClovers();
+		Save();
+	}
 
 	public void Load()
 	{
+		if ( IsProxy )
+		{
+			Log.Error( "Cannot load proxy player. Fix this call." );
+			return;
+		}
+		
 		// TODO: temporary fix for player id
 		if ( string.IsNullOrEmpty( PlayerId ) )
 		{
@@ -75,6 +88,8 @@ public sealed partial class PlayerCharacter
 			{
 				PlayerId = Guid.NewGuid().ToString();
 				Log.Info( $"PlayerId generated: {PlayerId}" );
+				NewGame();
+				return;
 			}
 		}
 
@@ -88,7 +103,9 @@ public sealed partial class PlayerCharacter
 		SaveData = JsonSerializer.Deserialize<PlayerSaveData>( json, GameManager.JsonOptions );
 
 		PlayerName = SaveData.Name;
-		CloverBalanceController = new CloverBalanceController(SaveData.Clovers);
+		
+		CloverBalanceController.SetClovers( SaveData.Clovers );
+		
 		// limit inventory slots if for some reason it exceeds max items
 		if ( SaveData.InventorySlots.Count > Inventory.Container.MaxItems )
 		{

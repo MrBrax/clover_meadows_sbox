@@ -25,8 +25,7 @@ public sealed partial class PlayerCharacter : Component
 	[RequireComponent] public Inventory.Inventory Inventory { get; set; }
 	[RequireComponent] public Equips Equips { get; set; }
 	[RequireComponent] public CameraController CameraController { get; set; }
-
-	public CloverBalanceController CloverBalanceController { get; set; }
+	[RequireComponent] public CloverBalanceController CloverBalanceController { get; set; }
 
 	[Property] public GameObject Model { get; set; }
 
