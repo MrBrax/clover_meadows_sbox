@@ -17,6 +17,10 @@ public class PersistentItem
 	
 	[JsonIgnore] public bool IsPackage => !string.IsNullOrEmpty( PackageIdent );
 
+	/// <summary>
+	///  The backbone of the persistence system. This is where you can store any data you want about an item.
+	///  Don't access this directly, use <see cref="GetArbitraryData{T}"/> and <see cref="SetArbitraryData"/> instead.
+	/// </summary>
 	[Property] public Dictionary<string, object> ArbitraryData { get; set; } = new();
 
 	[JsonIgnore]
@@ -32,9 +36,9 @@ public class PersistentItem
 	///  Get arbitrary data from this item. If the key doesn't exist, it will return the default value.
 	///  Use <see cref="SetArbitraryData"/> to store arbitrary data.
 	/// </summary>
-	/// <param name="key"></param>
-	/// <param name="defaultValue"></param>
-	/// <typeparam name="T"></typeparam>
+	/// <param name="key">Key to get the value from</param>
+	/// <param name="defaultValue">Value to return if the key doesn't exist</param>
+	/// <typeparam name="T">The same type as you saved with <see cref="SetArbitraryData"/></typeparam>
 	/// <returns></returns>
 	public T GetArbitraryData<T>( string key, T defaultValue = default )
 	{
@@ -44,9 +48,9 @@ public class PersistentItem
 	/// <summary>
 	/// Same as <see cref="GetArbitraryData{T}"/> but returns false if the key doesn't exist.
 	/// </summary>
-	/// <param name="key"></param>
-	/// <param name="value"></param>
-	/// <typeparam name="T"></typeparam>
+	/// <param name="key">Key to get the value from</param>
+	/// <param name="value">Value of the key</param>
+	/// <typeparam name="T">The same type as you saved with <see cref="SetArbitraryData"/></typeparam>
 	/// <returns></returns>
 	public bool TryGetArbitraryData<T>( string key, out T value )
 	{
@@ -81,6 +85,12 @@ public class PersistentItem
 		return false;
 	}
 
+	/// <summary>
+	///  Set arbitrary data on this item. Arbitrary in this case means that you can store any type of data that can be serialized.
+	///  Even complex types like classes and lists should work.
+	/// </summary>
+	/// <param name="key">The key to store the data under</param>
+	/// <param name="value">Any serializable object</param>
 	[Description( "Set arbitrary data on this item." )]
 	[Icon( "description" )]
 	public void SetArbitraryData( string key, object value )
@@ -148,6 +158,7 @@ public class PersistentItem
 		return gameObject;
 	}*/
 
+	// TODO: maybe less hardcoded and repeated code
 	public static PersistentItem Create( GameObject gameObject )
 	{
 		if ( !gameObject.IsValid() ) throw new Exception( "Item is null" );
@@ -197,6 +208,11 @@ public class PersistentItem
 		};
 	}
 
+	/// <summary>
+	///  Might sound stupid but don't use this unless you're spawning a carriable.
+	/// </summary>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
 	public BaseCarriable SpawnCarriable()
 	{
 		if ( ItemData is not ToolData toolData ) throw new Exception( $"ItemData is not a ToolData for {ItemId}" );
