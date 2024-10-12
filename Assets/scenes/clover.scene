@@ -329,7 +329,7 @@
           "__type": "Sandbox.SkyBox2D",
           "__guid": "6b9c7009-5a8c-46e0-a390-54d1c618e5f6",
           "SkyIndirectLighting": true,
-          "SkyMaterial": "materials/sky/atmosphere_sky.vmat",
+          "SkyMaterial": "materials/skybox/light_test_default.vmat",
           "Tint": "1,1,1,1"
         }
       ]
