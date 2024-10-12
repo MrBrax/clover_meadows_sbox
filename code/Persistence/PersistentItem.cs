@@ -91,7 +91,6 @@ public class PersistentItem
 	/// </summary>
 	/// <param name="key">The key to store the data under</param>
 	/// <param name="value">Any serializable object</param>
-	[Description( "Set arbitrary data on this item." )]
 	[Icon( "description" )]
 	public void SetArbitraryData( string key, object value )
 	{
