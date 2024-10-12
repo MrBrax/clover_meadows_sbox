@@ -4,6 +4,7 @@ using System.Text.Json;
 using Clover.Carriable;
 using Clover.Data;
 using Clover.Persistence;
+using Clover.Player.Clover;
 
 namespace Clover.Player;
 
@@ -46,7 +47,7 @@ public sealed partial class PlayerCharacter
 
 		Log.Info( $"Saved {SaveData.EquippedItems.Count} equipped items" );
 
-		SaveData.Clovers = Clovers;
+		SaveData.Clovers = CloverBalanceController.GetBalance();
 
 		SaveData.LastSave = DateTime.Now;
 
@@ -87,8 +88,7 @@ public sealed partial class PlayerCharacter
 		SaveData = JsonSerializer.Deserialize<PlayerSaveData>( json, GameManager.JsonOptions );
 
 		PlayerName = SaveData.Name;
-		Clovers = SaveData.Clovers;
-
+		CloverBalanceController = new CloverBalanceController(SaveData.Clovers);
 		// limit inventory slots if for some reason it exceeds max items
 		if ( SaveData.InventorySlots.Count > Inventory.Container.MaxItems )
 		{

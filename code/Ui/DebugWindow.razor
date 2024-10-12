@@ -1,4 +1,5 @@
 @using Clover.Data
+@using Clover.Player
 @using Sandbox;
 @using Sandbox.UI;
 @inherits PanelComponent
@@ -35,6 +36,15 @@
 			<section>
 				<h2>Lobbies</h2>
 				<LobbyBrowser/>
+			</section>
+			<section>
+				<h2>Clovers</h2>	
+				<button @onclick=@( () => PlayerCharacter.Local.CloverBalanceController.AddClover(10, "Debug add") )>
+                	<span>Add 10 clovers</span>
+                </button>
+				<button @onclick=@( () => PlayerCharacter.Local.CloverBalanceController.DeductClover(10, "Debug deduct") )>
+					<span>Deduct 10 clovers</span>
+                </button>
 			</section>
 		</div>
 	</div>

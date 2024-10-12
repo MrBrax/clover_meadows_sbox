@@ -6,6 +6,7 @@ using Clover.Components;
 using Clover.Data;
 using Clover.Inventory;
 using Clover.Persistence;
+using Clover.Player.Clover;
 
 namespace Clover.Player;
 
@@ -25,7 +26,7 @@ public sealed partial class PlayerCharacter : Component
 	[RequireComponent] public Equips Equips { get; set; }
 	[RequireComponent] public CameraController CameraController { get; set; }
 
-	[Property, Sync] public int Clovers { get; set; }
+	public CloverBalanceController CloverBalanceController { get; set; }
 
 	[Property] public GameObject Model { get; set; }
 

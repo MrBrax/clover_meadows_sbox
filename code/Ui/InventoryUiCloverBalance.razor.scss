@@ -1,0 +1,19 @@
+﻿InventoryUiCloverBalance{
+  position: absolute;
+  bottom: 200px;
+  color: white;
+  font-family: Itim;
+  font-size: 30px;
+  // text-stroke: 5px gray;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+
+  align-content: center;
+  align-items: center;
+
+  gap: 10px;
+
+  Image {
+    width: 40px;
+    height: 40px;
+  }
+}
