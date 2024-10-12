@@ -1,4 +1,5 @@
-﻿using Clover.Data;
+﻿using System;
+using Clover.Data;
 using Clover.Inventory;
 using Clover.Persistence;
 using Clover.Player;
@@ -26,8 +27,15 @@ public class WorldObject : Component, IPickupable
 	
 	public bool IsBeingPickedUp { get; set; }
 	
+	[Property] public Func<bool> CanPickupFunc { get; set; }
+	
 	public bool CanPickup( PlayerCharacter player )
 	{
+		if ( CanPickupFunc != null )
+		{
+			return CanPickupFunc();
+		}
+		
 		return ObjectData.CanPickup;
 	}
 
@@ -47,6 +55,14 @@ public class WorldObject : Component, IPickupable
 		}
 
 	}
+	
+	public delegate void OnObjectSaveActionEvent( PersistentItem item );
+
+	[Property] public OnObjectSaveActionEvent OnObjectSaveAction { get; set; }
+
+	public delegate void OnObjectLoadActionEvent( PersistentItem item );
+
+	[Property] public OnObjectLoadActionEvent OnObjectLoadAction { get; set; }
 
 	public PersistentWorldObject OnObjectSave()
 	{
@@ -78,6 +94,8 @@ public class WorldObject : Component, IPickupable
 		{
 			persistent.OnLoad( worldObject.Item );
 		}
+		
+		OnObjectLoadAction?.Invoke( worldObject.Item );
 		
 		GameObject.Name = ObjectData.Name;
 		

@@ -148,7 +148,7 @@ public class WorldNodeLink : IValid
 		
 		Persistence.ItemId ??= ItemId;
 		
-		foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndDescendants ) )
+		/*foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			saveable.OnSave( this );
 		}
@@ -156,7 +156,9 @@ public class WorldNodeLink : IValid
 		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			persistent.OnSave( Persistence );
-		}
+		}*/
+		
+		RefreshPersistence();
 
 		return new PersistentWorldItem
 		{
@@ -181,6 +183,12 @@ public class WorldNodeLink : IValid
 		{
 			persistent.OnSave( Persistence );
 		}
+		
+		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )
+		{
+			worldItem.OnItemSave?.Invoke( this );
+		}
+		
 	}
 
 	public void OnNodeLoad( PersistentWorldItem persistentItem )

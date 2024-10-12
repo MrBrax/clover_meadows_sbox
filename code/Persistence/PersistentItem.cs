@@ -163,6 +163,11 @@ public class PersistentItem
 		{
 			persistentItem.ItemId ??= carriable.ItemData.GetIdentifier();
 		}
+		
+		if ( gameObject.Components.TryGet<WorldObject>( out var worldObject ) )
+		{
+			worldObject.OnObjectSaveAction?.Invoke( persistentItem );
+		}
 
 		if ( gameObject.Components.TryGet<Persistent>( out var persistent ) )
 		{
