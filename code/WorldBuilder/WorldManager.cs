@@ -155,12 +155,12 @@ public class WorldManager : Component
 		return Worlds.Values.Any( w => w.Data.ResourceName == id );
 	}
 
-	public bool HasWorld( Data.WorldData data )
+	public bool HasWorld( WorldData data )
 	{
 		return Worlds.Values.Any( w => w.Data == data );
 	}
 
-	public async Task<World> LoadWorld( Data.WorldData data )
+	public async Task<World> LoadWorld( WorldData data )
 	{
 		Log.Info( $"Loading world: {data.ResourceName}" );
 
@@ -211,7 +211,7 @@ public class WorldManager : Component
 
 	}
 
-	public async Task<World> GetWorldOrLoad( Data.WorldData data )
+	public async Task<World> GetWorldOrLoad( WorldData data )
 	{
 		Assert.NotNull( data, "World data is null." );
 		var world = GetWorld( data.ResourceName );
@@ -221,7 +221,7 @@ public class WorldManager : Component
 	[Authority]
 	public void RequestLoadWorld( string id )
 	{
-		var worldData = ResourceLibrary.GetAll<Data.WorldData>().FirstOrDefault( w => w.ResourceName == id );
+		var worldData = ResourceLibrary.GetAll<WorldData>().FirstOrDefault( w => w.ResourceName == id );
 		if ( worldData != null )
 		{
 			_ = LoadWorld( worldData );
@@ -290,7 +290,7 @@ public class WorldManager : Component
 	public static void LoadWorldCmd( string id )
 	{
 		var worldManager = NodeManager.WorldManager;
-		var worldData = ResourceLibrary.GetAll<Data.WorldData>().FirstOrDefault( w => w.ResourceName == id );
+		var worldData = ResourceLibrary.GetAll<WorldData>().FirstOrDefault( w => w.ResourceName == id );
 		if ( worldData != null )
 		{
 			_ = worldManager.LoadWorld( worldData );
@@ -316,7 +316,7 @@ public class WorldManager : Component
 		var entrance = world.GetEntrance( entranceId );
 		if ( entrance == null ) throw new Exception( $"Invalid entrance id: {entranceId}" );
 
-		WorldManager.Instance.SetActiveWorld( worldIndex );
+		Instance.SetActiveWorld( worldIndex );
 
 		var player = NodeManager.Player;
 
