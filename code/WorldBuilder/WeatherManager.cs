@@ -244,11 +244,11 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 
 		var weather = GetWeather( now );
 
-		SetPrecipitation( weather.RainLevel, weather.WindDirection, weather.WindLevel * 3f, true );
-		SetLightning( weather.Lightning, true );
-		SetWind( weather.WindLevel, true );
-		SetFog( weather.FogLevel, true );
-		SetCloudDensity( weather.CloudDensity, true );
+		SetPrecipitation( weather.RainLevel, weather.WindDirection, weather.WindLevel * 3f, instant );
+		SetLightning( weather.Lightning, instant );
+		SetWind( weather.WindLevel, instant );
+		SetFog( weather.FogLevel, instant );
+		SetCloudDensity( weather.CloudDensity, instant );
 
 		Log.Info( $"Weather {now.Hour}: Rain: {weather.RainLevel}, Lightning: {weather.Lightning}, Wind: {weather.WindLevel}, Fog: {weather.FogLevel}, CloudDensity: {weather.CloudDensity}" );
 	}
