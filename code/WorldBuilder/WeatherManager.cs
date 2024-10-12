@@ -127,7 +127,17 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		};*/
 
 	}
-	
+
+	protected override void OnAwake()
+	{
+		base.OnAwake();
+		SetPrecipitation( 0, 0, 0, true );
+		SetLightning( false, true );
+		SetWind( 0, true );
+		SetFog( 0, true );
+		SetCloudDensity( 0.0f, true );
+	}
+
 	public class WeatherReport
 	{
 		public DateTime Time;
