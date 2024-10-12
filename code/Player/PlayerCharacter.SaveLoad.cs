@@ -12,16 +12,17 @@ public sealed partial class PlayerCharacter
 {
 	public string SaveFilePath => $"players/{PlayerId}.json";
 	public PlayerSaveData SaveData { get; set; }
+	
+	private DateTime _lastPlayTimeUpdate;
 
 	public void Save()
 	{
-
 		if ( IsProxy )
 		{
 			Log.Error( "Cannot save proxy player. Fix this call." );
 			return;
 		}
-		
+
 		Log.Info( $"Saving player {PlayerId}" );
 
 		Scene.RunEvent<IPlayerSaved>( x => x.PrePlayerSave( this ) );
@@ -49,6 +50,13 @@ public sealed partial class PlayerCharacter
 
 		SaveData.Clovers = CloverBalanceController.GetBalance();
 
+		if ( _lastPlayTimeUpdate != default )
+		{
+			SaveData.PlayTime += (DateTime.Now - _lastPlayTimeUpdate).TotalSeconds;
+		}
+
+		_lastPlayTimeUpdate = DateTime.Now;
+
 		SaveData.LastSave = DateTime.Now;
 
 		var json = JsonSerializer.Serialize( SaveData, GameManager.JsonOptions );
@@ -59,11 +67,13 @@ public sealed partial class PlayerCharacter
 
 		Scene.RunEvent<IPlayerSaved>( x => x.PostPlayerSave( this ) );
 	}
-	
+
 	public void NewGame()
 	{
+		SaveData = new PlayerSaveData( PlayerId );
 		PlayerName = Network.Owner.DisplayName;
 		CloverBalanceController.SetStartingClovers();
+		SaveData.LastLoad = DateTime.Now;
 		Save();
 	}
 
@@ -74,7 +84,7 @@ public sealed partial class PlayerCharacter
 			Log.Error( "Cannot load proxy player. Fix this call." );
 			return;
 		}
-		
+
 		// TODO: temporary fix for player id
 		if ( string.IsNullOrEmpty( PlayerId ) )
 		{
@@ -103,9 +113,11 @@ public sealed partial class PlayerCharacter
 		SaveData = JsonSerializer.Deserialize<PlayerSaveData>( json, GameManager.JsonOptions );
 
 		PlayerName = SaveData.Name;
-		
+
 		CloverBalanceController.SetClovers( SaveData.Clovers );
 		
+		SaveData.LastLoad = DateTime.Now;
+
 		// limit inventory slots if for some reason it exceeds max items
 		if ( SaveData.InventorySlots.Count > Inventory.Container.MaxItems )
 		{

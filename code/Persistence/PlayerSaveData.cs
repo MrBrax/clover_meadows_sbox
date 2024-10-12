@@ -15,6 +15,8 @@ public class PlayerSaveData
 	
 	public DateTime Created = DateTime.Now;
 	public DateTime LastSave = DateTime.Now;
+	public DateTime LastLoad = DateTime.Now;
+	public double PlayTime;
 	
 	public int Clovers;
 	
