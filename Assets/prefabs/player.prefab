@@ -67,7 +67,7 @@
       {
         "__type": "Clover.WorldLayerObject",
         "__guid": "4eb450db-642e-43aa-bd5c-bc5770f7b8bf",
-        "Layer": 0
+        "Layer": -1
       },
       {
         "__type": "Sandbox.BoxCollider",
@@ -461,16 +461,16 @@
         "__guid": "88dfd75e-8d32-4625-8d9f-c6c32cd18add",
         "Flags": 0,
         "Name": "Point Light",
-        "Position": "0,0,37.5158",
+        "Position": "0,0,56",
         "Tags": "light_point,light",
         "Components": [
           {
             "__type": "Sandbox.PointLight",
             "__guid": "80f4c50d-b59a-4a4a-845a-f7f2a2db8f2f",
             "Attenuation": 1,
-            "FogMode": "Enabled",
+            "FogMode": "Disabled",
             "FogStrength": 1,
-            "LightColor": "0.91373,0.98039,1,1",
+            "LightColor": "0.10698,0.10698,0.10698,1",
             "Radius": 400,
             "Shadows": false
           }
