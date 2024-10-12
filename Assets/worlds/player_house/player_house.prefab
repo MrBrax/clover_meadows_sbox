@@ -129,6 +129,7 @@
         "Name": "Entrance",
         "Position": "528,320,0",
         "Rotation": "0,0,1,-0.00000004371139",
+        "Tags": "worldlayer_visible",
         "Enabled": true,
         "Components": [
           {
@@ -149,6 +150,7 @@
         "Name": "Entrance (1)",
         "Position": "496,192,72",
         "Rotation": "0,0,0.7071069,0.7071066",
+        "Tags": "worldlayer_visible",
         "Enabled": true,
         "Components": [
           {
@@ -168,7 +170,7 @@
         "Flags": 0,
         "Name": "HouseTrigger",
         "Position": "544,320,16.00014",
-        "Tags": "trigger",
+        "Tags": "trigger,worldlayer_visible",
         "Enabled": true,
         "Components": [
           {
@@ -200,7 +202,7 @@
         "Name": "HouseTrigger (1)",
         "Position": "480,160,96",
         "Rotation": "0,0,-0.7071067,0.7071068",
-        "Tags": "trigger",
+        "Tags": "trigger,worldlayer_visible",
         "Enabled": true,
         "Components": [
           {
@@ -693,6 +695,24 @@
             "LightColor": "14.91207,15.99148,16.32,1",
             "Radius": 100,
             "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "30ae15bd-39d2-4086-98b5-7efe55d7a02a",
+        "Flags": 0,
+        "Name": "Ambi",
+        "Position": "448,320,32",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SoundscapeTrigger",
+            "__guid": "9f0c97d7-60a4-404f-a6fa-f19f4d5bd3be",
+            "BoxSize": "50,50,50",
+            "Radius": 500,
+            "Soundscape": "sounds/ambience/inside.sndscape",
+            "StayActiveOnExit": true,
+            "Type": "Point"
           }
         ]
       }

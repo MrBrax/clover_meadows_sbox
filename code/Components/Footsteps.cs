@@ -1,4 +1,6 @@
-﻿namespace Clover.Components;
+﻿using Sandbox.Audio;
+
+namespace Clover.Components;
 
 public class Footsteps : Component
 {
@@ -47,7 +49,8 @@ public class Footsteps : Component
 		if ( sound is null ) return;
 
 		var handle = Sound.Play( sound, tr.HitPosition + tr.Normal * 5 );
-		handle.Volume *= e.Volume * 3f;
+		handle.TargetMixer = Mixer.FindMixerByName( "Footsteps" );
+		handle.Volume *= e.Volume * 5f;
 		
 		Scene.RunEvent<IFootstepEvent>( x => x.OnFootstepEvent( e ) );
 	}

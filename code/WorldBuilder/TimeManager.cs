@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using Sandbox.Audio;
 
 namespace Clover.WorldBuilder;
 
@@ -76,7 +77,7 @@ public class TimeManager : Component, IWorldEvent
 		} */
 		// chime.Play();
 
-		Sound.Play( HourChime );
+		Sound.Play( HourChime.ResourcePath, Mixer.FindMixerByName( "UI" ) );
 	}
 
 	private readonly List<Color> _skyColors = new()

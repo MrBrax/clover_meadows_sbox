@@ -4,7 +4,9 @@
   "Pitch": "1",
   "Decibels": 70,
   "SelectionMode": "Random",
-  "Sounds": null,
+  "Sounds": [
+    "sounds/ambience/ambiance_night_loop_stereo.vsnd"
+  ],
   "Occlusion": true,
   "AirAbsorption": true,
   "Transmission": true,
