@@ -46,7 +46,7 @@ public sealed class NetworkHelper : Component, Component.INetworkListener
 	/// </summary>
 	public void OnActive( Connection channel )
 	{
-		Log.Info( $"Player '{channel.DisplayName}' has joined the game" );
+		/*Log.Info( $"Player '{channel.DisplayName}' has joined the game" );
 
 		if ( !PlayerPrefab.IsValid() )
 			return;
@@ -81,7 +81,7 @@ public sealed class NetworkHelper : Component, Component.INetworkListener
 		else
 		{
 			Log.Error( "No active world found" );
-		}
+		}*/
 	}
 
 	/// <summary>

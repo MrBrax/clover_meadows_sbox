@@ -7,7 +7,7 @@ namespace Clover;
 
 public sealed partial class World
 {
-	private string SaveFileName => $"{GameManager.Instance.SaveProfile}/worlds/{Data.ResourceName}.json";
+	private string SaveFileName => $"{GameManager.Realm.Path}/worlds/{Data.ResourceName}.json";
 
 	private WorldSaveData _saveData = new();
 

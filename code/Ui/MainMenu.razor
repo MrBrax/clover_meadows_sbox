@@ -8,23 +8,37 @@
 	{
 		<div class="title">Clover Meadows</div>
 		<div class="menu-items">
-			<button @onclick=@( () => Scene.LoadFromFile( "scenes/clover.scene" ) )>test start</button>
-			<button @onclick=@( () => SetState( MenuState.SelectWorld ) )>Select World</button>
+			<button @onclick=@( () => SetState( MenuState.SelectRealm ) )>Select Realm</button>
 			<button @onclick=@( () => SetState( MenuState.Settings ) )>Settings</button>
 			<button @onclick=@( () => Game.Close() )>Quit</button>
 		</div>
 	}
-	else if ( State == MenuState.SelectWorld )
+	else if ( State == MenuState.SelectRealm )
 	{
-		<div class="title">Select World</div>
+		<div class="title">Select Realm</div>
 		<div class="menu-items">
-			@foreach ( var world in Worlds )
+			@foreach ( var realm in Realms )
 			{
-				<button>@world.Name</button>
+				<button @onclick=@( () => SelectRealm( realm ) )>
+					@realm.Name
+				</button>
+			}
+			@if ( Realms.Count == 0 )
+			{
+				<div>No realms found</div>
 			}
 		</div>
 		<div class="menu-items">
+			<button @onclick=@( () => SetState( MenuState.CreateRealm ) )>Create</button>
 			<button @onclick=@( () => SetState( MenuState.Title ) )>Back</button>
+		</div>
+	} else if ( State == MenuState.CreateRealm )
+	{
+		<div class="title">Create Realm</div>
+		<div class="menu-items">
+			<TextEntry class="text-input" Value:bind=@_newRealmName />
+			<button @onclick=@( () => CreateRealm() )>Perfect</button>
+			<button @onclick=@( () => SetState( MenuState.SelectRealm ) )>Back</button>
 		</div>
 	}
 	else if ( State == MenuState.Settings )

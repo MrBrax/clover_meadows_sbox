@@ -12,7 +12,7 @@ public partial class InventoryUiEquip : IEquipChanged
 
 	public Equips.EquipSlot Slot { get; set; }
 
-	private BaseCarriable Tool => Inventory.Player.Equips.GetEquippedItem<BaseCarriable>( Slot );
+	private BaseCarriable Tool => Inventory?.Player?.Equips.GetEquippedItem<BaseCarriable>( Slot );
 	
 	private bool HasItem => Inventory.Player.Equips.HasEquippedItem( Slot );
 

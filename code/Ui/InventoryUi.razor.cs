@@ -8,8 +8,8 @@ namespace Clover.Ui;
 public partial class InventoryUi : IPlayerSpawned
 {
 	
-	private Inventory.Inventory Inventory => PlayerCharacter.Local.Inventory;
-	private IEnumerable<InventorySlot<PersistentItem>> Slots => Inventory.Container.Slots;
+	private Inventory.Inventory Inventory => PlayerCharacter.Local?.Inventory;
+	private IEnumerable<InventorySlot<PersistentItem>> Slots => Inventory?.Container.Slots;
 
 	public bool Show;
 	

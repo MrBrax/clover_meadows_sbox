@@ -6,16 +6,25 @@
 @namespace Clover
 
 <root>
-	<div class="is-saving" @ref="IsSavingPanel">
-		<i class="icon">save</i>
-	</div>
-	<div class="status">
-		<div class="weather"><Image Texture=@NodeManager.WeatherManager.GetWeatherIcon() /></div>
-		<div class="time">@TimeManager.Time.ToString( "HH:mm" )</div>
-	</div>
-	
-	<div class="cutscene-bars @( PlayerCharacter.Local.InCutscene ? "active" : "" )">
-		<div class="bar top"></div>
-		<div class="bar bottom"></div>
-	</div>
+	@if ( PlayerCharacter.Local.IsValid() )
+	{
+		<div class="is-saving" @ref=" IsSavingPanel">
+			<i class="icon">save</i>
+		</div>
+		<div class="status">
+			<div class="weather"><Image Texture=@NodeManager.WeatherManager.GetWeatherIcon()/></div>
+			<div class="time">@TimeManager.Time.ToString( "HH:mm" )</div>
+		</div>
+
+		<div class="cutscene-bars @( PlayerCharacter.Local.InCutscene ? "active" : "" )">
+			<div class="bar top"></div>
+			<div class="bar bottom"></div>
+		</div>
+	}
+	else
+	{
+		<div class="loading">
+			Loading...
+		</div>
+	}
 </root>

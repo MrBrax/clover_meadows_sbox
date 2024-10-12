@@ -15,10 +15,14 @@ MainMenu
 	gap: 50px;
 	
 	pointer-events: all;
+	
+	font-family: Itim;
+	font-size: 30px;
+	color: white;
 
 	.title
 	{
-		font-size: 70px;
+		font-size: 120px;
 		font-family: Itim;
 		color: #fff;
 	}
@@ -30,7 +34,7 @@ MainMenu
 		
 		button {
 			padding: 10px 20px;
-			font-size: 30px;
+			font-size: 40px;
 			font-family: Itim;
 			background-color: #0c83dd;
 			color: white;
@@ -38,9 +42,24 @@ MainMenu
 			cursor: pointer;
 			transition: all 0.1s ease;
 			
+			text-shadow: 3px 3px 0 #000;
+			
 			&:hover {
-				background-color: #156eb1;
+				background-color: #3ea1ed;
 			}
 		}
+	}
+	
+	.text-input {
+		padding: 10px 20px;
+		font-size: 40px;
+		min-width: 500px;
+		font-family: Itim;
+		background-color: #0c83dd;
+		color: white;
+		border-radius: 20px;
+		transition: all 0.1s ease;
+		
+		text-shadow: 3px 3px 0 #000;
 	}
 }

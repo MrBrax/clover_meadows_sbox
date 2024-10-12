@@ -134,13 +134,13 @@ public class WorldManager : Component
 
 	protected override void OnStart()
 	{
-		if ( Worlds.Count == 0 )
+		/*if ( Worlds.Count == 0 )
 		{
 			// await LoadWorldAsync( "res://world/worlds/island.tres" );
 			// await NodeManager.UserInterface.GetNode<Fader>( "Fade" ).FadeOutAsync();
 
 			_ = LoadWorld( DefaultWorldData );
-		}
+		}*/
 
 		// WorldLoaded += ( World world ) => NodeManager.SettingsSaveData.ApplyWorldSettings();
 

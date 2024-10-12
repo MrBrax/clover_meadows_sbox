@@ -9,7 +9,7 @@ namespace Clover.Ui;
 
 public partial class InventoryUiCloverBalance
 {
-	private CloverBalanceController CloverBalance => PlayerCharacter.Local.CloverBalanceController;
+	private CloverBalanceController CloverBalance => PlayerCharacter.Local?.CloverBalanceController;
 		
 	protected override int BuildHash()
 	{

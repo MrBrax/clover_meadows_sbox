@@ -27,7 +27,8 @@
       "__guid": "440cfd83-0eb5-4bbf-b07b-1d8cb74f9b1e",
       "Flags": 0,
       "Name": "Camera",
-      "Position": "-192,0,0",
+      "Position": "-167.8867,115.5616,34.68896",
+      "Rotation": "0,0,-0.3420201,0.9396926",
       "Tags": "maincamera",
       "Enabled": true,
       "Components": [
@@ -36,7 +37,7 @@
           "__guid": "4c7de97a-2573-423c-b80b-6f8569c3b815",
           "BackgroundColor": "0.33333,0.46275,0.52157,1",
           "ClearFlags": "All",
-          "FieldOfView": 60,
+          "FieldOfView": 20,
           "IsMainCamera": true,
           "Orthographic": false,
           "OrthographicHeight": 1204,
@@ -47,6 +48,14 @@
           "Viewport": "0,0,1,1",
           "ZFar": 10000,
           "ZNear": 10
+        },
+        {
+          "__type": "Sandbox.DepthOfField",
+          "__guid": "95dcb510-96b4-4379-9f5a-64264b355f41",
+          "BackBlur": true,
+          "BlurSize": 97.65,
+          "FocalDistance": 268.95,
+          "FrontBlur": false
         }
       ]
     },
@@ -80,6 +89,86 @@
           "__guid": "06a9bf82-5783-4548-a37d-fbbd4f05ed3b",
           "SkyIndirectLighting": true,
           "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
+          "Tint": "1,1,1,1"
+        }
+      ]
+    },
+    {
+      "__guid": "9e5f41c5-c405-42cb-b191-93f62d96d3af",
+      "Flags": 0,
+      "Name": "Plane",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "08cbcc9b-5743-4e43-a2ae-8432f1ff5a97",
+          "BodyGroups": 18446744073709551615,
+          "Model": "models/dev/plane.vmdl",
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        }
+      ]
+    },
+    {
+      "__guid": "d155c012-8216-42b4-a3a5-a9a5412c87ab",
+      "Flags": 0,
+      "Name": "sk_pig_guy_plasticity",
+      "Position": "0,0,0.4168164",
+      "Rotation": "-0,0,1,-0.00000004371139",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.SkinnedModelRenderer",
+          "__guid": "a21288f6-bddc-44c3-baf0-b74d264321b0",
+          "BodyGroups": 18446744073709551615,
+          "CreateBoneObjects": false,
+          "Model": "models/player/epic/sk_pig_guy_plasticity.vmdl",
+          "Morphs": {},
+          "Parameters": {
+            "bools": {},
+            "ints": {},
+            "floats": {},
+            "vectors": {},
+            "rotations": {}
+          },
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "RenderType": "On",
+          "Tint": "1,1,1,1",
+          "UseAnimGraph": true
+        }
+      ]
+    },
+    {
+      "__guid": "a84f4e0c-c3ff-42d7-a120-2f1fd6376f06",
+      "Flags": 0,
+      "Name": "Object",
+      "Position": "-2733.748,2620.808,0.0003132075",
+      "Rotation": "0,-0,-0.7181254,0.6959137",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "ecbf496a-f5b8-4677-921a-8ae46b73ab55",
+          "BodyGroups": 18446744073709551615,
+          "Model": "models/island/world.vmdl",
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "RenderType": "On",
           "Tint": "1,1,1,1"
         }
       ]

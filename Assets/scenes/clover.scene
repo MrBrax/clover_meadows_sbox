@@ -121,10 +121,15 @@
       "Name": "GameManager",
       "Position": "300.3214,304.458,962.4254",
       "Enabled": true,
+      "NetworkMode": 1,
       "Components": [
         {
           "__type": "Clover.GameManager",
-          "__guid": "1ec5f9d8-9d73-4e49-8d28-8da7f5fac66f"
+          "__guid": "1ec5f9d8-9d73-4e49-8d28-8da7f5fac66f",
+          "PlayerPrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/player.prefab"
+          }
         }
       ]
     },
