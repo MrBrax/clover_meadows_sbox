@@ -18,7 +18,15 @@ public class TimeManager : Component, IWorldEvent
 
 	[ConVar( "clover_time_scale" )] public static int Speed { get; set; } = 1;
 
-	public static DateTime Time => Speed != 1 ? DateTime.Now.AddSeconds( Sandbox.Time.Now * Speed ) : DateTime.Now;
+	// public static DateTime Time => Speed != 1 ? DateTime.Now.AddSeconds( Sandbox.Time.Now * Speed ) : DateTime.Now;
+	
+	[Sync] public double GlobalTime { get; set; }
+	
+	public static DateTime Time => Instance.TimeOverride > -1 ? DateTime.Today.AddSeconds( Instance.TimeOverride ) : DateTime.FromOADate( Instance.GlobalTime );
+	
+	[Property, Range( -1, 86400 )]
+	public float TimeOverride { get; set; } = -1;
+	
 
 	private const float SecondsPerDay = 86400f;
 
@@ -55,6 +63,7 @@ public class TimeManager : Component, IWorldEvent
 	
 	private void PlayChime( int hour )
 	{
+		if ( TimeOverride > -1 ) return;
 		Log.Info( $"Playing chime for hours {hour}" );
 		// var chime = GetNode<AudioStreamPlayer>( "Chime" );
 		/* for ( int i = 0; i < hour; i++ )
@@ -103,6 +112,11 @@ public class TimeManager : Component, IWorldEvent
 
 	protected override void OnFixedUpdate()
 	{
+		if ( !IsProxy )
+		{
+			GlobalTime = DateTime.Now.ToOADate();
+		}
+		
 		if ( Sun.IsValid() )
 		{
 			Sun.WorldRotation = CalculateSunRotation( Sun );
@@ -172,6 +186,7 @@ public class TimeManager : Component, IWorldEvent
 		var color = Color.Lerp( baseAmbientColor * 1f, baseAmbientColor * 1f, lerp );
 		
 		return color.WithAlpha( 1f );*/
+		
 
 	}
 	
