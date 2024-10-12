@@ -14,7 +14,7 @@ public sealed class CameraMan : Component
 
 	private IEnumerable<CameraNode> _cameraNodes => Scene.GetAllComponents<CameraNode>().Where( x => !x.IsProxy );
 
-	private CameraNode MainCameraNode => _cameraNodes.OrderBy( x => x.Priority ).Reverse().FirstOrDefault();
+	public CameraNode MainCameraNode => _cameraNodes.OrderBy( x => x.Priority ).Reverse().FirstOrDefault();
 
 	private Vector3 _positionLerp;
 	private Rotation _rotationLerp;

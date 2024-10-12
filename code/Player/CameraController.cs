@@ -28,12 +28,19 @@ public sealed class CameraController : Component
 		// SkyCameraNode.Priority = Input.Down("View") ? 10 : 0;
 		if ( Input.Down( "View" ) )
 		{
+			if ( (CameraMan.Instance?.MainCameraNode.IsValid() ?? false) && CameraMan.Instance.MainCameraNode.Static )
+			{
+				if ( !_playedErrorSound ) Sound.Play( CameraErrorSound );
+				_playedErrorSound = true;
+				return;
+			}
+
 			var trace = Scene.Trace.Ray( GameObject.WorldPosition, SkyCameraNode.WorldPosition )
 				.WithTag( "terrain" )
 				.Run();
 
 			// Gizmo.Draw.Line( SkyCameraNode.WorldPosition, GameObject.WorldPosition );
-			
+
 			_playedOutSound = false;
 
 			if ( trace.Hit )
@@ -56,7 +63,7 @@ public sealed class CameraController : Component
 				SkyCameraNode.Priority = 0;
 				return;
 			}
-			
+
 			if ( !_playedInSound )
 			{
 				Sound.Play( CameraInSound );
@@ -67,7 +74,6 @@ public sealed class CameraController : Component
 		}
 		else
 		{
-
 			if ( !_playedOutSound && SkyCameraNode.Priority == 10 )
 			{
 				Sound.Play( CameraOutSound );
@@ -76,7 +82,7 @@ public sealed class CameraController : Component
 
 			_playedInSound = false;
 			_playedErrorSound = false;
-			
+
 			SkyCameraNode.Priority = 0;
 		}
 	}
