@@ -1,12 +1,9 @@
 using System;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using Clover.Data;
 using Clover.Items;
 using Clover.Persistence;
 using Clover.Player;
-using Sandbox;
 using Sandbox.Diagnostics;
 
 namespace Clover;
@@ -63,7 +60,7 @@ public sealed partial class World : Component
 	public static float GridSize = 32f;
 	public static float GridSizeCenter = GridSize / 2f;
 
-	[Property] public Data.WorldData Data { get; set; }
+	[Property] public WorldData Data { get; set; }
 
 
 	public delegate void OnItemAddedEvent( WorldNodeLink nodeLink );
@@ -77,11 +74,11 @@ public sealed partial class World : Component
 	public Dictionary<Vector2Int, Dictionary<ItemPlacement, WorldNodeLink>> Items { get; set; } = new();
 
 	// TODO: should this be synced?
-	private HashSet<Vector2Int> _blockedTiles { get; set; } = new();
+	private HashSet<Vector2Int> BlockedTiles { get; set; } = new();
 
-	[Sync] private Dictionary<Vector2Int, float> _tileHeights { get; set; } = new();
+	[Sync] private Dictionary<Vector2Int, float> TileHeights { get; set; } = new();
 
-	private Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
+	private readonly Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
 
 	public record struct NodeLinkMapKey
 	{
@@ -89,7 +86,7 @@ public sealed partial class World : Component
 		public ItemPlacement Placement;
 	}
 
-	private Dictionary<NodeLinkMapKey, WorldNodeLink> _nodeLinkGridMap = new();
+	private readonly Dictionary<NodeLinkMapKey, WorldNodeLink> _nodeLinkGridMap = new();
 
 	[Sync] public int Layer { get; set; }
 
@@ -115,23 +112,23 @@ public sealed partial class World : Component
 
 	public bool IsBlockedGridPosition( Vector2Int position )
 	{
-		if ( _blockedTiles.Contains( position ) ) return true;
+		if ( BlockedTiles.Contains( position ) ) return true;
 
 		CheckTerrainAt( position );
 
-		return _blockedTiles.Contains( position );
+		return BlockedTiles.Contains( position );
 	}
 
 	public float GetHeightAt( Vector2Int position )
 	{
-		if ( _tileHeights.TryGetValue( position, out var height ) )
+		if ( TileHeights.TryGetValue( position, out var height ) )
 		{
 			return height;
 		}
 
 		CheckTerrainAt( position );
 
-		if ( _tileHeights.TryGetValue( position, out height ) )
+		if ( TileHeights.TryGetValue( position, out height ) )
 		{
 			return height;
 		}
@@ -145,20 +142,14 @@ public sealed partial class World : Component
 
 		if ( worldPos.z != 0 )
 		{
-			_tileHeights[position] = worldPos.z;
-			// Logger.Info( $"Adding grid position height {gridPos} = {worldPos.Y}" );
+			TileHeights[position] = worldPos.z;
 		}
 
 		if ( !check )
 		{
-			_blockedTiles.Add( position );
-			// Logger.Info( $"Blocking grid position from terrain check: {gridPos} (height: {worldPos.Y})" );
-			// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + new Vector3( 0, 10, 0 ), new Color( 1, 0, 0 ), 15 );
+			BlockedTiles.Add( position );
 		}
-		else
-		{
-			// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + new Vector3( 0, 10, 0 ), new Color( 0, 1, 0 ), 15 );
-		}
+		
 	}
 
 	public bool IsOutsideGrid( Vector2Int position )
@@ -194,7 +185,7 @@ public sealed partial class World : Component
 		{
 			foreach ( var item in dict.Values )
 			{
-				Log.Info( $"Found item {item.GetName()} at {gridPos} with exact placement" );
+				// Log.Info( $"Found item {item.GetName()} at {gridPos} with exact placement" );
 				foundItems.Add( item );
 				yield return item;
 			}
@@ -202,7 +193,7 @@ public sealed partial class World : Component
 
 		foreach ( var entry in _nodeLinkGridMap.Where( x => x.Key.Position == gridPos ) )
 		{
-			Log.Info( $"Found item {entry.Value.GetName()} at {gridPos} in grid map" );
+			// Log.Info( $"Found item {entry.Value.GetName()} at {gridPos} in grid map" );
 			foundItems.Add( entry.Value );
 			yield return entry.Value;
 		}
@@ -279,28 +270,17 @@ public sealed partial class World : Component
 	///  It will check if the position is outside the grid, if there are any items at the position, and if there are any items nearby that would block the placement.
 	///  An item can be larger than 1x1, in which case it will check all positions that the item would occupy.
 	/// </summary>
-	/// <param name="item"></param>
-	/// <param name="position"></param>
-	/// <param name="rotation"></param>
+	/// <param name="positions"></param>
 	/// <param name="placement"></param>
 	/// <returns></returns>
 	/// <exception cref="Exception"></exception>
 	public bool CanPlaceItem( List<Vector2Int> positions, ItemPlacement placement )
 	{
-		/*if ( IsOutsideGrid( position ) )
-		{
-			// throw new Exception( $"Position {position} is outside the grid" );
-			Log.Warning( $"Position {position} is outside the grid" );
-			return false;
-		}*/
-
 		if ( positions.Any( IsOutsideGrid ) )
 		{
 			Log.Warning( $"One or more positions are outside the grid" );
 			return false;
 		}
-
-		// var positions = itemData.GetGridPositions( rotation, position );
 
 		// check any nearby items
 		foreach ( var pos in positions )
@@ -339,9 +319,7 @@ public sealed partial class World : Component
 				return false;
 			}
 		}
-
-		// Log.Info( $"Item {itemData.Name} can be placed at {position} with rotation {rotation} and placement {placement}" );
-
+		
 		return true;
 	}
 
@@ -349,20 +327,16 @@ public sealed partial class World : Component
 	{
 		if ( IsOutsideGrid( position ) )
 		{
-			// Log.Warning( $"Position {position} is outside the grid" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
 
-		if ( _blockedTiles.Contains( position ) )
+		if ( BlockedTiles.Contains( position ) )
 		{
-			// Log.Info( $"Position {position} is already blocked" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
-
-		// Log.Info( $"Checking eligibility of {position}" );
-
+		
 		// trace a ray from the sky straight down in each corner, if height is the same on all corners then it's a valid position
 
 		var basePosition = ItemGridToWorld( position, true );
@@ -378,36 +352,11 @@ public sealed partial class World : Component
 		var bottomLeft = new Vector3( basePosition.x - margin, basePosition.y + margin, baseHeight );
 		var bottomRight = new Vector3( basePosition.x + margin, basePosition.y + margin, baseHeight );
 
-		/*var spaceState = GetWorld3D().DirectSpaceState;
-
-		// uint collisionMask = 1010; // terrain is on layer 10
-		// Logger.Info( "EligibilityCheck", $"Collision mask: {collisionMask}" );
-
-		var traceTopLeft =
-			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( topLeft, new Vector3( topLeft.X, -50, topLeft.Z ),
-					TerrainLayer ) );
-		var traceTopRight =
-			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( topRight, new Vector3( topRight.X, -50, topRight.Z ),
-					TerrainLayer ) );
-		var traceBottomLeft = new Trace( spaceState ).CastRay(
-			PhysicsRayQueryParameters3D.Create( bottomLeft, new Vector3( bottomLeft.X, -50, bottomLeft.Z ),
-				TerrainLayer ) );
-		var traceBottomRight = new Trace( spaceState ).CastRay(
-			PhysicsRayQueryParameters3D.Create( bottomRight, new Vector3( bottomRight.X, -50, bottomRight.Z ),
-				TerrainLayer ) );
-
-		if ( traceTopLeft == null || traceTopRight == null || traceBottomLeft == null || traceBottomRight == null )
-		{
-			Logger.Warn( "ElegibilityCheck", $"Failed to trace rays at {position}" );
-			worldPosition = Vector3.Zero;
-			return false;
-		}*/
-
-		var traceTopLeft = Scene.Trace.Ray( topLeft, topLeft + (Vector3.Down * traceDistance) ).WithTag( "terrain" )
+		var traceTopLeft = Scene.Trace.Ray( topLeft, topLeft + (Vector3.Down * traceDistance) )
+			.WithTag( "terrain" )
 			.Run();
-		var traceTopRight = Scene.Trace.Ray( topRight, topRight + (Vector3.Down * traceDistance) ).WithTag( "terrain" )
+		var traceTopRight = Scene.Trace.Ray( topRight, topRight + (Vector3.Down * traceDistance) )
+			.WithTag( "terrain" )
 			.Run();
 		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + (Vector3.Down * traceDistance) )
 			.WithTag( "terrain" )
@@ -415,11 +364,6 @@ public sealed partial class World : Component
 		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + (Vector3.Down * traceDistance) )
 			.WithTag( "terrain" )
 			.Run();
-
-		// Gizmo.Draw.Line( topLeft, topLeft + (Vector3.Down * traceDistance) );
-		// Gizmo.Draw.Line( topRight, topRight + (Vector3.Down * traceDistance) );
-		// Gizmo.Draw.Line( bottomLeft, bottomLeft + (Vector3.Down * traceDistance) );
-		// Gizmo.Draw.Line( bottomRight, bottomRight + (Vector3.Down * traceDistance) );
 
 		if ( !traceTopLeft.Hit || !traceTopRight.Hit || !traceBottomLeft.Hit || !traceBottomRight.Hit )
 		{
@@ -433,19 +377,10 @@ public sealed partial class World : Component
 		var heightBottomLeft = traceBottomLeft.HitPosition.z - WorldPosition.z;
 		var heightBottomRight = traceBottomRight.HitPosition.z - WorldPosition.z;
 
-		/*if ( heightTopLeft != heightTopRight || heightTopLeft != heightBottomLeft ||
-			 heightTopLeft != heightBottomRight )
-		{
-			worldPosition = Vector3.Zero;
-			return false;
-		}*/
-
 		if ( heightTopLeft <= -50 )
 		{
 			Log.Warning( $"Height at {position} is below -50" );
 		}
-
-		// var averageHeight = (heightTopLeft + heightTopRight + heightBottomLeft + heightBottomRight) / 4;
 
 		if ( Math.Abs( heightTopLeft - heightTopRight ) > heightTolerance ||
 		     Math.Abs( heightTopLeft - heightBottomLeft ) > heightTolerance ||
@@ -467,8 +402,6 @@ public sealed partial class World : Component
 		}
 
 		worldPosition = new Vector3( basePosition.x, basePosition.y, heightTopLeft );
-
-		// Log.Info( $"Position {position} is eligible" );
 
 		return true;
 	}
