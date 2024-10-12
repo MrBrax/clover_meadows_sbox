@@ -1,0 +1,38 @@
+@import "./Shared.scss";
+
+PlayerSelect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    
+    pointer-events: all;
+    
+    align-items: center;
+    justify-content: center;
+    
+    flex-direction: column;
+    gap: 20px;
+    
+    font-family: Itim;
+    font-size: 30px;
+    color: white;
+    
+    h1 {
+        font-size: 80px;
+    }
+    
+    .player {
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .new-player {
+        gap: 20px;
+    }
+    
+}
+

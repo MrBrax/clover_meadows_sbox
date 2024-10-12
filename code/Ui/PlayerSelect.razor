@@ -1,0 +1,115 @@
+@using System
+@using System.Text.Json
+@using Clover.Data
+@using Clover.Persistence
+@using Clover.Player
+@using Clover.Player.Clover
+@using Sandbox;
+@using Sandbox.Network
+@using Sandbox.UI;
+@using GameManager = Clover.GameManager
+@inherits Panel
+@namespace Clover.Ui
+
+<root>
+	<h1>Player Select</h1>
+	@if ( Players.Any() )
+	{
+		@foreach ( var player in Players )
+		{
+			<div class="player">
+				<h2>@player.Name</h2>
+				<span>@($"{player.InventorySlots.Count()} items")</span>
+				<button class="clover-button small" @onclick=@( () => LoadPlayer( player ) )>Select</button>
+			</div>
+		}
+	} else {
+		<div>No players found</div>
+	}
+	
+	<div class="new-player">
+		<TextEntry class="text-input" Value:bind=@_playerName />
+		<button class="clover-button small" @onclick=@CreatePlayer>Create</button>
+	</div>
+</root>
+
+@code {
+
+	private List<PlayerSaveData> Players = new();
+	
+	private string _playerName = "";
+	
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		base.OnAfterTreeRender( firstTime );
+		
+		if ( firstTime )
+		{
+			LoadPlayers();
+		}
+	}
+
+	protected override void OnParametersSet()
+	{
+		base.OnParametersSet();
+		LoadPlayers();
+	}
+
+	public override void OnParentChanged()
+	{
+		base.OnParentChanged();
+		LoadPlayers();
+	}
+
+	private void LoadPlayers()
+	{
+		Players.Clear();
+		
+		var files = FileSystem.Data.FindFile( "players", "*.json" );
+		
+		foreach ( var file in files )
+		{
+			var path = $"players/{file}";
+			var data = JsonSerializer.Deserialize<PlayerSaveData>( FileSystem.Data.ReadAllText( path ), GameManager.JsonOptions );
+			Log.Info( $"Loaded player {data.Name} from {path}" );
+			Players.Add( data );
+		}
+		
+		Players.Sort( ( a, b ) => String.Compare( a.Name, b.Name, StringComparison.Ordinal ) );
+			
+		Log.Info( $"Loaded {Players.Count} players" );
+		
+	}
+
+
+	private void LoadPlayer( PlayerSaveData player )
+	{
+		Log.Info( $"Loading player {player.Name}" );
+		PlayerCharacter.SpawnPlayerId = player.PlayerId;
+		GameManager.Instance.RequestSpawn( player.PlayerId );
+	}
+	
+	private void CreatePlayer()
+	{
+		if ( string.IsNullOrWhiteSpace( _playerName ) )
+			return;
+		
+		var player = new PlayerSaveData()
+		{
+			Name = _playerName,
+			Clovers = CloverBalanceController.StartingClovers,
+			Created = DateTime.Now,
+			PlayerId = Guid.NewGuid().ToString()
+		};
+		
+		var path = $"players/{player.PlayerId}.json";
+		FileSystem.Data.WriteAllText( path, JsonSerializer.Serialize( player, GameManager.JsonOptions ) );
+		
+		Log.Info( $"Created player {player.Name} at {path}" );
+		
+		LoadPlayers();
+		
+		_playerName = "";
+	}
+
+}

@@ -76,7 +76,9 @@ public sealed partial class World
 		Log.Info( $"Saving {savedObjects.Count} objects" );
 		_saveData.Objects = savedObjects;
 
-		FileSystem.Data.CreateDirectory( $"{GameManager.Instance?.SaveProfile}/worlds" );
+		FileSystem.Data.CreateDirectory( $"{GameManager.Realm.Path}/worlds" );
+		
+		Log.Info( $"Writing save data to {SaveFileName}" );
 
 		// FileSystem.Data.WriteJson( $"worlds/{Data.ResourceName}.json", saveData );
 		var json = JsonSerializer.Serialize( _saveData, GameManager.JsonOptions );

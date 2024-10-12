@@ -43,3 +43,41 @@
         text-stroke: 3px rgba(34, 94, 152, 0.8);
     }
 }
+
+.text-input {
+    padding: 10px 20px;
+    font-size: 40px;
+    min-width: 500px;
+    font-family: Itim;
+    background-color: #0c83dd;
+    color: white;
+    border-radius: 20px;
+    transition: all 0.1s ease;
+
+    text-shadow: 3px 3px 0 #000;
+}
+
+.clover-button {
+    padding: 10px 20px;
+    font-size: 40px;
+    font-family: Itim;
+    background-color: #0c83dd;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    
+    align-items: center;
+    align-content: center;
+
+    text-shadow: 3px 3px 0 #000;
+
+    &:hover {
+        background-color: #3ea1ed;
+    }
+    
+    &.small {
+        padding: 5px 10px;
+        font-size: 30px;
+    }
+}

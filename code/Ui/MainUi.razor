@@ -2,6 +2,7 @@
 @using Clover.WorldBuilder
 @using Sandbox;
 @using Sandbox.UI;
+@using Clover.Ui;
 @inherits PanelComponent
 @namespace Clover
 
@@ -23,8 +24,6 @@
 	}
 	else
 	{
-		<div class="loading">
-			Loading...
-		</div>
+		<PlayerSelect />
 	}
 </root>

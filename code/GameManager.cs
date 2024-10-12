@@ -37,10 +37,10 @@ public class GameManager : Component, Component.INetworkListener
 
 		await WorldManager.Instance.LoadWorld( WorldManager.Instance.DefaultWorldData );
 		
-		if ( !_spawnQueue.Contains( Connection.Local ) )
+		/*if ( !_spawnQueue.Contains( Connection.Local ) )
 		{
 			OnConnected( Connection.Local );
-		}
+		}*/
 
 	}
 
@@ -49,7 +49,7 @@ public class GameManager : Component, Component.INetworkListener
 		WriteIndented = true, IncludeFields = true, Converters = { new JsonStringEnumConverter() }
 	};
 
-	public string SaveProfile = "default";
+	// public string SaveProfile = "default";
 
 	private TimeSince _lastSave;
 
@@ -99,7 +99,7 @@ public class GameManager : Component, Component.INetworkListener
 	public void OnConnected( Connection channel )
 	{
 		Log.Info( $"Player '{channel.DisplayName}' has joined the game" );
-		_spawnQueue.Add( channel );
+		// _spawnQueue.Add( channel );
 	}
 
 	public void OnDisconnected( Connection channel )
@@ -159,5 +159,12 @@ public class GameManager : Component, Component.INetworkListener
 		
 		_spawnQueue.Remove( channel );
 	}
-	
+
+	[Authority]
+	public void RequestSpawn( string playerId )
+	{
+		var caller = Rpc.Caller;
+		Log.Info( $"Player '{caller.DisplayName}' has requested to spawn player '{playerId}'" );
+		_spawnQueue.Add( caller );
+	}
 }

@@ -23,7 +23,7 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 
 	public void PreWorldSaved( World world )
 	{
-		IsSavingPanel.FlashClass( "saving", 2 );
+		IsSavingPanel?.FlashClass( "saving", 2 );
 	}
 
 	public void PostWorldSaved( World world )

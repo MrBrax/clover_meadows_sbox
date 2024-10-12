@@ -1,3 +1,5 @@
+@import "./Shared.scss";
+
 MainMenu
 {
 	position: absolute;
@@ -50,16 +52,5 @@ MainMenu
 		}
 	}
 	
-	.text-input {
-		padding: 10px 20px;
-		font-size: 40px;
-		min-width: 500px;
-		font-family: Itim;
-		background-color: #0c83dd;
-		color: white;
-		border-radius: 20px;
-		transition: all 0.1s ease;
-		
-		text-shadow: 3px 3px 0 #000;
-	}
+	
 }

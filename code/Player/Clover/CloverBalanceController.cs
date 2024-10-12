@@ -5,7 +5,7 @@ public class CloverBalanceController : Component
 	[Property, Sync, ReadOnly] private int Clovers { get; set; }
 
 	private List<string> Transactions { get; set; } = new List<string>();
-	private static readonly int StartingClovers = 100;
+	public static readonly int StartingClovers = 100;
 
 	internal void SetClovers( int clovers )
 	{

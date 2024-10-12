@@ -89,7 +89,7 @@
             "EntranceId": "player_house_exit",
             "ExitDoor": {
               "_type": "component",
-              "component_id": "8c9c1fc9-3d72-4e55-aee6-cd9edb2b6ae1",
+              "component_id": "4681be4d-644b-417f-ab74-3ca95e29b43a",
               "go": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
               "component_type": "Door"
             }
@@ -675,6 +675,24 @@
             "Soundscape": "sounds/ambience/night.sndscape",
             "StayActiveOnExit": true,
             "Type": "Point"
+          }
+        ]
+      },
+      {
+        "__guid": "6b1fa830-e68f-4a78-8c2f-eb42ace37fe6",
+        "Flags": 0,
+        "Name": "NullCamera",
+        "Position": "2009.879,19.66338,140.4214",
+        "Rotation": "-0.1064796,0.0327677,0.9498171,0.2922937",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "CameraNode",
+            "__guid": "e2892826-161f-461f-aec0-80b616993408",
+            "FieldOfView": 90,
+            "FollowTargets": true,
+            "Priority": -1,
+            "Static": false
           }
         ]
       }

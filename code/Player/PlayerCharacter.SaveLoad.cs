@@ -10,9 +10,11 @@ namespace Clover.Player;
 
 public sealed partial class PlayerCharacter
 {
+	public static string SpawnPlayerId { get; set; }
+	
 	public string SaveFilePath => $"players/{PlayerId}.json";
 	public PlayerSaveData SaveData { get; set; }
-	
+
 	private DateTime _lastPlayTimeUpdate;
 
 	public void Save()
@@ -68,14 +70,14 @@ public sealed partial class PlayerCharacter
 		Scene.RunEvent<IPlayerSaved>( x => x.PostPlayerSave( this ) );
 	}
 
-	public void NewGame()
+	/*public void NewGame()
 	{
 		SaveData = new PlayerSaveData( PlayerId );
 		PlayerName = Network.Owner.DisplayName;
 		CloverBalanceController.SetStartingClovers();
 		SaveData.LastLoad = DateTime.Now;
 		Save();
-	}
+	}*/
 
 	public void Load()
 	{
@@ -88,7 +90,7 @@ public sealed partial class PlayerCharacter
 		// TODO: temporary fix for player id
 		if ( string.IsNullOrEmpty( PlayerId ) )
 		{
-			var save = FileSystem.Data.FindFile( "players", "*.json" );
+			/*var save = FileSystem.Data.FindFile( "players", "*.json" );
 			if ( save != null && save.Any() )
 			{
 				PlayerId = Path.GetFileNameWithoutExtension( save.First() );
@@ -100,6 +102,12 @@ public sealed partial class PlayerCharacter
 				Log.Info( $"PlayerId generated: {PlayerId}" );
 				NewGame();
 				return;
+			}*/
+			PlayerId = SpawnPlayerId;
+			
+			if ( string.IsNullOrEmpty( PlayerId ) )
+			{
+				throw new Exception( "PlayerId is null" );
 			}
 		}
 
