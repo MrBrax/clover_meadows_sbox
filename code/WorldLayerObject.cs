@@ -6,7 +6,7 @@ namespace Clover;
 [Category( "Clover" )]
 [Icon( "visibility" )]
 [Description( "Handles the visibility of the object based on the world layer." )]
-public sealed class WorldLayerObject : Component
+public sealed class WorldLayerObject : Component, IWorldEvent
 {
 	
 	private int _layer = -1;
@@ -76,14 +76,27 @@ public sealed class WorldLayerObject : Component
 		if ( Scene.IsEditor ) return;
 		Tags.Remove( "worldlayer_invisible" );
 		Tags.Remove( "worldlayer_visible" );
+
+		if ( !WorldManager.Instance.IsValid() )
+		{
+			Log.Error( "WorldManager is not valid." );
+			return;
+		}
 			
 		if ( layer == WorldManager.Instance.ActiveWorldIndex )
 		{
+			Log.Info( $"Setting {GameObject.Name} to visible" );
 			Tags.Add( "worldlayer_visible" );
 		}
 		else
 		{
+			Log.Info( $"Setting {GameObject.Name} to invisible" );
 			Tags.Add( "worldlayer_invisible" );
 		}
+	}
+
+	public void OnWorldChanged( World world )
+	{
+		RebuildVisibility( Layer );
 	}
 }
