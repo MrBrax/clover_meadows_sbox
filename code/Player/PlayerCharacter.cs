@@ -60,10 +60,10 @@ public sealed partial class PlayerCharacter : Component
 			Save();
 		};
 
-		if ( !IsProxy )
-		{
-			CameraMan.Instance.Targets.Add( GameObject );
-		}
+		Fader.Instance.FadeFromBlack();
+		
+		CameraMan.Instance.Targets.Add( GameObject );
+		
 	}
 
 	public void ModelLookAt( Vector3 position )
@@ -234,6 +234,7 @@ public sealed partial class PlayerCharacter : Component
 	{
 		return Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => x.Network.Owner == channel );
 	}
+	
 }
 
 public interface IPlayerSaved

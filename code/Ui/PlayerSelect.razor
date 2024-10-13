@@ -1,5 +1,6 @@
 @using System
 @using System.Text.Json
+@using Clover.Components
 @using Clover.Data
 @using Clover.Persistence
 @using Clover.Player
@@ -82,10 +83,11 @@
 	}
 
 
-	private void LoadPlayer( PlayerSaveData player )
+	private async void LoadPlayer( PlayerSaveData player )
 	{
 		Log.Info( $"Loading player {player.Name}" );
 		PlayerCharacter.SpawnPlayerId = player.PlayerId;
+		await Fader.Instance.FadeToBlack();
 		GameManager.Instance.RequestSpawn( player.PlayerId );
 	}
 	

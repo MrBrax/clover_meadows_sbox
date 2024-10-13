@@ -13,7 +13,9 @@
 			<i class="icon">save</i>
 		</div>
 		<div class="status">
-			<div class="weather"><Image Texture=@NodeManager.WeatherManager.GetWeatherIcon()/></div>
+			<div class="weather">
+				<Image Texture=@NodeManager.WeatherManager.GetWeatherIcon()/>
+			</div>
 			<div class="time">@TimeManager.Time.ToString( "HH:mm" )</div>
 		</div>
 
@@ -22,8 +24,8 @@
 			<div class="bar bottom"></div>
 		</div>
 	}
-	else
+	else if ( string.IsNullOrEmpty( PlayerCharacter.SpawnPlayerId ) )
 	{
-		<PlayerSelect />
+		<PlayerSelect/>
 	}
 </root>

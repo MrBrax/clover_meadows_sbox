@@ -6,7 +6,7 @@ using Clover.Ui;
 
 namespace Clover;
 
-public class GameManager : Component, Component.INetworkListener
+public class GameManager : Component, Component.INetworkListener, ISceneStartup
 {
 	public static MainMenu.RealmInfo Realm { get; set; }
 
@@ -167,4 +167,8 @@ public class GameManager : Component, Component.INetworkListener
 		Log.Info( $"Player '{caller.DisplayName}' has requested to spawn player '{playerId}'" );
 		_spawnQueue.Add( caller );
 	}
+
+	public void OnHostPreInitialize( SceneFile scene ) { Log.Info("BOOT"); PlayerCharacter.SpawnPlayerId = null; }
+	public void OnHostInitialize() { Log.Info("BOOT"); PlayerCharacter.SpawnPlayerId = null; }
+	public void OnClientInitialize() { Log.Info("BOOT"); PlayerCharacter.SpawnPlayerId = null; }
 }
