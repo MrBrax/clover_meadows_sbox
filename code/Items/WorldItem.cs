@@ -13,11 +13,10 @@ public class WorldItem : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
-	public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World.GetItem( GameObject ) : null;
+	public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World?.GetItem( GameObject ) : null;
 
 	public Vector2Int GridPosition => NodeLink?.GridPosition ?? Vector2Int.Zero;
-
-	[Property, ReadOnly]
+	
 	public Vector2Int Size =>
 		!Scene.IsEditor ? NodeLink.Size : new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
 
