@@ -78,17 +78,19 @@ public sealed class WateringCan : BaseCarriable
 		Log.Info( "Item watered." );
 	}
 
+	[Broadcast]
 	public void StartEmitting()
 	{
-		if ( WaterParticles != null )
+		if ( WaterParticles.IsValid() )
 		{
 			WaterParticles.Enabled = true;
 		}
 	}
 
+	[Broadcast]
 	public void StopEmitting()
 	{
-		if ( WaterParticles != null )
+		if ( WaterParticles.IsValid() )
 		{
 			WaterParticles.Enabled = false;
 		}
