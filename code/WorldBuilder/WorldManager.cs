@@ -5,7 +5,7 @@ using Sandbox.Diagnostics;
 
 namespace Clover;
 
-public class WorldManager : Component
+public class WorldManager : Component, Component.INetworkSpawn
 {
 	public static WorldManager Instance { get; private set; }
 	
@@ -44,11 +44,22 @@ public class WorldManager : Component
 		base.OnAwake();
 		Instance = this;
 	}
+
+	public void OnNetworkSpawn( Connection owner )
+	{
+		Instance = this;
+	}
 	
 	public void OnWorldsChanged()
 	{
 		Log.Info( "Worlds changed." );
 		RebuildVisibility();
+	}
+
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+		Instance = null;
 	}
 
 	public World GetWorld( string id )
@@ -65,7 +76,12 @@ public class WorldManager : Component
 
 	public World GetWorld( int index )
 	{
-		// return Worlds.TryGetValue( index, out var world ) ? world : null;
+		if ( index < 0 )
+		{
+			return null;
+		}
+		
+		
 		var val = Worlds.Values.FirstOrDefault( w => w.Layer == index );
 		if ( !val.IsValid() )
 		{
@@ -80,6 +96,12 @@ public class WorldManager : Component
 	{
 		Log.Info( $"Setting active world to index: {index}" );
 		ActiveWorldIndex = index;
+		
+		if ( !ActiveWorld.IsValid() )
+		{
+			Log.Warning( $"Active world is not valid: {index}" );
+		}
+		
 		RebuildVisibility();
 		ActiveWorldChanged?.Invoke( ActiveWorld );
 		Scene.RunEvent<IWorldEvent>( x => x.OnWorldChanged( ActiveWorld ) );
@@ -134,20 +156,7 @@ public class WorldManager : Component
 
 	protected override void OnStart()
 	{
-		/*if ( Worlds.Count == 0 )
-		{
-			// await LoadWorldAsync( "res://world/worlds/island.tres" );
-			// await NodeManager.UserInterface.GetNode<Fader>( "Fade" ).FadeOutAsync();
-
-			_ = LoadWorld( DefaultWorldData );
-		}*/
-
-		// WorldLoaded += ( World world ) => NodeManager.SettingsSaveData.ApplyWorldSettings();
-
-		/*WorldLoaded += ( world ) =>
-		{
-			SetupNewWorld();
-		};*/
+		Instance = this;
 	}
 
 	public bool HasWorld( string id )

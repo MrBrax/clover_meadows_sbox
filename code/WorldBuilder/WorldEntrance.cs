@@ -23,6 +23,7 @@ public class WorldEntrance : Component
 		Gizmo.Draw.Text( EntranceId, new Transform( Vector3.Up * 50 ) );
 	}
 	
+	[Authority]
 	public void OnTeleportTo( PlayerCharacter player )
 	{
 		if ( ExitDoor.IsValid() )

@@ -501,6 +501,8 @@ public sealed partial class World : Component
 
 		// UpdateTransform( nodeLink );
 
+		Log.Info( $"Added item {nodeLink.GetName()} at {position} with placement {placement} ({item.Id})" );
+
 		return nodeLink;
 	}
 

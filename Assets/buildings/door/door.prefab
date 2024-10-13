@@ -4,6 +4,7 @@
     "Flags": 0,
     "Name": "door",
     "Enabled": true,
+    "NetworkMode": 1,
     "Components": [
       {
         "__type": "Clover.WorldBuilder.Door",
@@ -34,6 +35,7 @@
         "Flags": 0,
         "Name": "Model",
         "Enabled": true,
+        "NetworkMode": 1,
         "Children": [
           {
             "__guid": "55f4ccfd-16a7-4a21-a789-feb8bc9f10b7",

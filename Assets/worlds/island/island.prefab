@@ -89,15 +89,14 @@
             "EntranceId": "player_house_exit",
             "ExitDoor": {
               "_type": "component",
-              "component_id": "4681be4d-644b-417f-ab74-3ca95e29b43a",
+              "component_id": "c8a3a278-6b4f-4fea-b29e-e33e0d612287",
               "go": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
               "component_type": "Door"
             }
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "23fc471c-773d-4337-93c4-9ba7772244ce",
-            "Layer": -1
+            "__guid": "23fc471c-773d-4337-93c4-9ba7772244ce"
           }
         ]
       },
@@ -116,8 +115,7 @@
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "5ed6164e-5224-4b45-8d42-a94183800a33",
-            "Layer": -1
+            "__guid": "5ed6164e-5224-4b45-8d42-a94183800a33"
           }
         ]
       },
@@ -148,8 +146,7 @@
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "28d46897-f5af-41b6-b28d-5e28368ff23d",
-            "Layer": -1
+            "__guid": "28d46897-f5af-41b6-b28d-5e28368ff23d"
           }
         ]
       },
@@ -657,6 +654,7 @@
         "Position": "1278,512,1.000275",
         "Rotation": "-0.00000000000003422443,-0.00000002980232,0.000000462459,-0.9999999",
         "Enabled": true,
+        "NetworkMode": 1,
         "__Prefab": "buildings/door/door.prefab",
         "__PrefabVariables": {}
       },

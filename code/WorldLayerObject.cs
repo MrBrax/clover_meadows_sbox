@@ -14,13 +14,14 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 	/// <summary>
 	///  The layer of the world this object is in. It's just the index of the world in the WorldManager.
 	/// </summary>
-	[Property, Sync]
+	[Property, Sync, JsonIgnore]
 	public int Layer
 	{
 		get => _layer;
 		set
 		{
 			_layer = value;
+			Log.Info( $"Setting layer property to {value} for {GameObject.Name}, rebuilding visibility." );
 			RebuildVisibility( value );
 		}
 	}
@@ -48,6 +49,7 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 
 	public void SetLayer( int layer, bool rebuildVisibility = false )
 	{
+		Log.Info( $"Setting layer {layer} for {GameObject.Name}" );
 		Layer = layer;
 		
 		if ( rebuildVisibility )
@@ -97,6 +99,7 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 
 	public void OnWorldChanged( World world )
 	{
+		Log.Info( $"World changed to {world.Layer}, rebuilding visibility for {GameObject.Name}" );
 		RebuildVisibility( Layer );
 	}
 }
