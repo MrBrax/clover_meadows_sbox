@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 using Clover.Data;
 using Clover.Items;
@@ -79,6 +80,8 @@ public sealed partial class World : Component
 	[Sync] private Dictionary<Vector2Int, float> TileHeights { get; set; } = new();
 
 	private readonly Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
+	
+	private readonly List<WorldNodeLink> _nodeLinks = new();
 
 	public record struct NodeLinkMapKey
 	{
@@ -178,10 +181,10 @@ public sealed partial class World : Component
 
 		HashSet<WorldNodeLink> foundItems = new();
 
-		Log.Info( $"Getting items at {gridPos}" );
+		// Log.Info( $"Getting items at {gridPos}" );
 
 		// get items at exact grid position
-		if ( Items.TryGetValue( gridPos, out var dict ) )
+		/*if ( Items.TryGetValue( gridPos, out var dict ) )
 		{
 			foreach ( var item in dict.Values )
 			{
@@ -189,7 +192,7 @@ public sealed partial class World : Component
 				foundItems.Add( item );
 				yield return item;
 			}
-		}
+		}*/
 
 		foreach ( var entry in _nodeLinkGridMap.Where( x => x.Key.Position == gridPos ) )
 		{
@@ -595,6 +598,7 @@ public sealed partial class World : Component
 		nodeLink.PrefabPath = nodeLink.GetPrefabPath();
 
 		_nodeLinkMap[item] = nodeLink;
+		_nodeLinks.Add( nodeLink );
 
 		item.SetParent( GameObject ); // TODO: should items be parented to the world?
 
@@ -709,6 +713,7 @@ public sealed partial class World : Component
 			{
 				var nodeLink = itemsDict[placement];
 				_nodeLinkMap.Remove( nodeLink.Node );
+				_nodeLinks.Remove( nodeLink );
 				nodeLink.DestroyNode();
 				itemsDict.Remove( placement );
 
@@ -910,4 +915,59 @@ public sealed partial class World : Component
 	{
 		return _nodeLinkMap.ContainsKey( node.Node );
 	}
+	
+	public void NodeLinkBenchmark()
+	{
+		var sw = new Stopwatch();
+		sw.Start();
+		
+		var pos = new Vector2Int( 47, 6 );
+		
+		for ( var i = 0; i < 10000; i++ )
+		{
+			var nodeLink = GetItems( pos ).FirstOrDefault();
+		}
+		
+		sw.Stop();
+		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in GetItems" );
+	
+		
+		sw.Restart();
+		
+		for ( var i = 0; i < 10000; i++ )
+		{
+			var nodeLink = _nodeLinkMap.FirstOrDefault( x => x.Value.GridPosition == pos );
+		}
+		
+		sw.Stop();
+		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinkMap" );
+		
+		sw.Restart();
+		
+		for ( var i = 0; i < 10000; i++ )
+		{
+			var nodeLink = _nodeLinks.FirstOrDefault( x => x.GridPosition == pos );
+		}
+		
+		sw.Stop();
+		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinks" );
+		
+		sw.Restart();
+		
+		for ( var i = 0; i < 10000; i++ )
+		{
+			var nodeLink = _nodeLinkGridMap.FirstOrDefault( x => x.Key.Position == pos );
+		}
+		
+		sw.Stop();
+		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinkGridMap" );
+		
+	}
+	
+	[ConCmd( "world_node_link_benchmark" )]
+	public static void CmdNodeLinkBenchmark()
+	{
+		WorldManager.Instance.ActiveWorld.NodeLinkBenchmark();
+	}
+	
 }
