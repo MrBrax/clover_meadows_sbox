@@ -428,7 +428,7 @@ public sealed partial class World : Component
 		UpdateTransform( nodeLink );
 
 		gameObject.Name = nodeLink.GetName();
-		
+
 		AddNodeLinkToGridMap( nodeLink );
 
 		// nodeLink.OnNodeAdded();
@@ -694,12 +694,15 @@ public sealed partial class World : Component
 			Gizmo.Draw.Text( item.GridPosition.ToString(), new Transform( ItemGridToWorld( item.GridPosition ) ) );
 		}*/
 
+		var i = 0;
 		foreach ( var item in _nodeLinkGridMap )
 		{
 			// var pos = item.Key.Split( ':' )[0].Split( ',' ).Select( int.Parse ).ToArray();
 			var offset = item.Key.Placement == ItemPlacement.OnTop ? Vector3.Up * 32f : Vector3.Zero;
 			Gizmo.Draw.Text( $"{item.Key.Position} {item.Key.Placement} | {item.Value.GetName()}",
 				new Transform( ItemGridToWorld( item.Key.Position ) + offset ) );
+
+			Gizmo.Draw.ScreenText( $"[{item.Key.Position}:{item.Key.Placement}] {item.Value.GetName()}", new Vector2( 20f, 20f + ( (i++) * 20f ) ) );
 		}
 	}
 
