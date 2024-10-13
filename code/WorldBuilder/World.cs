@@ -79,16 +79,16 @@ public sealed partial class World : Component
 
 	[Sync] private Dictionary<Vector2Int, float> TileHeights { get; set; } = new();
 
-	// private readonly Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
-
-	// private readonly List<WorldNodeLink> _nodeLinks = new();
-
 	public record struct NodeLinkMapKey( Vector2Int Position, ItemPlacement Placement )
 	{
 		public Vector2Int Position = Position;
 		public ItemPlacement Placement = Placement;
 	}
 
+	/// <summary>
+	///  This is now the main grid map for all items in the world. Node links appear multiple times in this map if they occupy multiple grid positions.
+	///  Somehow, the record struct works as a non-reference type, so it can be used like a search query. Anyone know why?
+	/// </summary>
 	private readonly Dictionary<NodeLinkMapKey, WorldNodeLink> _nodeLinkGridMap = new();
 
 	private void AddNodeLinkToGridMap( WorldNodeLink nodeLink )
@@ -702,7 +702,8 @@ public sealed partial class World : Component
 			Gizmo.Draw.Text( $"{item.Key.Position} {item.Key.Placement} | {item.Value.GetName()}",
 				new Transform( ItemGridToWorld( item.Key.Position ) + offset ) );
 
-			Gizmo.Draw.ScreenText( $"[{item.Key.Position}:{item.Key.Placement}] {item.Value.GetName()}", new Vector2( 20f, 20f + ( (i++) * 20f ) ) );
+			Gizmo.Draw.ScreenText( $"[{item.Key.Position}:{item.Key.Placement}] {item.Value.GetName()}",
+				new Vector2( 20f, 20f + ((i++) * 20f) ) );
 		}
 	}
 
