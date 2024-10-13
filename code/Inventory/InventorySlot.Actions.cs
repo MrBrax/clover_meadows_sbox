@@ -11,24 +11,23 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 {
 	public void Drop()
 	{
-		Log.Info( "Dropping item" );
+		Log.Info( $"Dropping item {PersistentItem.ItemData.ResourceName}" );
 		var position = InventoryContainer.Player.GetAimingGridPosition();
 		var playerRotation =
 			World.GetItemRotationFromDirection(
 				World.Get4Direction( InventoryContainer.Player.PlayerController.Yaw ) );
 
-		try
-		{
-			
+		/*try
+		{*/
 			InventoryContainer.Player.World.SpawnDroppedNode( PersistentItem, position, playerRotation,
 				World.ItemPlacement.Floor );
-		}
+		/*}
 		catch ( Exception e )
 		{
 			//x NodeManager.UserInterface.ShowWarning( e.Message );
 			Log.Error( e.Message );
 			return;
-		}
+		}*/
 		
 		Sound.Play( "sounds/interact/item_drop.sound", InventoryContainer.Owner.WorldPosition );
 

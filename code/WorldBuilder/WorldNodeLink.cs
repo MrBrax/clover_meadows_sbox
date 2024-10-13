@@ -27,18 +27,32 @@ public class WorldNodeLink : IValid
 	public string ItemId;
 	public string PrefabPath;
 
-	[Icon( "save" )]
-	private PersistentItem Persistence { get; set; }
+	[Icon( "save" )] private PersistentItem Persistence { get; set; }
 
 	public ItemData ItemData
 	{
-		get => ItemData.Get( ItemId );
+		get
+		{
+			ItemData itemData;
+			try
+			{
+				itemData = ItemData.Get( ItemId );
+			}
+			catch ( Exception e )
+			{
+				Log.Error( $"Item data not found for {ItemId} on {this}" );
+				// throw;
+				return null;
+			}
+
+			return itemData;
+		}
 	}
 
 	public bool IsBeingPickedUp { get; set; }
 
 	public bool IsDroppedItem => PrefabPath == "items/misc/dropped_item/dropped_item.prefab";
-	
+
 	public bool IsValid => World != null && World.HasNodeLink( this );
 
 	public WorldNodeLink( World world, GameObject item )
@@ -107,25 +121,25 @@ public class WorldNodeLink : IValid
 
 		return persistentItem;
 	}*/
-	
+
 	public void SetPersistence( PersistentItem persistentItem )
 	{
 		Persistence = persistentItem;
 	}
-	
+
 	[Pure, Icon( "save" )]
 	public PersistentItem GetPersistence()
 	{
 		return Persistence ??= new PersistentItem();
 	}
-	
+
 	public T GetPersistence<T>() where T : PersistentItem
 	{
 		if ( Persistence is T t )
 		{
 			return t;
 		}
-		
+
 		return null;
 	}
 
@@ -145,19 +159,19 @@ public class WorldNodeLink : IValid
 		{
 			Log.Warning( $"No WorldItem component found on {Node}" );
 		}
-		
+
 		Persistence.ItemId ??= ItemId;
-		
+
 		/*foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			saveable.OnSave( this );
 		}
-		
+
 		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			persistent.OnSave( Persistence );
 		}*/
-		
+
 		RefreshPersistence();
 
 		return new PersistentWorldItem
@@ -171,24 +185,23 @@ public class WorldNodeLink : IValid
 			Item = Persistence,
 		};
 	}
-	
+
 	public void RefreshPersistence()
 	{
 		foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			saveable.OnSave( this );
 		}
-		
+
 		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			persistent.OnSave( Persistence );
 		}
-		
+
 		if ( Node.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
 			worldItem.OnItemSave?.Invoke( this );
 		}
-		
 	}
 
 	public void OnNodeLoad( PersistentWorldItem persistentItem )
@@ -197,12 +210,12 @@ public class WorldNodeLink : IValid
 		ItemId = persistentItem.ItemId;
 
 		Persistence = persistentItem.Item;
-		
+
 		foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndAncestors ) )
 		{
 			saveable.OnLoad( this );
 		}
-		
+
 		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndAncestors ) )
 		{
 			persistent.OnLoad( Persistence );
@@ -218,7 +231,7 @@ public class WorldNodeLink : IValid
 		{
 			Log.Warning( $"No WorldItem component found on {Node}" );
 		}
-		
+
 		Node.Name = GetName();
 	}
 
@@ -262,11 +275,10 @@ public class WorldNodeLink : IValid
 		var minY = gridPositions.Min( p => p.y );
 		var maxX = gridPositions.Max( p => p.x );
 		var maxY = gridPositions.Max( p => p.y );
-		
+
 		Size = new Vector2Int( maxX - minX + 1, maxY - minY + 1 );
-		
+
 		// Log.Info( $"Calculated size for {this}: {Size}" );
-		
 	}
 
 	/// <summary>
@@ -276,5 +288,4 @@ public class WorldNodeLink : IValid
 	{
 		World.RemoveItem( this );
 	}
-	
 }

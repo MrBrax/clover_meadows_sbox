@@ -428,13 +428,8 @@ public sealed partial class World : Component
 		UpdateTransform( nodeLink );
 
 		gameObject.Name = nodeLink.GetName();
-
-		// add node link to grid map
-		foreach ( var pos in nodeLink.GetGridPositions( true ) )
-		{
-			// _nodeLinkGridMap[$"{pos.x},{pos.y}:{placement}"] = nodeLink;
-			_nodeLinkGridMap[new NodeLinkMapKey { Position = pos, Placement = placement }] = nodeLink;
-		}
+		
+		AddNodeLinkToGridMap( nodeLink );
 
 		// nodeLink.OnNodeAdded();
 
@@ -495,7 +490,8 @@ public sealed partial class World : Component
 		nodeLink.GridRotation = rotation;
 		nodeLink.PrefabPath = nodeLink.GetPrefabPath();
 
-		AddNodeLinkToGridMap( nodeLink );
+		// NODE LINK IS NOT ADDED TO WORLD YET, CAN'T DO IT HERE BECAUSE WE NEED TO CALCULATE SIZE FIRST
+		// AddNodeLinkToGridMap( nodeLink );
 
 		item.SetParent( GameObject ); // TODO: should items be parented to the world?
 
