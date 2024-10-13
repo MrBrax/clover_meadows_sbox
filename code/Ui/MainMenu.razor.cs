@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Text.Json;
+using Clover.Player;
 
 namespace Clover.Ui;
 
@@ -92,6 +93,7 @@ public partial class MainMenu
 
 	private void SelectRealm( RealmInfo realm )
 	{
+		PlayerCharacter.SpawnPlayerId = null;
 		GameManager.Realm = realm;
 		GameManager.LoadRealm();
 		
