@@ -32,6 +32,9 @@ public class Equips : Component
 	[Property] public Action<EquipSlot, GameObject> OnEquippedItemChanged { get; set; }
 
 	[Property] public Action<EquipSlot> OnEquippedItemRemoved { get; set; }
+	
+	[Sync] public NetDictionary<EquipSlot, bool> EquippedSlots { get; set; } = new();
+	[Sync] public NetDictionary<EquipSlot, bool> VisibleSlots { get; set; } = new();
 
 	public GameObject GetEquippedItem( EquipSlot slot )
 	{
@@ -86,10 +89,14 @@ public class Equips : Component
 		}
 
 		EquippedItems[slot] = item;
+		
+		EquippedSlots[slot] = true;
 
 		item.SetParent( attachPoint );
 		item.LocalPosition = Vector3.Zero;
 		item.LocalRotation = Rotation.Identity;
+
+		item.NetworkSpawn();
 
 		if ( item.Components.TryGet<BaseCarriable>( out var carriable ) )
 		{
@@ -108,6 +115,7 @@ public class Equips : Component
 		{
 			if ( destroy ) EquippedItems[slot].Destroy();
 			EquippedItems.Remove( slot );
+			EquippedSlots[slot] = false;
 			OnEquippedItemRemoved?.Invoke( slot );
 			Scene.RunEvent<IEquipChanged>( x => x.OnEquippedItemRemoved( GameObject, slot ) );
 		}
@@ -118,6 +126,7 @@ public class Equips : Component
 		if ( EquippedItems.ContainsKey( slot ) )
 		{
 			EquippedItems[slot].Enabled = visible;
+			VisibleSlots[slot] = visible;
 			return;
 		}
 

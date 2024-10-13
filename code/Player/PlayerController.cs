@@ -138,8 +138,10 @@ public class PlayerController : Component, IEquipChanged
 	protected override void OnFixedUpdate()
 	{
 		if ( IsProxy )
+		{
+			Model.Set( "holding", Player.Equips.EquippedSlots.TryGetValue( Equips.EquipSlot.Tool, out var state ) && state );
 			return;
-
+		}
 
 		if ( Player.InCutscene )
 		{
@@ -249,9 +251,8 @@ public class PlayerController : Component, IEquipChanged
 			WishVelocity = forward.Normal;*/
 
 			WishVelocity = (input * -1).Normal;
-			
-			Yaw = Yaw.LerpDegreesTo( MathF.Atan2( input.y * -1, input.x * -1).RadianToDegree(), Time.Delta * 7.0f );
 
+			Yaw = Yaw.LerpDegreesTo( MathF.Atan2( input.y * -1, input.x * -1 ).RadianToDegree(), Time.Delta * 7.0f );
 		}
 		else
 		{
