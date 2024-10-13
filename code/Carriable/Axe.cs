@@ -16,13 +16,12 @@ public class Axe : BaseCarriable
 		if ( !CanUse() ) return;
 
 		NextUse = 1f;
-
-		/*Log.Info( "Axe used down" );
-
-		if ( SwingSound.IsValid() )
+		
+		if ( !Networking.IsHost )
 		{
-			GameObject.PlaySound( SwingSound );
-		}*/
+			Log.Error( "Only the host can use world altering items for now." );
+			return;
+		}
 
 		var pos = Player.GetAimingGridPosition();
 

@@ -16,6 +16,12 @@ public class Shovel : BaseCarriable
 		if ( !CanUse() ) return;
 
 		NextUse = 1f;
+		
+		if ( !Networking.IsHost )
+		{
+			Log.Error( "Only the host can use world altering items for now." );
+			return;
+		}
 
 		var pos = Player.GetAimingGridPosition();
 

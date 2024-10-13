@@ -13,6 +13,11 @@ public sealed partial class World
 	/// <returns>An enumerable collection of WorldNodeLink items at the specified grid position.</returns>
 	public IEnumerable<WorldNodeLink> GetItems( Vector2Int gridPos )
 	{
+		if ( !Networking.IsHost )
+		{
+			throw new Exception( "Only the host can query the world" );
+		}
+		
 		if ( IsOutsideGrid( gridPos ) )
 		{
 			throw new Exception( $"Position {gridPos} is outside the grid" );

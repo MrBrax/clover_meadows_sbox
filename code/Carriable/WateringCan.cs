@@ -37,6 +37,12 @@ public sealed class WateringCan : BaseCarriable
 		base.OnUseDown();
 
 		NextUse = UseTime;
+		
+		if ( !Networking.IsHost )
+		{
+			Log.Error( "Only the host can use world altering items for now." );
+			return;
+		}
 
 		var pos = Player.GetAimingGridPosition();
 

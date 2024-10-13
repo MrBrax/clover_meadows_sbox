@@ -11,6 +11,13 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 {
 	public void Drop()
 	{
+
+		if ( !Networking.IsHost )
+		{
+			Log.Error( "Only the host can drop items for now." );
+			return;
+		}
+		
 		Log.Info( $"Dropping item {PersistentItem.ItemData.ResourceName}" );
 		var position = InventoryContainer.Player.GetAimingGridPosition();
 		var playerRotation =
@@ -36,7 +43,11 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Place()
 	{
-		Log.Trace( "Placing item" );
+		if ( !Networking.IsHost )
+		{
+			Log.Error( "Only the host can place items for now." );
+			return;
+		}
 
 		var aimingGridPosition = InventoryContainer.Player.GetAimingGridPosition();
 
@@ -405,6 +416,13 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void SpawnObject()
 	{
+		
+		if ( !Networking.IsHost )
+		{
+			Log.Error( "Only the host can spawn objects for now." );
+			return;
+		}
+		
 		var objectData = PersistentItem.ItemData.ObjectData;
 
 		if ( objectData == null )
@@ -428,6 +446,13 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Plant()
 	{
+		
+		if ( !Networking.IsHost )
+		{
+			Log.Error( "Only the host can plant objects for now." );
+			return;
+		}
+		
 		if ( PersistentItem.ItemData is not SeedData seedData )
 		{
 			Log.Error( "Item is not a seed" );

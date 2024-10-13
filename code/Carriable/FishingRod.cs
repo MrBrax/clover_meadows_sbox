@@ -85,6 +85,12 @@ public class FishingRod : BaseCarriable
 			Log.Warning( "Cannot use." );
 			return;
 		}
+		
+		if ( !Networking.IsHost )
+		{
+			Log.Error( "Only the host can use world altering items for now." );
+			return;
+		}
 
 		if ( _isCasting )
 		{

@@ -14,6 +14,12 @@ public class Gift : Component, IInteract, IPersistent
 	
 	public void StartInteract( PlayerCharacter player )
 	{
+		
+		if ( !Networking.IsHost )
+		{
+			Log.Error( "Only the host can use world altering items for now." );
+			return;
+		}
 
 		if ( Items.Count == 0 )
 		{
