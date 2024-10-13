@@ -1,4 +1,5 @@
 ﻿using System;
+using Clover.Items;
 
 namespace Clover;
 
@@ -112,4 +113,90 @@ public sealed partial class World
 
 		return neighbors;
 	}
+
+	public Vector3 ItemGridToWorld( Vector2Int gridPosition, bool noRecursion = false )
+	{
+		if ( GridSize == 0 ) throw new Exception( "Grid size is 0" );
+		if ( GridSizeCenter == 0 ) throw new Exception( "Grid size center is 0" );
+
+		var height = !noRecursion ? GetHeightAt( gridPosition ) : 0;
+
+		return new Vector3(
+			(gridPosition.x * GridSize) + GridSizeCenter + WorldPosition.x,
+			(gridPosition.y * GridSize) + GridSizeCenter + WorldPosition.y,
+			height != 0 ? WorldPosition.z + height : WorldPosition.z
+		);
+	}
+
+	public Vector2Int WorldToItemGrid( Vector3 worldPosition )
+	{
+		var x = (int)Math.Floor( (worldPosition.x - WorldPosition.x) / GridSize );
+		var y = (int)Math.Floor( (worldPosition.y - WorldPosition.y) / GridSize );
+
+		return new Vector2Int( x, y );
+	}
+
+	public void ValidateNodeLinks()
+	{
+		foreach ( var nodeLink in _nodeLinkGridMap.Values )
+		{
+			if ( !nodeLink.Node.IsValid() )
+			{
+				Log.Error( $"Node link {nodeLink} is invalid (node is null)" );
+			}
+		}
+
+		var uniqueNodeLinks = _nodeLinkGridMap.Values.Select( x => x ).Distinct().ToList();
+		foreach ( var nodeLink in uniqueNodeLinks )
+		{
+			var gridPositions = nodeLink.GetGridPositions( true );
+
+			foreach ( var gridPos in gridPositions )
+			{
+				if ( !_nodeLinkGridMap.ContainsKey(
+					    new NodeLinkMapKey( nodeLink.GridPosition, nodeLink.GridPlacement ) ) )
+				{
+					Log.Error( $"Node link {nodeLink} at {gridPos} is not in the grid map" );
+				}
+			}
+			
+		}
+		
+		foreach ( var gridMapEntry in _nodeLinkGridMap )
+		{
+			if ( gridMapEntry.Key.Position != gridMapEntry.Value.GridPosition )
+			{
+				Log.Error( $"Grid map entry {gridMapEntry.Value} at {gridMapEntry.Key.Position} has a different position than the node link" );
+			}
+			
+			if ( gridMapEntry.Key.Placement != gridMapEntry.Value.GridPlacement )
+			{
+				Log.Error( $"Grid map entry {gridMapEntry.Value} at {gridMapEntry.Key.Position} has a different placement than the node link" );
+			}
+			
+		}
+
+		var worldItems = Scene.GetAllComponents<WorldItem>().Where( x => x.WorldLayerObject.Layer == Layer ).ToList();
+		foreach ( var worldItem in worldItems )
+		{
+			if ( !worldItem.NodeLink.IsValid() )
+			{
+				Log.Error( $"World item {worldItem} has an invalid node link" );
+			}
+
+			// if ( worldItem.WorldLayerObject.World
+		}
+		
+		Log.Info( "If you didn't see any errors just now, you're good." );
+	}
+	
+	[ConCmd( "clover_world_validate_node_links")]
+	public static void ValidateNodeLinksCmd()
+	{
+		foreach ( var world in WorldManager.Instance.Worlds.Values )
+		{
+			world.ValidateNodeLinks();
+		}
+	}
+	
 }
