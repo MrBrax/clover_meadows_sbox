@@ -54,6 +54,8 @@ public partial class DebugWindow
 		worldObject.WorldLayerObject.SetLayer( PlayerCharacter.Local.WorldLayerObject.Layer, true );
 		
 		worldObject.WorldPosition = PlayerCharacter.Local.WorldPosition;
+
+		gameObject.NetworkSpawn();
 		
 		Sound.Play( "sounds/interact/item_pickup.sound", PlayerCharacter.Local.WorldPosition );
 

@@ -4,6 +4,9 @@
     "Flags": 0,
     "Name": "scooter",
     "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkOrphaned": 1,
+    "OwnerTransfer": 2,
     "Components": [
       {
         "__type": "Clover.Vehicles.BaseVehicle",
@@ -20,11 +23,18 @@
           "_type": "gameobject",
           "go": "843cf470-c5e3-4f93-91a4-d0cdae3d9bf6"
         },
+        "Occupants": {},
         "Seats": [
           {
             "_type": "component",
             "component_id": "62c7954a-aeaa-41b0-9904-b57117b6ca90",
             "go": "e4872e07-4521-40b1-941e-3b9feefd8d78",
+            "component_type": "SittableNode"
+          },
+          {
+            "_type": "component",
+            "component_id": "66d85648-8349-46f7-ab41-a740fc06fbdf",
+            "go": "901cc35c-8299-42d5-9bc8-453f216c00c3",
             "component_type": "SittableNode"
           }
         ],
@@ -50,6 +60,7 @@
         "Center": "0,0,25",
         "Height": 50,
         "IsTrigger": false,
+        "Points": [],
         "Radius": 25,
         "Radius2": 0,
         "Slices": 16,
@@ -74,17 +85,33 @@
         "Flags": 0,
         "Name": "Model",
         "Enabled": true,
+        "NetworkMode": 1,
         "Children": [
           {
             "__guid": "e4872e07-4521-40b1-941e-3b9feefd8d78",
             "Flags": 0,
-            "Name": "Seat",
+            "Name": "Seat1",
             "Position": "-5.712124,0.00001264484,26.15299",
             "Enabled": true,
+            "NetworkMode": 1,
             "Components": [
               {
                 "__type": "Clover.Components.SittableNode",
                 "__guid": "62c7954a-aeaa-41b0-9904-b57117b6ca90"
+              }
+            ]
+          },
+          {
+            "__guid": "901cc35c-8299-42d5-9bc8-453f216c00c3",
+            "Flags": 0,
+            "Name": "Seat2",
+            "Position": "-21.23021,0.00001171989,32.3091",
+            "Enabled": true,
+            "NetworkMode": 1,
+            "Components": [
+              {
+                "__type": "Clover.Components.SittableNode",
+                "__guid": "66d85648-8349-46f7-ab41-a740fc06fbdf"
               }
             ]
           },
@@ -280,6 +307,5 @@
   "__references": [
     "svin.scooter#19812"
   ],
-  "IsValid": true,
   "__version": 1
 }

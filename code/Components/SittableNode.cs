@@ -8,7 +8,7 @@ public class SittableNode : Component
 {
 	
 	public Sittable Sittable { get; set; }
-	public GameObject Occupant { get; set; }
+	[Sync, Property, ReadOnly] public GameObject Occupant { get; set; }
 	
 	public bool IsOccupied => Occupant.IsValid();
 	

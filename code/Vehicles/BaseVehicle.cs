@@ -23,12 +23,17 @@ public class BaseVehicle : Component, IInteract
 	[Property] public SoundEvent IdleSound { get; set; }
 	[Property] public SoundEvent EngineSound { get; set; }
 	[Property] public SoundEvent HornSound { get; set; }
-	
+
 	[Property] public GameObject ExhaustParticles { get; set; }
 
 	private bool IsOn;
 
-	public Dictionary<SittableNode, GameObject> Occupants { get; set; } = new();
+	public bool LocalPlayerInside => Occupants.Values.Contains( PlayerCharacter.Local?.GameObject );
+
+	public bool LocalPlayerIsDriver =>
+		Occupants.Keys.Contains( Seats[0] ) && Occupants[Seats[0]] == PlayerCharacter.Local?.GameObject;
+
+	[Property, Sync] public NetDictionary<SittableNode, GameObject> Occupants { get; set; } = new();
 
 	public bool HasDriver => Occupants.Keys.Contains( Seats[0] );
 
@@ -44,16 +49,21 @@ public class BaseVehicle : Component, IInteract
 		{
 			light.Enabled = false;
 		}
-		
+
 		ExhaustParticles.Enabled = false;
 	}
 
 	public void StartInteract( PlayerCharacter player )
 	{
-		if ( !HasDriver )
+		/*if ( !HasDriver )
 		{
 			AddOccupant( 0, player.GameObject );
 		}
+		else
+		{
+			AddOccupant( player.GameObject );
+		}*/
+		EnterVehicle();
 	}
 
 	public void FinishInteract( PlayerCharacter player )
@@ -105,6 +115,107 @@ public class BaseVehicle : Component, IInteract
 		}
 	}
 
+
+	[Authority]
+	private void EnterVehicle()
+	{
+		var caller = Rpc.Caller;
+		var player = PlayerCharacter.Get( caller );
+		
+		if ( !player.IsValid() )
+		{
+			Log.Error( "Player not found" );
+			return;
+		}
+		
+		// check if player is already inside
+		if ( Occupants.Values.Contains( player.GameObject ) )
+		{
+			Log.Error( "Player is already inside" );
+			return;
+		}
+		
+		if ( !HasDriver )
+		{
+
+			var seat = Seats[0];
+			
+			Log.Info( "Player is entering as driver" );
+			
+			Occupants[seat] = player.GameObject;
+			
+			seat.Occupant = player.GameObject;
+
+			using ( Rpc.FilterInclude( caller ) )
+			{
+				SitDown( seat );
+			}
+			
+			// player.VehicleRider.OnEnterVehicle( this, Seats[0], 0 );
+			
+			StartEngine();
+
+		}
+		else
+		{
+			
+			Log.Info( "Player is entering as passenger" );
+			
+			var seat = Seats.FirstOrDefault( x => !Occupants.ContainsKey( x ) );
+
+			if ( seat == null )
+			{
+				Log.Error( "No available seats" );
+				return;
+			}
+
+			Occupants[seat] = player.GameObject;
+			
+			seat.Occupant = player.GameObject;
+
+			using ( Rpc.FilterInclude( caller ) )
+			{
+				SitDown( seat );
+			}
+			
+			// player.VehicleRider.OnEnterVehicle( this, seat, Seats.IndexOf( seat ) );
+			
+		}
+		
+		
+	}
+
+	[Broadcast]
+	private void SitDown( SittableNode seat )
+	{
+		var player = PlayerCharacter.Local;
+		
+		if ( player.IsValid() )
+		{
+			player.GameObject.SetParent( GameObject );
+			// player.Seat = seat;
+			player.TeleportTo( seat.WorldPosition, seat.WorldRotation );
+			player.PlayerController.Yaw = Model.WorldRotation.Yaw();
+			player.SetCollisionEnabled( false );
+			player.SetCarriableVisibility( false );
+			
+			if ( player.Components.TryGet<VehicleRider>( out var rider ) )
+			{
+				rider.OnEnterVehicle( this, seat, Seats.IndexOf( seat ) );
+			}
+		}
+
+	}
+	
+	/*public void AddOccupant( GameObject occupant )
+	{
+		var seat = Seats.FirstOrDefault( x => !Occupants.ContainsKey( x ) );
+
+		if ( seat == null ) throw new InvalidOperationException( "No available seats" );
+
+		AddOccupant( Seats.IndexOf( seat ), occupant );
+	}
+	
 	public void AddOccupant( int seatIndex, GameObject occupant )
 	{
 		var seat = Seats[seatIndex];
@@ -164,7 +275,7 @@ public class BaseVehicle : Component, IInteract
 		{
 			StopEngine();
 		}
-	}
+	}*/
 
 	protected override void OnDestroy()
 	{
@@ -196,7 +307,10 @@ public class BaseVehicle : Component, IInteract
 
 		var exitPosition = FindExitPosition( occupant );
 
-		RemoveOccupant( occupant );
+		// RemoveOccupant( occupant );
+		
+		Occupants.Remove( seat );
+		seat.Occupant = null;
 
 		if ( occupant.Components.TryGet<PlayerCharacter>( out var player ) )
 		{
@@ -206,6 +320,8 @@ public class BaseVehicle : Component, IInteract
 		{
 			occupant.WorldPosition = exitPosition;
 		}
+		
+		occupant.SetParent( null );
 	}
 
 	private Vector3 FindExitPosition( GameObject occupant )
@@ -221,10 +337,73 @@ public class BaseVehicle : Component, IInteract
 		HandleSounds();
 		Handling();
 
-		if ( HasDriver && Input.Pressed( "Use" ) )
+		if ( LocalPlayerInside && Input.Pressed( "Use" ) )
 		{
-			TryToEjectOccupant( Occupants[Seats[0]] );
+			// TryToEjectOccupant( Occupants[Seats[0]] );
+			ExitVehicle();
 			Input.Clear( "Use" );
+		}
+	}
+	
+	[Authority]
+	private void ExitVehicle()
+	{
+		var caller = Rpc.Caller;
+		var player = PlayerCharacter.Get( caller );
+		
+		if ( !player.IsValid() )
+		{
+			Log.Error( "Player not found" );
+			return;
+		}
+		
+		if ( !Occupants.Values.Contains( player.GameObject ) )
+		{
+			Log.Error( "Player is not inside" );
+			return;
+		}
+		
+		var seat = Occupants.FirstOrDefault( x => x.Value == player.GameObject ).Key;
+		
+		if ( seat == null )
+		{
+			Log.Error( "Seat not found" );
+			return;
+		}
+		
+		Occupants.Remove( seat );
+		seat.Occupant = null;
+		
+		using ( Rpc.FilterInclude( caller ) )
+		{
+			ExitVehicleRpc();
+		}
+		
+		// player.VehicleRider.OnExitVehicle();
+		
+		if ( seat == Seats[0] )
+		{
+			StopEngine();
+		}
+	}
+	
+	[Broadcast]
+	private void ExitVehicleRpc()
+	{
+		var player = PlayerCharacter.Local;
+		
+		if ( player.IsValid() )
+		{
+			player.GameObject.SetParent( null );
+			player.TeleportTo( FindExitPosition( player.GameObject ), Model.WorldRotation );
+			// player.PlayerController.Yaw = Model.WorldRotation.Yaw();
+			player.SetCollisionEnabled( true );
+			player.SetCarriableVisibility( true );
+			
+			if ( player.Components.TryGet<VehicleRider>( out var rider ) )
+			{
+				rider.OnExitVehicle();
+			}
 		}
 	}
 
@@ -257,6 +436,8 @@ public class BaseVehicle : Component, IInteract
 
 	private void Handling()
 	{
+		BuildInput();
+
 		if ( IsProxy )
 			return;
 
@@ -287,11 +468,33 @@ public class BaseVehicle : Component, IInteract
 		}
 	}
 
+	public Vector3 ProxyInput;
+
+	private void BuildInput()
+	{
+		if ( !LocalPlayerIsDriver ) return;
+
+		if ( !IsProxy )
+		{
+			ProxyInput = Input.AnalogMove;
+		}
+		else
+		{
+			InputRpc( Input.AnalogMove );
+		}
+	}
+
+	[Authority]
+	private void InputRpc( Vector3 input )
+	{
+		ProxyInput = input;
+	}
+
 	public void BuildWishVelocity()
 	{
 		if ( !HasDriver ) return;
 
-		var input = Input.AnalogMove;
+		var input = ProxyInput;
 
 		if ( input.Length > 0 /*&& !Player.ShouldDisableMovement()*/ )
 		{
@@ -313,11 +516,10 @@ public class BaseVehicle : Component, IInteract
 			// Model.WorldRotation = Rotation.Lerp( Model.WorldRotation, Model.WorldRotation * Rotation.From( 0, Steering * input.y, 0 ), Time.Delta * 10.0f );
 
 			var forward = Model.WorldRotation.Forward;
-			WishVelocity = forward * ( input.x * 300f );
+			WishVelocity = forward * (input.x * 300f);
 			WishVelocity = WishVelocity.ClampLength( 200f );
 
 			Gizmo.Draw.ScreenText( WishVelocity.Length.ToString(), new Vector2( 20, 20 ) );
-
 		}
 		else
 		{

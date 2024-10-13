@@ -26,6 +26,7 @@ public sealed partial class PlayerCharacter : Component
 	[RequireComponent] public Equips Equips { get; set; }
 	[RequireComponent] public CameraController CameraController { get; set; }
 	[RequireComponent] public CloverBalanceController CloverBalanceController { get; set; }
+	[RequireComponent] public VehicleRider VehicleRider { get; set; }
 
 	[Property] public GameObject Model { get; set; }
 
@@ -227,6 +228,11 @@ public sealed partial class PlayerCharacter : Component
 		Log.Info( "Ending cutscene" );
 		CutsceneTarget = null;
 		InCutscene = false;
+	}
+
+	public static PlayerCharacter Get( Connection channel )
+	{
+		return Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => x.Network.Owner == channel );
 	}
 }
 
