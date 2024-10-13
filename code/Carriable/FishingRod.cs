@@ -269,6 +269,8 @@ public class FishingRod : BaseCarriable
 
 			CameraMan.Instance.Targets.Add( Bobber.GameObject );
 
+			Bobber.GameObject.NetworkSpawn();
+
 			// place slack dummy between the line start and the bobber
 			_lineSlackDummy = Scene.CreateObject();
 			_lineSlackDummy.WorldPosition = LineStartPoint.WorldPosition.LerpTo( Bobber.WorldPosition, 0.5f ) +
