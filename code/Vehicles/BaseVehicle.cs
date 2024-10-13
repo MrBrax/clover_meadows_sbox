@@ -26,7 +26,7 @@ public class BaseVehicle : Component, IInteract
 
 	[Property] public GameObject ExhaustParticles { get; set; }
 
-	private bool IsOn;
+	[Sync] private bool IsOn { get; set; }
 
 	public bool LocalPlayerInside => Occupants.Values.Contains( PlayerCharacter.Local?.GameObject );
 
@@ -39,7 +39,7 @@ public class BaseVehicle : Component, IInteract
 
 	private SoundHandle _idleSoundHandle;
 	private SoundHandle _engineSoundHandle;
-	private TimeSince _startEngineTime;
+	[Sync] private TimeSince _startEngineTime { get; set; }
 
 	protected override void OnStart()
 	{
@@ -47,10 +47,19 @@ public class BaseVehicle : Component, IInteract
 
 		foreach ( var light in Headlights )
 		{
-			light.Enabled = false;
+			light.Enabled = IsOn;
 		}
 
-		ExhaustParticles.Enabled = false;
+		ExhaustParticles.Enabled = IsOn;
+
+		if ( IsOn )
+		{
+			_idleSoundHandle = GameObject.PlaySound( IdleSound );
+			_idleSoundHandle.Volume = 0;
+			
+			_engineSoundHandle = GameObject.PlaySound( EngineSound );
+			_engineSoundHandle.Volume = 0;
+		}
 	}
 
 	public void StartInteract( PlayerCharacter player )
@@ -70,6 +79,7 @@ public class BaseVehicle : Component, IInteract
 	{
 	}
 
+	[Broadcast]
 	private void StartEngine()
 	{
 		IsOn = true;
@@ -95,6 +105,7 @@ public class BaseVehicle : Component, IInteract
 		}
 	}
 
+	[Broadcast]
 	private void StopEngine()
 	{
 		IsOn = false;
