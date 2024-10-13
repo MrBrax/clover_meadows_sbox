@@ -28,7 +28,7 @@ public sealed partial class World
 
 		var savedItems = new List<PersistentWorldItem>();
 
-		foreach ( var item in Items )
+		/*foreach ( var item in Items )
 		{
 			var position = item.Key;
 			foreach ( var itemEntry in item.Value )
@@ -49,7 +49,26 @@ public sealed partial class World
 
 				savedItems.Add( persistentItem );
 			}
+		}*/
+		
+		var items = _nodeLinkGridMap.Values.Select( x => x ).Distinct().ToList();
+		
+		foreach ( var nodeLink in items )
+		{
+			if ( !nodeLink.ShouldBeSaved() )
+			{
+				Log.Info( $"Skipping {nodeLink}" );
+				continue;
+			}
+
+			var prefabPath = nodeLink.GetPrefabPath();
+			nodeLink.PrefabPath = prefabPath;
+
+			var persistentItem = nodeLink.OnNodeSave();
+
+			savedItems.Add( persistentItem );
 		}
+		
 		
 		var savedObjects = new List<PersistentWorldObject>();
 
@@ -126,14 +145,16 @@ public sealed partial class World
 			nodeLink.ItemId = item.ItemId;
 			nodeLink.PlacementType = item.PlacementType;
 
-			if ( !Items.ContainsKey( position ) )
+			/*if ( !Items.ContainsKey( position ) )
 			{
 				Items[position] = new Dictionary<ItemPlacement, WorldNodeLink>();
-			}
+			}*/
 
-			Items[position][placement] = nodeLink;
+			/*Items[position][placement] = nodeLink;
 
-			_nodeLinkMap[nodeLink.Node] = nodeLink;
+			_nodeLinkMap[nodeLink.Node] = nodeLink;*/
+			
+			AddNodeLinkToGridMap( nodeLink );
 
 			nodeLink.OnNodeLoad( item );
 

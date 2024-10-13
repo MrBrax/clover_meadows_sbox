@@ -72,45 +72,67 @@ public sealed partial class World : Component
 
 	public event OnItemRemovedEvent OnItemRemoved;
 
-	public Dictionary<Vector2Int, Dictionary<ItemPlacement, WorldNodeLink>> Items { get; set; } = new();
+	// public Dictionary<Vector2Int, Dictionary<ItemPlacement, WorldNodeLink>> Items { get; set; } = new();
 
 	// TODO: should this be synced?
 	private HashSet<Vector2Int> BlockedTiles { get; set; } = new();
 
 	[Sync] private Dictionary<Vector2Int, float> TileHeights { get; set; } = new();
 
-	private readonly Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
-	
-	private readonly List<WorldNodeLink> _nodeLinks = new();
+	// private readonly Dictionary<GameObject, WorldNodeLink> _nodeLinkMap = new();
 
-	public record struct NodeLinkMapKey
+	// private readonly List<WorldNodeLink> _nodeLinks = new();
+
+	public record struct NodeLinkMapKey( Vector2Int Position, ItemPlacement Placement )
 	{
-		public Vector2Int Position;
-		public ItemPlacement Placement;
+		public Vector2Int Position = Position;
+		public ItemPlacement Placement = Placement;
 	}
 
 	private readonly Dictionary<NodeLinkMapKey, WorldNodeLink> _nodeLinkGridMap = new();
 
+	private void AddNodeLinkToGridMap( WorldNodeLink nodeLink )
+	{
+		foreach ( var pos in nodeLink.GetGridPositions( true ) )
+		{
+			if ( _nodeLinkGridMap.ContainsKey(
+				    new NodeLinkMapKey { Position = pos, Placement = nodeLink.GridPlacement } ) )
+			{
+				throw new Exception( $"Node link already exists at {pos} with placement {nodeLink.GridPlacement}" );
+			}
+
+			_nodeLinkGridMap[new NodeLinkMapKey { Position = pos, Placement = nodeLink.GridPlacement }] = nodeLink;
+		}
+	}
+
+	private void RemoveNodeLinkFromGridMap( WorldNodeLink nodeLink )
+	{
+		foreach ( var entry in _nodeLinkGridMap.Where( x => x.Value == nodeLink ).ToList() )
+		{
+			_nodeLinkGridMap.Remove( entry.Key );
+		}
+	}
+
+	private void AddNodeLinkGridMapEntry( Vector2Int position, ItemPlacement placement, WorldNodeLink nodeLink )
+	{
+		/*if ( _nodeLinkGridMap.ContainsKey( new NodeLinkMapKey { Position = position, Placement = placement } ) )
+		{
+			throw new Exception( $"Node link already exists at {position} with placement {placement}" );
+		}*/
+		_nodeLinkGridMap[new NodeLinkMapKey { Position = position, Placement = placement }] = nodeLink;
+	}
+
 	[Sync] public int Layer { get; set; }
 
 	public string WorldId => Data.ResourceName;
-	
-	[JsonIgnore] public IEnumerable<PlayerCharacter> PlayersInWorld => Scene.GetAllComponents<PlayerCharacter>().Where( p => p.WorldLayerObject.Layer == Layer );
+
+	[JsonIgnore]
+	public IEnumerable<PlayerCharacter> PlayersInWorld =>
+		Scene.GetAllComponents<PlayerCharacter>().Where( p => p.WorldLayerObject.Layer == Layer );
 
 	public bool ShouldUnloadOnExit
 	{
 		get => !PlayersInWorld.Any();
-	}
-
-	protected override void OnAwake()
-	{
-		base.OnAwake();
-
-		Log.Info( $"World {WorldId} awake" );
-		foreach ( var item in Items )
-		{
-			Log.Info( $"Item at {item.Key}: {item.Value}" );
-		}
 	}
 
 	public bool IsBlockedGridPosition( Vector2Int position )
@@ -152,7 +174,6 @@ public sealed partial class World : Component
 		{
 			BlockedTiles.Add( position );
 		}
-		
 	}
 
 	public bool IsOutsideGrid( Vector2Int position )
@@ -174,12 +195,12 @@ public sealed partial class World : Component
 			throw new Exception( $"Position {gridPos} is outside the grid" );
 		}
 
-		if ( Items == null )
+		/*if ( Items == null )
 		{
 			throw new Exception( "Items is null" );
-		}
+		}*/
 
-		HashSet<WorldNodeLink> foundItems = new();
+		// HashSet<WorldNodeLink> foundItems = new();
 
 		// Log.Info( $"Getting items at {gridPos}" );
 
@@ -197,7 +218,7 @@ public sealed partial class World : Component
 		foreach ( var entry in _nodeLinkGridMap.Where( x => x.Key.Position == gridPos ) )
 		{
 			// Log.Info( $"Found item {entry.Value.GetName()} at {gridPos} in grid map" );
-			foundItems.Add( entry.Value );
+			// foundItems.Add( entry.Value );
 			yield return entry.Value;
 		}
 
@@ -265,7 +286,7 @@ public sealed partial class World : Component
 
 	public WorldNodeLink GetItem( GameObject node )
 	{
-		return CollectionExtensions.GetValueOrDefault( _nodeLinkMap, node );
+		return _nodeLinkGridMap.Values.FirstOrDefault( x => x.Node == node );
 	}
 
 	/// <summary>
@@ -300,21 +321,6 @@ public sealed partial class World : Component
 				return false;
 			}*/
 
-			if ( Items.TryGetValue( pos, out var dict ) )
-			{
-				if ( dict.ContainsKey( placement ) )
-				{
-					Log.Warning( $"Found item at {pos} with placement {placement}" );
-					return false;
-				}
-			}
-
-			/*if ( _nodeLinkGridMap.TryGetValue( $"{pos.x},{pos.y}:{placement}", out var nodeLink ) )
-			{
-				Log.Warning( $"Found item at {pos} with placement {placement} in grid map, but not in items" );
-				return false;
-			}*/
-
 			if ( _nodeLinkGridMap.TryGetValue( new NodeLinkMapKey { Position = pos, Placement = placement },
 				    out var nodeLink ) )
 			{
@@ -322,7 +328,7 @@ public sealed partial class World : Component
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -339,7 +345,7 @@ public sealed partial class World : Component
 			worldPosition = Vector3.Zero;
 			return false;
 		}
-		
+
 		// trace a ray from the sky straight down in each corner, if height is the same on all corners then it's a valid position
 
 		var basePosition = ItemGridToWorld( position, true );
@@ -583,22 +589,21 @@ public sealed partial class World : Component
 
 		var nodeLink = new WorldNodeLink( this, item );
 
-		if ( Items.TryGetValue( position, out var dict ) )
+		/*if ( Items.TryGetValue( position, out var dict ) )
 		{
 			dict[placement] = nodeLink;
 		}
 		else
 		{
 			Items[position] = new Dictionary<ItemPlacement, WorldNodeLink>() { { placement, nodeLink } };
-		}
+		}*/
 
 		nodeLink.GridPosition = position;
 		nodeLink.GridPlacement = placement;
 		nodeLink.GridRotation = rotation;
 		nodeLink.PrefabPath = nodeLink.GetPrefabPath();
 
-		_nodeLinkMap[item] = nodeLink;
-		_nodeLinks.Add( nodeLink );
+		AddNodeLinkToGridMap( nodeLink );
 
 		item.SetParent( GameObject ); // TODO: should items be parented to the world?
 
@@ -707,49 +712,26 @@ public sealed partial class World : Component
 	/// </remarks>
 	public void RemoveItem( Vector2Int position, ItemPlacement placement )
 	{
-		if ( Items.TryGetValue( position, out var itemsDict ) )
+		var nodeLink = GetItem( position, placement );
+
+		if ( nodeLink == null )
 		{
-			if ( itemsDict.ContainsKey( placement ) )
-			{
-				var nodeLink = itemsDict[placement];
-				_nodeLinkMap.Remove( nodeLink.Node );
-				_nodeLinks.Remove( nodeLink );
-				nodeLink.DestroyNode();
-				itemsDict.Remove( placement );
-
-				// remove all entries in grid map containing this node
-				foreach ( var entry in _nodeLinkGridMap.Where( x => x.Value == nodeLink ).ToList() )
-				{
-					_nodeLinkGridMap.Remove( entry.Key );
-				}
-
-				if ( itemsDict.Count == 0 )
-				{
-					Log.Info( $"Removed last item at {position}" );
-					Items.Remove( position );
-					// EmitSignal( SignalName.OnItemRemoved, nodeLink );
-					OnItemRemoved?.Invoke( nodeLink );
-				}
-
-				Log.Info( $"Removed item {nodeLink} at {position} with placement {placement}" );
-				// DebugPrint();
-			}
-			else
-			{
-				Log.Warning( $"No item at {position} with placement {placement}" );
-			}
+			Log.Warning( $"No item at {position} with placement {placement}" );
+			return;
 		}
-		else
-		{
-			Log.Warning( $"No items at {position}" );
-		}
+
+		nodeLink.DestroyNode();
+
+		RemoveNodeLinkFromGridMap( nodeLink );
+
+		OnItemRemoved?.Invoke( nodeLink );
 	}
 
 	/// <inheritdoc cref="RemoveItem(Vector2Int,ItemPlacement)"/>
 	public void RemoveItem( GameObject node )
 	{
 		// RemoveItem( item.GridPosition, item.Placement );
-		var nodeLink = Items.Values.SelectMany( x => x.Values ).FirstOrDefault( x => x.Node == node );
+		var nodeLink = GetItem( node );
 		if ( nodeLink == null )
 		{
 			throw new Exception( $"Failed to find node link for {node}" );
@@ -793,27 +775,6 @@ public sealed partial class World : Component
 		{
 			layerObject.SetLayer( Layer );
 		}
-
-		/*var modelPhysics = GetComponentsInChildren<ModelPhysics>( true );
-		foreach ( var model in modelPhysics )
-		{
-			model.Enabled = false;
-			Invoke( 0.01f, () => model.Enabled = true );
-		}*/
-
-		/*var modelPhysics = GetComponentsInChildren<ModelPhysics>( true ).ToList();
-
-		foreach ( var model in modelPhysics )
-		{
-			model.Enabled = false;
-		}
-
-		await Task.Frame();
-
-		foreach ( var model in modelPhysics )
-		{
-			model.Enabled = true;
-		}*/
 	}
 
 	public WorldEntrance GetEntrance( string entranceId )
@@ -882,20 +843,11 @@ public sealed partial class World : Component
 			Gizmo.Draw.Text( $"{item.Key.Position} {item.Key.Placement} | {item.Value.GetName()}",
 				new Transform( ItemGridToWorld( item.Key.Position ) + offset ) );
 		}
-
-		foreach ( var entry in Items )
-		{
-			foreach ( var item in entry.Value.Values )
-			{
-				Gizmo.Draw.Text( item.GridPlacement + "\n" + item.GetName(),
-					new Transform( ItemGridToWorld( item.GridPosition ) ) );
-			}
-		}
 	}
 
 	[ConVar( "clover_show_grid_info" )] public static bool ShowGridInfo { get; set; }
 
-	[ConCmd( "clover_dump_items" )]
+	/*[ConCmd( "clover_dump_items" )]
 	public static void CmdDumpItems()
 	{
 		var world = WorldManager.Instance.ActiveWorld;
@@ -909,65 +861,63 @@ public sealed partial class World : Component
 				Log.Info( $" - {item.Key}: {item.Value.GetName()}" );
 			}
 		}
-	}
+	}*/
 
 	public bool HasNodeLink( WorldNodeLink node )
 	{
-		return _nodeLinkMap.ContainsKey( node.Node );
+		return _nodeLinkGridMap.ContainsValue( node );
 	}
-	
+
 	public void NodeLinkBenchmark()
 	{
 		var sw = new Stopwatch();
 		sw.Start();
-		
+
 		var pos = new Vector2Int( 47, 6 );
-		
+
 		for ( var i = 0; i < 10000; i++ )
 		{
 			var nodeLink = GetItems( pos ).FirstOrDefault();
 		}
-		
+
 		sw.Stop();
 		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in GetItems" );
-	
-		
-		sw.Restart();
-		
+
+
+		/*sw.Restart();
+
 		for ( var i = 0; i < 10000; i++ )
 		{
 			var nodeLink = _nodeLinkMap.FirstOrDefault( x => x.Value.GridPosition == pos );
 		}
-		
+
 		sw.Stop();
 		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinkMap" );
-		
+
 		sw.Restart();
-		
+
 		for ( var i = 0; i < 10000; i++ )
 		{
 			var nodeLink = _nodeLinks.FirstOrDefault( x => x.GridPosition == pos );
 		}
-		
+
 		sw.Stop();
-		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinks" );
-		
+		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinks" );*/
+
 		sw.Restart();
-		
+
 		for ( var i = 0; i < 10000; i++ )
 		{
 			var nodeLink = _nodeLinkGridMap.FirstOrDefault( x => x.Key.Position == pos );
 		}
-		
+
 		sw.Stop();
 		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinkGridMap" );
-		
 	}
-	
+
 	[ConCmd( "world_node_link_benchmark" )]
 	public static void CmdNodeLinkBenchmark()
 	{
 		WorldManager.Instance.ActiveWorld.NodeLinkBenchmark();
 	}
-	
 }
