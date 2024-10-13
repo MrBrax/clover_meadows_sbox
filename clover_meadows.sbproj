@@ -5,7 +5,7 @@
   "Ident": "clovermeadows",
   "Schema": 1,
   "IncludeSourceFiles": false,
-  "Resources": "/ui/*png",
+  "Resources": "/ui/*png\n/items/*.png",
   "PackageReferences": [],
   "EditorReferences": null,
   "IsWhitelistDisabled": false,
