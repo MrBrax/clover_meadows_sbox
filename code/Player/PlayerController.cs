@@ -250,7 +250,7 @@ public class PlayerController : Component, IEquipChanged
 			var forward = Player.Model.WorldRotation.Forward;
 			WishVelocity = forward.Normal;*/
 
-			WishVelocity = (input * -1).Normal;
+			WishVelocity = (input * -1).ClampLength( 1f );
 
 			Yaw = Yaw.LerpDegreesTo( MathF.Atan2( input.y * -1, input.x * -1 ).RadianToDegree(), Time.Delta * 7.0f );
 		}
