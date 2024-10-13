@@ -147,6 +147,12 @@ public class Equips : Component
 					// tool.OnUse( GetComponent<PlayerCharacter>() );
 					tool.OnUseDown();
 					tool.OnUseDownAction?.Invoke();
+					
+					using ( Rpc.FilterInclude( Connection.Host ) )
+					{
+						tool.OnUseDownHost();
+					}
+					
 				}
 				else
 				{

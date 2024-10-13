@@ -22,6 +22,7 @@ public sealed partial class PlayerCharacter : Component
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	[RequireComponent] public CharacterController CharacterController { get; set; }
 	[RequireComponent] public PlayerController PlayerController { get; set; }
+	[RequireComponent] public PlayerInteract PlayerInteract { get; set; }
 	[RequireComponent] public Inventory.Inventory Inventory { get; set; }
 	[RequireComponent] public Equips Equips { get; set; }
 	[RequireComponent] public CameraController CameraController { get; set; }

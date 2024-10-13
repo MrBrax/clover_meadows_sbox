@@ -16,12 +16,18 @@ public class Shovel : BaseCarriable
 		if ( !CanUse() ) return;
 
 		NextUse = 1f;
-		
-		if ( !Networking.IsHost )
+
+		/*if ( !Networking.IsHost )
 		{
 			Log.Error( "Only the host can use world altering items for now." );
 			return;
-		}
+		}*/
+
+	}
+	
+	[Broadcast]
+	public override void OnUseDownHost()
+	{
 
 		var pos = Player.GetAimingGridPosition();
 
@@ -81,34 +87,14 @@ public class Shovel : BaseCarriable
 
 	private bool CanDigAt( Vector3 worldPos )
 	{
-		/*var state = GetWorld3D().DirectSpaceState;
-		var query = new Trace( state ).CastRay( PhysicsRayQueryParameters3D.Create( worldPos + Vector3.Up, worldPos + Vector3.Down, World.TerrainLayer ) );
 
-		if ( query == null )
+		var hitbox = Player.PlayerInteract.InteractCollider;
+
+		if ( hitbox.Touching.FirstOrDefault( x => x.GameObject != Holder && x.GameObject.Tags.Has("player" ) ) != null )
 		{
-			Log.Warning( $"No query found for {worldPos}" );
+			Log.Warning( "Can't dig while touching player." );
 			return false;
 		}
-
-		var worldMesh = query.Collider.GetAncestorOfType<WorldMesh>();
-
-		if ( worldMesh != null )
-		{
-			var surface = worldMesh.Surface;
-			if ( surface == null )
-			{
-				Log.Warning( $"No SurfaceData found for {worldMesh}" );
-				return false;
-			}
-
-			return surface.IsDiggable;
-		}
-
-		Log.Warning( $"No WorldMesh found for {query.Collider}" );
-
-		return false;*/
-
-		// return true;
 		
 		var trace = Scene.Trace.Ray( worldPos + Vector3.Up * 16f, worldPos + Vector3.Down * 32f )
 			.WithTag( "terrain" ) 
@@ -127,12 +113,10 @@ public class Shovel : BaseCarriable
 		if ( floorItem.ItemData.Name == "Tree stump" )
 		{
 			floorItem.Remove();
-			// GetNode<AudioStreamPlayer3D>( "HitSound" ).Play();
 			return;
 		}
 
 		Log.Info( $"Hit {floorItem.ItemData.Name} at {pos}" );
-		// GetNode<AudioStreamPlayer3D>( "HitSound" ).Play();
 	}
 
 	private void DigHole( Vector2Int pos )
@@ -142,23 +126,13 @@ public class Shovel : BaseCarriable
 		Player.SnapToGrid();
 		Player.ModelLookAt( Player.World.ItemGridToWorld( pos ) );
 
-		/*var holeData = Loader.LoadResource<ItemData>( "res://items/misc/hole/hole.tres" );
-		/*var hole = Inventory.World.SpawnPlacedItem<Hole>( holeData, pos, World.ItemPlacement.Floor,
-			World.RandomItemRotation() );#1#
-		var hole = World.SpawnNode( holeData, pos, World.RandomItemRotation(), World.ItemPlacement.Floor,
-			false );*/
-
 		var holeData = Data.ItemData.Get( "hole" );
 		var hole = Player.World.SpawnPlacedNode( holeData, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
-
-
-		// GetNode<AudioStreamPlayer3D>( "DigSound" ).Play();
-		GameObject.PlaySound( DigSound );
+		
+		SoundEx.Play( DigSound, WorldPosition );
 
 		Durability--;
-		// Inventory.Player.Save();
 
-		// Inventory.World.Save();
 	}
 
 	private void FillHole( Vector2Int pos )
@@ -175,16 +149,13 @@ public class Shovel : BaseCarriable
 		if ( hole.Node.Components.TryGet<Hole>( out var holeItem ) )
 		{
 			Player.World.RemoveItem( holeItem.GameObject );
-			// Inventory.World.Save();
 
 			Player.SnapToGrid();
 			Player.ModelLookAt( Player.World.ItemGridToWorld( pos ) );
 
 			Durability--;
-			// Inventory.Player.Save();
 
-			// GetNode<AudioStreamPlayer3D>( "FillSound" ).Play();
-			GameObject.PlaySound( FillSound );
+			SoundEx.Play( FillSound, WorldPosition );
 		}
 		else
 		{

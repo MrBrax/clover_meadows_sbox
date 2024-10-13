@@ -11,11 +11,12 @@ namespace Clover.Carriable;
 [Icon( "build" )]
 public class BaseCarriable : Component, IPersistent, IPickupable
 {
-	public int Durability { get; set; } = 100;
+	[Sync] public int Durability { get; set; } = 100;
 
 	public TimeUntil NextUse;
 
-	public GameObject Holder { get; set; }
+	[Sync] public GameObject Holder { get; set; }
+	
 	public PlayerCharacter Player => Holder.GetComponent<PlayerCharacter>();
 	
 	[Property] public GameObject Model { get; set; }
@@ -77,6 +78,10 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 	///  Called when you release the use button. Useful for firing a bow or swinging a tool.
 	/// </summary>
 	public virtual void OnUseUp()
+	{
+	}
+	
+	public virtual void OnUseDownHost()
 	{
 	}
 
