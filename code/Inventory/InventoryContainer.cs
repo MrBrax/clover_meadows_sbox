@@ -22,8 +22,8 @@ public sealed partial class InventoryContainer
 	[JsonInclude] public List<InventorySlot<PersistentItem>> Slots = new();
 	
 	
-	public delegate void InventoryChangedEventHandler();
-	[Property] public event InventoryChangedEventHandler InventoryChanged;
+	// public delegate void InventoryChangedEventHandler();
+	// [Property] public event InventoryChangedEventHandler InventoryChanged;
 
 	public InventoryContainer()
 	{
@@ -54,6 +54,16 @@ public sealed partial class InventoryContainer
 		{
 			yield return new InventoryContainerEntry { Index = i, Slot = GetSlotByIndex( i ) };
 		}
+	}
+	
+	public List<InventoryContainerEntry> QuerySlots()
+	{
+		var entries = new List<InventoryContainerEntry>();
+		for ( var i = 0; i < MaxItems; i++ )
+		{
+			entries.Add( new InventoryContainerEntry { Index = i, Slot = GetSlotByIndex( i ) } );
+		}
+		return entries;
 	}
 
 	/// <summary>
@@ -345,9 +355,7 @@ public sealed partial class InventoryContainer
 
 	public void OnChange()
 	{
-		// OnInventoryChanged?.Invoke();
-		//x EmitSignal( SignalName.InventoryChanged );
-		InventoryChanged?.Invoke();
+		Game.ActiveScene.RunEvent<IInventoryEvent>( x => x.OnInventoryChanged( this ) );
 	}
 
 	public void RemoveSlot( InventorySlot<PersistentItem> inventorySlot )
@@ -589,6 +597,11 @@ public sealed partial class InventoryContainer
 		return true;
 	}
 
+}
+
+public interface IInventoryEvent
+{
+	void OnInventoryChanged( InventoryContainer container );
 }
 
 

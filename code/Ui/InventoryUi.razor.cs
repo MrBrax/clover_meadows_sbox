@@ -1,11 +1,12 @@
-﻿using Clover.Inventory;
+﻿using System;
+using Clover.Inventory;
 using Clover.Persistence;
 using Clover.Player;
 using Sandbox.UI;
 
 namespace Clover.Ui;
 
-public partial class InventoryUi : IPlayerSpawned
+public partial class InventoryUi : IInventoryEvent
 {
 	
 	private Inventory.Inventory Inventory => PlayerCharacter.Local?.Inventory;
@@ -14,15 +15,6 @@ public partial class InventoryUi : IPlayerSpawned
 	public bool Show;
 	
 	private Panel SlotContainer { get; set; }
-
-	/*protected override void OnAwake()
-	{
-		base.OnAwake();
-		
-		// PlayerCharacter.Local.Inventory.Container.InventoryChanged += UpdateInventory;
-		
-		UpdateInventory();
-	}*/
 
 	protected override void OnEnabled()
 	{
@@ -51,7 +43,7 @@ public partial class InventoryUi : IPlayerSpawned
 
 		Panel row = null;
 		
-		foreach ( var entry in Inventory.Container.GetEnumerator() )
+		foreach ( var entry in Inventory.Container.QuerySlots() )
 		{
 			var rowNumber = entry.Index / SlotsPerRow;
 			var columnNumber = entry.Index % SlotsPerRow;
@@ -77,15 +69,6 @@ public partial class InventoryUi : IPlayerSpawned
 		
 	}
 
-	void IPlayerSpawned.OnPlayerSpawned( PlayerCharacter player )
-	{
-		if ( player == PlayerCharacter.Local )
-		{
-			player.Inventory.Container.InventoryChanged += UpdateInventory;
-			UpdateInventory();
-		}
-	}
-
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
@@ -100,8 +83,16 @@ public partial class InventoryUi : IPlayerSpawned
 		}
 	}
 
-	/// <summary>
-	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
-	/// </summary>
-	// protected override int BuildHash() => System.HashCode.Combine( MyStringValue );
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Show, Inventory );
+	}
+
+	public void OnInventoryChanged( InventoryContainer container )
+	{
+		if ( container.Owner == Inventory?.GameObject )
+		{
+			UpdateInventory();
+		}
+	}
 }

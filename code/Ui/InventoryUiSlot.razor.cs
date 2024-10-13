@@ -117,7 +117,7 @@ public partial class InventoryUiSlot
 
 	private void DropOnSlot( InventoryUiSlot slot )
 	{
-		Log.Info( $"Dropped on {slot.Index}" );
+		Log.Info( $"Dropped on slot #{slot.Index}" );
 
 		if ( Inventory.Id == slot.Inventory.Id )
 		{
