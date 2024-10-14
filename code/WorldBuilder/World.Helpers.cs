@@ -9,9 +9,9 @@ public sealed partial class World
 	{
 		return rotation switch
 		{
-			ItemRotation.North => Rotation.FromYaw( 0 ),
+			ItemRotation.North => Rotation.FromYaw( 180 ),
 			ItemRotation.East => Rotation.FromYaw( 90 ),
-			ItemRotation.South => Rotation.FromYaw( 180 ),
+			ItemRotation.South => Rotation.FromYaw( 0 ),
 			ItemRotation.West => Rotation.FromYaw( 270 ),
 			_ => Rotation.FromYaw( 0 )
 		};

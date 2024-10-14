@@ -729,7 +729,7 @@ public sealed partial class World : Component
 		{
 			// var pos = item.Key.Split( ':' )[0].Split( ',' ).Select( int.Parse ).ToArray();
 			var offset = item.Key.Placement == ItemPlacement.OnTop ? Vector3.Up * 32f : Vector3.Zero;
-			Gizmo.Draw.Text( $"{item.Key.Position} {item.Key.Placement} | {item.Value.GetName()}",
+			Gizmo.Draw.Text( $"{item.Key.Position} {item.Key.Placement} | {item.Value.GetName()}\n{item.Value.GridRotation}",
 				new Transform( ItemGridToWorld( item.Key.Position ) + offset ) );
 
 			Gizmo.Draw.ScreenText( $"[{item.Key.Position}:{item.Key.Placement}] {item.Value.GetName()}",
