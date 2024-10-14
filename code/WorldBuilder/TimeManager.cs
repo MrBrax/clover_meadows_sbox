@@ -270,6 +270,23 @@ public class TimeManager : Component, IWorldEvent
 			SkyBox.Enabled = !world.Data.IsInside;
 		}
 	}
+
+	protected override void DrawGizmos()
+	{
+		base.DrawGizmos();
+
+		if ( !Gizmo.IsSelected ) return;
+		
+		for ( var i = 0; i < 48; i++ )
+		{
+			var frac = i / 48f;
+			var pitch = SunPitchCurve.Evaluate( frac );
+			var yaw = SunYawCurve.Evaluate( frac );
+			var rotation = Rotation.FromYaw( yaw ) * Rotation.FromPitch( pitch );
+			var direction = rotation.Backward;
+			Gizmo.Draw.LineSphere( Gizmo.Camera.Position + direction * 512f, 8f );
+		}
+	}
 }
 
 public interface ITimeEvent
