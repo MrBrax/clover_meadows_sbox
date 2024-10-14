@@ -175,6 +175,28 @@ public sealed partial class World : Component
 			BlockedTiles.Add( position );
 		}
 	}
+	
+	/// <summary>
+	///  Checks if a player is in the way of an item placement.
+	/// </summary>
+	/// <param name="positions"></param>
+	/// <returns></returns>
+	public bool CheckPlayerObstruction( List<Vector2Int> positions )
+	{
+		foreach ( var player in PlayersInWorld )
+		{
+			var playerPos = WorldToItemGrid( player.WorldPosition );
+
+			if ( positions.Any( x => ItemGridToWorld( x ).Distance( player.WorldPosition ) < 25 ) )
+			{
+				Log.Warning( $"Player {player.PlayerName} is in the way" );
+				return true;
+			}
+		}
+
+		return false;
+		
+	}
 
 	public bool IsOutsideGrid( Vector2Int position )
 	{
@@ -195,6 +217,12 @@ public sealed partial class World : Component
 		if ( positions.Any( IsOutsideGrid ) )
 		{
 			Log.Warning( $"One or more positions are outside the grid" );
+			return false;
+		}
+		
+		if ( CheckPlayerObstruction( positions ) )
+		{
+			Log.Warning( $"Player obstruction" );
 			return false;
 		}
 
