@@ -51,7 +51,8 @@ public class ItemData : GameResource
 
 	public static T GetById<T>( string id ) where T : ItemData
 	{
-		return ResourceLibrary.GetAll<T>().FirstOrDefault( i => i.ResourceName == id || i.ResourcePath == id || i.Id == id ) ??
+		return ResourceLibrary.GetAll<T>()
+			       .FirstOrDefault( i => i.ResourceName == id || i.ResourcePath == id || i.Id == id ) ??
 		       throw new Exception( $"Item data not found: {id}" );
 	}
 
@@ -128,6 +129,18 @@ public class ItemData : GameResource
 		}
 
 		return positions;
+	}
+
+	public Vector2Int GetBounds( World.ItemRotation itemRotation )
+	{
+		if ( itemRotation == World.ItemRotation.North || itemRotation == World.ItemRotation.South )
+		{
+			return new Vector2Int( Width, Height );
+		}
+		else
+		{
+			return new Vector2Int( Height, Width );
+		}
 	}
 
 	public bool IsSameAs( ItemData item )
@@ -225,7 +238,8 @@ public class ItemData : GameResource
 
 	public static ItemData Get( string id )
 	{
-		return ResourceLibrary.GetAll<ItemData>().FirstOrDefault( x => x.ResourceName == id || x.ResourcePath == id || x.Id == id ) ??
+		return ResourceLibrary.GetAll<ItemData>()
+			       .FirstOrDefault( x => x.ResourceName == id || x.ResourcePath == id || x.Id == id ) ??
 		       throw new Exception( $"Item data not found: {id}" );
 	}
 
