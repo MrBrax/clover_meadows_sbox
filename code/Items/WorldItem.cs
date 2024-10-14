@@ -129,16 +129,31 @@ public class WorldItem : Component, IPickupable
 		Gizmo.Draw.Text( WorldPosition.ToString(), new Transform( WorldPosition ) );
 	}*/
 
-	/*protected override void OnUpdate()
+	protected override void OnUpdate()
 	{
 		base.OnUpdate();
 
-		if ( Gizmo.Camera == null ) return;
+		if ( Gizmo.Camera == null || !DebugWorldItem ) return;
 		if ( NodeLink.IsValid() && NodeLink.IsDroppedItem )
 		{
 			Gizmo.Draw.Text( $"Dropped: {NodeLink.GetName()}", new Transform( WorldPosition + Vector3.Up * 20 ) );
 		}
-	}*/
+
+		if ( NodeLink.IsValid() )
+		{
+			var placeableNodes = NodeLink.GetPlaceableNodes().ToList();
+			foreach ( var placeableNode in placeableNodes )
+			{
+				Gizmo.Draw.Color = placeableNode.PlacedNodeLink == null ? Color.Green : Color.Red;
+				Gizmo.Draw.Text( placeableNode.GameObject.Name, new Transform( placeableNode.WorldPosition ) );
+				Gizmo.Draw.Color = Color.White;
+			}
+		}
+		
+	}
+	
+	[ConVar( "clover_debug_worlditem" )]
+	public static bool DebugWorldItem { get; set; }
 
 	[Property] public bool CanPickupSimple { get; set; }
 

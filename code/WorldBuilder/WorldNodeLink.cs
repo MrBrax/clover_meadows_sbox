@@ -27,6 +27,8 @@ public class WorldNodeLink : IValid
 	public string ItemId;
 	public string PrefabPath;
 
+	public PlaceableNode PlacedOn;
+
 	[Icon( "save" )] private PersistentItem Persistence { get; set; }
 
 	public ItemData ItemData

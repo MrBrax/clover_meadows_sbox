@@ -605,6 +605,9 @@ public sealed partial class World : Component
 				Log.Warning( $"No on top node at {position}" );
 				return;
 			}
+			
+			onTopNode.PlacedNodeLink = nodeLink;
+			nodeLink.PlacedOn = onTopNode;
 
 			Log.Info( $"Updating transform of {nodeLink.GetName()} to be on top of {onTopNode}" );
 			// newPosition = onTopNode.GlobalTransform.Origin;
@@ -641,6 +644,11 @@ public sealed partial class World : Component
 		nodeLink.DestroyNode();
 
 		RemoveNodeLinkFromGridMap( nodeLink );
+
+		if ( nodeLink.PlacedOn != null )
+		{
+			nodeLink.PlacedOn.PlacedNodeLink = null;
+		}
 
 		OnItemRemoved?.Invoke( nodeLink );
 	}
