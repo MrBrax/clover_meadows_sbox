@@ -89,7 +89,7 @@
             "EntranceId": "player_house_exit",
             "ExitDoor": {
               "_type": "component",
-              "component_id": "c8a3a278-6b4f-4fea-b29e-e33e0d612287",
+              "component_id": "ebe5d951-2776-4417-898e-89de9e7643a6",
               "go": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
               "component_type": "Door"
             }

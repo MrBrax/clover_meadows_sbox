@@ -617,6 +617,90 @@ public sealed partial class World : Component
 
 		// Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
 	}
+	
+	public (Vector3 position, Rotation rotation) GetTransform( Vector2Int gridPosition, ItemRotation gridRotation, ItemPlacement placement, ItemData itemData, bool isDropped = false )
+	{
+		var position = gridPosition;
+
+		var newPosition = ItemGridToWorld( position );
+		var newRotation = GetRotation( gridRotation );
+
+		var offset = Vector3.Zero;
+		
+		if ( itemData != null )
+		{
+			var itemWidth = itemData.Width - 1;
+			var itemHeight = itemData.Height - 1;
+			
+			if ( isDropped )
+			{
+				itemWidth = 0;
+				itemHeight = 0;
+				Log.Info( $"Forcing item size to 1x1 - dropped item" );
+			}
+
+			// "rotate" the offset based on the item's rotation
+			if ( gridRotation == ItemRotation.North )
+			{
+				offset = new Vector3( itemWidth * GridSizeCenter, itemHeight * GridSizeCenter, 0 );
+			}
+			else if ( gridRotation == ItemRotation.East )
+			{
+				offset = new Vector3( itemHeight * GridSizeCenter, itemWidth * GridSizeCenter, 0 );
+			}
+			else if ( gridRotation == ItemRotation.South )
+			{
+				offset = new Vector3( -itemWidth * GridSizeCenter, -itemHeight * GridSizeCenter, 0 );
+			}
+			else if ( gridRotation == ItemRotation.West )
+			{
+				offset = new Vector3( -itemHeight * GridSizeCenter, -itemWidth * GridSizeCenter, 0 );
+			}
+		}
+		else
+		{
+			Log.Warning( $"No item data" );
+		}
+
+		if ( placement == ItemPlacement.Underground )
+		{
+			newPosition = new Vector3( newPosition.x, newPosition.y, -50 );
+		}
+		else if ( placement == ItemPlacement.OnTop )
+		{
+			var floorNodeLink = GetItem( position, ItemPlacement.Floor );
+			if ( floorNodeLink == null )
+			{
+				Log.Warning( $"No floor item at {position}" );
+				WorldPosition = newPosition;
+				return (newPosition, newRotation);
+			}
+
+			var onTopNode = floorNodeLink.GetPlaceableNodeAtGridPosition( position );
+			if ( onTopNode == null )
+			{
+				Log.Warning( $"No on top node at {position}" );
+				WorldPosition = newPosition;
+				return (newPosition, newRotation);
+			}
+			
+			// onTopNode.PlacedNodeLink = nodeLink;
+			// nodeLink.PlacedOn = onTopNode;
+
+			Log.Info( $"Updating transform to be on top of {onTopNode}" );
+			
+			newPosition = onTopNode.WorldPosition;
+		}
+
+		newPosition += offset;
+		
+		// nodeLink.Node.WorldPosition = newPosition;
+		// nodeLink.Node.WorldRotation = newRotation;
+		
+		return (newPosition, newRotation);
+
+		// Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
+	}
 
 	/// <summary>
 	/// Removes an item from the world at the specified position and placement.

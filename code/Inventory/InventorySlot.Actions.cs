@@ -4,6 +4,7 @@ using Clover.Components;
 using Clover.Data;
 using Clover.Items;
 using Clover.Persistence;
+using Clover.Ui;
 
 namespace Clover.Inventory;
 
@@ -49,73 +50,9 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			return;
 		}
 
-		var aimingGridPosition = InventoryContainer.Player.GetAimingGridPosition();
+		InventoryContainer.Player.ItemPlacer.StartPlacing( Index );
+		InventoryUi.Instance.Close();
 
-		var playerRotation =
-			World.GetItemRotationFromDirection(
-				World.Get4Direction( InventoryContainer.Player.PlayerController.Yaw ) );
-
-		var floorItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
-
-		if ( floorItem != null )
-		{
-			var placeableNodes = floorItem.GetPlaceableNodes();
-			if ( placeableNodes.Any() )
-			{
-				var onTopItem =
-					InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
-				if ( onTopItem != null )
-				{
-					Log.Warning( "On top item already exists." );
-					return;
-				}
-				
-				if ( GetItem().ItemData.Width > 1 || GetItem().ItemData.Height > 1 )
-				{
-					Log.Warning( "Can't place a large item on top of another item." );
-					return;
-				}
-				
-				try
-				{
-					InventoryContainer.Player.World.SpawnPlacedNode( PersistentItem, aimingGridPosition, playerRotation,
-						World.ItemPlacement.OnTop );
-				}
-				catch ( System.Exception e )
-				{
-					Log.Error( e.Message );
-					return;
-				}
-
-				//x InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
-				Sound.Play( "sounds/interact/item_place.sound", InventoryContainer.Owner.WorldPosition );
-
-				TakeOneOrDelete();
-
-				return;
-			}
-
-			Log.Warning( $"Can't place {GetItem().GetName()} on top of {floorItem.GetName()}" );
-			//x NodeManager.UserInterface.ShowWarning( "Can't place item on this position." );
-			return;
-		}
-
-		try
-		{
-			InventoryContainer.Player.World.SpawnPlacedNode( PersistentItem, aimingGridPosition, playerRotation,
-				World.ItemPlacement.Floor );
-		}
-		catch ( System.Exception e )
-		{
-			Log.Error( e.Message );
-			//x NodeManager.UserInterface.ShowWarning( e.Message );
-			return;
-		}
-
-		//x InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
-		Sound.Play( "sounds/interact/item_place.sound", InventoryContainer.Owner.WorldPosition );
-
-		TakeOneOrDelete();
 	}
 
 	public void Equip()

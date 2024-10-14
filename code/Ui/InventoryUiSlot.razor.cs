@@ -236,6 +236,7 @@ public partial class InventoryUiSlot
 			_contextMenu.AddItem( action.Name, action.Icon, () =>
 			{
 				action.Action();
+				_contextMenu.Delete();
 			} );
 		}
 		
@@ -245,6 +246,7 @@ public partial class InventoryUiSlot
 			_contextMenu.AddItem( "Place", "file_download", () =>
 			{
 				Slot.Place();
+				_contextMenu.Delete();
 			} );
 		}
 
@@ -253,12 +255,14 @@ public partial class InventoryUiSlot
 			_contextMenu.AddItem( "Drop", "work", () =>
 			{
 				Slot.Drop();
+				_contextMenu.Delete();
 			} );
 		}
 		
 		_contextMenu.AddItem( "Destroy", "delete", () =>
 		{
 			Slot.Destroy();
+			_contextMenu.Delete();
 		} );
 	}
 }

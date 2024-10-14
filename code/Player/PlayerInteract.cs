@@ -13,7 +13,7 @@ public class PlayerInteract : Component
 	[Property] public BoxCollider InteractCollider { get; set; }
 
 	[Property] public GameObject Cursor { get; set; }
-	
+
 	[Property] public SoundEvent UseFailSound { get; set; }
 	[Property] public SoundEvent PickUpFailSound { get; set; }
 
@@ -36,9 +36,20 @@ public class PlayerInteract : Component
 		}
 	}
 
+	public bool CanInteract()
+	{
+		if ( Player.ItemPlacer.IsPlacing ) return false;
+		return true;
+	}
+
 	protected override void OnFixedUpdate()
 	{
 		if ( IsProxy ) return;
+
+		if ( !CanInteract() )
+		{
+			return;
+		}
 
 		if ( Input.Pressed( "use" ) )
 		{
@@ -92,17 +103,15 @@ public class PlayerInteract : Component
 		}
 
 		Log.Warning( "No pickupable node found" );
-		
+
 		Sound.Play( PickUpFailSound, WorldPosition );
-		
 	}
 
 	private IPickupable GetPickupableNode()
 	{
 		var touchingItems = InteractCollider.Touching;
-		
-		
-		
+
+
 		foreach ( var collider in touchingItems )
 		{
 			if ( collider.GameObject.Components.TryGet<IPickupable>( out var pickupable ) )
@@ -115,7 +124,7 @@ public class PlayerInteract : Component
 					{
 						continue;
 					}
-					
+
 					// don't allow picking up items that have items on top of them
 					if ( worldItem.HasItemOnTop() )
 					{
@@ -132,11 +141,10 @@ public class PlayerInteract : Component
 
 	private IInteract FindInteractable()
 	{
-
 		foreach ( var collider in InteractCollider.Touching )
 		{
 			var checkGameObject = collider.GameObject;
-			
+
 			// Log.Info( $"# Checking base collider {checkGameObject.Name}" );
 
 			while ( checkGameObject != null )
@@ -157,12 +165,11 @@ public class PlayerInteract : Component
 
 					return interactable;
 				}
-				
-				checkGameObject = checkGameObject.Parent;
 
+				checkGameObject = checkGameObject.Parent;
 			}
 		}
-		
+
 		// Log.Info( "# Reached root, no interactable found." );
 
 		return null;

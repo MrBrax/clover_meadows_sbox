@@ -10,7 +10,6 @@
       {
         "__type": "Clover.Player.PlayerCharacter",
         "__guid": "f4b346c7-49e8-445e-9581-0d0cde06d66f",
-        "Clovers": 0,
         "InteractPoint": {
           "_type": "gameobject",
           "go": "3babed6e-289d-4418-bdfa-98de415a887a"
@@ -66,8 +65,7 @@
       },
       {
         "__type": "Clover.WorldLayerObject",
-        "__guid": "4eb450db-642e-43aa-bd5c-bc5770f7b8bf",
-        "Layer": -1
+        "__guid": "4eb450db-642e-43aa-bd5c-bc5770f7b8bf"
       },
       {
         "__type": "Sandbox.BoxCollider",
@@ -127,6 +125,16 @@
       {
         "__type": "Clover.Components.VehicleRider",
         "__guid": "ab9a83fa-0380-4c6c-b3d6-7f7a3559696f"
+      },
+      {
+        "__type": "Clover.Player.Clover.CloverBalanceController",
+        "__guid": "2f8ae284-2c7c-4536-ad7e-d363a5a6f7bb",
+        "Clovers": 0
+      },
+      {
+        "__type": "Clover.Player.ItemPlacer",
+        "__guid": "bec44100-3b47-421b-acc1-f469e5cecee1",
+        "CursorModel": "models/tools/tile_cursor.vmdl"
       }
     ],
     "Children": [

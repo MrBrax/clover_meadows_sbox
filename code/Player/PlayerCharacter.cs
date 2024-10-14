@@ -28,6 +28,7 @@ public sealed partial class PlayerCharacter : Component
 	[RequireComponent] public CameraController CameraController { get; set; }
 	[RequireComponent] public CloverBalanceController CloverBalanceController { get; set; }
 	[RequireComponent] public VehicleRider VehicleRider { get; set; }
+	[RequireComponent] public ItemPlacer ItemPlacer { get; set; }
 
 	[Property] public GameObject Model { get; set; }
 
