@@ -207,8 +207,10 @@ public class ItemPlacer : Component
 		var canPlace = Player.World.CanPlaceItem(
 			InventorySlot.GetItem().ItemData.GetGridPositions( _lastGridRotation, _lastGridPosition ),
 			_lastItemPlacement );
+		
+		var isValidPlacementType = InventorySlot.GetItem().ItemData.Placements.HasFlag( _lastItemPlacement );
 
-		_isValidPlacement = canPlace;
+		_isValidPlacement = canPlace && isValidPlacementType;
 
 		TransformChange();
 	}
