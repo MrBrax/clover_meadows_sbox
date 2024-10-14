@@ -9,6 +9,8 @@ namespace Clover.Ui;
 public partial class InventoryUi : IInventoryEvent
 {
 	
+	public static InventoryUi Instance => Game.ActiveScene.GetAllComponents<InventoryUi>().FirstOrDefault();
+	
 	private Inventory.Inventory Inventory => PlayerCharacter.Local?.Inventory;
 	private IEnumerable<InventorySlot<PersistentItem>> Slots => Inventory?.Container.Slots;
 
@@ -82,7 +84,14 @@ public partial class InventoryUi : IInventoryEvent
 			Sound.Play( "sounds/ui/inventory_toggle.sound" );
 		}
 	}
-
+	
+	public void Close()
+	{
+		Show = false;
+		Panel.Style.Display = DisplayMode.None;
+		StateHasChanged();
+	}
+	
 	protected override int BuildHash()
 	{
 		return HashCode.Combine( Show, Inventory );
