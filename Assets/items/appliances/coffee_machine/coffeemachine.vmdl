@@ -37,6 +37,7 @@
 							exception_list = 
 							[
 								"SM_CoffeeMachine",
+								"SM_CoffeeMachine_fixed",
 							]
 						}
 					},
