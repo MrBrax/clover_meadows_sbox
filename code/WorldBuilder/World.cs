@@ -596,6 +596,7 @@ public sealed partial class World : Component
 			if ( floorNodeLink == null )
 			{
 				Log.Warning( $"No floor item at {position}" );
+				WorldPosition = newPosition;
 				return;
 			}
 
@@ -603,6 +604,7 @@ public sealed partial class World : Component
 			if ( onTopNode == null )
 			{
 				Log.Warning( $"No on top node at {position}" );
+				WorldPosition = newPosition;
 				return;
 			}
 			

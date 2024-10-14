@@ -111,7 +111,7 @@ public class WorldNodeLink : IValid
 	public PlaceableNode GetPlaceableNodeAtGridPosition( Vector2Int position )
 	{
 		// return GetPlaceableNodes().FirstOrDefault( n => GridPosition == World.WorldToItemGrid( n.WorldPosition ) );
-		return GetPlaceableNodes().MinBy( n => (n.WorldPosition - position).LengthSquared );
+		return GetPlaceableNodes().MinBy( n => (World.WorldToItemGrid( n.WorldPosition ) - position).LengthSquared );
 	}
 
 	/*public PersistentItem GetPersistentItem()
