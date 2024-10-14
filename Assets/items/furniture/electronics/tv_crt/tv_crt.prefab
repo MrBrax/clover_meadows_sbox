@@ -1,0 +1,127 @@
+{
+  "RootObject": {
+    "__guid": "b8b1777d-6e59-439e-9707-384af44077c9",
+    "Flags": 0,
+    "Name": "tv_crt",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "004fa9db-fda2-427b-9c80-f032b08eeecc",
+        "CanPickupSimple": false,
+        "ItemData": "items/furniture/electronics/tv_crt/tv_crt.item",
+        "Prefab": "items/furniture/electronics/tv_crt/tv_crt.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "6eab051a-23f1-4108-88b5-850a54527957"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "2d1501a6-0d46-4fb2-8174-9ad24c77cd2a",
+        "Center": "0,0,16",
+        "IsTrigger": false,
+        "Scale": "32,32,32",
+        "Static": false
+      },
+      {
+        "__type": "Clover.Items.Television",
+        "__guid": "aa7f4569-c1ac-433c-a1fc-fdaaa4047027",
+        "Light": {
+          "_type": "component",
+          "component_id": "e54758e5-ab19-47cd-9693-625aa9301c1f",
+          "go": "cdd36429-c4d2-479d-a1ab-b3acd86e7a79",
+          "component_type": "PointLight"
+        },
+        "Model": {
+          "_type": "component",
+          "component_id": "c7cc5cbc-0773-4fd4-99e2-866023f92e17",
+          "go": "2ff6d40d-e0f1-4e55-b354-84cfa6fed20d",
+          "component_type": "ModelRenderer"
+        },
+        "ScreenMaterialAttribute": "tv_screen",
+        "SpotLight": {
+          "_type": "component",
+          "component_id": "2afa6ea0-d86f-45e5-aad5-4ee5b5ad72d1",
+          "go": "c8827dfc-5301-4f6d-8c7e-40e49e5dfba0",
+          "component_type": "SpotLight"
+        }
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "2ff6d40d-e0f1-4e55-b354-84cfa6fed20d",
+        "Flags": 0,
+        "Name": "tv",
+        "Rotation": "0,0,0.7071068,0.7071068",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "c7cc5cbc-0773-4fd4-99e2-866023f92e17",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/furniture/electronics/tv_crt/tv_crt.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "c8827dfc-5301-4f6d-8c7e-40e49e5dfba0",
+        "Flags": 0,
+        "Name": "Spot Light",
+        "Position": "-17.36156,0.000001279734,16",
+        "Rotation": "0,0,1,-0.00000004371139",
+        "Tags": "light_spot,light",
+        "Components": [
+          {
+            "__type": "Sandbox.SpotLight",
+            "__guid": "2afa6ea0-d86f-45e5-aad5-4ee5b5ad72d1",
+            "Attenuation": 1,
+            "ConeInner": 15,
+            "ConeOuter": 45,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 500,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "cdd36429-c4d2-479d-a1ab-b3acd86e7a79",
+        "Flags": 0,
+        "Name": "Point Light",
+        "Position": "-17.81817,0,16",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "e54758e5-ab19-47cd-9693-625aa9301c1f",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 200,
+            "Shadows": true
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
