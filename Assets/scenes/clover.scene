@@ -224,6 +224,7 @@
         {
           "__type": "Clover.WorldBuilder.TimeManager",
           "__guid": "6bcba752-8450-49ec-b17a-cfa20ee2f5f9",
+          "_SunRotation": "-0.01513444,0.08583164,0.1729874,0.9810603",
           "AmbientGradient": {
             "color": [
               {
@@ -302,6 +303,29 @@
               }
             ],
             "alpha": []
+          },
+          "SunPitchCurve": {
+            "rangey": "10,40",
+            "frames": [
+              {},
+              {
+                "x": 0.5,
+                "y": 1
+              },
+              {
+                "x": 1
+              }
+            ]
+          },
+          "SunYawCurve": {
+            "rangey": "20,320",
+            "frames": [
+              {},
+              {
+                "x": 1,
+                "y": 1
+              }
+            ]
           },
           "TimeOverride": -1
         }

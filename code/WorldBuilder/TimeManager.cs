@@ -18,6 +18,9 @@ public class TimeManager : Component, IWorldEvent
 	[Property] public Gradient AmbientGradient { get; set; }
 
 	[ConVar( "clover_time_scale" )] public static int Speed { get; set; } = 1;
+	
+	[Property] public Curve SunPitchCurve { get; set; }
+	[Property] public Curve SunYawCurve { get; set; }
 
 	// public static DateTime Time => Speed != 1 ? DateTime.Now.AddSeconds( Sandbox.Time.Now * Speed ) : DateTime.Now;
 	
@@ -210,14 +213,20 @@ public class TimeManager : Component, IWorldEvent
 
 		var frac = totalSeconds / totalSecondsInDay;
 
-		var pitch = MathX.Lerp( -3, 183, frac );
-		var yaw = MathX.Lerp( 0, 180, frac );
+		// var pitch = MathX.Lerp( 15, 50, frac );
+		// var yaw = MathX.Lerp( 0, 180, frac );
+		
+		var pitch = SunPitchCurve.Evaluate( frac );
+		var yaw = SunYawCurve.Evaluate( frac );
 
-		var rotation = Rotation.From( pitch, yaw, 0 );
+		var rotation = Rotation.FromYaw( yaw ) * Rotation.FromPitch( pitch );
 
 
 		return rotation;
 	}
+	
+	[Property]
+	private Rotation _SunRotation => CalculateSunRotation( Sun );
 
 	/// <summary>
 	///  A value between 0 and 1 used to calculate the sun's energy (0 at night, 1 at midday).
