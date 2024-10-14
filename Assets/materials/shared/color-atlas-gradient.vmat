@@ -1,11 +1,35 @@
+// THIS FILE IS AUTO-GENERATED
 
 Layer0
 {
-	shader "shaders/complex.shader_c"
+	shader "shaders/toonshader.shader"
 
-	TextureColor "materials/shared/color-atlas-gradient.png"
-	TextureAmbientOcclusion "materials/default/default_ao.tga"
-	TextureNormal "materials/default/default_normal.tga"
-	TextureRoughness "materials/default/default_rough.tga"
+	//---- Fog ----
+	g_bFogEnabled "1"
 
+	//---- MToon Color ----
+	InputLitTexture "materials/shared/color-atlas-gradient.png"
+	LitColor "[1.000000 1.000000 1.000000 1.000000]"
+	LitIntensity "1.000"
+	ShadeColor "[0.968628 0.811765 0.858824 1.000000]"
+
+	//---- MToon Emission ----
+	EmissionColor "[0.301961 0.301961 0.301961 1.000000]"
+	InputEmissionMap "materials/shared/color-atlas-gradient.png"
+	InputMatCap ""
+	matcapStrength "0.000"
+
+	//---- MToon Lighting ----
+	IndirectLightIntensity "0.000"
+	InputShadingGradeTexture ""
+	LightColorAttenuation "0.000"
+	ShadingGradeRate "0.100"
+	ShadingShift "0.000"
+	ShadingToony "0.900"
+
+	//---- MToon Rim ----
+	RimColor "[0.000000 0.000000 0.000000 1.000000]"
+	RimFresnelPower "1.000"
+	RimLift "0.000"
+	RimLightingMix "0.000"
 }

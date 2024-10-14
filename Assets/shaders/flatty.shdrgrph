@@ -1,0 +1,47 @@
+{
+  "Model": null,
+  "Description": "",
+  "BlendMode": "Opaque",
+  "nodes": [
+    {
+      "_class": "Result",
+      "DefaultOpacity": 1,
+      "DefaultRoughness": 1,
+      "DefaultMetalness": 0,
+      "DefaultAmbientOcclusion": 0,
+      "Identifier": "0",
+      "Position": "156,-96",
+      "Albedo": {
+        "Identifier": "2",
+        "Output": "Result"
+      },
+      "Emission": {
+        "Identifier": "2",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "Float4",
+      "Value": "1,1,1,1",
+      "Name": "",
+      "IsAttribute": false,
+      "UI": {
+        "Type": "Color"
+      },
+      "Identifier": "1",
+      "Position": "-624,24"
+    },
+    {
+      "_class": "TextureSampler",
+      "Image": "materials/dev/white_color.tga",
+      "Sampler": {},
+      "UI": {
+        "Default": "1,1,1,1",
+        "ShowExtension": true,
+        "SrgbRead": true
+      },
+      "Identifier": "2",
+      "Position": "-300,-204"
+    }
+  ]
+}
