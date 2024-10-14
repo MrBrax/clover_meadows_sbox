@@ -549,8 +549,7 @@ public sealed partial class World : Component
 		{
 			var itemWidth = itemData.Width - 1;
 			var itemHeight = itemData.Height - 1;
-
-			// Log.Info( nodeLink.PrefabPath );
+			
 			if ( nodeLink.IsDroppedItem )
 			{
 				itemWidth = 0;
@@ -561,22 +560,18 @@ public sealed partial class World : Component
 			// "rotate" the offset based on the item's rotation
 			if ( nodeLink.GridRotation == ItemRotation.North )
 			{
-				// offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
 				offset = new Vector3( itemWidth * GridSizeCenter, itemHeight * GridSizeCenter, 0 );
 			}
 			else if ( nodeLink.GridRotation == ItemRotation.East )
 			{
-				// offset = new Vector3( itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
 				offset = new Vector3( itemHeight * GridSizeCenter, itemWidth * GridSizeCenter, 0 );
 			}
 			else if ( nodeLink.GridRotation == ItemRotation.South )
 			{
-				// offset = new Vector3( itemWidth * GridSizeCenter, 0, -itemHeight * GridSizeCenter );
 				offset = new Vector3( -itemWidth * GridSizeCenter, -itemHeight * GridSizeCenter, 0 );
 			}
 			else if ( nodeLink.GridRotation == ItemRotation.West )
 			{
-				// offset = new Vector3( -itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
 				offset = new Vector3( -itemHeight * GridSizeCenter, -itemWidth * GridSizeCenter, 0 );
 			}
 		}
@@ -587,7 +582,6 @@ public sealed partial class World : Component
 
 		if ( placement == ItemPlacement.Underground )
 		{
-			// newPosition = new Vector3( newPosition.X, -50, newPosition.Z );
 			newPosition = new Vector3( newPosition.x, newPosition.y, -50 );
 		}
 		else if ( placement == ItemPlacement.OnTop )
@@ -612,13 +606,12 @@ public sealed partial class World : Component
 			nodeLink.PlacedOn = onTopNode;
 
 			Log.Info( $"Updating transform of {nodeLink.GetName()} to be on top of {onTopNode}" );
-			// newPosition = onTopNode.GlobalTransform.Origin;
+			
 			newPosition = onTopNode.WorldPosition;
 		}
 
 		newPosition += offset;
-
-		// nodeLink.Node.GlobalTransform = new Transform3D( new Basis( newRotation ), newPosition );
+		
 		nodeLink.Node.WorldPosition = newPosition;
 		nodeLink.Node.WorldRotation = newRotation;
 
