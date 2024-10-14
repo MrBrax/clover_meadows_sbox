@@ -1,0 +1,62 @@
+{
+  "RootObject": {
+    "__guid": "2c44da16-de47-4a7c-b614-059ca1e3df47",
+    "Flags": 0,
+    "Name": "test_direction",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "21bc688c-8ab7-4489-8ff9-b3510d673061",
+        "CanPickupSimple": true,
+        "ItemData": "items/misc/test_direction/test_direction.item",
+        "Prefab": "items/misc/test_direction/test_direction.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "475de1b3-e4fa-4bde-aa62-b513410c12f2"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "43388675-27fe-4d92-a1ff-bd2c32d8af13",
+        "Center": "0,0,8",
+        "IsTrigger": false,
+        "Scale": "16,16,16",
+        "Static": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "5ebbe616-bb89-40fe-a22e-03214b78811c",
+        "Flags": 0,
+        "Name": "arrow",
+        "Position": "0,0,16",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "12ec7d65-9622-4738-b7ed-fdf409dfe1ff",
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/editor/arrow.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
