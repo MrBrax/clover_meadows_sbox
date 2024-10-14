@@ -1,0 +1,63 @@
+{
+  "RootObject": {
+    "__guid": "06063265-f39c-4a7a-9abf-23f9e44845d8",
+    "Flags": 0,
+    "Name": "coffee_machine",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "92639fa7-0ef0-45c6-a72f-c4766730b7c0",
+        "CanPickupSimple": true,
+        "ItemData": "items/appliances/coffee_machine/coffee_machine.item",
+        "Prefab": "items/appliances/coffee_machine/coffee_machine.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "18e29830-1d47-4473-b82a-62a6b9d0f0b6"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "99c01e03-c632-4b92-9129-bb904d500506",
+        "Center": "0,0,16",
+        "IsTrigger": false,
+        "Scale": "25,25,32",
+        "Static": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "bd02afd5-49c6-47f0-a7f6-d16c87dfedee",
+        "Flags": 0,
+        "Name": "coffeemachine",
+        "Rotation": "0,0,0.7071068,0.7071068",
+        "Scale": "0.5,0.5,0.5",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "eda6c2a1-fa15-462f-a846-435324dd1166",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/appliances/coffee_machine/coffeemachine.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
