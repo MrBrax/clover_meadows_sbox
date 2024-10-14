@@ -111,6 +111,9 @@ public class WorldItem : Component, IPickupable
 			new Vector3( gridSize * Size.x, gridSize * Size.y, 32 ) );
 
 		Gizmo.Draw.LineBBox( bbox );
+		
+		Gizmo.Draw.Arrow( WorldPosition + Vector3.Up * 64f, WorldPosition + Vector3.Forward * 64 + Vector3.Up * 64f, 8f );
+		Gizmo.Draw.Text( $"NORTH", new Transform( WorldPosition + Vector3.Up * 64f + Vector3.Forward * 72 ) );
 	}
 
 	/*protected override void OnUpdate()
@@ -172,4 +175,22 @@ public class WorldItem : Component, IPickupable
 	{
 		player.Inventory.PickUpItem( NodeLink );
 	}
+	
+	
+	[Button("Add simple collider (32)")]
+	private void AddSimpleCollider32()
+	{
+		var collider = GameObject.AddComponent<BoxCollider>();
+		collider.Scale = new Vector3( 32, 32, 32 );
+		collider.Center = new Vector3( 0, 0, 16 );
+	}
+	
+	[Button("Add simple collider (16)")]
+	private void AddSimpleCollider16()
+	{
+		var collider = GameObject.AddComponent<BoxCollider>();
+		collider.Scale = new Vector3( 16, 16, 16 );
+		collider.Center = new Vector3( 0, 0, 8 );
+	}
+	
 }
