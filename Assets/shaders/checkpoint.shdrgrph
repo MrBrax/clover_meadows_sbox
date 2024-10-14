@@ -20,8 +20,8 @@
         "Output": "Result"
       },
       "Opacity": {
-        "Identifier": "4",
-        "Output": "Y"
+        "Identifier": "2",
+        "Output": "Result"
       }
     },
     {
@@ -36,21 +36,19 @@
       "Position": "-420,-144"
     },
     {
-      "_class": "TextureSampler",
-      "Image": "models/braxen/checkpoint/gradient.png",
-      "Sampler": {
-        "AddressU": "Clamp",
-        "AddressV": "Clamp"
-      },
-      "UI": {
-        "Name": "",
-        "Default": "1,1,1,1",
-        "CustomExtension": "",
-        "ShowExtension": true,
-        "SrgbRead": true
-      },
+      "_class": "Multiply",
+      "DefaultA": 0,
+      "DefaultB": 1,
       "Identifier": "2",
-      "Position": "-588,48"
+      "Position": "-120,108",
+      "A": {
+        "Identifier": "5",
+        "Output": "Result"
+      },
+      "B": {
+        "Identifier": "4",
+        "Output": "Y"
+      }
     },
     {
       "_class": "TextureCoord",
@@ -67,6 +65,17 @@
         "Identifier": "3",
         "Output": "Result"
       }
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 1,
+      "Name": "Opacity",
+      "IsAttribute": false,
+      "UI": {},
+      "Identifier": "5",
+      "Position": "-552,120"
     }
   ]
 }

@@ -74,6 +74,7 @@ PS
 	#include "common/pixel.hlsl"
 	
 	float4 g_vTint < UiType( Color ); UiGroup( ",0/,0/0" ); Default4( 1.00, 0.00, 0.00, 1.00 ); >;
+	float g_flOpacity < UiGroup( ",0/,0/0" ); Default1( 1 ); Range1( 0, 1 ); >;
 	
 	float4 MainPs( PixelInput i ) : SV_Target0
 	{
@@ -89,12 +90,14 @@ PS
 		m.Transmission = 0;
 		
 		float4 l_0 = g_vTint;
-		float2 l_1 = i.vTextureCoords.xy * float2( 1, 1 );
-		float l_2 = l_1.y;
+		float l_1 = g_flOpacity;
+		float2 l_2 = i.vTextureCoords.xy * float2( 1, 1 );
+		float l_3 = l_2.y;
+		float l_4 = l_1 * l_3;
 		
 		m.Albedo = l_0.xyz;
 		m.Emission = l_0.xyz;
-		m.Opacity = l_2;
+		m.Opacity = l_4;
 		m.Roughness = 1;
 		m.Metalness = 0;
 		m.AmbientOcclusion = 1;

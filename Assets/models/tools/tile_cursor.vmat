@@ -5,13 +5,21 @@ Layer0
 	shader "shaders/checkpoint.shader"
 
 	//---- Rendering ----
+	F_DO_NOT_CAST_SHADOWS 1
 	F_RENDER_BACKFACES 1
 
-	g_vTint "[1.000000 0.917647 0.309804 1.000000]"
+	g_flOpacity "1.000"
+	g_vTint "[1.000000 1.000000 1.000000 1.000000]"
 
 	//---- Fog ----
 	g_bFogEnabled "1"
 
 	//---- Translucent ----
 	g_flOpacityScale "1.000"
+
+	DynamicParams
+	{
+		g_flOpacity "opacity"
+		g_vTint "tint"
+	}
 }

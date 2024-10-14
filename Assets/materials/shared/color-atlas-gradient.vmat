@@ -4,9 +4,6 @@ Layer0
 {
 	shader "shaders/toonshader.shader"
 
-	//---- Rendering ----
-	F_RENDERING_TYPE 2 // Transparent
-
 	//---- Fog ----
 	g_bFogEnabled "1"
 
