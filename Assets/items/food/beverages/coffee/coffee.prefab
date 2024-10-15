@@ -1,68 +1,23 @@
 {
   "RootObject": {
-    "__guid": "06063265-f39c-4a7a-9abf-23f9e44845d8",
+    "__guid": "befaddcf-c1ad-425c-bdd3-2b8c5b39d55d",
     "Flags": 0,
-    "Name": "coffee_machine",
+    "Name": "coffee",
     "Enabled": true,
-    "Components": [
-      {
-        "__type": "Clover.Items.WorldItem",
-        "__guid": "92639fa7-0ef0-45c6-a72f-c4766730b7c0",
-        "CanPickupSimple": true,
-        "ItemData": "items/appliances/coffee_machine/coffee_machine.item",
-        "Prefab": "items/appliances/coffee_machine/coffee_machine.prefab"
-      },
-      {
-        "__type": "Clover.WorldLayerObject",
-        "__guid": "18e29830-1d47-4473-b82a-62a6b9d0f0b6"
-      },
-      {
-        "__type": "Sandbox.BoxCollider",
-        "__guid": "99c01e03-c632-4b92-9129-bb904d500506",
-        "Center": "0,0,16",
-        "IsTrigger": false,
-        "Scale": "20,20,32",
-        "Static": false
-      },
-      {
-        "__type": "Clover.Items.CoffeeMachine",
-        "__guid": "b2f2e140-4a40-4b44-8b12-3a3138e40cfa",
-        "BrewingSound": "items/appliances/coffee_machine/brewing.sound",
-        "Cup": {
-          "_type": "gameobject",
-          "go": "a479daa0-16e3-4f35-9b43-3167d50fd792"
-        },
-        "CupSound": "items/appliances/coffee_machine/cup.sound",
-        "FinishSound": "items/appliances/coffee_machine/finish.sound",
-        "GrindingSound": "items/appliances/coffee_machine/grinding-beans.sound",
-        "Model": {
-          "_type": "gameobject",
-          "go": "bd02afd5-49c6-47f0-a7f6-d16c87dfedee"
-        },
-        "ParticleEmitter": {
-          "_type": "component",
-          "component_id": "5098a55a-f506-4288-aa89-feda4f9b5844",
-          "go": "052d95ff-883e-47ee-9f73-cf83a2486d16",
-          "component_type": "ParticleBoxEmitter"
-        },
-        "PouringSound": "items/appliances/coffee_machine/pouring.sound",
-        "ReceivedItem": "items/food/beverages/coffee/coffee.food"
-      }
-    ],
     "Children": [
       {
-        "__guid": "bd02afd5-49c6-47f0-a7f6-d16c87dfedee",
+        "__guid": "de508af3-e6c5-491d-8ab3-c3b467cc18e1",
         "Flags": 0,
-        "Name": "coffeemachine",
-        "Rotation": "0,0,0.7071068,0.7071068",
-        "Scale": "0.5,0.5,0.5",
+        "Name": "Cup",
+        "Position": "0.000002929366,-3.377892,-4.14771",
+        "Scale": "2,2,2",
         "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
-            "__guid": "eda6c2a1-fa15-462f-a846-435324dd1166",
+            "__guid": "a9169cb2-617f-4a31-aaf0-7510ec91645c",
             "BodyGroups": 18446744073709551615,
-            "Model": "items/appliances/coffee_machine/coffeemachine.vmdl",
+            "Model": "teacup/tea_cup.vmdl",
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -75,43 +30,17 @@
         ],
         "Children": [
           {
-            "__guid": "a479daa0-16e3-4f35-9b43-3167d50fd792",
-            "Flags": 0,
-            "Name": "Cup",
-            "Position": "7.919048,14.36574,8.480505",
-            "Rotation": "0,0,-0.2588191,0.9659258",
-            "Scale": "3.721541,3.721541,3.721541",
-            "Enabled": true,
-            "Components": [
-              {
-                "__type": "Sandbox.ModelRenderer",
-                "__guid": "67ff985f-ae03-45ee-aa76-762969ea6ff4",
-                "BodyGroups": 18446744073709551615,
-                "Model": "teacup/tea_cup.vmdl",
-                "RenderOptions": {
-                  "GameLayer": true,
-                  "OverlayLayer": false,
-                  "BloomLayer": false,
-                  "AfterUILayer": false
-                },
-                "RenderType": "On",
-                "Tint": "1,1,1,1"
-              }
-            ]
-          },
-          {
-            "__guid": "052d95ff-883e-47ee-9f73-cf83a2486d16",
+            "__guid": "193e67b8-555d-40a0-b10a-1e9342f59a50",
             "Flags": 0,
             "Name": "Particle",
-            "Position": "11.55484,14.56411,24.34239",
-            "Rotation": "0,0,-0.7071068,0.7071068",
-            "Scale": "2,2,2",
+            "Position": "-0.0000004882277,0,3.220127",
+            "Scale": "0.1666667,0.1666667,0.1666667",
             "Tags": "particles",
             "Enabled": true,
             "Components": [
               {
                 "__type": "Sandbox.ParticleEffect",
-                "__guid": "75729dcf-6adb-41e5-a30a-bc3ecbc4bb8d",
+                "__guid": "60dd8263-325e-421a-9b42-6bdbbb4870f5",
                 "__version": 1,
                 "Alpha": {
                   "Type": "Curve",
@@ -133,7 +62,7 @@
                 "ApplyAlpha": true,
                 "ApplyColor": false,
                 "ApplyRotation": false,
-                "ApplyShape": false,
+                "ApplyShape": true,
                 "Bounce": {
                   "Constants": "1,0,0,0"
                 },
@@ -145,8 +74,8 @@
                 "CollisionRadius": 1,
                 "Damping": {},
                 "DieOnCollisionChance": {},
-                "Force": false,
-                "ForceDirection": "0,0,0",
+                "Force": true,
+                "ForceDirection": "0,0,5",
                 "ForceScale": {
                   "Constants": "1,0,0,0"
                 },
@@ -191,7 +120,8 @@
                 "PushStrength": {},
                 "Roll": {},
                 "Scale": {
-                  "Constants": "1,0,0,0"
+                  "Type": "Range",
+                  "Constants": "2,8,0,0"
                 },
                 "SequenceId": {},
                 "SequenceSpeed": {
@@ -213,7 +143,7 @@
               },
               {
                 "__type": "Sandbox.ParticleSpriteRenderer",
-                "__guid": "2b26b2f6-662c-456e-aaff-a200aa745a93",
+                "__guid": "ad7befbd-ca49-4ff7-a412-0edba0d7e559",
                 "Additive": false,
                 "Alignment": "LookAtCamera",
                 "BlurAmount": 0.5,
@@ -233,14 +163,14 @@
                   "AfterUILayer": false
                 },
                 "RotationOffset": 0,
-                "Scale": 1.5,
+                "Scale": 1.2,
                 "Shadows": false,
                 "SortMode": "Unsorted",
                 "Texture": "materials/particle/particle_smokegrenade.vtex"
               },
               {
                 "__type": "Sandbox.ParticleBoxEmitter",
-                "__guid": "5098a55a-f506-4288-aa89-feda4f9b5844",
+                "__guid": "d03f9ba1-2ee2-4587-8cde-d579ae6a1ad7",
                 "Burst": 0,
                 "Delay": 0,
                 "DestroyOnEnd": false,
@@ -248,7 +178,7 @@
                 "Loop": true,
                 "OnEdge": false,
                 "Rate": 10,
-                "RateOverDistance": 0,
+                "RateOverDistance": 20,
                 "Size": "4,4,4"
               }
             ]

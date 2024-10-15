@@ -1,0 +1,29 @@
+{
+  "HoldScene": {
+    "_type": "gameobject",
+    "prefab": "items/food/beverages/coffee/coffee.prefab"
+  },
+  "Id": "coffee:1701670996139836110",
+  "Name": "Coffee",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "Placements": "Floor, Underground",
+  "CanDrop": false,
+  "CanPlace": false,
+  "DisablePickup": false,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": {
+    "_type": "gameobject",
+    "prefab": "items/food/beverages/coffee/coffee.prefab"
+  },
+  "DropScene": null,
+  "PlaceScene": null,
+  "DefaultTypeScene": null,
+  "Icon": null,
+  "ObjectData": null,
+  "HideInSpawnMenu": false,
+  "__references": [],
+  "__version": 0
+}

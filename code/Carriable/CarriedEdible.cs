@@ -43,11 +43,20 @@ public class CarriedEdible : BaseCarriable
 	public void UpdateModel()
 	{
 		_edibleModel?.Destroy();
-		_edibleModel = EdibleData.ModelScene.Clone();
+
+		if ( EdibleData is IEdibleData edibleData )
+		{
+			_edibleModel = edibleData.HoldScene.Clone();
+		}
+		else
+		{
+			_edibleModel = EdibleData.ModelScene.Clone();
+			_edibleModel.LocalScale = Vector3.One * 0.3f;
+		}
+
 		_edibleModel.SetParent( GameObject );
 		_edibleModel.LocalPosition = Vector3.Zero;
 		_edibleModel.LocalRotation = Rotation.Identity;
-		_edibleModel.LocalScale = Vector3.One * 0.3f;
 	}
 
 	public override void OnUseDown()
