@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using Clover.Components;
 using Clover.Data;
 using Clover.Inventory;
 using Clover.Player;
@@ -16,7 +17,7 @@ public class WorldItem : Component, IPickupable
 	public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World?.GetItem( GameObject ) : null;
 
 	public Vector2Int GridPosition => NodeLink?.GridPosition ?? Vector2Int.Zero;
-	
+
 	public Vector2Int Size =>
 		!Scene.IsEditor ? NodeLink.Size : new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
 
@@ -81,6 +82,7 @@ public class WorldItem : Component, IPickupable
 	{
 		base.DrawGizmos();
 
+		return;
 		if ( !Gizmo.Settings.GizmosEnabled ) return;
 
 		if ( Gizmo.Camera == null ) return;
@@ -113,8 +115,9 @@ public class WorldItem : Component, IPickupable
 			new Vector3( gridSize * Size.x, gridSize * Size.y, 32 ) );
 
 		Gizmo.Draw.LineBBox( bbox );
-		
-		Gizmo.Draw.Arrow( WorldPosition + Vector3.Up * 64f, WorldPosition + Vector3.Forward * 64 + Vector3.Up * 64f, 8f );
+
+		Gizmo.Draw.Arrow( WorldPosition + Vector3.Up * 64f, WorldPosition + Vector3.Forward * 64 + Vector3.Up * 64f,
+			8f );
 		Gizmo.Draw.Text( $"NORTH", new Transform( WorldPosition + Vector3.Up * 64f + Vector3.Forward * 72 ) );
 	}
 
@@ -134,7 +137,7 @@ public class WorldItem : Component, IPickupable
 	protected override void OnUpdate()
 	{
 		base.OnUpdate();
-
+		
 		if ( Gizmo.Camera == null || !DebugWorldItem ) return;
 		if ( NodeLink.IsValid() && NodeLink.IsDroppedItem )
 		{
@@ -151,11 +154,9 @@ public class WorldItem : Component, IPickupable
 				Gizmo.Draw.Color = Color.White;
 			}
 		}
-		
 	}
-	
-	[ConVar( "clover_debug_worlditem" )]
-	public static bool DebugWorldItem { get; set; }
+
+	[ConVar( "clover_debug_worlditem" )] public static bool DebugWorldItem { get; set; }
 
 	[Property] public bool CanPickupSimple { get; set; }
 
@@ -192,22 +193,21 @@ public class WorldItem : Component, IPickupable
 	{
 		player.Inventory.PickUpItem( NodeLink );
 	}
-	
-	
-	[Button("Add simple collider (32)")]
+
+
+	[Button( "Add simple collider (32)" )]
 	private void AddSimpleCollider32()
 	{
 		var collider = GameObject.AddComponent<BoxCollider>();
 		collider.Scale = new Vector3( 32, 32, 32 );
 		collider.Center = new Vector3( 0, 0, 16 );
 	}
-	
-	[Button("Add simple collider (16)")]
+
+	[Button( "Add simple collider (16)" )]
 	private void AddSimpleCollider16()
 	{
 		var collider = GameObject.AddComponent<BoxCollider>();
 		collider.Scale = new Vector3( 16, 16, 16 );
 		collider.Center = new Vector3( 0, 0, 8 );
 	}
-	
 }

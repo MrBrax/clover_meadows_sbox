@@ -58,6 +58,11 @@ public class ItemPlacer : Component
 		foreach ( var collider in gameObject.Components.GetAll<Collider>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
+			if ( collider is BoxCollider boxCollider )
+			{
+				_colliderSize = boxCollider.Scale;
+				_colliderCenter = boxCollider.Center;
+			}
 			collider.Destroy();
 		}
 
@@ -137,6 +142,12 @@ public class ItemPlacer : Component
 			}
 			Input.Clear( "use" );
 		}
+		
+		if ( Input.MouseWheel.y != 0 )
+		{
+			ghost.WorldRotation *= Rotation.FromYaw( Input.MouseWheel.y * 15 );
+		}
+		
 		/*else if ( Input.Pressed( "cancel" ) )
 		{
 			StopPlacing();
@@ -189,10 +200,12 @@ public class ItemPlacer : Component
 	private Vector2Int _lastGridPosition;
 	private World.ItemRotation _lastGridRotation;
 	private World.ItemPlacement _lastItemPlacement = World.ItemPlacement.Floor;
+	private Vector3 _colliderSize;
+	private Vector3 _colliderCenter;
 
 	private void UpdateGhostTransform()
 	{
-		var gridPosition = Player.GetAimingGridPosition();
+		/*var gridPosition = Player.GetAimingGridPosition();
 		var gridRotation =
 			World.GetItemRotationFromDirection(
 				World.Get4Direction( Player.PlayerController.Yaw ) );
@@ -212,7 +225,34 @@ public class ItemPlacer : Component
 
 		_isValidPlacement = canPlace && isValidPlacementType;
 
-		TransformChange();
+		TransformChange();*/
+		
+		var ray = Scene.Camera.ScreenPixelToRay( Mouse.Position );
+		
+		var box = BBox.FromPositionAndSize( _colliderCenter, _colliderSize );
+		
+		box = box.Rotate( ghost.WorldRotation );
+
+		var trace = Scene.Trace.Box( box, ray, 10000f )
+			.WithoutTags( "player" )
+			.Run();
+		
+		if ( !trace.Hit ) return;
+
+		// Gizmo.Transform = new Transform( trace.EndPosition );
+		// Gizmo.Draw.LineBBox( box );
+		
+		var endPosition = trace.EndPosition;
+		
+		var gridPosition = Player.World.WorldToItemGrid( endPosition );
+		
+		// endPosition = Player.World.ItemGridToWorld( gridPosition );
+		// endPosition.z = trace.EndPosition.z;
+		
+
+		ghost.WorldPosition = endPosition;
+		cursor.WorldPosition = endPosition;
+
 	}
 
 	private World.ItemPlacement? GetItemPlacement( Vector2Int gridPosition )
