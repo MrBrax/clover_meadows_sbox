@@ -8,7 +8,7 @@ namespace Clover.Player;
 
 public class ItemPlacer : Component
 {
-	// [RequireComponent] public PlayerCharacter Player { get; set; }
+
 	private PlayerCharacter Player => GetComponent<PlayerCharacter>();
 
 	[Property] public Model CursorModel { get; set; }
@@ -22,7 +22,11 @@ public class ItemPlacer : Component
 	private ItemData ItemData => InventorySlot.GetItem().ItemData;
 
 	private GameObject _ghost;
-	// private GameObject cursor;
+
+	protected override void OnStart()
+	{
+		Mouse.Visible = true;
+	}
 
 	public void StartPlacing( int inventorySlotIndex )
 	{
@@ -46,7 +50,7 @@ public class ItemPlacer : Component
 	{
 		IsPlacing = false;
 		DestroyGhost();
-		Mouse.Visible = false;
+		// Mouse.Visible = false;
 	}
 
 	public void CreateGhost()
@@ -212,27 +216,6 @@ public class ItemPlacer : Component
 
 	private void UpdateGhostTransform()
 	{
-		/*var gridPosition = Player.GetAimingGridPosition();
-		var gridRotation =
-			World.GetItemRotationFromDirection(
-				World.Get4Direction( Player.PlayerController.Yaw ) );
-
-		if ( gridPosition == _lastGridPosition && gridRotation == _lastGridRotation ) return;
-
-		_lastGridPosition = gridPosition;
-		_lastGridRotation = gridRotation;
-
-		_lastItemPlacement = GetItemPlacement( gridPosition ) ?? World.ItemPlacement.Floor;
-
-		var canPlace = Player.World.CanPlaceItem(
-			InventorySlot.GetItem().ItemData.GetGridPositions( _lastGridRotation, _lastGridPosition ),
-			_lastItemPlacement );
-		
-		var isValidPlacementType = InventorySlot.GetItem().ItemData.Placements.HasFlag( _lastItemPlacement );
-
-		_isValidPlacement = canPlace && isValidPlacementType;
-
-		TransformChange();*/
 		
 		var ray = Scene.Camera.ScreenPixelToRay( Mouse.Position );
 		
@@ -253,65 +236,11 @@ public class ItemPlacer : Component
 		
 		var gridPosition = Player.World.WorldToItemGrid( endPosition );
 		
-		// endPosition = Player.World.ItemGridToWorld( gridPosition );
-		// endPosition.z = trace.EndPosition.z;
-
+		// TODO: Check if the item can be placed here
 		_isValidPlacement = true;
 
 		_ghost.WorldPosition = endPosition;
-		// cursor.WorldPosition = endPosition;
 
 	}
-
-	/*private World.ItemPlacement? GetItemPlacement( Vector2Int gridPosition )
-	{
-		var floorItem = Player.World.GetItem( gridPosition, World.ItemPlacement.Floor );
-
-		if ( floorItem != null )
-		{
-			var placeableNodes = floorItem.GetPlaceableNodes();
-			if ( placeableNodes.Any() )
-			{
-				var onTopItem =
-					Player.World.GetItem( gridPosition, World.ItemPlacement.OnTop );
-				if ( onTopItem != null )
-				{
-					Log.Warning( "On top item already exists." );
-					return null;
-				}
-
-				if ( ItemData.Width > 1 || ItemData.Height > 1 )
-				{
-					Log.Warning( "Can't place a large item on top of another item." );
-					return null;
-				}
-
-				return World.ItemPlacement.OnTop;
-			}
-
-			return null;
-		}
-
-		return World.ItemPlacement.Floor;
-	}
-	*/
-
-	/*private void TransformChange()
-	{
-		/*var transform = Player.World.GetTransform( _lastGridPosition, _lastGridRotation, _lastItemPlacement,
-			InventorySlot.GetItem().ItemData );
-
-		ghost.WorldPosition = transform.position;
-		ghost.WorldRotation = transform.rotation;
-
-		Log.Info( $"Ghost position: {ghost.WorldPosition}" );
-
-		var gridPositions = InventorySlot.GetItem().ItemData.GetGridPositions( _lastGridRotation );
-		var bounds = InventorySlot.GetItem().ItemData.GetBounds( _lastGridRotation );
-
-
-		cursor.WorldPosition = transform.position;
-
-		cursor.WorldScale = new Vector3( bounds.x, bounds.y, 0.3f );#1#
-	}*/
+	
 }
