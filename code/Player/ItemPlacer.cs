@@ -21,8 +21,8 @@ public class ItemPlacer : Component
 
 	private ItemData ItemData => InventorySlot.GetItem().ItemData;
 
-	private GameObject ghost;
-	private GameObject cursor;
+	private GameObject _ghost;
+	// private GameObject cursor;
 
 	public void StartPlacing( int inventorySlotIndex )
 	{
@@ -84,10 +84,10 @@ public class ItemPlacer : Component
 
 		gameObject.WorldPosition = Player.WorldPosition;
 
-		ghost = gameObject;
+		_ghost = gameObject;
 
 		// create cursor
-		cursor = Scene.CreateObject();
+		/*cursor = Scene.CreateObject();
 		cursor.NetworkMode = NetworkMode.Never;
 
 		var model = cursor.AddComponent<ModelRenderer>();
@@ -95,24 +95,24 @@ public class ItemPlacer : Component
 		model.Model = CursorModel;
 		model.RenderType = ModelRenderer.ShadowRenderType.Off;
 
-		cursor.WorldScale = new Vector3( 1, 1, 0.3f );
+		cursor.WorldScale = new Vector3( 1, 1, 0.3f );*/
 	}
 
 	public void DestroyGhost()
 	{
-		if ( ghost.IsValid() )
+		if ( _ghost.IsValid() )
 		{
-			ghost.Destroy();
+			_ghost.Destroy();
 		}
 
-		ghost = null;
+		_ghost = null;
 
-		if ( cursor.IsValid() )
+		/*if ( cursor.IsValid() )
 		{
 			cursor.Destroy();
 		}
 
-		cursor = null;
+		cursor = null;*/
 	}
 
 	protected override void OnDestroy()
@@ -125,7 +125,7 @@ public class ItemPlacer : Component
 	{
 		if ( IsProxy ) return;
 		if ( !IsPlacing ) return;
-		if ( !ghost.IsValid() ) return;
+		if ( !_ghost.IsValid() ) return;
 		CheckInput();
 		UpdateGhostTransform();
 		UpdateVisuals();
@@ -133,7 +133,7 @@ public class ItemPlacer : Component
 
 	private void CheckInput()
 	{
-		if ( Input.Pressed( "use" ) )
+		if ( Input.Pressed( "attack1" ) )
 		{
 			if ( _isValidPlacement )
 			{
@@ -144,10 +144,15 @@ public class ItemPlacer : Component
 			}
 			Input.Clear( "use" );
 		}
+
+		if ( Input.Pressed( "attack2" ) )
+		{
+			StopPlacing();
+		}
 		
 		if ( Input.MouseWheel.y != 0 )
 		{
-			ghost.WorldRotation *= Rotation.FromYaw( Input.MouseWheel.y * 15 );
+			_ghost.WorldRotation *= Rotation.FromYaw( Input.MouseWheel.y * 15 );
 		}
 		
 		/*else if ( Input.Pressed( "cancel" ) )
@@ -160,7 +165,7 @@ public class ItemPlacer : Component
 	{
 		try
 		{
-			Player.World.SpawnPlacedNode( InventorySlot.GetItem(), ghost.WorldPosition, ghost.WorldRotation,
+			Player.World.SpawnPlacedNode( InventorySlot.GetItem(), _ghost.WorldPosition, _ghost.WorldRotation,
 				_lastItemPlacement );
 		}
 		catch ( Exception e )
@@ -176,25 +181,25 @@ public class ItemPlacer : Component
 
 	private void SetGhostTint( Color color )
 	{
-		foreach ( var renderable in ghost.Components.GetAll<ModelRenderer>( FindMode.EverythingInSelfAndDescendants )
+		foreach ( var renderable in _ghost.Components.GetAll<ModelRenderer>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
 			renderable.Tint = color;
 		}
 	}
 
-	private void SetCursorTintColor( Color color )
+	/*private void SetCursorTintColor( Color color )
 	{
 		var renderable = cursor.GetComponent<ModelRenderer>();
 		renderable.SceneObject.Attributes.Set( "tint", color.WithAlpha( 1 ) );
 		renderable.SceneObject.Attributes.Set( "opacity", color.a );
-	}
+	}*/
 
 	private void UpdateVisuals()
 	{
 		var s = MathF.Sin( Time.Now * 5 ) * 0.1f;
 		SetGhostTint( _isValidPlacement ? Color.White.WithAlpha( 0.5f + s ) : Color.Red.WithAlpha( 0.5f + s ) );
-		SetCursorTintColor( _isValidPlacement ? Color.White.WithAlpha( 0.2f + s ) : Color.Red.WithAlpha( 0.2f + s ) );
+		// SetCursorTintColor( _isValidPlacement ? Color.White.WithAlpha( 0.2f + s ) : Color.Red.WithAlpha( 0.2f + s ) );
 	}
 
 	private bool _isValidPlacement;
@@ -233,7 +238,7 @@ public class ItemPlacer : Component
 		
 		var box = BBox.FromPositionAndSize( _colliderCenter, _colliderSize );
 		
-		box = box.Rotate( ghost.WorldRotation );
+		box = box.Rotate( _ghost.WorldRotation );
 
 		var trace = Scene.Trace.Box( box, ray, 10000f )
 			.WithoutTags( "player" )
@@ -253,8 +258,8 @@ public class ItemPlacer : Component
 
 		_isValidPlacement = true;
 
-		ghost.WorldPosition = endPosition;
-		cursor.WorldPosition = endPosition;
+		_ghost.WorldPosition = endPosition;
+		// cursor.WorldPosition = endPosition;
 
 	}
 

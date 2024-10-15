@@ -136,7 +136,7 @@ public sealed partial class World
 		return new Vector2Int( x, y );
 	}
 
-	public void ValidateNodeLinks()
+	/*public void ValidateNodeLinks()
 	{
 		foreach ( var nodeLink in _nodeLinkGridMap.Values )
 		{
@@ -188,15 +188,15 @@ public sealed partial class World
 		}
 		
 		Log.Info( "If you didn't see any errors just now, you're good." );
-	}
+	}*/
 	
-	[ConCmd( "clover_world_validate_node_links")]
+	/*[ConCmd( "clover_world_validate_node_links")]
 	public static void ValidateNodeLinksCmd()
 	{
 		foreach ( var world in WorldManager.Instance.Worlds.Values )
 		{
 			world.ValidateNodeLinks();
 		}
-	}
+	}*/
 	
 }

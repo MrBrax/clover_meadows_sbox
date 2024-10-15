@@ -43,12 +43,12 @@ public sealed partial class World
 			}
 		}*/
 
-		foreach ( var entry in _nodeLinkGridMap.Where( x => x.Key.Position == gridPos ) )
+		/*foreach ( var entry in _nodeLinkGridMap.Where( x => x.Key.Position == gridPos ) )
 		{
 			// Log.Info( $"Found item {entry.Value.GetName()} at {gridPos} in grid map" );
 			// foundItems.Add( entry.Value );
 			yield return entry.Value;
-		}
+		}*/
 
 		// get items that are intersecting this grid position
 		/*foreach ( var item in Items.Values.SelectMany( d => d.Values ) )
@@ -88,6 +88,10 @@ public sealed partial class World
 		}
 
 		Log.Info( $"Found {foundItems.Count} items at {gridPos}" );*/
+
+		// TODO: rework for new system
+		var w = ItemGridToWorld( gridPos );
+		return Items.Where( x => x.WorldPosition.Distance( w ) < GridSize );
 	}
 
 	/// <summary>
@@ -114,6 +118,8 @@ public sealed partial class World
 
 	public WorldNodeLink GetItem( GameObject node )
 	{
-		return _nodeLinkGridMap.Values.FirstOrDefault( x => x.Node == node );
+		// return _nodeLinkGridMap.Values.FirstOrDefault( x => x.Node == node );
+		return Items.FirstOrDefault( x => x.Node == node );
 	}
+	
 }
