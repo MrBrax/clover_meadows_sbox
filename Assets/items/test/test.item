@@ -1,26 +1,28 @@
 {
-  "Name": "Test item",
+  "Id": "test:12268087489833637760",
+  "Name": "Test item 1",
   "Description": null,
   "Width": 1,
   "Height": 1,
   "Placements": "Floor, Underground",
   "CanDrop": true,
+  "CanPlace": true,
   "DisablePickup": false,
   "IsStackable": false,
   "StackSize": 1,
   "ModelScene": null,
-  "CarryScene": null,
   "DropScene": null,
   "PlaceScene": {
     "_type": "gameobject",
     "prefab": "items/test/test.prefab"
   },
-  "Icon": null,
   "DefaultTypeScene": {
     "_type": "gameobject",
     "prefab": "items/test/test.prefab"
   },
+  "Icon": null,
+  "ObjectData": null,
+  "HideInSpawnMenu": false,
   "__references": [],
-  "IsValid": true,
   "__version": 0
 }
