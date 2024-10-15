@@ -792,14 +792,17 @@ public sealed partial class World : Component
 	{
 		base.OnUpdate();
 
+		if ( ShowGrid )
+		{
+			Gizmo.Draw.Grid( Gizmo.GridAxis.XY, 32f );
+		}
+
 		if ( !ShowGridInfo ) return;
 
 		if ( !Game.IsEditor || Gizmo.Camera == null || Layer != WorldManager.Instance.ActiveWorldIndex ) return;
 
 		Gizmo.Transform = new Transform( WorldPosition );
 		// Log.Info( WorldId + ": " + WorldPosition  );
-
-		Gizmo.Draw.Grid( Gizmo.GridAxis.XY, 32f );
 
 		/*foreach ( var pos in _blockedTiles )
 		{
@@ -825,6 +828,8 @@ public sealed partial class World : Component
 	}
 
 	[ConVar( "clover_show_grid_info" )] public static bool ShowGridInfo { get; set; }
+	
+	[ConVar( "clover_show_grid" )] public static bool ShowGrid { get; set; }
 
 	/*[ConCmd( "clover_dump_items" )]
 	public static void CmdDumpItems()
