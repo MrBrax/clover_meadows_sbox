@@ -21,7 +21,7 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 		set
 		{
 			_layer = value;
-			Log.Info( $"Setting layer property to {value} for {GameObject.Name}, rebuilding visibility." );
+			// Log.Info( $"Setting layer property to {value} for {GameObject.Name}, rebuilding visibility." );
 			RebuildVisibility( value );
 		}
 	}
@@ -49,7 +49,7 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 
 	public void SetLayer( int layer, bool rebuildVisibility = false )
 	{
-		Log.Info( $"Setting layer {layer} for {GameObject.Name}" );
+		// Log.Info( $"Setting layer {layer} for {GameObject.Name}" );
 		Layer = layer;
 		
 		if ( rebuildVisibility )
@@ -87,19 +87,19 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 			
 		if ( layer == WorldManager.Instance.ActiveWorldIndex )
 		{
-			Log.Info( $"Setting {GameObject.Name} to visible" );
+			// Log.Info( $"Setting {GameObject.Name} to visible" );
 			Tags.Add( "worldlayer_visible" );
 		}
 		else
 		{
-			Log.Info( $"Setting {GameObject.Name} to invisible" );
+			// Log.Info( $"Setting {GameObject.Name} to invisible" );
 			Tags.Add( "worldlayer_invisible" );
 		}
 	}
 
 	public void OnWorldChanged( World world )
 	{
-		Log.Info( $"World changed to {world.Layer}, rebuilding visibility for {GameObject.Name}" );
+		// Log.Info( $"World changed to {world.Layer}, rebuilding visibility for {GameObject.Name}" );
 		RebuildVisibility( Layer );
 	}
 }

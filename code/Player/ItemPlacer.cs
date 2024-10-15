@@ -39,12 +39,14 @@ public class ItemPlacer : Component
 		InventorySlotIndex = inventorySlotIndex;
 		IsPlacing = true;
 		CreateGhost();
+		Mouse.Visible = true;
 	}
 
 	public void StopPlacing()
 	{
 		IsPlacing = false;
 		DestroyGhost();
+		Mouse.Visible = false;
 	}
 
 	public void CreateGhost()
@@ -158,7 +160,7 @@ public class ItemPlacer : Component
 	{
 		try
 		{
-			Player.World.SpawnPlacedNode( InventorySlot.GetItem(), _lastGridPosition, _lastGridRotation,
+			Player.World.SpawnPlacedNode( InventorySlot.GetItem(), ghost.WorldPosition, ghost.WorldRotation,
 				_lastItemPlacement );
 		}
 		catch ( Exception e )
@@ -248,14 +250,15 @@ public class ItemPlacer : Component
 		
 		// endPosition = Player.World.ItemGridToWorld( gridPosition );
 		// endPosition.z = trace.EndPosition.z;
-		
+
+		_isValidPlacement = true;
 
 		ghost.WorldPosition = endPosition;
 		cursor.WorldPosition = endPosition;
 
 	}
 
-	private World.ItemPlacement? GetItemPlacement( Vector2Int gridPosition )
+	/*private World.ItemPlacement? GetItemPlacement( Vector2Int gridPosition )
 	{
 		var floorItem = Player.World.GetItem( gridPosition, World.ItemPlacement.Floor );
 
@@ -286,10 +289,11 @@ public class ItemPlacer : Component
 
 		return World.ItemPlacement.Floor;
 	}
+	*/
 
-	private void TransformChange()
+	/*private void TransformChange()
 	{
-		var transform = Player.World.GetTransform( _lastGridPosition, _lastGridRotation, _lastItemPlacement,
+		/*var transform = Player.World.GetTransform( _lastGridPosition, _lastGridRotation, _lastItemPlacement,
 			InventorySlot.GetItem().ItemData );
 
 		ghost.WorldPosition = transform.position;
@@ -303,6 +307,6 @@ public class ItemPlacer : Component
 
 		cursor.WorldPosition = transform.position;
 
-		cursor.WorldScale = new Vector3( bounds.x, bounds.y, 0.3f );
-	}
+		cursor.WorldScale = new Vector3( bounds.x, bounds.y, 0.3f );#1#
+	}*/
 }

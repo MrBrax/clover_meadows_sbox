@@ -51,7 +51,7 @@ public sealed partial class World
 			}
 		}*/
 		
-		var items = _nodeLinkGridMap.Values.Select( x => x ).Distinct().ToList();
+		var items = Items.ToList();
 		
 		foreach ( var nodeLink in items )
 		{
@@ -132,6 +132,8 @@ public sealed partial class World
 				Log.Warning( $"Item {item} has no prefab path" );
 				continue;
 			}
+			
+			Log.Info( $"Loading item {item.PrefabPath}" );
 
 			var gameObject = Scene.CreateObject();
 			gameObject.SetPrefabSource( prefabPath );
@@ -149,19 +151,21 @@ public sealed partial class World
 			nodeLink.ItemId = item.ItemId;
 			nodeLink.PlacementType = item.PlacementType;
 			
-			AddNodeLinkToGridMap( nodeLink );
+			// AddNodeLinkToGridMap( nodeLink );
 
 			nodeLink.OnNodeLoad( item );
 
-			nodeLink.CalculateSize();
+			// nodeLink.CalculateSize();
 
 			// nodeLink.LoadItemData();
 			// UpdateTransform( nodeLink );
 
-			foreach ( var pos in nodeLink.GetGridPositions( true ) )
+			/*foreach ( var pos in nodeLink.GetGridPositions( true ) )
 			{
 				_nodeLinkGridMap[ new NodeLinkMapKey() { Position = pos, Placement = nodeLink.GridPlacement } ] = nodeLink;
-			}
+			}*/
+			
+			Items.Add( nodeLink );
 			
 			gameObject.SetParent( GameObject ); // TODO: should items be parented to the world?
 
