@@ -85,17 +85,17 @@ public sealed partial class World : Component
 		public ItemPlacement Placement = Placement;
 	}
 
-	/// <summary>
+	/*/// <summary>
 	///  This is now the main grid map for all items in the world. Node links appear multiple times in this map if they occupy multiple grid positions.
 	///  Somehow, the record struct works as a non-reference type, so it can be used like a search query. Anyone know why?
 	/// </summary>
 	[Obsolete]
-	private readonly Dictionary<NodeLinkMapKey, WorldNodeLink> _nodeLinkGridMap = new();
+	private readonly Dictionary<NodeLinkMapKey, WorldNodeLink> _nodeLinkGridMap = new();*/
 	
 	public HashSet<WorldNodeLink> Items { get; set; } = new();
 	
 
-	[Obsolete]
+	/*[Obsolete]
 	private void AddNodeLinkToGridMap( WorldNodeLink nodeLink )
 	{
 		foreach ( var pos in nodeLink.GetGridPositions( true ) )
@@ -108,26 +108,26 @@ public sealed partial class World : Component
 
 			_nodeLinkGridMap[new NodeLinkMapKey { Position = pos, Placement = nodeLink.GridPlacement }] = nodeLink;
 		}
-	}
+	}*/
 
-	[Obsolete]
+	/*[Obsolete]
 	private void RemoveNodeLinkFromGridMap( WorldNodeLink nodeLink )
 	{
 		foreach ( var entry in _nodeLinkGridMap.Where( x => x.Value == nodeLink ).ToList() )
 		{
 			_nodeLinkGridMap.Remove( entry.Key );
 		}
-	}
+	}*/
 
-	[Obsolete]
+	/*[Obsolete]
 	private void AddNodeLinkGridMapEntry( Vector2Int position, ItemPlacement placement, WorldNodeLink nodeLink )
 	{
 		/*if ( _nodeLinkGridMap.ContainsKey( new NodeLinkMapKey { Position = position, Placement = placement } ) )
 		{
 			throw new Exception( $"Node link already exists at {position} with placement {placement}" );
-		}*/
+		}#1#
 		_nodeLinkGridMap[new NodeLinkMapKey { Position = position, Placement = placement }] = nodeLink;
-	}
+	}*/
 
 	[Sync] public int Layer { get; set; }
 
@@ -503,7 +503,7 @@ public sealed partial class World : Component
 		// Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
 	}*/
 
-	/// <summary>
+	/*/// <summary>
 	/// Removes an item from the world at the specified position and placement.
 	/// </summary>
 	/// <param name="position">The position of the item to remove.</param>
@@ -532,7 +532,7 @@ public sealed partial class World : Component
 		}
 
 		OnItemRemoved?.Invoke( nodeLink );
-	}
+	}*/
 
 	/// <inheritdoc cref="RemoveItem(Vector2Int,ItemPlacement)"/>
 	public void RemoveItem( GameObject node )
@@ -623,7 +623,7 @@ public sealed partial class World : Component
 			Gizmo.Draw.Text( item.GridPosition.ToString(), new Transform( ItemGridToWorld( item.GridPosition ) ) );
 		}*/
 
-		var i = 0;
+		/*var i = 0;
 		foreach ( var item in _nodeLinkGridMap )
 		{
 			// var pos = item.Key.Split( ':' )[0].Split( ',' ).Select( int.Parse ).ToArray();
@@ -633,7 +633,7 @@ public sealed partial class World : Component
 
 			Gizmo.Draw.ScreenText( $"[{item.Key.Position}:{item.Key.Placement}] {item.Value.GetName()}",
 				new Vector2( 20f, 20f + ((i++) * 20f) ) );
-		}
+		}*/
 	}
 
 	[ConVar( "clover_show_grid_info" )] public static bool ShowGridInfo { get; set; }
@@ -658,7 +658,8 @@ public sealed partial class World : Component
 
 	public bool HasNodeLink( WorldNodeLink node )
 	{
-		return _nodeLinkGridMap.ContainsValue( node );
+		// return _nodeLinkGridMap.ContainsValue( node );
+		return Items.Contains( node );
 	}
 
 	public void NodeLinkBenchmark()
@@ -699,10 +700,10 @@ public sealed partial class World : Component
 
 		sw.Restart();
 
-		for ( var i = 0; i < 10000; i++ )
+		/*for ( var i = 0; i < 10000; i++ )
 		{
 			var nodeLink = _nodeLinkGridMap.FirstOrDefault( x => x.Key.Position == pos );
-		}
+		}*/
 
 		sw.Stop();
 		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinkGridMap" );

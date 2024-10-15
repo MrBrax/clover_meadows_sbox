@@ -162,13 +162,15 @@ public sealed partial class World
 			worldItem.ItemData = itemData;
 		}
 
-		nodeLink.CalculateSize();
+		// nodeLink.CalculateSize();
 
 		// UpdateTransform( nodeLink );
 
 		gameObject.Name = nodeLink.GetName();
 
-		AddNodeLinkToGridMap( nodeLink );
+		// AddNodeLinkToGridMap( nodeLink );
+		
+		Items.Add( nodeLink );
 
 		// nodeLink.OnNodeAdded();
 
