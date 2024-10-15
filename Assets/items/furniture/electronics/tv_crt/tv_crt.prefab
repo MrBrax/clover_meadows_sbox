@@ -8,7 +8,7 @@
       {
         "__type": "Clover.Items.WorldItem",
         "__guid": "004fa9db-fda2-427b-9c80-f032b08eeecc",
-        "CanPickupSimple": false,
+        "CanPickupSimple": true,
         "ItemData": "items/furniture/electronics/tv_crt/tv_crt.item",
         "Prefab": "items/furniture/electronics/tv_crt/tv_crt.prefab"
       },
