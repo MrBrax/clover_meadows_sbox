@@ -55,8 +55,8 @@ public class Television : Component, IInteract
 	protected override void OnDestroy()
 	{
 		base.OnDestroy();
-		_videoPlayer.Stop();
-		_videoPlayer.Dispose();
+		_videoPlayer?.Stop();
+		_videoPlayer?.Dispose();
 	}
 	
 	public async void PlayVideo( string url )
