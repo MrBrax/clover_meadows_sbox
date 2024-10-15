@@ -16,9 +16,13 @@ public class WorldNodeLink : IValid
 	[JsonIgnore] public World World;
 	[JsonIgnore] public GameObject Node;
 
-	public Vector2Int GridPosition;
+	[Obsolete] public Vector2Int GridPosition;
 
-	public World.ItemRotation GridRotation;
+	[Obsolete] public World.ItemRotation GridRotation;
+
+	public Vector3 WorldPosition => Node.WorldPosition;
+	public Rotation WorldRotation => Node.WorldRotation;
+
 	public World.ItemPlacement GridPlacement;
 	public World.ItemPlacementType PlacementType;
 
@@ -179,8 +183,10 @@ public class WorldNodeLink : IValid
 		return new PersistentWorldItem
 		{
 			Position = GridPosition,
-			Placement = GridPlacement,
 			Rotation = GridRotation,
+			WPosition = WorldPosition.SnapToGrid( 1 ),
+			WAngles = WorldRotation.Angles().SnapToGrid( 1 ),
+			Placement = GridPlacement,
 			PlacementType = PlacementType,
 			PrefabPath = PrefabPath,
 			ItemId = ItemId,

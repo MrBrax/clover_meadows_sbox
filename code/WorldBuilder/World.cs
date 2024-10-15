@@ -89,8 +89,13 @@ public sealed partial class World : Component
 	///  This is now the main grid map for all items in the world. Node links appear multiple times in this map if they occupy multiple grid positions.
 	///  Somehow, the record struct works as a non-reference type, so it can be used like a search query. Anyone know why?
 	/// </summary>
+	[Obsolete]
 	private readonly Dictionary<NodeLinkMapKey, WorldNodeLink> _nodeLinkGridMap = new();
+	
+	public List<WorldNodeLink> Items { get; set; } = new();
+	
 
+	[Obsolete]
 	private void AddNodeLinkToGridMap( WorldNodeLink nodeLink )
 	{
 		foreach ( var pos in nodeLink.GetGridPositions( true ) )
@@ -105,6 +110,7 @@ public sealed partial class World : Component
 		}
 	}
 
+	[Obsolete]
 	private void RemoveNodeLinkFromGridMap( WorldNodeLink nodeLink )
 	{
 		foreach ( var entry in _nodeLinkGridMap.Where( x => x.Value == nodeLink ).ToList() )
@@ -113,6 +119,7 @@ public sealed partial class World : Component
 		}
 	}
 
+	[Obsolete]
 	private void AddNodeLinkGridMapEntry( Vector2Int position, ItemPlacement placement, WorldNodeLink nodeLink )
 	{
 		/*if ( _nodeLinkGridMap.ContainsKey( new NodeLinkMapKey { Position = position, Placement = placement } ) )

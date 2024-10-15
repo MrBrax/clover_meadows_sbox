@@ -136,23 +136,18 @@ public sealed partial class World
 			var gameObject = Scene.CreateObject();
 			gameObject.SetPrefabSource( prefabPath );
 			gameObject.UpdateFromPrefab();
+			
+			gameObject.WorldPosition = item.WPosition;
+			gameObject.WorldRotation = item.WAngles;
 
 			var nodeLink = new WorldNodeLink( this, gameObject );
 
 			nodeLink.GridPosition = position;
-			nodeLink.GridPlacement = placement;
 			nodeLink.GridRotation = rotation;
+			
+			nodeLink.GridPlacement = placement;
 			nodeLink.ItemId = item.ItemId;
 			nodeLink.PlacementType = item.PlacementType;
-
-			/*if ( !Items.ContainsKey( position ) )
-			{
-				Items[position] = new Dictionary<ItemPlacement, WorldNodeLink>();
-			}*/
-
-			/*Items[position][placement] = nodeLink;
-
-			_nodeLinkMap[nodeLink.Node] = nodeLink;*/
 			
 			AddNodeLinkToGridMap( nodeLink );
 
@@ -161,11 +156,10 @@ public sealed partial class World
 			nodeLink.CalculateSize();
 
 			// nodeLink.LoadItemData();
-			UpdateTransform( nodeLink );
+			// UpdateTransform( nodeLink );
 
 			foreach ( var pos in nodeLink.GetGridPositions( true ) )
 			{
-				// _nodeLinkGridMap[$"{pos.x},{pos.y}:{nodeLink.GridPlacement}"] = nodeLink;
 				_nodeLinkGridMap[ new NodeLinkMapKey() { Position = pos, Placement = nodeLink.GridPlacement } ] = nodeLink;
 			}
 			
