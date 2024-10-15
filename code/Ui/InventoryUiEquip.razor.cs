@@ -16,7 +16,7 @@ public partial class InventoryUiEquip : IEquipChanged
 	
 	private bool HasItem => Inventory.Player.Equips.HasEquippedItem( Slot );
 
-	public void OnEquippedItemChanged( GameObject owner, Equips.EquipSlot slot, GameObject item )
+	void IEquipChanged.OnEquippedItemChanged( GameObject owner, Equips.EquipSlot slot, GameObject item )
 	{
 		if ( Inventory.GameObject != owner || slot != Slot )
 		{
@@ -27,7 +27,7 @@ public partial class InventoryUiEquip : IEquipChanged
 		StateHasChanged();
 	}
 
-	public void OnEquippedItemRemoved( GameObject owner, Equips.EquipSlot slot )
+	void IEquipChanged.OnEquippedItemRemoved( GameObject owner, Equips.EquipSlot slot )
 	{
 		if ( Inventory.GameObject != owner || slot != Slot )
 		{
@@ -79,6 +79,20 @@ public partial class InventoryUiEquip : IEquipChanged
 			Log.Error( "No item equipped" );
 			return;
 		}
+		
+		// hardcode for now 
+		if ( item.Components.TryGet<CarriedEdible>( out var edible ) )
+		{
+			var actualItem = new PersistentItem( edible.EdibleData.Id );
+			
+			Inventory.Container.AddItemToIndex( actualItem, targetSlot );
+			
+			Inventory.Player.Equips.RemoveEquippedItem( Slot, true );
+			
+			StateHasChanged();
+
+			return;
+		}
 
 		var persistentItem = PersistentItem.Create( item );
 		
@@ -86,7 +100,7 @@ public partial class InventoryUiEquip : IEquipChanged
 		
 		Inventory.Player.Equips.RemoveEquippedItem( Slot, true );
 		
-		Inventory.Player.Save();
+		// Inventory.Player.Save();
 		
 		StateHasChanged();
 

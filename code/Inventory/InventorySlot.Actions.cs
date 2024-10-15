@@ -57,6 +57,13 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Equip()
 	{
+
+		if ( PersistentItem.ItemData is FruitData )
+		{
+			HoldEdible();
+			return;
+		}
+		
 		Components.Equips.EquipSlot slot;
 
 		// get slot from item
