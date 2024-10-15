@@ -25,6 +25,8 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 	
 	[Property] public float UseTime { get; set; } = 1f;
 	
+	// public virtual bool DestroyOnUnequip => false;
+	
 	public delegate void OnEquipActionEvent( GameObject holder );
 	[Property, Group("Actions")] public OnEquipActionEvent OnEquipAction { get; set; }
 	
@@ -113,12 +115,12 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 		player.Inventory.PickUpItem( GetComponent<WorldItem>().NodeLink );
 	}
 
-	public void OnSave( PersistentItem item )
+	public virtual void OnSave( PersistentItem item )
 	{
 		item.SetArbitraryData( "Durability", Durability );
 	}
 
-	public void OnLoad( PersistentItem item )
+	public virtual void OnLoad( PersistentItem item )
 	{
 		if ( item.TryGetArbitraryData<int>( "Durability", out var durability ) )
 		{

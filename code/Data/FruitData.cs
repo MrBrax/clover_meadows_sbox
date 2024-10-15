@@ -12,11 +12,18 @@ public class FruitData : ItemData
 	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
 	{
 		// TODO: Add "Eat" action
-		yield return new ItemAction
+		/*yield return new ItemAction
 		{
 			Name = "Eat",
 			Icon = "restaurant",
 			Action = slot.Delete
+		};*/
+		
+		yield return new ItemAction
+		{
+			Name = "Hold",
+			Icon = "restaurant",
+			Action = slot.HoldEdible
 		};
 
 		foreach ( var action in base.GetActions( slot ) )

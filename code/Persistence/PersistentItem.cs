@@ -32,6 +32,16 @@ public class PersistentItem
 	[JsonIgnore] public virtual bool IsStackable => ItemData.IsStackable;
 	[JsonIgnore] public virtual int StackSize => ItemData.StackSize;
 	
+	public PersistentItem()
+	{
+	
+	}
+	
+	public PersistentItem( string itemId )
+	{
+		ItemId = itemId;
+	}
+	
 	/// <summary>
 	///  Get arbitrary data from this item. If the key doesn't exist, it will return the default value.
 	///  Use <see cref="SetArbitraryData"/> to store arbitrary data.

@@ -434,4 +434,19 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 	{
 		TakeOneOrDelete();
 	}
+
+	public void HoldEdible()
+	{
+
+		var carriedPersistentItem = new PersistentItem( "carried_edible:4023053997083351548" );
+		carriedPersistentItem.SetArbitraryData( "EdibleData", PersistentItem.ItemData.Id );
+
+		var carriedEdible = carriedPersistentItem.SpawnCarriable();
+		
+		InventoryContainer.Player.Equips.SetEquippedItem( Equips.EquipSlot.Tool, carriedEdible.GameObject );
+		
+		TakeOneOrDelete();
+
+	}
+	
 }
