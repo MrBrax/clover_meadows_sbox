@@ -1,0 +1,13 @@
+{
+  "Title": "Shop",
+  "Prefab": {
+    "_type": "gameobject",
+    "prefab": "worlds/shop/shop.prefab"
+  },
+  "IsInside": true,
+  "Width": 0,
+  "Height": 0,
+  "DisableItemPlacement": true,
+  "__references": [],
+  "__version": 0
+}

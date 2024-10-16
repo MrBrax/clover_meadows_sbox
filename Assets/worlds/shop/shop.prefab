@@ -1,0 +1,216 @@
+{
+  "RootObject": {
+    "__guid": "e631b962-245c-40ab-ba9b-ec604b6dfbbd",
+    "Flags": 0,
+    "Name": "shop",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.World",
+        "__guid": "4ecfd064-5720-4f02-bf25-832dd695823f",
+        "Data": "worlds/shop/shop.world"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "80d83da8-211b-4148-877a-65b7fa084058",
+        "Flags": 0,
+        "Name": "shop_main",
+        "Position": "256,192,0.00001439794",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "b9892183-d8c3-4a10-ac4d-400139993987",
+            "BodyGroups": 18446744073709551615,
+            "Model": "worlds/shop/shop_main.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "f510b25b-35c2-402b-b18e-836a7a6b4dba",
+            "IsTrigger": false,
+            "Model": "worlds/shop/shop_main.vmdl",
+            "Static": true
+          }
+        ],
+        "Children": [
+          {
+            "__guid": "e86c408e-d312-452b-bad9-166bca2bb4e6",
+            "Flags": 0,
+            "Name": "Point Light",
+            "Position": "192,0,15.99998",
+            "Tags": "light_point,light",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.PointLight",
+                "__guid": "eadec608-18bb-477c-9b2f-e59180d6741f",
+                "Attenuation": 2,
+                "FogMode": "Enabled",
+                "FogStrength": 1,
+                "LightColor": "14.91207,15.99148,16.32,1",
+                "Radius": 100,
+                "Shadows": true
+              }
+            ]
+          },
+          {
+            "__guid": "44a00733-7bf8-4e98-865b-9c760442c4fd",
+            "Flags": 0,
+            "Name": "shop_counter",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "f46095fa-c54c-4bd6-8126-36e93094dfef",
+                "BodyGroups": 18446744073709551615,
+                "Model": "worlds/shop/shop_counter.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "add99de3-7c63-4a76-9e24-30a6df5cb030",
+                "IsTrigger": false,
+                "Model": "worlds/shop/shop_counter.vmdl",
+                "Static": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__guid": "b51223e1-0773-48bd-a3ed-85e48b29ee55",
+        "Flags": 0,
+        "Name": "Point Light",
+        "Position": "96,128,96",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "76813bff-c094-47a9-ad04-56afb724d7df",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 400,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "e36422ed-aa73-4d24-9808-fd91f50bb73d",
+        "Flags": 0,
+        "Name": "Point Light (1)",
+        "Position": "256,128,96",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "77d17035-522a-4a87-99d6-c0df212992e5",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 400,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "49c3323c-0890-4481-a065-2d33da2e9ba2",
+        "Flags": 0,
+        "Name": "Point Light (2)",
+        "Position": "256,256,96",
+        "Tags": "light_point,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PointLight",
+            "__guid": "0ee9b917-5dcd-4ed4-b3f8-4fad46d2b3aa",
+            "Attenuation": 1,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.91373,0.98039,1,1",
+            "Radius": 400,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "18166db7-8085-4e5a-b828-49370c73b98b",
+        "Flags": 0,
+        "Name": "Entrance",
+        "Position": "376,192,-10",
+        "Rotation": "0,0,1,-0.00000004371139",
+        "Tags": "worldlayer_visible",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldEntrance",
+            "__guid": "629300c7-6c34-45e6-8c65-9d28695155e3",
+            "EntranceId": "entry"
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "fcef52e9-d2f8-4cb0-8874-1ea318a11801"
+          }
+        ]
+      },
+      {
+        "__guid": "1c6b916b-b0a9-4283-8f08-49b495b13ea4",
+        "Flags": 0,
+        "Name": "HouseTrigger",
+        "Position": "392,192,4.000069",
+        "Tags": "trigger,worldlayer_visible",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.AreaTrigger",
+            "__guid": "7831bfce-0ad4-419c-965d-6a0c9c4518f3",
+            "DestinationEntranceId": "shop_exit",
+            "DestinationWorldData": "worlds/island/island.world",
+            "NoWalk": false,
+            "UnloadPreviousWorld": true
+          },
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "206f2c58-4452-4c60-bca4-33452fc9170a",
+            "Center": "0,0,0",
+            "IsTrigger": true,
+            "Scale": "21.13332,76.00003,50",
+            "Static": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "7a320214-ff01-46e1-9627-478101d0caf9"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

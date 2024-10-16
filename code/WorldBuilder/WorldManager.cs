@@ -8,7 +8,7 @@ namespace Clover;
 public class WorldManager : Component, Component.INetworkSpawn
 {
 	public static WorldManager Instance { get; private set; }
-	
+
 	public static World Island => Instance.GetWorld( "island" );
 
 	// [Property] public List<World> Worlds { get; set; } = new();
@@ -16,7 +16,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 
 	[Property] public int ActiveWorldIndex { get; set; }
 	[Property] public World ActiveWorld => GetWorld( ActiveWorldIndex );
-	
+
 	[Property] public WorldData DefaultWorldData { get; set; }
 
 	public delegate void WorldUnloadEventHandler( World world );
@@ -49,7 +49,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 	{
 		Instance = this;
 	}
-	
+
 	public void OnWorldsChanged()
 	{
 		Log.Info( "Worlds changed." );
@@ -80,15 +80,15 @@ public class WorldManager : Component, Component.INetworkSpawn
 		{
 			return null;
 		}
-		
-		
+
+
 		var val = Worlds.Values.FirstOrDefault( w => w.Layer == index );
 		if ( !val.IsValid() )
 		{
 			Log.Warning( $"World not found at index: {index}, searching scene..." );
 			val = Scene.GetAllComponents<World>().FirstOrDefault( w => w.Layer == index );
 		}
-		
+
 		return val;
 	}
 
@@ -96,12 +96,12 @@ public class WorldManager : Component, Component.INetworkSpawn
 	{
 		Log.Info( $"Setting active world to index: {index}" );
 		ActiveWorldIndex = index;
-		
+
 		if ( !ActiveWorld.IsValid() )
 		{
 			Log.Warning( $"Active world is not valid: {index}" );
 		}
-		
+
 		RebuildVisibility();
 		ActiveWorldChanged?.Invoke( ActiveWorld );
 		Scene.RunEvent<IWorldEvent>( x => x.OnWorldChanged( ActiveWorld ) );
@@ -114,9 +114,9 @@ public class WorldManager : Component, Component.INetworkSpawn
 			Log.Warning( "No worlds to rebuild visibility for." );
 			return;
 		}
-		
+
 		Log.Info( $"Rebuilding world visibility for {Worlds.Count} worlds..." );
-		
+
 		// rebuild world visibility
 		for ( var i = 0; i < Worlds.Count; i++ )
 		{
@@ -144,7 +144,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		// rebuild object visibility
 		foreach ( var layerObject in Scene.GetAllComponents<WorldLayerObject>() )
 		{
-			layerObject.RebuildVisibility( layerObject.Layer);
+			layerObject.RebuildVisibility( layerObject.Layer );
 		}
 	}
 
@@ -180,6 +180,12 @@ public class WorldManager : Component, Component.INetworkSpawn
 			index++;
 		}
 
+		if ( !data.Prefab.IsValid() )
+		{
+			Log.Error( $"Invalid prefab for world: {data.ResourceName}" );
+			return null;
+		}
+
 		var gameObject = data.Prefab.Clone();
 
 		// gameObject.BreakFromPrefab();
@@ -197,7 +203,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 
 		gameObject.NetworkMode = NetworkMode.Object;
 		gameObject.NetworkSpawn();
-		
+
 		Worlds[index] = world;
 
 		world.Setup();
@@ -209,15 +215,14 @@ public class WorldManager : Component, Component.INetworkSpawn
 		RebuildVisibility();
 
 		// ActiveWorldChanged?.Invoke( world );
-		
+
 		OnWorldLoadedRpc( data.ResourceName );
 
 		// return dummy task to shut up the compiler
 
 		await Task.Frame();
-		
-		return world;
 
+		return world;
 	}
 
 	public async Task<World> GetWorldOrLoad( WorldData data )
@@ -226,7 +231,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		var world = GetWorld( data.ResourceName );
 		return world.IsValid() ? world : await LoadWorld( data );
 	}
-	
+
 	[Authority]
 	public void RequestLoadWorld( string id )
 	{
@@ -246,13 +251,13 @@ public class WorldManager : Component, Component.INetworkSpawn
 	{
 		Log.Info( $"World loaded: {id}" );
 		var world = GetWorld( id );
-		
+
 		if ( !world.IsValid() )
 		{
 			Log.Error( $"World not found: {id}" );
 			return;
 		}
-		
+
 		WorldLoaded?.Invoke( world );
 		Scene.RunEvent<IWorldEvent>( x => x.OnWorldLoaded( world ) );
 		world.OnWorldLoaded();
@@ -261,7 +266,6 @@ public class WorldManager : Component, Component.INetworkSpawn
 		{
 			Log.Info( $"World #{world2.Key}: {world2.Value.Data.ResourceName}" );
 		}
-		
 	}
 
 
@@ -334,7 +338,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		player.WorldPosition = entrance.WorldPosition;
 		player.GetComponent<CameraController>().SnapCamera();
 	}
-	
+
 	[ConCmd( "world_save_all" )]
 	public static void SaveAllCmd()
 	{
@@ -343,7 +347,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 			world.Save();
 		}
 	}
-	
+
 	public WorldNodeLink GetWorldNodeLink( GameObject gameObject )
 	{
 		foreach ( var world in Worlds.Values )
@@ -354,9 +358,8 @@ public class WorldManager : Component, Component.INetworkSpawn
 				return link;
 			}
 		}
-		
+
 		return null;
-		
 	}
 }
 

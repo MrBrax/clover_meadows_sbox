@@ -89,7 +89,7 @@
             "EntranceId": "player_house_exit",
             "ExitDoor": {
               "_type": "component",
-              "component_id": "a379faed-6e1a-4720-a641-e28db8b10990",
+              "component_id": "b2747e33-60fc-46cb-aaff-6dc3f6012faa",
               "go": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
               "component_type": "Door"
             }
@@ -97,6 +97,31 @@
           {
             "__type": "Clover.WorldLayerObject",
             "__guid": "23fc471c-773d-4337-93c4-9ba7772244ce"
+          }
+        ]
+      },
+      {
+        "__guid": "ea1777c4-b86f-4dd5-92dd-02ef686c3f46",
+        "Flags": 0,
+        "Name": "Entrance (1)",
+        "Position": "1296,304,-0.0000684095",
+        "Rotation": "0,0,0.0000001509958,-1",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldEntrance",
+            "__guid": "08530f11-08f1-45fa-b818-ff53f5d2b8e0",
+            "EntranceId": "shop_exit",
+            "ExitDoor": {
+              "_type": "component",
+              "component_id": "debf8939-f18d-4c22-9085-9d284a423e8b",
+              "go": "3cb765b7-d4ce-4bfb-9575-f21f6e9d8791",
+              "component_type": "Door"
+            }
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "402fb2fc-407e-4d3b-9e45-bbaf89d1f0ac"
           }
         ]
       },
@@ -151,6 +176,37 @@
         ]
       },
       {
+        "__guid": "cfa2e83d-e06c-4bda-b2ef-05bddc3c1fcc",
+        "Flags": 0,
+        "Name": "HouseTrigger (1)",
+        "Position": "1232,304,16",
+        "Rotation": "0,0,1,-0.00000004371139",
+        "Tags": "trigger",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.AreaTrigger",
+            "__guid": "37fc18d6-c446-4b4c-9522-890b9165c4f7",
+            "DestinationEntranceId": "entry",
+            "DestinationWorldData": "worlds/shop/shop.world",
+            "NoWalk": true,
+            "UnloadPreviousWorld": false
+          },
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "7c5405c4-d1d4-408d-aa67-2cf2a05c7a0e",
+            "Center": "0,0,0",
+            "IsTrigger": true,
+            "Scale": "80,80,50",
+            "Static": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "f07b0d4c-54e1-47fe-871f-050d0fb76b2e"
+          }
+        ]
+      },
+      {
         "__guid": "32ef1c9c-cf9b-4008-ab05-1bb0d055c8b0",
         "Flags": 0,
         "Name": "player_house_exterior",
@@ -174,6 +230,36 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "3ff6cb72-cf6b-41c5-9f7a-2b643b55c40e",
+            "IsTrigger": false,
+            "Model": "models/player_house_exterior/player_house_exterior.vmdl",
+            "Static": false
+          }
+        ]
+      },
+      {
+        "__guid": "baf8c252-bb06-4291-9d98-a944a237da0e",
+        "Flags": 0,
+        "Name": "player_house_exterior (1)",
+        "Position": "1216,304,0",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "c9e8ed28-6abe-4ad6-b878-ce16f081f4f3",
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/player_house_exterior/player_house_exterior.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "790268f2-7222-4b77-8808-41be402642d6",
             "IsTrigger": false,
             "Model": "models/player_house_exterior/player_house_exterior.vmdl",
             "Static": false
@@ -652,6 +738,17 @@
         "Flags": 0,
         "Name": "door",
         "Position": "1278,512,1.000275",
+        "Rotation": "-0.00000000000003422443,-0.00000002980232,0.000000462459,-0.9999999",
+        "Enabled": true,
+        "NetworkMode": 1,
+        "__Prefab": "buildings/door/door.prefab",
+        "__PrefabVariables": {}
+      },
+      {
+        "__guid": "3cb765b7-d4ce-4bfb-9575-f21f6e9d8791",
+        "Flags": 0,
+        "Name": "door (1)",
+        "Position": "1278,288,1.000275",
         "Rotation": "-0.00000000000003422443,-0.00000002980232,0.000000462459,-0.9999999",
         "Enabled": true,
         "NetworkMode": 1,
