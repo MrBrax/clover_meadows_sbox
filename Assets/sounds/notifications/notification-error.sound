@@ -5,7 +5,7 @@
   "Decibels": 70,
   "SelectionMode": "Random",
   "Sounds": [
-    "sounds/kenney/ui/error_006.vsnd"
+    "sounds/notifications/542040__rob_marion__gasp_ui_reject.vsnd"
   ],
   "Occlusion": true,
   "AirAbsorption": true,
