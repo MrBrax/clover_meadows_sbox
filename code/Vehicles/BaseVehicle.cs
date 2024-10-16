@@ -64,14 +64,6 @@ public class BaseVehicle : Component, IInteract
 
 	public void StartInteract( PlayerCharacter player )
 	{
-		/*if ( !HasDriver )
-		{
-			AddOccupant( 0, player.GameObject );
-		}
-		else
-		{
-			AddOccupant( player.GameObject );
-		}*/
 		EnterVehicle();
 	}
 

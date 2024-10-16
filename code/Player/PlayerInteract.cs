@@ -63,7 +63,16 @@ public class PlayerInteract : Component
 			if ( interactable != null )
 			{
 				_currentInteractable = interactable;
-				_currentInteractable.StartInteract( GetComponent<PlayerCharacter>() );
+				_currentInteractable.StartInteract( Player );
+
+				if ( !Networking.IsHost )
+				{
+					using ( Rpc.FilterInclude( Connection.Host ) )
+					{
+						_currentInteractable.StartInteractHost( Player );
+					}
+				}
+
 				Input.Clear( "use" );
 			}
 			else
@@ -77,7 +86,16 @@ public class PlayerInteract : Component
 		{
 			if ( _currentInteractable != null )
 			{
-				_currentInteractable.FinishInteract( GetComponent<PlayerCharacter>() );
+				_currentInteractable.FinishInteract( Player );
+
+				if ( !Networking.IsHost )
+				{
+					using ( Rpc.FilterInclude( Connection.Host ) )
+					{
+						_currentInteractable.FinishInteractHost( Player );
+					}
+				}
+
 				_currentInteractable = null;
 				Input.Clear( "use" );
 			}
@@ -125,7 +143,8 @@ public class PlayerInteract : Component
 				if ( collider.GameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 				{
 					// only allow picking up items on the floor or on top of other items
-					if ( worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
+					if ( worldItem.NodeLink != null &&
+					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
 					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop )
 					{
 						continue;
@@ -160,7 +179,8 @@ public class PlayerInteract : Component
 				{
 					if ( checkGameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 					{
-						if ( worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
+						if ( worldItem.NodeLink != null &&
+						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
 						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop &&
 						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Wall
 						   )

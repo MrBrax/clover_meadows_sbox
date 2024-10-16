@@ -167,8 +167,11 @@ public class WorldItem : Component, IPickupable
 		return !HasItemOnTop() && CanPickupSimple;
 	}
 
+	[Obsolete]
 	public bool HasItemOnTop()
 	{
+		if ( NodeLink == null ) return false;
+
 		var gridPositions = NodeLink.GetGridPositions( true );
 
 		foreach ( var pos in gridPositions )

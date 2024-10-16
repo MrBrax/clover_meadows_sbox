@@ -9,7 +9,7 @@ using Clover.Ui;
 
 namespace Clover.Items;
 
-public class CoffeeMachine : Component, IInteract
+public class CoffeeMachine : Component, IInteract, IPersistent
 {
 	[Property] public SoundEvent GrindingSound { get; set; }
 	[Property] public SoundEvent BrewingSound { get; set; }
@@ -28,7 +28,7 @@ public class CoffeeMachine : Component, IInteract
 
 	[Sync] private bool _hasCup { get; set; }
 	[Sync] private bool _isBrewing { get; set; }
-	private bool _isGrinding;
+	[Sync] private bool _isGrinding { get; set; }
 
 	protected override void OnStart()
 	{
@@ -143,5 +143,16 @@ public class CoffeeMachine : Component, IInteract
 	public string GetInteractName()
 	{
 		return !_isBrewing ? (_hasCup ? "Take cup" : "Brew coffee") : "Unavailable";
+	}
+
+	public void OnSave( PersistentItem item )
+	{
+		item.SetArbitraryData( "HasCup", _hasCup );
+	}
+
+	public void OnLoad( PersistentItem item )
+	{
+		_hasCup = item.GetArbitraryData<bool>( "HasCup" );
+		SetCupEnabled( _hasCup );
 	}
 }

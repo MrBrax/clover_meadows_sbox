@@ -17,4 +17,7 @@ public interface IInteract
 	void FinishInteract( PlayerCharacter player );
 
 	string GetInteractName();
+
+	void StartInteractHost( PlayerCharacter player ) { }
+	void FinishInteractHost( PlayerCharacter player ) { }
 }
