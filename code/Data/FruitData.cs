@@ -4,10 +4,11 @@ using Clover.Persistence;
 namespace Clover.Data;
 
 [GameResource( "Fruit Data", "fruit", "FruitData" )]
-public class FruitData : ItemData
+public class FruitData : ItemData, IEdibleData
 {
 	[Property, Group( "Fruit" )] public GameObject InTreeScene { get; set; }
 
+	[Property, Group( "Food" )] public GameObject HoldScene { get; set; }
 
 	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
 	{
@@ -18,13 +19,8 @@ public class FruitData : ItemData
 			Icon = "restaurant",
 			Action = slot.Delete
 		};*/
-		
-		yield return new ItemAction
-		{
-			Name = "Hold",
-			Icon = "restaurant",
-			Action = slot.HoldEdible
-		};
+
+		yield return new ItemAction { Name = "Hold", Icon = "restaurant", Action = slot.HoldEdible };
 
 		foreach ( var action in base.GetActions( slot ) )
 		{

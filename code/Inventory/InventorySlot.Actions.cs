@@ -58,7 +58,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 	public void Equip()
 	{
 
-		if ( PersistentItem.ItemData is FruitData )
+		if ( PersistentItem.ItemData is IEdibleData )
 		{
 			HoldEdible();
 			return;

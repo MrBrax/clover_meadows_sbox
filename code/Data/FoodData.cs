@@ -7,7 +7,7 @@ namespace Clover.Data;
 public class FoodData : ItemData, IEdibleData
 {
 	
-	[Property] public GameObject HoldScene { get; set; }
+	[Property, Group("Food")] public GameObject HoldScene { get; set; }
 	
 	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
 	{

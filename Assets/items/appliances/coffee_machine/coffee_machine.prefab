@@ -35,18 +35,24 @@
         "CupSound": "items/appliances/coffee_machine/cup.sound",
         "FinishSound": "items/appliances/coffee_machine/finish.sound",
         "GrindingSound": "items/appliances/coffee_machine/grinding-beans.sound",
+        "LiquidParticleEmitter": {
+          "_type": "component",
+          "component_id": "4a38ae2b-3486-45b3-aa9b-3be929fd75fc",
+          "go": "39dd1814-0ac5-4d8a-9b1f-9c25624adaec",
+          "component_type": "ParticleBoxEmitter"
+        },
         "Model": {
           "_type": "gameobject",
           "go": "bd02afd5-49c6-47f0-a7f6-d16c87dfedee"
         },
-        "ParticleEmitter": {
+        "PouringSound": "items/appliances/coffee_machine/pouring.sound",
+        "ReceivedItem": "items/food/beverages/coffee/coffee.food",
+        "SteamParticleEmitter": {
           "_type": "component",
           "component_id": "5098a55a-f506-4288-aa89-feda4f9b5844",
           "go": "052d95ff-883e-47ee-9f73-cf83a2486d16",
           "component_type": "ParticleBoxEmitter"
-        },
-        "PouringSound": "items/appliances/coffee_machine/pouring.sound",
-        "ReceivedItem": "items/food/beverages/coffee/coffee.food"
+        }
       }
     ],
     "Children": [
@@ -102,7 +108,7 @@
           {
             "__guid": "052d95ff-883e-47ee-9f73-cf83a2486d16",
             "Flags": 0,
-            "Name": "Particle",
+            "Name": "SteamParticle",
             "Position": "11.55484,14.56411,24.34239",
             "Rotation": "0,0,-0.7071068,0.7071068",
             "Scale": "2,2,2",
@@ -116,7 +122,7 @@
                 "Alpha": {
                   "Type": "Curve",
                   "CurveA": {
-                    "rangey": "0,0.4",
+                    "rangey": "0,0.1",
                     "frames": [
                       {},
                       {
@@ -250,6 +256,156 @@
                 "Rate": 10,
                 "RateOverDistance": 0,
                 "Size": "4,4,4"
+              }
+            ]
+          },
+          {
+            "__guid": "39dd1814-0ac5-4d8a-9b1f-9c25624adaec",
+            "Flags": 0,
+            "Name": "LiquidParticle",
+            "Position": "9.199724,14.56412,29.56793",
+            "Rotation": "0,0,-0.7071068,0.7071068",
+            "Scale": "2,2,2",
+            "Tags": "particles",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ParticleEffect",
+                "__guid": "b74fd3fb-f250-4346-a2c1-0b6b16ee6794",
+                "__version": 1,
+                "Alpha": {
+                  "Type": "Range",
+                  "CurveA": {
+                    "rangey": "0,0.4",
+                    "frames": [
+                      {},
+                      {
+                        "x": 0.5,
+                        "y": 1
+                      },
+                      {
+                        "x": 1
+                      }
+                    ]
+                  },
+                  "Constants": "1,0,0,0"
+                },
+                "ApplyAlpha": true,
+                "ApplyColor": true,
+                "ApplyRotation": false,
+                "ApplyShape": false,
+                "Bounce": {
+                  "Constants": "1,0,0,0"
+                },
+                "Brightness": {
+                  "Constants": "1,0,0,0"
+                },
+                "Bumpiness": {},
+                "Collision": false,
+                "CollisionRadius": 1,
+                "Damping": {},
+                "DieOnCollisionChance": {},
+                "Force": true,
+                "ForceDirection": "0,0,-30",
+                "ForceScale": {
+                  "Constants": "1,0,0,0"
+                },
+                "Friction": {
+                  "Constants": "1,0,0,0"
+                },
+                "Gradient": {
+                  "GradientA": {
+                    "color": [
+                      {
+                        "t": 0.5,
+                        "c": "1,1,1,1"
+                      }
+                    ],
+                    "alpha": []
+                  },
+                  "GradientB": {
+                    "color": [
+                      {
+                        "t": 0.5,
+                        "c": "1,1,1,1"
+                      }
+                    ],
+                    "alpha": []
+                  },
+                  "ConstantA": "1,1,1,1",
+                  "ConstantB": "1,1,1,1"
+                },
+                "Lifetime": {
+                  "Constants": "1,4,0,0"
+                },
+                "MaxParticles": 1000,
+                "OrbitalForce": {},
+                "OrbitalPull": {},
+                "PerParticleTimeScale": {
+                  "Constants": "1,0,0,0"
+                },
+                "Pitch": {},
+                "PreWarm": 0,
+                "PushStrength": {},
+                "Roll": {},
+                "Scale": {
+                  "Constants": "1,0,0,0"
+                },
+                "SequenceId": {},
+                "SequenceSpeed": {
+                  "Constants": "1,0,0,0"
+                },
+                "SequenceTime": {
+                  "Constants": "1,0,0,0"
+                },
+                "SheetSequence": false,
+                "Space": "World",
+                "StartDelay": {},
+                "StartVelocity": {},
+                "Stretch": {},
+                "TimeScale": 1,
+                "Tint": "0.02326,0.00887,0.00887,1",
+                "Yaw": {}
+              },
+              {
+                "__type": "Sandbox.ParticleSpriteRenderer",
+                "__guid": "ceeb4e0f-2ea2-499a-9aba-378a41c0b05d",
+                "Additive": false,
+                "Alignment": "RotateToCamera",
+                "BlurAmount": 0.5,
+                "BlurOpacity": 0.5,
+                "BlurSpacing": 0.5,
+                "DepthFeather": 3,
+                "FaceVelocity": false,
+                "FogStrength": 1,
+                "LeadingTrail": true,
+                "Lighting": true,
+                "MotionBlur": false,
+                "Opaque": false,
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RotationOffset": 0,
+                "Scale": 1.5,
+                "Shadows": false,
+                "SortMode": "Unsorted",
+                "Texture": "materials/particles/water_drop.vtex"
+              },
+              {
+                "__type": "Sandbox.ParticleBoxEmitter",
+                "__guid": "4a38ae2b-3486-45b3-aa9b-3be929fd75fc",
+                "Burst": 0,
+                "Delay": 0,
+                "DestroyOnEnd": false,
+                "Duration": 5,
+                "Loop": true,
+                "OnEdge": false,
+                "Rate": 30,
+                "RateOverDistance": 0,
+                "Size": "1,1,1"
               }
             ]
           }

@@ -20,7 +20,8 @@ public class CoffeeMachine : Component, IInteract
 
 	[Property] public ItemData ReceivedItem { get; set; }
 
-	[Property] public ParticleEmitter ParticleEmitter { get; set; }
+	[Property] public ParticleEmitter SteamParticleEmitter { get; set; }
+	[Property] public ParticleEmitter LiquidParticleEmitter { get; set; }
 
 	[Property] public GameObject Model { get; set; }
 
@@ -32,7 +33,8 @@ public class CoffeeMachine : Component, IInteract
 	{
 		base.OnStart();
 		Cup.Enabled = false;
-		ParticleEmitter.Enabled = false;
+		SteamParticleEmitter.Enabled = false;
+		LiquidParticleEmitter.Enabled = false;
 	}
 
 	void IInteract.StartInteract( PlayerCharacter player )
@@ -50,6 +52,13 @@ public class CoffeeMachine : Component, IInteract
 
 	private void TakeCup( PlayerCharacter player )
 	{
+		
+		if ( player.Equips.HasEquippedItem( Equips.EquipSlot.Tool ) )
+		{
+			Log.Error( "Player already has an item equipped" );
+			return;
+		}
+		
 		var carriedPersistentItem = new PersistentItem( "carried_edible:4023053997083351548" );
 		carriedPersistentItem.SetArbitraryData( "EdibleData", ReceivedItem.Id );
 
@@ -77,12 +86,14 @@ public class CoffeeMachine : Component, IInteract
 		_isGrinding = false;
 
 		SoundEx.Play( BrewingSound, WorldPosition );
-		await Task.DelayRealtimeSeconds( 2f );
+		await Task.DelayRealtimeSeconds( 1f );
 
 		SoundEx.Play( PouringSound, WorldPosition );
-		ParticleEmitter.Enabled = true;
+		SteamParticleEmitter.Enabled = true;
+		LiquidParticleEmitter.Enabled = true;
 		await Task.DelayRealtimeSeconds( PouringSound.Sounds.FirstOrDefault()?.Duration ?? 1f );
-		ParticleEmitter.Enabled = false;
+		LiquidParticleEmitter.Enabled = false;
+		SteamParticleEmitter.Enabled = false;
 
 		SoundEx.Play( FinishSound, WorldPosition );
 

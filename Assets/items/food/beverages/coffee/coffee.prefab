@@ -61,7 +61,7 @@
                 },
                 "ApplyAlpha": true,
                 "ApplyColor": false,
-                "ApplyRotation": false,
+                "ApplyRotation": true,
                 "ApplyShape": true,
                 "Bounce": {
                   "Constants": "1,0,0,0"
@@ -118,7 +118,33 @@
                 "Pitch": {},
                 "PreWarm": 0,
                 "PushStrength": {},
-                "Roll": {},
+                "Roll": {
+                  "Type": "CurveRange",
+                  "CurveA": {
+                    "rangey": "-180,180",
+                    "frames": [
+                      {
+                        "y": 0.52272725
+                      },
+                      {
+                        "x": 1,
+                        "y": 0.8333333
+                      }
+                    ]
+                  },
+                  "CurveB": {
+                    "rangey": "-180,180",
+                    "frames": [
+                      {
+                        "y": 0.46969697
+                      },
+                      {
+                        "x": 1,
+                        "y": 0.28787872
+                      }
+                    ]
+                  }
+                },
                 "Scale": {
                   "Type": "Range",
                   "Constants": "2,8,0,0"
