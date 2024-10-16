@@ -26,9 +26,8 @@ public sealed partial class World : Component
 		[Icon( "dashboard" ), Description( "Special case for decals" )]
 		FloorDecal = 1 << 4,
 
-		[Obsolete]
-		Rug = 1 << 5,
-		
+		[Obsolete] Rug = 1 << 5,
+
 		World = 1 << 6,
 	}
 
@@ -91,9 +90,9 @@ public sealed partial class World : Component
 	/// </summary>
 	[Obsolete]
 	private readonly Dictionary<NodeLinkMapKey, WorldNodeLink> _nodeLinkGridMap = new();*/
-	
+
 	public HashSet<WorldNodeLink> Items { get; set; } = new();
-	
+
 
 	/*[Obsolete]
 	private void AddNodeLinkToGridMap( WorldNodeLink nodeLink )
@@ -182,7 +181,7 @@ public sealed partial class World : Component
 			BlockedTiles.Add( position );
 		}
 	}
-	
+
 	/// <summary>
 	///  Checks if a player is in the way of an item placement.
 	/// </summary>
@@ -200,7 +199,6 @@ public sealed partial class World : Component
 		}
 
 		return false;
-		
 	}
 
 	public bool IsOutsideGrid( Vector2Int position )
@@ -224,8 +222,8 @@ public sealed partial class World : Component
 			Log.Warning( $"One or more positions are outside the grid" );
 			return false;
 		}
-		
-		if ( CheckPlayerObstruction( positions ) )
+
+		if ( placement != ItemPlacement.FloorDecal && CheckPlayerObstruction( positions ) )
 		{
 			Log.Warning( $"Player obstruction" );
 			return false;
@@ -350,7 +348,7 @@ public sealed partial class World : Component
 		{
 			var itemWidth = itemData.Width - 1;
 			var itemHeight = itemData.Height - 1;
-			
+
 			if ( nodeLink.IsDroppedItem )
 			{
 				itemWidth = 0;
@@ -402,23 +400,23 @@ public sealed partial class World : Component
 				WorldPosition = newPosition;
 				return;
 			}
-			
+
 			onTopNode.PlacedNodeLink = nodeLink;
 			nodeLink.PlacedOn = onTopNode;
 
 			Log.Info( $"Updating transform of {nodeLink.GetName()} to be on top of {onTopNode}" );
-			
+
 			newPosition = onTopNode.WorldPosition;
 		}
 
 		newPosition += offset;
-		
+
 		nodeLink.Node.WorldPosition = newPosition;
 		nodeLink.Node.WorldRotation = newRotation;
 
 		// Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
 	}*/
-	
+
 	/*public (Vector3 position, Rotation rotation) GetTransform( Vector2Int gridPosition, ItemRotation gridRotation, ItemPlacement placement, ItemData itemData, bool isDropped = false )
 	{
 		var position = gridPosition;
@@ -427,12 +425,12 @@ public sealed partial class World : Component
 		var newRotation = GetRotation( gridRotation );
 
 		var offset = Vector3.Zero;
-		
+
 		if ( itemData != null )
 		{
 			var itemWidth = itemData.Width - 1;
 			var itemHeight = itemData.Height - 1;
-			
+
 			if ( isDropped )
 			{
 				itemWidth = 0;
@@ -484,20 +482,20 @@ public sealed partial class World : Component
 				WorldPosition = newPosition;
 				return (newPosition, newRotation);
 			}
-			
+
 			// onTopNode.PlacedNodeLink = nodeLink;
 			// nodeLink.PlacedOn = onTopNode;
 
 			Log.Info( $"Updating transform to be on top of {onTopNode}" );
-			
+
 			newPosition = onTopNode.WorldPosition;
 		}
 
 		newPosition += offset;
-		
+
 		// nodeLink.Node.WorldPosition = newPosition;
 		// nodeLink.Node.WorldRotation = newRotation;
-		
+
 		return (newPosition, newRotation);
 
 		// Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
@@ -545,13 +543,12 @@ public sealed partial class World : Component
 		}
 
 		// RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
-		
+
 		nodeLink.DestroyNode();
-		
+
 		Items.Remove( nodeLink );
-		
+
 		OnItemRemoved?.Invoke( nodeLink );
-		
 	}
 
 	/// <inheritdoc cref="RemoveItem(Vector2Int,ItemPlacement)"/>
@@ -637,7 +634,7 @@ public sealed partial class World : Component
 	}
 
 	[ConVar( "clover_show_grid_info" )] public static bool ShowGridInfo { get; set; }
-	
+
 	[ConVar( "clover_show_grid" )] public static bool ShowGrid { get; set; }
 
 	/*[ConCmd( "clover_dump_items" )]

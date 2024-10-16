@@ -165,7 +165,7 @@ public class Shovel : BaseCarriable
 		Log.Info( $"Dug up {item.ItemData.Name} at {pos}" );
 
 		// var inventoryItem = PersistentItem.Create( item );
-		item.RefreshPersistence();
+		item.RunSavePersistence();
 		var inventoryItem = item.GetPersistence();
 
 		try
@@ -247,7 +247,7 @@ public class Shovel : BaseCarriable
 	{
 		var gridPos = hole.GridPosition;
 
-		hole.RefreshPersistence();
+		hole.RunSavePersistence();
 		// var item = hole.Persistence;
 
 		hole.Remove();

@@ -20,21 +20,23 @@ public sealed partial class World
 		var itemData = persistentItem.ItemData;
 		var nodeLink = SpawnPlacedNode( itemData, position, rotation, placement );
 		nodeLink.SetPersistence( persistentItem );
+		nodeLink.RunLoadPersistence();
 		return nodeLink;
 	}
-	
+
 	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector3 position, Rotation rotation,
 		ItemPlacement placement )
 	{
 		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation, placement );
 	}
-	
+
 	public WorldNodeLink SpawnPlacedNode( PersistentItem persistentItem, Vector3 position, Rotation rotation,
 		ItemPlacement placement )
 	{
 		var itemData = persistentItem.ItemData;
 		var nodeLink = SpawnPlacedNode( itemData, position, rotation, placement );
 		nodeLink.SetPersistence( persistentItem );
+		nodeLink.RunLoadPersistence();
 		return nodeLink;
 	}
 
@@ -50,6 +52,7 @@ public sealed partial class World
 		var itemData = persistentItem.ItemData;
 		var nodeLink = SpawnDroppedNode( itemData, position, rotation, placement );
 		nodeLink.SetPersistence( persistentItem );
+		nodeLink.RunLoadPersistence();
 		return nodeLink;
 	}
 
@@ -169,7 +172,7 @@ public sealed partial class World
 		gameObject.Name = nodeLink.GetName();
 
 		// AddNodeLinkToGridMap( nodeLink );
-		
+
 		Items.Add( nodeLink );
 
 		// nodeLink.OnNodeAdded();
@@ -178,7 +181,7 @@ public sealed partial class World
 
 		return nodeLink;
 	}
-	
+
 	private WorldNodeLink SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector3 position,
 		Rotation rotation, ItemPlacement placement )
 	{
@@ -290,7 +293,7 @@ public sealed partial class World
 
 		return nodeLink;
 	}
-	
+
 	public WorldNodeLink AddItem( ItemPlacement placement, GameObject item )
 	{
 		/*if ( IsOutsideGrid( position ) )
@@ -307,7 +310,7 @@ public sealed partial class World
 		// AddNodeLinkToGridMap( nodeLink );
 
 		item.SetParent( GameObject ); // TODO: should items be parented to the world?
-		
+
 		Items.Add( nodeLink );
 
 		OnItemAdded?.Invoke( nodeLink );
