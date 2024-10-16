@@ -5,6 +5,7 @@ using Clover.Interactable;
 using Clover.Inventory;
 using Clover.Persistence;
 using Clover.Player;
+using Clover.Ui;
 
 namespace Clover.Items;
 
@@ -25,8 +26,8 @@ public class CoffeeMachine : Component, IInteract
 
 	[Property] public GameObject Model { get; set; }
 
-	private bool _hasCup;
-	private bool _isBrewing;
+	[Sync] private bool _hasCup { get; set; }
+	[Sync] private bool _isBrewing { get; set; }
 	private bool _isGrinding;
 
 	protected override void OnStart()
@@ -55,7 +56,8 @@ public class CoffeeMachine : Component, IInteract
 		
 		if ( player.Equips.HasEquippedItem( Equips.EquipSlot.Tool ) )
 		{
-			Log.Error( "Player already has an item equipped" );
+			// Log.Error( "Player already has an item equipped" );
+			player.Notify( Notifications.NotificationType.Error, "You already have an item equipped" );
 			return;
 		}
 		
@@ -66,12 +68,19 @@ public class CoffeeMachine : Component, IInteract
 
 		player.Equips.SetEquippedItem( Equips.EquipSlot.Tool, carriedEdible.GameObject );
 
-		_hasCup = false;
+		TakeCupRpc();
 		Cup.Enabled = false;
 
 		SoundEx.Play( CupSound, WorldPosition );
 	}
+	
+	[Authority]
+	private void TakeCupRpc()
+	{
+		_hasCup = false;
+	}
 
+	[Authority]
 	private async void BrewAsync()
 	{
 		_isBrewing = true;

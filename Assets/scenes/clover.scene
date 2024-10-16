@@ -182,6 +182,11 @@
         {
           "__type": "Clover.Ui.FishingUi",
           "__guid": "5a07ecff-4800-4ef1-a4a6-9ea930e28d91"
+        },
+        {
+          "__type": "Clover.Ui.Notifications",
+          "__guid": "a366d06f-efbf-4cf7-9391-44ebca7afae8",
+          "MyStringValue": "Hello World!"
         }
       ]
     },

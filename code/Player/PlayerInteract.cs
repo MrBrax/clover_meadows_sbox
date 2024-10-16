@@ -1,6 +1,7 @@
 ﻿using Clover.Interactable;
 using Clover.Inventory;
 using Clover.Items;
+using Clover.Ui;
 
 namespace Clover.Player;
 
@@ -63,6 +64,7 @@ public class PlayerInteract : Component
 			else
 			{
 				Log.Warning( "No interactable found" );
+				// Notifications.Instance.AddNotification( Notifications.NotificationType.Warning, "No interactable found" );
 				Sound.Play( UseFailSound, WorldPosition );
 			}
 		}

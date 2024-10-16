@@ -7,6 +7,7 @@ using Clover.Data;
 using Clover.Inventory;
 using Clover.Persistence;
 using Clover.Player.Clover;
+using Clover.Ui;
 
 namespace Clover.Player;
 
@@ -235,6 +236,12 @@ public sealed partial class PlayerCharacter : Component
 	public static PlayerCharacter Get( Connection channel )
 	{
 		return Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => x.Network.Owner == channel );
+	}
+	
+	[Authority]
+	public void Notify( Notifications.NotificationType type, string text, float duration = 5f )
+	{
+		Notifications.Instance.AddNotification( type, text, duration );
 	}
 	
 }

@@ -1,0 +1,15 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Clover.Ui
+
+<root>
+	<div class="screen-notifications">
+		@foreach ( var notification in ScreenNotificationList )
+		{
+		<div class="screen-notification @notification.Type" style=@notification.Style>
+			@notification.Text
+		</div>
+		}
+	</div>
+</root>
