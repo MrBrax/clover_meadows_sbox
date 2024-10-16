@@ -53,14 +53,13 @@ public class CoffeeMachine : Component, IInteract
 
 	private void TakeCup( PlayerCharacter player )
 	{
-		
 		if ( player.Equips.HasEquippedItem( Equips.EquipSlot.Tool ) )
 		{
 			// Log.Error( "Player already has an item equipped" );
 			player.Notify( Notifications.NotificationType.Error, "You already have an item equipped" );
 			return;
 		}
-		
+
 		var carriedPersistentItem = new PersistentItem( "carried_edible:4023053997083351548" );
 		carriedPersistentItem.SetArbitraryData( "EdibleData", ReceivedItem.Id );
 
@@ -69,15 +68,21 @@ public class CoffeeMachine : Component, IInteract
 		player.Equips.SetEquippedItem( Equips.EquipSlot.Tool, carriedEdible.GameObject );
 
 		TakeCupRpc();
-		Cup.Enabled = false;
+		SetCupEnabled( false );
 
 		SoundEx.Play( CupSound, WorldPosition );
 	}
-	
+
 	[Authority]
 	private void TakeCupRpc()
 	{
 		_hasCup = false;
+	}
+
+	[Broadcast]
+	private void SetCupEnabled( bool enabled )
+	{
+		Cup.Enabled = enabled;
 	}
 
 	[Authority]
@@ -85,9 +90,15 @@ public class CoffeeMachine : Component, IInteract
 	{
 		_isBrewing = true;
 
-		Cup.Enabled = true;
+		SetCupEnabled( true );
+		
 		SoundEx.Play( CupSound, WorldPosition );
-		await Task.DelayRealtimeSeconds( 1f );
+		
+		await Task.DelayRealtimeSeconds( 0.5f );
+
+		SoundEx.Play( FinishSound, WorldPosition );
+
+		await Task.DelayRealtimeSeconds( 0.5f );
 
 		SoundEx.Play( GrindingSound, WorldPosition );
 		_isGrinding = true;
