@@ -246,13 +246,36 @@ public class ItemPlacer : Component
 
 		var endPosition = trace.EndPosition;
 
+		if ( SnapEnabled )
+		{
+			endPosition = endPosition.SnapToGrid( SnapDistance );
+		}
+
 		endPosition += ItemData.PlaceModeOffset;
 
-		var gridPosition = Player.World.WorldToItemGrid( endPosition );
+		// var gridPosition = Player.World.WorldToItemGrid( endPosition );
 
 		// TODO: Check if the item can be placed here
 		_isValidPlacement = true;
 
 		_ghost.WorldPosition = endPosition;
+	}
+
+	[ConVar( "clover_itemplacer_snap_enabled", Saved = true )]
+	public static bool SnapEnabled { get; set; } = false;
+
+	[ConVar( "clover_itemplacer_snap_distance", Saved = true )]
+	public static float SnapDistance { get; set; } = 16f;
+
+	[ConVar( "clover_itemplacer_show_grid", Saved = true )]
+	public static bool ShowGrid { get; set; } = true;
+
+
+	protected override void OnUpdate()
+	{
+		if ( IsPlacing && ShowGrid )
+		{
+			Gizmo.Draw.Grid( Gizmo.GridAxis.XY, 32f );
+		}
 	}
 }
