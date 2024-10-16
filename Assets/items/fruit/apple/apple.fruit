@@ -3,12 +3,19 @@
     "_type": "gameobject",
     "prefab": "items/fruit/apple/apple_model.prefab"
   },
+  "HoldScene": {
+    "_type": "gameobject",
+    "prefab": "items/fruit/apple/apple_model.prefab"
+  },
+  "Type": "Food",
+  "Id": "apple:3296840449012020675",
   "Name": "Apple",
   "Description": null,
   "Width": 1,
   "Height": 1,
   "Placements": "Floor, Underground",
   "CanDrop": true,
+  "CanPlace": true,
   "DisablePickup": false,
   "IsStackable": false,
   "StackSize": 1,
@@ -21,9 +28,10 @@
     "prefab": "items/fruit/apple/apple.prefab"
   },
   "PlaceScene": null,
-  "Icon": "items/fruit/apple/apple_icon.png",
   "DefaultTypeScene": null,
+  "Icon": "items/fruit/apple/apple_icon.png",
+  "ObjectData": null,
+  "HideInSpawnMenu": false,
   "__references": [],
-  "IsValid": true,
   "__version": 0
 }

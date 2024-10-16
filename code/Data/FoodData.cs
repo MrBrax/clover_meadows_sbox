@@ -9,6 +9,8 @@ public class FoodData : ItemData, IEdibleData
 	
 	[Property, Group("Food")] public GameObject HoldScene { get; set; }
 	
+	[Property, Group("Food")] public IEdibleData.EdibleType Type { get; set; } = IEdibleData.EdibleType.Food;
+	
 	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
 	{
 		yield return new ItemAction

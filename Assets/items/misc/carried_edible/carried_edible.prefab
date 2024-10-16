@@ -8,6 +8,7 @@
       {
         "__type": "Clover.Carriable.CarriedEdible",
         "__guid": "8d5f4662-954f-4b32-9abe-1faade9f6a7d",
+        "DrinkSound": "items/misc/carried_edible/drink.sound",
         "EatSound": "items/misc/carried_edible/eat.sound",
         "ItemData": "items/misc/carried_edible/carried_edible.tool",
         "UseTime": 1

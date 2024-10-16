@@ -3,6 +3,7 @@
     "_type": "gameobject",
     "prefab": "items/food/beverages/coffee/coffee.prefab"
   },
+  "Type": "Drink",
   "Id": "coffee:1701670996139836110",
   "Name": "Coffee",
   "Description": null,

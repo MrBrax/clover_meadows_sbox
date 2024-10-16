@@ -9,6 +9,7 @@ public class CarriedEdible : BaseCarriable
 	[Property] public ItemData EdibleData { get; set; }
 
 	[Property] public SoundEvent EatSound { get; set; }
+	[Property] public SoundEvent DrinkSound { get; set; }
 
 	// public override bool DestroyOnUnequip => true;
 
@@ -63,7 +64,28 @@ public class CarriedEdible : BaseCarriable
 	{
 		base.OnUseDown();
 
-		SoundEx.Play( EatSound, GameObject.WorldPosition );
+		if ( EdibleData is IEdibleData iEdible )
+		{
+			switch ( iEdible.Type )
+			{
+				case IEdibleData.EdibleType.Food:
+					SoundEx.Play( EatSound, GameObject.WorldPosition );
+					break;
+				case IEdibleData.EdibleType.Drink:
+					SoundEx.Play( DrinkSound, GameObject.WorldPosition );
+					break;
+				case IEdibleData.EdibleType.Unknown:
+				default:
+					Log.Error( "Unknown edible type" );
+					SoundEx.Play( EatSound, GameObject.WorldPosition );
+					break;
+			}
+		}
+		else
+		{
+			SoundEx.Play( EatSound, GameObject.WorldPosition );
+		}
+
 
 		Player.Equips.RemoveEquippedItem( Equips.EquipSlot.Tool, true );
 	}
