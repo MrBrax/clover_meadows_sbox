@@ -20,6 +20,7 @@ public class PlayerController : Component, IEquipChanged
 
 	[Property] public float WalkSpeed { get; set; } = 110.0f;
 	[Property] public float RunSpeed { get; set; } = 180.0f;
+	[Property] public float SneakSpeed { get; set; } = 60.0f;
 
 	public Vector3 WishVelocity { get; private set; }
 
@@ -139,7 +140,8 @@ public class PlayerController : Component, IEquipChanged
 	{
 		if ( IsProxy )
 		{
-			Model.Set( "holding", Player.Equips.EquippedSlots.TryGetValue( Equips.EquipSlot.Tool, out var state ) && state );
+			Model.Set( "holding",
+				Player.Equips.EquippedSlots.TryGetValue( Equips.EquipSlot.Tool, out var state ) && state );
 			return;
 		}
 
@@ -262,6 +264,10 @@ public class PlayerController : Component, IEquipChanged
 		if ( Input.Down( "Run" ) )
 		{
 			WishVelocity *= RunSpeed;
+		}
+		else if ( Input.Down( "Walk" ) )
+		{
+			WishVelocity *= SneakSpeed;
 		}
 		else
 		{
