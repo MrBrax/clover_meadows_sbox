@@ -60,6 +60,7 @@ public partial class Notifications
 	public void AddNotification( NotificationType type, string text, float duration = 5 )
 	{
 		Log.Info( $"[{type}] {text}" );
+		Sound.Play( $"sounds/notifications/notification-{type.ToString().ToLower()}.sound" );
 		ScreenNotificationList.Add( new Notification { Type = type, Text = text, Duration = duration, CreatedAt = 0 } );
 	}
 

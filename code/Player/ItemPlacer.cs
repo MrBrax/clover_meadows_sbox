@@ -3,12 +3,12 @@ using Clover.Data;
 using Clover.Inventory;
 using Clover.Items;
 using Clover.Persistence;
+using Clover.Ui;
 
 namespace Clover.Player;
 
 public class ItemPlacer : Component
 {
-
 	private PlayerCharacter Player => GetComponent<PlayerCharacter>();
 
 	[Property] public Model CursorModel { get; set; }
@@ -69,6 +69,7 @@ public class ItemPlacer : Component
 				_colliderSize = boxCollider.Scale;
 				_colliderCenter = boxCollider.Center;
 			}
+
 			collider.Destroy();
 		}
 
@@ -142,10 +143,12 @@ public class ItemPlacer : Component
 			if ( _isValidPlacement )
 			{
 				PlaceItem();
-			} else
-			{
-				Log.Warning( "Invalid placement" );
 			}
+			else
+			{
+				Player.Notify( Notifications.NotificationType.Warning, "Invalid placement" );
+			}
+
 			Input.Clear( "use" );
 		}
 
@@ -153,12 +156,12 @@ public class ItemPlacer : Component
 		{
 			StopPlacing();
 		}
-		
+
 		if ( Input.MouseWheel.y != 0 )
 		{
 			_ghost.WorldRotation *= Rotation.FromYaw( Input.MouseWheel.y * 15 );
 		}
-		
+
 		/*else if ( Input.Pressed( "cancel" ) )
 		{
 			StopPlacing();
@@ -174,12 +177,13 @@ public class ItemPlacer : Component
 		}
 		catch ( Exception e )
 		{
-			Log.Error( e );
+			// Log.Error( e );
+			Player.Notify( Notifications.NotificationType.Error, e.Message );
 			return;
 		}
 
 		InventorySlot.TakeOneOrDelete();
-		
+
 		StopPlacing();
 	}
 
@@ -216,31 +220,28 @@ public class ItemPlacer : Component
 
 	private void UpdateGhostTransform()
 	{
-		
 		var ray = Scene.Camera.ScreenPixelToRay( Mouse.Position );
-		
+
 		var box = BBox.FromPositionAndSize( _colliderCenter, _colliderSize );
-		
+
 		box = box.Rotate( _ghost.WorldRotation );
 
 		var trace = Scene.Trace.Box( box, ray, 10000f )
 			.WithoutTags( "player" )
 			.Run();
-		
+
 		if ( !trace.Hit ) return;
 
 		// Gizmo.Transform = new Transform( trace.EndPosition );
 		// Gizmo.Draw.LineBBox( box );
-		
+
 		var endPosition = trace.EndPosition;
-		
+
 		var gridPosition = Player.World.WorldToItemGrid( endPosition );
-		
+
 		// TODO: Check if the item can be placed here
 		_isValidPlacement = true;
 
 		_ghost.WorldPosition = endPosition;
-
 	}
-	
 }
