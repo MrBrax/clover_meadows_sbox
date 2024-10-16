@@ -50,6 +50,8 @@ public class ItemData : GameResource
 
 	public Vector3 PlaceModeOffset { get; set; }
 
+	[Property, Group( "Shop" )] public int BaseBuyPrice { get; set; } = 0;
+
 
 	public static T GetById<T>( string id ) where T : ItemData
 	{
