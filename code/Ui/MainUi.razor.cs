@@ -70,7 +70,7 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 		}
 
 		var pickupable = player.PlayerInteract.GetPickupableNode();
-		if ( pickupable != null )
+		if ( pickupable != null && pickupable.CanPickup( player ) )
 		{
 			yield return new InputData( "Pickup", $"Pick up {pickupable.GetPickupName()}" );
 		}
