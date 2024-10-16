@@ -1,0 +1,17 @@
+{
+  "UI": false,
+  "Volume": "1",
+  "Pitch": "0.8 1.2",
+  "Decibels": 70,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "items/tools/paintbrush/445109__breviceps__mud-splat.vsnd"
+  ],
+  "Occlusion": true,
+  "AirAbsorption": true,
+  "Transmission": true,
+  "OcclusionRadius": 64,
+  "DistanceAttenuation": true,
+  "__references": [],
+  "__version": 0
+}

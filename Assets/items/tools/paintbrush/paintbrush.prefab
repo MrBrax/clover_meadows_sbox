@@ -1,0 +1,62 @@
+{
+  "RootObject": {
+    "__guid": "57447ab8-183f-430e-bd77-0817e92d12f1",
+    "Flags": 0,
+    "Name": "paintbrush",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.Paintbrush",
+        "__guid": "06b0cdb4-812b-40ae-8c17-23255191889b",
+        "ItemData": "items/tools/paintbrush/paintbrush.tool",
+        "Model": {
+          "_type": "gameobject",
+          "go": "28f72579-ec01-4bb4-b81c-46d43090f418"
+        },
+        "PaintSound": "items/tools/paintbrush/paint.sound",
+        "UseTime": 1
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "28f72579-ec01-4bb4-b81c-46d43090f418",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "52a1d4e8-bf56-461d-a4d3-1d8f3c851d95",
+            "Flags": 0,
+            "Name": "paintbrush",
+            "Position": "0,0,7.221203",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "59eae451-e864-43ce-bdf0-f6539050e7b2",
+                "BodyGroups": 18446744073709551615,
+                "Model": "items/tools/paintbrush/paintbrush.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

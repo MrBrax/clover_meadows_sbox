@@ -12,7 +12,7 @@ public class FloorDecal : Component, IPersistent
 
 	public string TexturePath;
 
-	private void UpdateDecal()
+	public void UpdateDecal()
 	{
 		// Update decal
 

@@ -4,7 +4,7 @@
   "Description": null,
   "Width": 1,
   "Height": 1,
-  "Placements": "Floor, Underground",
+  "Placements": "FloorDecal",
   "CanDrop": true,
   "CanPlace": true,
   "DisablePickup": true,
