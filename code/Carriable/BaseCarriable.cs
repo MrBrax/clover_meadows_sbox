@@ -16,32 +16,46 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 	public TimeUntil NextUse;
 
 	[Sync] public GameObject Holder { get; set; }
-	
+
 	public PlayerCharacter Player => Holder.GetComponent<PlayerCharacter>();
-	
+
 	[Property] public GameObject Model { get; set; }
 
 	[Property] public ToolData ItemData { get; set; }
-	
+
 	[Property] public float UseTime { get; set; } = 1f;
-	
+
 	// public virtual bool DestroyOnUnequip => false;
-	
+
 	public delegate void OnEquipActionEvent( GameObject holder );
-	[Property, Group("Actions")] public OnEquipActionEvent OnEquipAction { get; set; }
-	
+
+	[Property, Group( "Actions" )] public OnEquipActionEvent OnEquipAction { get; set; }
+
 	public delegate void OnUnequipActionEvent();
-	[Property, Group("Actions")] public OnUnequipActionEvent OnUnequipAction { get; set; }
-	
+
+	[Property, Group( "Actions" )] public OnUnequipActionEvent OnUnequipAction { get; set; }
+
 	public delegate void OnUseDownActionEvent();
-	[Property, Group("Actions")] public OnUseDownActionEvent OnUseDownAction { get; set; }
-	
+
+	[Property, Group( "Actions" )] public OnUseDownActionEvent OnUseDownAction { get; set; }
+
 	public delegate void OnUseUpActionEvent();
-	[Property, Group("Actions")] public OnUseUpActionEvent OnUseUpAction { get; set; }
+
+	[Property, Group( "Actions" )] public OnUseUpActionEvent OnUseUpAction { get; set; }
 
 	public void SetHolder( GameObject holder )
 	{
 		Holder = holder;
+	}
+
+	public virtual string GetUseName()
+	{
+		return "Use";
+	}
+
+	public virtual IEnumerable<MainUi.InputData> GetInputs()
+	{
+		yield break;
 	}
 
 	public virtual bool CanUse()
@@ -53,7 +67,7 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 	{
 		return 1;
 	}
-	
+
 	public virtual bool ShouldDisableMovement()
 	{
 		return false;
@@ -82,7 +96,7 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 	public virtual void OnUseUp()
 	{
 	}
-	
+
 	public virtual void OnUseDownHost()
 	{
 	}
@@ -115,6 +129,11 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 		player.Inventory.PickUpItem( GetComponent<WorldItem>().NodeLink );
 	}
 
+	public string GetPickupName()
+	{
+		return ItemData.Name;
+	}
+
 	public virtual void OnSave( PersistentItem item )
 	{
 		item.SetArbitraryData( "Durability", Durability );
@@ -133,17 +152,17 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 		Gizmo.Draw.Arrow( Vector3.Zero, Vector3.Forward * 40f );
 		if ( WorldRotation != Rotation.Identity )
 		{
-			Gizmo.Draw.Text( "WRONG ROTATION", new Transform( ), "Roboto", 24f );
+			Gizmo.Draw.Text( "WRONG ROTATION", new Transform(), "Roboto", 24f );
 		}
-		
+
 		if ( Model.IsValid() && Model.WorldPosition != Vector3.Zero )
 		{
-			Gizmo.Draw.Text( "MODEL WRONG POSITION", new Transform( ), "Roboto", 24f );
+			Gizmo.Draw.Text( "MODEL WRONG POSITION", new Transform(), "Roboto", 24f );
 		}
-		
+
 		if ( Model.IsValid() && Model.WorldRotation != Rotation.Identity )
 		{
-			Gizmo.Draw.Text( "MODEL WRONG ROTATION", new Transform( ), "Roboto", 24f );
+			Gizmo.Draw.Text( "MODEL WRONG ROTATION", new Transform(), "Roboto", 24f );
 		}
 	}
 }

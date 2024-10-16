@@ -91,9 +91,9 @@ public class CoffeeMachine : Component, IInteract
 		_isBrewing = true;
 
 		SetCupEnabled( true );
-		
+
 		SoundEx.Play( CupSound, WorldPosition );
-		
+
 		await Task.DelayRealtimeSeconds( 0.5f );
 
 		SoundEx.Play( FinishSound, WorldPosition );
@@ -102,7 +102,7 @@ public class CoffeeMachine : Component, IInteract
 
 		SoundEx.Play( GrindingSound, WorldPosition );
 		_isGrinding = true;
-		await Task.DelayRealtimeSeconds( GrindingSound.Sounds.FirstOrDefault()?.Duration ?? 1f );
+		await Task.DelayRealtimeSeconds( 6f );
 		_isGrinding = false;
 
 		SoundEx.Play( BrewingSound, WorldPosition );
@@ -111,7 +111,7 @@ public class CoffeeMachine : Component, IInteract
 		SoundEx.Play( PouringSound, WorldPosition );
 		SteamParticleEmitter.Enabled = true;
 		LiquidParticleEmitter.Enabled = true;
-		await Task.DelayRealtimeSeconds( PouringSound.Sounds.FirstOrDefault()?.Duration ?? 1f );
+		await Task.DelayRealtimeSeconds( 4f );
 		LiquidParticleEmitter.Enabled = false;
 		SteamParticleEmitter.Enabled = false;
 
@@ -138,5 +138,10 @@ public class CoffeeMachine : Component, IInteract
 
 	void IInteract.FinishInteract( PlayerCharacter player )
 	{
+	}
+
+	public string GetInteractName()
+	{
+		return !_isBrewing ? (_hasCup ? "Take cup" : "Brew coffee") : "Unavailable";
 	}
 }

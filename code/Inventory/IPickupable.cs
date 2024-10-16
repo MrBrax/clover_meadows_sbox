@@ -5,7 +5,6 @@ namespace Clover.Inventory;
 
 public interface IPickupable
 {
-	
 	public bool CanPickup( PlayerCharacter player );
 
 	/// <summary>
@@ -14,5 +13,6 @@ public interface IPickupable
 	/// </summary>
 	/// <param name="player"></param>
 	public void OnPickup( PlayerCharacter player );
-	
+
+	public string GetPickupName();
 }

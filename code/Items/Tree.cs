@@ -10,30 +10,29 @@ namespace Clover.Items;
 
 public class Tree : Component, IPersistent, IInteract
 {
-	
 	[RequireComponent] public WorldItem WorldItem { get; set; }
-	
+
 	[Property] public List<GameObject> GrowSpawnPoints { get; set; } = new();
 	[Property] public List<GameObject> ShakeSpawnPoints { get; set; } = new();
-	
+
 	[Property] public GameObject TreeModel { get; set; }
 	[Property] public GameObject StumpModel { get; set; }
-	
+
 	[Property] public FruitData FruitData { get; set; }
-	
+
 	[Property] public SoundEvent ShakeSound { get; set; }
 	[Property] public SoundEvent FallSound { get; set; }
 	[Property] public SoundEvent FallGroundSound { get; set; }
 	[Property] public SoundEvent FruitHitGroundSound { get; set; }
-	
+
 	[Property] public ItemData StumpData { get; set; }
-	
+
 	public DateTime LastFruitDrop { get; set; } = DateTime.UnixEpoch;
-	
+
 	public bool IsDroppingFruit;
 	public bool IsFalling;
 	public bool IsShaking;
-	
+
 	public const float FruitGrowTime = 10f;
 
 	private bool _hasFruit;
@@ -65,9 +64,10 @@ public class Tree : Component, IPersistent, IInteract
 			fruit.SetParent( spawnPoint );
 			fruit.LocalPosition = Vector3.Zero;
 		}
+
 		_hasFruit = true;
 	}
-	
+
 	private async void Shake()
 	{
 		if ( IsShaking ) return;
@@ -80,10 +80,11 @@ public class Tree : Component, IPersistent, IInteract
 		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, 5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.InOut );
 		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, 0 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
 		await ToSignal( tween, Tween.SignalName.Finished );*/
-		
+
 		var tween = TweenManager.CreateTween();
 		tween.AddRotation( TreeModel, Rotation.FromRoll( 5 ), 0.2f ).SetEasing( Sandbox.Utility.Easing.QuadraticOut );
-		tween.AddRotation( TreeModel, Rotation.FromRoll( -5 ), 0.2f ).SetEasing( Sandbox.Utility.Easing.QuadraticInOut );
+		tween.AddRotation( TreeModel, Rotation.FromRoll( -5 ), 0.2f )
+			.SetEasing( Sandbox.Utility.Easing.QuadraticInOut );
 		tween.AddRotation( TreeModel, Rotation.FromRoll( 5 ), 0.2f ).SetEasing( Sandbox.Utility.Easing.QuadraticInOut );
 		tween.AddRotation( TreeModel, Rotation.FromRoll( 0 ), 0.2f ).SetEasing( Sandbox.Utility.Easing.QuadraticOut );
 		await tween.Wait();
@@ -92,7 +93,7 @@ public class Tree : Component, IPersistent, IInteract
 
 		IsShaking = false;
 	}
-	
+
 	public async Task DropFruitAsync()
 	{
 		if ( IsDroppingFruit ) return;
@@ -132,15 +133,15 @@ public class Tree : Component, IPersistent, IInteract
 			var p = tween.AddPosition( growNodeRaw, endPos, 0.7f + Random.Shared.Float() * 0.5f );
 			p.SetEasing( Sandbox.Utility.Easing.BounceOut );
 			p.SetDelay( Random.Shared.Float() * 0.5f );
-			
+
 			p.OnFinish += () =>
 			{
 				Sound.Play( FruitHitGroundSound, shakePoint.WorldPosition );
 			};
-			
+
 			p.OnBounce += () =>
 			{
-				Log.Info( "Bounce");
+				Log.Info( "Bounce" );
 				Sound.Play( FruitHitGroundSound, shakePoint.WorldPosition );
 			};
 
@@ -166,11 +167,10 @@ public class Tree : Component, IPersistent, IInteract
 				Sound.Play( FruitHitGroundSound, shakePoint.WorldPosition );
 
 			} );*/
-
 		}
-		
+
 		await Task.DelayRealtimeSeconds( 1.5f );
-		
+
 		foreach ( var growPoint in GrowSpawnPoints )
 		{
 			foreach ( var child in growPoint.Children )
@@ -178,7 +178,7 @@ public class Tree : Component, IPersistent, IInteract
 				child.Destroy();
 			}
 		}
-		
+
 		foreach ( var shakePoint in ShakeSpawnPoints )
 		{
 			var pos = WorldItem.WorldLayerObject.World.WorldToItemGrid( shakePoint.WorldPosition );
@@ -192,19 +192,18 @@ public class Tree : Component, IPersistent, IInteract
 		LastFruitDrop = DateTime.Now;
 		_hasFruit = false;
 	}
-	
+
 	private void CheckGrowth()
 	{
 		if ( IsFalling ) return;
 		if ( GrowSpawnPoints == null || GrowSpawnPoints.Count == 0 ) return;
 		if ( ShakeSpawnPoints == null || ShakeSpawnPoints.Count == 0 ) return;
-		
+
 		if ( !_hasFruit && DateTime.Now - LastFruitDrop > TimeSpan.FromSeconds( FruitGrowTime ) )
 		{
 			SpawnFruit();
 			// LastFruitDrop = DateTime.Now;
 		}
-
 	}
 
 	protected override void OnFixedUpdate()
@@ -228,13 +227,13 @@ public class Tree : Component, IPersistent, IInteract
 	protected override void DrawGizmos()
 	{
 		base.DrawGizmos();
-		
+
 		foreach ( var growPoint in GrowSpawnPoints )
 		{
 			if ( !growPoint.IsValid() ) continue;
 			Gizmo.Draw.LineSphere( growPoint.LocalPosition, 8f );
 		}
-		
+
 		foreach ( var shakePoint in ShakeSpawnPoints )
 		{
 			if ( !shakePoint.IsValid() ) continue;
@@ -250,6 +249,10 @@ public class Tree : Component, IPersistent, IInteract
 
 	public void FinishInteract( PlayerCharacter player )
 	{
-		
+	}
+
+	public string GetInteractName()
+	{
+		return "Shake";
 	}
 }

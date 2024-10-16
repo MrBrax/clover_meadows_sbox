@@ -83,6 +83,11 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 		throw new System.NotImplementedException();
 	}
 
+	public string GetInteractName()
+	{
+		return "?";
+	}
+
 	public void OnWater( WateringCan wateringCan )
 	{
 		Log.Info( "Watering plant" );

@@ -41,6 +41,22 @@ public class CarriedEdible : BaseCarriable
 		}
 	}
 
+	public override string GetUseName()
+	{
+		if ( EdibleData is IEdibleData iEdible )
+		{
+			return iEdible.Type switch
+			{
+				IEdibleData.EdibleType.Food => "Eat",
+				IEdibleData.EdibleType.Drink => "Drink",
+				IEdibleData.EdibleType.Unknown => "Use",
+				_ => "Use"
+			};
+		}
+
+		return "Use";
+	}
+
 	public void UpdateModel()
 	{
 		_edibleModel?.Destroy();

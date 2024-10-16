@@ -51,13 +51,18 @@ public class Door : Component, IInteract
 	{
 	}
 
+	public string GetInteractName()
+	{
+		return "Open door";
+	}
+
 	public void SetState( bool state )
 	{
 		_openState = state;
 		DoorModel.LocalRotation = Rotation.FromYaw( _openState ? _openAngle : 0 );
 	}
 
-	
+
 	public void Open()
 	{
 		if ( _squeakSoundHandle.IsValid() ) _squeakSoundHandle.Stop();
@@ -96,7 +101,7 @@ public class Door : Component, IInteract
 
 
 	}*/
-	
+
 	[Authority]
 	private void PlayerEnterRpc()
 	{

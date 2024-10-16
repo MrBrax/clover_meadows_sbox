@@ -84,6 +84,17 @@ public class Paintbrush : BaseCarriable
 		}
 	}
 
+	public override string GetUseName()
+	{
+		return "Paint";
+	}
+
+	public override IEnumerable<MainUi.InputData> GetInputs()
+	{
+		yield return new MainUi.InputData( "WheelUp", "Next texture" );
+		yield return new MainUi.InputData( "WheelDown", "Previous texture" );
+	}
+
 	protected override void OnStart()
 	{
 		CurrentTexture = FileSystem.Data.FindFile( "decals", "*.png" ).FirstOrDefault();

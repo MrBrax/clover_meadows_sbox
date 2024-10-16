@@ -177,7 +177,7 @@ public class WorldItem : Component, IPickupable
 			if ( WorldLayerObject.World.GetItems( pos ).Any( x => x.GridPlacement == World.ItemPlacement.OnTop ) &&
 			     GridPlacement == World.ItemPlacement.Floor )
 			{
-				Log.Warning( $"An item is on top of this item" );
+				// Log.Warning( $"An item is on top of this item" );
 				return true;
 			}
 		}
@@ -194,6 +194,11 @@ public class WorldItem : Component, IPickupable
 	public void OnPickup( PlayerCharacter player )
 	{
 		player.Inventory.PickUpItem( NodeLink );
+	}
+
+	public string GetPickupName()
+	{
+		return ItemData?.Name ?? "Item";
 	}
 
 

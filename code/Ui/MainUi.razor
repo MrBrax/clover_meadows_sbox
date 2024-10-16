@@ -23,6 +23,16 @@
 			<div class="bar top"></div>
 			<div class="bar bottom"></div>
 		</div>
+
+		<div class="inputs">
+			@foreach ( var input in GetCurrentInputs() )
+			{
+				<div class="input-entry">
+					<Image Texture=@Input.GetGlyph( input.Action, InputGlyphSize.Large, false )/>
+					<div class="input-name">@input.Name</div>
+				</div>
+			}
+		</div>
 	}
 	else if ( string.IsNullOrEmpty( PlayerCharacter.SpawnPlayerId ) )
 	{

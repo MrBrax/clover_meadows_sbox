@@ -4,9 +4,8 @@ namespace Clover.Interactable;
 
 public class InteractSound : Component, IInteract
 {
-	
 	[Property] public SoundEvent Sound { get; set; }
-	
+
 	public void StartInteract( PlayerCharacter player )
 	{
 		SoundEx.Play( Sound, WorldPosition );
@@ -14,6 +13,10 @@ public class InteractSound : Component, IInteract
 
 	public void FinishInteract( PlayerCharacter player )
 	{
-		
+	}
+
+	public string GetInteractName()
+	{
+		return "Use";
 	}
 }

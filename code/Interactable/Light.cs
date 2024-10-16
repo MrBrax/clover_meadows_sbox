@@ -7,11 +7,10 @@ namespace Clover.Interactable;
 [Icon( "lightbulb" )]
 public class Light : Component, IInteract, IPersistent
 {
+	[Property, Sync] public bool IsOn { get; set; } = true;
 
-	[Property] public bool IsOn { get; set; } = true;
-	
 	[Property] public List<GameObject> Targets { get; set; } = new();
-	
+
 	[Property] public SoundEvent LightSwitchSound { get; set; }
 
 
@@ -20,10 +19,14 @@ public class Light : Component, IInteract, IPersistent
 		Toggle();
 		Sound.Play( LightSwitchSound, WorldPosition );
 	}
-	
+
 	public void FinishInteract( PlayerCharacter player )
 	{
-		
+	}
+
+	public string GetInteractName()
+	{
+		return IsOn ? "Turn Off" : "Turn On";
 	}
 
 	public void Toggle()
@@ -31,13 +34,13 @@ public class Light : Component, IInteract, IPersistent
 		IsOn = !IsOn;
 		UpdateState();
 	}
-	
+
 	public void TurnOn()
 	{
 		IsOn = true;
 		UpdateState();
 	}
-	
+
 	public void TurnOff()
 	{
 		IsOn = false;
@@ -59,7 +62,6 @@ public class Light : Component, IInteract, IPersistent
 	public void OnSave( PersistentItem item )
 	{
 		item.SetArbitraryData( "IsOn", IsOn );
-		
 	}
 
 	public void OnLoad( PersistentItem item )

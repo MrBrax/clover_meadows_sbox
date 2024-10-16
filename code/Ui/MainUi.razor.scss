@@ -1,90 +1,124 @@
-MainUi
-{
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	
-	.is-saving {
-		position: absolute;
-		top: 50px;
-		right: 50px;
-		color: #2b79f1;
-		font-size: 80px;
-		text-stroke: 10px white;
-		
-		animation: saving 1s infinite ease;
-		transition: opacity 0.2s;
-		
-		opacity: 0;
-		
-		&.saving {
-			opacity: 1;
-		}
-	}
-	
-	.status {
-		position: absolute;
-		bottom: 50px;
-		left: 50px;
-		color: white;
-		font-family: Itim;
-		font-size: 60px;
-		// text-stroke: 5px gray;
-		text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-		
-		align-content: center;
-		align-items: center;
-		
-		gap: 10px;
-		
-		.weather Image {
-			width: 80px;
-			height: 80px;
-		}
-	}
-	
+MainUi {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    .is-saving {
+        position: absolute;
+        top: 50px;
+        right: 50px;
+        color: #2b79f1;
+        font-size: 80px;
+        text-stroke: 10px white;
+
+        animation: saving 1s infinite ease;
+        transition: opacity 0.2s;
+
+        opacity: 0;
+
+        &.saving {
+            opacity: 1;
+        }
+    }
+
+    .status {
+        position: absolute;
+        bottom: 50px;
+        left: 50px;
+        color: white;
+        font-family: Itim;
+        font-size: 60px;
+        // text-stroke: 5px gray;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+
+        align-content: center;
+        align-items: center;
+
+        gap: 10px;
+
+        .weather Image {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+    .inputs {
+        position: absolute;
+        left: 50px;
+        bottom: 150px;
+
+        gap: 20px;
+        flex-direction: column;
+
+        font-family: Itim;
+        font-size: 35px;
+
+        color: white;
+
+        .input-entry {
+            // background-color: rgba(0, 0, 0, 0.2);
+
+            gap: 15px;
+
+            align-content: center;
+            align-items: center;
+
+            Image, img {
+                max-width: 40px;
+                max-height: 40px;
+                background-position: center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                image-rendering: trilinear;
+            }
+
+            .input-name {
+                flex-grow: 1;
+            }
+        }
+    }
+
 }
 
 .cutscene-bars {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 100;
-	
-	flex-direction: column;
-	
-	justify-content: space-between;
-	align-content: space-between;
-	
-	
-	
-	.bar {
-		width: 100%;
-		height: 0%;
-		background-color: black;
-		transition: height 0.5s;
-	}
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
 
-	&.active {
-		.bar {
-			height: 15%;
-		}
-	}
-	
+    flex-direction: column;
+
+    justify-content: space-between;
+    align-content: space-between;
+
+
+    .bar {
+        width: 100%;
+        height: 0%;
+        background-color: black;
+        transition: height 0.5s;
+    }
+
+    &.active {
+        .bar {
+            height: 15%;
+        }
+    }
+
 }
 
 @keyframes saving {
-	0% {
-		transform: scale(1);
-	}
-	50% {
-		transform: scale(1.1);
-	}
-	100% {
-		transform: scale(1);
-	}
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

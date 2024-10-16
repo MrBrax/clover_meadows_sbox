@@ -43,6 +43,11 @@ public class PlayerInteract : Component
 		return true;
 	}
 
+	public bool HasInteractable()
+	{
+		return FindInteractable() != null;
+	}
+
 	protected override void OnFixedUpdate()
 	{
 		if ( IsProxy ) return;
@@ -109,10 +114,9 @@ public class PlayerInteract : Component
 		Sound.Play( PickUpFailSound, WorldPosition );
 	}
 
-	private IPickupable GetPickupableNode()
+	public IPickupable GetPickupableNode()
 	{
 		var touchingItems = InteractCollider.Touching;
-
 
 		foreach ( var collider in touchingItems )
 		{
@@ -141,7 +145,7 @@ public class PlayerInteract : Component
 		return null;
 	}
 
-	private IInteract FindInteractable()
+	public IInteract FindInteractable()
 	{
 		foreach ( var collider in InteractCollider.Touching )
 		{
