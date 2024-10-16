@@ -16,11 +16,11 @@ public sealed partial class World : Component
 	[Flags]
 	public enum ItemPlacement
 	{
-		[Icon( "wallpaper" )] Wall = 1 << 0,
+		[Icon( "wallpaper" ), Obsolete] Wall = 1 << 0,
 
-		[Icon( "inventory" )] OnTop = 1 << 1,
+		[Icon( "inventory" ), Obsolete] OnTop = 1 << 1,
 
-		[Icon( "waves" )] Floor = 1 << 2,
+		[Icon( "waves" ), Obsolete] Floor = 1 << 2,
 
 		[Description( "Items dug into the ground" )]
 		Underground = 1 << 3,
@@ -29,7 +29,10 @@ public sealed partial class World : Component
 		[Icon( "dashboard" ), Description( "Special case for decals" )]
 		FloorDecal = 1 << 4,
 
+		[Obsolete]
 		Rug = 1 << 5,
+		
+		World = 1 << 6,
 	}
 
 	public enum ItemPlacementType
