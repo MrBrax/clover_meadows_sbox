@@ -11,7 +11,7 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 	public static MainMenu.RealmInfo Realm { get; set; }
 
 	public static GameManager Instance;
-	
+
 	[Property] public GameObject PlayerPrefab { get; set; }
 
 	protected override void OnAwake()
@@ -36,17 +36,19 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 		if ( IsProxy ) return;
 
 		await WorldManager.Instance.LoadWorld( WorldManager.Instance.DefaultWorldData );
-		
+
 		/*if ( !_spawnQueue.Contains( Connection.Local ) )
 		{
 			OnConnected( Connection.Local );
 		}*/
-
 	}
 
 	public static JsonSerializerOptions JsonOptions = new()
 	{
-		WriteIndented = true, IncludeFields = true, Converters = { new JsonStringEnumConverter() }
+		WriteIndented = true,
+		IncludeFields = true,
+		Converters = { new JsonStringEnumConverter() },
+		DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 	};
 
 	// public string SaveProfile = "default";
@@ -87,7 +89,7 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 	private void SpawnPlayers()
 	{
 		if ( IsProxy ) return;
-		
+
 		foreach ( var channel in _spawnQueue.ToList() )
 		{
 			SpawnPlayer( channel );
@@ -119,14 +121,13 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 
 	public void SpawnPlayer( Connection channel )
 	{
-		
 		if ( Scene.GetAllComponents<PlayerCharacter>().Any( x => x.Network.Owner == channel ) )
 		{
 			Log.Warning( $"Player '{channel.DisplayName}' already spawned" );
 			_spawnQueue.Remove( channel );
 			return;
 		}
-		
+
 		if ( !PlayerPrefab.IsValid() )
 			return;
 
@@ -156,7 +157,7 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 		{
 			Log.Error( "No active world found" );
 		}
-		
+
 		_spawnQueue.Remove( channel );
 	}
 
@@ -168,7 +169,21 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 		_spawnQueue.Add( caller );
 	}
 
-	public void OnHostPreInitialize( SceneFile scene ) { Log.Info("BOOT"); PlayerCharacter.SpawnPlayerId = null; }
-	public void OnHostInitialize() { Log.Info("BOOT"); PlayerCharacter.SpawnPlayerId = null; }
-	public void OnClientInitialize() { Log.Info("BOOT"); PlayerCharacter.SpawnPlayerId = null; }
+	public void OnHostPreInitialize( SceneFile scene )
+	{
+		Log.Info( "BOOT" );
+		PlayerCharacter.SpawnPlayerId = null;
+	}
+
+	public void OnHostInitialize()
+	{
+		Log.Info( "BOOT" );
+		PlayerCharacter.SpawnPlayerId = null;
+	}
+
+	public void OnClientInitialize()
+	{
+		Log.Info( "BOOT" );
+		PlayerCharacter.SpawnPlayerId = null;
+	}
 }
