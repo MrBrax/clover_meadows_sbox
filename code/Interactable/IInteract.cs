@@ -14,7 +14,7 @@ public interface IInteract
 	///  Called when the player releases the interact button. Only called once.
 	/// </summary>
 	/// <param name="player"></param>
-	void FinishInteract( PlayerCharacter player );
+	void FinishInteract( PlayerCharacter player ) { }
 
 	string GetInteractName();
 
