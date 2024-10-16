@@ -1,0 +1,65 @@
+{
+  "RootObject": {
+    "__guid": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4",
+    "Flags": 0,
+    "Name": "shop_display",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "745c344d-29f5-4e32-8da1-86f65149885e",
+        "Center": "0,0,16",
+        "IsTrigger": false,
+        "Scale": "32,32,32",
+        "Static": true
+      },
+      {
+        "__type": "Clover.Items.ShopDisplay",
+        "__guid": "412df943-d4e2-4f30-a0b2-9ed0dfeb995a",
+        "Container": {
+          "_type": "gameobject",
+          "go": "5987670e-028e-43d2-8a17-5afaf668a20e"
+        }
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "07cf6a15-99ef-4ae3-8f8c-430d39f36fbb",
+        "Flags": 0,
+        "Name": "shop_display",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "8e8c63fe-b4bf-4be4-9349-cbd1214864f6",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/misc/shop_display/shop_display.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "5987670e-028e-43d2-8a17-5afaf668a20e",
+        "Flags": 0,
+        "Name": "Container",
+        "Position": "0,0,8",
+        "Enabled": true
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
