@@ -222,13 +222,13 @@ public class ItemPlacer : Component
 	private void UpdateGhostTransform()
 	{
 		if ( !_ghost.IsValid() ) return;
-		
+
 		if ( _colliderSize == Vector3.Zero )
 		{
 			Log.Error( "Collider size is zero" );
 			return;
 		}
-		
+
 		var ray = Scene.Camera.ScreenPixelToRay( Mouse.Position );
 
 		var box = BBox.FromPositionAndSize( _colliderCenter, _colliderSize );
@@ -245,6 +245,8 @@ public class ItemPlacer : Component
 		// Gizmo.Draw.LineBBox( box );
 
 		var endPosition = trace.EndPosition;
+
+		endPosition += ItemData.PlaceModeOffset;
 
 		var gridPosition = Player.World.WorldToItemGrid( endPosition );
 

@@ -1,0 +1,29 @@
+{
+  "Id": "floor_decal:6672717986415029329",
+  "Name": "FLOOR DECAL",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "Placements": "Floor, Underground",
+  "CanDrop": true,
+  "CanPlace": true,
+  "DisablePickup": true,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": null,
+  "DropScene": null,
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/floor_decal/floor_decal.prefab"
+  },
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/floor_decal/floor_decal.prefab"
+  },
+  "Icon": null,
+  "ObjectData": null,
+  "HideInSpawnMenu": false,
+  "PlaceModeOffset": "0,0,-8",
+  "__references": [],
+  "__version": 0
+}

@@ -48,6 +48,8 @@ public class ItemData : GameResource
 
 	public bool HideInSpawnMenu { get; set; }
 
+	public Vector3 PlaceModeOffset { get; set; }
+
 
 	public static T GetById<T>( string id ) where T : ItemData
 	{
@@ -239,12 +241,12 @@ public class ItemData : GameResource
 	public static ItemData Get( string id )
 	{
 		var itemData = ResourceLibrary.GetAll<ItemData>()
-			       .FirstOrDefault( x => x.ResourceName == id || x.ResourcePath == id || x.Id == id );
+			.FirstOrDefault( x => x.ResourceName == id || x.ResourcePath == id || x.Id == id );
 		if ( itemData == null )
 		{
 			Log.Error( $"Item data not found: {id}" );
 		}
-		
+
 		return itemData;
 	}
 

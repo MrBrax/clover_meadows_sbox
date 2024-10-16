@@ -1,0 +1,113 @@
+{
+  "RootObject": {
+    "__guid": "e2e4198c-7fb1-4c2c-9bb5-1f93ebf0ac19",
+    "Flags": 0,
+    "Name": "floor_decal",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.FloorDecal",
+        "__guid": "5abd97fe-e4a1-4021-b9d9-8362e8cb79b1",
+        "DecalRenderer": {
+          "_type": "component",
+          "component_id": "925ac286-c065-48db-bd8a-00cace1dd273",
+          "go": "96b6cf2c-4e34-4226-8faa-2658cb0c7a86",
+          "component_type": "DecalRenderer"
+        },
+        "ModelRenderer": {
+          "_type": "component",
+          "component_id": "22752d93-bac3-4fc0-9edd-cacf78cc87ec",
+          "go": "bd4aa247-3b00-4b4f-8811-4facce3b0257",
+          "component_type": "ModelRenderer"
+        }
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "c83ca949-17b9-438a-a87f-c5c73738231d",
+        "CanPickupSimple": false,
+        "ItemData": "items/misc/floor_decal/floor_decal.item",
+        "PlaceModeOffset": "0,0,8",
+        "Prefab": "items/misc/floor_decal/floor_decal.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "013ae8a7-3dd8-4d57-91cd-f2b33c4cf151"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "81f8ea5b-34f5-43c3-b67e-f5547376e1cd",
+        "Center": "0,0,-4",
+        "IsTrigger": false,
+        "Scale": "32,32,8",
+        "Static": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "ef55514e-08fa-4ac4-859a-3e247d224ac2",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true
+      },
+      {
+        "__guid": "bd4aa247-3b00-4b4f-8811-4facce3b0257",
+        "Flags": 0,
+        "Name": "TEMP",
+        "Position": "0,0,0.1",
+        "Scale": "0.32,0.32,0.32",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "22752d93-bac3-4fc0-9edd-cacf78cc87ec",
+            "BodyGroups": 18446744073709551615,
+            "MaterialOverride": "materials/dev/dev_nonmetal_rough100.vmat",
+            "Model": "models/dev/plane.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "96b6cf2c-4e34-4226-8faa-2658cb0c7a86",
+        "Flags": 0,
+        "Name": "Decal",
+        "Position": "0,0,8.943312",
+        "Rotation": "0,0.7071067,0,0.7071068",
+        "Components": [
+          {
+            "__type": "Sandbox.DecalRenderer",
+            "__guid": "925ac286-c065-48db-bd8a-00cace1dd273",
+            "CutoffAngle": 60,
+            "CutoffAngleSoftness": 5,
+            "Material": "materials/decals/default.vmat",
+            "Mod2XBlending": false,
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "Size": "32,32,32",
+            "TintColor": "1,1,1,1",
+            "TriPlanar": false
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

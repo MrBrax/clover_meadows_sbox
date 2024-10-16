@@ -37,6 +37,8 @@ public class WorldItem : Component, IPickupable
 
 	[Property] public ItemData ItemData { get; set; }
 
+	[Property] public Vector3 PlaceModeOffset { get; set; }
+
 	protected override void OnAwake()
 	{
 		if ( Scene.IsEditor ) return;
@@ -137,7 +139,7 @@ public class WorldItem : Component, IPickupable
 	protected override void OnUpdate()
 	{
 		base.OnUpdate();
-		
+
 		if ( Gizmo.Camera == null || !DebugWorldItem ) return;
 		if ( NodeLink.IsValid() && NodeLink.IsDroppedItem )
 		{
