@@ -52,7 +52,7 @@ public sealed partial class PlayerCharacter : Component
 	protected override void OnStart()
 	{
 		if ( IsProxy ) return;
-		
+
 		GameObject.BreakFromPrefab();
 
 		Load();
@@ -64,9 +64,8 @@ public sealed partial class PlayerCharacter : Component
 		};
 
 		Fader.Instance.FadeFromBlack();
-		
+
 		CameraMan.Instance.Targets.Add( GameObject );
-		
 	}
 
 	public void ModelLookAt( Vector3 position )
@@ -86,7 +85,7 @@ public sealed partial class PlayerCharacter : Component
 	protected override void OnFixedUpdate()
 	{
 		if ( IsProxy ) return;
-		
+
 		base.OnFixedUpdate();
 
 		if ( Input.Pressed( "use" ) && IsSitting )
@@ -152,13 +151,13 @@ public sealed partial class PlayerCharacter : Component
 	public void TeleportTo( string entrance )
 	{
 		Log.Info( $"Teleporting to entrance: {entrance}" );
-		
+
 		if ( !World.IsValid() )
 		{
 			Log.Error( "World is not valid" );
 			return;
 		}
-		
+
 		var spawnPoint = World.GetEntrance( entrance );
 		if ( spawnPoint.IsValid() )
 		{
@@ -226,6 +225,15 @@ public sealed partial class PlayerCharacter : Component
 	}
 
 	[Authority]
+	public void StartCutscene()
+	{
+		Log.Info( $"Starting cutscene (empty)" );
+		CutsceneTarget = null;
+		InCutscene = true;
+	}
+
+
+	[Authority]
 	public void EndCutscene()
 	{
 		Log.Info( "Ending cutscene" );
@@ -237,13 +245,12 @@ public sealed partial class PlayerCharacter : Component
 	{
 		return Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => x.Network.Owner == channel );
 	}
-	
+
 	[Authority]
 	public void Notify( Notifications.NotificationType type, string text, float duration = 5f )
 	{
 		Notifications.Instance.AddNotification( type, text, duration );
 	}
-	
 }
 
 public interface IPlayerSaved

@@ -100,11 +100,15 @@ public class Inventory : Component
 
 		} ) );*/
 
-		Player.InCutscene = true;
-		Player.CutsceneTarget = Vector3.Zero;
+		Player.StartCutscene();
 		Player.CharacterController.Velocity = Vector3.Zero;
 
 		nodeLink.IsBeingPickedUp = true;
+
+		foreach ( var collider in nodeLink.Node.Components.GetAll<Collider>( FindMode.EverythingInSelfAndDescendants ) )
+		{
+			collider.Enabled = false;
+		}
 
 		var tween = TweenManager.CreateTween();
 		tween.AddPosition( nodeLink.Node, Player.WorldPosition + Vector3.Up * 16f, 0.2f );
@@ -120,7 +124,7 @@ public class Inventory : Component
 
 		nodeLink.Remove();
 
-		Player.InCutscene = false;
+		Player.EndCutscene();
 
 		Player.Save();
 	}
