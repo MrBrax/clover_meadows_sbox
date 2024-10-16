@@ -1,4 +1,5 @@
-﻿using Clover.Inventory;
+﻿using Clover.Data;
+using Clover.Inventory;
 using Clover.Items;
 using Clover.Persistence;
 
@@ -22,13 +23,11 @@ public class Shovel : BaseCarriable
 			Log.Error( "Only the host can use world altering items for now." );
 			return;
 		}*/
-
 	}
-	
+
 	[Broadcast]
 	public override void OnUseDownHost()
 	{
-
 		var pos = Player.GetAimingGridPosition();
 
 		var worldPos = Player.World.ItemGridToWorld( pos );
@@ -48,14 +47,13 @@ public class Shovel : BaseCarriable
 		}
 		else
 		{
-			
 			var undergroundItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Underground );
 			if ( undergroundItem != null )
 			{
 				DigUpItem( pos, undergroundItem );
 				return;
 			}
-			
+
 			var floorItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Floor );
 			if ( floorItem != null )
 			{
@@ -65,7 +63,7 @@ public class Shovel : BaseCarriable
 				}
 				else if ( floorItem.Node.Components.TryGet<IDiggable>( out var diggable ) )
 				{
-					DigUpFloorItem( pos, floorItem, diggable.GiveItemWhenDug() );
+					DigUpFloorItem( pos, floorItem, diggable );
 				}
 				else
 				{
@@ -74,7 +72,6 @@ public class Shovel : BaseCarriable
 
 				return;
 			}
-			
 		}
 
 		Log.Warning( "No action taken." );
@@ -87,25 +84,24 @@ public class Shovel : BaseCarriable
 
 	private bool CanDigAt( Vector3 worldPos )
 	{
-
 		var hitbox = Player.PlayerInteract.InteractCollider;
 
-		if ( hitbox.Touching.FirstOrDefault( x => x.GameObject != Holder && x.GameObject.Tags.Has("player" ) ) != null )
+		if ( hitbox.Touching.FirstOrDefault( x => x.GameObject != Holder && x.GameObject.Tags.Has( "player" ) ) !=
+		     null )
 		{
 			Log.Warning( "Can't dig while touching player." );
 			return false;
 		}
-		
+
 		var trace = Scene.Trace.Ray( worldPos + Vector3.Up * 16f, worldPos + Vector3.Down * 32f )
-			.WithTag( "terrain" ) 
+			.WithTag( "terrain" )
 			.Run();
 
 		if ( !trace.Hit ) return false;
 
 		var surface = trace.Surface;
-		
-		return surface.ResourceName == "grass" || surface.ResourceName == "dirt";
 
+		return surface.ResourceName == "grass" || surface.ResourceName == "dirt";
 	}
 
 	private void HitItem( Vector2Int pos, WorldNodeLink floorItem )
@@ -128,11 +124,10 @@ public class Shovel : BaseCarriable
 
 		var holeData = Data.ItemData.Get( "hole" );
 		var hole = Player.World.SpawnPlacedNode( holeData, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
-		
+
 		SoundEx.Play( DigSound, WorldPosition );
 
 		Durability--;
-
 	}
 
 	private void FillHole( Vector2Int pos )
@@ -204,11 +199,11 @@ public class Shovel : BaseCarriable
 	/// </summary>
 	/// <param name="pos"></param>
 	/// <param name="item"></param>
-	private void DigUpFloorItem( Vector2Int pos, WorldNodeLink item, bool giveItem )
+	private void DigUpFloorItem( Vector2Int pos, WorldNodeLink item, IDiggable diggable )
 	{
 		Log.Info( $"Dug up {item.ItemData.Name} at {pos}" );
 
-		if ( giveItem )
+		/*if ( giveItem )
 		{
 			// var inventoryItem = PersistentItem.Create( item );
 
@@ -229,6 +224,18 @@ public class Shovel : BaseCarriable
 				Log.Error( e.Message );
 				return;
 			}
+		}*/
+
+		if ( !diggable.CanDig() )
+		{
+			Log.Warning( "Can't dig up item." );
+			return;
+		}
+
+		if ( !diggable.OnDig( Player, item ) )
+		{
+			Log.Warning( "Failed to dig up item." );
+			return;
 		}
 
 		Player.World.RemoveItem( item );
@@ -238,20 +245,22 @@ public class Shovel : BaseCarriable
 
 	public void BuryItem( InventorySlot<PersistentItem> slot, WorldNodeLink hole )
 	{
-		
 		var gridPos = hole.GridPosition;
-		
+
 		hole.RefreshPersistence();
 		// var item = hole.Persistence;
-		
+
 		hole.Remove();
-		
+
 		// main item
-		Player.World.SpawnDroppedNode( slot.PersistentItem, gridPos, World.ItemRotation.North, World.ItemPlacement.Underground );
-		
+		// Player.World.SpawnDroppedNode( slot.PersistentItem, gridPos, World.ItemRotation.North, World.ItemPlacement.Underground );
+
 		// dirt
-		Player.World.SpawnPlacedNode( Data.ItemData.Get( "buried_item" ), gridPos, World.ItemRotation.North, World.ItemPlacement.Floor );
+		var dirt = Player.World.SpawnPlacedNode( Data.ItemData.Get( "buried_item" ), gridPos, World.ItemRotation.North,
+			World.ItemPlacement.Floor );
 
+		var node = dirt.Node;
 
+		node.Components.Get<BuriedItem>().SetItem( slot.PersistentItem );
 	}
 }

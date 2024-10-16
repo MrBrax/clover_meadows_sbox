@@ -10,13 +10,19 @@
         "__guid": "25c61185-f3fd-4b66-a519-2f2955da6d94",
         "CanPickupSimple": false,
         "ItemData": "items/misc/buried_item/buried_item.item",
-        "Prefab": "items/misc/buried_item/buried_item.prefab",
-        "Size": "1,1"
+        "Prefab": "items/misc/buried_item/buried_item.prefab"
       },
       {
         "__type": "Clover.WorldLayerObject",
-        "__guid": "8fe689a6-1bdb-454d-8d1e-4743c139efb2",
-        "Layer": 0
+        "__guid": "8fe689a6-1bdb-454d-8d1e-4743c139efb2"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "4613a046-bb5a-4028-a6e1-6564cf3d9333",
+        "Center": "0,0,-4",
+        "IsTrigger": false,
+        "Scale": "16,16,8",
+        "Static": false
       }
     ],
     "Children": [
@@ -62,6 +68,5 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }

@@ -1,12 +1,12 @@
-﻿namespace Clover.Items;
+﻿using Clover.Player;
+
+namespace Clover.Items;
 
 public interface IDiggable
 {
-	
 	public bool CanDig();
 
-	public bool GiveItemWhenDug();
-	
-	// TODO: add OnDig method?
-	
+	// public bool GiveItemWhenDug();
+
+	bool OnDig( PlayerCharacter player, WorldNodeLink item );
 }
