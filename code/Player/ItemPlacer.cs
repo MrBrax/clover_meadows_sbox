@@ -189,6 +189,7 @@ public class ItemPlacer : Component
 
 	private void SetGhostTint( Color color )
 	{
+		if ( !_ghost.IsValid() ) return;
 		foreach ( var renderable in _ghost.Components.GetAll<ModelRenderer>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
@@ -220,6 +221,14 @@ public class ItemPlacer : Component
 
 	private void UpdateGhostTransform()
 	{
+		if ( !_ghost.IsValid() ) return;
+		
+		if ( _colliderSize == Vector3.Zero )
+		{
+			Log.Error( "Collider size is zero" );
+			return;
+		}
+		
 		var ray = Scene.Camera.ScreenPixelToRay( Mouse.Position );
 
 		var box = BBox.FromPositionAndSize( _colliderCenter, _colliderSize );
