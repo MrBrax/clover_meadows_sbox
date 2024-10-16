@@ -28,7 +28,7 @@
 			@foreach ( var input in GetCurrentInputs() )
 			{
 				<div class="input-entry">
-					<Image Texture=@Input.GetGlyph( input.Action, InputGlyphSize.Large, false )/>
+					<Image Texture=@Input.GetGlyph( input.Action, InputGlyphSize.Small, GlyphStyle.Dark )/>
 					<div class="input-name">@input.Name</div>
 				</div>
 			}
