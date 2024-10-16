@@ -40,6 +40,8 @@ public class PlayerInteract : Component
 	public bool CanInteract()
 	{
 		if ( Player.ItemPlacer.IsPlacing ) return false;
+		if ( Player.InCutscene ) return false;
+		if ( Player.ItemPlacer.IsPlacing ) return false;
 		return true;
 	}
 
