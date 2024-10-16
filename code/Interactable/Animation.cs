@@ -15,6 +15,12 @@ public class Animation : Component, IInteract
 
 	public void StartInteract( PlayerCharacter player )
 	{
+		StartAnimation();
+	}
+
+	[Broadcast]
+	private void StartAnimation()
+	{
 		Renderer.Set( AnimationName, true );
 	}
 

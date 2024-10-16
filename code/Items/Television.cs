@@ -56,6 +56,7 @@ public class Television : Component, IInteract
 		_videoPlayer?.Dispose();
 	}
 
+	[Broadcast]
 	public async void PlayVideo( string url )
 	{
 		_videoPlayer.Play( FileSystem.Data, url );
@@ -108,14 +109,15 @@ public class Television : Component, IInteract
 	}
 
 
-	public void StartInteract( PlayerCharacter player )
+	void IInteract.StartInteract( PlayerCharacter player )
 	{
 		PlayVideo( "videos/mono.mp4" );
 	}
 
-	public void FinishInteract( PlayerCharacter player )
+	/*void IInteract.StartInteractHost( PlayerCharacter player )
 	{
-	}
+		PlayVideo( "videos/mono.mp4" );
+	}*/
 
 	public string GetInteractName()
 	{
