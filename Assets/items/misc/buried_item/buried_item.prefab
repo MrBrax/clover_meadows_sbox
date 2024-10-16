@@ -23,6 +23,10 @@
         "IsTrigger": false,
         "Scale": "16,16,8",
         "Static": false
+      },
+      {
+        "__type": "Clover.Data.BuriedItem",
+        "__guid": "727da360-97fa-4ce5-afa7-e453b53ab673"
       }
     ],
     "Children": [
