@@ -299,7 +299,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 	}
 
 
-	[ConCmd( "world_load" )]
+	[ConCmd( "clover_world_load" )]
 	public static void LoadWorldCmd( string id )
 	{
 		var worldManager = NodeManager.WorldManager;
@@ -314,13 +314,13 @@ public class WorldManager : Component, Component.INetworkSpawn
 		}
 	}
 
-	[ConCmd( "world_set_active" )]
+	[ConCmd( "clover_world_set_active" )]
 	public static void SetActiveWorldCmd( int index )
 	{
 		NodeManager.WorldManager.SetActiveWorld( index );
 	}
 
-	[ConCmd( "world_move_to_entrance" )]
+	[ConCmd( "clover_world_move_to_entrance" )]
 	public static void MoveToEntranceCmd( int worldIndex, string entranceId )
 	{
 		var world = Instance.GetWorld( worldIndex );
@@ -339,7 +339,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		player.GetComponent<CameraController>().SnapCamera();
 	}
 
-	[ConCmd( "world_save_all" )]
+	[ConCmd( "clover_world_save_all" )]
 	public static void SaveAllCmd()
 	{
 		foreach ( var world in Instance.Worlds.Values )
