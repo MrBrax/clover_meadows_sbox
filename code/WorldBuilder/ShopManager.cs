@@ -110,7 +110,7 @@ public class ShopManager : Component
 
 		if ( State.LastGenerated.Date != DateTime.Today )
 		{
-			Log.Info( "Shop: Regenerating shop items." );
+			Log.Info( $"Shop: Regenerating shop items (last: {State.LastGenerated}, today: {DateTime.Today})." );
 			State.Items.Clear();
 			State.LastGenerated = DateTime.Today;
 			GenerateItems();

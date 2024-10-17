@@ -267,8 +267,6 @@ public class ItemData : GameResource
 			Log.Error( $"Item data not found: {id}" );
 		}
 
-		Log.Info( $"Item data found for {id}: {itemData?.ResourcePath}" );
-
 		return itemData;
 	}
 
