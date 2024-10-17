@@ -1,0 +1,229 @@
+{
+  "RootObject": {
+    "__guid": "ba36c64f-a12f-4c53-a92a-f46c7016debf",
+    "Flags": 0,
+    "Name": "stork",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Objects.GiftCarrier",
+        "__guid": "4787ffcb-bf81-4b79-8f35-936b38925afc",
+        "Speed": 50
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "2a2dbac7-b929-44c1-97e6-8a087005ea3b",
+        "Flags": 0,
+        "Name": "stork",
+        "Position": "-59.66035,0,0",
+        "Rotation": "0,0,1,-0.00000004371139",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "e8addfa7-415e-4e43-8dd4-79f8d013c861",
+            "AnimationGraph": "objects/stork/stork.vanmgrph",
+            "BodyGroups": 18446744073709551615,
+            "CreateBoneObjects": true,
+            "Model": "objects/stork/stork.vmdl",
+            "Morphs": {},
+            "Parameters": {
+              "bools": {},
+              "ints": {},
+              "floats": {},
+              "vectors": {},
+              "rotations": {}
+            },
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1",
+            "UseAnimGraph": true
+          }
+        ],
+        "Children": [
+          {
+            "__guid": "59f7c9f9-3d2b-4ec9-93df-c6a2c789ad3a",
+            "Flags": 4,
+            "Name": "Bone",
+            "Position": "22.39999,-0.000001335143,0.000001335144",
+            "Rotation": "0.00000003231165,0.00000003231164,0.7071066,0.7071069",
+            "Enabled": true,
+            "Children": [
+              {
+                "__guid": "733987a5-1b64-4a91-b6e8-d2e7fc280ebb",
+                "Flags": 4,
+                "Name": "Bone_003",
+                "Position": "-0.0000000000009094947,21.59999,-0.000003261508",
+                "Enabled": true,
+                "Children": [
+                  {
+                    "__guid": "4c165cc0-f886-4055-94dd-23bf67446fb8",
+                    "Flags": 4,
+                    "Name": "Bone_001",
+                    "Position": "-0.000000000001364242,21.59999,-0.000003261508",
+                    "Enabled": true,
+                    "Children": [
+                      {
+                        "__guid": "102d374a-76d3-499b-b051-586defdc95ed",
+                        "Flags": 4,
+                        "Name": "Bone_002",
+                        "Position": "-0.0000000000004547474,21.59999,-0.00000326151",
+                        "Enabled": true,
+                        "Children": [
+                          {
+                            "__guid": "437b2241-b04a-464e-91f2-cafbd4ef2cf3",
+                            "Flags": 4,
+                            "Name": "Bone_002_end",
+                            "Position": "-0.0000000000004547474,21.45663,-2.694697",
+                            "Rotation": "-0.0391538,-0.0000000000000003077768,-0.00000000000000355544,0.9992331",
+                            "Enabled": true,
+                            "Children": [
+                              {
+                                "__guid": "99eddb5c-dbb7-4af9-8b47-79c9f901891b",
+                                "Flags": 0,
+                                "Name": "Beak",
+                                "Enabled": true,
+                                "Children": [
+                                  {
+                                    "__guid": "501f2764-f469-4669-84c8-c61506bed3df",
+                                    "Flags": 0,
+                                    "Name": "stork_holder",
+                                    "Position": "-0.000004192082,1.686993,-40.94395",
+                                    "Rotation": "0.05704207,0.00000001862645,0.0000000006693881,0.9983718",
+                                    "Enabled": true,
+                                    "Components": [
+                                      {
+                                        "__type": "Sandbox.ModelRenderer",
+                                        "__guid": "c5da0419-88bc-4a0f-8536-cbcc09efffc6",
+                                        "BodyGroups": 18446744073709551615,
+                                        "Model": "objects/stork/stork_holder.vmdl",
+                                        "RenderOptions": {
+                                          "GameLayer": true,
+                                          "OverlayLayer": false,
+                                          "BloomLayer": false,
+                                          "AfterUILayer": false
+                                        },
+                                        "RenderType": "On",
+                                        "Tint": "1,1,1,1"
+                                      }
+                                    ],
+                                    "Children": [
+                                      {
+                                        "__guid": "b17d6014-dbe3-40f2-8b0b-f7cb777dd0ab",
+                                        "Flags": 0,
+                                        "Name": "gift",
+                                        "Enabled": true,
+                                        "Components": [
+                                          {
+                                            "__type": "Sandbox.ModelRenderer",
+                                            "__guid": "af8f2c13-9ce9-4721-800f-9f31d04e6a54",
+                                            "BodyGroups": 18446744073709551615,
+                                            "Model": "items/misc/gift/gift.vmdl",
+                                            "RenderOptions": {
+                                              "GameLayer": true,
+                                              "OverlayLayer": false,
+                                              "BloomLayer": false,
+                                              "AfterUILayer": false
+                                            },
+                                            "RenderType": "On",
+                                            "Tint": "1,1,1,1"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "__guid": "dd0d70b8-2343-4b73-9e33-00bef89866be",
+                "Flags": 4,
+                "Name": "Bone_004_L",
+                "Position": "0.000000005961965,21.59999,-0.000003261508",
+                "Rotation": "0,-0.00000009508187,-0.6296988,0.7768394",
+                "Enabled": true,
+                "Children": [
+                  {
+                    "__guid": "140f312d-88dd-470f-8fbd-75c32c1c4241",
+                    "Flags": 4,
+                    "Name": "Bone_005_L",
+                    "Position": "-0.000002086163,22.07032,-0.000003332525",
+                    "Rotation": "0.000000000000009018528,0.00000002619448,0.1734783,0.9848377",
+                    "Enabled": true,
+                    "Children": [
+                      {
+                        "__guid": "17f2e789-c114-4ae8-acac-29570130810b",
+                        "Flags": 4,
+                        "Name": "Bone_006_L",
+                        "Position": "0.000003814697,46.72236,-0.000007054883",
+                        "Rotation": "0.000000000000005560899,0.000000008952735,0.05929134,0.9982407",
+                        "Enabled": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "__guid": "70eaa3f6-b623-4de7-977f-989cdd10340d",
+                "Flags": 4,
+                "Name": "Bone_004_R",
+                "Position": "-0.000000008939196,21.59999,-0.000003261508",
+                "Rotation": "-0.000000000000004573294,0.00000009508187,0.6296988,0.7768394",
+                "Enabled": true,
+                "Children": [
+                  {
+                    "__guid": "852d1299-d1f6-429c-86dc-d172c6a24b0b",
+                    "Flags": 4,
+                    "Name": "Bone_005_R",
+                    "Position": "0.000001192093,22.07032,-0.000003332526",
+                    "Rotation": "0.000000000000009694916,-0.00000002619449,-0.1734783,0.9848377",
+                    "Enabled": true,
+                    "Children": [
+                      {
+                        "__guid": "d8cf8174-39bb-4078-b0e9-7ce8af45dad5",
+                        "Flags": 4,
+                        "Name": "Bone_006_R",
+                        "Position": "-0.000005722046,46.72235,-0.000007054884",
+                        "Rotation": "0.0000000000000008897439,-0.000000008952737,-0.05929139,0.9982408",
+                        "Enabled": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "__guid": "afee8c01-16f6-4c33-a4f2-338325f268ab",
+            "Flags": 4,
+            "Name": "legs",
+            "Position": "22.39999,-0.000001335143,0.000001335145",
+            "Rotation": "-0.0000001699904,-0.0000001053671,-0.7071067,0.7071068",
+            "Enabled": true
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
