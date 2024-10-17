@@ -82,7 +82,7 @@ public partial class InventoryUiEquip : IEquipChanged
 		// hardcode for now 
 		if ( item.Components.TryGet<CarriedEdible>( out var edible ) )
 		{
-			var actualItem = new PersistentItem( edible.EdibleData.GetIdentifier() );
+			var actualItem = PersistentItem.Create( edible.EdibleData.GetIdentifier() );
 
 			Inventory.Container.AddItemToIndex( actualItem, targetSlot );
 

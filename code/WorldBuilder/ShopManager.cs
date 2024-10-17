@@ -3,6 +3,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Clover.Data;
 using Clover.Items;
+using Clover.Persistence;
+using Clover.Player;
+using Clover.Ui;
 
 namespace Clover.WorldBuilder;
 
@@ -160,4 +163,43 @@ public class ShopManager : Component
 	public List<ShopItem> Items => State.Items;
 
 	public ShopManagerState State { get; set; }
+
+	public bool BuyItem( PlayerCharacter player, ShopItem item )
+	{
+		if ( !Items.Contains( item ) )
+		{
+			player.Notify( Notifications.NotificationType.Error, "This item is not available in this shop." );
+			return false;
+		}
+
+		if ( item.Stock <= 0 )
+		{
+			player.Notify( Notifications.NotificationType.Error, "This item is out of stock." );
+			return false;
+		}
+
+		if ( player.CloverBalanceController.GetBalance() < item.Price )
+		{
+			player.Notify( Notifications.NotificationType.Error, "You don't have enough clovers to buy this item." );
+			return false;
+		}
+
+		player.CloverBalanceController.DeductClover( item.Price );
+
+		item.Stock--;
+
+		if ( item.Stock <= 0 )
+		{
+			Items.Remove( item );
+		}
+
+		SaveState();
+
+		player.Inventory.PickUpItem( PersistentItem.Create( item.ItemId ) );
+
+		player.Notify( Notifications.NotificationType.Success,
+			$"You bought {item.ItemData.Name} for {item.Price} clovers." );
+
+		return true;
+	}
 }

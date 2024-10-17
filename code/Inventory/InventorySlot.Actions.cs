@@ -436,7 +436,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void HoldEdible()
 	{
-		var carriedPersistentItem = new PersistentItem( "carried_edible:4023053997083351548" );
+		var carriedPersistentItem = Persistence.PersistentItem.Create( "carried_edible:4023053997083351548" );
 		carriedPersistentItem.SetArbitraryData( "EdibleData", PersistentItem.ItemData.GetIdentifier() );
 
 		var carriedEdible = carriedPersistentItem.SpawnCarriable();

@@ -1,9 +1,10 @@
 ﻿using Clover.Interactable;
+using Clover.Player;
 using Clover.WorldBuilder;
 
 namespace Clover.Items;
 
-public class ShopDisplay : Component
+public class ShopDisplay : Component, IInteract
 {
 	[Property] public GameObject Container { get; set; }
 	[Property] public int Size { get; set; } = 1;
@@ -97,5 +98,19 @@ public class ShopDisplay : Component
 		}
 
 		Log.Error( $"ShopDisplay: No model or place scene found for {itemData.GetIdentifier()}" );
+	}
+
+	public void StartInteract( PlayerCharacter player )
+	{
+		if ( ShopManager.BuyItem( player, Item ) )
+		{
+			UpdateItem();
+		}
+	}
+
+	public string GetInteractName()
+	{
+		if ( Item == null ) return "Sold Out";
+		return $"Buy {Item.ItemData.Name}";
 	}
 }
