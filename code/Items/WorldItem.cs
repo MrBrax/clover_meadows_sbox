@@ -84,7 +84,6 @@ public class WorldItem : Component, IPickupable
 	{
 		base.DrawGizmos();
 
-		return;
 		if ( !Gizmo.Settings.GizmosEnabled ) return;
 
 		if ( Gizmo.Camera == null ) return;

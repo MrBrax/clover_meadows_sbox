@@ -10,6 +10,7 @@
         "__guid": "004fa9db-fda2-427b-9c80-f032b08eeecc",
         "CanPickupSimple": true,
         "ItemData": "items/furniture/electronics/tv_crt/tv_crt.item",
+        "PlaceModeOffset": "0,0,0",
         "Prefab": "items/furniture/electronics/tv_crt/tv_crt.prefab"
       },
       {
@@ -53,7 +54,7 @@
         "__guid": "2ff6d40d-e0f1-4e55-b354-84cfa6fed20d",
         "Flags": 0,
         "Name": "tv",
-        "Rotation": "0,0,0.7071068,0.7071068",
+        "Rotation": "0,0,1,-0.00000004371139",
         "Enabled": true,
         "Components": [
           {

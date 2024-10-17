@@ -7,7 +7,7 @@ using Clover.Ui;
 
 namespace Clover.Player;
 
-public class ItemPlacer : Component
+public class ItemPlacer : Component, IWorldEvent
 {
 	private PlayerCharacter Player => GetComponent<PlayerCharacter>();
 
@@ -26,6 +26,11 @@ public class ItemPlacer : Component
 	protected override void OnStart()
 	{
 		Mouse.Visible = true;
+	}
+
+	void IWorldEvent.OnWorldChanged( World world )
+	{
+		StopPlacing();
 	}
 
 	public void StartPlacing( int inventorySlotIndex )
@@ -246,11 +251,15 @@ public class ItemPlacer : Component
 
 		box = box.Rotate( _ghost.WorldRotation );
 
-		var trace = Scene.Trace.Box( box, ray, 10000f )
-			.WithoutTags( "player" )
+		var trace = Scene.Trace.Box( box, ray, 1000f )
+			.WithoutTags( "player", "invisiblewall" )
 			.Run();
 
-		if ( !trace.Hit ) return;
+		if ( !trace.Hit )
+		{
+			_isValidPlacement = false;
+			return;
+		}
 
 		// Gizmo.Transform = new Transform( trace.EndPosition );
 		// Gizmo.Draw.LineBBox( box );
@@ -287,7 +296,9 @@ public class ItemPlacer : Component
 	{
 		if ( IsPlacing && ShowGrid )
 		{
-			Gizmo.Draw.Grid( Gizmo.GridAxis.XY, 32f );
+			// TODO: re-add grid when it can be positioned relative to the player
+			// Gizmo.Transform = new Transform( Player.WorldPosition );
+			// Gizmo.Draw.Grid( Gizmo.GridAxis.XY, new Vector2( 32f, 32f ) );
 		}
 
 		if ( IsPlacing && _ghost.IsValid() )

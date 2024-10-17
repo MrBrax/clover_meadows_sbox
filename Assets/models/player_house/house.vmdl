@@ -264,6 +264,7 @@
 					{
 						_class = "PhysicsMeshFile"
 						name = "house"
+						disabled = true
 						parent_bone = ""
 						surface_prop = "default"
 						collision_tags = "solid"
@@ -310,7 +311,6 @@
 								"Stairs_001",
 								"Stairs_003",
 								"interior_col",
-								"interior_walls_col",
 								"room1_floor_col",
 								"room1_walls_col",
 								"room2_floor_col",
@@ -319,6 +319,7 @@
 								"room4_floor_col",
 								"room3_walls_col",
 								"room3_floor_col",
+								"interior_walls_col",
 							]
 						}
 					},

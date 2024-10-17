@@ -11,43 +11,38 @@
 				[
 					{
 						_class = "DefaultMaterialGroup"
-						remaps = 
-						[
-							{
-								from = "screen.vmat"
-								to = "items/furniture/electronics/tv_crt/tv_screen.vmat"
-							},
-							{
-								from = "newgradient.vmat"
-								to = "materials/shared/color-atlas-gradient.vmat"
-							},
-						]
-						use_global_default = false
+						remaps = [  ]
+						use_global_default = true
 						global_default_material = "materials/default.vmat"
 					},
 				]
 			},
 			{
-				_class = "RenderMeshList"
+				_class = "PhysicsShapeList"
 				children = 
 				[
 					{
-						_class = "RenderMeshFile"
-						filename = "items/furniture/electronics/tv_crt/tv_crt.fbx"
-						import_translation = [ 0.0, 0.0, 0.0 ]
-						import_rotation = [ 0.0, 0.0, 0.0 ]
-						import_scale = 1.0
+						_class = "PhysicsMeshFile"
+						name = "house"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						recenter_on_parent_bone = false
+						offset_origin = [ 0.0, 0.0, 0.0 ]
+						offset_angles = [ 0.0, 0.0, 0.0 ]
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
-						parent_bone = ""
+						filename = "models/player_house/house.fbx"
+						import_scale = 1.0
+						maxMeshVertices = 0
+						qemError = 0.0
 						import_filter = 
 						{
 							exclude_by_default = true
 							exception_list = 
 							[
-								"Cube",
-								"Cube_011",
+								"interiorcol_colonly",
 							]
 						}
 					},
