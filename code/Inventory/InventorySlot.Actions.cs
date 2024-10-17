@@ -399,8 +399,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		var aimingGridPosition = InventoryContainer.Player.GetAimingGridPosition();
-		var floorItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
-		if ( floorItem == null || floorItem.ItemData.ResourceName != "hole" )
+		var floorItem = InventoryContainer.Player.World.GetItem<Hole>( aimingGridPosition );
+		if ( floorItem == null )
 		{
 			Log.Warning( "No hole found" );
 			return;

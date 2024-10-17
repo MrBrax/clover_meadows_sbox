@@ -16,7 +16,7 @@ public class Axe : BaseCarriable
 		if ( !CanUse() ) return;
 
 		NextUse = 1f;
-		
+
 		if ( !Networking.IsHost )
 		{
 			Log.Error( "Only the host can use world altering items for now." );
@@ -35,25 +35,8 @@ public class Axe : BaseCarriable
 			return;
 		}
 
-		var floorItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Floor );
-		if ( floorItem != null )
+		foreach ( var floorItem in worldItems )
 		{
-			/*if ( floorItem.Node is Items.Tree tree )
-			{
-				if ( tree.IsFalling || tree.IsDroppingFruit )
-				{
-					Logger.Info( "Axe", "Tree is falling or dropping fruit." );
-					return;
-				}
-				ChopTree( pos, floorItem, tree );
-				return;
-			}
-			else
-			{
-				HitItem( pos, floorItem );
-				return;
-			}*/
-
 			if ( floorItem.Node.Components.TryGet<Tree>( out var tree ) )
 			{
 				if ( tree.IsFalling || tree.IsDroppingFruit )

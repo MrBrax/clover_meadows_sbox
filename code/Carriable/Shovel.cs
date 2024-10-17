@@ -47,30 +47,30 @@ public class Shovel : BaseCarriable
 		}
 		else
 		{
-			var undergroundItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Underground );
+			/*var undergroundItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Underground );
 			if ( undergroundItem != null )
 			{
 				DigUpItem( pos, undergroundItem );
 				return;
-			}
+			}*/
 
-			var floorItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Floor );
-			if ( floorItem != null )
+			foreach ( var floorItem in worldItems )
 			{
 				if ( floorItem.Node.Components.TryGet<Hole>( out var hole ) )
 				{
 					FillHole( pos );
+					break;
 				}
 				else if ( floorItem.Node.Components.TryGet<IDiggable>( out var diggable ) )
 				{
 					DigUpFloorItem( pos, floorItem, diggable );
+					break;
 				}
 				else
 				{
 					HitItem( pos, floorItem );
+					break;
 				}
-
-				return;
 			}
 		}
 
@@ -134,7 +134,7 @@ public class Shovel : BaseCarriable
 	{
 		Log.Info( $"Filled hole at {pos}" );
 
-		var hole = Player.World.GetItem( pos, World.ItemPlacement.Floor );
+		var hole = Player.World.GetItem<Hole>( pos );
 		if ( hole == null )
 		{
 			Log.Info( "No hole found." );
@@ -185,10 +185,18 @@ public class Shovel : BaseCarriable
 
 		Player.World.RemoveItem( item );
 
-		var dirt = Player.World.GetItem( pos, World.ItemPlacement.Floor );
-		if ( dirt != null && dirt.ItemData?.ResourceName == "buried_item" )
+		var dirtQuery = Player.World.GetItems( pos ).ToList();
+		/*if ( dirt != null && dirt.ItemData?.ResourceName == "buried_item" )
 		{
 			Player.World.RemoveItem( dirt );
+		}*/
+
+		if ( dirtQuery.Count > 0 )
+		{
+			foreach ( var dirt in dirtQuery.Where( dirt => dirt.ItemData.ResourceName == "buried_item" ) )
+			{
+				Player.World.RemoveItem( dirt );
+			}
 		}
 
 		DigHole( pos );

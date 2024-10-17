@@ -17,7 +17,7 @@ public sealed partial class World
 		{
 			throw new Exception( "Only the host can query the world" );
 		}
-		
+
 		if ( IsOutsideGrid( gridPos ) )
 		{
 			throw new Exception( $"Position {gridPos} is outside the grid" );
@@ -94,7 +94,7 @@ public sealed partial class World
 		return Items.Where( x => x.WorldPosition.Distance( w ) < GridSize );
 	}
 
-	/// <summary>
+	/*/// <summary>
 	///  Get a node link at a specific grid position and placement.
 	///  Use <see cref="WorldNodeLink.Node"/> to get the node.
 	/// </summary>
@@ -114,12 +114,17 @@ public sealed partial class World
 		}
 
 		return null;
-	}
+	}*/
 
 	public WorldNodeLink GetItem( GameObject node )
 	{
 		// return _nodeLinkGridMap.Values.FirstOrDefault( x => x.Node == node );
 		return Items.FirstOrDefault( x => x.Node == node );
 	}
-	
+
+	public WorldNodeLink GetItem<T>( Vector2Int gridPos ) where T : Component
+	{
+		return Items.FirstOrDefault( x =>
+			x.WorldPosition == ItemGridToWorld( gridPos ) && x.Node.GetComponent<T>() != null );
+	}
 }

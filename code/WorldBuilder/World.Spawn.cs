@@ -65,10 +65,10 @@ public sealed partial class World
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
 
-		if ( !itemData.Placements.HasFlag( placement ) )
+		/*if ( !itemData.Placements.HasFlag( placement ) )
 		{
 			throw new Exception( $"Item {itemData.Name} does not support placement {placement}" );
-		}
+		}*/
 
 		var positions = itemData.GetGridPositions( rotation, position );
 
@@ -117,10 +117,10 @@ public sealed partial class World
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
 
-		if ( !itemData.Placements.HasFlag( placement ) )
+		/*if ( !itemData.Placements.HasFlag( placement ) )
 		{
 			throw new Exception( $"Item {itemData.Name} does not support placement {placement}" );
-		}
+		}*/
 
 
 		var defaultDropScene =
@@ -192,10 +192,11 @@ public sealed partial class World
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
 
-		if ( !itemData.Placements.HasFlag( placement ) )
+		/*if ( !itemData.Placements.HasFlag( placement ) )
 		{
 			throw new Exception( $"Item {itemData.Name} does not support placement {placement}" );
 		}
+		*/
 
 		var defaultDropScene =
 			SceneUtility.GetPrefabScene(
@@ -272,10 +273,10 @@ public sealed partial class World
 
 		var nodeLink = new WorldNodeLink( this, item );
 
-		nodeLink.GridPosition = position;
-		nodeLink.GridRotation = rotation;
+		// nodeLink.GridPosition = position;
+		// nodeLink.GridRotation = rotation;
 
-		nodeLink.GridPlacement = placement;
+		// nodeLink.GridPlacement = placement;
 		nodeLink.PrefabPath = nodeLink.GetPrefabPath();
 
 		// NODE LINK IS NOT ADDED TO WORLD YET, CAN'T DO IT HERE BECAUSE WE NEED TO CALCULATE SIZE FIRST
@@ -303,7 +304,7 @@ public sealed partial class World
 
 		var nodeLink = new WorldNodeLink( this, item );
 
-		nodeLink.GridPlacement = placement;
+		// nodeLink.GridPlacement = placement;
 		nodeLink.PrefabPath = nodeLink.GetPrefabPath();
 
 		// NODE LINK IS NOT ADDED TO WORLD YET, CAN'T DO IT HERE BECAUSE WE NEED TO CALCULATE SIZE FIRST

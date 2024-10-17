@@ -21,7 +21,7 @@ public class WorldItem : Component, IPickupable
 	public Vector2Int Size =>
 		!Scene.IsEditor ? NodeLink.Size : new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
 
-	public World.ItemPlacement GridPlacement => !Scene.IsEditor ? NodeLink.GridPlacement : World.ItemPlacement.Floor;
+	// public World.ItemPlacement GridPlacement => !Scene.IsEditor ? NodeLink.GridPlacement : World.ItemPlacement.Floor;
 	public World.ItemPlacementType GridPlacementType => NodeLink?.PlacementType ?? World.ItemPlacementType.Placed;
 	public World.ItemRotation GridRotation => NodeLink?.GridRotation ?? World.ItemRotation.North;
 
@@ -164,10 +164,10 @@ public class WorldItem : Component, IPickupable
 
 	public bool CanPickup( PlayerCharacter player )
 	{
-		return !HasItemOnTop() && CanPickupSimple;
+		return CanPickupSimple;
 	}
 
-	[Obsolete]
+	/*[Obsolete]
 	public bool HasItemOnTop()
 	{
 		if ( NodeLink == null ) return false;
@@ -186,7 +186,7 @@ public class WorldItem : Component, IPickupable
 		}
 
 		return false;
-	}
+	}*/
 
 	/// <summary>
 	///  Called when the player picks up this item, mostly so you don't have to add IPickupable to every item.

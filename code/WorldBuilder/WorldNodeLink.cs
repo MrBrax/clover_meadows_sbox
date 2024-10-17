@@ -16,14 +16,15 @@ public class WorldNodeLink : IValid
 	[JsonIgnore] public World World;
 	[JsonIgnore] public GameObject Node;
 
-	[Obsolete] public Vector2Int GridPosition;
+	public Vector2Int GridPosition => World.WorldToItemGrid( Node.WorldPosition );
 
-	[Obsolete] public World.ItemRotation GridRotation;
+	public World.ItemRotation GridRotation =>
+		World.GetItemRotationFromDirection( World.Get4Direction( Node.WorldRotation ) );
 
 	public Vector3 WorldPosition => Node.WorldPosition;
 	public Rotation WorldRotation => Node.WorldRotation;
 
-	public World.ItemPlacement GridPlacement;
+	// public World.ItemPlacement GridPlacement;
 	public World.ItemPlacementType PlacementType;
 
 	public Vector2Int Size;
@@ -186,7 +187,7 @@ public class WorldNodeLink : IValid
 			Rotation = GridRotation,
 			WPosition = WorldPosition.SnapToGrid( 1 ),
 			WAngles = WorldRotation.Angles().SnapToGrid( 1 ),
-			Placement = GridPlacement,
+			// Placement = GridPlacement,
 			PlacementType = PlacementType,
 			PrefabPath = PrefabPath,
 			ItemId = ItemId,

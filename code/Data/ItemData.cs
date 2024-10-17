@@ -2,6 +2,7 @@
 using Clover.Carriable;
 using Clover.Components;
 using Clover.Inventory;
+using Clover.Items;
 using Clover.Persistence;
 using Sandbox.Utility;
 
@@ -34,8 +35,10 @@ public class ItemData : GameResource
 	[Property, Group( "World" )] public int Width { get; set; } = 1;
 	[Property, Group( "World" )] public int Height { get; set; } = 1;
 
-	[Property, Group( "World" )] // default to floor and underground
-	public World.ItemPlacement Placements { get; set; } = World.ItemPlacement.Floor | World.ItemPlacement.Underground;
+	// [Property, Group( "World" )] // default to floor and underground
+	// public World.ItemPlacement Placements { get; set; } = World.ItemPlacement.Floor | World.ItemPlacement.Underground;
+
+	[Property, Group( "World" )] public bool CanBeBuried { get; set; } = true;
 
 	[Property, Group( "Inventory" )] public bool CanDrop { get; set; } = true;
 	[Property, Group( "Inventory" )] public bool CanPlace { get; set; } = true;
@@ -215,15 +218,15 @@ public class ItemData : GameResource
 		var player = slot.InventoryContainer.Player;
 		if ( player != null )
 		{
-			if ( slot.GetItem().ItemData.Placements.HasFlag( World.ItemPlacement.Underground ) )
+			if ( slot.GetItem().ItemData.CanBeBuried )
 			{
 				var shovel = player.Equips.GetEquippedItem<Shovel>( Equips.EquipSlot.Tool );
 
 				if ( shovel != null )
 				{
-					var hole = player.World.GetItem( player.GetAimingGridPosition(), World.ItemPlacement.Floor );
+					var hole = player.World.GetItem<Hole>( player.GetAimingGridPosition() );
 
-					if ( hole != null && hole.ItemId == "hole" )
+					if ( hole != null )
 					{
 						yield return new ItemAction
 						{

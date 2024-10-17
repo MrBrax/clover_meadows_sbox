@@ -17,7 +17,7 @@ public class Paintbrush : BaseCarriable
 	{
 		var pos = Player.GetAimingGridPosition();
 
-		var item = Player.World.GetItem( pos, World.ItemPlacement.FloorDecal );
+		var item = Player.World.GetItems( pos ).FirstOrDefault();
 
 		if ( item != null && item.Node.Components.TryGet<FloorDecal>( out var floorDecal ) )
 		{

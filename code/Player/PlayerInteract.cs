@@ -142,7 +142,7 @@ public class PlayerInteract : Component
 		{
 			if ( collider.GameObject.Components.TryGet<IPickupable>( out var pickupable ) )
 			{
-				if ( collider.GameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+				/*if ( collider.GameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 				{
 					// only allow picking up items on the floor or on top of other items
 					if ( worldItem.NodeLink != null &&
@@ -157,7 +157,7 @@ public class PlayerInteract : Component
 					{
 						continue;
 					}
-				}
+				}*/
 
 				return pickupable;
 			}
@@ -179,7 +179,7 @@ public class PlayerInteract : Component
 				// Log.Info( $" - Checking (parent?) {checkGameObject.Name}" );
 				if ( checkGameObject.Components.TryGet<IInteract>( out var interactable ) )
 				{
-					if ( checkGameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+					/*if ( checkGameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 					{
 						if ( worldItem.NodeLink != null &&
 						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
@@ -189,7 +189,7 @@ public class PlayerInteract : Component
 						{
 							continue;
 						}
-					}
+					}*/
 
 					return interactable;
 				}
