@@ -12,13 +12,12 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 {
 	public void Drop()
 	{
-
 		if ( !Networking.IsHost )
 		{
 			Log.Error( "Only the host can drop items for now." );
 			return;
 		}
-		
+
 		Log.Info( $"Dropping item {PersistentItem.ItemData.ResourceName}" );
 		var position = InventoryContainer.Player.GetAimingGridPosition();
 		var playerRotation =
@@ -27,8 +26,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		/*try
 		{*/
-			InventoryContainer.Player.World.SpawnDroppedNode( PersistentItem, position, playerRotation,
-				World.ItemPlacement.Floor );
+		InventoryContainer.Player.World.SpawnDroppedNode( PersistentItem, position, playerRotation,
+			World.ItemPlacement.Floor );
 		/*}
 		catch ( Exception e )
 		{
@@ -36,7 +35,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			Log.Error( e.Message );
 			return;
 		}*/
-		
+
 		Sound.Play( "sounds/interact/item_drop.sound", InventoryContainer.Owner.WorldPosition );
 
 		TakeOneOrDelete();
@@ -52,18 +51,16 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		InventoryContainer.Player.ItemPlacer.StartPlacing( Index );
 		InventoryUi.Instance.Close();
-
 	}
 
 	public void Equip()
 	{
-
 		if ( PersistentItem.ItemData is IEdibleData )
 		{
 			HoldEdible();
 			return;
 		}
-		
+
 		Components.Equips.EquipSlot slot;
 
 		// get slot from item
@@ -360,13 +357,12 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void SpawnObject()
 	{
-		
 		if ( !Networking.IsHost )
 		{
 			Log.Error( "Only the host can spawn objects for now." );
 			return;
 		}
-		
+
 		var objectData = PersistentItem.ItemData.ObjectData;
 
 		if ( objectData == null )
@@ -379,30 +375,29 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		var worldObject = gameObject.GetComponent<WorldObject>();
 		worldObject.WorldLayerObject.SetLayer( InventoryContainer.Player.WorldLayerObject.Layer, true );
-		
+
 		var size = gameObject.GetBounds().Size.Length;
 
 		worldObject.WorldPosition = InventoryContainer.Player.WorldPosition +
 		                            InventoryContainer.Player.Model.WorldRotation.Forward * size;
-		
+
 		TakeOneOrDelete();
 	}
 
 	public void Plant()
 	{
-		
 		if ( !Networking.IsHost )
 		{
 			Log.Error( "Only the host can plant objects for now." );
 			return;
 		}
-		
+
 		if ( PersistentItem.ItemData is not SeedData seedData )
 		{
 			Log.Error( "Item is not a seed" );
 			return;
 		}
-		
+
 		var aimingGridPosition = InventoryContainer.Player.GetAimingGridPosition();
 		var floorItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
 		if ( floorItem == null || floorItem.ItemData.ResourceName != "hole" )
@@ -410,17 +405,17 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			Log.Warning( "No hole found" );
 			return;
 		}
-		
+
 		var spawnedItemData = seedData.SpawnedItemData;
-		
+
 		if ( spawnedItemData == null )
 		{
 			Log.Error( "Seed does not have a spawned item data" );
 			return;
 		}
-		
+
 		floorItem.Remove();
-		
+
 		if ( spawnedItemData is PlantData plantData )
 		{
 			InventoryContainer.Player.World.SpawnCustomNode( plantData, plantData.PlantedScene, aimingGridPosition,
@@ -431,10 +426,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			Log.Error( "Spawned item data is not a plant data" );
 			return;
 		}
-		
+
 		TakeOneOrDelete();
-		
-		
 	}
 
 	public void Destroy()
@@ -444,16 +437,13 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void HoldEdible()
 	{
-
 		var carriedPersistentItem = new PersistentItem( "carried_edible:4023053997083351548" );
 		carriedPersistentItem.SetArbitraryData( "EdibleData", PersistentItem.ItemData.Id );
 
 		var carriedEdible = carriedPersistentItem.SpawnCarriable();
-		
-		InventoryContainer.Player.Equips.SetEquippedItem( Equips.EquipSlot.Tool, carriedEdible.GameObject );
-		
-		TakeOneOrDelete();
 
+		InventoryContainer.Player.Equips.SetEquippedItem( Equips.EquipSlot.Tool, carriedEdible.GameObject );
+
+		TakeOneOrDelete();
 	}
-	
 }

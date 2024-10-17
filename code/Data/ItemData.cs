@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Nodes;
 using Clover.Carriable;
 using Clover.Components;
 using Clover.Inventory;
@@ -12,7 +13,11 @@ namespace Clover.Data;
 [Icon( "weekend" )]
 public class ItemData : GameResource
 {
-	[Property] public string Id { get; set; }
+	/// <summary>
+	///  Unique identifier for this item.
+	/// </summary>
+	[Property]
+	public string Id { get; set; }
 
 	[Button( "Generate ID" )]
 	public void GenerateId()
@@ -254,7 +259,7 @@ public class ItemData : GameResource
 	public static ItemData Get( string id )
 	{
 		var itemData = ResourceLibrary.GetAll<ItemData>()
-			.FirstOrDefault( x => x.ResourceName == id || x.ResourcePath == id || x.Id == id );
+			.FirstOrDefault( x => x.Id == id || x.ResourceName == id || x.ResourcePath == id );
 		if ( itemData == null )
 		{
 			Log.Error( $"Item data not found: {id}" );
@@ -275,7 +280,8 @@ public class ItemData : GameResource
 		{
 			// create id based on path
 			// TODO: is this a good idea?
-			Id = $"{ResourceName}:{Crc64.FromString( ResourcePath )}";
+			Log.Warning( $"Item {ResourcePath} has no id, generating one" );
+			// Id = $"{ResourceName}:{Crc64.FromString( ResourcePath )}";
 		}
 	}*/
 

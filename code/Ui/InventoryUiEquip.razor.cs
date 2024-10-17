@@ -13,7 +13,7 @@ public partial class InventoryUiEquip : IEquipChanged
 	public Equips.EquipSlot Slot { get; set; }
 
 	private BaseCarriable Tool => Inventory?.Player?.Equips.GetEquippedItem<BaseCarriable>( Slot );
-	
+
 	private bool HasItem => Inventory.Player.Equips.HasEquippedItem( Slot );
 
 	void IEquipChanged.OnEquippedItemChanged( GameObject owner, Equips.EquipSlot slot, GameObject item )
@@ -47,16 +47,15 @@ public partial class InventoryUiEquip : IEquipChanged
 	{
 		base.OnRightClick( e );
 		if ( Tool == null ) return;
-		
+
 		Unequip();
-		
 	}
 
 	protected override void OnDoubleClick( MousePanelEvent e )
 	{
 		base.OnDoubleClick( e );
 		if ( Tool == null ) return;
-		
+
 		Unequip();
 	}
 
@@ -70,45 +69,44 @@ public partial class InventoryUiEquip : IEquipChanged
 			Log.Error( "No free slots available" );
 			return;
 		}
-		
+
 		targetSlot = targetSlot == -1 ? freeIndex : targetSlot;
-		
+
 		var item = Inventory.Player.Equips.GetEquippedItem( Slot );
 		if ( item == null )
 		{
 			Log.Error( "No item equipped" );
 			return;
 		}
-		
+
 		// hardcode for now 
 		if ( item.Components.TryGet<CarriedEdible>( out var edible ) )
 		{
 			var actualItem = new PersistentItem( edible.EdibleData.Id );
-			
+
 			Inventory.Container.AddItemToIndex( actualItem, targetSlot );
-			
+
 			Inventory.Player.Equips.RemoveEquippedItem( Slot, true );
-			
+
 			StateHasChanged();
 
 			return;
 		}
 
 		var persistentItem = PersistentItem.Create( item );
-		
-		Inventory.Container.AddItemToIndex( persistentItem, targetSlot );
-		
-		Inventory.Player.Equips.RemoveEquippedItem( Slot, true );
-		
-		// Inventory.Player.Save();
-		
-		StateHasChanged();
 
+		Inventory.Container.AddItemToIndex( persistentItem, targetSlot );
+
+		Inventory.Player.Equips.RemoveEquippedItem( Slot, true );
+
+		// Inventory.Player.Save();
+
+		StateHasChanged();
 	}
-	
+
 	private Panel Ghost;
 	public override bool WantsDrag => true;
-	
+
 	protected override void OnDragStart( DragEvent e )
 	{
 		if ( !HasItem ) return;
@@ -128,9 +126,9 @@ public partial class InventoryUiEquip : IEquipChanged
 		Ghost.Style.ZIndex = 1000;
 
 		var icon = new Image();
-		
+
 		var texture = Tool?.ItemData.GetIconTexture();
-		
+
 		icon.Texture = texture;
 		icon.Style.Width = Ghost.Style.Width.GetValueOrDefault().Value * 0.8f;
 		icon.Style.Height = Ghost.Style.Height.GetValueOrDefault().Value * 0.8f;
@@ -155,7 +153,7 @@ public partial class InventoryUiEquip : IEquipChanged
 		{
 			s.RemoveClass( "moving-to" );
 		}
-		
+
 		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiEquip>() )
 		{
 			s.RemoveClass( "moving-to" );
@@ -170,7 +168,6 @@ public partial class InventoryUiEquip : IEquipChanged
 			DropOnSlot( slot );
 			return;
 		}
-		
 	}
 
 	private void DropOnSlot( InventoryUiSlot slot )
@@ -187,10 +184,10 @@ public partial class InventoryUiEquip : IEquipChanged
 		}
 
 		Sound.Play( "sounds/ui/inventory_stop_drag.sound" );
-		
 	}
 
 	private Panel _lastHovered;
+
 	protected override void OnDragSelect( SelectionEvent e )
 	{
 		if ( !HasItem ) return;
@@ -200,7 +197,7 @@ public partial class InventoryUiEquip : IEquipChanged
 
 		var equip = FindRootPanel().Descendants.OfType<InventoryUiEquip>()
 			.FirstOrDefault( x => x.IsInside( e.EndPoint ) );
-		
+
 		if ( slot == null && equip == null ) return;
 
 		// Log.Info( $"Selected on {slot.Index}" );
@@ -209,7 +206,7 @@ public partial class InventoryUiEquip : IEquipChanged
 		{
 			s.RemoveClass( "moving-to" );
 		}
-		
+
 		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiEquip>() )
 		{
 			s.RemoveClass( "moving-to" );
@@ -217,7 +214,7 @@ public partial class InventoryUiEquip : IEquipChanged
 
 		slot?.AddClass( "moving-to" );
 		equip?.AddClass( "moving-to" );
-		
+
 		Panel currentHovered = slot != null ? slot : equip;
 		if ( _lastHovered != currentHovered )
 		{
@@ -228,7 +225,7 @@ public partial class InventoryUiEquip : IEquipChanged
 
 	protected override void OnDrag( DragEvent e )
 	{
-		if (!HasItem ) return;
+		if ( !HasItem ) return;
 		if ( !Ghost.IsValid() ) return;
 		Ghost.Style.Top = (e.ScreenPosition.y - e.LocalGrabPosition.y) * ScaleFromScreen;
 		Ghost.Style.Left = (e.ScreenPosition.x - e.LocalGrabPosition.x) * ScaleFromScreen;
@@ -242,5 +239,4 @@ public partial class InventoryUiEquip : IEquipChanged
 			Ghost.Delete();
 		}
 	}
-	
 }

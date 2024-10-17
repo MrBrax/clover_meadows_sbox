@@ -53,8 +53,7 @@ public class ShopManager : Component
 			}
 
 			var nonAddedItems = catalogue.Items
-				.FindAll( i => !HasItem( i.Id ) )
-				.Where( i => i.GetMaxBounds() <= display.Size ).ToList();
+				.Where( i => !HasItem( i.Id ) && i.GetMaxBounds() <= display.Size ).ToList();
 
 			if ( !nonAddedItems.Any() )
 			{

@@ -22,6 +22,7 @@
   "ObjectData": null,
   "HideInSpawnMenu": false,
   "PlaceModeOffset": "0,0,0",
+  "BaseBuyPrice": 0,
   "__references": [],
   "__version": 0
 }
