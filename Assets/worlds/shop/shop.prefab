@@ -211,7 +211,9 @@
         "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
         "Enabled": true,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
-        "__PrefabVariables": {}
+        "__PrefabVariables": {
+          "Size": 1
+        }
       },
       {
         "__guid": "48205435-d897-40bc-8c65-b3380d408850",
@@ -221,7 +223,9 @@
         "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
         "Enabled": true,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
-        "__PrefabVariables": {}
+        "__PrefabVariables": {
+          "Size": 1
+        }
       },
       {
         "__guid": "47e84f87-91d0-4a14-9701-aca88304b704",
@@ -231,7 +235,9 @@
         "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
         "Enabled": true,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
-        "__PrefabVariables": {}
+        "__PrefabVariables": {
+          "Size": 1
+        }
       },
       {
         "__guid": "a67590a1-22b4-4926-a4bb-e8a46fe85914",
@@ -242,23 +248,26 @@
           {
             "__type": "Clover.WorldBuilder.ShopManager",
             "__guid": "3c8c1a9c-bf76-439a-a07e-f43da512327c",
+            "Catalogues": [
+              "catalogues/furniture.cata"
+            ],
             "Displays": [
               {
                 "_type": "component",
-                "component_id": "785668d5-4105-4fb8-a697-25004ba8900a",
-                "go": "47e84f87-91d0-4a14-9701-aca88304b704",
+                "component_id": "8b3331e9-f848-4c8d-9cb3-d4c14e26ff9f",
+                "go": "b664a362-cc2c-4654-916b-49a642d2dbfd",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "821825d5-8589-42fe-ab18-ece2bbdcac07",
+                "component_id": "b2198f7c-3415-409b-921d-e99bf3ba46a0",
                 "go": "48205435-d897-40bc-8c65-b3380d408850",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "56790c5c-516b-46c3-9490-6112b3ac8eb1",
-                "go": "b664a362-cc2c-4654-916b-49a642d2dbfd",
+                "component_id": "4ecb73d2-30d9-4718-874a-af25ff15ab2c",
+                "go": "47e84f87-91d0-4a14-9701-aca88304b704",
                 "component_type": "ShopDisplay"
               }
             ],

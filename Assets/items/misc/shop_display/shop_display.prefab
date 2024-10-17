@@ -19,7 +19,8 @@
         "Container": {
           "_type": "gameobject",
           "go": "5987670e-028e-43d2-8a17-5afaf668a20e"
-        }
+        },
+        "Size": 1
       }
     ],
     "Children": [
@@ -53,7 +54,18 @@
         "Enabled": true
       }
     ],
-    "__variables": []
+    "__variables": [
+      {
+        "Id": "Size",
+        "Title": "Size",
+        "Targets": [
+          {
+            "Id": "412df943-d4e2-4f30-a0b2-9ed0dfeb995a",
+            "Property": "Size"
+          }
+        ]
+      }
+    ]
   },
   "ShowInMenu": false,
   "MenuPath": null,

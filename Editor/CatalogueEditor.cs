@@ -35,20 +35,19 @@ public class DatePeriodEditor : ControlWidget
 		// Layout.Add(new ColorSwatchWidget(color) { FixedWidth = ControlRowHeight, FixedHeight = ControlRowHeight });
 		// Layout.Add(new StringControlWidget(name) { HorizontalSizeMode = SizeMode.Default });
 
-		Layout.Add( new MonthControlWidget( startMonth ) { HorizontalSizeMode = SizeMode.Default } );
+		Layout.Add( new MonthControlWidget( startMonth ) { HorizontalSizeMode = SizeMode.Expand } );
 		Layout.Add( new IntegerControlWidget( startDay )
 		{
-			HorizontalSizeMode = SizeMode.Expand, Range = new Vector2( 1, 31 )
+			HorizontalSizeMode = SizeMode.Default, Range = new Vector2( 1, 31 )
 		} );
 
 		Layout.Add( new Label( "to" ) { HorizontalSizeMode = SizeMode.Default } );
 
-		Layout.Add( new MonthControlWidget( endMonth ) { HorizontalSizeMode = SizeMode.Default } );
+		Layout.Add( new MonthControlWidget( endMonth ) { HorizontalSizeMode = SizeMode.Expand } );
 		Layout.Add( new IntegerControlWidget( endDay )
 		{
-			HorizontalSizeMode = SizeMode.Expand, Range = new Vector2( 1, 31 )
+			HorizontalSizeMode = SizeMode.Default, Range = new Vector2( 1, 31 )
 		} );
-
 
 		/*var row2 = Layout.Row();
 
@@ -69,7 +68,7 @@ public class MonthControlWidget : DropdownControlWidget<int>
 
 	protected override IEnumerable<object> GetDropdownValues()
 	{
-		yield return new Entry() { Label = "None", Value = 0 };
+		// yield return new Entry() { Label = "None", Value = 0 };
 		for ( int i = 1; i <= 12; i++ )
 		{
 			yield return new Entry()
@@ -101,7 +100,7 @@ public class MonthControlWidget : DropdownControlWidget<int>
 
 		var text = value switch
 		{
-			0 => "None",
+			0 => "ERROR",
 			_ => new DateTime( 2021, value, 1 ).ToString( "MMMM", CultureInfo.InvariantCulture )
 		};
 

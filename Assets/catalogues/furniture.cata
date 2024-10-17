@@ -1,8 +1,25 @@
 {
   "Name": "Catalogue",
   "Description": "A collection of items.",
-  "Items": [],
-  "AlwaysAvailable": false,
+  "Items": [
+    "items/furniture/electronics/tv_crt/tv_crt.item",
+    "items/test/test3.item",
+    "items/test/test.item",
+    "items/tools/fishing_rod/fishing_rod.tool",
+    "items/tools/flashlight/flashlight.tool",
+    "items/tools/axe/axe.tool",
+    "items/tools/shovel/shovel.tool",
+    "items/tools/watering_can/watering_can.tool"
+  ],
+  "AlwaysAvailable": true,
+  "AvailablePeriods": [
+    {
+      "StartMonth": 1,
+      "StartDay": 1,
+      "EndMonth": 1,
+      "EndDay": 1
+    }
+  ],
   "__references": [],
   "__version": 0
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Clover.Data;
 
@@ -15,6 +16,30 @@ public class CatalogueData : GameResource
 
 	[Property, ShowIf( nameof(AlwaysAvailable), false )]
 	public List<DatePeriod> AvailablePeriods { get; set; } = new();
+
+	[JsonIgnore, Hide]
+	public bool IsCurrentlyInsideAvailablePeriod
+	{
+		get
+		{
+			if ( AlwaysAvailable )
+				return true;
+
+			var now = DateTime.Now;
+			foreach ( var period in AvailablePeriods )
+			{
+				if ( period.StartMonth <= now.Month && now.Month <= period.EndMonth )
+				{
+					if ( period.StartDay <= now.Day && now.Day <= period.EndDay )
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+	}
 }
 
 public struct DatePeriod

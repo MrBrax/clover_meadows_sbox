@@ -147,6 +147,11 @@ public class ItemData : GameResource
 		}
 	}
 
+	public int GetMaxBounds()
+	{
+		return Math.Max( Width, Height );
+	}
+
 	public bool IsSameAs( ItemData item )
 	{
 		return item != null && (item.ResourcePath == ResourcePath || item.GetIdentifier() == GetIdentifier());
