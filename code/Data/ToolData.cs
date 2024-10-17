@@ -10,6 +10,8 @@ public sealed class ToolData : ItemData
 {
 	[Property, Group( "Tool" )] public GameObject CarryScene { get; set; }
 
+	[Property, Group( "Tool" )] public int MaxDurability { get; set; } = 100;
+
 
 	public BaseCarriable SpawnCarriable()
 	{
@@ -25,5 +27,11 @@ public sealed class ToolData : ItemData
 	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
 	{
 		yield return new ItemAction { Name = "Equip", Icon = "build", Action = slot.Equip };
+	}
+
+	public override void OnPersistentItemInitialize( PersistentItem persistentItem )
+	{
+		base.OnPersistentItemInitialize( persistentItem );
+		persistentItem.SetArbitraryData( "Durability", MaxDurability );
 	}
 }

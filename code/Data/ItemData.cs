@@ -294,4 +294,8 @@ public class ItemData : GameResource
 	{
 		return Id;
 	}
+
+	public virtual void OnPersistentItemInitialize( PersistentItem persistentItem )
+	{
+	}
 }

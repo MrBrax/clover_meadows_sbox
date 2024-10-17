@@ -33,10 +33,7 @@ public partial class DebugWindow
 	{
 		var pItem = item.CreatePersistentItem();
 
-		if ( pItem.ItemData is ToolData toolData )
-		{
-			pItem.SetArbitraryData( "Durability", 100 );
-		}
+		item.OnPersistentItemInitialize( pItem );
 
 		PlayerCharacter.Local.Inventory.PickUpItem( pItem );
 

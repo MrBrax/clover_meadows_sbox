@@ -35,10 +35,7 @@ public class PersistentItem
 
 	public void Initialize()
 	{
-		if ( ItemData is ToolData )
-		{
-			SetArbitraryData( "Durability", 100 );
-		}
+		ItemData?.OnPersistentItemInitialize( this );
 	}
 
 	/// <summary>
