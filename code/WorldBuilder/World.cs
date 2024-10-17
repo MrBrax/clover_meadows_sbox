@@ -79,11 +79,11 @@ public sealed partial class World : Component
 
 	[Sync] private Dictionary<Vector2Int, float> TileHeights { get; set; } = new();
 
-	public record struct NodeLinkMapKey( Vector2Int Position, ItemPlacement Placement )
+	/*public record struct NodeLinkMapKey( Vector2Int Position, ItemPlacement Placement )
 	{
 		public Vector2Int Position = Position;
 		public ItemPlacement Placement = Placement;
-	}
+	}*/
 
 	/*/// <summary>
 	///  This is now the main grid map for all items in the world. Node links appear multiple times in this map if they occupy multiple grid positions.
@@ -207,7 +207,7 @@ public sealed partial class World : Component
 		return position.x < 0 || position.y < 0 || position.x >= Data.Width || position.y >= Data.Height;
 	}
 
-	/// <summary>
+	/*/// <summary>
 	///  Checks if an item can be placed at the specified position and rotation.
 	///  It will check if the position is outside the grid, if there are any items at the position, and if there are any items nearby that would block the placement.
 	///  An item can be larger than 1x1, in which case it will check all positions that the item would occupy.
@@ -244,11 +244,11 @@ public sealed partial class World : Component
 			{
 				Log.Warning( $"Found item at {pos} with placement {placement} in grid map, but not in items" );
 				return false;
-			}*/
+			}#1#
 		}
 
 		return true;
-	}
+	}*/
 
 	public bool CheckGridPositionEligibility( Vector2Int position, out Vector3 worldPosition )
 	{

@@ -178,8 +178,7 @@ public class ItemPlacer : Component
 	{
 		try
 		{
-			Player.World.SpawnPlacedNode( InventorySlot.GetItem(), _ghost.WorldPosition, _ghost.WorldRotation,
-				_lastItemPlacement );
+			Player.World.SpawnPlacedNode( InventorySlot.GetItem(), _ghost.WorldPosition, _ghost.WorldRotation );
 		}
 		catch ( Exception e )
 		{
@@ -219,9 +218,9 @@ public class ItemPlacer : Component
 
 	private bool _isValidPlacement;
 
-	private Vector2Int _lastGridPosition;
-	private World.ItemRotation _lastGridRotation;
-	private World.ItemPlacement _lastItemPlacement = World.ItemPlacement.Floor;
+	// private Vector2Int _lastGridPosition;
+	// private World.ItemRotation _lastGridRotation;
+	// private World.ItemPlacement _lastItemPlacement = World.ItemPlacement.Floor;
 	private Vector3 _colliderSize;
 	private Vector3 _colliderCenter;
 

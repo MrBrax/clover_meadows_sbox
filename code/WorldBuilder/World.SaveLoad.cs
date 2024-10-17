@@ -123,7 +123,7 @@ public sealed partial class World
 		foreach ( var item in saveData.Items )
 		{
 			var position = item.Position;
-			var placement = item.Placement;
+			// var placement = item.Placement;
 			var rotation = item.Rotation;
 			var prefabPath = item.PrefabPath;
 

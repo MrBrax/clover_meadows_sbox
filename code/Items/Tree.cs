@@ -182,8 +182,7 @@ public class Tree : Component, IPersistent, IInteract
 		foreach ( var shakePoint in ShakeSpawnPoints )
 		{
 			var pos = WorldItem.WorldLayerObject.World.WorldToItemGrid( shakePoint.WorldPosition );
-			WorldItem.WorldLayerObject.World.SpawnDroppedNode( FruitData, pos, World.ItemRotation.North,
-				World.ItemPlacement.Floor );
+			WorldItem.WorldLayerObject.World.SpawnDroppedNode( FruitData, pos, World.ItemRotation.North );
 		}
 
 		// await ToSignal( GetTree().CreateTimer( 1.5f ), Timer.SignalName.Timeout );

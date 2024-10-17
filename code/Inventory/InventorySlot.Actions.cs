@@ -26,8 +26,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		/*try
 		{*/
-		InventoryContainer.Player.World.SpawnDroppedNode( PersistentItem, position, playerRotation,
-			World.ItemPlacement.Floor );
+		InventoryContainer.Player.World.SpawnDroppedNode( PersistentItem, position, playerRotation );
 		/*}
 		catch ( Exception e )
 		{
@@ -419,7 +418,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		if ( spawnedItemData is PlantData plantData )
 		{
 			InventoryContainer.Player.World.SpawnCustomNode( plantData, plantData.PlantedScene, aimingGridPosition,
-				World.ItemRotation.North, World.ItemPlacement.Floor );
+				World.ItemRotation.North );
 		}
 		else
 		{

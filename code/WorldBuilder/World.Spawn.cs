@@ -8,57 +8,50 @@ namespace Clover;
 
 public sealed partial class World
 {
-	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector2Int position, ItemRotation rotation,
-		ItemPlacement placement )
+	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector2Int position, ItemRotation rotation )
 	{
-		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation, placement );
+		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation );
 	}
 
-	public WorldNodeLink SpawnPlacedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation,
-		ItemPlacement placement )
+	public WorldNodeLink SpawnPlacedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation )
 	{
 		var itemData = persistentItem.ItemData;
-		var nodeLink = SpawnPlacedNode( itemData, position, rotation, placement );
+		var nodeLink = SpawnPlacedNode( itemData, position, rotation );
 		nodeLink.SetPersistence( persistentItem );
 		nodeLink.RunLoadPersistence();
 		return nodeLink;
 	}
 
-	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector3 position, Rotation rotation,
-		ItemPlacement placement )
+	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector3 position, Rotation rotation )
 	{
-		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation, placement );
+		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation );
 	}
 
-	public WorldNodeLink SpawnPlacedNode( PersistentItem persistentItem, Vector3 position, Rotation rotation,
-		ItemPlacement placement )
+	public WorldNodeLink SpawnPlacedNode( PersistentItem persistentItem, Vector3 position, Rotation rotation )
 	{
 		var itemData = persistentItem.ItemData;
-		var nodeLink = SpawnPlacedNode( itemData, position, rotation, placement );
+		var nodeLink = SpawnPlacedNode( itemData, position, rotation );
 		nodeLink.SetPersistence( persistentItem );
 		nodeLink.RunLoadPersistence();
 		return nodeLink;
 	}
 
-	public WorldNodeLink SpawnDroppedNode( ItemData itemData, Vector2Int position, ItemRotation rotation,
-		ItemPlacement placement )
+	public WorldNodeLink SpawnDroppedNode( ItemData itemData, Vector2Int position, ItemRotation rotation )
 	{
-		return SpawnNode( itemData, ItemPlacementType.Dropped, position, rotation, placement );
+		return SpawnNode( itemData, ItemPlacementType.Dropped, position, rotation );
 	}
 
-	public WorldNodeLink SpawnDroppedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation,
-		ItemPlacement placement )
+	public WorldNodeLink SpawnDroppedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation )
 	{
 		var itemData = persistentItem.ItemData;
-		var nodeLink = SpawnDroppedNode( itemData, position, rotation, placement );
+		var nodeLink = SpawnDroppedNode( itemData, position, rotation );
 		nodeLink.SetPersistence( persistentItem );
 		nodeLink.RunLoadPersistence();
 		return nodeLink;
 	}
 
 	public WorldNodeLink SpawnCustomNode( ItemData itemData, GameObject scene, Vector2Int position,
-		ItemRotation rotation,
-		ItemPlacement placement )
+		ItemRotation rotation )
 	{
 		if ( IsOutsideGrid( position ) )
 		{
@@ -72,10 +65,10 @@ public sealed partial class World
 
 		var positions = itemData.GetGridPositions( rotation, position );
 
-		if ( !CanPlaceItem( positions, placement ) )
+		/*if ( !CanPlaceItem( positions, placement ) )
 		{
 			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
-		}
+		}*/
 
 		if ( scene == null )
 		{
@@ -91,7 +84,7 @@ public sealed partial class World
 		gameObject.WorldPosition = ItemGridToWorld( position );
 		gameObject.WorldRotation = GetRotation( rotation );
 
-		var nodeLink = AddItem( position, rotation, placement, gameObject );
+		var nodeLink = AddItem( position, rotation, gameObject );
 
 		nodeLink.ItemId = itemData.ResourceName;
 		nodeLink.PlacementType = ItemPlacementType.Placed;
@@ -108,7 +101,7 @@ public sealed partial class World
 	}
 
 	private WorldNodeLink SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector2Int position,
-		ItemRotation rotation, ItemPlacement placement )
+		ItemRotation rotation )
 	{
 		Assert.NotNull( itemData, "Item data is null" );
 
@@ -144,17 +137,17 @@ public sealed partial class World
 			? new List<Vector2Int> { position }
 			: itemData.GetGridPositions( rotation, position );
 
-		if ( !CanPlaceItem( positions, placement ) )
+		/*if ( !CanPlaceItem( positions, placement ) )
 		{
 			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
-		}
+		}*/
 
 		var gameObject = scene.Clone();
 
 		gameObject.WorldPosition = ItemGridToWorld( position );
 		gameObject.WorldRotation = GetRotation( rotation );
 
-		var nodeLink = AddItem( position, rotation, placement, gameObject );
+		var nodeLink = AddItem( position, rotation, gameObject );
 
 		nodeLink.ItemId = itemData.ResourceName;
 		nodeLink.PlacementType = ItemPlacementType.Placed;
@@ -183,7 +176,7 @@ public sealed partial class World
 	}
 
 	private WorldNodeLink SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector3 position,
-		Rotation rotation, ItemPlacement placement )
+		Rotation rotation )
 	{
 		Assert.NotNull( itemData, "Item data is null" );
 
@@ -229,7 +222,7 @@ public sealed partial class World
 		gameObject.WorldPosition = position;
 		gameObject.WorldRotation = rotation;
 
-		var nodeLink = AddItem( placement, gameObject );
+		var nodeLink = AddItem( gameObject );
 
 		nodeLink.ItemId = itemData.ResourceName;
 		nodeLink.PlacementType = ItemPlacementType.Placed;
@@ -264,7 +257,7 @@ public sealed partial class World
 	/// <param name="item"></param>
 	/// <returns></returns>
 	/// <exception cref="Exception"></exception>
-	public WorldNodeLink AddItem( Vector2Int position, ItemRotation rotation, ItemPlacement placement, GameObject item )
+	public WorldNodeLink AddItem( Vector2Int position, ItemRotation rotation, GameObject item )
 	{
 		if ( IsOutsideGrid( position ) )
 		{
@@ -290,12 +283,12 @@ public sealed partial class World
 
 		// UpdateTransform( nodeLink );
 
-		Log.Info( $"Added item {item.Name} at {position} with placement {placement} ({item.Id})" );
+		Log.Info( $"Added item {item.Name} at {position} ({item.Id})" );
 
 		return nodeLink;
 	}
 
-	public WorldNodeLink AddItem( ItemPlacement placement, GameObject item )
+	public WorldNodeLink AddItem( GameObject item )
 	{
 		/*if ( IsOutsideGrid( position ) )
 		{
@@ -320,7 +313,7 @@ public sealed partial class World
 
 		// UpdateTransform( nodeLink );
 
-		Log.Info( $"Added item {item.Name} at {item.WorldPosition} with placement {placement} ({item.Id})" );
+		Log.Info( $"Added item {item.Name} at {item.WorldPosition} ({item.Id})" );
 
 		return nodeLink;
 	}

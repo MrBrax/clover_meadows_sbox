@@ -123,7 +123,7 @@ public class Shovel : BaseCarriable
 		Player.ModelLookAt( Player.World.ItemGridToWorld( pos ) );
 
 		var holeData = Data.ItemData.Get( "hole" );
-		var hole = Player.World.SpawnPlacedNode( holeData, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
+		var hole = Player.World.SpawnPlacedNode( holeData, pos, World.ItemRotation.North );
 
 		SoundEx.Play( DigSound, WorldPosition );
 
@@ -264,8 +264,8 @@ public class Shovel : BaseCarriable
 		// Player.World.SpawnDroppedNode( slot.PersistentItem, gridPos, World.ItemRotation.North, World.ItemPlacement.Underground );
 
 		// dirt
-		var dirt = Player.World.SpawnPlacedNode( Data.ItemData.Get( "buried_item" ), gridPos, World.ItemRotation.North,
-			World.ItemPlacement.Floor );
+		var dirt = Player.World.SpawnPlacedNode( Data.ItemData.Get( "buried_item" ), gridPos,
+			World.ItemRotation.North );
 
 		var node = dirt.Node;
 
