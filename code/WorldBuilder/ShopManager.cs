@@ -1,4 +1,5 @@
-﻿using Clover.Data;
+﻿using System.Text.Json.Serialization;
+using Clover.Data;
 using Clover.Items;
 
 namespace Clover.WorldBuilder;
@@ -13,13 +14,22 @@ public class ShopManager : Component
 
 	// [Property] public Shopkeeper Shopkeeper { get; set; }
 
+
+	private void GenerateItems()
+	{
+		foreach ( var display in Displays )
+		{
+		}
+	}
+
 	public class ShopItem
 	{
 		public string ItemId { get; set; }
 		public int Price { get; set; }
 		public int Stock { get; set; }
-		// public int CustomCategory { get; set; }
-
-		public ItemData ItemData { get; set; }
+		public string DisplayId { get; set; }
+		[JsonIgnore] public ItemData ItemData => ItemData.Get( ItemId );
 	}
+
+	public List<ShopItem> Items { get; set; }
 }
