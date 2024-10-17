@@ -1,0 +1,33 @@
+{
+  "Id": "grass_tuft:15977583958843679845",
+  "Name": "Grass tuft",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "CanBeBuried": true,
+  "CanDrop": true,
+  "CanPlace": true,
+  "DisablePickup": true,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": null,
+  "DropScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/grass_tuft/grass_tuft.prefab"
+  },
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/grass_tuft/grass_tuft.prefab"
+  },
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/misc/grass_tuft/grass_tuft.prefab"
+  },
+  "Icon": null,
+  "ObjectData": null,
+  "HideInSpawnMenu": false,
+  "PlaceModeOffset": "0,0,-8",
+  "BaseBuyPrice": 0,
+  "__references": [],
+  "__version": 0
+}
