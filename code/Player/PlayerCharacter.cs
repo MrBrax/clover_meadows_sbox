@@ -63,7 +63,7 @@ public sealed partial class PlayerCharacter : Component
 			Save();
 		};
 
-		Fader.Instance.FadeFromBlack();
+		_ = Fader.Instance.FadeFromBlack();
 
 		CameraMan.Instance.Targets.Add( GameObject );
 	}

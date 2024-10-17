@@ -2,7 +2,6 @@
 using Clover.Components;
 using Clover.Data;
 using Clover.Interactable;
-using Clover.Inventory;
 using Clover.Persistence;
 using Clover.Player;
 using Clover.Ui;
@@ -43,12 +42,19 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 		if ( _isBrewing ) return;
 		if ( !_hasCup )
 		{
-			BrewAsync();
+			Brew();
 		}
 		else
 		{
 			TakeCup( player );
 		}
+	}
+
+	[Authority]
+	private void Brew()
+	{
+		if ( _hasCup ) return;
+		BrewAsync();
 	}
 
 	private void TakeCup( PlayerCharacter player )
@@ -85,7 +91,6 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 		Cup.Enabled = enabled;
 	}
 
-	[Authority]
 	private async void BrewAsync()
 	{
 		_isBrewing = true;

@@ -28,7 +28,7 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 
 	protected override void OnStart()
 	{
-		Bootstrap();
+		_ = Bootstrap();
 	}
 
 	private async Task Bootstrap()
