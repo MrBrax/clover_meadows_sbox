@@ -36,7 +36,7 @@ public class Inventory : Component
 
 	public void PickUpItem( GameObject gameObject )
 	{
-		PickUpItem( WorldManager.Instance.ActiveWorld.GetItem( gameObject ) );
+		PickUpItem( WorldManager.Instance.ActiveWorld.GetNodeLink( gameObject ) );
 	}
 
 	public async void PickUpItem( WorldNodeLink nodeLink )

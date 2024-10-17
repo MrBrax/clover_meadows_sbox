@@ -224,7 +224,7 @@ public class ItemData : GameResource
 
 				if ( shovel != null )
 				{
-					var hole = player.World.GetItem<Hole>( player.GetAimingGridPosition() );
+					var hole = player.World.GetNodeLink<Hole>( player.GetAimingGridPosition() );
 
 					if ( hole != null )
 					{

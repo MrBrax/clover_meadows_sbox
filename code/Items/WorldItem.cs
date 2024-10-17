@@ -14,7 +14,7 @@ public class WorldItem : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
-	public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World?.GetItem( GameObject ) : null;
+	public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World?.GetNodeLink( GameObject ) : null;
 
 	public Vector2Int GridPosition => NodeLink?.GridPosition ?? Vector2Int.Zero;
 

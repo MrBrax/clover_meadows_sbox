@@ -352,7 +352,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 	{
 		foreach ( var world in Worlds.Values )
 		{
-			var link = world.GetItem( gameObject );
+			var link = world.GetNodeLink( gameObject );
 			if ( link != null )
 			{
 				return link;

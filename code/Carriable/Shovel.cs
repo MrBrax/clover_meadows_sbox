@@ -134,7 +134,7 @@ public class Shovel : BaseCarriable
 	{
 		Log.Info( $"Filled hole at {pos}" );
 
-		var hole = Player.World.GetItem<Hole>( pos );
+		var hole = Player.World.GetNodeLink<Hole>( pos );
 		if ( hole == null )
 		{
 			Log.Info( "No hole found." );
