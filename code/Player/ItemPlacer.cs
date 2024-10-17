@@ -35,6 +35,12 @@ public class ItemPlacer : Component
 		if ( Player.Inventory.Container == null )
 			throw new System.Exception( "Player Inventory Container is not valid" );
 
+		if ( Player.World.Data.DisableItemPlacement )
+		{
+			Player.Notify( Notifications.NotificationType.Error, "Item placement is disabled in this area" );
+			return;
+		}
+
 		if ( IsPlacing )
 		{
 			StopPlacing();
