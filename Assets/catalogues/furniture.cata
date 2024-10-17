@@ -3,9 +3,6 @@
   "Description": "A collection of items.",
   "Items": [],
   "AlwaysAvailable": false,
-  "AvailablePeriods": [
-    null
-  ],
   "__references": [],
   "__version": 0
 }

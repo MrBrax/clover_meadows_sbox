@@ -1,4 +1,6 @@
-﻿namespace Clover.Data;
+﻿using System.Text.Json.Serialization;
+
+namespace Clover.Data;
 
 [GameResource( "Catalogue", "cata", "Catalogue" )]
 public class CatalogueData : GameResource
@@ -15,11 +17,15 @@ public class CatalogueData : GameResource
 	public List<DatePeriod> AvailablePeriods { get; set; } = new();
 }
 
-public class DatePeriod
+public struct DatePeriod
 {
-	public int StartMonth;
-	public int StartDay;
+	public DatePeriod()
+	{
+	}
 
-	public int EndMonth;
-	public int EndDay;
+	[JsonInclude] public int StartMonth { get; set; } = 1;
+	[JsonInclude] public int StartDay { get; set; } = 1;
+
+	[JsonInclude] public int EndMonth { get; set; } = 1;
+	[JsonInclude] public int EndDay { get; set; } = 1;
 }

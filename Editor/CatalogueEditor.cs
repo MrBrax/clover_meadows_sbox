@@ -11,15 +11,18 @@ public class DatePeriodEditor : ControlWidget
 
 	public DatePeriodEditor( SerializedProperty property ) : base( property )
 	{
-		Layout = Layout.Column();
-		// Layout.Spacing = 10;
+		Layout = Layout.Row();
+		Layout.Spacing = 10;
 
 		PaintBackground = false;
 
 		// Serialize the property as a MyClass object
-		var serializedObject = property.GetValue<DatePeriod>()?.GetSerialized();
+		var serializedObject = property.GetValue<DatePeriod>().GetSerialized();
 		if ( serializedObject is null )
+		{
+			Log.Error( "Failed to get serialized object" );
 			return;
+		}
 
 		// Get the Color and Name properties from the serialized object
 		serializedObject.TryGetProperty( nameof(DatePeriod.StartMonth), out var startMonth );
@@ -32,24 +35,20 @@ public class DatePeriodEditor : ControlWidget
 		// Layout.Add(new ColorSwatchWidget(color) { FixedWidth = ControlRowHeight, FixedHeight = ControlRowHeight });
 		// Layout.Add(new StringControlWidget(name) { HorizontalSizeMode = SizeMode.Default });
 
-
-		var row1 = Layout.Row();
-		row1.Spacing = 10;
-		row1.Add( new MonthControlWidget( startMonth ) { HorizontalSizeMode = SizeMode.Default } );
-		row1.Add( new IntegerControlWidget( startDay )
+		Layout.Add( new MonthControlWidget( startMonth ) { HorizontalSizeMode = SizeMode.Default } );
+		Layout.Add( new IntegerControlWidget( startDay )
 		{
-			HorizontalSizeMode = SizeMode.Default, Range = new Vector2( 0, 31 )
+			HorizontalSizeMode = SizeMode.Expand, Range = new Vector2( 1, 31 )
 		} );
 
-		row1.Add( new Label( "to" ) { HorizontalSizeMode = SizeMode.Default } );
+		Layout.Add( new Label( "to" ) { HorizontalSizeMode = SizeMode.Default } );
 
-		row1.Add( new MonthControlWidget( endMonth ) { HorizontalSizeMode = SizeMode.Default } );
-		row1.Add( new IntegerControlWidget( endDay )
+		Layout.Add( new MonthControlWidget( endMonth ) { HorizontalSizeMode = SizeMode.Default } );
+		Layout.Add( new IntegerControlWidget( endDay )
 		{
-			HorizontalSizeMode = SizeMode.Default, Range = new Vector2( 0, 31 )
+			HorizontalSizeMode = SizeMode.Expand, Range = new Vector2( 1, 31 )
 		} );
 
-		Layout.Add( row1 );
 
 		/*var row2 = Layout.Row();
 
@@ -65,7 +64,7 @@ public class MonthControlWidget : DropdownControlWidget<int>
 {
 	public MonthControlWidget( SerializedProperty property ) : base( property )
 	{
-		Layout = Layout.Row();
+		// Layout = Layout.Row();
 	}
 
 	protected override IEnumerable<object> GetDropdownValues()
