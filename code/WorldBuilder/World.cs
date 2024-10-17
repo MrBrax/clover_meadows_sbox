@@ -11,6 +11,7 @@ namespace Clover;
 public sealed partial class World : Component
 {
 	[Flags]
+	[Obsolete]
 	public enum ItemPlacement
 	{
 		[Icon( "wallpaper" ), Obsolete] Wall = 1 << 0,
@@ -19,7 +20,7 @@ public sealed partial class World : Component
 
 		[Icon( "waves" ), Obsolete] Floor = 1 << 2,
 
-		[Description( "Items dug into the ground" )]
+		[Description( "Items dug into the ground" )] [Obsolete( "just realised this is obsolete now too" )]
 		Underground = 1 << 3,
 
 
