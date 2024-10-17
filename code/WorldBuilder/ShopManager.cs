@@ -52,20 +52,6 @@ public class ShopManager : Component
 				continue;
 			}
 
-			Log.Info( $"Shop: LISTING CATALOGUE ITEMS" );
-			foreach ( var item1 in catalogue.Items )
-			{
-				Log.Info(
-					$"Shop: Found item {item1} (id: {item1.GetIdentifier()}, type: {item1.GetType()}, name: {item1.Name}) for display {display}." );
-			}
-
-			Log.Info( $"Shop: LISTING ALL ITEMS" );
-			foreach ( var item2 in ResourceLibrary.GetAll<ItemData>() )
-			{
-				Log.Info(
-					$"Shop: Found item {item2} (id: {item2.GetIdentifier()}, type: {item2.GetType()}, name: {item2.Name})." );
-			}
-
 			var nonAddedItems = catalogue.Items
 				.Where( i => !HasItem( i.GetIdentifier() ) && i.GetMaxBounds() <= display.Size ).ToList();
 
@@ -85,11 +71,12 @@ public class ShopManager : Component
 				continue;
 			}
 
+			// WORKAROUND FOR WRONGLY CASTED ITEMDATA
+			// TODO: Remove this when fixed
+			// https://github.com/Facepunch/sbox-issues/issues/6630
 			if ( string.IsNullOrEmpty( item.GetIdentifier() ) )
 			{
-				Log.Error(
-					$"Shop: No item ID found for display {display}: {item.ResourcePath} ({item.GetIdentifier()}/{item.GetType()})." );
-				continue;
+				item = ResourceLibrary.Get<ItemData>( item.ResourcePath );
 			}
 
 			Items.Add( new ShopItem

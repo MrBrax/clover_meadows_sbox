@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.Json.Nodes;
 using Clover.Carriable;
 using Clover.Components;
 using Clover.Inventory;
@@ -11,6 +10,9 @@ namespace Clover.Data;
 [GameResource( "Item", "item", "item", Icon = "weekend" )]
 [Category( "Clover/Items" )]
 [Icon( "weekend" )]
+// [JsonPolymorphic]
+// [JsonDerivedType( typeof(ItemData), "item" )]
+// [JsonDerivedType( typeof(ToolData), "tool" )]
 public class ItemData : GameResource
 {
 	/// <summary>
