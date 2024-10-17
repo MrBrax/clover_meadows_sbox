@@ -61,7 +61,7 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 		}
 
 		var carriedPersistentItem = new PersistentItem( "carried_edible:4023053997083351548" );
-		carriedPersistentItem.SetArbitraryData( "EdibleData", ReceivedItem.Id );
+		carriedPersistentItem.SetArbitraryData( "EdibleData", ReceivedItem.GetIdentifier() );
 
 		var carriedEdible = carriedPersistentItem.SpawnCarriable();
 

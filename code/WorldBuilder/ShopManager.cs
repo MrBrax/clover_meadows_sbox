@@ -52,8 +52,22 @@ public class ShopManager : Component
 				continue;
 			}
 
+			Log.Info( $"Shop: LISTING CATALOGUE ITEMS" );
+			foreach ( var item1 in catalogue.Items )
+			{
+				Log.Info(
+					$"Shop: Found item {item1} (id: {item1.GetIdentifier()}, type: {item1.GetType()}, name: {item1.Name}) for display {display}." );
+			}
+
+			Log.Info( $"Shop: LISTING ALL ITEMS" );
+			foreach ( var item2 in ResourceLibrary.GetAll<ItemData>() )
+			{
+				Log.Info(
+					$"Shop: Found item {item2} (id: {item2.GetIdentifier()}, type: {item2.GetType()}, name: {item2.Name})." );
+			}
+
 			var nonAddedItems = catalogue.Items
-				.Where( i => !HasItem( i.Id ) && i.GetMaxBounds() <= display.Size ).ToList();
+				.Where( i => !HasItem( i.GetIdentifier() ) && i.GetMaxBounds() <= display.Size ).ToList();
 
 			if ( !nonAddedItems.Any() )
 			{
@@ -71,15 +85,19 @@ public class ShopManager : Component
 				continue;
 			}
 
-			if ( string.IsNullOrEmpty( item.Id ) )
+			if ( string.IsNullOrEmpty( item.GetIdentifier() ) )
 			{
-				Log.Error( $"Shop: No item ID found for display {display}: {item.ResourcePath}." );
+				Log.Error(
+					$"Shop: No item ID found for display {display}: {item.ResourcePath} ({item.GetIdentifier()}/{item.GetType()})." );
 				continue;
 			}
 
 			Items.Add( new ShopItem
 			{
-				ItemId = item.Id, Price = item.BaseBuyPrice, Stock = 1, Display = Displays.IndexOf( display )
+				ItemId = item.GetIdentifier(),
+				Price = item.BaseBuyPrice,
+				Stock = 1,
+				Display = Displays.IndexOf( display )
 			} );
 
 			Log.Info( $"Shop: Added item {item} to display {display}." );

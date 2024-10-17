@@ -90,6 +90,6 @@ public class ShopDisplay : Component
 			return;
 		}
 
-		Log.Error( $"ShopDisplay: No model or place scene found for {itemData.Id}" );
+		Log.Error( $"ShopDisplay: No model or place scene found for {itemData.GetIdentifier()}" );
 	}
 }
