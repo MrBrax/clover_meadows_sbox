@@ -65,10 +65,16 @@ public class ShopDisplay : Component
 				c.Destroy();
 			}*/
 
-			// destroy all components
+			// destroy all root components
 			foreach ( var c in gameObject.Components.GetAll().ToList() )
 			{
 				c.Destroy();
+			}
+
+			// destroy all particles
+			foreach ( var p in gameObject.GetComponentsInChildren<ParticleEffect>().ToList() )
+			{
+				p.Destroy();
 			}
 
 			return;
