@@ -14,6 +14,12 @@ public class ItemData : GameResource
 {
 	[Property] public string Id { get; set; }
 
+	[Button( "Generate ID" )]
+	public void GenerateId()
+	{
+		Id = $"{ResourceName}:{Crc64.FromString( ResourcePath )}";
+	}
+
 	[Property] public string Name { get; set; }
 
 	[Property, TextArea] public string Description { get; set; }
@@ -262,7 +268,7 @@ public class ItemData : GameResource
 		return new PersistentItem { ItemId = GetIdentifier(), };
 	}
 
-	protected override void PostLoad()
+	/*protected override void PostLoad()
 	{
 		base.PostLoad();
 		if ( string.IsNullOrEmpty( Id ) )
@@ -271,7 +277,7 @@ public class ItemData : GameResource
 			// TODO: is this a good idea?
 			Id = $"{ResourceName}:{Crc64.FromString( ResourcePath )}";
 		}
-	}
+	}*/
 
 	public string GetIdentifier()
 	{

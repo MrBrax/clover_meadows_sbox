@@ -207,7 +207,43 @@
         "__guid": "b664a362-cc2c-4654-916b-49a642d2dbfd",
         "Flags": 0,
         "Name": "shop_display",
-        "Position": "144,48,0.0000005013359",
+        "Position": "64,192,-0.000004406023",
+        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
+        "Enabled": true,
+        "__Prefab": "items/misc/shop_display/shop_display.prefab",
+        "__PrefabVariables": {
+          "Size": 1
+        }
+      },
+      {
+        "__guid": "daa05fcf-c2b3-494d-a4a3-f37dc453e630",
+        "Flags": 0,
+        "Name": "shop_display (3)",
+        "Position": "128,64,-0.0000001725211",
+        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
+        "Enabled": true,
+        "__Prefab": "items/misc/shop_display/shop_display.prefab",
+        "__PrefabVariables": {
+          "Size": 1
+        }
+      },
+      {
+        "__guid": "b965aa8c-b7ab-4c1f-beec-c7024197316e",
+        "Flags": 0,
+        "Name": "shop_display (4)",
+        "Position": "128,128,-0.0000002689342",
+        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
+        "Enabled": true,
+        "__Prefab": "items/misc/shop_display/shop_display.prefab",
+        "__PrefabVariables": {
+          "Size": 1
+        }
+      },
+      {
+        "__guid": "7c38a36a-7ade-4861-a119-ccf310e95b79",
+        "Flags": 0,
+        "Name": "shop_display (5)",
+        "Position": "128,192,-0.000000365416",
         "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
         "Enabled": true,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
@@ -219,7 +255,7 @@
         "__guid": "48205435-d897-40bc-8c65-b3380d408850",
         "Flags": 0,
         "Name": "shop_display (1)",
-        "Position": "96,48,0.0000005013359",
+        "Position": "64,128,-0.000002616266",
         "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
         "Enabled": true,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
@@ -231,7 +267,7 @@
         "__guid": "47e84f87-91d0-4a14-9701-aca88304b704",
         "Flags": 0,
         "Name": "shop_display (2)",
-        "Position": "48,48,0.0000005013359",
+        "Position": "64,64,0.000001008559",
         "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
         "Enabled": true,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
@@ -268,6 +304,24 @@
                 "_type": "component",
                 "component_id": "4ecb73d2-30d9-4718-874a-af25ff15ab2c",
                 "go": "47e84f87-91d0-4a14-9701-aca88304b704",
+                "component_type": "ShopDisplay"
+              },
+              {
+                "_type": "component",
+                "component_id": "b81a4714-7bb1-4d30-bea0-5e0714036861",
+                "go": "daa05fcf-c2b3-494d-a4a3-f37dc453e630",
+                "component_type": "ShopDisplay"
+              },
+              {
+                "_type": "component",
+                "component_id": "e4a5199e-c2ed-41ca-b8b3-30585ab912d2",
+                "go": "b965aa8c-b7ab-4c1f-beec-c7024197316e",
+                "component_type": "ShopDisplay"
+              },
+              {
+                "_type": "component",
+                "component_id": "48424c70-740c-43bf-bbf7-96f13c8906d1",
+                "go": "7c38a36a-7ade-4861-a119-ccf310e95b79",
                 "component_type": "ShopDisplay"
               }
             ],

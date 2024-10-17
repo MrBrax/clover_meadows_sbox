@@ -74,6 +74,22 @@ public class ShopDisplay : Component
 			return;
 		}
 
+		if ( itemData.DropScene.IsValid() )
+		{
+			var gameObject = itemData.DropScene.Clone();
+			gameObject.SetParent( Container );
+			gameObject.LocalPosition = Vector3.Zero;
+			gameObject.LocalRotation = Rotation.Identity;
+
+			// destroy all components
+			foreach ( var c in gameObject.Components.GetAll().ToList() )
+			{
+				c.Destroy();
+			}
+
+			return;
+		}
+
 		Log.Error( $"ShopDisplay: No model or place scene found for {itemData.Id}" );
 	}
 }

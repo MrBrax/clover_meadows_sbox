@@ -62,7 +62,21 @@ public class ShopManager : Component
 				continue;
 			}
 
+			Log.Info( $"Shop: Found {nonAddedItems.Count} items for display {display}." );
+
 			var item = Random.Shared.FromList( nonAddedItems );
+
+			if ( item == null )
+			{
+				Log.Error( $"Shop: Invalid item found for display {display}. This should not happen." );
+				continue;
+			}
+
+			if ( string.IsNullOrEmpty( item.Id ) )
+			{
+				Log.Error( $"Shop: No item ID found for display {display}: {item.ResourcePath}." );
+				continue;
+			}
 
 			Items.Add( new ShopItem
 			{
