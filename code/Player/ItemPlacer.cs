@@ -168,9 +168,13 @@ public class ItemPlacer : Component, IWorldEvent
 			StopPlacing();
 		}
 
-		if ( Input.MouseWheel.y != 0 )
+		if ( Input.Pressed( "RotateClockwise" ) )
 		{
-			_ghost.WorldRotation *= Rotation.FromYaw( Input.MouseWheel.y * 15 );
+			_ghost.WorldRotation *= Rotation.FromYaw( -15 );
+		}
+		else if ( Input.Pressed( "RotateCounterClockwise" ) )
+		{
+			_ghost.WorldRotation *= Rotation.FromYaw( 15 );
 		}
 
 		/*else if ( Input.Pressed( "cancel" ) )

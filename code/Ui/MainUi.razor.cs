@@ -74,5 +74,14 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 		{
 			yield return new InputData( "Pickup", $"Pick up {pickupable.GetPickupName()}" );
 		}
+
+		if ( player.ItemPlacer.IsPlacing )
+		{
+			yield return new InputData( "attack1", "Place" );
+			yield return new InputData( "attack2", "Cancel" );
+
+			yield return new InputData( "RotateClockwise", "Rotate Clockwise" );
+			yield return new InputData( "RotateCounterClockwise", "Rotate Counter Clockwise" );
+		}
 	}
 }
