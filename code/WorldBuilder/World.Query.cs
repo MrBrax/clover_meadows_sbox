@@ -28,6 +28,31 @@ public sealed partial class World
 		return Items.Where( x => x.WorldPosition.Distance( w ) < GridSize );
 	}
 
+	public IEnumerable<WorldNodeLink> GetItems( Vector3 worldPos, float radius = 16f )
+	{
+		if ( !Networking.IsHost )
+		{
+			throw new Exception( "Only the host can query the world" );
+		}
+
+		return Items.Where( x => x.WorldPosition.Distance( worldPos ) < radius );
+	}
+
+	public bool IsPositionOccupied( Vector2Int gridPos )
+	{
+		return GetItems( gridPos ).Any();
+	}
+
+	public bool IsPositionOccupied( Vector3 worldPos, float radius = 16f )
+	{
+		return GetItems( worldPos, radius ).Any();
+	}
+
+	public bool IsNearPlayer( Vector3 worldPos, float radius = 16f )
+	{
+		return PlayersInWorld.Any( x => x.WorldPosition.Distance( worldPos ) < radius );
+	}
+
 	/*/// <summary>
 	///  Get a node link at a specific grid position and placement.
 	///  Use <see cref="WorldNodeLink.Node"/> to get the node.

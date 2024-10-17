@@ -192,13 +192,20 @@ public class ItemPlacer : Component
 		StopPlacing();
 	}
 
-	private void SetGhostTint( Color color )
+	private Material _invalidMaterial = Material.Load( "materials/ghost_invalid.vmat" );
+
+	private void SetGhostTint()
 	{
 		if ( !_ghost.IsValid() ) return;
+
+		var s = MathF.Sin( Time.Now * 5 ) * 0.4f;
+
 		foreach ( var renderable in _ghost.Components.GetAll<ModelRenderer>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
-			renderable.Tint = color;
+			renderable.Tint = _isValidPlacement ? Color.White.WithAlpha( 0.5f + s ) : Color.Red.WithAlpha( 0.5f + s );
+
+			renderable.MaterialOverride = _isValidPlacement ? null : _invalidMaterial;
 		}
 	}
 
@@ -211,8 +218,7 @@ public class ItemPlacer : Component
 
 	private void UpdateVisuals()
 	{
-		var s = MathF.Sin( Time.Now * 5 ) * 0.1f;
-		SetGhostTint( _isValidPlacement ? Color.White.WithAlpha( 0.5f + s ) : Color.Red.WithAlpha( 0.5f + s ) );
+		SetGhostTint();
 		// SetCursorTintColor( _isValidPlacement ? Color.White.WithAlpha( 0.2f + s ) : Color.Red.WithAlpha( 0.2f + s ) );
 	}
 
@@ -261,7 +267,8 @@ public class ItemPlacer : Component
 		// var gridPosition = Player.World.WorldToItemGrid( endPosition );
 
 		// TODO: Check if the item can be placed here
-		_isValidPlacement = true;
+		_isValidPlacement = !Player.World.IsPositionOccupied( endPosition, 4f ) &&
+		                    !Player.World.IsNearPlayer( endPosition );
 
 		_ghost.WorldPosition = endPosition;
 	}
@@ -281,6 +288,13 @@ public class ItemPlacer : Component
 		if ( IsPlacing && ShowGrid )
 		{
 			Gizmo.Draw.Grid( Gizmo.GridAxis.XY, 32f );
+		}
+
+		if ( IsPlacing && _ghost.IsValid() )
+		{
+			Gizmo.Draw.Line( _ghost.WorldPosition, _ghost.WorldPosition + _ghost.WorldRotation.Down * 256f );
+			Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( _colliderCenter, _colliderSize )
+				.Rotate( _ghost.WorldRotation ).Translate( _ghost.WorldPosition ) );
 		}
 	}
 }
