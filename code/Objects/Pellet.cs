@@ -1,5 +1,6 @@
 ﻿using System;
 using Clover.Carriable;
+using Clover.Interfaces;
 
 namespace Clover.Objects;
 
@@ -58,7 +59,11 @@ public class Pellet : Component, Component.ICollisionListener, Component.ITrigge
 		OnHit?.Invoke( otherGameObject, PelletGun );
 		
 		Log.Info( $"Pellet hit {otherGameObject.Name}" );
-		Log.Info( otherGameObject );
+		
+		if ( otherGameObject.Components.TryGet<IShootable>( out var shootable, FindMode.EverythingInSelfAndAncestors ) )
+		{
+			shootable.OnShot( this );
+		}
 
 		PlayHitSound();
 		DestroyGameObject();

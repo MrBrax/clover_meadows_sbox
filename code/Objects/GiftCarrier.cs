@@ -1,9 +1,10 @@
 ﻿using System;
+using Clover.Interfaces;
 using Clover.Persistence;
 
 namespace Clover.Objects;
 
-public class GiftCarrier : Component
+public class GiftCarrier : Component, IShootable
 {
 	[Property] public float Speed = 50f;
 
@@ -62,6 +63,43 @@ public class GiftCarrier : Component
 
 		// giftCarrier.Items = GenerateRandomItems();
 
+	}
+	
+	public void OnShot( Pellet pellet )
+	{
+
+		if ( _hasDroppedGift ) return;
+
+		Log.Info( "Shot" );
+
+		var world = NodeManager.WorldManager.ActiveWorld;
+
+		var endPosGrid = world.WorldToItemGrid( WorldPosition );
+		var endPosWorld = world.ItemGridToWorld( endPosGrid );
+
+		/*var giftModel = GiftModel.Instantiate<Node3D>();
+		GetTree().CurrentScene.AddChild( giftModel );
+		giftModel.GlobalPosition = GiftModelSpawn.GlobalPosition;
+		giftModel.RotationDegrees = GiftModelSpawn.RotationDegrees;
+
+		var tween = GetTree().CreateTween();
+		var p = tween.TweenProperty( giftModel, "global_position", endPosWorld, 2f );
+		p.SetTrans( Tween.TransitionType.Bounce );
+		p.SetEase( Tween.EaseType.Out );
+
+		tween.TweenCallback( Callable.From( () =>
+		{
+			giftModel.QueueFree();
+			SpawnGift( endPosWorld );
+		} ) );
+
+		// LookAtWhenShotTarget = giftModel;
+
+		// QueueFree();
+		GiftVisual.Hide();
+		_hasDroppedGift = true;
+		Speed *= 2f;
+		AnimationPlayer.SpeedScale = 2f;*/
 	}
 
 	/*private static List<PersistentItem> GenerateRandomItems()
