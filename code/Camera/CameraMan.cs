@@ -59,23 +59,25 @@ public sealed class CameraMan : Component
 
 	protected override void OnUpdate()
 	{
-		if ( !MainCameraNode.IsValid() ) return;
+		var mainCameraNode = MainCameraNode;
+		
+		if ( !mainCameraNode.IsValid() ) return;
 		if ( !CameraComponent.IsValid() ) return;
 
 		Rotation wishedRot;
 		Vector3 wishedPos;
 
-		wishedPos = MainCameraNode.WorldPosition;
+		wishedPos = mainCameraNode.WorldPosition;
 
-		if ( Targets.Count > 1 && MainCameraNode.FollowTargets )
+		if ( Targets.Count > 1 && mainCameraNode.FollowTargets )
 		{
 			var midpoint = GetTargetsMidpoint();
-			wishedRot = Rotation.LookAt( midpoint - MainCameraNode.WorldPosition, Vector3.Up );
+			wishedRot = Rotation.LookAt( midpoint - mainCameraNode.WorldPosition, Vector3.Up );
 		}
 		else
 		{
-			wishedRot = MainCameraNode.WorldRotation;
-			if ( !MainCameraNode.Static && PlayerCharacter.Local.IsValid() )
+			wishedRot = mainCameraNode.WorldRotation;
+			if ( !mainCameraNode.Static && PlayerCharacter.Local.IsValid() )
 			{
 				wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.3f;
 			}
@@ -83,13 +85,22 @@ public sealed class CameraMan : Component
 
 		_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * LerpSpeed );
 		_rotationLerp = Rotation.Lerp( _rotationLerp, wishedRot, Time.Delta * LerpSpeed );
-		_fovLerp = _fovLerp.LerpTo( MainCameraNode.FieldOfView, Time.Delta * LerpSpeed );
+		_fovLerp = _fovLerp.LerpTo( mainCameraNode.FieldOfView, Time.Delta * LerpSpeed );
 
 		// var midpoint = GetTargetsMidpoint();
 		// _rotationLerp = Rotation.Lerp( _rotationLerp, Rotation.LookAt( midpoint - _positionLerp, Vector3.Up ), Time.Delta * LerpSpeed );
 
-		CameraComponent.WorldPosition = _positionLerp;
-		CameraComponent.WorldRotation = _rotationLerp;
+		if ( mainCameraNode.Lerping )
+		{
+			CameraComponent.WorldPosition = _positionLerp;
+			CameraComponent.WorldRotation = _rotationLerp;
+		}
+		else
+		{
+			CameraComponent.WorldPosition = wishedPos;
+			CameraComponent.WorldRotation = wishedRot;
+		}
+
 		CameraComponent.FieldOfView = _fovLerp;
 	}
 

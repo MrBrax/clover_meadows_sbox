@@ -276,7 +276,7 @@
                   "DstName": "_signal"
                 },
                 {
-                  "Id": 2,
+                  "Id": 3,
                   "Value": "asdf",
                   "DstId": 1,
                   "DstName": "format"
@@ -591,6 +591,7 @@
         "Flags": 0,
         "Name": "room1_camera_trigger",
         "Position": "320,320,0.0001778322",
+        "Tags": "trigger",
         "Enabled": true,
         "Components": [
           {
@@ -636,6 +637,7 @@
         "Flags": 0,
         "Name": "room2_camera_trigger",
         "Position": "320,96,0.0001778322",
+        "Tags": "trigger",
         "Enabled": true,
         "Components": [
           {

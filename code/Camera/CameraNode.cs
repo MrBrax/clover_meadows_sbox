@@ -13,6 +13,8 @@ public sealed class CameraNode : Component
 	
 	[Property] public bool Static { get; set; } = false;
 	
+	[Property] public bool Lerping { get; set; } = true;
+	
 	protected override void OnUpdate()
 	{
 

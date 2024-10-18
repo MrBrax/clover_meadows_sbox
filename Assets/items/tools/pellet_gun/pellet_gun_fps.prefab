@@ -1,0 +1,59 @@
+{
+  "RootObject": {
+    "__guid": "f8fdd41a-b767-4810-8ead-e92d24e60a4c",
+    "Flags": 0,
+    "Name": "pellet_gun_fps",
+    "Enabled": true,
+    "Children": [
+      {
+        "__guid": "bdfd0689-2bfd-488c-94d9-bbf205b75675",
+        "Flags": 0,
+        "Name": "pellet_gun",
+        "Position": "14.5735,-5.485591,-2.33059",
+        "Rotation": "0,0,-0.7071067,0.7071068",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "b2e5bafb-9bfb-4d42-bedb-e2b79dd96002",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/tools/pellet_gun/pellet_gun.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "dde6ed36-8a00-432f-bacb-8f37ecf90179",
+        "Flags": 0,
+        "Name": "Camera",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "CameraNode",
+            "__guid": "5ff6ba75-7528-42f6-982f-8c97f7021877",
+            "FieldOfView": 90,
+            "FollowTargets": false,
+            "Lerping": false,
+            "Priority": 200,
+            "Static": false
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

@@ -241,6 +241,14 @@ public sealed partial class PlayerCharacter : Component
 		CutsceneTarget = null;
 		InCutscene = false;
 	}
+	
+	public void SetVisible( bool state )
+	{
+		foreach ( var renderer in Model.GetComponentsInChildren<ModelRenderer>( true ) )
+		{
+			renderer.Enabled = state;
+		}
+	}
 
 	public static PlayerCharacter Get( Connection channel )
 	{
