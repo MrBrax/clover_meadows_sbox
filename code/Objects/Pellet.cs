@@ -72,7 +72,17 @@ public class Pellet : Component, Component.ICollisionListener, Component.ITrigge
 	protected override void OnFixedUpdate()
 	{
 		WorldPosition += WorldRotation.Forward * Speed * Time.Delta;
-		Transform.ClearInterpolation();
+		
+		var trace = Scene.Trace.Ray( WorldPosition, WorldPosition + WorldRotation.Forward * 8f )
+			.IgnoreGameObject( GameObject )
+			.IgnoreGameObjectHierarchy( PelletGun.Player.GameObject )
+			.Run();
+
+		if ( trace.Hit && trace.GameObject.IsValid() )
+		{
+			OnHitObject( trace.GameObject );
+			return;
+		}
 
 		if ( _shot > 2 )
 		{
