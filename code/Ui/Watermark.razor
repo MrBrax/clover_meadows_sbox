@@ -4,6 +4,11 @@
 @inherits PanelComponent
 @namespace Clover
 
+@if ( !ShowWatermark )
+{
+	return;
+}
+
 <root>
 	<div class="watermark-container @( MainUi.Instance.ShouldShowUi ? "active" : "" )">
 		<div class="name">clover meadows project - s&amp;box</div>
@@ -22,9 +27,11 @@
 	[ConVar( "clover_show_watermark_link" )]
 	public static bool ShowWatermarkLink { get; set; } = true;
 
+	[ConVar( "clover_show_watermark" )] public static bool ShowWatermark { get; set; } = true;
+
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( MainUi.Instance.ShouldShowUi );
+		return HashCode.Combine( MainUi.Instance.ShouldShowUi, ShowWatermarkLink, ShowWatermark );
 	}
 
 }
