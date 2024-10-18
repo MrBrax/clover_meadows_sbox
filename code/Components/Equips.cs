@@ -55,6 +55,11 @@ public class Equips : Component
 	{
 		return EquippedItems.ContainsKey( slot ) && EquippedItems[slot].IsValid();
 	}
+	
+	public bool HasEquippedItem<T>( EquipSlot slot ) where T : Component
+	{
+		return EquippedItems.TryGetValue( slot, out var gameObject ) && gameObject.GetComponent<T>() != null;
+	}
 
 	public bool TryGetEquippedItem( EquipSlot slot, out GameObject item )
 	{

@@ -9,9 +9,10 @@ namespace Clover.Carriable;
 public class Paintbrush : BaseCarriable
 {
 	[Property] public SoundEvent PaintSound { get; set; }
+	[Property] public SoundEvent TextureChangeSound { get; set; }
 
-	private string CurrentTexture { get; set; }
-	private string CurrentTexturePath => $"decals/{CurrentTexture}";
+	public string CurrentTexture { get; set; }
+	public string CurrentTexturePath => $"decals/{CurrentTexture}";
 
 	public override void OnUseDown()
 	{
@@ -99,6 +100,12 @@ public class Paintbrush : BaseCarriable
 	{
 		CurrentTexture = FileSystem.Data.FindFile( "decals", "*.png" ).FirstOrDefault();
 	}
+	
+	public List<string> GetTextures()
+	{
+		FileSystem.Data.CreateDirectory( "decals" );
+		return FileSystem.Data.FindFile( "decals", "*.png" ).ToList();
+	}
 
 	protected override void OnFixedUpdate()
 	{
@@ -106,7 +113,7 @@ public class Paintbrush : BaseCarriable
 
 		if ( Input.MouseWheel.y != 0 )
 		{
-			var textures = FileSystem.Data.FindFile( "decals", "*.png" ).ToList();
+			var textures = GetTextures();
 
 			if ( !textures.Any() ) return;
 
@@ -118,8 +125,10 @@ public class Paintbrush : BaseCarriable
 			if ( index >= textures.Count ) index = 0;
 
 			CurrentTexture = textures[index];
+			
+			Sound.Play( TextureChangeSound );
 
-			Player.Notify( Notifications.NotificationType.Info, $"Selected texture: {CurrentTexture}" );
+			// Player.Notify( Notifications.NotificationType.Info, $"Selected texture: {CurrentTexture}" );
 		}
 	}
 }
