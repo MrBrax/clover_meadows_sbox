@@ -1,3 +1,4 @@
+using Clover;
 using Sandbox;
 
 [Category( "Clover/Player" )]
@@ -84,6 +85,11 @@ public sealed class CameraController : Component
 			_playedErrorSound = false;
 
 			SkyCameraNode.Priority = 0;
+		}
+
+		if ( MainUi.Instance.IsValid() && MainUi.Instance.LastInput > MainUi.HideUiDelay * 3 )
+		{
+			SkyCameraNode.Priority = 10;
 		}
 	}
 

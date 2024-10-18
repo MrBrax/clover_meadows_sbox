@@ -13,9 +13,9 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 {
 	public static MainUi Instance { get; private set; }
 
-	private TimeSince _lastInput;
+	public TimeSince LastInput;
 
-	public bool ShouldShowUi => _lastInput < HideUiDelay;
+	public bool ShouldShowUi => LastInput < HideUiDelay;
 
 	[ConVar( "clover_ui_hide_delay" )] public static float HideUiDelay { get; set; } = 5;
 
@@ -58,7 +58,7 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 	{
 		if ( Input.ActionNames.Any( x => Input.Down( x ) ) )
 		{
-			_lastInput = 0;
+			LastInput = 0;
 		}
 	}
 
