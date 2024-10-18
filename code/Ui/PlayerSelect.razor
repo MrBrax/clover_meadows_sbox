@@ -66,6 +66,8 @@
 	{
 		Players.Clear();
 		
+		FileSystem.Data.CreateDirectory( "players" );
+		
 		var files = FileSystem.Data.FindFile( "players", "*.json" );
 		
 		foreach ( var file in files )
@@ -103,6 +105,8 @@
 			Created = DateTime.Now,
 			PlayerId = Guid.NewGuid().ToString()
 		};
+		
+		FileSystem.Data.CreateDirectory( "players" );
 		
 		var path = $"players/{player.PlayerId}.json";
 		FileSystem.Data.WriteAllText( path, JsonSerializer.Serialize( player, GameManager.JsonOptions ) );
