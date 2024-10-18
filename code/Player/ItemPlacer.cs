@@ -270,7 +270,7 @@ public class ItemPlacer : Component, IWorldEvent
 
 		var endPosition = trace.EndPosition;
 
-		if ( SnapEnabled )
+		if ( SnapEnabled && !Input.Down( "Snap" ) )
 		{
 			endPosition = endPosition.SnapToGrid( SnapDistance );
 		}
