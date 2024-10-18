@@ -35,7 +35,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 
 	public bool IsLoading;
 
-	public const float WorldOffset = 1000;
+	public const float WorldOffset = 1024;
 
 	// public Array LoadingProgress { get; set; } = new Array();
 
