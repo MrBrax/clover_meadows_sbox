@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using Clover.Objects;
 using Sandbox.Audio;
 
 namespace Clover.WorldBuilder;
@@ -56,13 +57,13 @@ public class TimeManager : Component, IWorldEvent
 		
 		_lastHour = Time.Hour;
 
-		/*OnNewMinute += ( minute ) =>
+		OnNewMinute += ( minute ) =>
 		{
-			if ( GD.Randf() > 0.95f )
+			if ( Random.Shared.NextSingle() > 0.95f )
 			{
 				GiftCarrier.SpawnRandom();
 			}
-		};*/
+		};
 	}
 	
 	private void PlayChime( int hour )

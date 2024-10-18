@@ -791,26 +791,6 @@
             "Static": false
           }
         ]
-      },
-      {
-        "__guid": "e6d24dd2-1a70-45a1-8e64-95dd7d787ead",
-        "Flags": 0,
-        "Name": "stork",
-        "Position": "3427.396,-423.1912,496.9196",
-        "Rotation": "0.00000007742869,-0.0000000447035,-0.8660252,-0.5000001",
-        "Enabled": true,
-        "__Prefab": "objects/stork/stork.prefab",
-        "__PrefabVariables": {}
-      },
-      {
-        "__guid": "9278d468-27c6-49da-bef0-267ea76b9db1",
-        "Flags": 0,
-        "Name": "stork (1)",
-        "Position": "1441.493,-69.23349,241.939",
-        "Rotation": "0.00000002580956,-0.00000001490117,-0.8660252,-0.5000001",
-        "Enabled": true,
-        "__Prefab": "objects/stork/stork.prefab",
-        "__PrefabVariables": {}
       }
     ],
     "__variables": []

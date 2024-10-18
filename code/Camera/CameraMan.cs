@@ -109,8 +109,13 @@ public sealed class CameraMan : Component
 		if ( Targets.Count == 0 ) return Vector3.Zero;
 
 		var midpoint = Vector3.Zero;
-		foreach ( var target in Targets )
+		foreach ( var target in Targets.ToList() )
 		{
+			if ( !target.IsValid() )
+			{
+				Targets.Remove( target );
+				continue;
+			}
 			midpoint += target.WorldPosition;
 		}
 

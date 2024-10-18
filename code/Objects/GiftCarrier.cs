@@ -1,4 +1,6 @@
 ﻿using System;
+using Braxnet;
+using Clover.Data;
 using Clover.Interfaces;
 using Clover.Persistence;
 
@@ -8,13 +10,29 @@ public class GiftCarrier : Component, IShootable
 {
 	[Property] public float Speed = 50f;
 
-	[Property] public GameObject GiftVisual { get; set; }
-	[Property] public GameObject GiftFallingScene { get; set; }
+	[Property] public GameObject GiftInHolderVisual { get; set; }
+	// [Property] public GameObject GiftFallingScene { get; set; }
 	[Property] public GameObject GiftModelSpawn { get; set; }
+	
+	[Property] public ItemData GiftItem { get; set; }
+	
+	[Property] public SoundEvent WingSound { get; set; }
 
 	public List<PersistentItem> Items { get; set; } = new();
 
 	private bool _hasDroppedGift;
+	
+	private SoundHandle _wingSoundHandle;
+
+	protected override void OnStart()
+	{
+		_wingSoundHandle = GameObject.PlaySound( WingSound );
+	}
+
+	protected override void OnDestroy()
+	{
+		_wingSoundHandle?.Stop();
+	}
 
 	protected override void OnFixedUpdate()
 	{
@@ -39,10 +57,12 @@ public class GiftCarrier : Component, IShootable
 			return;
 		}
 
-		var giftCarrier = SceneUtility.GetPrefabScene( 
+		var giftCarrierGameObject = SceneUtility.GetPrefabScene( 
 				ResourceLibrary.Get<PrefabFile>( "objects/stork/stork.prefab" ) 
 				)
 			.Clone();
+		
+		var giftCarrier = giftCarrierGameObject.GetComponent<GiftCarrier>();
 
 		var height = 256f;
 
@@ -61,7 +81,7 @@ public class GiftCarrier : Component, IShootable
 
 		Log.Info( $"Facing {midpoint} ({giftCarrier.WorldRotation}) ({giftCarrier.WorldRotation.Forward}) ({giftCarrier.WorldRotation.Yaw()})" );
 
-		// giftCarrier.Items = GenerateRandomItems();
+		giftCarrier.Items = GenerateRandomItems();
 
 	}
 	
@@ -77,12 +97,9 @@ public class GiftCarrier : Component, IShootable
 		var endPosGrid = world.WorldToItemGrid( WorldPosition );
 		var endPosWorld = world.ItemGridToWorld( endPosGrid );
 
-		/*var giftModel = GiftModel.Instantiate<Node3D>();
-		GetTree().CurrentScene.AddChild( giftModel );
-		giftModel.GlobalPosition = GiftModelSpawn.GlobalPosition;
-		giftModel.RotationDegrees = GiftModelSpawn.RotationDegrees;
+		var giftModel = GiftModelSpawn.Clone( GiftInHolderVisual.WorldPosition, GiftInHolderVisual.WorldRotation );
 
-		var tween = GetTree().CreateTween();
+		/*var tween = GetTree().CreateTween();
 		var p = tween.TweenProperty( giftModel, "global_position", endPosWorld, 2f );
 		p.SetTrans( Tween.TransitionType.Bounce );
 		p.SetEase( Tween.EaseType.Out );
@@ -91,21 +108,49 @@ public class GiftCarrier : Component, IShootable
 		{
 			giftModel.QueueFree();
 			SpawnGift( endPosWorld );
-		} ) );
+		} ) );*/
+		
+		// SpawnGift( endPosWorld );
+		
+		CameraMan.Instance.Targets.Add( giftModel );
+
+		var tween = TweenManager.CreateTween();
+		tween.AddPosition( giftModel, endPosWorld, 2f ).SetEasing( Sandbox.Utility.Easing.BounceOut );
+		
+		tween.OnFinish += () =>
+		{
+			giftModel.Destroy();
+			SpawnGift( endPosWorld );
+		};
 
 		// LookAtWhenShotTarget = giftModel;
 
 		// QueueFree();
-		GiftVisual.Hide();
+		GiftInHolderVisual.Enabled = false;
 		_hasDroppedGift = true;
 		Speed *= 2f;
-		AnimationPlayer.SpeedScale = 2f;*/
+		// AnimationPlayer.SpeedScale = 2f;
+	}
+	
+	public void SpawnGift( Vector3 position )
+	{
+
+		var world = NodeManager.WorldManager.ActiveWorld;
+
+		var gridPos = world.WorldToItemGrid( position );
+		
+		
+		var pItem = PersistentItem.Create( GiftItem );
+		pItem.SetArbitraryData( "Items", Items );
+
+		var nodeLink = world.SpawnPlacedNode( pItem, gridPos, World.ItemRotation.North );
+
 	}
 
-	/*private static List<PersistentItem> GenerateRandomItems()
+	private static List<PersistentItem> GenerateRandomItems()
 	{
-		var category = Loader.LoadResource<ItemCategoryData>( "res://collections/gifts.tres" );
-		var itemData = category.Items.PickRandom();
-		return [itemData.CreateItem()]; // TODO: give maybe multiple items?
-	}*/
+		var catalogue = ResourceLibrary.Get<CatalogueData>( "catalogues/stork_items.cata" );
+		var itemData = Random.Shared.FromList( catalogue.Items );
+		return new List<PersistentItem> { itemData.CreatePersistentItem() }; // TODO: give maybe multiple items?
+	}
 }

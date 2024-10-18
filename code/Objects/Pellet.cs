@@ -89,7 +89,7 @@ public class Pellet : Component, Component.ICollisionListener, Component.ITrigge
 			return;
 		}
 
-		if ( _shot > 2 )
+		if ( _shot > 6 )
 		{
 			Log.Info( "Pellet timed out" );
 			OnTimeout?.Invoke();

@@ -8,7 +8,41 @@
       {
         "__type": "Clover.Objects.GiftCarrier",
         "__guid": "4787ffcb-bf81-4b79-8f35-936b38925afc",
-        "Speed": 50
+        "Speed": 50,
+        "GiftInHolderVisual": {
+          "_type": "gameobject",
+          "go": "501f2764-f469-4669-84c8-c61506bed3df"
+        },
+        "GiftItem": "items/misc/gift/gift.item",
+        "GiftModelSpawn": {
+          "_type": "gameobject",
+          "prefab": "objects/stork/gift_model.prefab"
+        },
+        "WingSound": "objects/stork/wings.sound"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "ec91fd6e-44ca-4098-88e1-ae729c41897a",
+        "Center": "-57.50003,0,0",
+        "IsTrigger": false,
+        "Scale": "132.1998,47.29996,16",
+        "Static": false
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "afa29fba-c7ad-4861-81aa-e7c75330d667",
+        "Center": "0,0,-29.90001",
+        "IsTrigger": false,
+        "Scale": "32,32,32",
+        "Static": false
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "0555d791-0636-4df0-9369-dd94250ae5b8",
+        "Center": "-30.3,0,0",
+        "IsTrigger": false,
+        "Scale": "73.7,168.5002,16",
+        "Static": false
       }
     ],
     "Children": [
