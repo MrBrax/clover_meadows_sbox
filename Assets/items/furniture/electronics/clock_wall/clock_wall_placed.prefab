@@ -8,12 +8,14 @@
       {
         "__type": "Clover.Items.Clock",
         "__guid": "39c6092b-d122-4897-9588-2eed2ac3b2a4",
+        "ArmMoveSound": "items/furniture/electronics/clock_wall/clock_arm_move.sound",
         "Renderer": {
           "_type": "component",
           "component_id": "15dccdb2-889d-4452-bbf2-f469b8b11c78",
           "go": "9737fc14-86f0-46b8-b959-7c7052bba3dd",
           "component_type": "SkinnedModelRenderer"
-        }
+        },
+        "TickSound": "items/furniture/electronics/clock_wall/clock_ticking.sound"
       },
       {
         "__type": "Clover.Items.WorldItem",

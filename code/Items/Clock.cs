@@ -7,10 +7,30 @@ public class Clock : Component, ITimeEvent
 {
 	[Property] public SkinnedModelRenderer Renderer { get; set; }
 
+	[Property] public SoundEvent ArmMoveSound { get; set; }
+	[Property] public SoundEvent TickSound { get; set; }
+
+	private SoundHandle _tickSoundHandle;
+
 	protected override void OnStart()
 	{
 		base.OnStart();
 		UpdateArms();
+
+		if ( TickSound != null )
+		{
+			Log.Info( "Playing tick sound" );
+			_tickSoundHandle = GameObject.PlaySound( TickSound );
+		}
+	}
+
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+		if ( _tickSoundHandle.IsValid() )
+		{
+			_tickSoundHandle.Stop();
+		}
 	}
 
 	private void UpdateArms()
@@ -56,6 +76,11 @@ public class Clock : Component, ITimeEvent
 
 		Renderer?.SetBoneTransform( minuteBone,
 			new Transform( basePosition, minuteRotation ) );
+
+		if ( ArmMoveSound != null )
+		{
+			GameObject.PlaySound( ArmMoveSound );
+		}
 	}
 
 	public void OnNewHour( int hour )
