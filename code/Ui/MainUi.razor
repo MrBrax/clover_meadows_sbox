@@ -14,7 +14,8 @@
 		<div class="is-saving" @ref=" IsSavingPanel">
 			<i class="icon">save</i>
 		</div>
-		<div class="status">
+
+		<div class="status @( ShouldShowUi ? "active" : "" )">
 			<div class="weather">
 				<Image Texture=@NodeManager.WeatherManager.GetWeatherIcon()/>
 			</div>
@@ -26,7 +27,7 @@
 			<div class="bar bottom"></div>
 		</div>
 
-		<div class="inputs">
+		<div class="inputs @( ShouldShowUi ? "active" : "" )">
 			@foreach ( var input in GetCurrentInputs() )
 			{
 				<div class="input-entry">
@@ -35,12 +36,11 @@
 				</div>
 			}
 		</div>
-		
+
 		@if ( PlayerCharacter.Local.Equips.HasEquippedItem<Paintbrush>( Equips.EquipSlot.Tool ) )
 		{
 			<PaintbrushUi/>
 		}
-		
 	}
 	else if ( string.IsNullOrEmpty( PlayerCharacter.SpawnPlayerId ) )
 	{

@@ -11,6 +11,24 @@ namespace Clover;
 
 public partial class MainUi : IPlayerSaved, IWorldSaved
 {
+	public static MainUi Instance { get; private set; }
+
+	private TimeSince _lastInput;
+
+	public bool ShouldShowUi => _lastInput < HideUiDelay;
+
+	[ConVar( "clover_ui_hide_delay" )] public static float HideUiDelay { get; set; } = 5;
+
+	protected override void OnAwake()
+	{
+		Instance = this;
+	}
+
+	protected override void OnDestroy()
+	{
+		Instance = null;
+	}
+
 	private Panel IsSavingPanel { get; set; }
 
 	public void PrePlayerSave( PlayerCharacter player )
@@ -34,6 +52,14 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 	protected override int BuildHash()
 	{
 		return HashCode.Combine( TimeManager.Time );
+	}
+
+	protected override void OnFixedUpdate()
+	{
+		if ( Input.ActionNames.Any( x => Input.Down( x ) ) )
+		{
+			_lastInput = 0;
+		}
 	}
 
 	public struct InputData

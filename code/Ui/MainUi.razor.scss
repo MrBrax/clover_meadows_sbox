@@ -29,7 +29,7 @@ MainUi {
         left: 50px;
         color: white;
         font-family: Itim;
-        font-size: 60px;
+        font-size: 50px;
         // text-stroke: 5px gray;
         text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 
@@ -38,9 +38,17 @@ MainUi {
 
         gap: 10px;
 
+        transform: translateY(200%);
+        transition: transform 0.5s ease;
+
+        &.active {
+            transform: translateY(0%);
+        }
+
         .weather Image {
             width: 80px;
             height: 80px;
+            image-rendering: trilinear;
         }
     }
 
@@ -56,6 +64,13 @@ MainUi {
         font-size: 35px;
 
         color: white;
+
+        transform: translateX(-200%);
+        transition: transform 0.5s ease;
+
+        &.active {
+            transform: translateX(0%);
+        }
 
         .input-entry {
             // background-color: rgba(0, 0, 0, 0.2);
