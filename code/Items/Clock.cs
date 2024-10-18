@@ -1,15 +1,20 @@
 ﻿using System;
+using Clover.WorldBuilder;
 
 namespace Clover.Items;
 
-public class Clock : Component
+public class Clock : Component, ITimeEvent
 {
 	[Property] public SkinnedModelRenderer Renderer { get; set; }
 
-	protected override void OnFixedUpdate()
+	protected override void OnStart()
 	{
-		base.OnFixedUpdate();
+		base.OnStart();
+		UpdateArms();
+	}
 
+	private void UpdateArms()
+	{
 		var hourBone = Renderer.Model.Bones.GetBone( "hour" );
 		var minuteBone = Renderer.Model.Bones.GetBone( "minute" );
 
@@ -25,7 +30,7 @@ public class Clock : Component
 			return;
 		}
 
-		var time = DateTime.Now;
+		var time = TimeManager.Time;
 
 		var hourAngle = (time.Hour % 12) * 30 + time.Minute * 0.5f;
 		var minuteAngle = time.Minute * 6;
@@ -51,5 +56,15 @@ public class Clock : Component
 
 		Renderer?.SetBoneTransform( minuteBone,
 			new Transform( basePosition, minuteRotation ) );
+	}
+
+	public void OnNewHour( int hour )
+	{
+		UpdateArms();
+	}
+
+	public void OnNewMinute( int minute )
+	{
+		UpdateArms();
 	}
 }
