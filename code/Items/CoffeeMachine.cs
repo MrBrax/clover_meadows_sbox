@@ -32,7 +32,7 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 	protected override void OnStart()
 	{
 		base.OnStart();
-		Cup.Enabled = false;
+		SetCupEnabled( _hasCup );
 		SteamParticleEmitter.Enabled = false;
 		LiquidParticleEmitter.Enabled = false;
 	}
