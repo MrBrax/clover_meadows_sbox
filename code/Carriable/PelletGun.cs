@@ -5,24 +5,23 @@ namespace Clover.Carriable;
 
 public class PelletGun : BaseCarriable
 {
-	
 	[Property] public float FireRate { get; set; } = 3f;
 	[Property] public float PelletSpeed { get; set; } = 10f;
 	[Property] public GameObject PelletScene { get; set; }
 
 	[Property] public GameObject PelletGunFpsScene { get; set; }
-	
+
 	[Property] public SoundEvent FireSound { get; set; }
-	
+
 	private float _fireTimer;
-	
+
 	private bool _isAiming;
-	
+
 	private bool _isWaitingForHit;
 	private bool _isLookingAtWhenShot;
-	
+
 	private Angles _aimDirection;
-	
+
 	/// <summary>
 	///  A scene that contains a camera and a gun model. When aiming, this scene is instantiated and the player model is hidden.
 	///  The entire thing rotates to aim.
@@ -35,7 +34,7 @@ public class PelletGun : BaseCarriable
 		base.OnUseDown();
 		StartAiming();
 	}
-	
+
 	public override void OnUseUp()
 	{
 		if ( _isWaitingForHit ) return;
@@ -43,25 +42,30 @@ public class PelletGun : BaseCarriable
 		Fire();
 		// StopAiming();
 	}
-	
+
 	public override void OnUnequip()
 	{
 		base.OnUnequip();
 		StopAiming();
 	}
-	
+
+	public override string GetUseName()
+	{
+		return "Fire";
+	}
+
 	private void StartAiming()
 	{
 		_isAiming = true;
-		
+
 		_pelletGunFpsNode = PelletGunFpsScene.Clone();
 		_pelletGunFpsNode.WorldPosition = Player.WorldPosition + Vector3.Up * 32f;
 
 		_pelletGunFpsNode.WorldRotation = Rotation.FromYaw( Player.PlayerController.Yaw );
-		
+
 		// TODO: Hide the player model
 		Player.SetVisible( false );
-		
+
 		Mouse.Visible = false;
 
 		// Hide the player model
@@ -84,7 +88,7 @@ public class PelletGun : BaseCarriable
 	{
 		return base.ShouldDisableMovement() || _isAiming;
 	}
-	
+
 	private void Fire()
 	{
 		if ( !_pelletGunFpsNode.IsValid() ) return;
@@ -127,7 +131,6 @@ public class PelletGun : BaseCarriable
 		_isWaitingForHit = false;
 		_isLookingAtWhenShot = false;
 		StopAiming();
-		
 	}
 
 	protected override void OnUpdate()
@@ -149,7 +152,7 @@ public class PelletGun : BaseCarriable
 		{
 			StopAiming();
 		}
-		
+
 		_pelletGunFpsNode.WorldRotation = _aimDirection;
 	}
 }

@@ -1,0 +1,118 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "newgradient.vmat"
+								to = "materials/shared/color-atlas-gradient.vmat"
+							},
+							{
+								from = "glass.001.vmat"
+								to = "materials/glass/glass_a.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = "materials/shared/color-atlas-gradient.vmat"
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						filename = "items/furniture/electronics/clock_wall/clock_wall.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"clock",
+							]
+						}
+					},
+				]
+			},
+			{
+				_class = "Skeleton"
+				children = 
+				[
+					{
+						_class = "Bone"
+						name = "clock"
+						children = 
+						[
+							{
+								_class = "Bone"
+								name = "clock_end"
+								origin = [ 0.0, 31.999987, 0.000004 ]
+								angles = [ -0.0, 0.0, 0.000007 ]
+								do_not_discard = true
+							},
+						]
+						origin = [ 1.09728, 0.0, -0.0 ]
+						angles = [ -0.000002, 89.999992, 89.999985 ]
+						do_not_discard = true
+					},
+					{
+						_class = "Bone"
+						name = "hour"
+						children = 
+						[
+							{
+								_class = "Bone"
+								name = "hour_end"
+								origin = [ 2.761054, -3.090894, -0.000002 ]
+								angles = [ 0.000003, -138.225983, -0.000025 ]
+								do_not_discard = true
+							},
+						]
+						origin = [ 1.09728, 0.0, -0.0 ]
+						angles = [ -0.000002, 89.999992, 89.999985 ]
+						do_not_discard = true
+					},
+					{
+						_class = "Bone"
+						name = "minute"
+						children = 
+						[
+							{
+								_class = "Bone"
+								name = "minute_end"
+								origin = [ -4.340012, -4.776677, -0.000001 ]
+								angles = [ -0.000005, 137.742188, -0.00001 ]
+								do_not_discard = true
+							},
+						]
+						origin = [ 1.09728, 0.0, -0.0 ]
+						angles = [ -0.000002, 89.999992, 89.999985 ]
+						do_not_discard = true
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}
