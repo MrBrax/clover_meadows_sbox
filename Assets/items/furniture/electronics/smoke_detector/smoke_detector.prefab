@@ -1,0 +1,69 @@
+{
+  "RootObject": {
+    "__guid": "0166d4e5-7d07-41d4-8ec4-17935e9c3dd3",
+    "Flags": 0,
+    "Name": "smoke_detector",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "e6b4af97-62b0-4393-8b42-8f1d8bc43774",
+        "CanPickupSimple": true,
+        "ItemData": "items/furniture/electronics/smoke_detector/smoke_detector.item",
+        "PlaceModeOffset": "0,0,0",
+        "Prefab": "items/furniture/electronics/smoke_detector/smoke_detector.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "120096fc-0473-4dba-a23f-16ac25301f45"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "703add72-8021-4b07-b46e-a51bd29286c3",
+        "Center": "1,0,3",
+        "IsTrigger": false,
+        "Scale": "2,6,6",
+        "Static": false
+      },
+      {
+        "__type": "Clover.Items.SmokeDetector",
+        "__guid": "8f7c0640-fc3e-457a-af13-1d0c94ce4087",
+        "Sound": "items/furniture/electronics/smoke_detector/smoke_detector_battery_low.sound",
+        "TimeBetweenSounds": 10
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "67778736-75de-4ddf-8fc5-702bb62a0f10",
+        "Flags": 0,
+        "Name": "smoke_detector",
+        "Position": "0.6,0,3.5",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "8cf4672a-99e0-4444-ae0f-54c4e409713a",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/furniture/electronics/smoke_detector/smoke_detector.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

@@ -1,0 +1,30 @@
+{
+  "Id": "smoke_detector:17059633707980498809",
+  "Name": "Smoke detector",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "CanBeBuried": true,
+  "CanDrop": true,
+  "CanPlace": true,
+  "DisablePickup": false,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": null,
+  "DropScene": null,
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/furniture/electronics/smoke_detector/smoke_detector.prefab"
+  },
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/furniture/electronics/smoke_detector/smoke_detector.prefab"
+  },
+  "Icon": null,
+  "ObjectData": null,
+  "HideInSpawnMenu": false,
+  "PlaceModeOffset": "0,0,0",
+  "BaseBuyPrice": 0,
+  "__references": [],
+  "__version": 0
+}
