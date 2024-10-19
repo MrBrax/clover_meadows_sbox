@@ -7,9 +7,9 @@ public partial class DialogueWindow
 {
 	[Property] public Dialogue Dialogue { get; set; }
 
-	[Property]
-	public Dictionary<string, object> Data { get; set; } =
-		new() { { "test", 123 }, { "money", 100 }, { "price", 200 }, };
+	[Property] public Dictionary<string, object> Data { get; set; } = new();
+
+	[Property] public Dictionary<string, Action> Actions { get; set; } = new();
 
 	[Property, ReadOnly] public List<Dialogue.DialogueNode> CurrentNodeList { get; set; }
 
@@ -46,7 +46,7 @@ public partial class DialogueWindow
 		CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
 		Read();*/
 
-		LoadDialogue( ResourceLibrary.GetAll<Dialogue>().First() );
+		// LoadDialogue( ResourceLibrary.GetAll<Dialogue>().First() );
 
 		Panel.ButtonInput = PanelInputType.UI;
 	}
@@ -141,6 +141,24 @@ public partial class DialogueWindow
 		CurrentTargets.Clear();
 	}
 
+	public void SetAction( string key, Action action )
+	{
+		Actions[key] = action;
+	}
+
+	[Property]
+	public void RunAction( string key )
+	{
+		if ( Actions.TryGetValue( key, out var action ) )
+		{
+			action();
+		}
+		else
+		{
+			Log.Warning( $"Could not find action {key}" );
+		}
+	}
+
 	/// <summary>
 	///  Searches for a node with the given id recursively and sets it as the current node.
 	/// </summary>
@@ -226,7 +244,7 @@ public partial class DialogueWindow
 			Log.Warning( $"Could not find node with id {id}" );
 		}
 	}
-	
+
 	public void Advance()
 	{
 		if ( IsOnLastNode && CurrentNode.Choices.Count == 0 )
@@ -235,11 +253,11 @@ public partial class DialogueWindow
 			End();
 			return;
 		}
-		
+
 		Log.Info( $"Choices: {CurrentNode.Choices.Count}, index: {CurrentNodeIndex}/{CurrentNodeList.Count}" );
-		
+
 		// go to the next node if there are no choices
-		
+
 		if ( CurrentNode.Choices.Count == 0 )
 		{
 			CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );
@@ -253,18 +271,18 @@ public partial class DialogueWindow
 					Advance();
 					return;
 				}
-				
+
 				Read();
 			}
 			else
 			{
 				Log.Error( "No nodes found for choice" );
 			}
+
 			return;
 		}
-		
+
 		Log.Error( "Choices found" );
-		
 	}
 
 	private void Read()
@@ -378,9 +396,9 @@ public partial class DialogueWindow
 	private void OnClick( PanelEvent e )
 	{
 		// if ( _textIndex < 2 ) return;
-		
+
 		// Input.ReleaseActions();
-		
+
 		e.StopPropagation();
 
 		// If we're still typing, finish the text
@@ -400,9 +418,8 @@ public partial class DialogueWindow
 			End();
 			return;
 		}
-		
+
 		Advance();
-		
 	}
 
 	private void End()

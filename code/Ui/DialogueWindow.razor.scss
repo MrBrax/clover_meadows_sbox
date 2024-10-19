@@ -1,68 +1,69 @@
-DialogueWindow
-{
-	position: absolute;
-	
-	left: 0;
-	right: 0;
-	bottom: 50px;
-	justify-content: center;
-	align-items: center;
-	border-radius: 20px;
-	
-	pointer-events: all;
-	
-	.dialogue-window {
-		width: 1200px;
-		height: 300px;
-		background-color: #fff;
-		border-radius: 20px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-		
-		padding: 50px;
-		font-family: Poppins;
-		font-size: 40px;
-		
-		pointer-events: all;
-		
-		&.noclick {
-			& > * {
-				pointer-events: none;
-			}
-		}
-		
-		.name {
-			position: absolute;
-			top: -50px;
-			background-color: #95b9ea;
-			padding: 10px 20px;
-			border-radius: 10px;
-			font-size: 30px;
-			color: white;
-		}
-		
-		.text {
-			flex-grow: 1;
-		}
-		
-		.choices {
-			flex-direction: column;
-			gap: 20px;
-			min-width: 200px;
-			
-			button {
-				width: 100%;
-				padding: 10px;
-				background-color: #eee;
-				align-content: center;
-				justify-content: center;
-				border-radius: 10px;
-				font-size: 30px;
-				cursor: pointer;				
-			}
-			
-		}
-		
-	}
+DialogueWindow {
+    position: absolute;
 
-	
+    left: 0;
+    right: 0;
+    bottom: 50px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+
+    pointer-events: all;
+
+    .dialogue-window {
+        width: 1200px;
+        height: 300px;
+        background-color: #fff;
+        border-radius: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+        padding: 50px;
+        font-family: Poppins;
+        font-size: 40px;
+
+        pointer-events: all;
+
+        gap: 10px;
+
+        &.noclick {
+            & > * {
+                pointer-events: none;
+            }
+        }
+
+        .name {
+            position: absolute;
+            top: -50px;
+            background-color: #95b9ea;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 30px;
+            color: white;
+        }
+
+        .text {
+            flex-grow: 1;
+        }
+
+        .choices {
+            flex-direction: column;
+            gap: 20px;
+            min-width: 200px;
+
+            button {
+                width: 100%;
+                padding: 10px;
+                background-color: #eee;
+                align-content: center;
+                justify-content: center;
+                border-radius: 10px;
+                font-size: 30px;
+                cursor: pointer;
+            }
+
+        }
+
+    }
+
+
 }

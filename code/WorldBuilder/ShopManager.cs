@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Clover.Components;
 using Clover.Data;
 using Clover.Items;
+using Clover.Npc;
 using Clover.Persistence;
 using Clover.Player;
 using Clover.Ui;
@@ -15,9 +17,11 @@ public class ShopManager : Component
 
 	[Property] public List<ShopDisplay> Displays { get; set; }
 
-	// [Property] public Shopkeeper Shopkeeper { get; set; }
+	[Property] public ShopClerk ShopClerk { get; set; }
 
 	[Property] public List<CatalogueData> Catalogues { get; set; }
+
+	[Property] public Dialogue BuyItemDialogue { get; set; }
 
 	private CatalogueData PickRandomCatalogue()
 	{
@@ -164,20 +168,39 @@ public class ShopManager : Component
 
 	public ShopManagerState State { get; set; }
 
-	public bool BuyItem( PlayerCharacter player, ShopItem item )
+	public void DispatchBuyItem( PlayerCharacter player, ShopItem item )
 	{
 		if ( !Items.Contains( item ) )
 		{
 			player.Notify( Notifications.NotificationType.Error, "This item is not available in this shop." );
-			return false;
+			return;
 		}
 
 		if ( item.Stock <= 0 )
 		{
 			player.Notify( Notifications.NotificationType.Error, "This item is out of stock." );
-			return false;
+			return;
 		}
 
+		DialogueManager.Instance.DialogueWindow.SetData( "ItemName", item.ItemData.Name );
+		DialogueManager.Instance.DialogueWindow.SetData( "Price", item.Price );
+		DialogueManager.Instance.DialogueWindow.SetData( "PlayerClovers", player.CloverBalanceController.GetBalance() );
+
+		DialogueManager.Instance.DialogueWindow.SetTarget( 0, ShopClerk.GameObject );
+
+		DialogueManager.Instance.DialogueWindow.SetAction( "BuyItem", () =>
+		{
+			if ( !BuyItem( player, item ) )
+				return;
+
+			DialogueManager.Instance.DialogueWindow.Enabled = false;
+		} );
+
+		ShopClerk.LoadDialogue( BuyItemDialogue );
+	}
+
+	public bool BuyItem( PlayerCharacter player, ShopItem item )
+	{
 		if ( player.CloverBalanceController.GetBalance() < item.Price )
 		{
 			player.Notify( Notifications.NotificationType.Error, "You don't have enough clovers to buy this item." );

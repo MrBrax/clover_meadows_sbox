@@ -102,10 +102,7 @@ public class ShopDisplay : Component, IInteract
 
 	public void StartInteract( PlayerCharacter player )
 	{
-		if ( ShopManager.BuyItem( player, Item ) )
-		{
-			UpdateItem();
-		}
+		ShopManager.DispatchBuyItem( player, Item );
 	}
 
 	public string GetInteractName()
