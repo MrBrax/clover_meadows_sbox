@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 using Clover;
+using Clover.Player;
 
 namespace Sandbox;
 
@@ -17,7 +18,7 @@ public class Dialogue : GameResource
 
 	public delegate void DialogueAction(
 		DialogueWindow window,
-		GameObject player,
+		PlayerCharacter player,
 		List<GameObject> targets,
 		DialogueNode node,
 		DialogueChoice choice
@@ -25,7 +26,7 @@ public class Dialogue : GameResource
 
 	public delegate bool DialogueCondition(
 		DialogueWindow window,
-		GameObject player,
+		PlayerCharacter player,
 		List<GameObject> targets,
 		DialogueNode node,
 		DialogueChoice choice
@@ -52,11 +53,11 @@ public class Dialogue : GameResource
 	public class DialogueNode
 	{
 		[Property] public string Id { get; set; } = Guid.NewGuid().ToString()[..8];
-		
+
 		[Property, Description( "I don't think the player ever talks, but this is here just in case." )]
 		public bool IsPlayer { get; set; }
 
-		
+
 		[Property, HideIf( nameof(IsPlayer), true )]
 		public int Speaker { get; set; }
 
@@ -64,12 +65,11 @@ public class Dialogue : GameResource
 
 		// [Property] public List<string> Choices { get; set; } = new();
 		[Property] public List<DialogueChoice> Choices { get; set; } = new();
-		
+
 		[Property, Description( "This is the action that will be executed when this node is entered." )]
 		public DialogueAction OnEnter { get; set; }
-		
-		[Property] 
-		public DialogueAction OnExit { get; set; }
+
+		[Property] public DialogueAction OnExit { get; set; }
 
 		[Property] public bool IsHidden { get; set; }
 

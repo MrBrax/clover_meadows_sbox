@@ -1,4 +1,5 @@
 ﻿using System;
+using Clover.Player;
 using Sandbox.UI;
 
 namespace Clover;
@@ -34,6 +35,8 @@ public partial class DialogueWindow
 	private TimeSince _lastLetter;
 	// private bool _skipped;
 
+	public Action OnDialogueEnd { get; set; }
+
 
 	protected override void OnStart()
 	{
@@ -56,7 +59,7 @@ public partial class DialogueWindow
 		Dialogue = dialogue;
 		CurrentNodeList = Dialogue.Nodes;
 		CurrentNodeIndex = 0;
-		CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
+		CurrentNode.OnEnter?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 		Read();
 	}
 
@@ -225,13 +228,13 @@ public partial class DialogueWindow
 
 		if ( node != null )
 		{
-			CurrentNode?.OnExit?.Invoke( this, null, null, CurrentNode, null );
+			CurrentNode?.OnExit?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 			CurrentNodeList = list;
 			CurrentNodeIndex = list.IndexOf( node );
 			Log.Info( $"Jumped to node {node.Id}, index {CurrentNodeIndex}/{list.Count}" );
 			if ( CurrentNode != null )
 			{
-				CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
+				CurrentNode.OnEnter?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 				Read();
 			}
 			else
@@ -260,7 +263,7 @@ public partial class DialogueWindow
 
 		if ( CurrentNode.Choices.Count == 0 )
 		{
-			CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );
+			CurrentNode.OnExit?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 			CurrentNodeIndex++;
 			if ( CurrentNode != null )
 			{
@@ -426,6 +429,11 @@ public partial class DialogueWindow
 	{
 		Enabled = false;
 		CurrentTargets.Clear();
+		CurrentNodeList = null;
+		CurrentNodeIndex = 0;
+		// CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );
+		OnDialogueEnd?.Invoke();
+		OnDialogueEnd = null;
 	}
 
 	private void OnChoice( Dialogue.DialogueChoice choice )
@@ -435,7 +443,7 @@ public partial class DialogueWindow
 		if ( choice.OnSelect != null )
 		{
 			Log.Info( $"Running custom action for {choice.Label}" );
-			choice.OnSelect( this, null, null, CurrentNode, choice );
+			choice.OnSelect( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, choice );
 		}
 		else
 		{
@@ -446,14 +454,14 @@ public partial class DialogueWindow
 			}
 
 
-			CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );
+			CurrentNode.OnExit?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 			CurrentNodeList = choice.Nodes;
 			CurrentNodeIndex = 0;
 			// CurrentChoice = choice;
 
 			if ( CurrentNode != null )
 			{
-				CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
+				CurrentNode.OnEnter?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 				Read();
 			}
 			else

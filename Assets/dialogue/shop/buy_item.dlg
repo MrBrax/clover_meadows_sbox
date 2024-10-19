@@ -9,7 +9,7 @@
           "OnSelect": {
             "__version": 8,
             "__guid": "e22ada2e-f2a9-4d51-95b0-ba9395deb52a",
-            "__changeId": 40,
+            "__changeId": 86,
             "UserData": {
               "Title": "On Select",
               "ReferencedComponentTypes": []
@@ -32,7 +32,7 @@
                   "_type": "Clover.DialogueWindow"
                 },
                 "UserData": {
-                  "Position": "732,0"
+                  "Position": "1164,-48"
                 }
               },
               {
@@ -84,11 +84,75 @@
                 "UserData": {
                   "Position": "732,168"
                 }
+              },
+              {
+                "Id": 16,
+                "Type": "property",
+                "Properties": {
+                  "_name": "Inventory",
+                  "_type": "Clover.Player.PlayerCharacter"
+                },
+                "UserData": {
+                  "Position": "108,-156"
+                }
+              },
+              {
+                "Id": 17,
+                "Type": "property",
+                "Properties": {
+                  "_name": "Container",
+                  "_type": "Clover.Inventory.Inventory"
+                },
+                "UserData": {
+                  "Position": "264,-108"
+                }
+              },
+              {
+                "Id": 18,
+                "Type": "property",
+                "Properties": {
+                  "_name": "HasFreeSlot",
+                  "_type": "Clover.Inventory.InventoryContainer"
+                },
+                "UserData": {
+                  "Position": "396,-60"
+                }
+              },
+              {
+                "Id": 19,
+                "Type": "if",
+                "UserData": {
+                  "Position": "852,-108"
+                }
+              },
+              {
+                "Id": 22,
+                "Type": "call",
+                "Properties": {
+                  "_isStatic": false,
+                  "_name": "JumpToId",
+                  "_type": "Clover.DialogueWindow"
+                },
+                "UserData": {
+                  "Position": "1104,60"
+                }
+              },
+              {
+                "Id": 33,
+                "Type": "call",
+                "Properties": {
+                  "_isStatic": false,
+                  "_name": "RunAction",
+                  "_type": "Clover.DialogueWindow"
+                },
+                "UserData": {
+                  "Position": "1548,-108"
+                }
               }
             ],
             "Links": [
               {
-                "SrcId": 6,
+                "SrcId": 19,
                 "SrcName": "true",
                 "DstId": 2,
                 "DstName": "_signal"
@@ -112,7 +176,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 47,
+                "Id": 13,
                 "Value": "PlayerClovers",
                 "DstId": 3,
                 "DstName": "key"
@@ -124,7 +188,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 37,
+                "Id": 14,
                 "Value": "ItemPrice",
                 "DstId": 4,
                 "DstName": "key"
@@ -170,6 +234,72 @@
                 "Value": "failed",
                 "DstId": 7,
                 "DstName": "id"
+              },
+              {
+                "SrcId": 1,
+                "SrcName": "player",
+                "DstId": 16,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 16,
+                "SrcName": "_result",
+                "DstId": 17,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 17,
+                "SrcName": "_result",
+                "DstId": 18,
+                "DstName": "_target"
+              },
+              {
+                "SrcId": 6,
+                "SrcName": "true",
+                "DstId": 19,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 18,
+                "SrcName": "_result",
+                "DstId": 19,
+                "DstName": "condition"
+              },
+              {
+                "SrcId": 19,
+                "SrcName": "false",
+                "DstId": 22,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 1,
+                "SrcName": "window",
+                "DstId": 22,
+                "DstName": "_target"
+              },
+              {
+                "Id": 31,
+                "Value": "nospace",
+                "DstId": 22,
+                "DstName": "id"
+              },
+              {
+                "SrcId": 2,
+                "SrcName": "_signal",
+                "DstId": 33,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 1,
+                "SrcName": "window",
+                "DstId": 33,
+                "DstName": "_target"
+              },
+              {
+                "Id": 40,
+                "Value": "BuyItem",
+                "DstId": 33,
+                "DstName": "key"
               }
             ]
           },

@@ -182,8 +182,10 @@ public class ShopManager : Component
 			return;
 		}
 
+		CameraMan.Instance.Targets.Add( ShopClerk.GameObject );
+
 		DialogueManager.Instance.DialogueWindow.SetData( "ItemName", item.ItemData.Name );
-		DialogueManager.Instance.DialogueWindow.SetData( "Price", item.Price );
+		DialogueManager.Instance.DialogueWindow.SetData( "ItemPrice", item.Price );
 		DialogueManager.Instance.DialogueWindow.SetData( "PlayerClovers", player.CloverBalanceController.GetBalance() );
 
 		DialogueManager.Instance.DialogueWindow.SetTarget( 0, ShopClerk.GameObject );
@@ -197,6 +199,11 @@ public class ShopManager : Component
 		} );
 
 		ShopClerk.LoadDialogue( BuyItemDialogue );
+
+		DialogueManager.Instance.DialogueWindow.OnDialogueEnd += () =>
+		{
+			CameraMan.Instance.Targets.Remove( ShopClerk.GameObject );
+		};
 	}
 
 	public bool BuyItem( PlayerCharacter player, ShopItem item )
