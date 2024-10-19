@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Clover.Data;
 using Sandbox.Diagnostics;
@@ -14,8 +15,8 @@ public class WorldManager : Component, Component.INetworkSpawn
 	// [Property] public List<World> Worlds { get; set; } = new();
 	[Property, Sync, Change] public NetDictionary<int, World> Worlds { get; set; } = new();
 
-	[Property] public int ActiveWorldIndex { get; set; }
-	[Property] public World ActiveWorld => GetWorld( ActiveWorldIndex );
+	[Property, JsonIgnore] public int ActiveWorldIndex { get; set; }
+	[Property, JsonIgnore] public World ActiveWorld => GetWorld( ActiveWorldIndex );
 
 	[Property] public WorldData DefaultWorldData { get; set; }
 
