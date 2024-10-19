@@ -251,6 +251,8 @@ public sealed partial class World : Component
 		{
 			layerObject.SetLayer( Layer );
 		}
+
+		Scene.NavMesh.Generate( Scene.PhysicsWorld );
 	}
 
 	public WorldEntrance GetEntrance( string entranceId )

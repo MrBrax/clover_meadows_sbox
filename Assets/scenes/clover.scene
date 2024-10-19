@@ -20,6 +20,7 @@
           "__type": "Clover.DialogueWindow",
           "__guid": "e4381c2f-796e-44b0-81a2-d666d662876e",
           "__enabled": false,
+          "Actions": {},
           "CurrentChoice": {
             "Nodes": []
           },
@@ -394,7 +395,7 @@
     "TimeScale": 1,
     "UseFixedUpdate": true,
     "NavMesh": {
-      "Enabled": false,
+      "Enabled": true,
       "IncludeStaticBodies": true,
       "IncludeKeyframedBodies": true,
       "EditorAutoUpdate": true,

@@ -4,10 +4,12 @@
     "Flags": 0,
     "Name": "vdog",
     "Enabled": true,
+    "NetworkMode": 1,
     "Components": [
       {
         "__type": "Sandbox.Rigidbody",
         "__guid": "f3545bdc-0481-40d5-b86f-5a2cd0eef4e1",
+        "__enabled": false,
         "AngularDamping": 0,
         "Gravity": true,
         "LinearDamping": 0,
@@ -26,6 +28,122 @@
         "IsTrigger": false,
         "Scale": "16,32,42",
         "Static": false
+      },
+      {
+        "__type": "Clover.Npc.Villager",
+        "__guid": "45fe79b7-ed72-4cd9-b900-1c09505e79a2"
+      },
+      {
+        "__type": "Sandbox.NavMeshAgent",
+        "__guid": "fe32a364-a912-4f1a-b095-04c444c34320",
+        "Acceleration": 20,
+        "Height": 64,
+        "MaxSpeed": 40,
+        "Radius": 16,
+        "Separation": 0.25,
+        "UpdatePosition": true,
+        "UpdateRotation": true
+      },
+      {
+        "__type": "Sandbox.States.StateMachineComponent",
+        "__guid": "1fda5e55-d2ee-4e6c-a668-5568b053bee3",
+        "Serialized": {
+          "States": [
+            {
+              "Name": "Idle",
+              "UserData": {
+                "Position": "-256,-192"
+              }
+            },
+            {
+              "Id": 1,
+              "Name": "Walking",
+              "OnEnterState": {
+                "__version": 8,
+                "__guid": "af4c498c-71ca-4ef5-96e9-8d6c392dbacb",
+                "__changeId": 7,
+                "UserData": {
+                  "Title": "Enter",
+                  "ReferencedComponentTypes": []
+                },
+                "Variables": [],
+                "Nodes": [
+                  {
+                    "Id": 0,
+                    "Type": "input"
+                  },
+                  {
+                    "Id": 1,
+                    "Type": "call",
+                    "Properties": {
+                      "_isStatic": false,
+                      "_name": "GetOrCreate",
+                      "_type": "Sandbox.IComponentLister",
+                      "T": "Clover.Npc.Villager"
+                    },
+                    "UserData": {
+                      "Position": "192,12"
+                    }
+                  },
+                  {
+                    "Id": 2,
+                    "Type": "call",
+                    "Properties": {
+                      "_isStatic": false,
+                      "_name": "WalkToRandomTarget",
+                      "_type": "Clover.Npc.Villager"
+                    },
+                    "UserData": {
+                      "Position": "516,12"
+                    }
+                  }
+                ],
+                "Links": [
+                  {
+                    "SrcId": 0,
+                    "SrcName": "_signal",
+                    "DstId": 1,
+                    "DstName": "_signal"
+                  },
+                  {
+                    "SrcId": 0,
+                    "SrcName": "_target",
+                    "DstId": 1,
+                    "DstName": "_target"
+                  },
+                  {
+                    "SrcId": 1,
+                    "SrcName": "_signal",
+                    "DstId": 2,
+                    "DstName": "_signal"
+                  },
+                  {
+                    "SrcId": 1,
+                    "SrcName": "_result",
+                    "DstId": 2,
+                    "DstName": "_target"
+                  }
+                ]
+              },
+              "UserData": {
+                "Position": "160,-192"
+              }
+            }
+          ],
+          "Transitions": [
+            {
+              "Id": 2,
+              "TargetId": 1,
+              "MinDelay": 3,
+              "MaxDelay": 15
+            },
+            {
+              "Id": 3,
+              "SourceId": 1
+            }
+          ],
+          "InitialStateId": 0
+        }
       }
     ],
     "Children": [
@@ -78,6 +196,5 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }
