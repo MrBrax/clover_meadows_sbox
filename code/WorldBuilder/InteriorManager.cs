@@ -1,36 +1,75 @@
-﻿using Clover.Player;
+﻿using Clover.Items;
+using Clover.Player;
 
 namespace Clover.WorldBuilder;
 
 [Category( "Clover/World" )]
 public class InteriorManager : Component
 {
-	[Property] public ModelRenderer InteriorModel { get; set; }
+	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
 	[Property, InlineEditor] public Dictionary<string, Room> Rooms { get; set; } = new();
+
+	public string CurrentRoom { get; set; }
+	public List<GameObject> CurrentRoomPieces { get; set; } = new();
+
+	[Property] public string DefaultRoom { get; set; }
+
+
+	public IEnumerable<InteriorPiece> InteriorPieces =>
+		WorldLayerObject.World?.Components.GetAll<InteriorPiece>( FindMode.EverythingInSelfAndDescendants );
 
 	public class Room
 	{
 		[Property] public GameObject Wall { get; set; }
 		[Property] public GameObject Floor { get; set; }
-	}
-
-	public void SetInteriorModelBodyGroup( string bodygroup, bool enabled )
-	{
-		if ( InteriorModel.IsValid() )
-		{
-			InteriorModel.SetBodyGroup( bodygroup, enabled ? 0 : 1 );
-		}
-		else
-		{
-			Log.Error( "InteriorModel is not valid" );
-		}
+		[Property] public RoomTrigger[] Triggers { get; set; }
 	}
 
 	protected override void OnStart()
 	{
 		base.OnStart();
 		UpdateMaterials();
+
+		Log.Info( $"InteriorManager started, found {InteriorPieces.Count()} interior pieces" );
+		foreach ( var piece in InteriorPieces )
+		{
+			if ( piece.BelongsToRoom( DefaultRoom ) )
+			{
+				piece.Show();
+			}
+			else
+			{
+				piece.Hide();
+			}
+		}
+
+		CurrentRoom = DefaultRoom;
+
+		RebuildVisibility();
+	}
+
+	private void RebuildVisibility()
+	{
+		foreach ( var room in Rooms )
+		{
+			foreach ( var trigger in room.Value.Triggers )
+			{
+				var collider = trigger.Components.Get<Collider>();
+				foreach ( var touching in collider.Touching )
+				{
+					if ( touching.Components.Get<WorldItem>() == null )
+						continue;
+
+					touching.Tags.Remove( "room_invisible" );
+
+					if ( CurrentRoom != room.Key )
+					{
+						touching.Tags.Add( "room_invisible" );
+					}
+				}
+			}
+		}
 	}
 
 	private void UpdateMaterials()
@@ -70,13 +109,32 @@ public class InteriorManager : Component
 		}
 	}
 
-	public void EnterRoom( PlayerCharacter player, string roomId )
+	public void EnterRoom( PlayerCharacter player, RoomTrigger trigger )
 	{
-		if ( !player.IsLocalPlayer )
+		var roomToEnter = trigger.RoomId;
+
+		if ( roomToEnter == CurrentRoom )
 			return;
+
+		var piecesToShow = InteriorPieces.Where( x => x.BelongsToRoom( roomToEnter ) );
+		var piecesToHide = InteriorPieces.Where( x => !x.BelongsToRoom( roomToEnter ) );
+
+		foreach ( var piece in piecesToShow )
+		{
+			piece.Show();
+		}
+
+		foreach ( var piece in piecesToHide )
+		{
+			piece.Hide();
+		}
+
+		CurrentRoom = roomToEnter;
+
+		RebuildVisibility();
 	}
 
-	public void ExitRoom( PlayerCharacter player, string roomId )
+	public void ExitRoom( PlayerCharacter player, RoomTrigger trigger )
 	{
 	}
 }
