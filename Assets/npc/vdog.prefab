@@ -3,6 +3,7 @@
     "__guid": "6176b4be-a82d-46c5-8f59-415385718318",
     "Flags": 0,
     "Name": "vdog",
+    "Tags": "npc",
     "Enabled": true,
     "NetworkMode": 1,
     "Components": [
@@ -27,7 +28,8 @@
         "Center": "0,0,21",
         "IsTrigger": false,
         "Scale": "16,32,42",
-        "Static": false
+        "Static": false,
+        "SurfaceVelocity": "0,0,0"
       },
       {
         "__type": "Clover.Npc.Villager",
@@ -42,11 +44,12 @@
         "Radius": 16,
         "Separation": 0.25,
         "UpdatePosition": true,
-        "UpdateRotation": true
+        "UpdateRotation": false
       },
       {
         "__type": "Sandbox.States.StateMachineComponent",
         "__guid": "1fda5e55-d2ee-4e6c-a668-5568b053bee3",
+        "__enabled": false,
         "Serialized": {
           "States": [
             {
@@ -128,6 +131,13 @@
               "UserData": {
                 "Position": "160,-192"
               }
+            },
+            {
+              "Id": 4,
+              "Name": "Talking",
+              "UserData": {
+                "Position": "-32,64"
+              }
             }
           ],
           "Transitions": [
@@ -139,11 +149,300 @@
             },
             {
               "Id": 3,
-              "SourceId": 1
+              "SourceId": 1,
+              "Condition": {
+                "__version": 8,
+                "__guid": "291de3f7-5e70-4536-8222-60158c2f57e1",
+                "__changeId": 6,
+                "UserData": {
+                  "Title": "Condition",
+                  "ReferencedComponentTypes": [
+                    "Clover.Npc.Villager"
+                  ]
+                },
+                "Variables": [],
+                "Nodes": [
+                  {
+                    "Id": 0,
+                    "Type": "input"
+                  },
+                  {
+                    "Id": 1,
+                    "Type": "output",
+                    "UserData": {
+                      "Position": "360,-0"
+                    }
+                  },
+                  {
+                    "Id": 2,
+                    "Type": "scene.get",
+                    "Properties": {
+                      "T": "Clover.Npc.Villager"
+                    },
+                    "UserData": {
+                      "Position": "-180,60"
+                    }
+                  },
+                  {
+                    "Id": 3,
+                    "Type": "property",
+                    "Properties": {
+                      "_name": "IsCloseToTarget",
+                      "_type": "Clover.Npc.BaseNpc"
+                    },
+                    "UserData": {
+                      "Position": "24,60"
+                    }
+                  }
+                ],
+                "Links": [
+                  {
+                    "SrcId": 3,
+                    "SrcName": "_result",
+                    "DstId": 1,
+                    "DstName": "_result"
+                  },
+                  {
+                    "SrcId": 0,
+                    "SrcName": "_signal",
+                    "DstId": 1,
+                    "DstName": "_signal"
+                  },
+                  {
+                    "SrcId": 0,
+                    "SrcName": "_target",
+                    "DstId": 2,
+                    "DstName": "_this"
+                  },
+                  {
+                    "SrcId": 2,
+                    "SrcName": "_result",
+                    "DstId": 3,
+                    "DstName": "_target"
+                  }
+                ]
+              }
+            },
+            {
+              "Id": 5,
+              "SourceId": 1,
+              "TargetId": 4,
+              "Condition": {
+                "__version": 8,
+                "__guid": "6e0daa53-d992-4f19-95ec-a136dcbccc74",
+                "__changeId": 17,
+                "UserData": {
+                  "Title": "Condition",
+                  "ReferencedComponentTypes": [
+                    "Clover.Npc.Villager"
+                  ]
+                },
+                "Variables": [],
+                "Nodes": [
+                  {
+                    "Id": 0,
+                    "Type": "input"
+                  },
+                  {
+                    "Id": 1,
+                    "Type": "output",
+                    "UserData": {
+                      "Position": "336,0"
+                    }
+                  },
+                  {
+                    "Id": 5,
+                    "Type": "sys.isvalid",
+                    "UserData": {
+                      "Position": "-120,108"
+                    }
+                  },
+                  {
+                    "Id": 6,
+                    "Type": "op.compliment",
+                    "UserData": {
+                      "Position": "180,108"
+                    }
+                  },
+                  {
+                    "Id": 7,
+                    "Type": "scene.get",
+                    "Properties": {
+                      "T": "Clover.Npc.Villager"
+                    },
+                    "UserData": {
+                      "Position": "-624,108"
+                    }
+                  },
+                  {
+                    "Id": 8,
+                    "Type": "property",
+                    "Properties": {
+                      "_name": "InteractionTarget",
+                      "_type": "Clover.Npc.BaseNpc"
+                    },
+                    "UserData": {
+                      "Position": "-408,108"
+                    }
+                  }
+                ],
+                "Links": [
+                  {
+                    "SrcId": 6,
+                    "SrcName": "_result",
+                    "DstId": 1,
+                    "DstName": "_result"
+                  },
+                  {
+                    "SrcId": 0,
+                    "SrcName": "_signal",
+                    "DstId": 1,
+                    "DstName": "_signal"
+                  },
+                  {
+                    "SrcId": 8,
+                    "SrcName": "_result",
+                    "DstId": 5,
+                    "DstName": "obj"
+                  },
+                  {
+                    "SrcId": 5,
+                    "SrcName": "_result",
+                    "DstId": 6,
+                    "DstName": "a"
+                  },
+                  {
+                    "SrcId": 0,
+                    "SrcName": "_target",
+                    "DstId": 7,
+                    "DstName": "_this"
+                  },
+                  {
+                    "SrcId": 7,
+                    "SrcName": "_result",
+                    "DstId": 8,
+                    "DstName": "_target"
+                  }
+                ]
+              }
+            },
+            {
+              "Id": 6,
+              "SourceId": 4,
+              "Condition": {
+                "__version": 8,
+                "__guid": "4ca9c26b-10cc-470c-abab-62a516a04c0c",
+                "__changeId": 20,
+                "UserData": {
+                  "Title": "Condition",
+                  "ReferencedComponentTypes": [
+                    "Clover.Npc.Villager"
+                  ]
+                },
+                "Variables": [],
+                "Nodes": [
+                  {
+                    "Id": 0,
+                    "Type": "input",
+                    "UserData": {
+                      "Position": "-96,-0"
+                    }
+                  },
+                  {
+                    "Id": 1,
+                    "Type": "output",
+                    "UserData": {
+                      "Position": "468,0"
+                    }
+                  },
+                  {
+                    "Id": 2,
+                    "Type": "scene.get",
+                    "Properties": {
+                      "T": "Clover.Npc.Villager"
+                    },
+                    "UserData": {
+                      "Position": "-384,108"
+                    }
+                  },
+                  {
+                    "Id": 3,
+                    "Type": "property",
+                    "Properties": {
+                      "_name": "InteractionTarget",
+                      "_type": "Clover.Npc.BaseNpc"
+                    },
+                    "UserData": {
+                      "Position": "-192,108"
+                    }
+                  },
+                  {
+                    "Id": 4,
+                    "Type": "sys.isvalid",
+                    "UserData": {
+                      "Position": "84,108"
+                    }
+                  },
+                  {
+                    "Id": 6,
+                    "Type": "op.compliment",
+                    "UserData": {
+                      "Position": "300,108"
+                    }
+                  }
+                ],
+                "Links": [
+                  {
+                    "SrcId": 6,
+                    "SrcName": "_result",
+                    "DstId": 1,
+                    "DstName": "_result"
+                  },
+                  {
+                    "SrcId": 0,
+                    "SrcName": "_signal",
+                    "DstId": 1,
+                    "DstName": "_signal"
+                  },
+                  {
+                    "SrcId": 0,
+                    "SrcName": "_target",
+                    "DstId": 2,
+                    "DstName": "_this"
+                  },
+                  {
+                    "SrcId": 2,
+                    "SrcName": "_result",
+                    "DstId": 3,
+                    "DstName": "_target"
+                  },
+                  {
+                    "SrcId": 3,
+                    "SrcName": "_result",
+                    "DstId": 4,
+                    "DstName": "obj"
+                  },
+                  {
+                    "SrcId": 4,
+                    "SrcName": "_result",
+                    "DstId": 6,
+                    "DstName": "a"
+                  }
+                ]
+              }
             }
           ],
           "InitialStateId": 0
         }
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "f9dd7ea9-1303-4aa5-a5f8-aa8ebe5031fb",
+        "Center": "0,0,20",
+        "IsTrigger": false,
+        "Scale": "20,20,40",
+        "Static": false,
+        "SurfaceVelocity": "0,0,0"
       }
     ],
     "Children": [

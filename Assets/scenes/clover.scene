@@ -21,9 +21,6 @@
           "__guid": "e4381c2f-796e-44b0-81a2-d666d662876e",
           "__enabled": false,
           "Actions": {},
-          "CurrentChoice": {
-            "Nodes": []
-          },
           "CurrentNodeList": [],
           "CurrentTargets": [],
           "Data": {}
@@ -403,7 +400,7 @@
       "AgentRadius": 16,
       "AgentStepSize": 18,
       "AgentMaxSlope": 40,
-      "ExcludedBodies": "",
+      "ExcludedBodies": "player,water,npc",
       "IncludedBodies": ""
     }
   },
