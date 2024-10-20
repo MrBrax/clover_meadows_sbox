@@ -87,6 +87,10 @@
           "go": "c57a55e5-d342-4045-a3da-1926e89dcd32",
           "component_type": "ModelRenderer"
         }
+      },
+      {
+        "__type": "Sandbox.Highlight",
+        "__guid": "40c7b340-49f4-469d-81e8-bbe554688fb0"
       }
     ],
     "Children": [
