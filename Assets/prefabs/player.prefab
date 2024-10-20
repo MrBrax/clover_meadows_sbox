@@ -28,7 +28,7 @@
         "Height": 40,
         "IgnoreLayers": "",
         "Radius": 12,
-        "StepHeight": 14,
+        "StepHeight": 10,
         "UseCollisionRules": true
       },
       {
@@ -42,6 +42,7 @@
           "component_type": "SkinnedModelRenderer"
         },
         "RunSpeed": 190,
+        "SneakSpeed": 60,
         "WalkSpeed": 120
       },
       {
@@ -73,7 +74,8 @@
         "Center": "0,0,25",
         "IsTrigger": false,
         "Scale": "32,32,50",
-        "Static": false
+        "Static": false,
+        "SurfaceVelocity": "0,0,0"
       },
       {
         "__type": "Clover.Player.PlayerInteract",
@@ -195,7 +197,8 @@
                 "Center": "0,0,25",
                 "IsTrigger": true,
                 "Scale": "24,24,50",
-                "Static": false
+                "Static": false,
+                "SurfaceVelocity": "0,0,0"
               }
             ]
           },
@@ -373,6 +376,7 @@
             "__guid": "2fb1ce16-d463-4554-980e-59a3a3a2e355",
             "FieldOfView": 70,
             "FollowTargets": true,
+            "Lerping": true,
             "Priority": 1,
             "Static": false
           }
@@ -391,6 +395,7 @@
             "__guid": "4bfeaf52-03a5-4eb5-8679-5b0183a6aad9",
             "FieldOfView": 90,
             "FollowTargets": false,
+            "Lerping": true,
             "Priority": 0,
             "Static": false
           }
