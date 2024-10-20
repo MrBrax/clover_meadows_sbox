@@ -11,7 +11,8 @@
         "Center": "0,0,16",
         "IsTrigger": false,
         "Scale": "32,32,32",
-        "Static": true
+        "Static": true,
+        "SurfaceVelocity": "0,0,0"
       },
       {
         "__type": "Clover.Items.ShopDisplay",
@@ -20,7 +21,11 @@
           "_type": "gameobject",
           "go": "5987670e-028e-43d2-8a17-5afaf668a20e"
         },
-        "Size": 1
+        "Size": 1,
+        "SoldOutSign": {
+          "_type": "gameobject",
+          "go": "db2b7c5b-a63d-4a4d-acbf-de674df4ac01"
+        }
       }
     ],
     "Children": [
@@ -52,6 +57,30 @@
         "Name": "Container",
         "Position": "0,0,8",
         "Enabled": true
+      },
+      {
+        "__guid": "db2b7c5b-a63d-4a4d-acbf-de674df4ac01",
+        "Flags": 0,
+        "Name": "sold_out",
+        "Position": "0,0,8",
+        "Rotation": "0,0,0.3826835,0.9238795",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "514bf6b8-c9c9-4dc1-8f26-f9c1037754a4",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/misc/sold_out/sold_out.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
       }
     ],
     "__variables": [

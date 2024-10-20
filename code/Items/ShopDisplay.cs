@@ -9,10 +9,17 @@ public class ShopDisplay : Component, IInteract
 	[Property] public GameObject Container { get; set; }
 	[Property] public int Size { get; set; } = 1;
 
+	[Property] public GameObject SoldOutSign { get; set; }
+
 	public ShopManager ShopManager { get; set; }
 
 	public ShopManager.ShopItem Item =>
 		ShopManager.Items.Find( i => i.Display == ShopManager.Displays.IndexOf( this ) );
+
+	protected override void OnAwake()
+	{
+		SoldOutSign.Enabled = true;
+	}
 
 	public void UpdateItem()
 	{
@@ -21,6 +28,7 @@ public class ShopDisplay : Component, IInteract
 		if ( Item == null )
 		{
 			Log.Error( "ShopDisplay: Item is null" );
+			SoldOutSign.Enabled = true;
 			return;
 		}
 
@@ -29,6 +37,7 @@ public class ShopDisplay : Component, IInteract
 		if ( !itemData.IsValid() )
 		{
 			Log.Error( $"ShopDisplay: Item data is invalid for {Item}" );
+			SoldOutSign.Enabled = true;
 			return;
 		}
 
@@ -39,6 +48,9 @@ public class ShopDisplay : Component, IInteract
 			gameObject.SetParent( Container );
 			gameObject.LocalPosition = Vector3.Zero;
 			gameObject.LocalRotation = Rotation.Identity;
+
+			SoldOutSign.Enabled = false;
+
 			return;
 		}
 
@@ -78,6 +90,8 @@ public class ShopDisplay : Component, IInteract
 				p.Destroy();
 			}
 
+			SoldOutSign.Enabled = false;
+
 			return;
 		}
 
@@ -93,6 +107,8 @@ public class ShopDisplay : Component, IInteract
 			{
 				c.Destroy();
 			}
+
+			SoldOutSign.Enabled = false;
 
 			return;
 		}
