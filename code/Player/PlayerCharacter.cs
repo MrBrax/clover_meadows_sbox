@@ -5,6 +5,7 @@ using Clover.Carriable;
 using Clover.Components;
 using Clover.Data;
 using Clover.Inventory;
+using Clover.Npc;
 using Clover.Persistence;
 using Clover.Player.Clover;
 using Clover.Ui;
@@ -201,6 +202,11 @@ public sealed partial class PlayerCharacter : Component
 		if ( ItemPlacer.IsPlacing ) return false;
 		if ( Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) &&
 		     tool.ShouldDisableMovement() ) return false;
+		if ( PlayerInteract.InteractionTarget.IsValid() )
+		{
+			if ( PlayerInteract.InteractionTarget.GetComponent<BaseNpc>().IsValid() ) return false;
+		}
+
 		return true;
 	}
 

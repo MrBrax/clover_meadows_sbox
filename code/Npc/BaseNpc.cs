@@ -77,14 +77,19 @@ public class BaseNpc : Component, IInteract
 			LookAt( InteractionTarget );
 			if ( InteractionTarget.WorldPosition.Distance( WorldPosition ) > 128f )
 			{
-				InteractionTarget = null;
+				if ( InteractionTarget.Components.TryGet<PlayerCharacter>( out var player ) )
+				{
+					player.PlayerInteract.InteractionTarget = null;
+				}
+
 				_nextAction = Random.Shared.Float( 3, 8 );
-				SetState( NpcState.Idle );
+				EndInteraction();
 			}
 		}
 		else
 		{
-			SetState( NpcState.Idle );
+			_nextAction = Random.Shared.Float( 3, 8 );
+			EndInteraction();
 		}
 	}
 
@@ -143,8 +148,39 @@ public class BaseNpc : Component, IInteract
 	public void StartInteract( PlayerCharacter player )
 	{
 		Log.Info( "BaseNpc StartInteract" );
+
+		if ( InteractionTarget.IsValid() )
+		{
+			Log.Error( "BaseNpc StartInteract: Busy" );
+			return;
+		}
+
+		player.PlayerInteract.InteractionTarget = GameObject;
+		player.ModelLookAt( WorldPosition );
 		InteractionTarget = player.GameObject;
 		SetState( NpcState.Interacting );
+		DispatchDialogue();
+	}
+
+	public void EndInteraction()
+	{
+		if ( InteractionTarget.IsValid() )
+		{
+			if ( InteractionTarget.Components.TryGet<PlayerCharacter>( out var player ) )
+			{
+				player.PlayerInteract.InteractionTarget = null;
+			}
+		}
+
+		InteractionTarget = null;
+		SetState( NpcState.Idle );
+	}
+
+	private void DispatchDialogue()
+	{
+		Log.Error( "BaseNpc DispatchDialogue: Not implemented" );
+		SetState( NpcState.Idle );
+		EndInteraction();
 	}
 
 	public string GetInteractName()

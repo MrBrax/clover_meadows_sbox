@@ -1,6 +1,7 @@
 ﻿using Clover.Interactable;
 using Clover.Inventory;
 using Clover.Items;
+using Clover.Npc;
 using Clover.Ui;
 
 namespace Clover.Player;
@@ -20,6 +21,8 @@ public class PlayerInteract : Component
 
 	[Property] public SoundEvent UseFailSound { get; set; }
 	[Property] public SoundEvent PickUpFailSound { get; set; }
+
+	public GameObject InteractionTarget { get; set; }
 
 	protected override void OnAwake()
 	{
@@ -45,6 +48,11 @@ public class PlayerInteract : Component
 		if ( Player.ItemPlacer.IsPlacing ) return false;
 		if ( Player.InCutscene ) return false;
 		if ( Player.ItemPlacer.IsPlacing ) return false;
+		if ( InteractionTarget.IsValid() )
+		{
+			if ( InteractionTarget.GetComponent<BaseNpc>().IsValid() ) return false;
+		}
+
 		return true;
 	}
 
