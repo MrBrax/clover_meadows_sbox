@@ -2,14 +2,14 @@
   "Nodes": [
     {
       "Id": "44643c67",
-      "Text": "Do you want to buy that {{ItemName}}? It\u0027s {{Price}} clovers.",
+      "Text": "Do you want to buy that {{ItemName}}? It\u0027s {{ItemPrice}} clovers.",
       "Choices": [
         {
           "Label": "Yes",
           "OnSelect": {
             "__version": 8,
             "__guid": "e22ada2e-f2a9-4d51-95b0-ba9395deb52a",
-            "__changeId": 86,
+            "__changeId": 87,
             "UserData": {
               "Title": "On Select",
               "ReferencedComponentTypes": []
@@ -164,7 +164,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 12,
+                "Id": 40,
                 "Value": "bought",
                 "DstId": 2,
                 "DstName": "id"
@@ -176,7 +176,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 13,
+                "Id": 41,
                 "Value": "PlayerClovers",
                 "DstId": 3,
                 "DstName": "key"
@@ -188,7 +188,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 14,
+                "Id": 42,
                 "Value": "ItemPrice",
                 "DstId": 4,
                 "DstName": "key"
@@ -230,7 +230,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 15,
+                "Id": 43,
                 "Value": "failed",
                 "DstId": 7,
                 "DstName": "id"
@@ -278,7 +278,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 31,
+                "Id": 44,
                 "Value": "nospace",
                 "DstId": 22,
                 "DstName": "id"
@@ -296,7 +296,7 @@
                 "DstName": "_target"
               },
               {
-                "Id": 40,
+                "Id": 45,
                 "Value": "BuyItem",
                 "DstId": 33,
                 "DstName": "key"

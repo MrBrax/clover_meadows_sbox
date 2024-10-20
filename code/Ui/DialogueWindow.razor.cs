@@ -64,6 +64,7 @@ public partial class DialogueWindow
 	}
 
 	[Pure]
+	[Icon( "description" )]
 	public int GetDataInt( string key )
 	{
 		if ( Data.TryGetValue( key, out var value ) )
@@ -78,6 +79,7 @@ public partial class DialogueWindow
 	}
 
 	[Pure]
+	[Icon( "description" )]
 	public string GetDataString( string key )
 	{
 		if ( Data.TryGetValue( key, out var value ) )
@@ -90,6 +92,7 @@ public partial class DialogueWindow
 	}
 
 	[Pure]
+	[Icon( "description" )]
 	public float GetDataFloat( string key )
 	{
 		if ( Data.TryGetValue( key, out var value ) )
@@ -102,6 +105,7 @@ public partial class DialogueWindow
 	}
 
 	[Pure]
+	[Icon( "description" )]
 	public bool GetDataBool( string key )
 	{
 		if ( Data.TryGetValue( key, out var value ) )
@@ -149,7 +153,12 @@ public partial class DialogueWindow
 		Actions[key] = action;
 	}
 
+	/// <summary>
+	///  Runs an action by key. Add actions with <see cref="SetAction"/>.
+	/// </summary>
+	/// <param name="key"></param>
 	[Property]
+	[Icon( "rocket_launch" )]
 	public void RunAction( string key )
 	{
 		if ( Actions.TryGetValue( key, out var action ) )
@@ -166,6 +175,8 @@ public partial class DialogueWindow
 	///  Searches for a node with the given id recursively and sets it as the current node.
 	/// </summary>
 	/// <param name="id"></param>
+	[Property]
+	[Icon( "search" )]
 	public void JumpToId( string id )
 	{
 		/*Dialogue.DialogueNode FindNode( List<Dialogue.DialogueNode> nodes )

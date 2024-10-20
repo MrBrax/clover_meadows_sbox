@@ -11,7 +11,7 @@ public class Inventory : Component
 
 	[Property, ReadOnly] public int ItemCount => Container.Slots.Count;
 
-	public InventoryContainer Container { get; private set; } = new();
+	[Icon( "inventory" )] public InventoryContainer Container { get; private set; } = new();
 
 	protected override void OnAwake()
 	{

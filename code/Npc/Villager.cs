@@ -24,6 +24,7 @@ public class Villager : BaseNpc
 
 		Log.Info( "Villager WalkToRandomTarget: " + _targetPos );
 		Agent.MoveTo( _targetPos );
+		
 	}
 
 	protected override void OnUpdate()

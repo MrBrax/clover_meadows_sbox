@@ -11,6 +11,10 @@ using Clover.Ui;
 
 namespace Clover.Player;
 
+[Title( "Player Character" )]
+[Icon( "face" )]
+[Category( "Clover" )]
+[Description( "The player character component." )]
 public sealed partial class PlayerCharacter : Component
 {
 	[ActionGraphNode( "player.local" ), Title( "Local Player" ), Icon( "face" ), Category( "Clover" )]
@@ -19,17 +23,6 @@ public sealed partial class PlayerCharacter : Component
 
 	[Sync] public string PlayerId { get; set; }
 	[Sync] public string PlayerName { get; set; }
-
-	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
-	[RequireComponent] public CharacterController CharacterController { get; set; }
-	[RequireComponent] public PlayerController PlayerController { get; set; }
-	[RequireComponent] public PlayerInteract PlayerInteract { get; set; }
-	[RequireComponent] public Inventory.Inventory Inventory { get; set; }
-	[RequireComponent] public Equips Equips { get; set; }
-	[RequireComponent] public CameraController CameraController { get; set; }
-	[RequireComponent] public CloverBalanceController CloverBalanceController { get; set; }
-	[RequireComponent] public VehicleRider VehicleRider { get; set; }
-	[RequireComponent] public ItemPlacer ItemPlacer { get; set; }
 
 	[Property] public GameObject Model { get; set; }
 
@@ -241,7 +234,7 @@ public sealed partial class PlayerCharacter : Component
 		CutsceneTarget = null;
 		InCutscene = false;
 	}
-	
+
 	public void SetVisible( bool state )
 	{
 		foreach ( var renderer in Model.GetComponentsInChildren<ModelRenderer>( true ) )
