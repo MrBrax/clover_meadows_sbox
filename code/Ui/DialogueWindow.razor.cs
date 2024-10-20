@@ -374,16 +374,21 @@ public partial class DialogueWindow
 	private void Typewriter()
 	{
 		if ( _textTarget == null ) return;
-		if ( _lastLetter > 0.05f )
+		if ( _lastLetter <= 0.05f )
 		{
-			_lastLetter = 0;
-			if ( _textIndex < _textTarget.Length )
-			{
-				Text += _textTarget[_textIndex];
-				OnLetterTyped( _textTarget[_textIndex] );
-				_textIndex++;
-			}
+			return;
 		}
+
+		_lastLetter = 0;
+		if ( _textIndex >= _textTarget.Length )
+		{
+			return;
+		}
+
+		Text += _textTarget[_textIndex];
+
+		OnLetterTyped( _textTarget[_textIndex] );
+		_textIndex++;
 	}
 
 	private char[] _letters = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
