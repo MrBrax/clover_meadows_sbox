@@ -26,7 +26,8 @@
         "Center": "-57.50003,0,0",
         "IsTrigger": false,
         "Scale": "132.1998,47.29996,16",
-        "Static": false
+        "Static": false,
+        "SurfaceVelocity": "0,0,0"
       },
       {
         "__type": "Sandbox.BoxCollider",
@@ -34,7 +35,8 @@
         "Center": "0,0,-29.90001",
         "IsTrigger": false,
         "Scale": "32,32,32",
-        "Static": false
+        "Static": false,
+        "SurfaceVelocity": "0,0,0"
       },
       {
         "__type": "Sandbox.BoxCollider",
@@ -42,7 +44,12 @@
         "Center": "-30.3,0,0",
         "IsTrigger": false,
         "Scale": "73.7,168.5002,16",
-        "Static": false
+        "Static": false,
+        "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "e2e8b311-de89-4d25-9bb3-31a1f032d96f"
       }
     ],
     "Children": [
