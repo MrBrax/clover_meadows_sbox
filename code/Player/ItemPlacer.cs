@@ -7,7 +7,10 @@ using Clover.Ui;
 
 namespace Clover.Player;
 
-public class ItemPlacer : Component
+[Title( "Item Placer" )]
+[Icon( "inventory" )]
+[Category( "Clover/Player" )]
+public class ItemPlacer : Component, IWorldEvent
 {
 	private PlayerCharacter Player => GetComponent<PlayerCharacter>();
 
@@ -50,12 +53,24 @@ public class ItemPlacer : Component
 		Mouse.Visible = true;
 
 	}
+	
+	void IWorldEvent.OnWorldChanged( World world )
+	{
+		StopPlacing();
+	}
+
 	public void StartPlacing( int inventorySlotIndex )
 	{
 		if ( !Player.IsValid() ) throw new System.Exception( "Player is not valid" );
 		if ( !Player.Inventory.IsValid() ) throw new System.Exception( "Player Inventory is not valid" );
 		if ( Player.Inventory.Container == null )
 			throw new System.Exception( "Player Inventory Container is not valid" );
+
+		if ( Player.World.Data.DisableItemPlacement )
+		{
+			Player.Notify( Notifications.NotificationType.Error, "Item placement is disabled in this area" );
+			return;
+		}
 
 		if ( IsPlacing )
 		{
@@ -189,9 +204,13 @@ public class ItemPlacer : Component
 			StopPlacing();
 		}
 
-		if ( Input.MouseWheel.y != 0 )
+		if ( Input.Pressed( "RotateClockwise" ) )
 		{
-			_ghost.WorldRotation *= Rotation.FromYaw( Input.MouseWheel.y * 15 );
+			_ghost.WorldRotation *= Rotation.FromYaw( -15 );
+		}
+		else if ( Input.Pressed( "RotateCounterClockwise" ) )
+		{
+			_ghost.WorldRotation *= Rotation.FromYaw( 15 );
 		}
 
 		/*else if ( Input.Pressed( "cancel" ) )
@@ -204,8 +223,7 @@ public class ItemPlacer : Component
 	{
 		try
 		{
-			Player.World.SpawnPlacedNode( _selectedItem, _ghost.WorldPosition, _ghost.WorldRotation,
-				_lastItemPlacement );
+			Player.World.SpawnPlacedNode( _selectedItem, _ghost.WorldPosition, _ghost.WorldRotation );
 		}
 		catch ( Exception e )
 		{
@@ -222,13 +240,20 @@ public class ItemPlacer : Component
 		StopPlacing();
 	}
 
-	private void SetGhostTint( Color color )
+	private Material _invalidMaterial = Material.Load( "materials/ghost_invalid.vmat" );
+
+	private void SetGhostTint()
 	{
 		if ( !_ghost.IsValid() ) return;
+
+		var s = MathF.Sin( Time.Now * 5 ) * 0.4f;
+
 		foreach ( var renderable in _ghost.Components.GetAll<ModelRenderer>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
-			renderable.Tint = color;
+			renderable.Tint = _isValidPlacement ? Color.White.WithAlpha( 0.5f + s ) : Color.Red.WithAlpha( 0.5f + s );
+
+			renderable.MaterialOverride = _isValidPlacement ? null : _invalidMaterial;
 		}
 	}
 
@@ -241,16 +266,15 @@ public class ItemPlacer : Component
 
 	private void UpdateVisuals()
 	{
-		var s = MathF.Sin( Time.Now * 5 ) * 0.1f;
-		SetGhostTint( _isValidPlacement ? Color.White.WithAlpha( 0.5f + s ) : Color.Red.WithAlpha( 0.5f + s ) );
+		SetGhostTint();
 		// SetCursorTintColor( _isValidPlacement ? Color.White.WithAlpha( 0.2f + s ) : Color.Red.WithAlpha( 0.2f + s ) );
 	}
 
 	private bool _isValidPlacement;
 
-	private Vector2Int _lastGridPosition;
-	private World.ItemRotation _lastGridRotation;
-	private World.ItemPlacement _lastItemPlacement = World.ItemPlacement.Floor;
+	// private Vector2Int _lastGridPosition;
+	// private World.ItemRotation _lastGridRotation;
+	// private World.ItemPlacement _lastItemPlacement = World.ItemPlacement.Floor;
 	private Vector3 _colliderSize;
 	private Vector3 _colliderCenter;
 
@@ -270,24 +294,61 @@ public class ItemPlacer : Component
 
 		box = box.Rotate( _ghost.WorldRotation );
 
-		var trace = Scene.Trace.Box( box, ray, 10000f )
-			.WithoutTags( "player" )
+		var trace = Scene.Trace.Box( box, ray, 1000f )
+			.WithoutTags( "player", "invisiblewall" )
 			.Run();
 
-		if ( !trace.Hit ) return;
+		if ( !trace.Hit )
+		{
+			_isValidPlacement = false;
+			return;
+		}
 
 		// Gizmo.Transform = new Transform( trace.EndPosition );
 		// Gizmo.Draw.LineBBox( box );
 
 		var endPosition = trace.EndPosition;
 
+		if ( SnapEnabled && !Input.Down( "Snap" ) )
+		{
+			endPosition = endPosition.SnapToGrid( SnapDistance );
+		}
+
 		endPosition += _selectedItem.PlaceModeOffset;
 
-		var gridPosition = Player.World.WorldToItemGrid( endPosition );
+		// var gridPosition = Player.World.WorldToItemGrid( endPosition );
 
 		// TODO: Check if the item can be placed here
-		_isValidPlacement = true;
+		_isValidPlacement = !Player.World.IsPositionOccupied( endPosition, 4f ) &&
+		                    !Player.World.IsNearPlayer( endPosition );
 
 		_ghost.WorldPosition = endPosition;
+	}
+
+	[ConVar( "clover_itemplacer_snap_enabled", Saved = true )]
+	public static bool SnapEnabled { get; set; } = false;
+
+	[ConVar( "clover_itemplacer_snap_distance", Saved = true )]
+	public static float SnapDistance { get; set; } = 16f;
+
+	[ConVar( "clover_itemplacer_show_grid", Saved = true )]
+	public static bool ShowGrid { get; set; } = true;
+
+
+	protected override void OnUpdate()
+	{
+		if ( IsPlacing && ShowGrid )
+		{
+			// TODO: re-add grid when it can be positioned relative to the player
+			// Gizmo.Transform = new Transform( Player.WorldPosition );
+			// Gizmo.Draw.Grid( Gizmo.GridAxis.XY, new Vector2( 32f, 32f ) );
+		}
+
+		if ( IsPlacing && _ghost.IsValid() )
+		{
+			Gizmo.Draw.Line( _ghost.WorldPosition, _ghost.WorldPosition + _ghost.WorldRotation.Down * 256f );
+			Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( _colliderCenter, _colliderSize )
+				.Rotate( _ghost.WorldRotation ).Translate( _ghost.WorldPosition ) );
+		}
 	}
 }

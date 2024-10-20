@@ -44,6 +44,37 @@
         ]
       },
       {
+        "__guid": "a592634c-7786-4bd2-87c1-4e34a3e1c57e",
+        "Flags": 0,
+        "Name": "Model (1)",
+        "Tags": "solid,terrain,invisiblewall",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "effdf2ef-dac3-4813-9855-9c83588fe675",
+            "__enabled": false,
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/player_house/house.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "Sandbox.ModelCollider",
+            "__guid": "d5d6670b-2513-4a43-9102-e3300e8e91c0",
+            "IsTrigger": false,
+            "Model": "worlds/player_house/floor_base/house_floor_base_blocker.vmdl",
+            "Static": true
+          }
+        ]
+      },
+      {
         "__guid": "ab750cae-1285-469e-9352-779c93e502cc",
         "Flags": 0,
         "Name": "Point Light",
@@ -139,8 +170,7 @@
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "14161e64-6242-4e3b-9bad-a5a4281aa15b",
-            "Layer": 0
+            "__guid": "14161e64-6242-4e3b-9bad-a5a4281aa15b"
           }
         ]
       },
@@ -160,8 +190,7 @@
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "13ba7cff-f8ef-4f3a-9166-49560d7b8a3d",
-            "Layer": 0
+            "__guid": "13ba7cff-f8ef-4f3a-9166-49560d7b8a3d"
           }
         ]
       },
@@ -191,8 +220,7 @@
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "363c6364-0e0c-4cdc-9d96-d381cb537bf0",
-            "Layer": 0
+            "__guid": "363c6364-0e0c-4cdc-9d96-d381cb537bf0"
           }
         ]
       },
@@ -260,8 +288,7 @@
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "c26c2bcc-e180-4dc0-b6d8-beb7b493265e",
-            "Layer": 0
+            "__guid": "c26c2bcc-e180-4dc0-b6d8-beb7b493265e"
           }
         ]
       },
@@ -564,6 +591,7 @@
         "Flags": 0,
         "Name": "room1_camera_trigger",
         "Position": "320,320,0.0001778322",
+        "Tags": "trigger",
         "Enabled": true,
         "Components": [
           {
@@ -609,6 +637,7 @@
         "Flags": 0,
         "Name": "room2_camera_trigger",
         "Position": "320,96,0.0001778322",
+        "Tags": "trigger",
         "Enabled": true,
         "Components": [
           {

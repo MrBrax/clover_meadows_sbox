@@ -11,6 +11,24 @@ namespace Clover;
 
 public partial class MainUi : IPlayerSaved, IWorldSaved
 {
+	public static MainUi Instance { get; private set; }
+
+	public TimeSince LastInput;
+
+	public bool ShouldShowUi => LastInput < HideUiDelay;
+
+	[ConVar( "clover_ui_hide_delay" )] public static float HideUiDelay { get; set; } = 5;
+
+	protected override void OnAwake()
+	{
+		Instance = this;
+	}
+
+	protected override void OnDestroy()
+	{
+		Instance = null;
+	}
+
 	private Panel IsSavingPanel { get; set; }
 
 	public void PrePlayerSave( PlayerCharacter player )
@@ -34,6 +52,14 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 	protected override int BuildHash()
 	{
 		return HashCode.Combine( TimeManager.Time );
+	}
+
+	protected override void OnFixedUpdate()
+	{
+		if ( Input.ActionNames.Any( x => Input.Down( x ) ) )
+		{
+			LastInput = 0;
+		}
 	}
 
 	public struct InputData
@@ -75,7 +101,14 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 			yield return new InputData( "Pickup", $"Pick up {pickupable.GetPickupName()}" );
 			yield return new InputData( "Move", $"Move" );
 		}
-		
 
+		if ( player.ItemPlacer.IsPlacing )
+		{
+			yield return new InputData( "attack1", "Place" );
+			yield return new InputData( "attack2", "Cancel" );
+
+			yield return new InputData( "RotateClockwise", "Rotate Clockwise" );
+			yield return new InputData( "RotateCounterClockwise", "Rotate Counter Clockwise" );
+		}
 	}
 }

@@ -1,18 +1,18 @@
 ﻿namespace Clover.WorldBuilder.Weather;
 
+[Category( "Clover/Weather" )]
 public class Fog : WeatherBase
 {
-	
 	[Property] public ParticleEmitter Emitter { get; set; }
-	
+
 	[Property] public GradientFog Effect { get; set; }
-	
+
 	[Property] public VolumetricFogVolume Volume { get; set; }
 
 	public override void SetEnabled( bool state, bool smooth = false )
 	{
 		base.SetEnabled( state, smooth );
-		
+
 		Emitter.Enabled = state;
 		Effect.Enabled = state;
 		Volume.Enabled = state;
@@ -21,7 +21,7 @@ public class Fog : WeatherBase
 	public override void SetLevel( int level, bool smooth = false )
 	{
 		base.SetLevel( level, smooth );
-		
+
 		switch ( level )
 		{
 			case 0:
@@ -63,10 +63,8 @@ public class Fog : WeatherBase
 
 	protected override void OnFixedUpdate()
 	{
-
 		var col = NodeManager.TimeManager.CalculateFogColor();
-		
-		Effect.Color = col;
 
+		Effect.Color = col;
 	}
 }

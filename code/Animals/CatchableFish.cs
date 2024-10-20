@@ -6,6 +6,7 @@ using Clover.Objects;
 
 namespace Clover.Animals;
 
+[Category( "Clover/Animals" )]
 public class CatchableFish : Component, IFootstepEvent
 {
 	public enum FishState
@@ -16,7 +17,7 @@ public class CatchableFish : Component, IFootstepEvent
 		TryingToEat = 3,
 		Fighting = 4
 	}
-	
+
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
 	[Property] public SkinnedModelRenderer Renderer { get; set; }
@@ -75,7 +76,6 @@ public class CatchableFish : Component, IFootstepEvent
 
 	protected override void OnFixedUpdate()
 	{
-		
 		// don't simulate fish if there are no players in the world
 		if ( WorldLayerObject.World == null || !WorldLayerObject.World.PlayersInWorld.Any() )
 		{
@@ -113,8 +113,8 @@ public class CatchableFish : Component, IFootstepEvent
 		{
 			// GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
 			GameObject.PlaySound( SplashSound );
-			_nextSplashSound = (TimeUntil)Math.Clamp(  Random.Shared.Float( 0.2f, 0.5f ) + ( Stamina / 50f ), 0.1, 10f );
-			
+			_nextSplashSound = (TimeUntil)Math.Clamp( Random.Shared.Float( 0.2f, 0.5f ) + (Stamina / 50f), 0.1, 10f );
+
 			Bobber.Rod.SplashParticle.Clone( WorldPosition, Rotation.FromPitch( -90f ) );
 		}
 
@@ -124,21 +124,21 @@ public class CatchableFish : Component, IFootstepEvent
 			SetState( FishState.Idle );
 			return;
 		}
-		
+
 		var fleePosition = Bobber.WorldPosition + Bobber.WorldRotation.Forward * 32f;
 		// fleePosition += Bobber.WorldRotation.Right * Random.Shared.Float( -32f, 32f );
-		fleePosition += Bobber.WorldRotation.Right * ( ( Sandbox.Utility.Noise.Perlin( Time.Now * 20f ) * 64f ) - 32f);
-		
+		fleePosition += Bobber.WorldRotation.Right * ((Sandbox.Utility.Noise.Perlin( Time.Now * 20f ) * 64f) - 32f);
+
 		// Gizmo.Draw.Arrow( fleePosition + Vector3.Up * 16f, fleePosition + Vector3.Down * 16f );
 		// Gizmo.Draw.LineSphere( fleePosition, 8f );
-		
+
 		if ( !FishingRod.CheckForWater( fleePosition + Vector3.Up * 8f ) )
 		{
 			return;
 		}
 
 		var distance = WorldPosition.Distance( Bobber.Rod.WorldPosition );
-		
+
 		if ( distance > Bobber.Rod.LineLength )
 		{
 			fleePosition = Bobber.WorldPosition;
@@ -146,35 +146,34 @@ public class CatchableFish : Component, IFootstepEvent
 		}
 
 		var swimSpeed = _maxSwimSpeedPanic;
-		
+
 		// TODO: properly adjust this based on distance and stamina
 		if ( distance < 96f )
 		{
-			swimSpeed = _maxSwimSpeedPanic * ( distance / 40f );
+			swimSpeed = _maxSwimSpeedPanic * (distance / 40f);
 		}
-		
+
 		if ( Stamina <= 0 )
 		{
 			swimSpeed *= 0.1f;
 		}
-		
+
 		Bobber.WorldPosition += (fleePosition - Bobber.WorldPosition).Normal * swimSpeed * Time.Delta;
-		
+
 		WorldPosition = Bobber.WorldPosition;
 
 		Stamina -= Time.Delta * 0.1f;
-		
+
 		Bobber.Rod.LineStrength -= Time.Delta * 0.1f;
-		
+
 		// Gizmo.Draw.Text( Stamina.ToString(), new Transform( WorldPosition + Vector3.Up * 32f ) );
-		
+
 		/*if ( Stamina <= 0 )
 		{
 			CatchFish();
 		}*/
 
 		// Log.Info( "Fighting the fish." );
-
 	}
 
 	private void Animate()
@@ -330,7 +329,7 @@ public class CatchableFish : Component, IFootstepEvent
 	}
 
 	private float _swimRandomRadius = 128f;
-	
+
 	private Vector3 _swimTarget;
 	private const int _swimTargetTries = 10;
 	// private float _swimProgress;
@@ -363,7 +362,7 @@ public class CatchableFish : Component, IFootstepEvent
 
 			Log.Trace( $"New swim target: {_swimTarget}." );
 		}
-		
+
 		var swimSpeed = _maxSwimSpeed;
 		if ( _lastPanic < 5f )
 		{
@@ -373,7 +372,7 @@ public class CatchableFish : Component, IFootstepEvent
 		// move towards the target smoothly
 		// var moveDirection = (_swimTarget - WorldPosition).Normal;
 		// var swimDistance = _swimTarget.Distance( _swimStartPos );
-		
+
 		// _swimProgress += Time.Delta * (swimSpeed / swimDistance);
 
 		// Vector3 preA = _swimStartPos;
@@ -384,36 +383,35 @@ public class CatchableFish : Component, IFootstepEvent
 		// Gizmo.Draw.Arrow( preA + Vector3.Up * 8f, postB + Vector3.Up * 8f );
 
 		var distance = WorldPosition.Distance( _swimTarget );
-		
+
 		var acceleration = _swimAcceleration;
-		
+
 		if ( distance < 16f )
 		{
 			acceleration = _swimDeceleration;
 		}
 
 		var swimDirection = (_swimTarget - WorldPosition).Normal;
-		
+
 		_velocity += swimDirection * acceleration;
 
 		if ( distance < 8f )
 		{
 			_velocity = _velocity.ClampLength( 8f );
-			
 		}
-		
+
 		_velocity = _velocity.ClampLength( swimSpeed );
-		
+
 		var newRotation = Rotation.LookAt( _velocity.Normal, Vector3.Up );
 
 		WorldPosition += _velocity * Time.Delta;
 		WishedRotation = newRotation;
 
 		// check if the fish has reached the target
-		
-		
+
+
 		/**/
-		
+
 		if ( distance < 4f )
 		{
 			Log.Trace( "Reached swim target." );
@@ -427,12 +425,11 @@ public class CatchableFish : Component, IFootstepEvent
 
 	private void FindSwimAwayFromTarget( Vector3 source )
 	{
-		
 		var currentPos = WorldPosition;
 		var direction = (currentPos - source).Normal.WithZ( 0 );
-		
+
 		var basePoint = currentPos + direction * 128f;
-		
+
 		for ( var i = 0; i < 10; i++ )
 		{
 			var randomPoint = basePoint + new Vector3(
@@ -480,14 +477,12 @@ public class CatchableFish : Component, IFootstepEvent
 			_swimTarget = randomPoint;
 			return;
 		}
-		
+
 		Log.Warning( "Failed to find a flee swim target." );
-		
 	}
-	
+
 	private void GetNewSwimTarget()
 	{
-		
 		var randomPoint = WorldPosition + new Vector3(
 			Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ),
 			Random.Shared.Float( -_swimRandomRadius, _swimRandomRadius ),
@@ -663,7 +658,7 @@ public class CatchableFish : Component, IFootstepEvent
 
 		Gizmo.Draw.LineSphere( WorldPosition, 8f );
 		Gizmo.Draw.Arrow( WorldPosition, WorldPosition + WorldRotation.Forward * 32f );
-		
+
 		Gizmo.Draw.Arrow( _swimTarget + Vector3.Up * 64f, _swimTarget );
 	}*/
 
@@ -674,6 +669,5 @@ public class CatchableFish : Component, IFootstepEvent
 			Log.Info( $"Fish heard a footstep: {e.Volume}." );
 			// Scare( e.Transform.Position );
 		}
-	
 	}
 }

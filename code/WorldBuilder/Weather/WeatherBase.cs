@@ -1,8 +1,8 @@
 ﻿namespace Clover.WorldBuilder.Weather;
 
+[Category( "Clover/Weather" )]
 public class WeatherBase : Component
 {
-	
 	// protected bool _enabled = false;
 	// protected const float _fadeTime = 30.0f;
 
@@ -13,11 +13,10 @@ public class WeatherBase : Component
 		Log.Info( $"Setting weather {GameObject.Name} enabled to {state}" );
 		_lastFade = 0;
 	}
-	
+
 	public virtual void SetLevel( int level, bool smooth = false )
 	{
 		Log.Info( $"Setting weather {GameObject.Name} level to {level}" );
 		_lastFade = 0;
 	}
-	
 }

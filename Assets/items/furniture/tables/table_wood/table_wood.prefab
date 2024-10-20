@@ -1,0 +1,62 @@
+{
+  "RootObject": {
+    "__guid": "eedfe281-bf5b-4426-95d0-c388b9b7140a",
+    "Flags": 0,
+    "Name": "table_wood",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "55267a3b-4828-4983-83dd-729071087c5f",
+        "CanPickupSimple": true,
+        "ItemData": "items/furniture/tables/table_wood/table_wood.item",
+        "PlaceModeOffset": "0,0,0",
+        "Prefab": "items/furniture/tables/table_wood/table_wood.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "9dc96e26-df15-4935-bdd6-a82de4440e97"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "81347ab1-c5db-48c7-a1d0-7e42afbc177c",
+        "Center": "0,0,6.4",
+        "IsTrigger": false,
+        "Scale": "30,62,12.8",
+        "Static": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "bb5af76c-ab36-415c-90e2-a87835027465",
+        "Flags": 0,
+        "Name": "table_wood",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "db8ed2e7-0345-4d08-9da3-07413beee779",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/furniture/tables/table_wood/table_wood.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

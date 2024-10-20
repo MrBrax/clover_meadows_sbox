@@ -159,21 +159,21 @@ public sealed partial class World
 					Log.Error( $"Node link {nodeLink} at {gridPos} is not in the grid map" );
 				}
 			}
-			
+
 		}
-		
+
 		foreach ( var gridMapEntry in _nodeLinkGridMap )
 		{
 			if ( gridMapEntry.Key.Position != gridMapEntry.Value.GridPosition )
 			{
 				Log.Error( $"Grid map entry {gridMapEntry.Value} at {gridMapEntry.Key.Position} has a different position than the node link" );
 			}
-			
+
 			if ( gridMapEntry.Key.Placement != gridMapEntry.Value.GridPlacement )
 			{
 				Log.Error( $"Grid map entry {gridMapEntry.Value} at {gridMapEntry.Key.Position} has a different placement than the node link" );
 			}
-			
+
 		}
 
 		var worldItems = Scene.GetAllComponents<WorldItem>().Where( x => x.WorldLayerObject.Layer == Layer ).ToList();
@@ -186,10 +186,10 @@ public sealed partial class World
 
 			// if ( worldItem.WorldLayerObject.World
 		}
-		
+
 		Log.Info( "If you didn't see any errors just now, you're good." );
 	}*/
-	
+
 	/*[ConCmd( "clover_world_validate_node_links")]
 	public static void ValidateNodeLinksCmd()
 	{
@@ -198,5 +198,9 @@ public sealed partial class World
 			world.ValidateNodeLinks();
 		}
 	}*/
-	
+
+	public Direction Get4Direction( Rotation nodeWorldRotation )
+	{
+		return Get4Direction( nodeWorldRotation.Yaw() );
+	}
 }

@@ -28,12 +28,14 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 
 	protected override void OnStart()
 	{
-		Bootstrap();
+		_ = Bootstrap();
 	}
 
 	private async Task Bootstrap()
 	{
 		if ( IsProxy ) return;
+
+		Log.Info( "GameManager is booting up" );
 
 		await WorldManager.Instance.LoadWorld( WorldManager.Instance.DefaultWorldData );
 
@@ -41,6 +43,8 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 		{
 			OnConnected( Connection.Local );
 		}*/
+
+		Log.Info( "GameManager has booted up" );
 	}
 
 	public static JsonSerializerOptions JsonOptions = new()
@@ -50,8 +54,6 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 		Converters = { new JsonStringEnumConverter() },
 		DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 	};
-
-	// public string SaveProfile = "default";
 
 	private TimeSince _lastSave;
 
@@ -96,7 +98,7 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 		}
 	}
 
-	private List<Connection> _spawnQueue = new();
+	private readonly List<Connection> _spawnQueue = new();
 
 	public void OnConnected( Connection channel )
 	{

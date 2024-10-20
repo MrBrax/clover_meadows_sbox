@@ -6,6 +6,7 @@ using Light = Sandbox.Light;
 
 namespace Clover.Vehicles;
 
+[Category( "Clover/Vehicles" )]
 public class BaseVehicle : Component, IInteract
 {
 	[RequireComponent] public CharacterController CharacterController { get; set; }

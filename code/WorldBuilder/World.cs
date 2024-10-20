@@ -10,27 +10,6 @@ namespace Clover;
 [Icon( "world" )]
 public sealed partial class World : Component
 {
-	[Flags]
-	public enum ItemPlacement
-	{
-		[Icon( "wallpaper" ), Obsolete] Wall = 1 << 0,
-
-		[Icon( "inventory" ), Obsolete] OnTop = 1 << 1,
-
-		[Icon( "waves" ), Obsolete] Floor = 1 << 2,
-
-		[Description( "Items dug into the ground" )]
-		Underground = 1 << 3,
-
-
-		[Icon( "dashboard" ), Description( "Special case for decals" )]
-		FloorDecal = 1 << 4,
-
-		[Obsolete] Rug = 1 << 5,
-
-		World = 1 << 6,
-	}
-
 	public enum ItemPlacementType
 	{
 		Placed = 1,
@@ -78,55 +57,8 @@ public sealed partial class World : Component
 
 	[Sync] private Dictionary<Vector2Int, float> TileHeights { get; set; } = new();
 
-	public record struct NodeLinkMapKey( Vector2Int Position, ItemPlacement Placement )
-	{
-		public Vector2Int Position = Position;
-		public ItemPlacement Placement = Placement;
-	}
-
-	/*/// <summary>
-	///  This is now the main grid map for all items in the world. Node links appear multiple times in this map if they occupy multiple grid positions.
-	///  Somehow, the record struct works as a non-reference type, so it can be used like a search query. Anyone know why?
-	/// </summary>
-	[Obsolete]
-	private readonly Dictionary<NodeLinkMapKey, WorldNodeLink> _nodeLinkGridMap = new();*/
-
 	public HashSet<WorldNodeLink> Items { get; set; } = new();
 
-
-	/*[Obsolete]
-	private void AddNodeLinkToGridMap( WorldNodeLink nodeLink )
-	{
-		foreach ( var pos in nodeLink.GetGridPositions( true ) )
-		{
-			if ( _nodeLinkGridMap.ContainsKey(
-				    new NodeLinkMapKey { Position = pos, Placement = nodeLink.GridPlacement } ) )
-			{
-				throw new Exception( $"Node link already exists at {pos} with placement {nodeLink.GridPlacement}" );
-			}
-
-			_nodeLinkGridMap[new NodeLinkMapKey { Position = pos, Placement = nodeLink.GridPlacement }] = nodeLink;
-		}
-	}*/
-
-	/*[Obsolete]
-	private void RemoveNodeLinkFromGridMap( WorldNodeLink nodeLink )
-	{
-		foreach ( var entry in _nodeLinkGridMap.Where( x => x.Value == nodeLink ).ToList() )
-		{
-			_nodeLinkGridMap.Remove( entry.Key );
-		}
-	}*/
-
-	/*[Obsolete]
-	private void AddNodeLinkGridMapEntry( Vector2Int position, ItemPlacement placement, WorldNodeLink nodeLink )
-	{
-		/*if ( _nodeLinkGridMap.ContainsKey( new NodeLinkMapKey { Position = position, Placement = placement } ) )
-		{
-			throw new Exception( $"Node link already exists at {position} with placement {placement}" );
-		}#1#
-		_nodeLinkGridMap[new NodeLinkMapKey { Position = position, Placement = placement }] = nodeLink;
-	}*/
 
 	[Sync] public int Layer { get; set; }
 
@@ -204,49 +136,6 @@ public sealed partial class World : Component
 	public bool IsOutsideGrid( Vector2Int position )
 	{
 		return position.x < 0 || position.y < 0 || position.x >= Data.Width || position.y >= Data.Height;
-	}
-
-	/// <summary>
-	///  Checks if an item can be placed at the specified position and rotation.
-	///  It will check if the position is outside the grid, if there are any items at the position, and if there are any items nearby that would block the placement.
-	///  An item can be larger than 1x1, in which case it will check all positions that the item would occupy.
-	/// </summary>
-	/// <param name="positions"></param>
-	/// <param name="placement"></param>
-	/// <returns></returns>
-	/// <exception cref="Exception"></exception>
-	public bool CanPlaceItem( List<Vector2Int> positions, ItemPlacement placement )
-	{
-		if ( positions.Any( IsOutsideGrid ) )
-		{
-			Log.Warning( $"One or more positions are outside the grid" );
-			return false;
-		}
-
-		if ( placement != ItemPlacement.FloorDecal && CheckPlayerObstruction( positions ) )
-		{
-			Log.Warning( $"Player obstruction" );
-			return false;
-		}
-
-		// check any nearby items
-		foreach ( var pos in positions )
-		{
-			if ( IsBlockedGridPosition( pos ) )
-			{
-				Log.Warning( $"Found blocked grid position at {pos}" );
-				return false;
-			}
-
-			/*if ( _nodeLinkGridMap.TryGetValue( new NodeLinkMapKey { Position = pos, Placement = placement },
-				    out var nodeLink ) )
-			{
-				Log.Warning( $"Found item at {pos} with placement {placement} in grid map, but not in items" );
-				return false;
-			}*/
-		}
-
-		return true;
 	}
 
 	public bool CheckGridPositionEligibility( Vector2Int position, out Vector3 worldPosition )
@@ -332,211 +221,10 @@ public sealed partial class World : Component
 		return true;
 	}
 
-
-	/*private void UpdateTransform( WorldNodeLink nodeLink )
-	{
-		var position = nodeLink.GridPosition;
-		var placement = nodeLink.GridPlacement;
-
-		var newPosition = ItemGridToWorld( position );
-		var newRotation = GetRotation( nodeLink.GridRotation );
-
-		var offset = Vector3.Zero;
-
-		var itemData = nodeLink.ItemData;
-		if ( itemData != null )
-		{
-			var itemWidth = itemData.Width - 1;
-			var itemHeight = itemData.Height - 1;
-
-			if ( nodeLink.IsDroppedItem )
-			{
-				itemWidth = 0;
-				itemHeight = 0;
-				Log.Info( $"Forcing item size to 1x1 for {nodeLink.GetName()} - dropped item" );
-			}
-
-			// "rotate" the offset based on the item's rotation
-			if ( nodeLink.GridRotation == ItemRotation.North )
-			{
-				offset = new Vector3( itemWidth * GridSizeCenter, itemHeight * GridSizeCenter, 0 );
-			}
-			else if ( nodeLink.GridRotation == ItemRotation.East )
-			{
-				offset = new Vector3( itemHeight * GridSizeCenter, itemWidth * GridSizeCenter, 0 );
-			}
-			else if ( nodeLink.GridRotation == ItemRotation.South )
-			{
-				offset = new Vector3( -itemWidth * GridSizeCenter, -itemHeight * GridSizeCenter, 0 );
-			}
-			else if ( nodeLink.GridRotation == ItemRotation.West )
-			{
-				offset = new Vector3( -itemHeight * GridSizeCenter, -itemWidth * GridSizeCenter, 0 );
-			}
-		}
-		else
-		{
-			Log.Warning( $"No item data for {nodeLink.GetName()}" );
-		}
-
-		if ( placement == ItemPlacement.Underground )
-		{
-			newPosition = new Vector3( newPosition.x, newPosition.y, -50 );
-		}
-		else if ( placement == ItemPlacement.OnTop )
-		{
-			var floorNodeLink = GetItem( position, ItemPlacement.Floor );
-			if ( floorNodeLink == null )
-			{
-				Log.Warning( $"No floor item at {position}" );
-				WorldPosition = newPosition;
-				return;
-			}
-
-			var onTopNode = floorNodeLink.GetPlaceableNodeAtGridPosition( position );
-			if ( onTopNode == null )
-			{
-				Log.Warning( $"No on top node at {position}" );
-				WorldPosition = newPosition;
-				return;
-			}
-
-			onTopNode.PlacedNodeLink = nodeLink;
-			nodeLink.PlacedOn = onTopNode;
-
-			Log.Info( $"Updating transform of {nodeLink.GetName()} to be on top of {onTopNode}" );
-
-			newPosition = onTopNode.WorldPosition;
-		}
-
-		newPosition += offset;
-
-		nodeLink.Node.WorldPosition = newPosition;
-		nodeLink.Node.WorldRotation = newRotation;
-
-		// Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
-	}*/
-
-	/*public (Vector3 position, Rotation rotation) GetTransform( Vector2Int gridPosition, ItemRotation gridRotation, ItemPlacement placement, ItemData itemData, bool isDropped = false )
-	{
-		var position = gridPosition;
-
-		var newPosition = ItemGridToWorld( position );
-		var newRotation = GetRotation( gridRotation );
-
-		var offset = Vector3.Zero;
-
-		if ( itemData != null )
-		{
-			var itemWidth = itemData.Width - 1;
-			var itemHeight = itemData.Height - 1;
-
-			if ( isDropped )
-			{
-				itemWidth = 0;
-				itemHeight = 0;
-				Log.Info( $"Forcing item size to 1x1 - dropped item" );
-			}
-
-			// "rotate" the offset based on the item's rotation
-			if ( gridRotation == ItemRotation.North )
-			{
-				offset = new Vector3( itemWidth * GridSizeCenter, itemHeight * GridSizeCenter, 0 );
-			}
-			else if ( gridRotation == ItemRotation.East )
-			{
-				offset = new Vector3( itemHeight * GridSizeCenter, itemWidth * GridSizeCenter, 0 );
-			}
-			else if ( gridRotation == ItemRotation.South )
-			{
-				offset = new Vector3( -itemWidth * GridSizeCenter, -itemHeight * GridSizeCenter, 0 );
-			}
-			else if ( gridRotation == ItemRotation.West )
-			{
-				offset = new Vector3( -itemHeight * GridSizeCenter, -itemWidth * GridSizeCenter, 0 );
-			}
-		}
-		else
-		{
-			Log.Warning( $"No item data" );
-		}
-
-		if ( placement == ItemPlacement.Underground )
-		{
-			newPosition = new Vector3( newPosition.x, newPosition.y, -50 );
-		}
-		else if ( placement == ItemPlacement.OnTop )
-		{
-			var floorNodeLink = GetItem( position, ItemPlacement.Floor );
-			if ( floorNodeLink == null )
-			{
-				Log.Warning( $"No floor item at {position}" );
-				WorldPosition = newPosition;
-				return (newPosition, newRotation);
-			}
-
-			var onTopNode = floorNodeLink.GetPlaceableNodeAtGridPosition( position );
-			if ( onTopNode == null )
-			{
-				Log.Warning( $"No on top node at {position}" );
-				WorldPosition = newPosition;
-				return (newPosition, newRotation);
-			}
-
-			// onTopNode.PlacedNodeLink = nodeLink;
-			// nodeLink.PlacedOn = onTopNode;
-
-			Log.Info( $"Updating transform to be on top of {onTopNode}" );
-
-			newPosition = onTopNode.WorldPosition;
-		}
-
-		newPosition += offset;
-
-		// nodeLink.Node.WorldPosition = newPosition;
-		// nodeLink.Node.WorldRotation = newRotation;
-
-		return (newPosition, newRotation);
-
-		// Log.Info( $"Updated transform of {nodeLink.GetName()} to {newPosition} with rotation {newRotation}" );
-	}*/
-
-	/*/// <summary>
-	/// Removes an item from the world at the specified position and placement.
-	/// </summary>
-	/// <param name="position">The position of the item to remove.</param>
-	/// <param name="placement">The placement of the item to remove.</param>
-	/// <remarks>
-	/// Do NOT remove nodes directly from the world, use this method instead.
-	/// </remarks>
-	[Obsolete]
-	public void RemoveItem( Vector2Int position, ItemPlacement placement )
-	{
-		var nodeLink = GetItem( position, placement );
-
-		if ( nodeLink == null )
-		{
-			Log.Warning( $"No item at {position} with placement {placement}" );
-			return;
-		}
-
-		nodeLink.DestroyNode();
-
-		RemoveNodeLinkFromGridMap( nodeLink );
-
-		if ( nodeLink.PlacedOn != null )
-		{
-			nodeLink.PlacedOn.PlacedNodeLink = null;
-		}
-
-		OnItemRemoved?.Invoke( nodeLink );
-	}*/
-
-	/// <inheritdoc cref="RemoveItem(Vector2Int,ItemPlacement)"/>
 	public void RemoveItem( GameObject node )
 	{
 		// RemoveItem( item.GridPosition, item.Placement );
-		var nodeLink = GetItem( node );
+		var nodeLink = GetNodeLink( node );
 		if ( nodeLink == null )
 		{
 			throw new Exception( $"Failed to find node link for {node}" );
@@ -551,7 +239,6 @@ public sealed partial class World : Component
 		OnItemRemoved?.Invoke( nodeLink );
 	}
 
-	/// <inheritdoc cref="RemoveItem(Vector2Int,ItemPlacement)"/>
 	public void RemoveItem( WorldNodeLink nodeLink )
 	{
 		RemoveItem( nodeLink.Node );
@@ -564,6 +251,8 @@ public sealed partial class World : Component
 		{
 			layerObject.SetLayer( Layer );
 		}
+
+		Scene.NavMesh.Generate( Scene.PhysicsWorld );
 	}
 
 	public WorldEntrance GetEntrance( string entranceId )
@@ -657,58 +346,5 @@ public sealed partial class World : Component
 	{
 		// return _nodeLinkGridMap.ContainsValue( node );
 		return Items.Contains( node );
-	}
-
-	public void NodeLinkBenchmark()
-	{
-		var sw = new Stopwatch();
-		sw.Start();
-
-		var pos = new Vector2Int( 47, 6 );
-
-		for ( var i = 0; i < 10000; i++ )
-		{
-			var nodeLink = GetItems( pos ).FirstOrDefault();
-		}
-
-		sw.Stop();
-		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in GetItems" );
-
-
-		/*sw.Restart();
-
-		for ( var i = 0; i < 10000; i++ )
-		{
-			var nodeLink = _nodeLinkMap.FirstOrDefault( x => x.Value.GridPosition == pos );
-		}
-
-		sw.Stop();
-		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinkMap" );
-
-		sw.Restart();
-
-		for ( var i = 0; i < 10000; i++ )
-		{
-			var nodeLink = _nodeLinks.FirstOrDefault( x => x.GridPosition == pos );
-		}
-
-		sw.Stop();
-		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinks" );*/
-
-		sw.Restart();
-
-		/*for ( var i = 0; i < 10000; i++ )
-		{
-			var nodeLink = _nodeLinkGridMap.FirstOrDefault( x => x.Key.Position == pos );
-		}*/
-
-		sw.Stop();
-		Log.Info( $"Took {sw.ElapsedMilliseconds}ms to find node link in _nodeLinkGridMap" );
-	}
-
-	[ConCmd( "world_node_link_benchmark" )]
-	public static void CmdNodeLinkBenchmark()
-	{
-		WorldManager.Instance.ActiveWorld.NodeLinkBenchmark();
 	}
 }

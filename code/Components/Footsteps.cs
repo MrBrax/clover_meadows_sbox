@@ -2,11 +2,12 @@
 
 namespace Clover.Components;
 
+[Title( "Footsteps" )]
+[Category( "Clover/Components" )]
 public class Footsteps : Component
 {
-	
 	[Property] SkinnedModelRenderer Source { get; set; }
-	
+
 	protected override void OnEnabled()
 	{
 		if ( !Source.IsValid() )
@@ -29,7 +30,7 @@ public class Footsteps : Component
 	{
 		if ( timeSinceStep < 0.2f )
 			return;
-		
+
 		// Log.Info( "Footstep event" );
 
 		var tr = Scene.Trace
@@ -51,10 +52,9 @@ public class Footsteps : Component
 		var handle = Sound.Play( sound, tr.HitPosition + tr.Normal * 5 );
 		handle.TargetMixer = Mixer.FindMixerByName( "Footsteps" );
 		handle.Volume *= e.Volume * 5f;
-		
+
 		Scene.RunEvent<IFootstepEvent>( x => x.OnFootstepEvent( e ) );
 	}
-	
 }
 
 public interface IFootstepEvent

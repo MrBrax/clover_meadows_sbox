@@ -1,0 +1,17 @@
+{
+  "UI": false,
+  "Volume": "0.05",
+  "Pitch": "1",
+  "Decibels": 70,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "items/furniture/electronics/clock_wall/670889__knufds__lux-kitchen-timer.vsnd"
+  ],
+  "Occlusion": true,
+  "AirAbsorption": true,
+  "Transmission": true,
+  "OcclusionRadius": 64,
+  "DistanceAttenuation": true,
+  "__references": [],
+  "__version": 0
+}

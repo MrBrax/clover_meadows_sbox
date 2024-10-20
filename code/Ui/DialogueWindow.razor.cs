@@ -1,4 +1,6 @@
 ﻿using System;
+using Clover.Npc;
+using Clover.Player;
 using Sandbox.UI;
 
 namespace Clover;
@@ -7,13 +9,13 @@ public partial class DialogueWindow
 {
 	[Property] public Dialogue Dialogue { get; set; }
 
-	[Property]
-	public Dictionary<string, object> Data { get; set; } =
-		new() { { "test", 123 }, { "money", 100 }, { "price", 200 }, };
+	[Property] public Dictionary<string, object> Data { get; set; } = new();
+
+	[Property] public Dictionary<string, Action> Actions { get; set; } = new();
 
 	[Property, ReadOnly] public List<Dialogue.DialogueNode> CurrentNodeList { get; set; }
 
-	[Property, ReadOnly] public Dialogue.DialogueChoice CurrentChoice { get; set; }
+	// [Property, ReadOnly] public Dialogue.DialogueChoice CurrentChoice { get; set; }
 	[Property, ReadOnly] public List<GameObject> CurrentTargets { get; set; } = new();
 
 	public int CurrentNodeIndex;
@@ -34,6 +36,8 @@ public partial class DialogueWindow
 	private TimeSince _lastLetter;
 	// private bool _skipped;
 
+	public Action OnDialogueEnd { get; set; }
+
 
 	protected override void OnStart()
 	{
@@ -46,7 +50,7 @@ public partial class DialogueWindow
 		CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
 		Read();*/
 
-		LoadDialogue( ResourceLibrary.GetAll<Dialogue>().First() );
+		// LoadDialogue( ResourceLibrary.GetAll<Dialogue>().First() );
 
 		Panel.ButtonInput = PanelInputType.UI;
 	}
@@ -56,11 +60,12 @@ public partial class DialogueWindow
 		Dialogue = dialogue;
 		CurrentNodeList = Dialogue.Nodes;
 		CurrentNodeIndex = 0;
-		CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
+		CurrentNode.OnEnter?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 		Read();
 	}
 
 	[Pure]
+	[Icon( "description" )]
 	public int GetDataInt( string key )
 	{
 		if ( Data.TryGetValue( key, out var value ) )
@@ -75,6 +80,7 @@ public partial class DialogueWindow
 	}
 
 	[Pure]
+	[Icon( "description" )]
 	public string GetDataString( string key )
 	{
 		if ( Data.TryGetValue( key, out var value ) )
@@ -87,6 +93,7 @@ public partial class DialogueWindow
 	}
 
 	[Pure]
+	[Icon( "description" )]
 	public float GetDataFloat( string key )
 	{
 		if ( Data.TryGetValue( key, out var value ) )
@@ -99,6 +106,7 @@ public partial class DialogueWindow
 	}
 
 	[Pure]
+	[Icon( "description" )]
 	public bool GetDataBool( string key )
 	{
 		if ( Data.TryGetValue( key, out var value ) )
@@ -136,15 +144,45 @@ public partial class DialogueWindow
 		}
 	}
 
+	public BaseNpc GetTarget( int index )
+	{
+		return CurrentTargets.ElementAtOrDefault( index )?.Components.Get<BaseNpc>();
+	}
+
 	public void ClearTargets()
 	{
 		CurrentTargets.Clear();
+	}
+
+	public void SetAction( string key, Action action )
+	{
+		Actions[key] = action;
+	}
+
+	/// <summary>
+	///  Runs an action by key. Add actions with <see cref="SetAction"/>.
+	/// </summary>
+	/// <param name="key"></param>
+	[Property]
+	[Icon( "rocket_launch" )]
+	public void RunAction( string key )
+	{
+		if ( Actions.TryGetValue( key, out var action ) )
+		{
+			action();
+		}
+		else
+		{
+			Log.Warning( $"Could not find action {key}" );
+		}
 	}
 
 	/// <summary>
 	///  Searches for a node with the given id recursively and sets it as the current node.
 	/// </summary>
 	/// <param name="id"></param>
+	[Property]
+	[Icon( "search" )]
 	public void JumpToId( string id )
 	{
 		/*Dialogue.DialogueNode FindNode( List<Dialogue.DialogueNode> nodes )
@@ -207,18 +245,18 @@ public partial class DialogueWindow
 
 		if ( node != null )
 		{
-			CurrentNode?.OnExit?.Invoke( this, null, null, CurrentNode, null );
+			CurrentNode?.OnExit?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 			CurrentNodeList = list;
 			CurrentNodeIndex = list.IndexOf( node );
 			Log.Info( $"Jumped to node {node.Id}, index {CurrentNodeIndex}/{list.Count}" );
 			if ( CurrentNode != null )
 			{
-				CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
+				CurrentNode.OnEnter?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 				Read();
 			}
 			else
 			{
-				Log.Error( "No nodes found for choice" );
+				Log.Error( "JumpToId: No nodes found for choice" );
 			}
 		}
 		else
@@ -226,7 +264,7 @@ public partial class DialogueWindow
 			Log.Warning( $"Could not find node with id {id}" );
 		}
 	}
-	
+
 	public void Advance()
 	{
 		if ( IsOnLastNode && CurrentNode.Choices.Count == 0 )
@@ -235,14 +273,14 @@ public partial class DialogueWindow
 			End();
 			return;
 		}
-		
+
 		Log.Info( $"Choices: {CurrentNode.Choices.Count}, index: {CurrentNodeIndex}/{CurrentNodeList.Count}" );
-		
+
 		// go to the next node if there are no choices
-		
+
 		if ( CurrentNode.Choices.Count == 0 )
 		{
-			CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );
+			CurrentNode.OnExit?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 			CurrentNodeIndex++;
 			if ( CurrentNode != null )
 			{
@@ -253,18 +291,18 @@ public partial class DialogueWindow
 					Advance();
 					return;
 				}
-				
+
 				Read();
 			}
 			else
 			{
-				Log.Error( "No nodes found for choice" );
+				Log.Error( "Advance: No nodes found for choice" );
 			}
+
 			return;
 		}
-		
+
 		Log.Error( "Choices found" );
-		
 	}
 
 	private void Read()
@@ -280,8 +318,28 @@ public partial class DialogueWindow
 		}
 		else if ( CurrentTargets.Count > 0 )
 		{
+			// var speaker = CurrentTargets.ElementAtOrDefault( CurrentNode.Speaker );
+			// Name = speaker?.Name ?? "Unknown";
+
 			var speaker = CurrentTargets.ElementAtOrDefault( CurrentNode.Speaker );
-			Name = speaker?.Name ?? "Unknown";
+
+			if ( !speaker.IsValid() )
+			{
+				Log.Error( "Speaker is not valid" );
+				Name = "UNKNOWN";
+			}
+			else if ( speaker.Components.TryGet<BaseNpc>( out var npc ) )
+			{
+				Name = npc.Name;
+			}
+			else if ( speaker.Components.TryGet<PlayerCharacter>( out var player ) )
+			{
+				Name = player.PlayerName;
+			}
+			else
+			{
+				Name = speaker.Name;
+			}
 		}
 		else
 		{
@@ -378,9 +436,9 @@ public partial class DialogueWindow
 	private void OnClick( PanelEvent e )
 	{
 		// if ( _textIndex < 2 ) return;
-		
+
 		// Input.ReleaseActions();
-		
+
 		e.StopPropagation();
 
 		// If we're still typing, finish the text
@@ -400,15 +458,19 @@ public partial class DialogueWindow
 			End();
 			return;
 		}
-		
+
 		Advance();
-		
 	}
 
 	private void End()
 	{
 		Enabled = false;
-		CurrentTargets.Clear();
+		ClearTargets();
+		CurrentNodeList = null;
+		CurrentNodeIndex = 0;
+		// CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );
+		OnDialogueEnd?.Invoke();
+		OnDialogueEnd = null;
 	}
 
 	private void OnChoice( Dialogue.DialogueChoice choice )
@@ -418,30 +480,31 @@ public partial class DialogueWindow
 		if ( choice.OnSelect != null )
 		{
 			Log.Info( $"Running custom action for {choice.Label}" );
-			choice.OnSelect( this, null, null, CurrentNode, choice );
+			choice.OnSelect( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, choice );
 		}
 		else
 		{
 			if ( choice.Nodes.Count == 0 )
 			{
-				Log.Warning( "No nodes found for choice" );
+				Log.Error( "OnChoice1: No nodes found for choice" );
+				End();
 				return;
 			}
 
 
-			CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );
+			CurrentNode.OnExit?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 			CurrentNodeList = choice.Nodes;
 			CurrentNodeIndex = 0;
 			// CurrentChoice = choice;
 
 			if ( CurrentNode != null )
 			{
-				CurrentNode.OnEnter?.Invoke( this, null, null, CurrentNode, null );
+				CurrentNode.OnEnter?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
 				Read();
 			}
 			else
 			{
-				Log.Error( "No nodes found for choice" );
+				Log.Error( "OnChoice2: No nodes found for choice" );
 			}
 		}
 	}

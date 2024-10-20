@@ -5,31 +5,34 @@ using Clover.Carriable;
 using Clover.Components;
 using Clover.Data;
 using Clover.Inventory;
+using Clover.Npc;
 using Clover.Persistence;
 using Clover.Player.Clover;
 using Clover.Ui;
 
 namespace Clover.Player;
 
+[Title( "Player Character" )]
+[Icon( "face" )]
+[Category( "Clover/Player" )]
+[Description( "The player character component." )]
 public sealed partial class PlayerCharacter : Component
 {
+	private static PlayerCharacter _local;
+
 	[ActionGraphNode( "player.local" ), Title( "Local Player" ), Icon( "face" ), Category( "Clover" )]
-	public static PlayerCharacter Local =>
-		Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => !x.IsProxy );
+	public static PlayerCharacter Local
+	{
+		get
+		{
+			if ( _local.IsValid() ) return _local;
+			_local = Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => !x.IsProxy );
+			return _local;
+		}
+	}
 
 	[Sync] public string PlayerId { get; set; }
 	[Sync] public string PlayerName { get; set; }
-
-	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
-	[RequireComponent] public CharacterController CharacterController { get; set; }
-	[RequireComponent] public PlayerController PlayerController { get; set; }
-	[RequireComponent] public PlayerInteract PlayerInteract { get; set; }
-	[RequireComponent] public Inventory.Inventory Inventory { get; set; }
-	[RequireComponent] public Equips Equips { get; set; }
-	[RequireComponent] public CameraController CameraController { get; set; }
-	[RequireComponent] public CloverBalanceController CloverBalanceController { get; set; }
-	[RequireComponent] public VehicleRider VehicleRider { get; set; }
-	[RequireComponent] public ItemPlacer ItemPlacer { get; set; }
 
 	[Property] public GameObject Model { get; set; }
 
@@ -63,11 +66,12 @@ public sealed partial class PlayerCharacter : Component
 			Save();
 		};
 
-		Fader.Instance.FadeFromBlack();
+		_ = Fader.Instance.FadeFromBlack();
 
 		CameraMan.Instance.Targets.Add( GameObject );
 	}
 
+	// TODO: maybe stop using yaw
 	public void ModelLookAt( Vector3 position )
 	{
 		var dir = (position - WorldPosition).Normal;
@@ -192,12 +196,17 @@ public sealed partial class PlayerCharacter : Component
 
 	public bool ShouldMove()
 	{
-		// return !IsSitting && !InCutscene;
 		if ( IsSitting ) return false;
 		if ( InCutscene ) return false;
-		if ( Components.TryGet<VehicleRider>( out var rider ) && rider.Vehicle.IsValid() ) return false;
+		if ( VehicleRider.Vehicle.IsValid() ) return false;
+		if ( ItemPlacer.IsPlacing ) return false;
 		if ( Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) &&
 		     tool.ShouldDisableMovement() ) return false;
+		if ( PlayerInteract.InteractionTarget.IsValid() )
+		{
+			if ( PlayerInteract.InteractionTarget.GetComponent<BaseNpc>().IsValid() ) return false;
+		}
+
 		return true;
 	}
 
@@ -239,6 +248,14 @@ public sealed partial class PlayerCharacter : Component
 		Log.Info( "Ending cutscene" );
 		CutsceneTarget = null;
 		InCutscene = false;
+	}
+
+	public void SetVisible( bool state )
+	{
+		foreach ( var renderer in Model.GetComponentsInChildren<ModelRenderer>( true ) )
+		{
+			renderer.Enabled = state;
+		}
 	}
 
 	public static PlayerCharacter Get( Connection channel )

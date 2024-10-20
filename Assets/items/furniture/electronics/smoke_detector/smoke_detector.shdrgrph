@@ -1,0 +1,149 @@
+{
+  "Model": null,
+  "Description": "",
+  "BlendMode": "Opaque",
+  "nodes": [
+    {
+      "_class": "Result",
+      "DefaultOpacity": 1,
+      "DefaultRoughness": 1,
+      "DefaultMetalness": 0,
+      "DefaultAmbientOcclusion": 0,
+      "Identifier": "0",
+      "Position": "624,-132",
+      "Albedo": {
+        "Identifier": "8",
+        "Output": "Result"
+      },
+      "Emission": {
+        "Identifier": "8",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "Float4",
+      "Value": "0,0,0,1",
+      "Name": "",
+      "IsAttribute": false,
+      "UI": {
+        "Type": "Color"
+      },
+      "Identifier": "1",
+      "Position": "-300,-240"
+    },
+    {
+      "_class": "Float4",
+      "Value": "30,0.13949,0.13949,1",
+      "Name": "",
+      "IsAttribute": false,
+      "UI": {
+        "Type": "Color"
+      },
+      "Identifier": "2",
+      "Position": "-300,-84"
+    },
+    {
+      "_class": "Time",
+      "Identifier": "3",
+      "Position": "-420,144"
+    },
+    {
+      "_class": "Mod",
+      "DefaultA": 0,
+      "DefaultB": 1,
+      "Identifier": "4",
+      "Position": "-132,96",
+      "A": {
+        "Identifier": "3",
+        "Output": "Result"
+      },
+      "B": {
+        "Identifier": "5",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 10,
+      "Name": "",
+      "IsAttribute": false,
+      "UI": {},
+      "Identifier": "5",
+      "Position": "-420,228"
+    },
+    {
+      "_class": "Branch",
+      "Name": "",
+      "IsAttribute": true,
+      "Operator": "GreaterThan",
+      "Enabled": false,
+      "UI": {},
+      "Identifier": "6",
+      "Position": "96,96",
+      "True": {
+        "Identifier": "4",
+        "Output": "Result"
+      },
+      "False": {
+        "Identifier": "7",
+        "Output": "Result"
+      },
+      "A": {
+        "Identifier": "4",
+        "Output": "Result"
+      },
+      "B": {
+        "Identifier": "7",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 0.08163265,
+      "Name": "",
+      "IsAttribute": false,
+      "UI": {},
+      "Identifier": "7",
+      "Position": "-168,240"
+    },
+    {
+      "_class": "Blend",
+      "Fraction": 0,
+      "BlendMode": "Mix",
+      "Clamp": true,
+      "Identifier": "8",
+      "Position": "372,-108",
+      "A": {
+        "Identifier": "2",
+        "Output": "Result"
+      },
+      "B": {
+        "Identifier": "1",
+        "Output": "Result"
+      },
+      "C": {
+        "Identifier": "9",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "RemapValue",
+      "In": 0.5,
+      "InMin": 0,
+      "InMax": 0.18367347,
+      "OutMin": 0,
+      "OutMax": 1,
+      "Clamp": true,
+      "Identifier": "9",
+      "Position": "312,120",
+      "A": {
+        "Identifier": "6",
+        "Output": "Result"
+      }
+    }
+  ]
+}

@@ -6,18 +6,20 @@ using Clover.Ui;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
 public class Paintbrush : BaseCarriable
 {
 	[Property] public SoundEvent PaintSound { get; set; }
+	[Property] public SoundEvent TextureChangeSound { get; set; }
 
-	private string CurrentTexture { get; set; }
-	private string CurrentTexturePath => $"decals/{CurrentTexture}";
+	public string CurrentTexture { get; set; }
+	public string CurrentTexturePath => $"decals/{CurrentTexture}";
 
 	public override void OnUseDown()
 	{
 		var pos = Player.GetAimingGridPosition();
 
-		var item = Player.World.GetItem( pos, World.ItemPlacement.FloorDecal );
+		var item = Player.World.GetItems( pos ).FirstOrDefault();
 
 		if ( item != null && item.Node.Components.TryGet<FloorDecal>( out var floorDecal ) )
 		{
@@ -62,7 +64,7 @@ public class Paintbrush : BaseCarriable
 
 			try
 			{
-				node = Player.World.SpawnPlacedNode( newPItem, pos, playerRotation, World.ItemPlacement.FloorDecal );
+				node = Player.World.SpawnPlacedNode( newPItem, pos, playerRotation );
 			}
 			catch ( System.Exception e )
 			{
@@ -100,13 +102,19 @@ public class Paintbrush : BaseCarriable
 		CurrentTexture = FileSystem.Data.FindFile( "decals", "*.png" ).FirstOrDefault();
 	}
 
+	public List<string> GetTextures()
+	{
+		FileSystem.Data.CreateDirectory( "decals" );
+		return FileSystem.Data.FindFile( "decals", "*.png" ).ToList();
+	}
+
 	protected override void OnFixedUpdate()
 	{
 		if ( IsProxy ) return;
 
 		if ( Input.MouseWheel.y != 0 )
 		{
-			var textures = FileSystem.Data.FindFile( "decals", "*.png" ).ToList();
+			var textures = GetTextures();
 
 			if ( !textures.Any() ) return;
 
@@ -119,7 +127,9 @@ public class Paintbrush : BaseCarriable
 
 			CurrentTexture = textures[index];
 
-			Player.Notify( Notifications.NotificationType.Info, $"Selected texture: {CurrentTexture}" );
+			Sound.Play( TextureChangeSound );
+
+			// Player.Notify( Notifications.NotificationType.Info, $"Selected texture: {CurrentTexture}" );
 		}
 	}
 }

@@ -2,10 +2,14 @@
 using Clover.Interactable;
 using Clover.Inventory;
 using Clover.Items;
+using Clover.Npc;
 using Clover.Ui;
 
 namespace Clover.Player;
 
+[Title( "Player Interact" )]
+[Icon( "inventory" )]
+[Category( "Clover/Player" )]
 public class PlayerInteract : Component
 {
 	[RequireComponent] public PlayerCharacter Player { get; set; }
@@ -18,7 +22,9 @@ public class PlayerInteract : Component
 
 	[Property] public SoundEvent UseFailSound { get; set; }
 	[Property] public SoundEvent PickUpFailSound { get; set; }
-	
+
+	public GameObject InteractionTarget { get; set; }
+
 	protected override void OnAwake()
 	{
 		if ( IsProxy ) return;
@@ -43,6 +49,11 @@ public class PlayerInteract : Component
 		if ( Player.ItemPlacer.IsPlacing ) return false;
 		if ( Player.InCutscene ) return false;
 		if ( Player.ItemPlacer.IsPlacing ) return false;
+		if ( InteractionTarget.IsValid() )
+		{
+			if ( InteractionTarget.GetComponent<BaseNpc>().IsValid() ) return false;
+		}
+
 		return true;
 	}
 
@@ -181,7 +192,7 @@ public class PlayerInteract : Component
 		{
 			if ( collider.GameObject.Components.TryGet<IPickupable>( out var pickupable ) )
 			{
-				if ( collider.GameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+				/*if ( collider.GameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 				{
 					// only allow picking up items on the floor or on top of other items
 					if ( worldItem.NodeLink != null &&
@@ -196,7 +207,7 @@ public class PlayerInteract : Component
 					{
 						continue;
 					}
-				}
+				}*/
 
 				return pickupable;
 			}
@@ -216,17 +227,9 @@ public class PlayerInteract : Component
 				{
 					if ( checkGameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 					{
-						if ( worldItem.NodeLink != null &&
-						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
-						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop &&
-						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Wall
-						   )
-						{
-							continue;
-						}
+						return worldItem;
 					}
 
-					return worldItem;
 				}
 
 				checkGameObject = checkGameObject.Parent;
@@ -250,7 +253,7 @@ public class PlayerInteract : Component
 				// Log.Info( $" - Checking (parent?) {checkGameObject.Name}" );
 				if ( checkGameObject.Components.TryGet<IInteract>( out var interactable ) )
 				{
-					if ( checkGameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+					/*if ( checkGameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 					{
 						if ( worldItem.NodeLink != null &&
 						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
@@ -260,7 +263,7 @@ public class PlayerInteract : Component
 						{
 							continue;
 						}
-					}
+					}*/
 
 					return interactable;
 				}

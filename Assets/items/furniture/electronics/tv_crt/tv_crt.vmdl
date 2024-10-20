@@ -18,7 +18,7 @@
 								to = "items/furniture/electronics/tv_crt/tv_screen.vmat"
 							},
 							{
-								from = "crt.vmat"
+								from = "newgradient.vmat"
 								to = "materials/shared/color-atlas-gradient.vmat"
 							},
 						]
@@ -47,6 +47,7 @@
 							exception_list = 
 							[
 								"Cube",
+								"Cube_011",
 							]
 						}
 					},

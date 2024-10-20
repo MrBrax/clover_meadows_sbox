@@ -1,0 +1,73 @@
+{
+  "RootObject": {
+    "__guid": "decbeccf-cfc7-4e20-9ca1-194a034ed99e",
+    "Flags": 0,
+    "Name": "pellet_gun_carry",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.PelletGun",
+        "__guid": "0f128035-9b72-4811-9553-1a508c7e1da7",
+        "FireRate": 3,
+        "FireSound": "items/tools/pellet_gun/fire.sound",
+        "ItemData": "items/tools/pellet_gun/pellet_gun.tool",
+        "Model": {
+          "_type": "gameobject",
+          "go": "9f64f119-80be-46c5-a15b-04bf7055ae00"
+        },
+        "PelletGunFpsScene": {
+          "_type": "gameobject",
+          "prefab": "items/tools/pellet_gun/pellet_gun_fps.prefab"
+        },
+        "PelletScene": {
+          "_type": "gameobject",
+          "prefab": "objects/pellet/pellet.prefab"
+        },
+        "PelletSpeed": 128,
+        "UseTime": 1
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "9f64f119-80be-46c5-a15b-04bf7055ae00",
+        "Flags": 0,
+        "Name": "GameObject (1)",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "932c3478-f770-4880-b918-906bf86130c6",
+            "Flags": 0,
+            "Name": "pellet_gun",
+            "Position": "5.699982,-0.00001276855,1.501045",
+            "Rotation": "0,0,-0.7071067,0.7071068",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "1bb9bb6b-e456-40a5-b979-59aa6f7ad26a",
+                "BodyGroups": 18446744073709551615,
+                "Model": "items/tools/pellet_gun/pellet_gun.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

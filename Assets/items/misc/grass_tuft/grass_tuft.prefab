@@ -1,0 +1,62 @@
+{
+  "RootObject": {
+    "__guid": "3a3c9c9d-27c1-4c66-bef5-0c7ee9156133",
+    "Flags": 0,
+    "Name": "grass_tuft",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "196ecaa2-e2da-4a1e-bd4e-68f9be8c7afb",
+        "Center": "0,0,-4",
+        "IsTrigger": false,
+        "Scale": "16,16,8",
+        "Static": true
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "20f3baee-1e28-4431-80f1-9eb9b22e94e1",
+        "CanPickupSimple": false,
+        "ItemData": "items/misc/grass_tuft/grass_tuft.item",
+        "PlaceModeOffset": "0,0,0",
+        "Prefab": "items/misc/grass_tuft/grass_tuft.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "625f7265-d138-419e-81c5-1d75cfc32d51"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "937ac311-d0fa-493a-9963-a684090a29a8",
+        "Flags": 0,
+        "Name": "grass_tuft",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "71473da0-45f9-4d28-8d84-128586aaa830",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/misc/grass_tuft/grass_tuft.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

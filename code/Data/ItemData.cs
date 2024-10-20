@@ -2,6 +2,7 @@
 using Clover.Carriable;
 using Clover.Components;
 using Clover.Inventory;
+using Clover.Items;
 using Clover.Persistence;
 using Sandbox.Utility;
 
@@ -10,9 +11,22 @@ namespace Clover.Data;
 [GameResource( "Item", "item", "item", Icon = "weekend" )]
 [Category( "Clover/Items" )]
 [Icon( "weekend" )]
+// [JsonPolymorphic]
+// [JsonDerivedType( typeof(ItemData), "item" )]
+// [JsonDerivedType( typeof(ToolData), "tool" )]
 public class ItemData : GameResource
 {
-	[Property] public string Id { get; set; }
+	/// <summary>
+	///  Unique identifier for this item.
+	/// </summary>
+	[Property]
+	public string Id { get; set; }
+
+	[Button( "Generate ID" )]
+	public void GenerateId()
+	{
+		Id = $"{ResourceName}:{Crc64.FromString( ResourcePath )}";
+	}
 
 	[Property] public string Name { get; set; }
 
@@ -21,8 +35,10 @@ public class ItemData : GameResource
 	[Property, Group( "World" )] public int Width { get; set; } = 1;
 	[Property, Group( "World" )] public int Height { get; set; } = 1;
 
-	[Property, Group( "World" )] // default to floor and underground
-	public World.ItemPlacement Placements { get; set; } = World.ItemPlacement.Floor | World.ItemPlacement.Underground;
+	// [Property, Group( "World" )] // default to floor and underground
+	// public World.ItemPlacement Placements { get; set; } = World.ItemPlacement.Floor | World.ItemPlacement.Underground;
+
+	[Property, Group( "World" )] public bool CanBeBuried { get; set; } = true;
 
 	[Property, Group( "Inventory" )] public bool CanDrop { get; set; } = true;
 	[Property, Group( "Inventory" )] public bool CanPlace { get; set; } = true;
@@ -49,6 +65,8 @@ public class ItemData : GameResource
 	public bool HideInSpawnMenu { get; set; }
 
 	public Vector3 PlaceModeOffset { get; set; }
+
+	[Property, Group( "Shop" )] public int BaseBuyPrice { get; set; } = 0;
 
 
 	public static T GetById<T>( string id ) where T : ItemData
@@ -145,6 +163,11 @@ public class ItemData : GameResource
 		}
 	}
 
+	public int GetMaxBounds()
+	{
+		return Math.Max( Width, Height );
+	}
+
 	public bool IsSameAs( ItemData item )
 	{
 		return item != null && (item.ResourcePath == ResourcePath || item.GetIdentifier() == GetIdentifier());
@@ -195,15 +218,15 @@ public class ItemData : GameResource
 		var player = slot.InventoryContainer.Player;
 		if ( player != null )
 		{
-			if ( slot.GetItem().ItemData.Placements.HasFlag( World.ItemPlacement.Underground ) )
+			if ( slot.GetItem().ItemData.CanBeBuried )
 			{
 				var shovel = player.Equips.GetEquippedItem<Shovel>( Equips.EquipSlot.Tool );
 
 				if ( shovel != null )
 				{
-					var hole = player.World.GetItem( player.GetAimingGridPosition(), World.ItemPlacement.Floor );
+					var hole = player.World.GetNodeLink<Hole>( player.GetAimingGridPosition() );
 
-					if ( hole != null && hole.ItemId == "hole" )
+					if ( hole != null )
 					{
 						yield return new ItemAction
 						{
@@ -241,7 +264,7 @@ public class ItemData : GameResource
 	public static ItemData Get( string id )
 	{
 		var itemData = ResourceLibrary.GetAll<ItemData>()
-			.FirstOrDefault( x => x.ResourceName == id || x.ResourcePath == id || x.Id == id );
+			.FirstOrDefault( x => x.Id == id || x.ResourceName == id || x.ResourcePath == id );
 		if ( itemData == null )
 		{
 			Log.Error( $"Item data not found: {id}" );
@@ -255,19 +278,24 @@ public class ItemData : GameResource
 		return new PersistentItem { ItemId = GetIdentifier(), };
 	}
 
-	protected override void PostLoad()
+	/*protected override void PostLoad()
 	{
 		base.PostLoad();
 		if ( string.IsNullOrEmpty( Id ) )
 		{
 			// create id based on path
 			// TODO: is this a good idea?
-			Id = $"{ResourceName}:{Crc64.FromString( ResourcePath )}";
+			Log.Warning( $"Item {ResourcePath} has no id, generating one" );
+			// Id = $"{ResourceName}:{Crc64.FromString( ResourcePath )}";
 		}
-	}
+	}*/
 
 	public string GetIdentifier()
 	{
 		return Id;
+	}
+
+	public virtual void OnPersistentItemInitialize( PersistentItem persistentItem )
+	{
 	}
 }

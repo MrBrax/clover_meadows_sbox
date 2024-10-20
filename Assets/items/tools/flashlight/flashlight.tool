@@ -10,7 +10,7 @@
   "Height": 1,
   "Placements": "Floor, Underground",
   "CanDrop": true,
-  "CanPlace": false,
+  "CanPlace": true,
   "DisablePickup": false,
   "IsStackable": false,
   "StackSize": 1,
@@ -19,11 +19,19 @@
     "_type": "gameobject",
     "prefab": "items/tools/flashlight/flashlight_dropped.prefab"
   },
-  "PlaceScene": null,
-  "DefaultTypeScene": null,
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/tools/flashlight/flashlight_dropped.prefab"
+  },
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/tools/flashlight/flashlight_dropped.prefab"
+  },
   "Icon": null,
   "ObjectData": null,
   "HideInSpawnMenu": false,
+  "PlaceModeOffset": "0,0,0",
+  "BaseBuyPrice": 0,
   "__references": [],
   "__version": 0
 }

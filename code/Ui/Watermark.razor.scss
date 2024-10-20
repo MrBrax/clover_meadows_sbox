@@ -1,29 +1,41 @@
-Watermark
-{
-	position: absolute;
-	
-	right: 50px;
-	bottom: 50px;
-	
-	color: white;
-	
-	font-family: Itim;
-	font-size: 30px;
-	
-	// text-stroke: 5px #656565;
-	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-	
-	.watermark-container {
-		flex-direction: column;
-		align-items: flex-end;
-		
-		.date {
-			font-size: 25px;
-		}
-		
-		.link {
-			font-size: 24px;
-		}
-	}
-	
+Watermark {
+    position: absolute;
+
+    right: 50px;
+    bottom: 50px;
+
+    color: white;
+
+
+    // text-stroke: 5px #656565;
+
+    .watermark-container {
+        flex-direction: column;
+        align-items: flex-end;
+
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        font-family: Itim;
+
+        color: white;
+
+        font-size: 30px;
+
+        transform: translateY(200%);
+        transition: transform 0.5s ease;
+
+        &.active {
+            transform: translateY(0%);
+        }
+
+        .date {
+            font-size: 25px;
+            color: #b2ddf4;
+        }
+
+        .link {
+            font-size: 24px;
+            color: #cfc79d;
+        }
+    }
+
 }

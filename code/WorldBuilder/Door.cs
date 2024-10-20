@@ -5,6 +5,7 @@ using Clover.Player;
 
 namespace Clover.WorldBuilder;
 
+[Category( "Clover/World" )]
 public class Door : Component, IInteract
 {
 	[Property] public GameObject DoorModel { get; set; }

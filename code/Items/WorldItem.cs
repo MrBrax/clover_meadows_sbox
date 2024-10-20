@@ -15,14 +15,14 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
-	public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World?.GetItem( GameObject ) : null;
+	public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World?.GetNodeLink( GameObject ) : null;
 
 	public Vector2Int GridPosition => NodeLink?.GridPosition ?? Vector2Int.Zero;
 
 	public Vector2Int Size =>
 		!Scene.IsEditor ? NodeLink.Size : new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
 
-	public World.ItemPlacement GridPlacement => !Scene.IsEditor ? NodeLink.GridPlacement : World.ItemPlacement.Floor;
+	// public World.ItemPlacement GridPlacement => !Scene.IsEditor ? NodeLink.GridPlacement : World.ItemPlacement.Floor;
 	public World.ItemPlacementType GridPlacementType => NodeLink?.PlacementType ?? World.ItemPlacementType.Placed;
 	public World.ItemRotation GridRotation => NodeLink?.GridRotation ?? World.ItemRotation.North;
 
@@ -86,7 +86,6 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 	{
 		base.DrawGizmos();
 
-		return;
 		if ( !Gizmo.Settings.GizmosEnabled ) return;
 
 		if ( Gizmo.Camera == null ) return;
@@ -172,10 +171,10 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 
 	public bool CanPickup( PlayerCharacter player )
 	{
-		return !HasItemOnTop() && CanPickupSimple;
+		return CanPickupSimple;
 	}
 
-	[Obsolete]
+	/*[Obsolete]
 	public bool HasItemOnTop()
 	{
 		if ( NodeLink == null ) return false;
@@ -194,7 +193,7 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 		}
 
 		return false;
-	}
+	}*/
 
 	/// <summary>
 	///  Called when the player picks up this item, mostly so you don't have to add IPickupable to every item.

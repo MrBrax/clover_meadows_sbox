@@ -1,0 +1,11 @@
+{
+  "Name": "Stork items",
+  "Description": "A collection of items.",
+  "Items": [
+    "items/misc/soccerball/soccerball.item"
+  ],
+  "AlwaysAvailable": true,
+  "AvailablePeriods": [],
+  "__references": [],
+  "__version": 0
+}

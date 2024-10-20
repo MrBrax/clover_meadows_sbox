@@ -208,7 +208,7 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 
 	public void Spread()
 	{
-		var nodeLink = WorldLayerObject.World.GetItem( GameObject );
+		/*var nodeLink = WorldLayerObject.World.GetItem( GameObject );
 		if ( nodeLink == null )
 		{
 			Log.Warning( "No node link found for plant" );
@@ -237,6 +237,6 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 			randomNeighbor,
 			World.ItemRotation.North,
 			World.ItemPlacement.Floor
-		);
+		);*/
 	}
 }

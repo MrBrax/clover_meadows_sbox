@@ -2,6 +2,7 @@
 
 namespace Clover.WorldBuilder.Weather;
 
+[Category( "Clover/Weather" )]
 public class Wind : WeatherBase
 {
 	[Property] public SoundPointComponent Sound { get; set; }

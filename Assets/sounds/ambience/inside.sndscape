@@ -1,6 +1,11 @@
 {
   "MasterVolume": "1",
-  "LoopedSounds": [],
+  "LoopedSounds": [
+    {
+      "SoundFile": "sounds/ambience/indoor.vsnd",
+      "Volume": "1"
+    }
+  ],
   "StingSounds": [],
   "__references": [],
   "__version": 0

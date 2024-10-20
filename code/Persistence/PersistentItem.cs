@@ -12,16 +12,17 @@ namespace Clover.Persistence;
 public class PersistentItem
 {
 	[Property] public string ItemId { get; set; }
-	
+
 	[Property] public string PackageIdent { get; set; }
-	
+
 	[JsonIgnore] public bool IsPackage => !string.IsNullOrEmpty( PackageIdent );
 
 	/// <summary>
 	///  The backbone of the persistence system. This is where you can store any data you want about an item.
 	///  Don't access this directly, use <see cref="GetArbitraryData{T}"/> and <see cref="SetArbitraryData"/> instead.
 	/// </summary>
-	[Property] public Dictionary<string, object> ArbitraryData { get; set; } = new();
+	[Property]
+	public Dictionary<string, object> ArbitraryData { get; set; } = new();
 
 	[JsonIgnore]
 	public ItemData ItemData
@@ -31,17 +32,12 @@ public class PersistentItem
 
 	[JsonIgnore] public virtual bool IsStackable => ItemData.IsStackable;
 	[JsonIgnore] public virtual int StackSize => ItemData.StackSize;
-	
-	public PersistentItem()
+
+	public void Initialize()
 	{
-	
+		ItemData?.OnPersistentItemInitialize( this );
 	}
-	
-	public PersistentItem( string itemId )
-	{
-		ItemId = itemId;
-	}
-	
+
 	/// <summary>
 	///  Get arbitrary data from this item. If the key doesn't exist, it will return the default value.
 	///  Use <see cref="SetArbitraryData"/> to store arbitrary data.
@@ -71,14 +67,14 @@ public class PersistentItem
 				value = default;
 				return false;
 			}
-			
+
 			// i don't even know why this started happening but apparently it sometimes doesn't need to deserialize
 			if ( obj is T t )
 			{
 				value = t;
 				return true;
 			}
-			
+
 			if ( obj is not JsonElement jsonElement )
 			{
 				Log.Error( $"Arbitrary data {key} on {this} is not a JsonElement: {obj} ({obj.GetType()})" );
@@ -149,7 +145,7 @@ public class PersistentItem
 		return JsonSerializer.Deserialize<PersistentItem>( JsonSerializer.Serialize( this, GameManager.JsonOptions ),
 			GameManager.JsonOptions );
 	}
-	
+
 	/*public GameObject Create()
 	{
 		var gameObject = new GameObject();
@@ -173,17 +169,17 @@ public class PersistentItem
 		if ( !gameObject.IsValid() ) throw new Exception( "Item is null" );
 
 		var persistentItem = new PersistentItem();
-		
+
 		if ( gameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
 			persistentItem.ItemId = worldItem.ItemData.GetIdentifier();
 		}
-		
+
 		if ( gameObject.Components.TryGet<BaseCarriable>( out var carriable ) )
 		{
 			persistentItem.ItemId ??= carriable.ItemData.GetIdentifier();
 		}
-		
+
 		if ( gameObject.Components.TryGet<WorldObject>( out var worldObject ) )
 		{
 			worldObject.OnObjectSaveAction?.Invoke( persistentItem );
@@ -193,7 +189,7 @@ public class PersistentItem
 		{
 			persistent.OnItemSave( persistentItem );
 		}
-		
+
 		if ( gameObject.Components.TryGet<IPersistent>( out var persistent2 ) )
 		{
 			persistent2.OnSave( persistentItem );
@@ -209,12 +205,18 @@ public class PersistentItem
 		return persistentItem;
 	}
 
-	public static PersistentItem Create( ItemData itemData )
+	public static PersistentItem Create( ItemData itemData, bool initialize = false )
 	{
-		return new PersistentItem
-		{
-			ItemId = itemData.GetIdentifier()
-		};
+		var item = new PersistentItem { ItemId = itemData.GetIdentifier() };
+
+		if ( initialize ) item.Initialize();
+
+		return item;
+	}
+
+	public static PersistentItem Create( string itemId, bool initialize = false )
+	{
+		return Create( ItemData.Get( itemId ), initialize );
 	}
 
 	/// <summary>
@@ -225,30 +227,28 @@ public class PersistentItem
 	public BaseCarriable SpawnCarriable()
 	{
 		if ( ItemData is not ToolData toolData ) throw new Exception( $"ItemData is not a ToolData for {ItemId}" );
-		
+
 		var carriable = toolData.SpawnCarriable();
-		
+
 		if ( carriable == null ) throw new Exception( $"Carriable is null for {ItemId}" );
-		
+
 		carriable.Durability = GetArbitraryData<int>( "Durability" );
-		
+
 		if ( carriable.GameObject.Components.TryGet<Persistent>( out var persistent ) )
 		{
 			persistent.OnItemLoad( this );
 		}
-		
+
 		if ( carriable.GameObject.Components.TryGet<IPersistent>( out var persistent2 ) )
 		{
 			persistent2.OnLoad( this );
 		}
-		
+
 		return carriable;
-		
 	}
 
 	public async Task<Package> GetPackage()
 	{
 		return await Package.Fetch( PackageIdent, false );
 	}
-	
 }

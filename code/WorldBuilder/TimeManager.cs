@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Immutable;
+using Clover.Objects;
 using Sandbox.Audio;
 
 namespace Clover.WorldBuilder;
 
+[Category( "Clover/World" )]
 public class TimeManager : Component, IWorldEvent
 {
 	public static TimeManager Instance =>
@@ -13,24 +15,25 @@ public class TimeManager : Component, IWorldEvent
 	// 	Game.ActiveScene.GetAllComponents<DirectionalLight>().FirstOrDefault( x => x.Tags.Has( "sun" ) );
 	[Property] public DirectionalLight Sun { get; set; }
 	[Property] public SkyBox2D SkyBox { get; set; }
-	
+
 	[Property] public Gradient SunlightGradient { get; set; }
 	[Property] public Gradient AmbientGradient { get; set; }
 
 	[ConVar( "clover_time_scale" )] public static int Speed { get; set; } = 1;
-	
+
 	[Property] public Curve SunPitchCurve { get; set; }
 	[Property] public Curve SunYawCurve { get; set; }
 
 	// public static DateTime Time => Speed != 1 ? DateTime.Now.AddSeconds( Sandbox.Time.Now * Speed ) : DateTime.Now;
-	
+
 	[Sync] public double GlobalTime { get; set; }
-	
-	public static DateTime Time => Instance.TimeOverride > -1 ? DateTime.Today.AddSeconds( Instance.TimeOverride ) : DateTime.FromOADate( Instance.GlobalTime );
-	
-	[Property, Range( -1, 86400 )]
-	public float TimeOverride { get; set; } = -1;
-	
+
+	public static DateTime Time => Instance.TimeOverride > -1
+		? DateTime.Today.AddSeconds( Instance.TimeOverride )
+		: DateTime.FromOADate( Instance.GlobalTime );
+
+	[Property, Range( -1, 86400 )] public float TimeOverride { get; set; } = -1;
+
 
 	private const float SecondsPerDay = 86400f;
 
@@ -46,25 +49,25 @@ public class TimeManager : Component, IWorldEvent
 
 	public static bool IsNight => Time.Hour is < 6 or > 18;
 	public static bool IsDay => !IsNight;
-	
+
 	public static int DayStartHour => 6;
 	public static int DayEndHour => 18;
 
 	protected override void OnStart()
 	{
 		OnNewHour += PlayChime;
-		
+
 		_lastHour = Time.Hour;
 
-		/*OnNewMinute += ( minute ) =>
+		OnNewMinute += ( minute ) =>
 		{
-			if ( GD.Randf() > 0.95f )
+			if ( Random.Shared.NextSingle() > 0.95f )
 			{
 				GiftCarrier.SpawnRandom();
 			}
-		};*/
+		};
 	}
-	
+
 	private void PlayChime( int hour )
 	{
 		if ( TimeOverride > -1 ) return;
@@ -121,7 +124,7 @@ public class TimeManager : Component, IWorldEvent
 			if ( GlobalTime == 0 ) _lastHour = DateTime.Now.Hour;
 			GlobalTime = DateTime.Now.ToOADate();
 		}
-		
+
 		if ( Sun.IsValid() )
 		{
 			Sun.WorldRotation = CalculateSunRotation( Sun );
@@ -174,27 +177,24 @@ public class TimeManager : Component, IWorldEvent
 	public Color CalculateSunLightColor()
 	{
 		// return GetComputedSkyColor();
-		
+
 		return SunlightGradient.Evaluate( DayFraction );
 	}
-	
+
 	public Color CalculateSunAmbientColor()
 	{
-		
 		return AmbientGradient.Evaluate( DayFraction );
-		
+
 		/*// daytime is *1, nighttime is *3. lerp between *1 and *3 based on time of day
-		
+
 		var baseAmbientColor = GetComputedSkyColor();
-		
+
 		var lerp = MathF.Sin( MathF.PI * DayFraction );
 		var color = Color.Lerp( baseAmbientColor * 1f, baseAmbientColor * 1f, lerp );
-		
-		return color.WithAlpha( 1f );*/
-		
 
+		return color.WithAlpha( 1f );*/
 	}
-	
+
 	public Color CalculateFogColor()
 	{
 		return AmbientGradient.Evaluate( DayFraction ).WithAlpha( 0.2f );
@@ -215,7 +215,7 @@ public class TimeManager : Component, IWorldEvent
 
 		// var pitch = MathX.Lerp( 15, 50, frac );
 		// var yaw = MathX.Lerp( 0, 180, frac );
-		
+
 		var pitch = SunPitchCurve.Evaluate( frac );
 		var yaw = SunYawCurve.Evaluate( frac );
 
@@ -224,9 +224,8 @@ public class TimeManager : Component, IWorldEvent
 
 		return rotation;
 	}
-	
-	[Property]
-	private Rotation _SunRotation => CalculateSunRotation( Sun );
+
+	[Property] private Rotation _SunRotation => CalculateSunRotation( Sun );
 
 	/// <summary>
 	///  A value between 0 and 1 used to calculate the sun's energy (0 at night, 1 at midday).
@@ -265,6 +264,7 @@ public class TimeManager : Component, IWorldEvent
 		{
 			Sun.Enabled = !world.Data.IsInside;
 		}
+
 		if ( SkyBox.IsValid() )
 		{
 			SkyBox.Enabled = !world.Data.IsInside;
@@ -276,7 +276,7 @@ public class TimeManager : Component, IWorldEvent
 		base.DrawGizmos();
 
 		if ( !Gizmo.IsSelected ) return;
-		
+
 		for ( var i = 0; i < 48; i++ )
 		{
 			var frac = i / 48f;

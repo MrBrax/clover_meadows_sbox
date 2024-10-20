@@ -4,6 +4,7 @@ using Clover.Persistence;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
 public class CarriedEdible : BaseCarriable
 {
 	[Property] public ItemData EdibleData { get; set; }
@@ -23,7 +24,7 @@ public class CarriedEdible : BaseCarriable
 	public override void OnSave( PersistentItem item )
 	{
 		base.OnSave( item );
-		item.SetArbitraryData( "EdibleData", EdibleData.Id );
+		item.SetArbitraryData( "EdibleData", EdibleData.GetIdentifier() );
 	}
 
 	public override void OnUnequip()

@@ -57,7 +57,7 @@ public class Television : Component, IInteract
 	}
 
 	[Broadcast]
-	public async void PlayVideo( string url )
+	public void PlayVideo( string url )
 	{
 		_videoPlayer.Play( FileSystem.Data, url );
 

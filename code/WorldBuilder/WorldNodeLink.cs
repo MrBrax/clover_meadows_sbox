@@ -16,14 +16,15 @@ public class WorldNodeLink : IValid
 	[JsonIgnore] public World World;
 	[JsonIgnore] public GameObject Node;
 
-	[Obsolete] public Vector2Int GridPosition;
+	public Vector2Int GridPosition => World.WorldToItemGrid( Node.WorldPosition );
 
-	[Obsolete] public World.ItemRotation GridRotation;
+	public World.ItemRotation GridRotation =>
+		World.GetItemRotationFromDirection( World.Get4Direction( Node.WorldRotation ) );
 
 	public Vector3 WorldPosition => Node.WorldPosition;
 	public Rotation WorldRotation => Node.WorldRotation;
 
-	public World.ItemPlacement GridPlacement;
+	// public World.ItemPlacement GridPlacement;
 	public World.ItemPlacementType PlacementType;
 
 	public Vector2Int Size;
@@ -35,25 +36,7 @@ public class WorldNodeLink : IValid
 
 	[Icon( "save" )] private PersistentItem Persistence { get; set; }
 
-	public ItemData ItemData
-	{
-		get
-		{
-			ItemData itemData;
-			try
-			{
-				itemData = ItemData.Get( ItemId );
-			}
-			catch ( Exception e )
-			{
-				Log.Error( $"Item data not found for {ItemId} on {this}" );
-				// throw;
-				return null;
-			}
-
-			return itemData;
-		}
-	}
+	public ItemData ItemData => ItemData.Get( ItemId );
 
 	public bool IsBeingPickedUp { get; set; }
 
@@ -186,7 +169,7 @@ public class WorldNodeLink : IValid
 			Rotation = GridRotation,
 			WPosition = WorldPosition.SnapToGrid( 1 ),
 			WAngles = WorldRotation.Angles().SnapToGrid( 1 ),
-			Placement = GridPlacement,
+			// Placement = GridPlacement,
 			PlacementType = PlacementType,
 			PrefabPath = PrefabPath,
 			ItemId = ItemId,
@@ -196,11 +179,6 @@ public class WorldNodeLink : IValid
 
 	public void RunSavePersistence()
 	{
-		foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndDescendants ) )
-		{
-			saveable.OnSave( this );
-		}
-
 		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			persistent.OnSave( Persistence );
@@ -214,11 +192,6 @@ public class WorldNodeLink : IValid
 
 	public void RunLoadPersistence()
 	{
-		foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndDescendants ) )
-		{
-			saveable.OnLoad( this );
-		}
-
 		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			persistent.OnLoad( Persistence );
@@ -236,11 +209,6 @@ public class WorldNodeLink : IValid
 		ItemId = persistentItem.ItemId;
 
 		Persistence = persistentItem.Item;
-
-		foreach ( var saveable in Node.Components.GetAll<ISaveData>( FindMode.EverythingInSelfAndAncestors ) )
-		{
-			saveable.OnLoad( this );
-		}
 
 		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndAncestors ) )
 		{

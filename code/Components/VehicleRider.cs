@@ -3,6 +3,11 @@ using Clover.Vehicles;
 
 namespace Clover.Components;
 
+/// <summary>
+///  Helper component for getting players/NPCs to ride vehicles.
+/// </summary>
+[Category( "Clover/Components" )]
+[Icon( "car" )]
 public class VehicleRider : Component
 {
 	public BaseVehicle Vehicle { get; set; }

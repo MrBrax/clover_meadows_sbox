@@ -19,12 +19,19 @@
     "_type": "gameobject",
     "prefab": "items/tools/fishing_rod/fishing_rod_dropped.prefab"
   },
-  "PlaceScene": null,
-  "DefaultTypeScene": null,
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/tools/fishing_rod/fishing_rod_dropped.prefab"
+  },
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/tools/fishing_rod/fishing_rod_dropped.prefab"
+  },
   "Icon": null,
   "ObjectData": null,
   "HideInSpawnMenu": false,
+  "PlaceModeOffset": "0,0,0",
+  "BaseBuyPrice": 0,
   "__references": [],
-  "IsValid": true,
   "__version": 0
 }

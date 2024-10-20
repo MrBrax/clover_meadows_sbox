@@ -4,6 +4,7 @@ using Clover.Player;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
 public sealed class WateringCan : BaseCarriable
 {
 	[Property] public ParticleConeEmitter WaterParticles { get; set; }
@@ -37,7 +38,7 @@ public sealed class WateringCan : BaseCarriable
 		base.OnUseDown();
 
 		NextUse = UseTime;
-		
+
 		if ( !Networking.IsHost )
 		{
 			Log.Error( "Only the host can use world altering items for now." );
@@ -54,7 +55,7 @@ public sealed class WateringCan : BaseCarriable
 			return;
 		}
 
-		var floorItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Floor );
+		var floorItem = worldItems.FirstOrDefault( x => x.Node.GetComponent<IWaterable>() != null );
 
 		if ( floorItem != null )
 		{
@@ -75,7 +76,7 @@ public sealed class WateringCan : BaseCarriable
 			Log.Warning( "Item is not waterable." );
 			return;
 		}
-		
+
 		waterable.OnWater( this );
 
 		Durability--;
@@ -111,18 +112,18 @@ public sealed class WateringCan : BaseCarriable
 		StartEmitting();
 
 		Model.LocalRotation = Rotation.FromPitch( -20 );
-		
+
 		_wateringSoundHandle = Sound.Play( WateringSound, WorldPosition );
 		// await ToSignal( GetTree().CreateTimer( UseTime ), Timer.SignalName.Timeout );
 		await Task.DelayRealtimeSeconds( UseTime );
 
 		// GetNode<AudioStreamPlayer3D>( "Watering" ).Stop();
 		_wateringSoundHandle?.Stop();
-		
+
 		StopEmitting();
-		
+
 		Model.LocalRotation = Rotation.Identity;
-		
+
 		Log.Info( "Water wasted." );
 	}
 }

@@ -1,10 +1,12 @@
 using System;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Clover.Data;
 using Sandbox.Diagnostics;
 
 namespace Clover;
 
+[Category( "Clover/World" )]
 public class WorldManager : Component, Component.INetworkSpawn
 {
 	public static WorldManager Instance { get; private set; }
@@ -14,8 +16,8 @@ public class WorldManager : Component, Component.INetworkSpawn
 	// [Property] public List<World> Worlds { get; set; } = new();
 	[Property, Sync, Change] public NetDictionary<int, World> Worlds { get; set; } = new();
 
-	[Property] public int ActiveWorldIndex { get; set; }
-	[Property] public World ActiveWorld => GetWorld( ActiveWorldIndex );
+	[Property, JsonIgnore] public int ActiveWorldIndex { get; set; }
+	[Property, JsonIgnore] public World ActiveWorld => GetWorld( ActiveWorldIndex );
 
 	[Property] public WorldData DefaultWorldData { get; set; }
 
@@ -35,7 +37,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 
 	public bool IsLoading;
 
-	public const float WorldOffset = 1000;
+	public const float WorldOffset = 1024;
 
 	// public Array LoadingProgress { get; set; } = new Array();
 
@@ -299,7 +301,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 	}
 
 
-	[ConCmd( "world_load" )]
+	[ConCmd( "clover_world_load" )]
 	public static void LoadWorldCmd( string id )
 	{
 		var worldManager = NodeManager.WorldManager;
@@ -314,13 +316,13 @@ public class WorldManager : Component, Component.INetworkSpawn
 		}
 	}
 
-	[ConCmd( "world_set_active" )]
+	[ConCmd( "clover_world_set_active" )]
 	public static void SetActiveWorldCmd( int index )
 	{
 		NodeManager.WorldManager.SetActiveWorld( index );
 	}
 
-	[ConCmd( "world_move_to_entrance" )]
+	[ConCmd( "clover_world_move_to_entrance" )]
 	public static void MoveToEntranceCmd( int worldIndex, string entranceId )
 	{
 		var world = Instance.GetWorld( worldIndex );
@@ -339,7 +341,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		player.GetComponent<CameraController>().SnapCamera();
 	}
 
-	[ConCmd( "world_save_all" )]
+	[ConCmd( "clover_world_save_all" )]
 	public static void SaveAllCmd()
 	{
 		foreach ( var world in Instance.Worlds.Values )
@@ -352,7 +354,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 	{
 		foreach ( var world in Worlds.Values )
 		{
-			var link = world.GetItem( gameObject );
+			var link = world.GetNodeLink( gameObject );
 			if ( link != null )
 			{
 				return link;

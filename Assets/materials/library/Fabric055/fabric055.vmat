@@ -1,0 +1,11 @@
+
+Layer0
+{
+	shader "shaders/complex.shader_c"
+
+	TextureColor "materials/library/fabric055/fabric055_1k-jpg_color.jpg"
+	TextureAmbientOcclusion "materials/default/default_ao.tga"
+	TextureNormal "materials/library/fabric055/fabric055_1k-jpg_normalgl.jpg"
+	TextureRoughness "materials/library/fabric055/fabric055_1k-jpg_roughness.jpg"
+
+}

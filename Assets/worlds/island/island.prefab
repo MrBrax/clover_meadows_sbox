@@ -16,7 +16,7 @@
         "__guid": "424e9a5b-9dd5-4ceb-ad4a-4d16f3612af2",
         "Flags": 0,
         "Name": "Map",
-        "Tags": "terrain",
+        "Tags": "terrain,solid",
         "Enabled": true,
         "Components": [
           {
@@ -89,7 +89,7 @@
             "EntranceId": "player_house_exit",
             "ExitDoor": {
               "_type": "component",
-              "component_id": "b2747e33-60fc-46cb-aaff-6dc3f6012faa",
+              "component_id": "af684d72-065d-4622-a6d7-bf4e902e0d86",
               "go": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
               "component_type": "Door"
             }
@@ -114,7 +114,7 @@
             "EntranceId": "shop_exit",
             "ExitDoor": {
               "_type": "component",
-              "component_id": "debf8939-f18d-4c22-9085-9d284a423e8b",
+              "component_id": "f7d4c93e-0fee-4312-8aa5-3b1bcda46058",
               "go": "3cb765b7-d4ce-4bfb-9575-f21f6e9d8791",
               "component_type": "Door"
             }
@@ -315,7 +315,6 @@
         "Flags": 0,
         "Name": "vdog",
         "Position": "1792,704,0.00000655258",
-        "Rotation": "-0.00000001490117,-0.00000002580957,0.5,-0.8660252",
         "Enabled": true,
         "__Prefab": "npc/vdog.prefab",
         "__PrefabVariables": {}
@@ -786,6 +785,7 @@
             "__guid": "e2892826-161f-461f-aec0-80b616993408",
             "FieldOfView": 90,
             "FollowTargets": true,
+            "Lerping": true,
             "Priority": -1,
             "Static": false
           }

@@ -1,0 +1,58 @@
+{
+  "RootObject": {
+    "__guid": "613b9d56-013d-44b4-8d94-5a2bad956bdd",
+    "Flags": 0,
+    "Name": "pellet",
+    "Tags": "pellet",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Objects.Pellet",
+        "__guid": "fdce0bdf-99c3-42bc-96e6-38b7dd15976e",
+        "Hitbox": null,
+        "HitSound": "objects/pellet/pellet_hit.sound"
+      },
+      {
+        "__type": "Sandbox.SphereCollider",
+        "__guid": "033d3411-5dc7-43cc-b41a-8d5100763dbb",
+        "Center": "0,0,0",
+        "IsTrigger": false,
+        "Radius": 8,
+        "Static": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "0b101f19-2964-434e-9f88-d0b59095feed",
+        "Flags": 0,
+        "Name": "Sphere",
+        "Scale": "0.02,0.02,0.02",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "b0d7f2fb-0468-44c0-8772-b9020b604db3",
+            "BodyGroups": 18446744073709551615,
+            "Model": "models/dev/sphere.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "0.03256,0.03256,0.03256,1"
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

@@ -14,6 +14,7 @@
           "go": "28f72579-ec01-4bb4-b81c-46d43090f418"
         },
         "PaintSound": "items/tools/paintbrush/paint.sound",
+        "TextureChangeSound": "sounds/ui/button_down.sound",
         "UseTime": 1
       }
     ],

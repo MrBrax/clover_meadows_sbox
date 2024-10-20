@@ -1,4 +1,5 @@
 using System;
+using Clover;
 using Clover.Player;
 using Sandbox;
 
@@ -20,7 +21,7 @@ public sealed class CameraMan : Component
 	private Rotation _rotationLerp;
 	private float _fovLerp;
 
-	public float LerpSpeed = 5;
+	public const float LerpSpeed = 5;
 
 	private CameraComponent CameraComponent;
 
@@ -60,37 +61,56 @@ public sealed class CameraMan : Component
 
 	protected override void OnUpdate()
 	{
-		if ( !MainCameraNode.IsValid() ) return;
+		var mainCameraNode = MainCameraNode;
+
+		if ( !mainCameraNode.IsValid() ) return;
 		if ( !CameraComponent.IsValid() ) return;
 
 		Rotation wishedRot;
 		Vector3 wishedPos;
+		var _lerpSpeed = LerpSpeed;
 
-		wishedPos = MainCameraNode.WorldPosition;
+		wishedPos = mainCameraNode.WorldPosition;
 
-		if ( Targets.Count > 1 && MainCameraNode.FollowTargets )
+		if ( Targets.Count > 1 && mainCameraNode.FollowTargets )
 		{
 			var midpoint = GetTargetsMidpoint();
-			wishedRot = Rotation.LookAt( midpoint - MainCameraNode.WorldPosition, Vector3.Up );
+			wishedRot = Rotation.LookAt( midpoint - mainCameraNode.WorldPosition, Vector3.Up );
 		}
 		else
 		{
-			wishedRot = MainCameraNode.WorldRotation;
-			if ( !MainCameraNode.Static && PlayerCharacter.Local.IsValid() )
+			wishedRot = mainCameraNode.WorldRotation;
+			if ( !mainCameraNode.Static && PlayerCharacter.Local.IsValid() )
 			{
 				wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.3f;
 			}
 		}
 
-		_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * LerpSpeed );
-		_rotationLerp = Rotation.Lerp( _rotationLerp, wishedRot, Time.Delta * LerpSpeed );
-		_fovLerp = _fovLerp.LerpTo( MainCameraNode.FieldOfView, Time.Delta * LerpSpeed );
+		if ( MainUi.Instance.IsValid() && MainUi.Instance.LastInput > MainUi.HideUiDelay * 3 )
+		{
+			var p = Sandbox.Utility.Noise.Perlin( Time.Now * 5f, Time.Now * 7f, Time.Now * 9f ) - 0.5f;
+			wishedRot *= Rotation.From( p * 2, p * 3, p );
+			_lerpSpeed = 0.1f;
+		}
+
+		_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * _lerpSpeed );
+		_rotationLerp = Rotation.Lerp( _rotationLerp, wishedRot, Time.Delta * _lerpSpeed );
+		_fovLerp = _fovLerp.LerpTo( mainCameraNode.FieldOfView, Time.Delta * _lerpSpeed );
 
 		// var midpoint = GetTargetsMidpoint();
 		// _rotationLerp = Rotation.Lerp( _rotationLerp, Rotation.LookAt( midpoint - _positionLerp, Vector3.Up ), Time.Delta * LerpSpeed );
 
-		CameraComponent.WorldPosition = _positionLerp;
-		CameraComponent.WorldRotation = _rotationLerp;
+		if ( mainCameraNode.Lerping )
+		{
+			CameraComponent.WorldPosition = _positionLerp;
+			CameraComponent.WorldRotation = _rotationLerp;
+		}
+		else
+		{
+			CameraComponent.WorldPosition = wishedPos;
+			CameraComponent.WorldRotation = wishedRot;
+		}
+
 		CameraComponent.FieldOfView = _fovLerp;
 	}
 
@@ -99,8 +119,14 @@ public sealed class CameraMan : Component
 		if ( Targets.Count == 0 ) return Vector3.Zero;
 
 		var midpoint = Vector3.Zero;
-		foreach ( var target in Targets )
+		foreach ( var target in Targets.ToList() )
 		{
+			if ( !target.IsValid() )
+			{
+				Targets.Remove( target );
+				continue;
+			}
+
 			midpoint += target.WorldPosition;
 		}
 

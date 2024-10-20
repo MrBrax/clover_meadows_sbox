@@ -3,6 +3,7 @@ using Sandbox.Audio;
 
 namespace Clover.WorldBuilder.Weather;
 
+[Category( "Clover/Weather" )]
 public class Rain : WeatherBase
 {
 	[Property] public ParticleEmitter Emitter { get; set; }
@@ -14,7 +15,7 @@ public class Rain : WeatherBase
 		base.SetEnabled( state, smooth );
 		Emitter.Enabled = state;
 		Sound.Enabled = state;
-		
+
 		if ( Sound.Enabled )
 		{
 			Sound.TargetMixer = NodeManager.WeatherManager.IsInside
@@ -57,9 +58,9 @@ public class Rain : WeatherBase
 
 	public void SetWind( float direction, float windSpeed )
 	{
-		Emitter.GetComponent<ParticleEffect>().ForceDirection = new Vector3( 
-			MathF.Cos( direction ) * ( windSpeed * 50f ),
-			MathF.Sin( direction ) * ( windSpeed * 50f ), 
+		Emitter.GetComponent<ParticleEffect>().ForceDirection = new Vector3(
+			MathF.Cos( direction ) * (windSpeed * 50f),
+			MathF.Sin( direction ) * (windSpeed * 50f),
 			-400f );
 	}
 }

@@ -175,6 +175,7 @@ public class PlayerController : Component, IEquipChanged
 
 		if ( !Player.ShouldMove() )
 		{
+			CharacterController.Velocity = Vector3.Zero;
 			return;
 		}
 

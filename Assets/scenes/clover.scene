@@ -8,11 +8,6 @@
       "Enabled": true,
       "Components": [
         {
-          "__type": "Sandbox.DialogueParser",
-          "__guid": "17538c72-5935-40f1-996d-8ec463d10c66",
-          "__enabled": false
-        },
-        {
           "__type": "Sandbox.ScreenPanel",
           "__guid": "2d53e91d-dea5-4e4a-96fd-adadeb8d3e43",
           "AutoScreenScale": true,
@@ -25,13 +20,14 @@
           "__type": "Clover.DialogueWindow",
           "__guid": "e4381c2f-796e-44b0-81a2-d666d662876e",
           "__enabled": false,
-          "CurrentChoice": {
-            "Nodes": []
-          },
+          "Actions": {},
           "CurrentNodeList": [],
           "CurrentTargets": [],
-          "Data": {},
-          "Dialogue": "test.dlg"
+          "Data": {}
+        },
+        {
+          "__type": "Clover.Components.DialogueManager",
+          "__guid": "b67517c1-1ce5-4afe-bfc5-0a00e6697212"
         }
       ]
     },
@@ -61,7 +57,6 @@
         {
           "__type": "Clover.WorldManager",
           "__guid": "7effb95a-4f76-4128-8ab5-547848dfc5ab",
-          "ActiveWorldIndex": 0,
           "DefaultWorldData": "worlds/island/island.world",
           "Worlds": {}
         }
@@ -397,7 +392,7 @@
     "TimeScale": 1,
     "UseFixedUpdate": true,
     "NavMesh": {
-      "Enabled": false,
+      "Enabled": true,
       "IncludeStaticBodies": true,
       "IncludeKeyframedBodies": true,
       "EditorAutoUpdate": true,
@@ -405,7 +400,7 @@
       "AgentRadius": 16,
       "AgentStepSize": 18,
       "AgentMaxSlope": 40,
-      "ExcludedBodies": "",
+      "ExcludedBodies": "player,water,npc",
       "IncludedBodies": ""
     }
   },

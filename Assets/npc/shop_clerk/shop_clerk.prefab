@@ -1,0 +1,67 @@
+{
+  "RootObject": {
+    "__guid": "a243d461-cf82-4e35-bad5-6d69bb4e2924",
+    "Flags": 0,
+    "Name": "shop_clerk",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.NavMeshAgent",
+        "__guid": "c6513f3a-58d4-45cf-af6e-cd06288dff21",
+        "Acceleration": 50,
+        "Height": 40,
+        "MaxSpeed": 120,
+        "Radius": 12,
+        "Separation": 0.25,
+        "UpdatePosition": true,
+        "UpdateRotation": false
+      },
+      {
+        "__type": "Clover.Npc.ShopClerk",
+        "__guid": "62f44e28-e4ed-4ffa-871e-84c093a3b6f4"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "66089c65-9d81-4937-a322-59e022ffdb3b",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "9ef53959-5bc1-4bfe-b189-583f59fc5266",
+            "BodyGroups": 18446744073709551615,
+            "CreateBoneObjects": false,
+            "Model": "models/npc/vdog/vdog.vmdl",
+            "Morphs": {},
+            "Parameters": {
+              "bools": {},
+              "ints": {},
+              "floats": {},
+              "vectors": {},
+              "rotations": {}
+            },
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1",
+            "UseAnimGraph": true
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

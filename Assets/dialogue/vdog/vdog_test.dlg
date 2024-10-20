@@ -1,0 +1,20 @@
+{
+  "Nodes": [
+    {
+      "Id": "694cfa0e",
+      "Text": "Hello, {{PlayerName}}, wanna head back to my place?",
+      "Choices": [
+        {
+          "Label": "Yes",
+          "Nodes": []
+        },
+        {
+          "Label": "No",
+          "Nodes": []
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

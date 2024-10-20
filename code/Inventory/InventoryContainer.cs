@@ -10,7 +10,6 @@ namespace Clover.Inventory;
 
 public sealed partial class InventoryContainer
 {
-
 	public Guid Id { get; set; } = Guid.NewGuid();
 
 	[JsonIgnore] public GameObject Owner { get; set; }
@@ -20,8 +19,8 @@ public sealed partial class InventoryContainer
 	[JsonInclude] public int MaxItems { get; set; } = 20;
 
 	[JsonInclude] public List<InventorySlot<PersistentItem>> Slots = new();
-	
-	
+
+
 	// public delegate void InventoryChangedEventHandler();
 	// [Property] public event InventoryChangedEventHandler InventoryChanged;
 
@@ -55,7 +54,7 @@ public sealed partial class InventoryContainer
 			yield return new InventoryContainerEntry { Index = i, Slot = GetSlotByIndex( i ) };
 		}
 	}
-	
+
 	public List<InventoryContainerEntry> QuerySlots()
 	{
 		var entries = new List<InventoryContainerEntry>();
@@ -63,6 +62,7 @@ public sealed partial class InventoryContainer
 		{
 			entries.Add( new InventoryContainerEntry { Index = i, Slot = GetSlotByIndex( i ) } );
 		}
+
 		return entries;
 	}
 
@@ -88,7 +88,9 @@ public sealed partial class InventoryContainer
 		return Slots.ToImmutableList();
 	}
 
-	public int FreeSlots => MaxItems - Slots.Count;
+	[JsonIgnore] public int FreeSlots => MaxItems - Slots.Count;
+
+	[JsonIgnore] public bool HasFreeSlot => FreeSlots > 0;
 
 	public void RemoveSlots()
 	{
@@ -141,7 +143,6 @@ public sealed partial class InventoryContainer
 			slot.SetItem( item );
 
 			Slots.Add( slot );
-
 		}
 		else
 		{
@@ -152,7 +153,6 @@ public sealed partial class InventoryContainer
 				// slot.SetItem( item );
 				// Slots.Add( slot );
 				return AddItem( item, false );
-
 			}
 			else
 			{
@@ -182,7 +182,6 @@ public sealed partial class InventoryContainer
 	/// <exception cref="Exception"></exception>
 	public void AddItemToIndex( PersistentItem item, int index = -1 )
 	{
-
 		if ( index == -1 )
 		{
 			index = GetFirstFreeEmptyIndex();
@@ -333,14 +332,14 @@ public sealed partial class InventoryContainer
 			{
 				ItemDataPath = "res://items/furniture/polka_chair/polka_chair.tres",
 			};
-			
+
 			var slot = GetFirstFreeSlot();
 			if ( slot == null )
 			{
 				throw new System.Exception( "No free slots." );
 				return;
 			}
-			
+
 			slot.SetItem( testItem );*
 		}
 		else if ( Input.IsActionJustPressed( "Drop" ) )
@@ -516,7 +515,8 @@ public sealed partial class InventoryContainer
 
 	public InventorySlot<PersistentItem> GetSlotWithItem( ItemData item, int quantity )
 	{
-		return Slots.FirstOrDefault( slot => slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) && slot.Amount >= quantity );
+		return Slots.FirstOrDefault( slot =>
+			slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) && slot.Amount >= quantity );
 	}
 
 	public IEnumerable<InventorySlot<PersistentItem>> GetSlotsWithItem( ItemData item )
@@ -554,7 +554,6 @@ public sealed partial class InventoryContainer
 		if ( slotWithStackSpaceLeft.Count() > 0 ) return true;
 
 		return false;
-
 	}
 
 	public bool CanFit( List<PersistentItem> results )
@@ -596,14 +595,12 @@ public sealed partial class InventoryContainer
 
 		return true;
 	}
-
 }
 
 public interface IInventoryEvent
 {
 	void OnInventoryChanged( InventoryContainer container );
 }
-
 
 public class InventoryFullException : System.Exception
 {

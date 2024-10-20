@@ -1,0 +1,47 @@
+{
+  "Name": "Dialogue Collection",
+  "Entries": [
+    {
+      "Condition": {
+        "__version": 8,
+        "__guid": "3570a521-3f31-4fef-b9a4-c8459bb8d60b",
+        "__changeId": 2,
+        "UserData": {
+          "Title": "Condition",
+          "ReferencedComponentTypes": []
+        },
+        "Variables": [],
+        "Nodes": [
+          {
+            "Id": 0,
+            "Type": "input"
+          },
+          {
+            "Id": 1,
+            "Type": "output",
+            "UserData": {
+              "Position": "264,-0"
+            }
+          }
+        ],
+        "Links": [
+          {
+            "Id": 2,
+            "Value": true,
+            "DstId": 1,
+            "DstName": "_result"
+          },
+          {
+            "SrcId": 0,
+            "SrcName": "_signal",
+            "DstId": 1,
+            "DstName": "_signal"
+          }
+        ]
+      },
+      "DialogueData": "dialogue/vdog/vdog_test.dlg"
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

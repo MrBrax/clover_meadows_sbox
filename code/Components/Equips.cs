@@ -4,6 +4,12 @@ using Clover.Player;
 
 namespace Clover.Components;
 
+/// <summary>
+///  A component that manages equipping items to players and NPCs.
+/// </summary>
+[Title( "Equips" )]
+[Icon( "build" )]
+[Category( "Clover/Components" )]
 public class Equips : Component
 {
 	[Flags]
@@ -32,7 +38,7 @@ public class Equips : Component
 	[Property] public Action<EquipSlot, GameObject> OnEquippedItemChanged { get; set; }
 
 	[Property] public Action<EquipSlot> OnEquippedItemRemoved { get; set; }
-	
+
 	[Sync] public NetDictionary<EquipSlot, bool> EquippedSlots { get; set; } = new();
 	[Sync] public NetDictionary<EquipSlot, bool> VisibleSlots { get; set; } = new();
 
@@ -56,11 +62,16 @@ public class Equips : Component
 		return EquippedItems.ContainsKey( slot ) && EquippedItems[slot].IsValid();
 	}
 
+	public bool HasEquippedItem<T>( EquipSlot slot ) where T : Component
+	{
+		return EquippedItems.TryGetValue( slot, out var gameObject ) && gameObject.GetComponent<T>() != null;
+	}
+
 	public bool TryGetEquippedItem( EquipSlot slot, out GameObject item )
 	{
 		return EquippedItems.TryGetValue( slot, out item );
 	}
-	
+
 	public bool TryGetEquippedItem<T>( EquipSlot slot, out T item ) where T : Component
 	{
 		if ( EquippedItems.TryGetValue( slot, out var gameObject ) )
@@ -89,7 +100,7 @@ public class Equips : Component
 		}
 
 		EquippedItems[slot] = item;
-		
+
 		EquippedSlots[slot] = true;
 
 		item.SetParent( attachPoint );
@@ -147,12 +158,11 @@ public class Equips : Component
 					// tool.OnUse( GetComponent<PlayerCharacter>() );
 					tool.OnUseDown();
 					tool.OnUseDownAction?.Invoke();
-					
+
 					using ( Rpc.FilterInclude( Connection.Host ) )
 					{
 						tool.OnUseDownHost();
 					}
-					
 				}
 				else
 				{
@@ -183,8 +193,10 @@ public class Equips : Component
 			if ( pair.Value.IsValid() )
 			{
 				Gizmo.Draw.LineSphere( pair.Value.WorldPosition, 4f );
-				Gizmo.Draw.Arrow( pair.Value.WorldPosition, pair.Value.WorldPosition + pair.Value.WorldRotation.Up * 32f );
-				Gizmo.Draw.Arrow( pair.Value.WorldPosition, pair.Value.WorldPosition + pair.Value.WorldRotation.Forward * 32f );
+				Gizmo.Draw.Arrow( pair.Value.WorldPosition,
+					pair.Value.WorldPosition + pair.Value.WorldRotation.Up * 32f );
+				Gizmo.Draw.Arrow( pair.Value.WorldPosition,
+					pair.Value.WorldPosition + pair.Value.WorldRotation.Forward * 32f );
 			}
 		}
 	}

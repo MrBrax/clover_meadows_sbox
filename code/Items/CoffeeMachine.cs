@@ -2,7 +2,6 @@
 using Clover.Components;
 using Clover.Data;
 using Clover.Interactable;
-using Clover.Inventory;
 using Clover.Persistence;
 using Clover.Player;
 using Clover.Ui;
@@ -33,7 +32,7 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 	protected override void OnStart()
 	{
 		base.OnStart();
-		Cup.Enabled = false;
+		SetCupEnabled( _hasCup );
 		SteamParticleEmitter.Enabled = false;
 		LiquidParticleEmitter.Enabled = false;
 	}
@@ -43,12 +42,19 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 		if ( _isBrewing ) return;
 		if ( !_hasCup )
 		{
-			BrewAsync();
+			Brew();
 		}
 		else
 		{
 			TakeCup( player );
 		}
+	}
+
+	[Authority]
+	private void Brew()
+	{
+		if ( _hasCup ) return;
+		BrewAsync();
 	}
 
 	private void TakeCup( PlayerCharacter player )
@@ -60,8 +66,8 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 			return;
 		}
 
-		var carriedPersistentItem = new PersistentItem( "carried_edible:4023053997083351548" );
-		carriedPersistentItem.SetArbitraryData( "EdibleData", ReceivedItem.Id );
+		var carriedPersistentItem = PersistentItem.Create( "carried_edible:4023053997083351548", true );
+		carriedPersistentItem.SetArbitraryData( "EdibleData", ReceivedItem.GetIdentifier() );
 
 		var carriedEdible = carriedPersistentItem.SpawnCarriable();
 
@@ -85,7 +91,6 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 		Cup.Enabled = enabled;
 	}
 
-	[Authority]
 	private async void BrewAsync()
 	{
 		_isBrewing = true;

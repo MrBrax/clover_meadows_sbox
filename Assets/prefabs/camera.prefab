@@ -19,8 +19,8 @@
         "RenderTags": "",
         "TargetEye": "None",
         "Viewport": "0,0,1,1",
-        "ZFar": 10000,
-        "ZNear": 10
+        "ZFar": 5000,
+        "ZNear": 5
       },
       {
         "__type": "Sandbox.Bloom",
@@ -72,6 +72,7 @@
       {
         "__type": "Sandbox.AmbientOcclusion",
         "__guid": "0063d5a6-0e58-4ea0-9d93-a97cdef4af8f",
+        "__enabled": false,
         "FalloffDistance": 1,
         "Intensity": 8,
         "Quality": "High",

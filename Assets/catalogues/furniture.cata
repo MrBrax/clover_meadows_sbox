@@ -1,0 +1,15 @@
+{
+  "Name": "Catalogue",
+  "Description": "A collection of items.",
+  "Items": [
+    "items/appliances/coffee_machine/coffee_machine.item",
+    "items/tools/shovel/shovel.tool",
+    "items/test/test3.item",
+    "items/furniture/electronics/tv_crt/tv_crt.item",
+    "items/tools/paintbrush/paintbrush.tool"
+  ],
+  "AlwaysAvailable": true,
+  "AvailablePeriods": [],
+  "__references": [],
+  "__version": 0
+}

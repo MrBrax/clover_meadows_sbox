@@ -1,0 +1,33 @@
+{
+  "RootObject": {
+    "__guid": "fc75fb50-e2b1-4a67-adee-ce06f0a640d5",
+    "Flags": 0,
+    "Name": "gift_model",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.ModelRenderer",
+        "__guid": "63a67173-0f1a-462f-959f-69388e1b0358",
+        "BodyGroups": 18446744073709551615,
+        "Model": "items/misc/gift/gift.vmdl",
+        "RenderOptions": {
+          "GameLayer": true,
+          "OverlayLayer": false,
+          "BloomLayer": false,
+          "AfterUILayer": false
+        },
+        "RenderType": "On",
+        "Tint": "1,1,1,1"
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
