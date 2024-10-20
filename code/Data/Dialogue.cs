@@ -46,7 +46,7 @@ public class Dialogue : GameResource
 
 		public override string ToString()
 		{
-			return Label + " -> " + Nodes.Count;
+			return $"{Label} -> {Nodes.Count} nodes";
 		}
 	}
 
@@ -71,7 +71,11 @@ public class Dialogue : GameResource
 
 		[Property] public DialogueAction OnExit { get; set; }
 
-		[Property] public bool IsHidden { get; set; }
+		/// <summary>
+		///   If true, this node will not be advanced to automatically, and must be jumped to manually.
+		/// </summary>
+		[Property]
+		public bool IsHidden { get; set; }
 
 		public override string ToString()
 		{

@@ -445,6 +445,10 @@
         "Scale": "20,20,40",
         "Static": false,
         "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "4c2d5364-940f-460f-b998-900ef64ee5f1"
       }
     ],
     "Children": [

@@ -210,11 +210,13 @@ public class BaseNpc : Component, IInteract
 		return $"Talk to {Name}";
 	}
 
+	protected Rotation TargetLookAt;
+
 	public void LookAt( Vector3 target )
 	{
 		var dir = (target - WorldPosition).Normal;
 		var rot = Rotation.LookAt( dir );
-		WorldRotation = rot.Angles().WithPitch( 0 );
+		TargetLookAt = rot.Angles().WithPitch( 0 );
 	}
 
 	public void LookAt( GameObject target )
@@ -223,6 +225,12 @@ public class BaseNpc : Component, IInteract
 	}
 
 	protected override void OnFixedUpdate()
+	{
+		StateLogic();
+		WorldRotation = Rotation.Slerp( WorldRotation, TargetLookAt, Time.Delta * 5f );
+	}
+
+	protected virtual void StateLogic()
 	{
 		switch ( State )
 		{
@@ -236,10 +244,5 @@ public class BaseNpc : Component, IInteract
 				Interacting();
 				break;
 		}
-	}
-
-	protected override void OnUpdate()
-	{
-		Gizmo.Draw.Arrow( WorldPosition, Agent.GetLookAhead( 64f ) );
 	}
 }

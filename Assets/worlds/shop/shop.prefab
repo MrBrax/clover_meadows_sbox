@@ -17,6 +17,7 @@
         "Flags": 0,
         "Name": "shop_main",
         "Position": "256,192,0.00001439794",
+        "Tags": "terrain",
         "Enabled": true,
         "Components": [
           {
@@ -38,7 +39,8 @@
             "__guid": "f510b25b-35c2-402b-b18e-836a7a6b4dba",
             "IsTrigger": false,
             "Model": "worlds/shop/shop_main.vmdl",
-            "Static": true
+            "Static": true,
+            "SurfaceVelocity": "0,0,0"
           }
         ],
         "Children": [
@@ -87,7 +89,8 @@
                 "__guid": "add99de3-7c63-4a76-9e24-30a6df5cb030",
                 "IsTrigger": false,
                 "Model": "worlds/shop/shop_counter.vmdl",
-                "Static": true
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
               }
             ]
           }
@@ -195,7 +198,8 @@
             "Center": "0,0,0",
             "IsTrigger": true,
             "Scale": "21.13332,76.00003,50",
-            "Static": false
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldLayerObject",
@@ -291,47 +295,42 @@
             "Displays": [
               {
                 "_type": "component",
-                "component_id": "a7ba926f-b223-4a6e-8dad-7bcf50d4e9d2",
+                "component_id": "54871707-bcc6-41e4-9af3-339f9591d130",
                 "go": "b664a362-cc2c-4654-916b-49a642d2dbfd",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "90d2c501-8125-4a4c-8c56-eef8e8a913e8",
+                "component_id": "c19d6e3b-b844-4541-9752-9f9db9d3952f",
                 "go": "48205435-d897-40bc-8c65-b3380d408850",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "bdc0c37f-c378-4404-9201-8e7e41477b35",
+                "component_id": "88befc71-e8a3-404a-ad90-1ca802a1334c",
                 "go": "47e84f87-91d0-4a14-9701-aca88304b704",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "5e46fa80-7192-42d4-8eb1-72cd6a9c6d7b",
+                "component_id": "b6790e9c-be50-4a6b-ba42-1d49be680769",
                 "go": "daa05fcf-c2b3-494d-a4a3-f37dc453e630",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "7e30012c-e6a5-41f3-8109-89d4abcdd069",
+                "component_id": "cf1d5537-38a8-48fd-add4-9102a8d64ca9",
                 "go": "b965aa8c-b7ab-4c1f-beec-c7024197316e",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "a5ad2e45-c43b-4e94-8998-c6d80cdee49f",
+                "component_id": "0f56c524-dc3c-491e-84fa-99148e1495c5",
                 "go": "7c38a36a-7ade-4861-a119-ccf310e95b79",
                 "component_type": "ShopDisplay"
               }
             ],
-            "ShopClerk": {
-              "_type": "component",
-              "component_id": "2d1a8501-9e75-4405-a436-de4292a6a1a4",
-              "go": "1618499e-9729-429e-a00a-d61ee2b7978d",
-              "component_type": "ShopClerk"
-            },
+            "ShopClerk": null,
             "StoreId": "shop"
           }
         ]

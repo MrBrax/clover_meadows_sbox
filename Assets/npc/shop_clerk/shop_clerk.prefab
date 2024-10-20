@@ -18,7 +18,13 @@
       },
       {
         "__type": "Clover.Npc.ShopClerk",
-        "__guid": "62f44e28-e4ed-4ffa-871e-84c093a3b6f4"
+        "__guid": "62f44e28-e4ed-4ffa-871e-84c093a3b6f4",
+        "DialogueCollection": "dialogue/shop/shop.dcol",
+        "Name": "Clerk"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "d7509849-178d-4d5a-bf6d-1661c39d1c99"
       }
     ],
     "Children": [

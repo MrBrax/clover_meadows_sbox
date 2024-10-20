@@ -185,24 +185,30 @@ public class ShopManager : Component
 
 		CameraMan.Instance.Targets.Add( ShopClerk.GameObject );
 
-		DialogueManager.Instance.DialogueWindow.SetData( "ItemName", item.ItemData.Name );
-		DialogueManager.Instance.DialogueWindow.SetData( "ItemPrice", item.Price );
-		DialogueManager.Instance.DialogueWindow.SetData( "PlayerClovers", player.CloverBalanceController.GetBalance() );
+		var window = DialogueManager.Instance.DialogueWindow;
 
-		DialogueManager.Instance.DialogueWindow.SetTarget( 0, ShopClerk.GameObject );
+		window.SetData( "ItemName", item.ItemData.Name );
+		window.SetData( "ItemPrice", item.Price );
+		window.SetData( "PlayerClovers", player.CloverBalanceController.GetBalance() );
 
-		DialogueManager.Instance.DialogueWindow.SetAction( "BuyItem", () =>
+		window.SetTarget( 0, ShopClerk.GameObject );
+
+		window.SetAction( "BuyItem", () =>
 		{
 			if ( !BuyItem( player, item ) )
 				return;
 
-			DialogueManager.Instance.DialogueWindow.Enabled = false;
+			window.Enabled = false;
 		} );
 
 		ShopClerk.LoadDialogue( BuyItemDialogue );
 
-		DialogueManager.Instance.DialogueWindow.OnDialogueEnd += () =>
+		ShopClerk.SetState( BaseNpc.NpcState.Interacting );
+		ShopClerk.LookAt( player.GameObject );
+
+		window.OnDialogueEnd += () =>
 		{
+			ShopClerk.SetState( BaseNpc.NpcState.Idle );
 			CameraMan.Instance.Targets.Remove( ShopClerk.GameObject );
 		};
 	}
