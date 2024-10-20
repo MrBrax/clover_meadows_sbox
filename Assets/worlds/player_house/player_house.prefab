@@ -17,7 +17,6 @@
         "Flags": 0,
         "Name": "Model",
         "Tags": "solid,terrain",
-        "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
@@ -39,14 +38,15 @@
             "__guid": "e0daec7f-4fc5-471d-9f26-cf20ab67ee98",
             "IsTrigger": false,
             "Model": "models/player_house/house.vmdl",
-            "Static": true
+            "Static": true,
+            "SurfaceVelocity": "0,0,0"
           }
         ]
       },
       {
         "__guid": "a592634c-7786-4bd2-87c1-4e34a3e1c57e",
         "Flags": 0,
-        "Name": "Model (1)",
+        "Name": "EntranceCollision",
         "Tags": "solid,terrain,invisiblewall",
         "Enabled": true,
         "Components": [
@@ -70,7 +70,8 @@
             "__guid": "d5d6670b-2513-4a43-9102-e3300e8e91c0",
             "IsTrigger": false,
             "Model": "worlds/player_house/floor_base/house_floor_base_blocker.vmdl",
-            "Static": true
+            "Static": true,
+            "SurfaceVelocity": "0,0,0"
           }
         ]
       },
@@ -216,7 +217,8 @@
             "Center": "0,0,0",
             "IsTrigger": true,
             "Scale": "21.13332,76.00003,50",
-            "Static": false
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldLayerObject",
@@ -276,7 +278,7 @@
                   "DstName": "_signal"
                 },
                 {
-                  "Id": 3,
+                  "Id": 2,
                   "Value": "asdf",
                   "DstId": 1,
                   "DstName": "format"
@@ -284,7 +286,8 @@
               ]
             },
             "Scale": "21.13332,76.00003,50",
-            "Static": false
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldLayerObject",
@@ -297,7 +300,6 @@
         "Flags": 0,
         "Name": "house_floor_base_int",
         "Tags": "nobuild",
-        "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
@@ -318,7 +320,8 @@
             "__guid": "bcd9d2e2-e882-42a6-89b3-08b844913661",
             "IsTrigger": false,
             "Model": "worlds/player_house/floor_base/house_floor_base_int.vmdl",
-            "Static": false
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
           }
         ]
       },
@@ -326,7 +329,6 @@
         "__guid": "9e95fb93-e09e-4f6e-9aaa-7d7937b5b296",
         "Flags": 0,
         "Name": "house_floor_base_room1",
-        "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
@@ -348,7 +350,6 @@
         "__guid": "8b10bb1d-d019-4ce0-9bab-fe48c301c4de",
         "Flags": 0,
         "Name": "house_floor_base_room2",
-        "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
@@ -370,7 +371,6 @@
         "__guid": "f2fdf53d-7900-4011-97a6-151b760b8535",
         "Flags": 0,
         "Name": "house_floor_base_walls",
-        "Enabled": true,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
@@ -397,192 +397,18 @@
           {
             "__type": "Clover.WorldBuilder.InteriorManager",
             "__guid": "c4babfdc-5804-4dfc-aad1-c453c83e66cd",
+            "InteriorModel": {
+              "_type": "component",
+              "component_id": "70846090-a453-4c8b-bda3-1ff4b1017db4",
+              "go": "a784a3bb-fc0a-4396-aa57-9a6315bb6126",
+              "component_type": "ModelRenderer"
+            },
             "Rooms": {
               "room1": {
-                "Wall": {
-                  "_type": "gameobject",
-                  "go": "96d4141e-a9a8-4f4b-9356-f3cf556de33e"
-                },
-                "Floor": {
-                  "_type": "gameobject",
-                  "go": "f7c2c9ae-b5f4-4cb0-9cd3-42489f3da101"
-                }
+                "Wall": null,
+                "Floor": null
               }
             }
-          }
-        ]
-      },
-      {
-        "__guid": "8fa783d3-1e34-4b8a-9f7e-6221a36fae70",
-        "Flags": 0,
-        "Name": "Object",
-        "Enabled": true
-      },
-      {
-        "__guid": "f7c2c9ae-b5f4-4cb0-9cd3-42489f3da101",
-        "Flags": 0,
-        "Name": "Box",
-        "Position": "320,319.9999,0.00008786379",
-        "Components": [
-          {
-            "__type": "Sandbox.MeshComponent",
-            "__guid": "2254b511-9b20-4ce3-b286-91a624d062cb",
-            "Collision": "Mesh",
-            "Color": "1,1,1,1",
-            "HideInGame": false,
-            "IsTrigger": false,
-            "Mesh": {
-              "Topology": "H4sIAAAAAAAACk2MAQoAIAgDrSz7/4drBwoOjmKbczO7Ygg0hYuTHuB1hXgS/so\u002Bqi4vOdnOrb6NT15bJXy63JDz/\u002Bg6SXigAAAA",
-              "Positions": [
-                "-96,-96.00012,0",
-                "96,-96.00012,0",
-                "96,96.00012,0",
-                "-96,96.00012,0"
-              ],
-              "TextureCoord": [
-                "2.005347,2.00535",
-                "0,0",
-                "2.005347,0",
-                "0,0",
-                "0,0",
-                "0,0",
-                "0,2.00535",
-                "0,0"
-              ],
-              "TextureUAxis": [
-                "1,0,0"
-              ],
-              "TextureVAxis": [
-                "0,-1,0"
-              ],
-              "TextureScale": [
-                "0.187,0.187"
-              ],
-              "TextureOffset": [
-                "-1197.861,2224.599"
-              ],
-              "MaterialIndex": [
-                0
-              ],
-              "EdgeFlags": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              "Materials": [
-                "materials/dev/reflectivity_30.vmat"
-              ]
-            },
-            "SmoothingAngle": 40,
-            "Static": true
-          }
-        ]
-      },
-      {
-        "__guid": "96d4141e-a9a8-4f4b-9356-f3cf556de33e",
-        "Flags": 0,
-        "Name": "Box",
-        "Position": "192,320,0.00005340576",
-        "Components": [
-          {
-            "__type": "Sandbox.MeshComponent",
-            "__guid": "52dd6560-dc4b-45e7-b5e9-ae637526c03e",
-            "Collision": "Mesh",
-            "Color": "1,1,1,1",
-            "HideInGame": false,
-            "IsTrigger": false,
-            "Mesh": {
-              "Topology": "H4sIAAAAAAAACk3QWQ5DMQhD0fR1ep3H/W\u002B19ZGIBJJ/8DWQrGOMb7SN1BLtokN0jtboGd2jTQnT6129pebIj8a\u002Bol\u002BKt6/Zfde1WHVsc/HYS\u002BWxp7oLb5b7bm0\u002BVp\u002BPx8rw9bEy8za75fh2Peq9PLd496d8GW\u002BZWTxWho/Hysw/8jf6c759en8ghsqfeAEAAA==",
-              "Positions": [
-                "32,-96,95.99995",
-                "32,-96,0",
-                "32,96,0",
-                "32,96,95.99995",
-                "224,96,95.99995",
-                "224,96,0",
-                "224,-96,0",
-                "224,-96,95.99995"
-              ],
-              "TextureCoord": [
-                "0,1",
-                "2.005347,0",
-                "2.005347,1",
-                "0,0",
-                "2.005347,0",
-                "0,1",
-                "0,0",
-                "0,0",
-                "2.005347,0",
-                "0,0",
-                "0,0",
-                "0,0",
-                "2.005347,1",
-                "0,0",
-                "0,1",
-                "0,0",
-                "2.005347,1",
-                "0,0",
-                "0,0",
-                "0,0"
-              ],
-              "TextureUAxis": [
-                "0,1,0",
-                "0.9999999,0.00000005960464,0",
-                "-0.9999999,0.00000005960464,0"
-              ],
-              "TextureVAxis": [
-                "0,0,-1",
-                "0,0,-1",
-                "0,0,-1"
-              ],
-              "TextureScale": [
-                "0.187,0.1874999",
-                "0.187,0.1874999",
-                "0.187,0.1874999"
-              ],
-              "TextureOffset": [
-                "-1197.861,512.0003",
-                "-1197.861,512.0003",
-                "2224.599,512.0003"
-              ],
-              "MaterialIndex": [
-                0,
-                0,
-                0
-              ],
-              "EdgeFlags": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-              ],
-              "Materials": [
-                "materials/dev/reflectivity_30.vmat"
-              ]
-            },
-            "SmoothingAngle": 40,
-            "Static": true
           }
         ]
       },
@@ -599,8 +425,9 @@
             "__guid": "6a856510-0ec3-4fa1-b92c-9f6d1e5a858d",
             "Center": "0,0,64",
             "IsTrigger": true,
-            "Scale": "224,224,128",
-            "Static": false
+            "Scale": "192,224,128",
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.Camera.CameraTrigger",
@@ -627,6 +454,7 @@
             "__guid": "10865c93-9b81-4d45-94df-215e9d847d7a",
             "FieldOfView": 70,
             "FollowTargets": true,
+            "Lerping": true,
             "Priority": 0,
             "Static": true
           }
@@ -646,7 +474,8 @@
             "Center": "0,0,64",
             "IsTrigger": true,
             "Scale": "224,224,128",
-            "Static": false
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.Camera.CameraTrigger",
@@ -673,6 +502,55 @@
             "__guid": "950d56ba-21fe-41c2-94f7-d2c02d21faf2",
             "FieldOfView": 70,
             "FollowTargets": true,
+            "Lerping": true,
+            "Priority": 0,
+            "Static": true
+          }
+        ]
+      },
+      {
+        "__guid": "4c615432-7857-4740-8fd3-53b1fe8da6a0",
+        "Flags": 0,
+        "Name": "room3_camera_trigger",
+        "Position": "112,192,0.0001778322",
+        "Tags": "trigger",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "65b5634c-a387-4438-9dd9-77d2a8e79f46",
+            "Center": "0,0,64",
+            "IsTrigger": true,
+            "Scale": "224,456.334,128",
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
+          },
+          {
+            "__type": "Clover.Camera.CameraTrigger",
+            "__guid": "711ecf61-320e-43d8-825e-975feec13f79",
+            "Camera": {
+              "_type": "component",
+              "component_id": "ec24e341-bfde-49cb-af31-f1adf4eaf959",
+              "go": "a2096b15-7ade-4e20-8b88-01dce8af985f",
+              "component_type": "CameraNode"
+            }
+          }
+        ]
+      },
+      {
+        "__guid": "a2096b15-7ade-4e20-8b88-01dce8af985f",
+        "Flags": 0,
+        "Name": "room3_camera",
+        "Position": "336,320,176",
+        "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "CameraNode",
+            "__guid": "ec24e341-bfde-49cb-af31-f1adf4eaf959",
+            "FieldOfView": 70,
+            "FollowTargets": true,
+            "Lerping": true,
             "Priority": 0,
             "Static": true
           }
@@ -742,6 +620,171 @@
             "Soundscape": "sounds/ambience/inside.sndscape",
             "StayActiveOnExit": true,
             "Type": "Point"
+          }
+        ]
+      },
+      {
+        "__guid": "a784a3bb-fc0a-4396-aa57-9a6315bb6126",
+        "Flags": 0,
+        "Name": "Interior",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "70846090-a453-4c8b-bda3-1ff4b1017db4",
+            "BodyGroups": 5461,
+            "Model": "worlds/player_house/floor_base/floor_base.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "0b819148-fb33-4620-a773-aaf95b18151a",
+        "Flags": 0,
+        "Name": "Object",
+        "Position": "320,320,-0.0001259876",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.RoomTrigger",
+            "__guid": "312ffdfe-901e-4866-a1dd-c43f9fde776e",
+            "BodyGroupsToHide": [],
+            "InteriorManager": {
+              "_type": "component",
+              "component_id": "c4babfdc-5804-4dfc-aad1-c453c83e66cd",
+              "go": "f5784bcb-d490-43f6-b2fc-fc354ff8f611",
+              "component_type": "InteriorManager"
+            },
+            "RoomId": "room1"
+          },
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "e0b9ec38-2035-43bf-934e-22e02148f980",
+            "Center": "0,0,48",
+            "IsTrigger": true,
+            "Scale": "192,192,96",
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
+          }
+        ]
+      },
+      {
+        "__guid": "0fc071f2-8488-45cc-960f-88e8d4623fe9",
+        "Flags": 0,
+        "Name": "Object (1)",
+        "Position": "320,96,-0.0001259876",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.RoomTrigger",
+            "__guid": "f37e9b9c-ec27-4624-ae45-9fd299dfe2dc",
+            "BodyGroupsToHide": [],
+            "InteriorManager": {
+              "_type": "component",
+              "component_id": "c4babfdc-5804-4dfc-aad1-c453c83e66cd",
+              "go": "f5784bcb-d490-43f6-b2fc-fc354ff8f611",
+              "component_type": "InteriorManager"
+            },
+            "RoomId": "room2"
+          },
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "2176c6f5-cc56-497a-b7d5-794b4d080c70",
+            "Center": "0,0,48",
+            "IsTrigger": true,
+            "Scale": "192,192,96",
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
+          }
+        ]
+      },
+      {
+        "__guid": "699757f1-6b4f-4162-b837-690cd3988b32",
+        "Flags": 0,
+        "Name": "Object (2)",
+        "Position": "96,208,-0.000120671",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.RoomTrigger",
+            "__guid": "6702e9a2-34c4-483b-8e48-dcbda034f23c",
+            "BodyGroupsToHide": [
+              "room1",
+              "room2",
+              "room4",
+              "separator"
+            ],
+            "InteriorManager": {
+              "_type": "component",
+              "component_id": "c4babfdc-5804-4dfc-aad1-c453c83e66cd",
+              "go": "f5784bcb-d490-43f6-b2fc-fc354ff8f611",
+              "component_type": "InteriorManager"
+            },
+            "RoomId": "room3"
+          },
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "4e57f9e0-528b-43e7-9fa9-a1066d1f3af7",
+            "Center": "0,0,48",
+            "IsTrigger": true,
+            "Scale": "192,416,96",
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
+          }
+        ]
+      },
+      {
+        "__guid": "02739aea-c0e1-4055-b800-9cf772aebfe2",
+        "Flags": 0,
+        "Name": "Object (3)",
+        "Position": "208,544,-0.0001141847",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.RoomTrigger",
+            "__guid": "25c98bb7-6d5f-414b-8584-d5bccd3918e0",
+            "BodyGroupsToHide": [],
+            "InteriorManager": {
+              "_type": "component",
+              "component_id": "c4babfdc-5804-4dfc-aad1-c453c83e66cd",
+              "go": "f5784bcb-d490-43f6-b2fc-fc354ff8f611",
+              "component_type": "InteriorManager"
+            },
+            "RoomId": "room4"
+          },
+          {
+            "__type": "Sandbox.BoxCollider",
+            "__guid": "6f624e37-9b16-43e1-bd50-676159b795f4",
+            "Center": "0,0,48",
+            "IsTrigger": true,
+            "Scale": "416,192,96",
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
+          }
+        ]
+      },
+      {
+        "__guid": "dbad1da4-db5f-41e2-9c7f-7020fda1ec47",
+        "Flags": 0,
+        "Name": "Plane",
+        "Position": "496,256,0.00002973069",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.PlaneCollider",
+            "__guid": "40f0c28f-62b8-43b4-ab9d-d038e5a2af2a",
+            "Center": "0,0,0",
+            "IsTrigger": false,
+            "Scale": "3000,3000",
+            "Static": true,
+            "SurfaceVelocity": "0,0,0"
           }
         ]
       }

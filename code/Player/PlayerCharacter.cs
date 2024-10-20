@@ -52,6 +52,8 @@ public sealed partial class PlayerCharacter : Component
 
 	public string LastEntrance { get; set; }
 
+	public bool IsLocalPlayer => Local == this;
+
 	protected override void OnStart()
 	{
 		if ( IsProxy ) return;

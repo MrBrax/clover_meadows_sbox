@@ -30,4 +30,13 @@ public class CameraTrigger : Component, Component.ITriggerListener
 
 		Camera.Priority = 0;
 	}
+
+	protected override void DrawGizmos()
+	{
+		if ( Camera.IsValid() )
+		{
+			Gizmo.Transform = global::Transform.Zero;
+			Gizmo.Draw.Arrow( WorldPosition, Camera.WorldPosition );
+		}
+	}
 }
