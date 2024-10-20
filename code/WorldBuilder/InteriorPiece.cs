@@ -21,7 +21,7 @@ public class InteriorPiece : Component
 		return BelongsToRooms.Contains( room );
 	}
 
-	protected override void OnUpdate()
+	/*protected override void OnUpdate()
 	{
 		var camera = Scene.Camera;
 
@@ -34,5 +34,5 @@ public class InteriorPiece : Component
 		var dot = toCamera.Dot( cameraForward );
 
 		Gizmo.Draw.Text( dot.ToString(), new Transform( WorldPosition ) );
-	}
+	}*/
 }

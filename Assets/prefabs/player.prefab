@@ -368,25 +368,6 @@
         ]
       },
       {
-        "__guid": "5b40fa63-b198-426b-a53e-e3841791e7af",
-        "Flags": 0,
-        "Name": "Camera (1)",
-        "Position": "168.897,0,34.77294",
-        "Rotation": "0.000000000000000000000219619,0.000000000000005024296,-1,-0.00000004371139",
-        "Enabled": true,
-        "Components": [
-          {
-            "__type": "CameraNode",
-            "__guid": "4bfeaf52-03a5-4eb5-8679-5b0183a6aad9",
-            "FieldOfView": 90,
-            "FollowTargets": false,
-            "Lerping": true,
-            "Priority": 0,
-            "Static": false
-          }
-        ]
-      },
-      {
         "__guid": "8be4e3e2-33c1-4c39-a5b0-ca2696886f90",
         "Flags": 0,
         "Name": "Cursor",
@@ -495,6 +476,25 @@
                 "FollowTargets": true,
                 "Lerping": true,
                 "Priority": 1,
+                "Static": false
+              }
+            ]
+          },
+          {
+            "__guid": "5b40fa63-b198-426b-a53e-e3841791e7af",
+            "Flags": 0,
+            "Name": "SkyCamera",
+            "Position": "168.897,0,34.77294",
+            "Rotation": "0.000000000000000000000219619,0.000000000000005024296,-1,-0.00000004371139",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "CameraNode",
+                "__guid": "4bfeaf52-03a5-4eb5-8679-5b0183a6aad9",
+                "FieldOfView": 90,
+                "FollowTargets": false,
+                "Lerping": true,
+                "Priority": 0,
                 "Static": false
               }
             ]
