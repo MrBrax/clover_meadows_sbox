@@ -14,6 +14,12 @@
           "go": "0827e2ab-e08f-4489-af05-10b6c1c63433",
           "component_type": "Fog"
         },
+        "LightningComponent": {
+          "_type": "component",
+          "component_id": "73c23ba0-ddef-4cfe-aacd-f05d922b8612",
+          "go": "acc77397-1fad-41e1-a044-e364a86c1e99",
+          "component_type": "Lightning"
+        },
         "RainComponent": {
           "_type": "component",
           "component_id": "ef95e8c8-0f57-4e40-82bc-290d0ad8296f",
@@ -521,6 +527,47 @@
                   "Id": "00000000-0000-0000-0000-000000000000"
                 },
                 "Volume": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__guid": "acc77397-1fad-41e1-a044-e364a86c1e99",
+        "Flags": 0,
+        "Name": "Lightning",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Clover.WorldBuilder.Weather.Lightning",
+            "__guid": "73c23ba0-ddef-4cfe-aacd-f05d922b8612",
+            "LightningLight": {
+              "_type": "component",
+              "component_id": "8b8c5d0a-4483-4af1-9d61-4cdafbe32cdb",
+              "go": "829c61ee-846a-4bc5-9208-998493777573",
+              "component_type": "DirectionalLight"
+            },
+            "LightningSound": "sounds/weather/lightning/lightning.sound"
+          }
+        ],
+        "Children": [
+          {
+            "__guid": "829c61ee-846a-4bc5-9208-998493777573",
+            "Flags": 0,
+            "Name": "LightningLight",
+            "Position": "0,0,158.6241",
+            "Rotation": "0.1830127,0.6830127,0.1830127,0.6830127",
+            "Tags": "light_directional,light",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.DirectionalLight",
+                "__guid": "8b8c5d0a-4483-4af1-9d61-4cdafbe32cdb",
+                "FogMode": "Enabled",
+                "FogStrength": 1,
+                "LightColor": "9.1373,9.7987,10,1",
+                "Shadows": true,
+                "SkyColor": "1,1,1,1"
               }
             ]
           }

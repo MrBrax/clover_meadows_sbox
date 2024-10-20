@@ -33,6 +33,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 	[Property] public Rain RainComponent { get; set; }
 	[Property] public Fog FogComponent { get; set; }
 	[Property] public Wind WindComponent { get; set; }
+	[Property] public Lightning LightningComponent { get; set; }
 
 	public bool IsInside { get; set; } = false;
 	public bool PrecipitationEnabled { get; private set; }
@@ -90,6 +91,24 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		return GetStaticFloat( input );
 	}
 
+	protected int GetLightningLevel( DateTime time )
+	{
+		var input = $"{time.DayOfYear}{time.Hour}-lightning-level";
+		var value = GetStaticFloat( input );
+		if ( value < 0.2f )
+		{
+			return 1;
+		}
+		else if ( value < 0.5f )
+		{
+			return 2;
+		}
+		else
+		{
+			return 3;
+		}
+	}
+
 	protected float GetFogChance( DateTime time )
 	{
 		var input = $"{time.DayOfYear}{time.Hour}-fog";
@@ -131,7 +150,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 	{
 		base.OnAwake();
 		SetPrecipitation( 0, 0, 0, true );
-		SetLightning( false, true );
+		SetLightning( 0, true );
 		SetWind( 0, true );
 		SetFog( 0, true );
 		SetCloudDensity( 0.0f, true );
@@ -142,8 +161,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		public DateTime Time;
 
 		public int RainLevel;
-		public bool Lightning;
-
+		public int LightningLevel;
 		public int WindLevel;
 		public int FogLevel;
 
@@ -154,12 +172,13 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 
 		public bool Rain => RainLevel > 0;
 		public bool Wind => WindLevel > 0;
+		public bool Lightning => LightningLevel > 0;
 
 		public WeatherReport( DateTime time )
 		{
 			Time = time;
 			RainLevel = 0;
-			Lightning = false;
+			LightningLevel = 0;
 			WindLevel = 0;
 			FogLevel = 0;
 			CloudDensity = 0.0f;
@@ -177,7 +196,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		if ( precipitationChance > 0.8f )
 		{
 			weather.RainLevel = GetPrecipitationLevel( time );
-			weather.Lightning = lightningChance > 0.8f;
+			weather.LightningLevel = GetLightningLevel( time );
 			// weather.Fog = fogChance > 0.6f;
 			weather.FogLevel = fogChance > 0.6f ? 1 : 0;
 			weather.WindLevel = 1;
@@ -186,7 +205,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		else
 		{
 			weather.RainLevel = 0;
-			weather.Lightning = lightningChance > 0.9f;
+			weather.LightningLevel = 0;
 
 			// higher chance of fog in the morning
 			// weather.Fog = time.Hour > 3 && time.Hour < 7 ? fogChance > 0.2f : fogChance > 0.8f;
@@ -241,13 +260,13 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		var weather = GetWeather( now );
 
 		SetPrecipitation( weather.RainLevel, weather.WindDirection, weather.WindLevel * 3f, instant );
-		SetLightning( weather.Lightning, instant );
+		SetLightning( weather.LightningLevel, instant );
 		SetWind( weather.WindLevel, instant );
 		SetFog( weather.FogLevel, instant );
 		SetCloudDensity( weather.CloudDensity, instant );
 
 		Log.Info(
-			$"Weather {now.Hour}: Rain: {weather.RainLevel}, Lightning: {weather.Lightning}, Wind: {weather.WindLevel}, Fog: {weather.FogLevel}, CloudDensity: {weather.CloudDensity}" );
+			$"Weather {now.Hour}: Rain: {weather.RainLevel}, Lightning: {weather.LightningLevel}, Wind: {weather.WindLevel}, Fog: {weather.FogLevel}, CloudDensity: {weather.CloudDensity}" );
 	}
 
 	protected override void OnFixedUpdate()
@@ -290,17 +309,10 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		}
 	}
 
-	private void SetLightning( bool state, bool instant = false )
+	private void SetLightning( int level, bool instant = false )
 	{
-		LightningEnabled = state;
-		if ( IsInside )
-		{
-			// GetNode<Lightning>( "LightningInside" ).SetEnabled( state );
-		}
-		else
-		{
-			// GetNode<Lightning>( "LightningOutside" ).SetEnabled( state );
-		}
+		LightningComponent.SetEnabled( level > 0, !instant );
+		LightningComponent.SetLevel( level, !instant );
 	}
 
 	private void SetWind( int level, bool instant = false )
@@ -388,6 +400,11 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		}
 		else
 		{
+			if ( weather.Rain && weather.Lightning )
+			{
+				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/thunderstorms-night-overcast-rain.png" );
+			}
+
 			if ( weather.Rain )
 			{
 				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/partly-cloudy-night-rain.png" );
