@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using Clover.Components;
 using Clover.Data;
+using Clover.Interactable;
 using Clover.Inventory;
 using Clover.Player;
 
@@ -10,7 +11,7 @@ namespace Clover.Items;
 [Category( "Clover/Items" )]
 [Icon( "outlet" )]
 [Description( "Has to be added to items placed on the world grid, otherwise they will not be saved." )]
-public class WorldItem : Component, IPickupable
+public class WorldItem : Component, IPickupable, Component.ITriggerListener
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 
@@ -38,6 +39,7 @@ public class WorldItem : Component, IPickupable
 	[Property] public ItemData ItemData { get; set; }
 
 	[Property] public Vector3 PlaceModeOffset { get; set; }
+	public ItemHighlight ItemHighlight { get; set; }
 
 	protected override void OnAwake()
 	{
@@ -157,6 +159,12 @@ public class WorldItem : Component, IPickupable
 		}
 	}
 
+	protected override void OnStart()
+	{
+		var itemHighlight = AddComponent<ItemHighlight>();
+		ItemHighlight = itemHighlight;
+	}
+
 	[ConVar( "clover_debug_worlditem" )] public static bool DebugWorldItem { get; set; }
 
 	[Property] public bool CanPickupSimple { get; set; }
@@ -218,5 +226,25 @@ public class WorldItem : Component, IPickupable
 		var collider = GameObject.AddComponent<BoxCollider>();
 		collider.Scale = new Vector3( 16, 16, 16 );
 		collider.Center = new Vector3( 0, 0, 8 );
+	}
+	
+	public void OnTriggerEnter( Collider other )
+	{
+		ToggleHighlight( other, true);
+	}
+
+	public void OnTriggerExit( Collider other )
+	{
+		ToggleHighlight( other, false );
+	}
+
+	private void ToggleHighlight(Collider otherCollider, bool shouldEnable)
+	{
+		if ( otherCollider.GetComponentInParent<PlayerCharacter>() == null )
+		{
+			return;
+		}
+
+		ItemHighlight.Enabled = shouldEnable;
 	}
 }
