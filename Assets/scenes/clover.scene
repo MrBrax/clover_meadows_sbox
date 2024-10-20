@@ -185,8 +185,7 @@
         },
         {
           "__type": "Clover.Ui.Notifications",
-          "__guid": "a366d06f-efbf-4cf7-9391-44ebca7afae8",
-          "MyStringValue": "Hello World!"
+          "__guid": "a366d06f-efbf-4cf7-9391-44ebca7afae8"
         }
       ]
     },

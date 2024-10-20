@@ -22,12 +22,34 @@ public class ItemPlacer : Component
 	private ItemData ItemData => InventorySlot.GetItem().ItemData;
 
 	private GameObject _ghost;
+	private ItemData _selectedItem;
+	private bool _isPlacingFromInventory;
 
 	protected override void OnStart()
 	{
-		Mouse.Visible = true;
+		Mouse.Visible = false;
 	}
 
+	public void StartMovingPlacedItem( WorldItem selectedGameObject )
+	{
+		if ( selectedGameObject == null )
+		{
+			return; 
+		}
+		Log.Info( selectedGameObject );
+		if ( IsPlacing )
+		{
+			StopPlacing();
+		}
+		
+		_isPlacingFromInventory = false;
+		IsPlacing = true;
+		_selectedItem = selectedGameObject.ItemData;
+		selectedGameObject.DestroyGameObject();
+		PlaceGhostInternal(_selectedItem.PlaceScene.Clone());
+		Mouse.Visible = true;
+
+	}
 	public void StartPlacing( int inventorySlotIndex )
 	{
 		if ( !Player.IsValid() ) throw new System.Exception( "Player is not valid" );
@@ -40,9 +62,10 @@ public class ItemPlacer : Component
 			StopPlacing();
 		}
 
+		_isPlacingFromInventory = true;
 		InventorySlotIndex = inventorySlotIndex;
 		IsPlacing = true;
-		CreateGhost();
+		CreateGhostFromInventory();
 		Mouse.Visible = true;
 	}
 
@@ -50,18 +73,26 @@ public class ItemPlacer : Component
 	{
 		IsPlacing = false;
 		DestroyGhost();
-		// Mouse.Visible = false;
+		_selectedItem = null;
+		Mouse.Visible = false;
 	}
-
-	public void CreateGhost()
+	
+	public void CreateGhostFromInventory()
 	{
 		var item = InventorySlot.GetItem();
-
+		_selectedItem = item.ItemData;
 		var gameObject = item.ItemData.PlaceScene.Clone();
-		gameObject.NetworkMode = NetworkMode.Never;
+		PlaceGhostInternal( gameObject );
+		
+	}
+
+	private void PlaceGhostInternal(GameObject selectedGameObject)
+	{
+		
+		selectedGameObject.NetworkMode = NetworkMode.Never;
 
 		// kill all colliders
-		foreach ( var collider in gameObject.Components.GetAll<Collider>( FindMode.EverythingInSelfAndDescendants )
+		foreach ( var collider in selectedGameObject.Components.GetAll<Collider>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
 			if ( collider is BoxCollider boxCollider )
@@ -74,22 +105,22 @@ public class ItemPlacer : Component
 		}
 
 		// kill all worlditems
-		foreach ( var worldItem in gameObject.Components.GetAll<WorldItem>( FindMode.EverythingInSelfAndDescendants )
+		foreach ( var worldItem in selectedGameObject.Components.GetAll<WorldItem>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
 			worldItem.Destroy();
 		}
 
 		// tint the ghost
-		foreach ( var renderable in gameObject.Components
+		foreach ( var renderable in selectedGameObject.Components
 			         .GetAll<ModelRenderer>( FindMode.EverythingInSelfAndDescendants ).ToList() )
 		{
 			renderable.Tint = renderable.Tint.WithAlpha( 0.5f );
 		}
 
-		gameObject.WorldPosition = Player.WorldPosition;
+		selectedGameObject.WorldPosition = Player.WorldPosition;
 
-		_ghost = gameObject;
+		_ghost = selectedGameObject;
 
 		// create cursor
 		/*cursor = Scene.CreateObject();
@@ -146,6 +177,7 @@ public class ItemPlacer : Component
 			}
 			else
 			{
+				Log.Info( "Bad" );
 				Player.Notify( Notifications.NotificationType.Warning, "Invalid placement" );
 			}
 
@@ -172,7 +204,7 @@ public class ItemPlacer : Component
 	{
 		try
 		{
-			Player.World.SpawnPlacedNode( InventorySlot.GetItem(), _ghost.WorldPosition, _ghost.WorldRotation,
+			Player.World.SpawnPlacedNode( _selectedItem, _ghost.WorldPosition, _ghost.WorldRotation,
 				_lastItemPlacement );
 		}
 		catch ( Exception e )
@@ -182,8 +214,11 @@ public class ItemPlacer : Component
 			return;
 		}
 
-		InventorySlot.TakeOneOrDelete();
-
+		if ( _isPlacingFromInventory )
+		{
+			InventorySlot.TakeOneOrDelete();
+		}
+		
 		StopPlacing();
 	}
 
@@ -246,7 +281,7 @@ public class ItemPlacer : Component
 
 		var endPosition = trace.EndPosition;
 
-		endPosition += ItemData.PlaceModeOffset;
+		endPosition += _selectedItem.PlaceModeOffset;
 
 		var gridPosition = Player.World.WorldToItemGrid( endPosition );
 
