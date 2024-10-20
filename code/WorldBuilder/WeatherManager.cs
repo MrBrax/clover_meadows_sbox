@@ -4,9 +4,9 @@ using Clover.WorldBuilder.Weather;
 
 namespace Clover.WorldBuilder;
 
+[Category( "Clover/World" )]
 public class WeatherManager : Component, IWorldEvent, ITimeEvent
 {
-	
 	public enum WeatherEffects
 	{
 		None = 0,
@@ -18,7 +18,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 
 	public static DirectionalLight Sun =>
 		Game.ActiveScene.GetAllComponents<DirectionalLight>().FirstOrDefault( x => x.Tags.Has( "sun" ) );
-	
+
 	private int StringToInt( string input )
 	{
 		var hash = 0;
@@ -26,13 +26,14 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		{
 			hash = input[i] + (hash << 6) + (hash << 16) - hash;
 		}
+
 		return hash;
 	}
-	
+
 	[Property] public Rain RainComponent { get; set; }
 	[Property] public Fog FogComponent { get; set; }
 	[Property] public Wind WindComponent { get; set; }
-	
+
 	public bool IsInside { get; set; } = false;
 	public bool PrecipitationEnabled { get; private set; }
 	public bool LightningEnabled { get; private set; }
@@ -103,7 +104,6 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 
 	protected override void OnStart()
 	{
-		
 		// debug check today's weather
 		/* for ( int i = 0; i < 24; i++ )
 		{
@@ -125,7 +125,6 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 			IsInside = world.Data.IsInside;
 			Setup( true );
 		};*/
-
 	}
 
 	protected override void OnAwake()
@@ -144,10 +143,10 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 
 		public int RainLevel;
 		public bool Lightning;
-		
+
 		public int WindLevel;
 		public int FogLevel;
-		
+
 		public float CloudDensity;
 
 		public float WindDirection;
@@ -167,7 +166,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 			WindDirection = 0.0f;
 		}
 	}
-	
+
 	public WeatherReport GetWeather( DateTime time )
 	{
 		var weather = new WeatherReport( time );
@@ -200,14 +199,13 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		weather.WindDirection = GetWindDirection( time );
 
 		return weather;
-
 	}
-	
+
 	public WeatherReport GetCurrentWeather()
 	{
 		return GetWeather( TimeManager.Time );
 	}
-	
+
 	public WeatherReport GetLastPrecipitation( DateTime time )
 	{
 		var weather = new WeatherReport( time );
@@ -231,12 +229,10 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		}
 
 		return weather;
-
 	}
-	
+
 	private void Setup( bool instant = false )
 	{
-
 		Log.Info( "Setting up weather" );
 
 		var now = TimeManager.Time;
@@ -250,7 +246,8 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		SetFog( weather.FogLevel, instant );
 		SetCloudDensity( weather.CloudDensity, instant );
 
-		Log.Info( $"Weather {now.Hour}: Rain: {weather.RainLevel}, Lightning: {weather.Lightning}, Wind: {weather.WindLevel}, Fog: {weather.FogLevel}, CloudDensity: {weather.CloudDensity}" );
+		Log.Info(
+			$"Weather {now.Hour}: Rain: {weather.RainLevel}, Lightning: {weather.Lightning}, Wind: {weather.WindLevel}, Fog: {weather.FogLevel}, CloudDensity: {weather.CloudDensity}" );
 	}
 
 	protected override void OnFixedUpdate()
@@ -258,7 +255,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		if ( !PlayerCharacter.Local.IsValid() ) return;
 		WorldPosition = PlayerCharacter.Local.WorldPosition;
 	}
-	
+
 	private void SetPrecipitation( int level, float direction, float windSpeed, bool instant = false )
 	{
 		PrecipitationEnabled = level > 0;
@@ -270,7 +267,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 			RainComponent.SetEnabled( false );
 			return;
 		}
-		
+
 		if ( IsInside )
 		{
 			RainComponent.SetEnabled( false );
@@ -288,6 +285,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 			{
 				RainComponent.SetLevel( level, true );
 			}
+
 			RainComponent.SetWind( direction, windSpeed );
 		}
 	}
@@ -322,7 +320,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		{
 			// GetNode<Wind>( "Wind" ).SetEnabledSmooth( state );
 		}*/
-		
+
 		WindComponent.SetEnabled( level > 0, !instant );
 	}
 
@@ -354,7 +352,6 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 
 		FogComponent.SetEnabled( level > 0, !instant );
 		FogComponent.SetLevel( level, !instant );
-
 	}
 
 	private void SetCloudDensity( float density, bool instant = false )
@@ -367,7 +364,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		Logger.Info( "WeatherManager", $"Setting cloud density to {density}" );
 		SunLight.ShadowBlur = density * 2f;*/
 	}
-	
+
 	public Texture GetWeatherIcon()
 	{
 		var now = TimeManager.Time;
@@ -388,11 +385,9 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 			}
 
 			return Texture.Load( FileSystem.Mounted, "ui/icons/weather/clear-day.png" );
-
 		}
 		else
 		{
-
 			if ( weather.Rain )
 			{
 				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/partly-cloudy-night-rain.png" );
@@ -404,7 +399,6 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 			}
 
 			return Texture.Load( FileSystem.Mounted, "ui/icons/weather/clear-night.png" );
-
 		}
 
 		/* if ( weather.RainLevel > 0 )
@@ -421,7 +415,6 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		}*/
 
 		// return Texture.Load( FileSystem.Mounted, "ui/icons/weather/barometer.png" );
-
 	}
 
 	public void OnWorldLoaded( World world )
@@ -431,7 +424,7 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 	public void OnWorldUnloaded( World world )
 	{
 	}
-	
+
 	public void OnWorldChanged( World world )
 	{
 		Log.Info( "IS INSIDE: " + world.Data.IsInside );
@@ -446,6 +439,5 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 
 	public void OnNewMinute( int minute )
 	{
-		
 	}
 }

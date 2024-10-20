@@ -5,6 +5,7 @@ using Clover.Persistence;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
 public class Shovel : BaseCarriable
 {
 	[Property] public SoundEvent HitSound { get; set; }

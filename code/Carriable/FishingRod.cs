@@ -8,6 +8,7 @@ using Clover.Player;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
 public class FishingRod : BaseCarriable
 {
 	public enum RodState
@@ -38,7 +39,9 @@ public class FishingRod : BaseCarriable
 
 	public bool HasCasted = false;
 	private bool _isWindup = false;
+
 	private bool _isCasting = false;
+
 	// private bool _isBusy = false;
 	private TimeSince _timeSinceWindup;
 	private float _castDistance = 0f;
@@ -85,7 +88,7 @@ public class FishingRod : BaseCarriable
 			Log.Warning( "Cannot use." );
 			return;
 		}
-		
+
 		if ( !Networking.IsHost )
 		{
 			Log.Error( "Only the host can use world altering items for now." );
@@ -418,7 +421,7 @@ public class FishingRod : BaseCarriable
 		}
 
 		var reelPosition = Bobber.WorldPosition + reelDirection * amount;
-		
+
 		// Gizmo.Draw.LineSphere( reelPosition, 8f );
 
 		var dist = reelPosition.Distance( WorldPosition );
@@ -564,7 +567,7 @@ public class FishingRod : BaseCarriable
 		// ReelIn( 128f );
 		ResetAll();
 	}
-	
+
 	private void SetRodAngle( float angle )
 	{
 		// Model.LocalRotation = Rotation.FromPitch( angle * -1f );

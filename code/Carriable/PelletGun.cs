@@ -3,6 +3,7 @@ using Clover.Objects;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
 public class PelletGun : BaseCarriable
 {
 	[Property] public float FireRate { get; set; } = 3f;

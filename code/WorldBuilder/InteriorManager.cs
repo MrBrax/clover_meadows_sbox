@@ -1,8 +1,8 @@
 ﻿namespace Clover.WorldBuilder;
 
+[Category( "Clover/World" )]
 public class InteriorManager : Component
 {
-	
 	[Property, InlineEditor] public Dictionary<string, Room> Rooms { get; set; } = new();
 
 	public class Room
@@ -36,14 +36,12 @@ public class InteriorManager : Component
 					mesh.Mesh.SetFaceMaterial( face, "materials/world/summer/cliff.vmat" );
 				}
 			}
-			
+
 			if ( roomData.Floor.Components.TryGet<ModelRenderer>( out var modelRenderer ) )
 			{
-				
 			}
-			
 		}
-		
+
 		if ( roomData.Wall.IsValid() )
 		{
 			if ( roomData.Wall.Components.TryGet<MeshComponent>( out var mesh ) )
@@ -54,6 +52,5 @@ public class InteriorManager : Component
 				}
 			}
 		}
-		
 	}
 }

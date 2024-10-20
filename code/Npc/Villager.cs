@@ -2,6 +2,9 @@
 
 namespace Clover.Npc;
 
+[Title( "Villager" )]
+[Icon( "face" )]
+[Category( "Clover/Npc" )]
 public class Villager : BaseNpc
 {
 	private Vector3 _targetPos;
@@ -24,7 +27,6 @@ public class Villager : BaseNpc
 
 		Log.Info( "Villager WalkToRandomTarget: " + _targetPos );
 		Agent.MoveTo( _targetPos );
-		
 	}
 
 	protected override void OnUpdate()

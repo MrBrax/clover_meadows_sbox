@@ -13,7 +13,7 @@ namespace Clover.Player;
 
 [Title( "Player Character" )]
 [Icon( "face" )]
-[Category( "Clover" )]
+[Category( "Clover/Player" )]
 [Description( "The player character component." )]
 public sealed partial class PlayerCharacter : Component
 {

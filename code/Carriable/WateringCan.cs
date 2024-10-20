@@ -4,6 +4,7 @@ using Clover.Player;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
 public sealed class WateringCan : BaseCarriable
 {
 	[Property] public ParticleConeEmitter WaterParticles { get; set; }

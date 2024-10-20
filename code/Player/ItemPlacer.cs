@@ -7,6 +7,9 @@ using Clover.Ui;
 
 namespace Clover.Player;
 
+[Title( "Item Placer" )]
+[Icon( "inventory" )]
+[Category( "Clover/Player" )]
 public class ItemPlacer : Component, IWorldEvent
 {
 	private PlayerCharacter Player => GetComponent<PlayerCharacter>();

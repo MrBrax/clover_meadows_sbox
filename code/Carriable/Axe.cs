@@ -3,6 +3,7 @@ using Clover.Items;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
 public class Axe : BaseCarriable
 {
 	[Property] public SoundEvent SwingSound { get; set; }

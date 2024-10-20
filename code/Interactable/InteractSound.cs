@@ -2,6 +2,7 @@
 
 namespace Clover.Interactable;
 
+[Category( "Clover/Interactable" )]
 public class InteractSound : Component, IInteract
 {
 	[Property] public SoundEvent Sound { get; set; }

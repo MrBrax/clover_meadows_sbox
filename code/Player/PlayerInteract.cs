@@ -5,6 +5,9 @@ using Clover.Ui;
 
 namespace Clover.Player;
 
+[Title( "Player Interact" )]
+[Icon( "inventory" )]
+[Category( "Clover/Player" )]
 public class PlayerInteract : Component
 {
 	[RequireComponent] public PlayerCharacter Player { get; set; }

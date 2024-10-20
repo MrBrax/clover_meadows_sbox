@@ -11,6 +11,7 @@ using Clover.Ui;
 
 namespace Clover.WorldBuilder;
 
+[Category( "Clover/World" )]
 public class ShopManager : Component
 {
 	[Property] public string StoreId { get; set; }

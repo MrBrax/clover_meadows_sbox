@@ -9,7 +9,7 @@
           "OnSelect": {
             "__version": 8,
             "__guid": "e22ada2e-f2a9-4d51-95b0-ba9395deb52a",
-            "__changeId": 87,
+            "__changeId": 97,
             "UserData": {
               "Title": "On Select",
               "ReferencedComponentTypes": []
@@ -312,7 +312,7 @@
             },
             {
               "Id": "noclovers",
-              "Text": "You don\u0027t seem to have enough clovers.",
+              "Text": "You don\u0027t seem to have enough clovers for that.",
               "Choices": [],
               "IsHidden": true
             },

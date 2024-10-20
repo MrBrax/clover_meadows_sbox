@@ -6,11 +6,11 @@ using Clover.Player;
 
 namespace Clover.WorldBuilder;
 
+[Category( "Clover/World" )]
 public class FishSpot : Component
 {
-	
 	[Property] public List<FishData> SpecialFish { get; set; }
-	
+
 	[Property] public FishData.FishLocation Location { get; set; } = FishData.FishLocation.River;
 
 	[Property] public float SpawnRadius { get; set; } = 100f;
@@ -20,7 +20,7 @@ public class FishSpot : Component
 		if ( IsProxy || !Networking.IsHost ) return;
 		if ( Random.Shared.Float() > 0.5f ) SpawnFish();
 	}
-	
+
 	private TimeSince _lastSpawn;
 
 	protected override void OnFixedUpdate()
@@ -31,7 +31,6 @@ public class FishSpot : Component
 			_lastSpawn = 0;
 			CheckSpawn();
 		}
-		
 	}
 
 	private void CheckSpawn()
@@ -52,7 +51,6 @@ public class FishSpot : Component
 
 	private void SpawnFish()
 	{
-		
 		var findPositionTry = 0;
 		var basePosition = WorldPosition;
 
@@ -70,17 +68,16 @@ public class FishSpot : Component
 			// var resources = Resources.LoadAllResources( "res://items/fish/" );
 			// var fish = resources.Where( r => r is FishData ).Select( r => r as FishData ).ToList();
 			// fishData = fish.PickRandom();
-			
+
 			var fishes = ResourceLibrary.GetAll<FishData>().Where( f => f.Location == Location ).ToList();
-			
+
 			fishData = Random.Shared.FromList( fishes );
-			
+
 			if ( !fishData.IsValid() )
 			{
 				Log.Warning( $"No fish data found for location {Location}." );
 				return;
 			}
-			
 		}
 
 		if ( fishData == null )
@@ -91,9 +88,8 @@ public class FishSpot : Component
 
 		while ( findPositionTry < 10 )
 		{
-			
 			var randomPosition = basePosition;
-			
+
 			randomPosition += new Vector3(
 				Random.Shared.Float() * SpawnRadius * 2 - SpawnRadius,
 				Random.Shared.Float() * SpawnRadius * 2 - SpawnRadius,
@@ -102,9 +98,8 @@ public class FishSpot : Component
 
 			if ( FishingRod.CheckForWater( randomPosition ) )
 			{
-				
 				var world = WorldManager.Instance?.ActiveWorld;
-				
+
 				if ( world == null )
 				{
 					Log.Warning( "No active world found." );
@@ -114,7 +109,7 @@ public class FishSpot : Component
 				var prefab =
 					SceneUtility.GetPrefabScene(
 						ResourceLibrary.Get<PrefabFile>( "animals/fish/fish_shadow.prefab" ) );
-				
+
 				if ( prefab == null )
 				{
 					Log.Error( "Failed to load fish prefab." );
@@ -123,25 +118,25 @@ public class FishSpot : Component
 
 				var gameObject = prefab.Clone();
 				gameObject.SetParent( world.GameObject );
-				
+
 				var fish = gameObject.GetComponent<CatchableFish>();
-				
+
 				if ( fish == null )
 				{
 					Log.Error( "Failed to get CatchableFish component." );
 					gameObject.Destroy();
 					return;
 				}
-				
+
 				fish.Data = fishData;
 				fish.WorldPosition = randomPosition;
 				fish.SetSize( fishData.Size );
 				fish.Weight = fishData.Weight.GetValue();
 
 				gameObject.NetworkSpawn();
-				
+
 				Log.Info( $"Spawned fish {fishData.Name} at {randomPosition}." );
-				
+
 				return;
 			}
 
@@ -149,7 +144,6 @@ public class FishSpot : Component
 		}
 
 		Log.Warning( $"Failed to find a valid position to spawn fish on {this}." );
-
 	}
 
 	protected override void DrawGizmos()
@@ -157,7 +151,7 @@ public class FishSpot : Component
 		base.DrawGizmos();
 
 		Gizmo.Hitbox.Sphere( new Sphere( Vector3.Zero, SpawnRadius ) );
-		
+
 		Gizmo.Draw.LineSphere( Vector3.Zero, SpawnRadius );
 
 		Gizmo.Draw.Text( Location.ToString(), global::Transform.Zero );

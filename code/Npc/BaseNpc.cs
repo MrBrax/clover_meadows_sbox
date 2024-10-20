@@ -2,6 +2,9 @@
 
 namespace Clover.Npc;
 
+[Title( "Base Npc" )]
+[Icon( "face" )]
+[Category( "Clover/Npc" )]
 public class BaseNpc : Component
 {
 	[RequireComponent] public NavMeshAgent Agent { get; set; }

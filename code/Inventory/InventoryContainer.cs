@@ -88,9 +88,9 @@ public sealed partial class InventoryContainer
 		return Slots.ToImmutableList();
 	}
 
-	public int FreeSlots => MaxItems - Slots.Count;
+	[JsonIgnore] public int FreeSlots => MaxItems - Slots.Count;
 
-	public bool HasFreeSlot => FreeSlots > 0;
+	[JsonIgnore] public bool HasFreeSlot => FreeSlots > 0;
 
 	public void RemoveSlots()
 	{

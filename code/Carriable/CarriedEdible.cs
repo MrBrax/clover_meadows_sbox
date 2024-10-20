@@ -4,6 +4,7 @@ using Clover.Persistence;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
 public class CarriedEdible : BaseCarriable
 {
 	[Property] public ItemData EdibleData { get; set; }

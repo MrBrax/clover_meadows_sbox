@@ -6,6 +6,7 @@ using Sandbox.Diagnostics;
 
 namespace Clover;
 
+[Category( "Clover/World" )]
 public class WorldManager : Component, Component.INetworkSpawn
 {
 	public static WorldManager Instance { get; private set; }

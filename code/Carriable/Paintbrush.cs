@@ -6,6 +6,7 @@ using Clover.Ui;
 
 namespace Clover.Carriable;
 
+[Category( "Clover/Carriable" )]
 public class Paintbrush : BaseCarriable
 {
 	[Property] public SoundEvent PaintSound { get; set; }
@@ -100,7 +101,7 @@ public class Paintbrush : BaseCarriable
 	{
 		CurrentTexture = FileSystem.Data.FindFile( "decals", "*.png" ).FirstOrDefault();
 	}
-	
+
 	public List<string> GetTextures()
 	{
 		FileSystem.Data.CreateDirectory( "decals" );
@@ -125,7 +126,7 @@ public class Paintbrush : BaseCarriable
 			if ( index >= textures.Count ) index = 0;
 
 			CurrentTexture = textures[index];
-			
+
 			Sound.Play( TextureChangeSound );
 
 			// Player.Notify( Notifications.NotificationType.Info, $"Selected texture: {CurrentTexture}" );
