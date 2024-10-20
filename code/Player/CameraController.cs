@@ -12,6 +12,8 @@ public sealed class CameraController : Component
 	[Property] public SoundEvent CameraOutSound { get; set; }
 	[Property] public SoundEvent CameraErrorSound { get; set; }
 
+	[Property] public GameObject CameraPivot { get; set; }
+
 	private bool _playedInSound;
 	private bool _playedOutSound;
 	private bool _playedErrorSound;
@@ -90,6 +92,15 @@ public sealed class CameraController : Component
 		if ( MainUi.Instance.IsValid() && MainUi.Instance.LastInput > MainUi.HideUiDelay * 3 )
 		{
 			SkyCameraNode.Priority = 10;
+		}
+
+		if ( Input.Pressed( "CameraLeft" ) )
+		{
+			CameraPivot.WorldRotation *= Rotation.FromYaw( 30 );
+		}
+		else if ( Input.Pressed( "CameraRight" ) )
+		{
+			CameraPivot.WorldRotation *= Rotation.FromYaw( -30 );
 		}
 	}
 

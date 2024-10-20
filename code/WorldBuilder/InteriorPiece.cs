@@ -20,4 +20,19 @@ public class InteriorPiece : Component
 	{
 		return BelongsToRooms.Contains( room );
 	}
+
+	protected override void OnUpdate()
+	{
+		var camera = Scene.Camera;
+
+		var cameraPosition = camera.WorldPosition;
+		var cameraRotation = camera.WorldRotation;
+		var cameraForward = cameraRotation.Forward;
+
+		// check if we're looking from the back
+		var toCamera = (cameraPosition - WorldPosition).Normal;
+		var dot = toCamera.Dot( cameraForward );
+
+		Gizmo.Draw.Text( dot.ToString(), new Transform( WorldPosition ) );
+	}
 }

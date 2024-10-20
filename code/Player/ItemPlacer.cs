@@ -37,23 +37,23 @@ public class ItemPlacer : Component, IWorldEvent
 	{
 		if ( selectedGameObject == null )
 		{
-			return; 
+			return;
 		}
+
 		Log.Info( selectedGameObject );
 		if ( IsPlacing )
 		{
 			StopPlacing();
 		}
-		
+
 		_isPlacingFromInventory = false;
 		IsPlacing = true;
 		_selectedItem = selectedGameObject.ItemData;
 		selectedGameObject.DestroyGameObject();
-		PlaceGhostInternal(_selectedItem.PlaceScene.Clone());
+		PlaceGhostInternal( _selectedItem.PlaceScene.Clone() );
 		Mouse.Visible = true;
-
 	}
-	
+
 	void IWorldEvent.OnWorldChanged( World world )
 	{
 		StopPlacing();
@@ -91,23 +91,22 @@ public class ItemPlacer : Component, IWorldEvent
 		_selectedItem = null;
 		Mouse.Visible = false;
 	}
-	
+
 	public void CreateGhostFromInventory()
 	{
 		var item = InventorySlot.GetItem();
 		_selectedItem = item.ItemData;
 		var gameObject = item.ItemData.PlaceScene.Clone();
 		PlaceGhostInternal( gameObject );
-		
 	}
 
-	private void PlaceGhostInternal(GameObject selectedGameObject)
+	private void PlaceGhostInternal( GameObject selectedGameObject )
 	{
-		
 		selectedGameObject.NetworkMode = NetworkMode.Never;
 
 		// kill all colliders
-		foreach ( var collider in selectedGameObject.Components.GetAll<Collider>( FindMode.EverythingInSelfAndDescendants )
+		foreach ( var collider in selectedGameObject.Components
+			         .GetAll<Collider>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
 			if ( collider is BoxCollider boxCollider )
@@ -120,7 +119,8 @@ public class ItemPlacer : Component, IWorldEvent
 		}
 
 		// kill all worlditems
-		foreach ( var worldItem in selectedGameObject.Components.GetAll<WorldItem>( FindMode.EverythingInSelfAndDescendants )
+		foreach ( var worldItem in selectedGameObject.Components
+			         .GetAll<WorldItem>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
 			worldItem.Destroy();
@@ -236,7 +236,7 @@ public class ItemPlacer : Component, IWorldEvent
 		{
 			InventorySlot.TakeOneOrDelete();
 		}
-		
+
 		StopPlacing();
 	}
 
@@ -303,6 +303,8 @@ public class ItemPlacer : Component, IWorldEvent
 			_isValidPlacement = false;
 			return;
 		}
+
+		Log.Info( trace.Surface );
 
 		// Gizmo.Transform = new Transform( trace.EndPosition );
 		// Gizmo.Draw.LineBBox( box );
