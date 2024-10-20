@@ -1,4 +1,5 @@
-﻿using Clover.Interactable;
+﻿using Clover.Data;
+using Clover.Interactable;
 using Clover.Inventory;
 using Clover.Items;
 using Clover.Npc;
@@ -69,6 +70,7 @@ public class PlayerInteract : Component
 		{
 			return;
 		}
+		
 
 		if ( Input.Pressed( "use" ) )
 		{
@@ -117,6 +119,43 @@ public class PlayerInteract : Component
 		if ( Input.Pressed( "pickup" ) )
 		{
 			PickUp();
+		}
+
+		if ( Input.Pressed( "move" ) )
+		{
+			if ( !Player.World.Data.DisableItemPlacement )
+			{
+				var interactable = FindInteractable();
+				if ( interactable != null )
+				{
+					_currentInteractable = interactable;
+					Log.Info( "Moving..." );
+
+					Mouse.Visible = true;
+
+					var item = GetWorldItemFromInteract();
+					Player.ItemPlacer.StartMovingPlacedItem( item );
+				
+					if ( !Networking.IsHost )
+					{
+						using ( Rpc.FilterInclude( Connection.Host ) )
+						{
+							_currentInteractable.StartInteractHost( Player );
+						}
+					}
+
+					Input.Clear( "move" );
+				}
+				else
+				{
+					Mouse.Visible = false;
+					Log.Warning( "No interactable found" );
+					// Notifications.Instance.AddNotification( Notifications.NotificationType.Warning, "No interactable found" );
+					Sound.Play( UseFailSound, WorldPosition );
+				}
+
+			}
+			
 		}
 
 		if ( Cursor.IsValid() )
@@ -176,7 +215,31 @@ public class PlayerInteract : Component
 
 		return null;
 	}
+	public WorldItem GetWorldItemFromInteract()
+	{
+		foreach ( var collider in InteractCollider.Touching )
+		{
+			var checkGameObject = collider.GameObject;
 
+			while ( checkGameObject != null )
+			{
+				if ( checkGameObject.Components.TryGet<IInteract>( out var interactable ) )
+				{
+					if ( checkGameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+					{
+						return worldItem;
+					}
+
+				}
+
+				checkGameObject = checkGameObject.Parent;
+			}
+		}
+
+		// Log.Info( "# Reached root, no interactable found." );
+
+		return null;
+	}
 	public IInteract FindInteractable()
 	{
 		foreach ( var collider in InteractCollider.Touching )
@@ -213,4 +276,5 @@ public class PlayerInteract : Component
 
 		return null;
 	}
+	
 }

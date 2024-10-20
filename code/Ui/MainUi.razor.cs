@@ -99,6 +99,7 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 		if ( pickupable != null && pickupable.CanPickup( player ) )
 		{
 			yield return new InputData( "Pickup", $"Pick up {pickupable.GetPickupName()}" );
+			yield return new InputData( "Move", $"Move" );
 		}
 
 		if ( player.ItemPlacer.IsPlacing )
