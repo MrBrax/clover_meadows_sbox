@@ -1,4 +1,5 @@
 ﻿using System;
+using Clover.Npc;
 using Clover.Player;
 using Sandbox.UI;
 
@@ -14,7 +15,7 @@ public partial class DialogueWindow
 
 	[Property, ReadOnly] public List<Dialogue.DialogueNode> CurrentNodeList { get; set; }
 
-	[Property, ReadOnly] public Dialogue.DialogueChoice CurrentChoice { get; set; }
+	// [Property, ReadOnly] public Dialogue.DialogueChoice CurrentChoice { get; set; }
 	[Property, ReadOnly] public List<GameObject> CurrentTargets { get; set; } = new();
 
 	public int CurrentNodeIndex;
@@ -141,6 +142,11 @@ public partial class DialogueWindow
 		{
 			CurrentTargets[index] = target;
 		}
+	}
+
+	public BaseNpc GetTarget( int index )
+	{
+		return CurrentTargets.ElementAtOrDefault( index )?.Components.Get<BaseNpc>();
 	}
 
 	public void ClearTargets()
@@ -439,7 +445,7 @@ public partial class DialogueWindow
 	private void End()
 	{
 		Enabled = false;
-		CurrentTargets.Clear();
+		ClearTargets();
 		CurrentNodeList = null;
 		CurrentNodeIndex = 0;
 		// CurrentNode.OnExit?.Invoke( this, null, null, CurrentNode, null );

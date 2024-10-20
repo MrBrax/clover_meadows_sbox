@@ -8,7 +8,6 @@ namespace Clover;
 [Description( "Handles the visibility of the object based on the world layer." )]
 public sealed class WorldLayerObject : Component, IWorldEvent
 {
-	
 	private int _layer = -1;
 
 	/// <summary>
@@ -21,18 +20,18 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 		set
 		{
 			_layer = value;
+			if ( Scene.IsEditor ) return;
 			// Log.Info( $"Setting layer property to {value} for {GameObject.Name}, rebuilding visibility." );
 			RebuildVisibility( value );
 		}
 	}
-	
+
 	[JsonIgnore] public World World => WorldManager.Instance?.GetWorld( Layer );
 
 	protected override void OnStart()
 	{
-		
 		GameObject parentCheck = GameObject;
-		
+
 		while ( parentCheck != null )
 		{
 			if ( parentCheck.Components.TryGet<World>( out var world ) )
@@ -44,14 +43,13 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 
 			parentCheck = parentCheck.Parent;
 		}
-		
 	}
 
 	public void SetLayer( int layer, bool rebuildVisibility = false )
 	{
 		// Log.Info( $"Setting layer {layer} for {GameObject.Name}" );
 		Layer = layer;
-		
+
 		if ( rebuildVisibility )
 		{
 			RebuildVisibility( layer );
@@ -63,10 +61,10 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 		var currentLayer = Layer;
 		var currentHeight = WorldPosition.z;
 		var layerHeight = WorldManager.WorldOffset;
-		
-		Layer = layer;
-		WorldPosition = new Vector3( WorldPosition.x, WorldPosition.y, currentHeight + ( layerHeight * ( layer - currentLayer ) ) );
 
+		Layer = layer;
+		WorldPosition = new Vector3( WorldPosition.x, WorldPosition.y,
+			currentHeight + (layerHeight * (layer - currentLayer)) );
 	}
 
 	/// <summary>
@@ -84,7 +82,7 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 			Log.Error( "WorldManager is not valid." );
 			return;
 		}
-			
+
 		if ( layer == WorldManager.Instance.ActiveWorldIndex )
 		{
 			// Log.Info( $"Setting {GameObject.Name} to visible" );

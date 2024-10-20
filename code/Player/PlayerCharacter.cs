@@ -17,9 +17,18 @@ namespace Clover.Player;
 [Description( "The player character component." )]
 public sealed partial class PlayerCharacter : Component
 {
+	private static PlayerCharacter _local;
+
 	[ActionGraphNode( "player.local" ), Title( "Local Player" ), Icon( "face" ), Category( "Clover" )]
-	public static PlayerCharacter Local =>
-		Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => !x.IsProxy );
+	public static PlayerCharacter Local
+	{
+		get
+		{
+			if ( _local.IsValid() ) return _local;
+			_local = Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => !x.IsProxy );
+			return _local;
+		}
+	}
 
 	[Sync] public string PlayerId { get; set; }
 	[Sync] public string PlayerName { get; set; }
@@ -61,6 +70,7 @@ public sealed partial class PlayerCharacter : Component
 		CameraMan.Instance.Targets.Add( GameObject );
 	}
 
+	// TODO: maybe stop using yaw
 	public void ModelLookAt( Vector3 position )
 	{
 		var dir = (position - WorldPosition).Normal;
@@ -185,7 +195,6 @@ public sealed partial class PlayerCharacter : Component
 
 	public bool ShouldMove()
 	{
-		// return !IsSitting && !InCutscene;
 		if ( IsSitting ) return false;
 		if ( InCutscene ) return false;
 		if ( VehicleRider.Vehicle.IsValid() ) return false;
