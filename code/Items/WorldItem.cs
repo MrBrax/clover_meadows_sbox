@@ -14,6 +14,7 @@ namespace Clover.Items;
 public class WorldItem : Component, IPickupable, Component.ITriggerListener
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
+	[RequireComponent] public ItemHighlight ItemHighlight { get; set; }
 
 	public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World?.GetNodeLink( GameObject ) : null;
 
@@ -39,7 +40,6 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 	[Property] public ItemData ItemData { get; set; }
 
 	[Property] public Vector3 PlaceModeOffset { get; set; }
-	public ItemHighlight ItemHighlight { get; set; }
 
 	protected override void OnAwake()
 	{
@@ -159,12 +159,6 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 		}
 	}
 
-	protected override void OnStart()
-	{
-		var itemHighlight = AddComponent<ItemHighlight>();
-		ItemHighlight = itemHighlight;
-	}
-
 	[ConVar( "clover_debug_worlditem" )] public static bool DebugWorldItem { get; set; }
 
 	[Property] public bool CanPickupSimple { get; set; }
@@ -227,10 +221,10 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 		collider.Scale = new Vector3( 16, 16, 16 );
 		collider.Center = new Vector3( 0, 0, 8 );
 	}
-	
+
 	public void OnTriggerEnter( Collider other )
 	{
-		ToggleHighlight( other, true);
+		ToggleHighlight( other, true );
 	}
 
 	public void OnTriggerExit( Collider other )
@@ -238,7 +232,7 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 		ToggleHighlight( other, false );
 	}
 
-	private void ToggleHighlight(Collider otherCollider, bool shouldEnable)
+	private void ToggleHighlight( Collider otherCollider, bool shouldEnable )
 	{
 		if ( otherCollider.GetComponentInParent<PlayerCharacter>() == null )
 		{
