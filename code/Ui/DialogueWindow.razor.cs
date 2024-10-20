@@ -256,7 +256,7 @@ public partial class DialogueWindow
 			}
 			else
 			{
-				Log.Error( "No nodes found for choice" );
+				Log.Error( "JumpToId: No nodes found for choice" );
 			}
 		}
 		else
@@ -296,7 +296,7 @@ public partial class DialogueWindow
 			}
 			else
 			{
-				Log.Error( "No nodes found for choice" );
+				Log.Error( "Advance: No nodes found for choice" );
 			}
 
 			return;
@@ -466,7 +466,8 @@ public partial class DialogueWindow
 		{
 			if ( choice.Nodes.Count == 0 )
 			{
-				Log.Warning( "No nodes found for choice" );
+				Log.Error( "OnChoice1: No nodes found for choice" );
+				End();
 				return;
 			}
 
@@ -483,7 +484,7 @@ public partial class DialogueWindow
 			}
 			else
 			{
-				Log.Error( "No nodes found for choice" );
+				Log.Error( "OnChoice2: No nodes found for choice" );
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using System;
 using Clover.Components;
+using Clover.Data;
 using Clover.Interactable;
 using Clover.Player;
 using Sandbox.States;
@@ -30,6 +31,8 @@ public class BaseNpc : Component, IInteract
 	private TimeSince _startWalking;
 
 	private const float WalkRadius = 256f;
+
+	[Property] public DialogueCollection DialogueCollection { get; set; }
 
 	public void SetState( NpcState state )
 	{
@@ -178,9 +181,27 @@ public class BaseNpc : Component, IInteract
 
 	private void DispatchDialogue()
 	{
-		Log.Error( "BaseNpc DispatchDialogue: Not implemented" );
-		SetState( NpcState.Idle );
-		EndInteraction();
+		if ( DialogueCollection == null )
+		{
+			Log.Error( "BaseNpc DispatchDialogue: No dialogue collection found" );
+			EndInteraction();
+			return;
+		}
+
+		var entries = DialogueCollection.Entries.ToList().OrderBy( x => Guid.NewGuid() );
+		foreach ( var dialogue in entries )
+		{
+			if ( dialogue.Condition( DialogueManager.Instance.DialogueWindow, PlayerCharacter.Local,
+				    new List<GameObject>() { GameObject } ) )
+			{
+				DialogueManager.Instance.DialogueWindow.SetData( "PlayerName", PlayerCharacter.Local.PlayerName );
+				LoadDialogue( dialogue.DialogueData );
+
+				DialogueManager.Instance.DialogueWindow.OnDialogueEnd += EndInteraction;
+
+				return;
+			}
+		}
 	}
 
 	public string GetInteractName()

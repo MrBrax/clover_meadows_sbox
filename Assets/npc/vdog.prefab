@@ -33,7 +33,9 @@
       },
       {
         "__type": "Clover.Npc.Villager",
-        "__guid": "45fe79b7-ed72-4cd9-b900-1c09505e79a2"
+        "__guid": "45fe79b7-ed72-4cd9-b900-1c09505e79a2",
+        "DialogueCollection": "dialogue/vdog/vdog.dcol",
+        "Name": "V-Dog"
       },
       {
         "__type": "Sandbox.NavMeshAgent",

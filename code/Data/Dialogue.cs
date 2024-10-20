@@ -5,7 +5,7 @@ using Clover.Player;
 
 namespace Sandbox;
 
-[GameResource( "Dialogue", "dlg", "dialogue" )]
+[GameResource( "Dialogue", "dlg", "dialogue", Icon = "chat" )]
 public class Dialogue : GameResource
 {
 	/*public class DialogueAction
