@@ -195,6 +195,7 @@ public class BaseNpc : Component, IInteract
 				    new List<GameObject>() { GameObject } ) )
 			{
 				DialogueManager.Instance.DialogueWindow.SetData( "PlayerName", PlayerCharacter.Local.PlayerName );
+				DialogueManager.Instance.DialogueWindow.SetTarget( 0, GameObject );
 				LoadDialogue( dialogue.DialogueData );
 
 				DialogueManager.Instance.DialogueWindow.OnDialogueEnd += EndInteraction;

@@ -318,8 +318,28 @@ public partial class DialogueWindow
 		}
 		else if ( CurrentTargets.Count > 0 )
 		{
+			// var speaker = CurrentTargets.ElementAtOrDefault( CurrentNode.Speaker );
+			// Name = speaker?.Name ?? "Unknown";
+
 			var speaker = CurrentTargets.ElementAtOrDefault( CurrentNode.Speaker );
-			Name = speaker?.Name ?? "Unknown";
+
+			if ( !speaker.IsValid() )
+			{
+				Log.Error( "Speaker is not valid" );
+				Name = "UNKNOWN";
+			}
+			else if ( speaker.Components.TryGet<BaseNpc>( out var npc ) )
+			{
+				Name = npc.Name;
+			}
+			else if ( speaker.Components.TryGet<PlayerCharacter>( out var player ) )
+			{
+				Name = player.PlayerName;
+			}
+			else
+			{
+				Name = speaker.Name;
+			}
 		}
 		else
 		{
