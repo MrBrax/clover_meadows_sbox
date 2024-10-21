@@ -4,6 +4,7 @@ using Clover.Inventory;
 using Clover.Items;
 using Clover.Persistence;
 using Clover.Ui;
+using Clover.WorldBuilder;
 
 namespace Clover.Player;
 
@@ -295,7 +296,7 @@ public class ItemPlacer : Component, IWorldEvent
 		box = box.Rotate( _ghost.WorldRotation );
 
 		var trace = Scene.Trace.Box( box, ray, 1000f )
-			.WithoutTags( "player", "invisiblewall", "doorway", "stairs" )
+			.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )
 			.Run();
 
 		if ( !trace.Hit )
@@ -305,6 +306,13 @@ public class ItemPlacer : Component, IWorldEvent
 		}
 
 		if ( trace.GameObject.Tags.Has( "noplace" ) )
+		{
+			_isValidPlacement = false;
+			return;
+		}
+
+		var interiorManager = Player.World.Components.Get<InteriorManager>( FindMode.InDescendants );
+		if ( interiorManager != null && !interiorManager.IsInCurrentRoom( trace.EndPosition ) )
 		{
 			_isValidPlacement = false;
 			return;

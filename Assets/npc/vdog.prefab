@@ -131,7 +131,7 @@
                 ]
               },
               "UserData": {
-                "Position": "160,-192"
+                "Position": "128,-160"
               }
             },
             {
@@ -429,6 +429,48 @@
                     "SrcName": "_result",
                     "DstId": 6,
                     "DstName": "a"
+                  }
+                ]
+              }
+            },
+            {
+              "Id": 8,
+              "SourceId": 1,
+              "TargetId": 4,
+              "Condition": {
+                "__version": 8,
+                "__guid": "7633af2c-766f-45ab-9d05-cbfb3a0d4d0f",
+                "__changeId": 2,
+                "UserData": {
+                  "Title": "Condition",
+                  "ReferencedComponentTypes": []
+                },
+                "Variables": [],
+                "Nodes": [
+                  {
+                    "Id": 0,
+                    "Type": "input"
+                  },
+                  {
+                    "Id": 1,
+                    "Type": "output",
+                    "UserData": {
+                      "Position": "252,0"
+                    }
+                  }
+                ],
+                "Links": [
+                  {
+                    "Id": 2,
+                    "Value": true,
+                    "DstId": 1,
+                    "DstName": "_result"
+                  },
+                  {
+                    "SrcId": 0,
+                    "SrcName": "_signal",
+                    "DstId": 1,
+                    "DstName": "_signal"
                   }
                 ]
               }

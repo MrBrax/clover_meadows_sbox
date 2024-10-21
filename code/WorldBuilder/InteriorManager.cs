@@ -26,6 +26,29 @@ public class InteriorManager : Component
 		[Property] public RoomTrigger[] Triggers { get; set; }
 	}
 
+	public bool IsInCurrentRoom( Vector3 position )
+	{
+		var room = CollectionExtensions.GetValueOrDefault( Rooms, CurrentRoom );
+
+		if ( room == null )
+		{
+			Log.Warning( $"Room {CurrentRoom} not found" );
+			return false;
+		}
+
+		foreach ( var trigger in room.Triggers )
+		{
+			var collider = trigger.Components.Get<BoxCollider>();
+			var bbox = BBox.FromPositionAndSize( collider.WorldPosition + collider.Center, collider.Scale );
+			if ( bbox.Contains( position ) )
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected override void OnStart()
 	{
 		base.OnStart();

@@ -11,11 +11,13 @@ public class InteriorPiece : Component
 
 	public void Hide()
 	{
+		Tags.Add( "room_invisible" );
 		GetComponent<ModelRenderer>( true ).Enabled = false;
 	}
 
 	public void Show()
 	{
+		Tags.Remove( "room_invisible" );
 		GetComponent<ModelRenderer>( true ).Enabled = true;
 	}
 
