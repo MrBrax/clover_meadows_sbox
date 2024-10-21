@@ -1458,6 +1458,43 @@
                 "__guid": "6f155b7e-0705-45b7-bb51-4f51b396130a"
               }
             ]
+          },
+          {
+            "__guid": "89c12e65-cdd2-43c3-bdb1-78894de21baf",
+            "Flags": 0,
+            "Name": "interior_doorway_darkness (2)",
+            "Position": "352,432,0.00006417682",
+            "Rotation": "-0.00000000000001646087,-0.00000002980232,0.0000002543118,-0.9999999",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "48b6adca-d1df-414c-aa76-78465f104236",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_doorway_darkness.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "10f6321a-043e-4639-bf60-8ecd5695fc73",
+                "BelongsToRooms": [
+                  "room4"
+                ],
+                "IsFloor": false,
+                "IsWall": false
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "177dc74e-b9ac-4078-80a9-4af76409a4e3"
+              }
+            ]
           }
         ]
       },

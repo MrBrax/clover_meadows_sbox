@@ -15,11 +15,11 @@
 						[
 							{
 								from = "doorway.vmat"
-								to = "materials/dev/dev_nonmetal_rough10.vmat"
+								to = "materials/interior/doorway.vmat"
 							},
 							{
 								from = "floor.vmat"
-								to = "materials/placeholder/floor.vmat"
+								to = "materials/interior/doorway_floor.vmat"
 							},
 						]
 						use_global_default = false
@@ -47,6 +47,7 @@
 							exception_list = 
 							[
 								"Plane_003",
+								"interior_doorway",
 							]
 						}
 					},

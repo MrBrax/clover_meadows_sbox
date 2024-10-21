@@ -15,7 +15,7 @@
 						[
 							{
 								from = "doorway.vmat"
-								to = "materials/dev/dev_nonmetal_rough90.vmat"
+								to = "materials/interior/doorframe.vmat"
 							},
 							{
 								from = "wall_house.vmat"
@@ -75,7 +75,10 @@
 						import_filter = 
 						{
 							exclude_by_default = false
-							exception_list = [  ]
+							exception_list = 
+							[
+								"interior_wall_1_doorway_2",
+							]
 						}
 					},
 				]

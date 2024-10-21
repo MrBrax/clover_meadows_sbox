@@ -13,20 +13,20 @@ public class InteriorPiece : Component
 	{
 		Tags.Add( "room_invisible" );
 		var renderer = GetComponent<ModelRenderer>( true );
-		if ( renderer != null )
+		/*if ( renderer != null )
 		{
 			renderer.Enabled = false;
-		}
+		}*/
 	}
 
 	public void Show()
 	{
 		Tags.Remove( "room_invisible" );
-		var renderer = GetComponent<ModelRenderer>( true );
+		/*var renderer = GetComponent<ModelRenderer>( true );
 		if ( renderer != null )
 		{
 			renderer.Enabled = true;
-		}
+		}*/
 	}
 
 	public bool BelongsToRoom( string room )
