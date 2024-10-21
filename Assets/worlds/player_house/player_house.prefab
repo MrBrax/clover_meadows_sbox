@@ -2559,7 +2559,7 @@
                 "__guid": "ab9e0f24-560c-4d8b-b296-c08fcc46e86e",
                 "Center": "0,0,48",
                 "IsTrigger": true,
-                "Scale": "192,192,96",
+                "Scale": "160,320,96",
                 "Static": false,
                 "SurfaceVelocity": "0,0,0"
               },
