@@ -12,13 +12,21 @@ public class InteriorPiece : Component
 	public void Hide()
 	{
 		Tags.Add( "room_invisible" );
-		GetComponent<ModelRenderer>( true ).Enabled = false;
+		var renderer = GetComponent<ModelRenderer>( true );
+		if ( renderer != null )
+		{
+			renderer.Enabled = false;
+		}
 	}
 
 	public void Show()
 	{
 		Tags.Remove( "room_invisible" );
-		GetComponent<ModelRenderer>( true ).Enabled = true;
+		var renderer = GetComponent<ModelRenderer>( true );
+		if ( renderer != null )
+		{
+			renderer.Enabled = true;
+		}
 	}
 
 	public bool BelongsToRoom( string room )
@@ -64,5 +72,11 @@ public class InteriorPiece : Component
 		}*/
 
 		Tags.Set( "invisiblewall", dot > 0.4f );
+	}
+
+	protected override void DrawGizmos()
+	{
+		Gizmo.Transform = global::Transform.Zero;
+		Gizmo.Draw.Text( $"Rooms: {string.Join( ", ", BelongsToRooms )}", new Transform( WorldPosition ) );
 	}
 }
