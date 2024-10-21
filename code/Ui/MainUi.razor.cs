@@ -60,6 +60,14 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 		{
 			LastInput = 0;
 		}
+
+		if ( !PlayerCharacter.Local.IsValid() )
+			return;
+
+		if ( PlayerCharacter.Local.ItemPlacer.IsPlacing )
+		{
+			LastInput = 0;
+		}
 	}
 
 	public struct InputData
