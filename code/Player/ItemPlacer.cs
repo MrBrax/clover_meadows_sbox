@@ -357,7 +357,16 @@ public class ItemPlacer : Component, IWorldEvent
 
 		if ( IsPlacing && _ghost.IsValid() )
 		{
-			Gizmo.Draw.Line( _ghost.WorldPosition, _ghost.WorldPosition + _ghost.WorldRotation.Down * 256f );
+			var trace = Scene.Trace.Ray( _ghost.WorldPosition, _ghost.WorldPosition + Vector3.Down * 300f )
+				.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )
+				.Run();
+
+			if ( trace.Hit )
+			{
+				var endPos = trace.EndPosition;
+				Gizmo.Draw.Arrow( _ghost.WorldPosition, endPos );
+			}
+
 			Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( _colliderCenter, _colliderSize )
 				.Rotate( _ghost.WorldRotation ).Translate( _ghost.WorldPosition ) );
 		}
