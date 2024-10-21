@@ -117,6 +117,8 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 
 			yield return new InputData( "RotateClockwise", "Rotate Clockwise" );
 			yield return new InputData( "RotateCounterClockwise", "Rotate Counter Clockwise" );
+
+			yield return new InputData( "Snap", "Snap" );
 		}
 	}
 }
