@@ -24,10 +24,11 @@
 @code
 {
 
-	[ConVar( "clover_show_watermark_link" )]
+	[ConVar( "clover_show_watermark_link", Saved = true )]
 	public static bool ShowWatermarkLink { get; set; } = true;
 
-	[ConVar( "clover_show_watermark" )] public static bool ShowWatermark { get; set; } = true;
+	[ConVar( "clover_show_watermark", Saved = true )]
+	public static bool ShowWatermark { get; set; } = true;
 
 	protected override int BuildHash()
 	{
