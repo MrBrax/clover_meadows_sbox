@@ -70,7 +70,7 @@ public class PlayerInteract : Component
 		{
 			return;
 		}
-		
+
 
 		if ( Input.Pressed( "use" ) )
 		{
@@ -135,7 +135,7 @@ public class PlayerInteract : Component
 
 					var item = GetWorldItemFromInteract();
 					Player.ItemPlacer.StartMovingPlacedItem( item );
-				
+
 					if ( !Networking.IsHost )
 					{
 						using ( Rpc.FilterInclude( Connection.Host ) )
@@ -153,12 +153,10 @@ public class PlayerInteract : Component
 					// Notifications.Instance.AddNotification( Notifications.NotificationType.Warning, "No interactable found" );
 					Sound.Play( UseFailSound, WorldPosition );
 				}
-
 			}
-			
 		}
 
-		if ( Cursor.IsValid() )
+		if ( Cursor.IsValid() && Cursor.Enabled )
 		{
 			var gridPosition = Player.GetAimingGridPosition();
 			var worldPosition = WorldManager.Instance.ActiveWorld.ItemGridToWorld( gridPosition );
@@ -215,6 +213,7 @@ public class PlayerInteract : Component
 
 		return null;
 	}
+
 	public WorldItem GetWorldItemFromInteract()
 	{
 		foreach ( var collider in InteractCollider.Touching )
@@ -229,7 +228,6 @@ public class PlayerInteract : Component
 					{
 						return worldItem;
 					}
-
 				}
 
 				checkGameObject = checkGameObject.Parent;
@@ -240,6 +238,7 @@ public class PlayerInteract : Component
 
 		return null;
 	}
+
 	public IInteract FindInteractable()
 	{
 		foreach ( var collider in InteractCollider.Touching )
@@ -276,5 +275,4 @@ public class PlayerInteract : Component
 
 		return null;
 	}
-	
 }
