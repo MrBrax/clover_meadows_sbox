@@ -6,6 +6,9 @@ public class InteriorPiece : Component
 
 	[Property] public List<string> BelongsToRooms { get; set; } = new();
 
+	[Property] public bool IsWall { get; set; }
+	[Property] public bool IsFloor { get; set; }
+
 	public void Hide()
 	{
 		GetComponent<ModelRenderer>( true ).Enabled = false;
@@ -26,13 +29,38 @@ public class InteriorPiece : Component
 		var camera = Scene.Camera;
 
 		var cameraPosition = camera.WorldPosition;
-		var cameraRotation = camera.WorldRotation;
+		var cameraRotation = camera.WorldRotation.Angles().WithPitch( 0 );
 		var cameraForward = cameraRotation.Forward;
 
-		// check if we're looking from the back
-		var toCamera = (cameraPosition - WorldPosition).Normal;
-		var dot = toCamera.Dot( cameraForward );
+		var pieceForward = WorldRotation.Left;
 
-		Gizmo.Draw.Text( dot.ToString(), new Transform( WorldPosition ) );
+		// Gizmo.Draw.Arrow( WorldPosition, WorldPosition + pieceForward * 32f );
+
+		var dot = Vector3.Dot( cameraForward.Normal, pieceForward.Normal );
+
+		if ( dot > 0.4f && IsWall )
+		{
+			Gizmo.Draw.Text( "HIDE ME", new Transform( WorldPosition ) );
+		}
 	}*/
+
+	protected override void OnFixedUpdate()
+	{
+		if ( !IsWall ) return;
+		var camera = Scene.Camera;
+
+		var cameraRotation = camera.WorldRotation.Angles().WithPitch( 0 );
+		var cameraForward = cameraRotation.Forward;
+
+		var pieceForward = WorldRotation.Left;
+
+		var dot = Vector3.Dot( cameraForward.Normal, pieceForward.Normal );
+
+		/*if ( dot > 0.4f )
+		{
+			Gizmo.Draw.Text( "HIDE ME", new Transform( WorldPosition ) );
+		}*/
+
+		Tags.Set( "invisiblewall", dot > 0.4f );
+	}
 }

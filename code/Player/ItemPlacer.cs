@@ -295,7 +295,7 @@ public class ItemPlacer : Component, IWorldEvent
 		box = box.Rotate( _ghost.WorldRotation );
 
 		var trace = Scene.Trace.Box( box, ray, 1000f )
-			.WithoutTags( "player", "invisiblewall" )
+			.WithoutTags( "player", "invisiblewall", "doorway", "stairs" )
 			.Run();
 
 		if ( !trace.Hit )
@@ -304,10 +304,11 @@ public class ItemPlacer : Component, IWorldEvent
 			return;
 		}
 
-		Log.Info( trace.Surface );
-
-		// Gizmo.Transform = new Transform( trace.EndPosition );
-		// Gizmo.Draw.LineBBox( box );
+		if ( trace.GameObject.Tags.Has( "noplace" ) )
+		{
+			_isValidPlacement = false;
+			return;
+		}
 
 		var endPosition = trace.EndPosition;
 

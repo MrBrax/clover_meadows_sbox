@@ -16,7 +16,7 @@
         "__guid": "709a0c4e-9150-4acf-a1ca-0e18bf91ef8e",
         "Flags": 0,
         "Name": "Model",
-        "Tags": "solid,terrain",
+        "Tags": "terrain,solid",
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
@@ -47,7 +47,7 @@
         "__guid": "a592634c-7786-4bd2-87c1-4e34a3e1c57e",
         "Flags": 0,
         "Name": "EntranceCollision",
-        "Tags": "solid,terrain,invisiblewall",
+        "Tags": "invisiblewall,terrain,solid",
         "Enabled": true,
         "Components": [
           {
@@ -80,7 +80,7 @@
         "Flags": 0,
         "Name": "Point Light",
         "Position": "352,320,96.00002",
-        "Tags": "light_point,light",
+        "Tags": "light,light_point",
         "Enabled": true,
         "Components": [
           {
@@ -100,7 +100,7 @@
         "Flags": 0,
         "Name": "Point Light (1)",
         "Position": "352,96,96.00002",
-        "Tags": "light_point,light",
+        "Tags": "light,light_point",
         "Enabled": true,
         "Components": [
           {
@@ -120,7 +120,7 @@
         "Flags": 0,
         "Name": "Point Light (2)",
         "Position": "256,512,96.00008",
-        "Tags": "light_point,light",
+        "Tags": "light,light_point",
         "Enabled": true,
         "Components": [
           {
@@ -140,7 +140,7 @@
         "Flags": 0,
         "Name": "Point Light (3)",
         "Position": "96,192,96.00007",
-        "Tags": "light_point,light",
+        "Tags": "light,light_point",
         "Enabled": true,
         "Components": [
           {
@@ -200,7 +200,7 @@
         "Flags": 0,
         "Name": "HouseTrigger",
         "Position": "544,320,16.00014",
-        "Tags": "trigger,worldlayer_visible",
+        "Tags": "worldlayer_visible,trigger",
         "Enabled": true,
         "Components": [
           {
@@ -232,7 +232,7 @@
         "Name": "HouseTrigger (1)",
         "Position": "480,160,96",
         "Rotation": "0,0,-0.7071067,0.7071068",
-        "Tags": "trigger,worldlayer_visible",
+        "Tags": "worldlayer_visible,trigger",
         "Enabled": true,
         "Components": [
           {
@@ -400,8 +400,6 @@
             "DefaultRoom": "room1",
             "Rooms": {
               "room1": {
-                "Wall": null,
-                "Floor": null,
                 "Triggers": [
                   {
                     "_type": "component",
@@ -601,7 +599,7 @@
         "Flags": 0,
         "Name": "Point Light",
         "Position": "608,320,16",
-        "Tags": "light_point,light",
+        "Tags": "light,light_point",
         "Enabled": true,
         "Components": [
           {
@@ -688,6 +686,10 @@
             "Scale": "192,416,96",
             "Static": false,
             "SurfaceVelocity": "0,0,0"
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "2fd5444f-90fb-4a41-9384-0fddce2af31e"
           }
         ]
       },
@@ -719,6 +721,10 @@
             "Scale": "416,192,96",
             "Static": false,
             "SurfaceVelocity": "0,0,0"
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "79260c23-ca61-4a6e-8119-a5cd4ccd2b14"
           }
         ]
       },
@@ -744,6 +750,7 @@
         "Flags": 0,
         "Name": "interior_doorway",
         "Position": "352,208,0.00004494053",
+        "Tags": "doorway",
         "Enabled": true,
         "Components": [
           {
@@ -774,7 +781,9 @@
             "BelongsToRooms": [
               "room1",
               "room2"
-            ]
+            ],
+            "IsFloor": false,
+            "IsWall": false
           },
           {
             "__type": "Clover.WorldLayerObject",
@@ -788,6 +797,7 @@
         "Name": "interior_doorway",
         "Position": "207.9999,319.9998,0.0000908636",
         "Rotation": "-0.00000002107342,0.00000002107342,0.7071068,0.7071066",
+        "Tags": "doorway",
         "Enabled": true,
         "Components": [
           {
@@ -817,7 +827,9 @@
             "__guid": "0ba70930-3a70-419d-85dd-f8aac937a11e",
             "BelongsToRooms": [
               "room1"
-            ]
+            ],
+            "IsFloor": false,
+            "IsWall": false
           },
           {
             "__type": "Clover.WorldLayerObject",
@@ -831,6 +843,7 @@
         "Name": "interior_doorway",
         "Position": "208,96,0.00003731114",
         "Rotation": "0,0,-0.7071067,0.7071068",
+        "Tags": "doorway",
         "Enabled": true,
         "Components": [
           {
@@ -861,7 +874,9 @@
             "BelongsToRooms": [
               "room2",
               "room3"
-            ]
+            ],
+            "IsFloor": false,
+            "IsWall": false
           },
           {
             "__type": "Clover.WorldLayerObject",
@@ -874,6 +889,7 @@
         "Flags": 0,
         "Name": "interior_doorway",
         "Position": "352,432,0.00003731114",
+        "Tags": "doorway",
         "Enabled": true,
         "Components": [
           {
@@ -904,7 +920,9 @@
             "BelongsToRooms": [
               "room1",
               "room4"
-            ]
+            ],
+            "IsFloor": false,
+            "IsWall": false
           },
           {
             "__type": "Clover.WorldLayerObject",
@@ -918,6 +936,7 @@
         "Name": "interior_doorway",
         "Position": "432,320,0.00003731114",
         "Rotation": "0,0,-0.7071067,0.7071068",
+        "Tags": "doorway",
         "Enabled": true,
         "Components": [
           {
@@ -946,8 +965,11 @@
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "bacc3ab1-5c43-4042-ac43-be40fb82cd47",
             "BelongsToRooms": [
-              "room1"
-            ]
+              "room1",
+              "entrance"
+            ],
+            "IsFloor": false,
+            "IsWall": false
           },
           {
             "__type": "Clover.WorldLayerObject",
@@ -1022,6 +1044,10 @@
                 "Scale": "192,192,96",
                 "Static": false,
                 "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "9909746d-24d3-4ad6-92e4-07a16fb9fcfe"
               }
             ]
           },
@@ -1059,7 +1085,9 @@
                 "__guid": "29e167f9-4bc5-490a-9e9a-bb8f67657495",
                 "BelongsToRooms": [
                   "room1"
-                ]
+                ],
+                "IsFloor": true,
+                "IsWall": false
               },
               {
                 "__type": "Clover.WorldLayerObject",
@@ -1102,7 +1130,9 @@
                 "__guid": "42a0bf31-d092-42d4-8301-d1a4dce51eb2",
                 "BelongsToRooms": [
                   "room1"
-                ]
+                ],
+                "IsFloor": false,
+                "IsWall": true
               },
               {
                 "__type": "Clover.WorldLayerObject",
@@ -1145,7 +1175,9 @@
                 "__guid": "e09c41ed-9af0-4265-b93f-c01187294854",
                 "BelongsToRooms": [
                   "room1"
-                ]
+                ],
+                "IsFloor": false,
+                "IsWall": true
               },
               {
                 "__type": "Clover.WorldLayerObject",
@@ -1188,7 +1220,9 @@
                 "__guid": "4d1c0e9e-2cfe-4f8a-9203-6db555daaeee",
                 "BelongsToRooms": [
                   "room1"
-                ]
+                ],
+                "IsFloor": false,
+                "IsWall": true
               },
               {
                 "__type": "Clover.WorldLayerObject",
@@ -1231,7 +1265,9 @@
                 "__guid": "4ae7d31a-e093-490b-84d7-fd282ca7a78c",
                 "BelongsToRooms": [
                   "room1"
-                ]
+                ],
+                "IsFloor": false,
+                "IsWall": true
               },
               {
                 "__type": "Clover.WorldLayerObject",
@@ -1304,6 +1340,10 @@
                 "Scale": "192,192,96",
                 "Static": false,
                 "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "2434289c-045b-49ac-9cf7-dfe8cd73af42"
               }
             ]
           },
@@ -1341,7 +1381,9 @@
                 "__guid": "a4af4684-adea-43dc-80d4-ff2a7336907c",
                 "BelongsToRooms": [
                   "room2"
-                ]
+                ],
+                "IsFloor": true,
+                "IsWall": false
               },
               {
                 "__type": "Clover.WorldLayerObject",
@@ -1383,7 +1425,9 @@
                 "__guid": "656e7a3f-8d8f-43fb-91df-661696d5d718",
                 "BelongsToRooms": [
                   "room2"
-                ]
+                ],
+                "IsFloor": false,
+                "IsWall": true
               },
               {
                 "__type": "Clover.WorldLayerObject",
@@ -1426,7 +1470,9 @@
                 "__guid": "c29a3322-fff4-4676-86cd-153c11c1807b",
                 "BelongsToRooms": [
                   "room2"
-                ]
+                ],
+                "IsFloor": false,
+                "IsWall": true
               },
               {
                 "__type": "Clover.WorldLayerObject",
@@ -1469,7 +1515,9 @@
                 "__guid": "204d50f9-52a0-4c2a-8014-24440d300db9",
                 "BelongsToRooms": [
                   "room2"
-                ]
+                ],
+                "IsFloor": false,
+                "IsWall": true
               },
               {
                 "__type": "Clover.WorldLayerObject",
@@ -1512,7 +1560,9 @@
                 "__guid": "ccfcb65a-8a5e-4650-b5a5-b2fafef5fd01",
                 "BelongsToRooms": [
                   "room2"
-                ]
+                ],
+                "IsFloor": false,
+                "IsWall": true
               },
               {
                 "__type": "Clover.WorldLayerObject",
@@ -1523,33 +1573,551 @@
         ]
       },
       {
-        "__guid": "71c00eda-f0fd-450d-b9cb-98d4d271ffe3",
+        "__guid": "842e33d9-cc0c-4311-bcc5-dde99acccce6",
         "Flags": 0,
-        "Name": "interior_floor_1",
-        "Position": "544,320,0.00002276974",
+        "Name": "entrance",
         "Enabled": true,
-        "Components": [
+        "Children": [
           {
-            "__type": "Sandbox.ModelRenderer",
-            "__guid": "9d1905f5-1056-4f53-95c7-86ad410be033",
-            "BodyGroups": 18446744073709551615,
-            "Model": "models/interior/interior_floor_1.vmdl",
-            "RenderOptions": {
-              "GameLayer": true,
-              "OverlayLayer": false,
-              "BloomLayer": false,
-              "AfterUILayer": false
-            },
-            "RenderType": "On",
-            "Tint": "1,1,1,1"
+            "__guid": "073c8498-56ef-4e7c-b492-6a14c2d0ecba",
+            "Flags": 0,
+            "Name": "EntranceFloor",
+            "Position": "528,320.0001,0",
+            "Tags": "noplace",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.MeshComponent",
+                "__guid": "fd8663cf-9229-473c-adcb-15049787facd",
+                "Collision": "Mesh",
+                "Color": "1,1,1,1",
+                "HideInGame": false,
+                "IsTrigger": false,
+                "Mesh": {
+                  "Topology": "H4sIAAAAAAAACk3P2Q7DQAhD0Um6pWu6/f\u002Bvtj4SkRjJDwMXG5YxxjfaRd4c7aNjdImW6Bk9oqmE6e8V/fLm8jE/GjtVX\u002B9Q3j1LXV/t1HzVsbfywJ5rL39e9ru3\u002BWt5bDz2XVl4rBl9/rzVzcta6148H3d/mr9bZejjsWb08Vgz222y7bz5y1P7A4HJEHZ4AQAA",
+                  "Positions": [
+                    "-16,-32.00006,0",
+                    "80,-32.00006,0",
+                    "80,31.99991,0",
+                    "-16,31.99991,0",
+                    "-80,-32.00006,0",
+                    "-80,31.99991,0",
+                    "-16,-64.00009,0",
+                    "-80,-64.00009,0"
+                  ],
+                  "TextureCoord": [
+                    "19.5,-8.999998",
+                    "0,0",
+                    "19.5,-11",
+                    "0,0",
+                    "16.5,-11",
+                    "0,0",
+                    "16.5,-8.999998",
+                    "16,-11",
+                    "14,-9.000001",
+                    "0,0",
+                    "16,-9.000001",
+                    "14,-9.000001",
+                    "14,-11",
+                    "0,0",
+                    "16,-8",
+                    "0,0",
+                    "16,-9.000001",
+                    "0,0",
+                    "14,-8",
+                    "0,0"
+                  ],
+                  "TextureUAxis": [
+                    "1,0,0",
+                    "1,0,0",
+                    "1,0,0"
+                  ],
+                  "TextureVAxis": [
+                    "0,-1,0",
+                    "0,-1,0",
+                    "0,-1,0"
+                  ],
+                  "TextureScale": [
+                    "0.25,0.2499996",
+                    "0.25,0.25",
+                    "0.25,0.25"
+                  ],
+                  "TextureOffset": [
+                    "64,0.002075195",
+                    "0,0",
+                    "0,0"
+                  ],
+                  "MaterialIndex": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "EdgeFlags": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "Materials": [
+                    "materials/placeholder/floor.vmat"
+                  ]
+                },
+                "SmoothingAngle": 40,
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              }
+            ]
           },
           {
-            "__type": "Sandbox.ModelCollider",
-            "__guid": "982d6529-c8bf-4f59-9014-b22c06d4b37f",
-            "IsTrigger": false,
-            "Model": "models/interior/interior_floor_1.vmdl",
-            "Static": true,
-            "SurfaceVelocity": "0,0,0"
+            "__guid": "2ebc5a8f-269a-4b4f-ad47-0f7d6f59e344",
+            "Flags": 0,
+            "Name": "EntranceBlocker",
+            "Position": "560,240,-0.00002288818",
+            "Tags": "invisiblewall",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.MeshComponent",
+                "__guid": "a500856a-784b-49a7-8670-52eac92c6f0b",
+                "Collision": "Mesh",
+                "Color": "1,1,1,1",
+                "HideInGame": false,
+                "IsTrigger": false,
+                "Mesh": {
+                  "Topology": "H4sIAAAAAAAACqWU2VJUQRBEZ5wdZgUBFVBRFjdU3EBQcJdFkP//GckTcTqi370RGTO3M6u6blV2rzUajetgFPDcCtpBN5gL\u002BsEkWAzWg9vBWnAveBQ8DJ4E28HL4EXwLngTHAYHwZfgOPgV/Aj\u002BBOdBU7Bn/Qyr9Zb1NKq1\u002BeBfHriOtda1t\u002BRZ61V5W2o78mgHfmfTdb53wVxN9yp1ttXOjO/Yt758qb0n37V3U/OxPraXZf\u002BZNcB31U7ke2rH8h1rG8mz75Jz4X3gfO5bK2v/8/Ctq867bS\u002BY\u002B2bVq3VrKL1B\u002B9i90T8wpvSa2r6ppVcb\u002Bqj0Ej89sxdz5lqVH6p9an70W8bAz1vbqf/p247\u002BLLPAp6\u002BdxdBcG/Jjta/Mj/65MfAja7syllnt6vues8T/H\u002BzN2Fw78lO1782Pfs8Y\u002BIm1Xcoz67eep75e4Fx9spdTc\u002B1WvkV7ZDz6fWPgZ9a2J49XPnpOB86R8/q52v/IGoq3Do2BX1J7IL9obfvyy/k98fwzyxXvge\u002BVP77qEfhltSfyK2qP5dkD71AH/J38/gy4V8h1N\u002BB\u002BOav88VuPwKNHSww8erTEwAO8Q03w\u002BPYi4L5i3viQe\u002Btv5Q9mhUfg0aMlBh49WmLgqQfvUFO5H1inz7xzNvAvHsMHzIp\u002B8s3URewNlOGB27AFAAA=",
+                  "Positions": [
+                    "-48,-176,0",
+                    "-48,-176,208",
+                    "-48,48,208",
+                    "-48,48,0",
+                    "-112,-176,208",
+                    "-112,-176,0",
+                    "-112,48,208",
+                    "-112,48,0",
+                    "-112,112,208",
+                    "-112,112,0",
+                    "-112,304,208",
+                    "-112,304,0",
+                    "-48,304,208",
+                    "-48,304,0",
+                    "-48,112,208",
+                    "-48,112,0",
+                    "48,112,208",
+                    "48,112,0",
+                    "48,48,208",
+                    "48,48,0",
+                    "-48,48,208",
+                    "-48,48,0",
+                    "-112,304,-128",
+                    "-112,112,-128",
+                    "-48,304,-128",
+                    "-112,304,-128",
+                    "-48,112,-128",
+                    "-48,304,-128"
+                  ],
+                  "TextureCoord": [
+                    "8.25,-0.2499998",
+                    "-8,0.0000003576279",
+                    "8.25,-3.75",
+                    "0,0",
+                    "8.25,-3.75",
+                    "0,0",
+                    "8.25,-0.25",
+                    "0,0",
+                    "-7,-3.25",
+                    "1,0.0000003576279",
+                    "-8,-3.25",
+                    "0,0",
+                    "-7,0.0000003576279",
+                    "0,0",
+                    "4.5,-3.25",
+                    "4.5,0.0000003576279",
+                    "0.9999998,-3.25",
+                    "0,0",
+                    "4.5,0.0000003576279",
+                    "0,0",
+                    "5.5,-3.25",
+                    "5.5,0.0000003576279",
+                    "4.5,-3.25",
+                    "0,0",
+                    "5.5,0.0000003576279",
+                    "0,0",
+                    "8.5,-3.25",
+                    "7,0.0000003576279",
+                    "5.5,-3.25",
+                    "0,0",
+                    "8.5,0.0000003576279",
+                    "5.5,0.0000003576279",
+                    "8,-3.25",
+                    "-8.5,0.0000003576279",
+                    "7,-3.25",
+                    "0,0",
+                    "8,0.0000003576279",
+                    "7,0.0000003576279",
+                    "-5.5,-3.25",
+                    "8,0.0000003576279",
+                    "-8.5,-3.25",
+                    "0,0",
+                    "-5.5,0.0000003576279",
+                    "-8.5,0.0000003576279",
+                    "9.5,-3.25",
+                    "-5.5,0.0000003576279",
+                    "8,-3.25",
+                    "0,0",
+                    "9.5,0.0000003576279",
+                    "0,0",
+                    "-4.5,-3.25",
+                    "-9.5,0.0000003576279",
+                    "-5.5,-3.25",
+                    "0,0",
+                    "-4.5,0.0000003576279",
+                    "0,0",
+                    "-8,-3.25",
+                    "0,0",
+                    "-9.5,-3.25",
+                    "0,0",
+                    "-8,0.0000003576279",
+                    "0,0",
+                    "8.5,2",
+                    "0,0",
+                    "8.5,0.0000003576279",
+                    "0,0",
+                    "5.5,2",
+                    "0,0",
+                    "8,2",
+                    "0,0",
+                    "8,0.0000003576279",
+                    "0,0",
+                    "7,2",
+                    "0,0",
+                    "-5.5,2",
+                    "0,0",
+                    "-5.5,0.0000003576279",
+                    "0,0",
+                    "-8.5,2",
+                    "0,0"
+                  ],
+                  "TextureUAxis": [
+                    "NaN,NaN,NaN",
+                    "-1,0,0",
+                    "0,1,0",
+                    "0,1,0",
+                    "0,1,0",
+                    "1,-0,0",
+                    "0,-1,0",
+                    "1,-0,0",
+                    "0,-1,0",
+                    "-1,0,0",
+                    "0,1,0",
+                    "1,0,0",
+                    "0,-1,0"
+                  ],
+                  "TextureVAxis": [
+                    "NaN,NaN,NaN",
+                    "0,0,-1",
+                    "-0,-0,-1",
+                    "0,0,-1",
+                    "-0,-0,-1",
+                    "0,0,-1",
+                    "0,0,-1",
+                    "0,0,-1",
+                    "0,0,-1",
+                    "0,0,-1",
+                    "0,0,-1",
+                    "0,0,-1",
+                    "0,0,-1"
+                  ],
+                  "TextureScale": [
+                    "NaN,NaN",
+                    "16,16",
+                    "16,16",
+                    "0.25,0.25",
+                    "16,16",
+                    "16,16",
+                    "16,16",
+                    "16,16",
+                    "16,16",
+                    "16,16",
+                    "16,16",
+                    "16,16",
+                    "16,16"
+                  ],
+                  "TextureOffset": [
+                    "NaN,NaN",
+                    "0,0.0000000000002273737",
+                    "0,0.0000000000002273737",
+                    "0,0",
+                    "0,0.0000000000002273737",
+                    "0,0.0000000000002273737",
+                    "0,0.0000000000002273737",
+                    "0,0.0000000000002273737",
+                    "0,0.0000000000002273737",
+                    "0,0.0000000000002273737",
+                    "0,3.999999",
+                    "0,0",
+                    "0,3.999999"
+                  ],
+                  "MaterialIndex": [
+                    1,
+                    1,
+                    1,
+                    0,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                  ],
+                  "EdgeFlags": [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "Materials": [
+                    "materials/tools/toolsnodraw.vmat",
+                    "materials/shared/invisible_blocker.vmat"
+                  ]
+                },
+                "SmoothingAngle": 40,
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              }
+            ]
+          },
+          {
+            "__guid": "9a821115-1c9d-4f16-9525-19a5b5e3faba",
+            "Flags": 0,
+            "Name": "interior_stairs (1)",
+            "Position": "479.9998,544,-128",
+            "Tags": "stairs",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "f24d12c2-86c4-4951-8af5-16409ec292c7",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_stairs.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "b8f35e85-3d6b-4285-9d96-172ff1ee1d79",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_stairs.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "6f17805a-2cef-455d-a142-b4e215d33c6f",
+                "BelongsToRooms": [
+                  "entrance"
+                ],
+                "IsFloor": false,
+                "IsWall": false
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "653b5de5-f44c-4c03-8f8f-dded0e2f4c4b"
+              }
+            ]
+          },
+          {
+            "__guid": "607e75a5-5794-480f-a670-ca1e68852adc",
+            "Flags": 0,
+            "Name": "interior_stairs",
+            "Position": "479.9998,256,0.00009343096",
+            "Tags": "stairs",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "817f829b-e636-403a-99f5-bf12038a8b8b",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_stairs.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "f5168a38-bebc-4c60-93d0-5df330145e44",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_stairs.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "ada293aa-1076-4971-98de-9834d44ab423",
+                "BelongsToRooms": [
+                  "entrance"
+                ],
+                "IsFloor": false,
+                "IsWall": false
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "d525f7bd-be12-4c9e-b341-a1efa5c917f8"
+              }
+            ]
+          },
+          {
+            "__guid": "972d670e-993d-4e9d-9fe6-7ab13372d636",
+            "Flags": 0,
+            "Name": "entrance_trigger",
+            "Position": "528,320,-0.0001130897",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Clover.WorldBuilder.RoomTrigger",
+                "__guid": "f1367170-f955-4e2f-a26e-08422a3dc010",
+                "BodyGroupsToHide": [],
+                "InteriorManager": {
+                  "_type": "component",
+                  "component_id": "c4babfdc-5804-4dfc-aad1-c453c83e66cd",
+                  "go": "f5784bcb-d490-43f6-b2fc-fc354ff8f611",
+                  "component_type": "InteriorManager"
+                },
+                "PiecesToShow": [
+                  {
+                    "_type": "gameobject",
+                    "go": "607e75a5-5794-480f-a670-ca1e68852adc"
+                  },
+                  {
+                    "_type": "gameobject",
+                    "go": "9a821115-1c9d-4f16-9525-19a5b5e3faba"
+                  },
+                  {
+                    "_type": "gameobject",
+                    "go": "cac56ff7-dce1-414d-be74-13f614a62821"
+                  }
+                ],
+                "RoomId": "entrance"
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "ab9e0f24-560c-4d8b-b296-c08fcc46e86e",
+                "Center": "0,0,48",
+                "IsTrigger": true,
+                "Scale": "192,192,96",
+                "Static": false,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "8407ee0e-85f0-496b-8a18-74199e3a6572"
+              }
+            ]
           }
         ]
       }
