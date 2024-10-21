@@ -245,9 +245,10 @@ public class PlayerController : Component, IEquipChanged
 			}
 
 			// move relative to camera
+			// TODO: normalise properly
 			var camera = Scene.Camera;
 
-			var cameraRotation = camera.WorldRotation;
+			var cameraRotation = camera.WorldRotation.Angles().WithPitch( 0f ).ToRotation();
 			var cameraForward = cameraRotation.Forward;
 			var cameraRight = cameraRotation.Right;
 
