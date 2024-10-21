@@ -98,6 +98,8 @@ public class ItemPlacer : Component, IWorldEvent
 		var item = InventorySlot.GetItem();
 		_selectedItem = item.ItemData;
 		var gameObject = item.ItemData.PlaceScene.Clone();
+		gameObject.WorldRotation =
+			Rotation.FromYaw( Player.PlayerController.Yaw ).Angles().SnapToGrid( RotationDistance );
 		PlaceGhostInternal( gameObject );
 	}
 
@@ -207,11 +209,11 @@ public class ItemPlacer : Component, IWorldEvent
 
 		if ( Input.Pressed( "RotateClockwise" ) )
 		{
-			_ghost.WorldRotation *= Rotation.FromYaw( -15 );
+			_ghost.WorldRotation *= Rotation.FromYaw( -RotationDistance );
 		}
 		else if ( Input.Pressed( "RotateCounterClockwise" ) )
 		{
-			_ghost.WorldRotation *= Rotation.FromYaw( 15 );
+			_ghost.WorldRotation *= Rotation.FromYaw( RotationDistance );
 		}
 
 		/*else if ( Input.Pressed( "cancel" ) )
@@ -344,6 +346,9 @@ public class ItemPlacer : Component, IWorldEvent
 
 	[ConVar( "clover_itemplacer_show_grid", Saved = true )]
 	public static bool ShowGrid { get; set; } = true;
+
+	[ConVar( "clover_itemplacer_rotation_distance", Saved = true )]
+	public static float RotationDistance { get; set; } = 15f;
 
 
 	protected override void OnUpdate()
