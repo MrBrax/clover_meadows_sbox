@@ -7,7 +7,7 @@ namespace Clover.Npc;
 [Category( "Clover/Npc" )]
 public class Villager : BaseNpc
 {
-	protected override void OnUpdate()
+	/*protected override void OnUpdate()
 	{
 		base.OnUpdate();
 
@@ -15,5 +15,5 @@ public class Villager : BaseNpc
 		{
 			Gizmo.Draw.LineSphere( TargetPosition.Value, 32f );
 		}
-	}
+	}*/
 }
