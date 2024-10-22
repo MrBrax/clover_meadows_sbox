@@ -15,6 +15,7 @@ public sealed class CameraMan : Component
 
 	private IEnumerable<CameraNode> _cameraNodes => Scene.GetAllComponents<CameraNode>().Where( x => !x.IsProxy );
 
+	private CameraNode _currentCameraNode;
 	public CameraNode MainCameraNode => _cameraNodes.OrderBy( x => x.Priority ).Reverse().FirstOrDefault();
 
 	private Vector3 _positionLerp;
@@ -64,6 +65,23 @@ public sealed class CameraMan : Component
 
 		if ( !mainCameraNode.IsValid() ) return;
 		if ( !CameraComponent.IsValid() ) return;
+
+		if ( !_currentCameraNode.IsValid() )
+		{
+			_currentCameraNode = mainCameraNode;
+			_currentCameraNode.OnActivated();
+		}
+
+		if ( _currentCameraNode.IsValid() && _currentCameraNode != mainCameraNode )
+		{
+			/*_positionLerp = mainCameraNode.WorldPosition;
+			_rotationLerp = mainCameraNode.WorldRotation;
+			_fovLerp = mainCameraNode.FieldOfView;
+			_previousCameraNode = mainCameraNode;*/
+			_currentCameraNode.OnDeactivated();
+			mainCameraNode.OnActivated();
+			_currentCameraNode = mainCameraNode;
+		}
 
 		Rotation wishedRot;
 		Vector3 wishedPos;

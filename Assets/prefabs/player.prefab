@@ -474,6 +474,7 @@
                 "__guid": "2fb1ce16-d463-4554-980e-59a3a3a2e355",
                 "FieldOfView": 70,
                 "FollowTargets": true,
+                "HasPivotRotation": true,
                 "Lerping": true,
                 "Priority": 1,
                 "Static": false
@@ -493,6 +494,7 @@
                 "__guid": "4bfeaf52-03a5-4eb5-8679-5b0183a6aad9",
                 "FieldOfView": 90,
                 "FollowTargets": false,
+                "HasPivotRotation": true,
                 "Lerping": true,
                 "Priority": 0,
                 "Static": false

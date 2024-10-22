@@ -94,13 +94,20 @@ public sealed class CameraController : Component
 			SkyCameraNode.Priority = 10;
 		}
 
-		if ( Input.Pressed( "CameraLeft" ) )
+		if ( CameraMan.Instance?.MainCameraNode.HasPivotRotation ?? false )
 		{
-			CameraPivot.WorldRotation *= Rotation.FromYaw( 30 );
-		}
-		else if ( Input.Pressed( "CameraRight" ) )
-		{
-			CameraPivot.WorldRotation *= Rotation.FromYaw( -30 );
+			if ( Input.Pressed( "CameraLeft" ) )
+			{
+				// CameraPivot.WorldRotation *= Rotation.FromYaw( 30 );
+				// CameraMan.Instance.MainCameraNode.CameraPivot.WorldRotation *= Rotation.FromYaw( 30 );
+				CameraMan.Instance.MainCameraNode.RotatePivot( Rotation.FromYaw( 30 ) );
+			}
+			else if ( Input.Pressed( "CameraRight" ) )
+			{
+				// CameraPivot.WorldRotation *= Rotation.FromYaw( -30 );
+				// CameraMan.Instance.MainCameraNode.CameraPivot.WorldRotation *= Rotation.FromYaw( -30 );
+				CameraMan.Instance.MainCameraNode.RotatePivot( Rotation.FromYaw( -30 ) );
+			}
 		}
 	}
 

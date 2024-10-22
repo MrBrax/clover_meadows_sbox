@@ -427,98 +427,6 @@
         ]
       },
       {
-        "__guid": "16149dba-13f1-4157-aa51-1c23466ddd7e",
-        "Flags": 0,
-        "Name": "room1_camera_trigger",
-        "Position": "320,320,0.0001778322",
-        "Tags": "trigger",
-        "Components": [
-          {
-            "__type": "Sandbox.BoxCollider",
-            "__guid": "6a856510-0ec3-4fa1-b92c-9f6d1e5a858d",
-            "Center": "0,0,64",
-            "IsTrigger": true,
-            "Scale": "192,224,128",
-            "Static": false,
-            "SurfaceVelocity": "0,0,0"
-          },
-          {
-            "__type": "Clover.Camera.CameraTrigger",
-            "__guid": "bca2de73-8757-4c6e-8566-a22a579d40ce",
-            "Camera": {
-              "_type": "component",
-              "component_id": "10865c93-9b81-4d45-94df-215e9d847d7a",
-              "go": "13734a6a-dc87-41f6-a314-4b60ca12b27e",
-              "component_type": "CameraNode"
-            }
-          }
-        ]
-      },
-      {
-        "__guid": "13734a6a-dc87-41f6-a314-4b60ca12b27e",
-        "Flags": 0,
-        "Name": "room1_camera",
-        "Position": "544,320,176",
-        "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
-        "Components": [
-          {
-            "__type": "CameraNode",
-            "__guid": "10865c93-9b81-4d45-94df-215e9d847d7a",
-            "FieldOfView": 70,
-            "FollowTargets": true,
-            "Lerping": true,
-            "Priority": 0,
-            "Static": true
-          }
-        ]
-      },
-      {
-        "__guid": "5e508cbb-c02b-4934-bed1-336abcae9562",
-        "Flags": 0,
-        "Name": "room2_camera_trigger",
-        "Position": "320,96,0.0001778322",
-        "Tags": "trigger",
-        "Components": [
-          {
-            "__type": "Sandbox.BoxCollider",
-            "__guid": "b7b6bbf8-be5b-49ee-ba29-920f1d823204",
-            "Center": "0,0,64",
-            "IsTrigger": true,
-            "Scale": "224,224,128",
-            "Static": false,
-            "SurfaceVelocity": "0,0,0"
-          },
-          {
-            "__type": "Clover.Camera.CameraTrigger",
-            "__guid": "cbc48a66-8deb-4a5c-804d-7a73cfa5aa0a",
-            "Camera": {
-              "_type": "component",
-              "component_id": "950d56ba-21fe-41c2-94f7-d2c02d21faf2",
-              "go": "360f3f61-3ebc-441e-960d-7e172608366a",
-              "component_type": "CameraNode"
-            }
-          }
-        ]
-      },
-      {
-        "__guid": "360f3f61-3ebc-441e-960d-7e172608366a",
-        "Flags": 0,
-        "Name": "room2_camera",
-        "Position": "544,96,176",
-        "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
-        "Components": [
-          {
-            "__type": "CameraNode",
-            "__guid": "950d56ba-21fe-41c2-94f7-d2c02d21faf2",
-            "FieldOfView": 70,
-            "FollowTargets": true,
-            "Lerping": true,
-            "Priority": 0,
-            "Static": true
-          }
-        ]
-      },
-      {
         "__guid": "4c615432-7857-4740-8fd3-53b1fe8da6a0",
         "Flags": 0,
         "Name": "room3_camera_trigger",
@@ -558,8 +466,10 @@
             "__guid": "ec24e341-bfde-49cb-af31-f1adf4eaf959",
             "FieldOfView": 70,
             "FollowTargets": true,
+            "HasPivotRotation": false,
             "Lerping": true,
             "Priority": 0,
+            "ShouldSyncWithPlayerCameraRotation": false,
             "Static": true
           }
         ]
@@ -1495,6 +1405,65 @@
                 "__guid": "177dc74e-b9ac-4078-80a9-4af76409a4e3"
               }
             ]
+          },
+          {
+            "__guid": "506c37e1-7f61-4748-93ac-c3a6f6265ad9",
+            "Flags": 0,
+            "Name": "room1_camera_pivot",
+            "Position": "320,320,0.0001778322",
+            "Enabled": true,
+            "Children": [
+              {
+                "__guid": "13734a6a-dc87-41f6-a314-4b60ca12b27e",
+                "Flags": 0,
+                "Name": "room1_camera",
+                "Position": "240,0,191.9998",
+                "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "CameraNode",
+                    "__guid": "10865c93-9b81-4d45-94df-215e9d847d7a",
+                    "FieldOfView": 70,
+                    "FollowTargets": true,
+                    "HasPivotRotation": true,
+                    "Lerping": true,
+                    "Priority": 0,
+                    "ShouldSyncWithPlayerCameraRotation": true,
+                    "Static": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "__guid": "16149dba-13f1-4157-aa51-1c23466ddd7e",
+            "Flags": 0,
+            "Name": "room1_camera_trigger",
+            "Position": "320,320,0.0001778322",
+            "Tags": "trigger",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "6a856510-0ec3-4fa1-b92c-9f6d1e5a858d",
+                "Center": "0,0,64",
+                "IsTrigger": true,
+                "Scale": "192,224,128",
+                "Static": false,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.Camera.CameraTrigger",
+                "__guid": "bca2de73-8757-4c6e-8566-a22a579d40ce",
+                "Camera": {
+                  "_type": "component",
+                  "component_id": "10865c93-9b81-4d45-94df-215e9d847d7a",
+                  "go": "13734a6a-dc87-41f6-a314-4b60ca12b27e",
+                  "component_type": "CameraNode"
+                }
+              }
+            ]
           }
         ]
       },
@@ -2041,6 +2010,65 @@
               {
                 "__type": "Clover.WorldLayerObject",
                 "__guid": "370fd41c-7c96-41bf-93e8-be3e855d92e9"
+              }
+            ]
+          },
+          {
+            "__guid": "23282953-de51-4684-9f1c-6b9ba5b76c81",
+            "Flags": 0,
+            "Name": "room2_camera_pivot",
+            "Position": "320,96,0.0001778322",
+            "Enabled": true,
+            "Children": [
+              {
+                "__guid": "360f3f61-3ebc-441e-960d-7e172608366a",
+                "Flags": 0,
+                "Name": "room2_camera",
+                "Position": "240,0,191.9998",
+                "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "CameraNode",
+                    "__guid": "950d56ba-21fe-41c2-94f7-d2c02d21faf2",
+                    "FieldOfView": 70,
+                    "FollowTargets": true,
+                    "HasPivotRotation": true,
+                    "Lerping": true,
+                    "Priority": 0,
+                    "ShouldSyncWithPlayerCameraRotation": true,
+                    "Static": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "__guid": "5e508cbb-c02b-4934-bed1-336abcae9562",
+            "Flags": 0,
+            "Name": "room2_camera_trigger",
+            "Position": "320,96,0.0001778322",
+            "Tags": "trigger",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "b7b6bbf8-be5b-49ee-ba29-920f1d823204",
+                "Center": "0,0,64",
+                "IsTrigger": true,
+                "Scale": "224,224,128",
+                "Static": false,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.Camera.CameraTrigger",
+                "__guid": "cbc48a66-8deb-4a5c-804d-7a73cfa5aa0a",
+                "Camera": {
+                  "_type": "component",
+                  "component_id": "950d56ba-21fe-41c2-94f7-d2c02d21faf2",
+                  "go": "360f3f61-3ebc-441e-960d-7e172608366a",
+                  "component_type": "CameraNode"
+                }
               }
             ]
           }
