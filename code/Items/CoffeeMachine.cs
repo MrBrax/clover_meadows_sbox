@@ -8,6 +8,7 @@ using Clover.Ui;
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
 public class CoffeeMachine : Component, IInteract, IPersistent
 {
 	[Property] public SoundEvent GrindingSound { get; set; }

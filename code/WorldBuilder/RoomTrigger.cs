@@ -2,6 +2,7 @@
 
 namespace Clover.WorldBuilder;
 
+[Category( "Clover/World" )]
 public class RoomTrigger : Component, Component.ITriggerListener
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }

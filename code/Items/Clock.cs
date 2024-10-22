@@ -3,6 +3,7 @@ using Clover.WorldBuilder;
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
 public class Clock : Component, ITimeEvent
 {
 	[Property] public SkinnedModelRenderer Renderer { get; set; }

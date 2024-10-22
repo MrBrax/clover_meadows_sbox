@@ -4,6 +4,7 @@ using Clover.WorldBuilder;
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
 public class ShopDisplay : Component, IInteract
 {
 	[Property] public GameObject Container { get; set; }

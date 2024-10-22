@@ -2,6 +2,7 @@
 
 namespace Clover.WorldBuilder;
 
+[Category( "Clover/World" )]
 public class InteriorPiece : Component
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }

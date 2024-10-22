@@ -7,6 +7,7 @@ using Clover.Player;
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
 public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 {
 	[RequireComponent] public WorldItem WorldItem { get; set; }

@@ -4,6 +4,7 @@ using Clover.Player;
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
 public class Television : Component, IInteract
 {
 	[Property] public ModelRenderer Model { get; set; }

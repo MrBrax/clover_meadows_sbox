@@ -5,6 +5,7 @@ using Clover.Player;
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
 public class Gift : Component, IInteract, IPersistent
 {
 	[RequireComponent] public WorldItem WorldItem { get; private set; }

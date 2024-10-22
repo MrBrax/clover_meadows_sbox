@@ -2,6 +2,7 @@
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
 public class SmokeDetector : Component
 {
 	[Property] public SoundEvent Sound { get; set; }

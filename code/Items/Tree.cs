@@ -8,6 +8,7 @@ using Clover.Player;
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
 public class Tree : Component, IPersistent, IInteract
 {
 	[RequireComponent] public WorldItem WorldItem { get; set; }

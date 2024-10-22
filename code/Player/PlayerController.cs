@@ -7,6 +7,7 @@ using Clover.Carriable;
 using Clover.Components;
 using Clover.Player;
 
+[Category( "Clover/Player" )]
 public class PlayerController : Component, IEquipChanged
 {
 	[RequireComponent] public PlayerCharacter Player { get; set; }

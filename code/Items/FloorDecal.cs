@@ -2,6 +2,7 @@
 
 namespace Clover.Items;
 
+[Category( "Clover/Items" )]
 public class FloorDecal : Component, IPersistent
 {
 	[RequireComponent] public WorldItem WorldItem { get; private set; }
