@@ -17,4 +17,6 @@ public class WorldData : GameResource
 	[Property] public float MaxItemAltitude = 0;
 
 	[Property] public bool DisableItemPlacement { get; set; }
+
+	[Property] public bool CanRotateCamera { get; set; }
 }

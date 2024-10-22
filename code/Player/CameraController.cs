@@ -1,10 +1,13 @@
 using Clover;
+using Clover.Player;
 using Sandbox;
 
 [Category( "Clover/Player" )]
 [Icon( "camera" )]
-public sealed class CameraController : Component
+public sealed class CameraController : Component, IWorldEvent
 {
+	[RequireComponent] public PlayerCharacter Player { get; set; }
+
 	[Property] public CameraNode MainCameraNode { get; set; }
 	[Property] public CameraNode SkyCameraNode { get; set; }
 
@@ -94,18 +97,14 @@ public sealed class CameraController : Component
 			SkyCameraNode.Priority = 10;
 		}
 
-		if ( CameraMan.Instance?.MainCameraNode.HasPivotRotation ?? false )
+		if ( (CameraMan.Instance?.MainCameraNode.HasPivotRotation ?? false) && Player.World.Data.CanRotateCamera )
 		{
 			if ( Input.Pressed( "CameraLeft" ) )
 			{
-				// CameraPivot.WorldRotation *= Rotation.FromYaw( 30 );
-				// CameraMan.Instance.MainCameraNode.CameraPivot.WorldRotation *= Rotation.FromYaw( 30 );
 				CameraMan.Instance.MainCameraNode.RotatePivot( Rotation.FromYaw( 30 ) );
 			}
 			else if ( Input.Pressed( "CameraRight" ) )
 			{
-				// CameraPivot.WorldRotation *= Rotation.FromYaw( -30 );
-				// CameraMan.Instance.MainCameraNode.CameraPivot.WorldRotation *= Rotation.FromYaw( -30 );
 				CameraMan.Instance.MainCameraNode.RotatePivot( Rotation.FromYaw( -30 ) );
 			}
 		}
@@ -114,5 +113,13 @@ public sealed class CameraController : Component
 	public void SnapCamera()
 	{
 		MainCameraNode.SnapTo();
+	}
+
+	void IWorldEvent.OnWorldChanged( World world )
+	{
+		if ( !world.Data.CanRotateCamera )
+		{
+			CameraPivot.WorldRotation = Rotation.Identity;
+		}
 	}
 }
