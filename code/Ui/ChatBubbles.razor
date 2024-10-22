@@ -1,0 +1,16 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Clover
+
+<root>
+	@foreach ( var message in Messages )
+	{
+		<div class="message @( message.IsYou ? "local" : "" )">
+			<div class="content">
+				@*<div class="name">@message.Name</div>*@
+				<div class="text">@message.Text</div>
+			</div>
+		</div>
+	}
+</root>

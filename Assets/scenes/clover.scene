@@ -2,6 +2,21 @@
   "__guid": "325a4042-0696-43dd-a79d-dcc314299ba3",
   "GameObjects": [
     {
+      "__guid": "370ef2e6-9ab3-47b2-9d85-2e0b0ab771f0",
+      "Flags": 0,
+      "Name": "Scene Information",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.SceneInformation",
+          "__guid": "287819b3-2496-4cc3-9e09-6b549e9a1910",
+          "Description": "",
+          "SceneTags": "",
+          "Title": "minimal"
+        }
+      ]
+    },
+    {
       "__guid": "24e70066-371c-4c2e-8ccf-d4da82d1aef9",
       "Flags": 0,
       "Name": "Dialogue",
@@ -181,6 +196,11 @@
         {
           "__type": "Clover.Ui.Notifications",
           "__guid": "a366d06f-efbf-4cf7-9391-44ebca7afae8"
+        },
+        {
+          "__type": "Clover.Chat",
+          "__guid": "17147b21-9928-4c82-bf51-23e01e520f34",
+          "MyStringValue": "Hello World!"
         }
       ]
     },
@@ -391,6 +411,9 @@
     "ThreadedAnimation": true,
     "TimeScale": 1,
     "UseFixedUpdate": true,
+    "Metadata": {
+      "Title": "minimal"
+    },
     "NavMesh": {
       "Enabled": true,
       "IncludeStaticBodies": true,
@@ -404,9 +427,9 @@
       "IncludedBodies": ""
     }
   },
+  "ResourceVersion": 2,
   "Title": "minimal",
-  "Description": "",
-  "ResourceVersion": 1,
+  "Description": null,
   "__references": [],
-  "__version": 1
+  "__version": 2
 }

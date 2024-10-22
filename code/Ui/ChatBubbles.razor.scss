@@ -1,0 +1,23 @@
+ChatBubbles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+
+    flex-direction: column;
+    gap: 20px;
+
+    justify-content: flex-end;
+
+
+    .message {
+        font-family: Itim;
+        font-size: 50px;
+        padding: 20px 30px;
+        border-radius: 100%;
+        background-color: #f0f0f0;
+
+    }
+}
