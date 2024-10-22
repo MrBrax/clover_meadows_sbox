@@ -1,3 +1,4 @@
+using Clover.Camera;
 using Clover.Player;
 using Sandbox;
 
@@ -5,6 +6,8 @@ using Sandbox;
 [Icon( "camera" )]
 public sealed class CameraNode : Component
 {
+	public bool IsCameraActive => CameraMan.Instance.MainCameraNode == this;
+
 	[Property] public int Priority { get; set; } = 0;
 
 	[Property] public float FieldOfView { get; set; } = 90;
@@ -19,10 +22,37 @@ public sealed class CameraNode : Component
 
 	[Property] public bool ShouldSyncWithPlayerCameraRotation { get; set; } = false;
 
+	[Property] public CameraDollyNode DollyNode { get; set; }
+
 	public GameObject CameraPivot => HasPivotRotation ? GameObject.Parent : null;
 
 	protected override void OnUpdate()
 	{
+		if ( IsCameraActive && DollyNode.IsValid() && CameraPivot.IsValid() )
+		{
+			// move the camera between dolly nodes to follow player
+			var playerPosition = PlayerCharacter.Local.WorldPosition;
+			var path = DollyNode.GetPath();
+
+			CameraPivot.WorldPosition = playerPosition;
+
+			var node1 = path.MinBy( x => x.WorldPosition.Distance( playerPosition ) );
+			var node2 = path.Where( x => x != node1 ).MinBy( x => x.WorldPosition.Distance( playerPosition ) );
+
+			var t = (playerPosition - node1.WorldPosition).Length / (node2.WorldPosition - node1.WorldPosition).Length;
+
+			CameraPivot.WorldPosition = Vector3.Lerp( node1.WorldPosition, node2.WorldPosition, t );
+
+			Gizmo.Draw.LineSphere( node1.WorldPosition, 16f );
+			Gizmo.Draw.Text( "NODE1", new Transform( node1.WorldPosition + Vector3.Up * 32f ) );
+			Gizmo.Draw.LineSphere( node2.WorldPosition, 16f );
+			Gizmo.Draw.Text( "NODE2", new Transform( node2.WorldPosition + Vector3.Up * 32f ) );
+
+			Gizmo.Draw.LineSphere( CameraPivot.WorldPosition, 8f );
+			Gizmo.Draw.Text( "PIVOT", new Transform( CameraPivot.WorldPosition + Vector3.Up * 32f ) );
+			Gizmo.Draw.Arrow( CameraPivot.WorldPosition, node1.WorldPosition );
+			Gizmo.Draw.Arrow( CameraPivot.WorldPosition, node2.WorldPosition );
+		}
 	}
 
 	protected override void DrawGizmos()

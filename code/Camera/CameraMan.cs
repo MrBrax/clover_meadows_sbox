@@ -97,7 +97,7 @@ public sealed class CameraMan : Component
 		else
 		{
 			wishedRot = mainCameraNode.WorldRotation;
-			if ( !mainCameraNode.Static && PlayerCharacter.Local.IsValid() )
+			if ( !mainCameraNode.DollyNode.IsValid() && !mainCameraNode.Static && PlayerCharacter.Local.IsValid() )
 			{
 				wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.3f;
 			}
