@@ -1,5 +1,7 @@
 ﻿namespace Clover.Camera;
 
+[Category( "Clover/Camera" )]
+[EditorHandle( "materials/gizmo/tracked_object.png" )]
 public class CameraDollyNode : Component
 {
 	[Property] public CameraDollyNode Next { get; set; }
