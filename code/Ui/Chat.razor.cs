@@ -105,14 +105,22 @@ public partial class Chat
 	[Broadcast]
 	public void AddMessage( string message, string playerId, string location )
 	{
-		Messages.Add( new ChatMessage()
+		var msg = new ChatMessage()
 		{
 			Text = message,
 			Author = Rpc.Caller.SteamId,
 			Time = DateTime.Now,
 			PlayerId = playerId,
 			Location = location
-		} );
+		};
+		Messages.Add( msg );
+		Log.Info( $"> {msg.Name} ({Rpc.Caller.DisplayName}): {msg.Text}" );
 		StateHasChanged();
+	}
+
+	[ConCmd( "say" )]
+	public static void Say( string message )
+	{
+		Instance.AddMessage( message, PlayerCharacter.Local.PlayerId, PlayerCharacter.Local.World.Title );
 	}
 }
