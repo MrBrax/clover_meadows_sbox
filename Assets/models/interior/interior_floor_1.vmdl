@@ -56,7 +56,7 @@
 						_class = "PhysicsMeshFile"
 						name = "interior_floor_1"
 						parent_bone = ""
-						surface_prop = "default"
+						surface_prop = "wood"
 						collision_tags = "solid"
 						recenter_on_parent_bone = false
 						offset_origin = [ 0.0, 0.0, 0.0 ]
