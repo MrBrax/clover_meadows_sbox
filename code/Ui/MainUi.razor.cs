@@ -120,5 +120,22 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 
 			yield return new InputData( "Snap", "Snap" );
 		}
+
+		if ( ShowInputsObvious )
+		{
+			yield return new InputData( "View", "Camera" );
+			yield return new InputData( "Inventory", "Inventory" );
+			yield return new InputData( "Run", "Run" );
+			yield return new InputData( "Walk", "Walk" );
+			yield return new InputData( "DebugWindow", "Debug" );
+			yield return new InputData( "Chat", "Chat" );
+		}
 	}
+
+	[ConVar( "clover_ui_show_inputs", Saved = true )]
+	public static bool ShowInputs { get; set; } = true;
+
+	// TODO: better name
+	[ConVar( "clover_ui_show_inputs_obvious", Saved = true )]
+	public static bool ShowInputsObvious { get; set; } = true;
 }

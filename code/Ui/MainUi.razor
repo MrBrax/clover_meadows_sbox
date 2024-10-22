@@ -27,15 +27,18 @@
 			<div class="bar bottom"></div>
 		</div>
 
-		<div class="inputs @( ShouldShowUi ? "active" : "" )">
-			@foreach ( var input in GetCurrentInputs() )
-			{
-				<div class="input-entry">
-					<Image Texture=@Input.GetGlyph( input.Action, InputGlyphSize.Small, GlyphStyle.Dark )/>
-					<div class="input-name">@input.Name</div>
-				</div>
-			}
-		</div>
+		@if ( ShowInputs )
+		{
+			<div class="inputs @( ShouldShowUi ? "active" : "" )">
+				@foreach ( var input in GetCurrentInputs() )
+				{
+					<div class="input-entry">
+						<Image Texture=@Input.GetGlyph( input.Action, InputGlyphSize.Small, GlyphStyle.Dark )/>
+						<div class="input-name">@input.Name</div>
+					</div>
+				}
+			</div>
+		}
 
 		@if ( PlayerCharacter.Local.Equips.HasEquippedItem<Paintbrush>( Equips.EquipSlot.Tool ) )
 		{
