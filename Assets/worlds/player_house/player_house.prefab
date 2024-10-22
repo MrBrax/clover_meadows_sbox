@@ -691,6 +691,8 @@
               "room1",
               "room2"
             ],
+            "IsDarkness": false,
+            "IsDoorway": true,
             "IsFloor": false,
             "IsWall": false
           },
@@ -738,6 +740,8 @@
               "room1",
               "room3"
             ],
+            "IsDarkness": false,
+            "IsDoorway": true,
             "IsFloor": false,
             "IsWall": false
           },
@@ -784,6 +788,8 @@
               "room1",
               "room4"
             ],
+            "IsDarkness": false,
+            "IsDoorway": true,
             "IsFloor": false,
             "IsWall": false
           },
@@ -831,6 +837,8 @@
               "room1",
               "entrance"
             ],
+            "IsDarkness": false,
+            "IsDoorway": true,
             "IsFloor": false,
             "IsWall": false
           },
@@ -949,6 +957,8 @@
                 "BelongsToRooms": [
                   "room1"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": true,
                 "IsWall": false
               },
@@ -994,6 +1004,8 @@
                 "BelongsToRooms": [
                   "room1"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -1039,6 +1051,8 @@
                 "BelongsToRooms": [
                   "room1"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -1084,6 +1098,8 @@
                 "BelongsToRooms": [
                   "room1"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -1129,6 +1145,8 @@
                 "BelongsToRooms": [
                   "room1"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -1166,6 +1184,8 @@
                 "BelongsToRooms": [
                   "room1"
                 ],
+                "IsDarkness": true,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": false
               },
@@ -1203,6 +1223,8 @@
                 "BelongsToRooms": [
                   "room1"
                 ],
+                "IsDarkness": true,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": false
               },
@@ -1240,6 +1262,8 @@
                 "BelongsToRooms": [
                   "room3"
                 ],
+                "IsDarkness": true,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": false
               },
@@ -1277,6 +1301,8 @@
                 "BelongsToRooms": [
                   "room1"
                 ],
+                "IsDarkness": true,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": false
               },
@@ -1314,6 +1340,8 @@
                 "BelongsToRooms": [
                   "entrance"
                 ],
+                "IsDarkness": true,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": false
               },
@@ -1351,6 +1379,8 @@
                 "BelongsToRooms": [
                   "room1"
                 ],
+                "IsDarkness": true,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": false
               },
@@ -1388,6 +1418,8 @@
                 "BelongsToRooms": [
                   "room4"
                 ],
+                "IsDarkness": true,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": false
               },
@@ -1557,6 +1589,8 @@
                 "BelongsToRooms": [
                   "room2"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": true,
                 "IsWall": false
               },
@@ -1601,6 +1635,8 @@
                 "BelongsToRooms": [
                   "room2"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -1646,6 +1682,8 @@
                 "BelongsToRooms": [
                   "room2"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -1691,6 +1729,8 @@
                 "BelongsToRooms": [
                   "room2"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -1736,6 +1776,8 @@
                 "BelongsToRooms": [
                   "room2"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -1773,6 +1815,8 @@
                 "BelongsToRooms": [
                   "room2"
                 ],
+                "IsDarkness": true,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": false
               },
@@ -1959,6 +2003,8 @@
                 "BelongsToRooms": [
                   "entrance"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": true,
                 "IsWall": false
               },
@@ -2301,6 +2347,8 @@
                 "BelongsToRooms": [
                   "entrance"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": false
               },
@@ -2346,6 +2394,8 @@
                 "BelongsToRooms": [
                   "entrance"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": false
               },
@@ -2481,6 +2531,8 @@
                 "BelongsToRooms": [
                   "room3"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": true,
                 "IsWall": false
               },
@@ -2525,6 +2577,8 @@
                 "BelongsToRooms": [
                   "room3"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": true,
                 "IsWall": false
               },
@@ -2570,6 +2624,8 @@
                 "BelongsToRooms": [
                   "room3"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -2615,6 +2671,8 @@
                 "BelongsToRooms": [
                   "room3"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -2659,6 +2717,8 @@
                 "BelongsToRooms": [
                   "room3"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -2704,6 +2764,8 @@
                 "BelongsToRooms": [
                   "room3"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -2749,6 +2811,8 @@
                 "BelongsToRooms": [
                   "room3"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -2794,6 +2858,8 @@
                 "BelongsToRooms": [
                   "room3"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -2978,6 +3044,8 @@
                 "BelongsToRooms": [
                   "room4"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": true,
                 "IsWall": false
               },
@@ -3022,6 +3090,8 @@
                 "BelongsToRooms": [
                   "room4"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": true,
                 "IsWall": false
               },
@@ -3067,6 +3137,8 @@
                 "BelongsToRooms": [
                   "room4"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -3112,6 +3184,8 @@
                 "BelongsToRooms": [
                   "room4"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -3157,6 +3231,8 @@
                 "BelongsToRooms": [
                   "room4"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -3201,6 +3277,8 @@
                 "BelongsToRooms": [
                   "room4"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -3246,6 +3324,8 @@
                 "BelongsToRooms": [
                   "room4"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },
@@ -3291,6 +3371,8 @@
                 "BelongsToRooms": [
                   "room4"
                 ],
+                "IsDarkness": false,
+                "IsDoorway": false,
                 "IsFloor": false,
                 "IsWall": true
               },

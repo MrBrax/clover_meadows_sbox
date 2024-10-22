@@ -1,4 +1,6 @@
-﻿namespace Clover.WorldBuilder;
+﻿using Clover.Player;
+
+namespace Clover.WorldBuilder;
 
 public class InteriorPiece : Component
 {
@@ -8,6 +10,8 @@ public class InteriorPiece : Component
 
 	[Property] public bool IsWall { get; set; }
 	[Property] public bool IsFloor { get; set; }
+	[Property] public bool IsDoorway { get; set; }
+	[Property] public bool IsDarkness { get; set; }
 
 	public void Hide()
 	{
@@ -56,27 +60,53 @@ public class InteriorPiece : Component
 
 	protected override void OnFixedUpdate()
 	{
-		if ( !IsWall ) return;
-		var camera = Scene.Camera;
-
-		var cameraRotation = camera.WorldRotation.Angles().WithPitch( 0 );
-		var cameraForward = cameraRotation.Forward;
-
-		var pieceForward = WorldRotation.Left;
-
-		var dot = Vector3.Dot( cameraForward.Normal, pieceForward.Normal );
-
-		/*if ( dot > 0.4f )
+		if ( IsWall || IsDarkness )
 		{
-			Gizmo.Draw.Text( "HIDE ME", new Transform( WorldPosition ) );
-		}*/
+			var camera = Scene.Camera;
 
-		Tags.Set( "invisiblewall", dot > 0.4f );
+			var cameraRotation = camera.WorldRotation.Angles().WithPitch( 0 );
+			var cameraForward = cameraRotation.Forward;
+
+			var pieceForward = WorldRotation.Left;
+
+			var dot = Vector3.Dot( cameraForward.Normal, pieceForward.Normal );
+
+			/*if ( dot > 0.4f )
+			{
+				Gizmo.Draw.Text( "HIDE ME", new Transform( WorldPosition ) );
+			}*/
+
+			Tags.Set( "invisiblewall", dot > 0.3f );
+		}
+		else if ( IsDoorway )
+		{
+			var camera = Scene.Camera;
+
+			var cameraRotation = camera.WorldRotation.Angles().WithPitch( 0 );
+			var cameraForward = cameraRotation.Forward;
+
+			var pieceForward = WorldRotation.Left;
+
+			var playerPosition = PlayerCharacter.Local.WorldPosition;
+
+			// check if player is in front or behind the doorway to flip the final dot check, doorway should always face into the room
+			var isInFront = Vector3.Dot( pieceForward.Normal, playerPosition - WorldPosition ) > 0;
+
+			// Gizmo.Draw.Text( isInFront ? "IN FRONT" : "BEHIND", new Transform( WorldPosition ) );
+
+			var dot = Vector3.Dot( cameraForward.Normal, pieceForward.Normal );
+
+			// Gizmo.Draw.Text( dot.ToString(), new Transform( WorldPosition ) );
+
+			Tags.Set( "invisiblewall", isInFront ? dot > 0.3f : dot < -0.3f );
+		}
 	}
 
 	protected override void DrawGizmos()
 	{
 		Gizmo.Transform = global::Transform.Zero;
 		Gizmo.Draw.Text( $"Rooms: {string.Join( ", ", BelongsToRooms )}", new Transform( WorldPosition ) );
+
+		Gizmo.Draw.Arrow( WorldPosition, WorldPosition + WorldRotation.Left * 32f );
 	}
 }
