@@ -41,6 +41,9 @@ public sealed partial class World : Component
 
 	[Property] public WorldData Data { get; set; }
 
+	// TODO: player should be able to set this depending on world
+	public string Title => Data.Title;
+
 
 	public delegate void OnItemAddedEvent( WorldNodeLink nodeLink );
 

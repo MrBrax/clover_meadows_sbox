@@ -32,6 +32,8 @@ public partial class Chat
 
 		public bool IsNearby => Player.IsValid() && PlayerCharacter.Local.IsValid() &&
 		                        PlayerCharacter.Local.WorldPosition.Distance( Player.WorldPosition ) < 300;
+
+		public string Location { get; set; } = "Unknown";
 	}
 
 
@@ -81,12 +83,18 @@ public partial class Chat
 		}
 	}
 
+	private void HideInput()
+	{
+		ShouldShowInput = false;
+		StateHasChanged();
+	}
+
 	private void SendMessage()
 	{
 		if ( !string.IsNullOrWhiteSpace( MessageText ) )
 		{
-			Log.Info( "Send Message" );
-			AddMessage( MessageText, PlayerCharacter.Local.PlayerId );
+			var location = PlayerCharacter.Local.World.Title;
+			AddMessage( MessageText, PlayerCharacter.Local.PlayerId, location );
 			MessageText = "";
 		}
 
@@ -95,11 +103,15 @@ public partial class Chat
 	}
 
 	[Broadcast]
-	public void AddMessage( string message, string playerId )
+	public void AddMessage( string message, string playerId, string location )
 	{
 		Messages.Add( new ChatMessage()
 		{
-			Text = message, Author = Rpc.Caller.SteamId, Time = DateTime.Now, PlayerId = playerId
+			Text = message,
+			Author = Rpc.Caller.SteamId,
+			Time = DateTime.Now,
+			PlayerId = playerId,
+			Location = location
 		} );
 		StateHasChanged();
 	}

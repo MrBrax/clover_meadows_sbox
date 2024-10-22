@@ -1,15 +1,20 @@
 Chat {
-    position: absolute;
-    top: 50px;
-    left: 50px;
 
     // background-color: rgba(0, 0, 0, 0.4);
 
-    width: 700px;
+    .chat-container {
 
-    flex-direction: column;
+        position: absolute;
+        top: 50px;
+        left: 50px;
 
-    gap: 20px;
+        width: 700px;
+
+        flex-direction: column;
+
+        gap: 20px;
+
+    }
 
     .messages {
         height: 300px;
@@ -54,7 +59,11 @@ Chat {
             .content {
                 font-family: Itim;
                 font-size: 30px;
-                gap: 10px;
+                gap: 15px;
+
+                text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.7);
+
+                align-items: center;
 
                 .name {
                     color: yellow;
@@ -62,6 +71,11 @@ Chat {
 
                 .text {
                     color: white;
+                }
+
+                .location {
+                    color: #62e118;
+                    font-size: 20px;
                 }
             }
         }
@@ -87,6 +101,15 @@ Chat {
         font-family: Itim;
         font-size: 30px;
         border-radius: 20px;
+    }
+
+    .clickaway {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: all;
     }
 
 }

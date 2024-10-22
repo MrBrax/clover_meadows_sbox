@@ -4,21 +4,28 @@
 @namespace Clover
 
 <root>
-	<div class="messages @( ShouldShowMessages ? "active" : "" )">
-		@foreach ( var message in DistantMessages )
-		{
-			<div class="message">
-				<div class="avatar">
-					<img src="avatar://@message.Author"/>
+	@if ( ShouldShowInput )
+	{
+		<div class="clickaway" @onclick=@HideInput></div>
+	}
+	<div class="chat-container">
+		<div class="messages @( ShouldShowMessages ? "active" : "" )">
+			@foreach ( var message in ShouldShowInput ? Messages : DistantMessages )
+			{
+				<div class="message">
+					<div class="avatar">
+						<img src="avatar://@message.Author"/>
+					</div>
+					<div class="content">
+						<div class="name">@message.Name</div>
+						<div class="text">@message.Text</div>
+						<div class="location">@( $"@ {message.Location}" )</div>
+					</div>
 				</div>
-				<div class="content">
-					<div class="name">@message.Name</div>
-					<div class="text">@message.Text</div>
-				</div>
-			</div>
-		}
-	</div>
-	<div class="input-container @( ShouldShowInput ? "active" : "" )">
-		<TextEntry @ref=" InputBox" class="input" placeholder="Type a message..." Value:bind=@MessageText onsubmit=@SendMessage/>
+			}
+		</div>
+		<div class="input-container @( ShouldShowInput ? "active" : "" )">
+			<TextEntry @ref=" InputBox" class="input" placeholder="Type a message..." Value:bind=@MessageText onsubmit=@SendMessage/>
+		</div>
 	</div>
 </root>
