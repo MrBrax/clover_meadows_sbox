@@ -118,7 +118,7 @@
         "__guid": "f6b4ec4e-7934-49a1-94ba-1435112add65",
         "Flags": 0,
         "Name": "Point Light (2)",
-        "Position": "256,512,96.00008",
+        "Position": "256,544,96.00008",
         "Tags": "light,light_point",
         "Enabled": true,
         "Components": [
@@ -1045,51 +1045,6 @@
               {
                 "__type": "Clover.WorldLayerObject",
                 "__guid": "ab3098fc-ca72-4c4d-9f74-fa30491d261e"
-              }
-            ]
-          },
-          {
-            "__guid": "2378690f-edf8-47ae-99de-3212b6d6953f",
-            "Flags": 0,
-            "Name": "interior_wall_1_doorway_1",
-            "Position": "319.9998,448,0.00008654746",
-            "Rotation": "-0.00000000000001024362,-0.00000002980232,0.0000002245095,-0.9999999",
-            "Enabled": true,
-            "Components": [
-              {
-                "__type": "Sandbox.ModelRenderer",
-                "__guid": "5af2d636-5277-4d66-8418-a850f2868c76",
-                "BodyGroups": 18446744073709551615,
-                "Model": "models/interior/interior_wall_1_doorway_1.vmdl",
-                "RenderOptions": {
-                  "GameLayer": true,
-                  "OverlayLayer": false,
-                  "BloomLayer": false,
-                  "AfterUILayer": false
-                },
-                "RenderType": "On",
-                "Tint": "1,1,1,1"
-              },
-              {
-                "__type": "Sandbox.ModelCollider",
-                "__guid": "64da391f-3403-41d7-88d6-9368d323e3d2",
-                "IsTrigger": false,
-                "Model": "models/interior/interior_wall_1_doorway_1.vmdl",
-                "Static": true,
-                "SurfaceVelocity": "0,0,0"
-              },
-              {
-                "__type": "Clover.WorldBuilder.InteriorPiece",
-                "__guid": "b9c25b87-cfe6-4d20-a64a-f12b611eb797",
-                "BelongsToRooms": [
-                  "room1"
-                ],
-                "IsFloor": false,
-                "IsWall": true
-              },
-              {
-                "__type": "Clover.WorldLayerObject",
-                "__guid": "6976b8d6-93d7-4c56-96b7-3188597dccef"
               }
             ]
           },
@@ -2942,6 +2897,503 @@
               {
                 "__type": "Clover.Camera.CameraDollyNode",
                 "__guid": "512a7905-67ac-4554-a344-ffe5c6b29229"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__guid": "bc7943a6-b6f6-4d5a-929c-d1f4d531d66f",
+        "Flags": 0,
+        "Name": "room_4",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "295dd51e-bd74-479b-9821-349dbee2e96f",
+            "Flags": 0,
+            "Name": "room4_trigger",
+            "Position": "96,224,-0.0001259876",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Clover.WorldBuilder.RoomTrigger",
+                "__guid": "9616bccc-97f1-4058-ab15-6b5babdd0114",
+                "BodyGroupsToHide": [],
+                "InteriorManager": {
+                  "_type": "component",
+                  "component_id": "c4babfdc-5804-4dfc-aad1-c453c83e66cd",
+                  "go": "f5784bcb-d490-43f6-b2fc-fc354ff8f611",
+                  "component_type": "InteriorManager"
+                },
+                "PiecesToShow": [],
+                "RoomId": "room4"
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "0b56a512-423e-4484-8f1d-4d9ebaa5c3ec",
+                "Center": "0,0,48",
+                "IsTrigger": true,
+                "Scale": "192,384,96",
+                "Static": false,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "af834928-de64-49c2-a566-0ba6c69d15a4"
+              }
+            ]
+          },
+          {
+            "__guid": "726ac714-915c-4a63-a7ac-92d575d60cb0",
+            "Flags": 0,
+            "Name": "interior_floor_1",
+            "Position": "320,544,0.00009608794",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "e0a43eaa-50b5-4a15-8347-e613342c69a8",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_floor_1.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "bfefdb5c-e9b0-4704-b322-d22167eb92d2",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_floor_1.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "ec1e901b-fd54-43a5-848c-d08fcd6d4c87",
+                "BelongsToRooms": [
+                  "room4"
+                ],
+                "IsFloor": true,
+                "IsWall": false
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "dce70b0a-d400-4ae7-b3ba-608bf391b46f"
+              }
+            ]
+          },
+          {
+            "__guid": "1c2f799a-9227-428d-ba38-97d57848bc87",
+            "Flags": 0,
+            "Name": "interior_floor_1",
+            "Position": "128,544,0.00009608794",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "6ba1d55c-2adb-498a-9325-66cd998758f7",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_floor_1.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "c5169f20-c974-44d2-aa93-1bac02162951",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_floor_1.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "9f383b4c-6bae-412b-8933-a5ff0790643a",
+                "BelongsToRooms": [
+                  "room4"
+                ],
+                "IsFloor": true,
+                "IsWall": false
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "4cae8b24-b204-4d43-9e5f-38c2f51d559d"
+              }
+            ]
+          },
+          {
+            "__guid": "e783bf56-3792-4fed-b95f-1cb8d72b9cd7",
+            "Flags": 0,
+            "Name": "interior_wall_1",
+            "Position": "128,640,0.00005199471",
+            "Rotation": "0,0,-0.9999999,0.0000001490116",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "cf5873ef-a278-4a64-9b06-25915769bbd7",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_wall_1.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "4f2892cd-1a76-44ae-818b-2797108ded24",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_wall_1.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "a7ac39b1-cbb2-45d6-bf21-d1424f802d60",
+                "BelongsToRooms": [
+                  "room4"
+                ],
+                "IsFloor": false,
+                "IsWall": true
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "e8ebee6e-23a8-4de6-a4e2-5b09b0627d1b"
+              }
+            ]
+          },
+          {
+            "__guid": "eee2e6e8-290a-4557-a72c-d8cf8f875a03",
+            "Flags": 0,
+            "Name": "interior_wall_1",
+            "Position": "320,640,0.00006387572",
+            "Rotation": "0,0,-0.9999999,0.0000001490116",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "3d18153e-b0ab-4e01-8144-49f561e0e7b0",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_wall_1.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "cdf32ce1-2c85-444c-8e4f-8ac9c2ac7082",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_wall_1.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "1458cfbb-b718-41d1-902a-c52dcb44925f",
+                "BelongsToRooms": [
+                  "room4"
+                ],
+                "IsFloor": false,
+                "IsWall": true
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "2a1ec8f4-6307-4b89-b024-760ed931b440"
+              }
+            ]
+          },
+          {
+            "__guid": "cff7cd85-a8d0-4625-8a20-a9da3f590b97",
+            "Flags": 0,
+            "Name": "interior_wall_1",
+            "Position": "32,544,0.00004617598",
+            "Rotation": "0,0,-0.7071067,0.7071068",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "5412eeb5-800f-43eb-ae80-1002e4856e2d",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_wall_1.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "9520b027-2340-4546-8276-b58d3b8f8b32",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_wall_1.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "0b020d57-0424-4738-b822-f7f9ef17d838",
+                "BelongsToRooms": [
+                  "room4"
+                ],
+                "IsFloor": false,
+                "IsWall": true
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "b65c6e13-e3bd-4df6-b77d-eeaae619a50d"
+              }
+            ]
+          },
+          {
+            "__guid": "ead41bfa-ec10-4688-a33c-14a3c97d9de4",
+            "Flags": 0,
+            "Name": "interior_wall_1",
+            "Position": "128,448,0.00005246972",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "7a5d50e4-3112-46f2-b852-d15d3f58a46c",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_wall_1.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "dc1b46ec-5ce7-49e1-acc3-bc7854323fdb",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_wall_1.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "ed4d9fd2-e240-40d4-b5af-2e9062cbd2d7",
+                "BelongsToRooms": [
+                  "room4"
+                ],
+                "IsFloor": false,
+                "IsWall": true
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "dab5ddbd-21a7-43e1-a031-776577b27149"
+              }
+            ]
+          },
+          {
+            "__guid": "2378690f-edf8-47ae-99de-3212b6d6953f",
+            "Flags": 0,
+            "Name": "interior_wall_1_doorway_1",
+            "Position": "319.9998,448,0.00008654746",
+            "Rotation": "-0.00000000000001024362,-0.00000002980232,0.0000002245095,-0.9999999",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "5af2d636-5277-4d66-8418-a850f2868c76",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_wall_1_doorway_1.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "64da391f-3403-41d7-88d6-9368d323e3d2",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_wall_1_doorway_1.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "b9c25b87-cfe6-4d20-a64a-f12b611eb797",
+                "BelongsToRooms": [
+                  "room4"
+                ],
+                "IsFloor": false,
+                "IsWall": true
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "6976b8d6-93d7-4c56-96b7-3188597dccef"
+              }
+            ]
+          },
+          {
+            "__guid": "cfcf0eed-4cc9-46da-afcd-a3e0df71304b",
+            "Flags": 0,
+            "Name": "interior_wall_1",
+            "Position": "416,544,0.00006871914",
+            "Rotation": "0,0,-0.7071069,-0.7071065",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "69c3b98c-bfac-4dba-bbba-e002115f3837",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_wall_1.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "a359f49c-86e9-4083-bd25-5e0ffc1d1dbe",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_wall_1.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "ab13fd97-5e6d-4591-ad3e-3330bf86ed1e",
+                "BelongsToRooms": [
+                  "room4"
+                ],
+                "IsFloor": false,
+                "IsWall": true
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "8c4eb17a-821d-48e5-80e6-eec773bb8f2d"
+              }
+            ]
+          },
+          {
+            "__guid": "6d4fe28f-21e1-44cf-8484-25f34a6853df",
+            "Flags": 0,
+            "Name": "room4_dolly_1",
+            "Position": "320,544,0.00001817971",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Clover.Camera.CameraDollyNode",
+                "__guid": "f16f36c9-e007-4367-8bae-a80fe5afbf7a",
+                "Next": {
+                  "_type": "component",
+                  "component_id": "7b90b9d6-b027-4bfb-baa6-7746d965b5a7",
+                  "go": "9b76b998-0dbf-4efd-941c-88e610af7e2d",
+                  "component_type": "CameraDollyNode"
+                }
+              }
+            ]
+          },
+          {
+            "__guid": "9b76b998-0dbf-4efd-941c-88e610af7e2d",
+            "Flags": 0,
+            "Name": "room4_dolly_2",
+            "Position": "128,544,0.000006590691",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Clover.Camera.CameraDollyNode",
+                "__guid": "7b90b9d6-b027-4bfb-baa6-7746d965b5a7"
+              }
+            ]
+          },
+          {
+            "__guid": "b9373e93-1757-444b-8777-90c0a6a95624",
+            "Flags": 0,
+            "Name": "room4_camera_trigger",
+            "Position": "224,544,0.0001850559",
+            "Tags": "trigger",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "49a67991-ec9d-4ae4-bf85-a3e9f248961a",
+                "Center": "0,0,64",
+                "IsTrigger": true,
+                "Scale": "384,192,128",
+                "Static": false,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.Camera.CameraTrigger",
+                "__guid": "47b68077-e0a3-46d2-8d64-0697a3b7827c",
+                "Camera": {
+                  "_type": "component",
+                  "component_id": "f500ab51-6292-4579-8822-5ef1668e8094",
+                  "go": "24d2a056-3a81-4d26-a89b-ba0ab5d1350e",
+                  "component_type": "CameraNode"
+                }
+              }
+            ]
+          },
+          {
+            "__guid": "dbbe598c-c95c-4845-a320-906c7a557669",
+            "Flags": 0,
+            "Name": "room4_camera_pivot",
+            "Position": "224,544,0.0001850559",
+            "Enabled": true,
+            "Children": [
+              {
+                "__guid": "24d2a056-3a81-4d26-a89b-ba0ab5d1350e",
+                "Flags": 0,
+                "Name": "room4_camera",
+                "Position": "240,0,191.9998",
+                "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "CameraNode",
+                    "__guid": "f500ab51-6292-4579-8822-5ef1668e8094",
+                    "DollyNode": {
+                      "_type": "component",
+                      "component_id": "f16f36c9-e007-4367-8bae-a80fe5afbf7a",
+                      "go": "6d4fe28f-21e1-44cf-8484-25f34a6853df",
+                      "component_type": "CameraDollyNode"
+                    },
+                    "FieldOfView": 70,
+                    "FollowTargets": true,
+                    "HasPivotRotation": true,
+                    "Lerping": true,
+                    "Priority": 0,
+                    "ShouldSyncWithPlayerCameraRotation": true,
+                    "Static": false
+                  }
+                ]
               }
             ]
           }
