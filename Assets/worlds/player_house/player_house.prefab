@@ -417,6 +417,23 @@
                     "component_type": "RoomTrigger"
                   }
                 ]
+              },
+              "room3": {
+                "Triggers": [
+                  {
+                    "_type": "component",
+                    "component_id": "d57fe365-9ba6-4efc-8ec0-023beeab42a1",
+                    "go": "09ed5e27-a21c-440c-937b-8fb37a4d8b60",
+                    "component_type": "RoomTrigger"
+                  }
+                ]
+              },
+              "room4": {
+                "Floor": {
+                  "_type": "gameobject",
+                  "go": "295dd51e-bd74-479b-9821-349dbee2e96f"
+                },
+                "Triggers": []
               }
             }
           },

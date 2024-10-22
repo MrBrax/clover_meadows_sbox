@@ -79,6 +79,12 @@ public class InteriorManager : Component
 			foreach ( var trigger in room.Value.Triggers )
 			{
 				var collider = trigger.Components.Get<Collider>();
+				if ( !collider.IsValid() )
+				{
+					Log.Error( $"Room {room.Key} trigger {trigger.GameObject.Name} has no collider" );
+					continue;
+				}
+
 				foreach ( var touching in collider.Touching )
 				{
 					if ( touching.Components.Get<WorldItem>() == null )
