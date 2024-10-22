@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Text.Json.Serialization;
 using Clover.Objects;
 using Sandbox.Audio;
 
@@ -28,9 +29,10 @@ public class TimeManager : Component, IWorldEvent
 
 	[Sync] public double GlobalTime { get; set; }
 
-	public static DateTime Time => Instance.TimeOverride > -1
-		? DateTime.Today.AddSeconds( Instance.TimeOverride )
-		: DateTime.FromOADate( Instance.GlobalTime );
+	[JsonIgnore]
+	public static DateTime Time => Instance?.TimeOverride > -1
+		? DateTime.Today.AddSeconds( Instance?.TimeOverride ?? 0 )
+		: DateTime.FromOADate( Instance?.GlobalTime ?? DateTime.Now.ToOADate() );
 
 	[Property, Range( -1, 86400 )] public float TimeOverride { get; set; } = -1;
 
