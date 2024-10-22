@@ -2852,7 +2852,7 @@
             "__guid": "60febe1f-df65-4df1-87af-c2115a5f17f8",
             "Flags": 0,
             "Name": "room3_camera_pivot",
-            "Position": "96,320,0.0001778322",
+            "Position": "96,224,0.0001778322",
             "Enabled": true,
             "Children": [
               {

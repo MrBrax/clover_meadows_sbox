@@ -32,26 +32,21 @@ public sealed class CameraNode : Component
 		{
 			// move the camera between dolly nodes to follow player
 			var playerPosition = PlayerCharacter.Local.WorldPosition;
-			var path = DollyNode.GetPath();
+			var pathNodes = DollyNode.GetPath();
 
-			CameraPivot.WorldPosition = playerPosition;
-
-			var node1 = path.MinBy( x => x.WorldPosition.Distance( playerPosition ) );
-			var node2 = path.Where( x => x != node1 ).MinBy( x => x.WorldPosition.Distance( playerPosition ) );
-
-			var t = (playerPosition - node1.WorldPosition).Length / (node2.WorldPosition - node1.WorldPosition).Length;
-
-			CameraPivot.WorldPosition = Vector3.Lerp( node1.WorldPosition, node2.WorldPosition, t );
-
-			Gizmo.Draw.LineSphere( node1.WorldPosition, 16f );
-			Gizmo.Draw.Text( "NODE1", new Transform( node1.WorldPosition + Vector3.Up * 32f ) );
-			Gizmo.Draw.LineSphere( node2.WorldPosition, 16f );
-			Gizmo.Draw.Text( "NODE2", new Transform( node2.WorldPosition + Vector3.Up * 32f ) );
-
-			Gizmo.Draw.LineSphere( CameraPivot.WorldPosition, 8f );
-			Gizmo.Draw.Text( "PIVOT", new Transform( CameraPivot.WorldPosition + Vector3.Up * 32f ) );
-			Gizmo.Draw.Arrow( CameraPivot.WorldPosition, node1.WorldPosition );
-			Gizmo.Draw.Arrow( CameraPivot.WorldPosition, node2.WorldPosition );
+			if ( pathNodes.Count > 1 )
+			{
+				var closestNode = pathNodes.OrderBy( x => x.WorldPosition.Distance( playerPosition ) ).First();
+				var nextNode = pathNodes.FirstOrDefault( x => x != closestNode );
+				if ( nextNode.IsValid() )
+				{
+					var direction = (nextNode.WorldPosition - closestNode.WorldPosition).Normal;
+					var distance = closestNode.WorldPosition.Distance( nextNode.WorldPosition );
+					var t = (playerPosition - closestNode.WorldPosition).Dot( direction ) / distance;
+					var position = Vector3.Lerp( closestNode.WorldPosition, nextNode.WorldPosition, t );
+					CameraPivot.WorldPosition = position;
+				}
+			}
 		}
 	}
 
