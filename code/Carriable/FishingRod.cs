@@ -187,8 +187,12 @@ public class FishingRod : BaseCarriable
 			}
 		}
 
-		_reelSound.Volume = _reelSound.Volume.LerpTo( 0f, Sandbox.Utility.Easing.QuadraticIn( Time.Delta * 15f ) );
-		// _reelSound.Pitch = _reelSound.Pitch.LerpTo( 1f, Time.Delta * 3f );
+		if ( _reelSound.IsValid() )
+		{
+			_reelSound.Volume = _reelSound.Volume.LerpTo( 0f, Sandbox.Utility.Easing.QuadraticIn( Time.Delta * 15f ) );
+			// _reelSound.Pitch = _reelSound.Pitch.LerpTo( 1f, Time.Delta * 3f );
+		}
+
 
 		if ( Stamina < 100f )
 		{
