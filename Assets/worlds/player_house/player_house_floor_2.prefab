@@ -59,6 +59,21 @@
             "LightColor": "0.91373,0.98039,1,1",
             "Radius": 400,
             "Shadows": true
+          },
+          {
+            "__type": "Clover.WorldBuilder.InteriorPiece",
+            "__guid": "021163c8-e704-424b-b6b8-ceeb98d7e0a3",
+            "BelongsToRooms": [
+              "room1"
+            ],
+            "IsDarkness": false,
+            "IsDoorway": false,
+            "IsFloor": false,
+            "IsWall": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "0e89b2df-beac-4b95-866a-c10840e5ea4e"
           }
         ]
       },
@@ -79,6 +94,21 @@
             "LightColor": "0.91373,0.98039,1,1",
             "Radius": 400,
             "Shadows": true
+          },
+          {
+            "__type": "Clover.WorldBuilder.InteriorPiece",
+            "__guid": "c5fa9bc4-5413-4187-95f8-8b9f09cd15c7",
+            "BelongsToRooms": [
+              "entrance"
+            ],
+            "IsDarkness": false,
+            "IsDoorway": false,
+            "IsFloor": false,
+            "IsWall": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "7758281c-47a9-4bd6-9ffe-043a8f2d20fa"
           }
         ]
       },
@@ -150,6 +180,21 @@
             "LightColor": "0.91373,0.98039,1,1",
             "Radius": 400,
             "Shadows": true
+          },
+          {
+            "__type": "Clover.WorldBuilder.InteriorPiece",
+            "__guid": "b51dc3de-d76c-488e-9ed9-359d615dd3c5",
+            "BelongsToRooms": [
+              "room2"
+            ],
+            "IsDarkness": false,
+            "IsDoorway": false,
+            "IsFloor": false,
+            "IsWall": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "6ff01344-0b1f-46ad-9374-7e5f2bf0d8a6"
           }
         ]
       },

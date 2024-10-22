@@ -63,6 +63,12 @@ public class InteriorPiece : Component
 	{
 		if ( IsWall || IsDarkness )
 		{
+			if ( IsDarkness && PlayerCharacter.Local.WorldPosition.Distance( WorldPosition ) < 32f )
+			{
+				Tags.Set( "invisiblewall", false );
+				return;
+			}
+
 			var camera = Scene.Camera;
 
 			var cameraRotation = camera.WorldRotation.Angles().WithPitch( 0 );
@@ -89,6 +95,12 @@ public class InteriorPiece : Component
 			var pieceForward = WorldRotation.Left;
 
 			var playerPosition = PlayerCharacter.Local.WorldPosition;
+
+			if ( playerPosition.Distance( WorldPosition ) < 32f )
+			{
+				Tags.Set( "invisiblewall", false );
+				return;
+			}
 
 			// check if player is in front or behind the doorway to flip the final dot check, doorway should always face into the room
 			var isInFront = Vector3.Dot( pieceForward.Normal, playerPosition - WorldPosition ) > 0;
