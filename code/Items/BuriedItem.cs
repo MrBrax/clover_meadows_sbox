@@ -5,6 +5,7 @@ using Clover.Player;
 
 namespace Clover.Data;
 
+[Category( "Clover/Items" )]
 public class BuriedItem : Component, IPersistent, IDiggable
 {
 	[RequireComponent] public WorldItem WorldItem { get; private set; }
