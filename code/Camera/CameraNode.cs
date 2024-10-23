@@ -24,7 +24,7 @@ public sealed class CameraNode : Component
 
 	[Property] public CameraDollyNode DollyNode { get; set; }
 
-	private Rotation _wishedPivotRotation = Rotation.Identity;
+	// private Rotation _wishedPivotRotation = Rotation.Identity;
 	public GameObject CameraPivot => HasPivotRotation ? GameObject.Parent : null;
 
 	protected override void OnUpdate()
@@ -36,7 +36,7 @@ public sealed class CameraNode : Component
 			// Gizmo.Draw.Arrow( CameraPivot.WorldPosition, CameraPivot.WorldPosition + ( CameraPivot.WorldRotation.Forward * 32f ) );
 			
 			// CameraPivot.WorldRotation = Rotation.Slerp( CameraPivot.WorldRotation, _wishedPivotRotation, Time.Delta * 5f );
-			CameraPivot.WorldRotation = _wishedPivotRotation;
+			// CameraPivot.WorldRotation = _wishedPivotRotation;
 		}
 		
 		if ( DollyNode.IsValid() && CameraPivot.IsValid() )
@@ -85,8 +85,7 @@ public sealed class CameraNode : Component
 		{
 			if ( HasPivotRotation )
 			{
-				_wishedPivotRotation = PlayerCharacter.Local.CameraController.CameraPivot.WorldRotation;
-				CameraPivot.WorldRotation = _wishedPivotRotation;
+				CameraPivot.WorldRotation = PlayerCharacter.Local.CameraController.CameraPivot.WorldRotation;
 			}
 			else
 			{
@@ -108,8 +107,8 @@ public sealed class CameraNode : Component
 			return;
 		}
 
-		// CameraPivot.WorldRotation *= rotation;
-		_wishedPivotRotation *= rotation;
+		CameraPivot.WorldRotation *= rotation;
+		// _wishedPivotRotation *= rotation;
 		
 		Log.Info( $"Rotating pivot by {rotation}" );
 		
