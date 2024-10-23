@@ -101,6 +101,10 @@ public sealed class CameraMan : Component
 			{
 				wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.3f;
 			}
+
+			if ( mainCameraNode.Static && mainCameraNode.HasPivotRotation )
+			{
+			}
 		}
 
 		if ( MainUi.Instance.IsValid() && MainUi.Instance.LastInput > MainUi.HideUiDelay * 3 )
@@ -109,9 +113,9 @@ public sealed class CameraMan : Component
 			wishedRot *= Rotation.From( p * 2, p * 3, p );
 			_lerpSpeed = 0.1f;
 		}
-
+		
 		_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * _lerpSpeed );
-		_rotationLerp = Rotation.Lerp( _rotationLerp, wishedRot, Time.Delta * _lerpSpeed );
+		_rotationLerp = Rotation.Slerp( _rotationLerp, wishedRot, Time.Delta * _lerpSpeed );
 		_fovLerp = _fovLerp.LerpTo( mainCameraNode.FieldOfView, Time.Delta * _lerpSpeed );
 
 		// var midpoint = GetTargetsMidpoint();

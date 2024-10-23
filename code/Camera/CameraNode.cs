@@ -28,6 +28,11 @@ public sealed class CameraNode : Component
 
 	protected override void OnUpdate()
 	{
+		/*if ( CameraPivot.IsValid() )
+		{
+			Gizmo.Draw.Arrow( CameraPivot.WorldPosition, CameraPivot.WorldPosition + ( CameraPivot.WorldRotation.Forward * 32f ) );
+		}*/
+		
 		if ( IsCameraActive && DollyNode.IsValid() && CameraPivot.IsValid() )
 		{
 			// move the camera between dolly nodes to follow player
@@ -48,6 +53,7 @@ public sealed class CameraNode : Component
 				}
 			}
 		}
+		
 	}
 
 	protected override void DrawGizmos()
