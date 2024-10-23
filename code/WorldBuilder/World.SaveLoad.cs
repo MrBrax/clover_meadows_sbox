@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Clover.Items;
 using Clover.Persistence;
 
@@ -107,7 +108,7 @@ public sealed partial class World
 		Scene.RunEvent<IWorldSaved>( x => x.PostWorldSaved( this ) );
 	}
 
-	public void Load()
+	public async Task Load()
 	{
 		if ( !FileSystem.Data.FileExists( SaveFileName ) )
 		{
@@ -115,7 +116,7 @@ public sealed partial class World
 			return;
 		}
 
-		var json = FileSystem.Data.ReadAllText( SaveFileName );
+		var json = await FileSystem.Data.ReadAllTextAsync( SaveFileName );
 		var saveData = JsonSerializer.Deserialize<WorldSaveData>( json, GameManager.JsonOptions );
 
 		Log.Info( $"Loaded save data from {SaveFileName}" );
@@ -123,7 +124,6 @@ public sealed partial class World
 		foreach ( var item in saveData.Items )
 		{
 			var position = item.Position;
-			// var placement = item.Placement;
 			var rotation = item.Rotation;
 			var prefabPath = item.PrefabPath;
 
@@ -135,6 +135,18 @@ public sealed partial class World
 
 			Log.Info( $"Loading item {item.PrefabPath}" );
 
+			if ( !string.IsNullOrEmpty( item.Item.PackageIdent ) )
+			{
+				var package = await Package.Fetch( item.Item.PackageIdent, false );
+				if ( package == null )
+				{
+					Log.Warning( $"Could not fetch package {item.Item.PackageIdent}" );
+					continue;
+				}
+				
+				Log.Info( $"Fetched package {package.Title}" );
+			}
+
 			var gameObject = Scene.CreateObject();
 			gameObject.SetPrefabSource( prefabPath );
 			gameObject.UpdateFromPrefab();
@@ -142,28 +154,13 @@ public sealed partial class World
 			gameObject.WorldPosition = item.WPosition;
 			gameObject.WorldRotation = item.WAngles;
 
-			var nodeLink = new WorldNodeLink( this, gameObject );
-
-			// nodeLink.GridPosition = position;
-			// nodeLink.GridRotation = rotation;
-
-			// nodeLink.GridPlacement = placement;
-			nodeLink.ItemId = item.ItemId;
-			nodeLink.PlacementType = item.PlacementType;
-
-			// AddNodeLinkToGridMap( nodeLink );
+			var nodeLink = new WorldNodeLink( this, gameObject )
+			{
+				ItemId = item.ItemId, 
+				PlacementType = item.PlacementType
+			};
 
 			nodeLink.OnNodeLoad( item );
-
-			// nodeLink.CalculateSize();
-
-			// nodeLink.LoadItemData();
-			// UpdateTransform( nodeLink );
-
-			/*foreach ( var pos in nodeLink.GetGridPositions( true ) )
-			{
-				_nodeLinkGridMap[ new NodeLinkMapKey() { Position = pos, Placement = nodeLink.GridPlacement } ] = nodeLink;
-			}*/
 
 			Items.Add( nodeLink );
 

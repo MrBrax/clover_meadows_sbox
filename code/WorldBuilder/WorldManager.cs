@@ -210,7 +210,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 
 		world.Setup();
 
-		world.Load();
+		await world.Load();
 
 		Log.Info( $"Loaded world: {data.ResourceName}, now has {Worlds.Count} worlds." );
 
