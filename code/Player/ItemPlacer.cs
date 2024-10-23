@@ -39,9 +39,12 @@ public class ItemPlacer : Component, IWorldEvent
 
 	public WorldItem CurrentPlacedItem { get; set; }
 
+	private TimeSince _lastAction;
+
 	protected override void OnStart()
 	{
 		Mouse.Visible = true;
+		_lastAction = 0;
 	}
 
 	public void StartMovingPlacedItem( WorldItem selectedGameObject )
@@ -237,7 +240,7 @@ public class ItemPlacer : Component, IWorldEvent
 
 	private void CheckInput()
 	{
-		if ( Input.Pressed( "attack1" ) || Input.Released( "attack1" ) )
+		if ( Input.Pressed( "attack1" ) )
 		{
 			if ( _isValidPlacement )
 			{
@@ -256,7 +259,10 @@ public class ItemPlacer : Component, IWorldEvent
 				Player.Notify( Notifications.NotificationType.Warning, "Invalid placement" );
 			}
 
+			Input.ReleaseAction( "attack1" );
 			Input.Clear( "attack1" );
+			_lastAction = 0;
+			return;
 		}
 
 		if ( Input.Pressed( "attack2" ) )
@@ -269,6 +275,8 @@ public class ItemPlacer : Component, IWorldEvent
 			{
 				StopMoving();
 			}
+
+			return;
 		}
 
 		if ( Input.Pressed( "RotateClockwise" ) )
@@ -315,8 +323,8 @@ public class ItemPlacer : Component, IWorldEvent
 		}*/
 	}
 
-	private WorldItem _clickedWorldItem;
-	private Vector2 _clickedWorldItemScreenPosition;
+	// private WorldItem _clickedWorldItem;
+	// private Vector2 _clickedWorldItemScreenPosition;
 
 	private void CheckStartMove()
 	{
@@ -336,7 +344,7 @@ public class ItemPlacer : Component, IWorldEvent
 
 		var tooFarAway = worldItem.WorldPosition.Distance( Player.WorldPosition ) > 200f;
 
-		if ( Input.Pressed( "attack1" ) )
+		if ( Input.Released( "attack1" ) && _lastAction > 0.2f )
 		{
 			if ( tooFarAway )
 			{
@@ -344,10 +352,12 @@ public class ItemPlacer : Component, IWorldEvent
 				return;
 			}
 
-			_clickedWorldItem = worldItem;
-			_clickedWorldItemScreenPosition = Mouse.Position;
+			StartMovingPlacedItem( worldItem );
+
+			/*_clickedWorldItem = worldItem;
+			_clickedWorldItemScreenPosition = Mouse.Position;*/
 		}
-		else if ( Input.Released( "attack1" ) )
+		/*else if ( Input.Released( "attack1" ) )
 		{
 			_clickedWorldItem = null;
 		}
@@ -368,7 +378,7 @@ public class ItemPlacer : Component, IWorldEvent
 				StartMovingPlacedItem( _clickedWorldItem );
 				_clickedWorldItem = null;
 			}
-		}
+		}*/
 	}
 
 	private void PlaceItem()
@@ -396,6 +406,13 @@ public class ItemPlacer : Component, IWorldEvent
 		{
 			Log.Error( "CurrentPlacedItem is not valid" );
 			StopMoving();
+			return;
+		}
+
+		if ( _ghost.WorldPosition.Distance( Player.WorldPosition ) > 300f )
+		{
+			Player.Notify( Notifications.NotificationType.Warning, "Item placed too far away" );
+			// StopMoving();
 			return;
 		}
 
