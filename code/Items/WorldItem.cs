@@ -11,7 +11,7 @@ namespace Clover.Items;
 [Category( "Clover/Items" )]
 [Icon( "outlet" )]
 [Description( "Has to be added to items placed on the world grid, otherwise they will not be saved." )]
-public class WorldItem : Component, IPickupable, Component.ITriggerListener
+public class WorldItem : Component, IPickupable
 {
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	[RequireComponent] public ItemHighlight ItemHighlight { get; set; }
@@ -137,6 +137,11 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 		Gizmo.Draw.Text( WorldPosition.ToString(), new Transform( WorldPosition ) );
 	}*/
 
+	protected override void OnFixedUpdate()
+	{
+		// ItemHighlight.Enabled = false;
+	}
+
 	protected override void OnUpdate()
 	{
 		base.OnUpdate();
@@ -222,7 +227,7 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 		collider.Center = new Vector3( 0, 0, 8 );
 	}
 
-	public void OnTriggerEnter( Collider other )
+	/*public void OnTriggerEnter( Collider other )
 	{
 		ToggleHighlight( other, true );
 	}
@@ -240,5 +245,5 @@ public class WorldItem : Component, IPickupable, Component.ITriggerListener
 		}
 
 		ItemHighlight.Enabled = shouldEnable;
-	}
+	}*/
 }

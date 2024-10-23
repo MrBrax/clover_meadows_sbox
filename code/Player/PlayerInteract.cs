@@ -71,10 +71,12 @@ public class PlayerInteract : Component
 			return;
 		}
 
+		var interactable = FindInteractable();
+		var moveable = FindMoveable();
+		var pickupableNode = GetPickupableNode();
 
 		if ( Input.Pressed( "use" ) )
 		{
-			var interactable = FindInteractable();
 			if ( interactable != null )
 			{
 				_currentInteractable = interactable;
@@ -96,6 +98,8 @@ public class PlayerInteract : Component
 				// Notifications.Instance.AddNotification( Notifications.NotificationType.Warning, "No interactable found" );
 				Sound.Play( UseFailSound, WorldPosition );
 			}
+
+			return;
 		}
 		else if ( Input.Released( "use" ) )
 		{
@@ -114,35 +118,38 @@ public class PlayerInteract : Component
 				_currentInteractable = null;
 				Input.Clear( "use" );
 			}
+
+			return;
 		}
 
 		if ( Input.Pressed( "pickup" ) )
 		{
-			PickUp();
+			if ( pickupableNode != null )
+			{
+				if ( pickupableNode.CanPickup( Player ) )
+				{
+					pickupableNode.OnPickup( Player );
+					return;
+				}
+			}
+
+			Log.Warning( "No pickupable node found" );
+
+			Sound.Play( PickUpFailSound, WorldPosition );
+			return;
 		}
 
 		if ( Input.Pressed( "move" ) )
 		{
 			if ( !Player.World.Data.DisableItemPlacement )
 			{
-				var interactable = FindInteractable();
-				if ( interactable != null )
+				if ( moveable.IsValid() )
 				{
-					_currentInteractable = interactable;
 					Log.Info( "Moving..." );
 
 					Mouse.Visible = true;
 
-					var item = GetWorldItemFromInteract();
-					Player.ItemPlacer.StartMovingPlacedItem( item );
-
-					if ( !Networking.IsHost )
-					{
-						using ( Rpc.FilterInclude( Connection.Host ) )
-						{
-							_currentInteractable.StartInteractHost( Player );
-						}
-					}
+					Player.ItemPlacer.StartMovingPlacedItem( moveable.GetComponent<WorldItem>() );
 
 					Input.Clear( "move" );
 				}
@@ -154,7 +161,34 @@ public class PlayerInteract : Component
 					Sound.Play( UseFailSound, WorldPosition );
 				}
 			}
+
+			return;
 		}
+
+
+		GameObject target = null;
+		if ( interactable is Component interactableComponent )
+		{
+			target = interactableComponent.GameObject;
+		}
+		else if ( moveable.IsValid() )
+		{
+			target = moveable;
+		}
+		else if ( pickupableNode is Component pickupableNodeComponent && pickupableNode.CanPickup( Player ) )
+		{
+			target = pickupableNodeComponent.GameObject;
+		}
+		
+		if ( target != null )
+		{
+			if ( target.Components.TryGet<WorldItem>( out var worldItem ) )
+			{
+				worldItem.ItemHighlight.Enabled = true;
+			}
+		}
+		
+
 
 		if ( Cursor.IsValid() && Cursor.Enabled )
 		{
@@ -162,24 +196,6 @@ public class PlayerInteract : Component
 			var worldPosition = WorldManager.Instance.ActiveWorld.ItemGridToWorld( gridPosition );
 			Cursor.WorldPosition = worldPosition;
 		}
-	}
-
-	private void PickUp()
-	{
-		var pickupableNode = GetPickupableNode();
-
-		if ( pickupableNode != null )
-		{
-			if ( pickupableNode.CanPickup( Player ) )
-			{
-				pickupableNode.OnPickup( Player );
-				return;
-			}
-		}
-
-		Log.Warning( "No pickupable node found" );
-
-		Sound.Play( PickUpFailSound, WorldPosition );
 	}
 
 	public IPickupable GetPickupableNode()
@@ -190,23 +206,6 @@ public class PlayerInteract : Component
 		{
 			if ( collider.GameObject.Components.TryGet<IPickupable>( out var pickupable ) )
 			{
-				/*if ( collider.GameObject.Components.TryGet<WorldItem>( out var worldItem ) )
-				{
-					// only allow picking up items on the floor or on top of other items
-					if ( worldItem.NodeLink != null &&
-					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
-					     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop )
-					{
-						continue;
-					}
-
-					// don't allow picking up items that have items on top of them
-					if ( worldItem.HasItemOnTop() )
-					{
-						continue;
-					}
-				}*/
-
 				return pickupable;
 			}
 		}
@@ -214,7 +213,7 @@ public class PlayerInteract : Component
 		return null;
 	}
 
-	public WorldItem GetWorldItemFromInteract()
+	/*public WorldItem GetWorldItemFromInteract()
 	{
 		foreach ( var collider in InteractCollider.Touching )
 		{
@@ -234,44 +233,50 @@ public class PlayerInteract : Component
 			}
 		}
 
-		// Log.Info( "# Reached root, no interactable found." );
-
 		return null;
-	}
+	}*/
 
 	public IInteract FindInteractable()
 	{
 		foreach ( var collider in InteractCollider.Touching )
 		{
-			var checkGameObject = collider.GameObject;
-
-			// Log.Info( $"# Checking base collider {checkGameObject.Name}" );
+			/*var checkGameObject = collider.GameObject;
 
 			while ( checkGameObject != null )
 			{
-				// Log.Info( $" - Checking (parent?) {checkGameObject.Name}" );
+
 				if ( checkGameObject.Components.TryGet<IInteract>( out var interactable ) )
 				{
-					/*if ( checkGameObject.Components.TryGet<WorldItem>( out var worldItem ) )
-					{
-						if ( worldItem.NodeLink != null &&
-						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Floor &&
-						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.OnTop &&
-						     worldItem.NodeLink.GridPlacement != World.ItemPlacement.Wall
-						   )
-						{
-							continue;
-						}
-					}*/
+
 
 					return interactable;
 				}
 
 				checkGameObject = checkGameObject.Parent;
+			}*/
+
+			if ( collider.GameObject.Components.TryGet<IInteract>( out var interactable,
+				    FindMode.EverythingInSelfAndAncestors ) )
+			{
+				return interactable;
 			}
 		}
 
 		// Log.Info( "# Reached root, no interactable found." );
+
+		return null;
+	}
+
+	public GameObject FindMoveable()
+	{
+		foreach ( var collider in InteractCollider.Touching )
+		{
+			var worldItem = collider.GameObject.Components.Get<WorldItem>( FindMode.EverythingInSelfAndAncestors );
+			if ( worldItem != null && worldItem.CanPickup( Player ) )
+			{
+				return collider.GameObject;
+			}
+		}
 
 		return null;
 	}
