@@ -1,4 +1,5 @@
 ﻿using System;
+using Clover.Items;
 
 namespace Clover;
 
@@ -47,6 +48,11 @@ public sealed partial class World
 	{
 		return GetItems( worldPos, radius ).Any();
 	}
+	
+	public bool IsPositionOccupied( Vector3 endPosition, GameObject ignoreMe, float f )
+	{
+		return Items.Any( x => x.Node != ignoreMe && x.WorldPosition.Distance( endPosition ) < f );
+	}
 
 	public bool IsNearPlayer( Vector3 worldPos, float radius = 16f )
 	{
@@ -86,4 +92,6 @@ public sealed partial class World
 		return Items.FirstOrDefault( x =>
 			x.WorldPosition == ItemGridToWorld( gridPos ) && x.Node.GetComponent<T>() != null );
 	}
+
+	
 }

@@ -15,7 +15,7 @@
         "Orthographic": false,
         "OrthographicHeight": 1204,
         "Priority": 1,
-        "RenderExcludeTags": "worldlayer_invisible,room_invisible,invisiblewall",
+        "RenderExcludeTags": "worldlayer_invisible,room_invisible,invisiblewall,invisible",
         "RenderTags": "",
         "TargetEye": "None",
         "Viewport": "0,0,1,1",

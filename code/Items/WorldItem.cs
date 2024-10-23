@@ -246,4 +246,13 @@ public class WorldItem : Component, IPickupable
 
 		ItemHighlight.Enabled = shouldEnable;
 	}*/
+	public void Hide()
+	{
+		Tags.Add("invisible");
+	}
+
+	public void Show()
+	{
+		Tags.Remove("invisible");
+	}
 }

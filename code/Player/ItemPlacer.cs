@@ -18,6 +18,7 @@ public class ItemPlacer : Component, IWorldEvent
 	[Property] public Model CursorModel { get; set; }
 
 	public bool IsPlacing;
+	public bool IsMoving;
 	public int InventorySlotIndex;
 
 	public InventorySlot<PersistentItem> InventorySlot =>
@@ -26,8 +27,10 @@ public class ItemPlacer : Component, IWorldEvent
 	private ItemData ItemData => InventorySlot.GetItem().ItemData;
 
 	private GameObject _ghost;
-	private ItemData _selectedItem;
-	private bool _isPlacingFromInventory;
+	private ItemData _selectedItemData;
+	// private bool _isPlacingFromInventory;
+
+	public WorldItem CurrentPlacedItem { get; set; }
 
 	protected override void OnStart()
 	{
@@ -36,31 +39,38 @@ public class ItemPlacer : Component, IWorldEvent
 
 	public void StartMovingPlacedItem( WorldItem selectedGameObject )
 	{
-		if ( selectedGameObject == null )
+		if ( !selectedGameObject.IsValid() )
 		{
 			return;
 		}
 
-		Log.Info( selectedGameObject );
 		if ( IsPlacing )
 		{
 			StopPlacing();
 		}
 
-		_isPlacingFromInventory = false;
-		IsPlacing = true;
-		_selectedItem = selectedGameObject.ItemData;
-		selectedGameObject.DestroyGameObject();
-		PlaceGhostInternal( _selectedItem.PlaceScene.Clone() );
+		// _isPlacingFromInventory = false;
+		IsMoving = true;
+		_selectedItemData = selectedGameObject.ItemData;
+		// selectedGameObject.DestroyGameObject();
+		
+		CurrentPlacedItem = selectedGameObject;
+		
+		PlaceGhostInternal( selectedGameObject.GameObject.Clone() );
+
+		// TODO: hide worlditem
+		CurrentPlacedItem.Hide();
+
 		Mouse.Visible = true;
 	}
 
 	void IWorldEvent.OnWorldChanged( World world )
 	{
 		StopPlacing();
+		StopMoving();
 	}
 
-	public void StartPlacing( int inventorySlotIndex )
+	public void StartPlacingInventorySlot( int inventorySlotIndex )
 	{
 		if ( !Player.IsValid() ) throw new System.Exception( "Player is not valid" );
 		if ( !Player.Inventory.IsValid() ) throw new System.Exception( "Player Inventory is not valid" );
@@ -78,7 +88,7 @@ public class ItemPlacer : Component, IWorldEvent
 			StopPlacing();
 		}
 
-		_isPlacingFromInventory = true;
+		// _isPlacingFromInventory = true;
 		InventorySlotIndex = inventorySlotIndex;
 		IsPlacing = true;
 		CreateGhostFromInventory();
@@ -87,16 +97,31 @@ public class ItemPlacer : Component, IWorldEvent
 
 	public void StopPlacing()
 	{
+		IsMoving = false;
 		IsPlacing = false;
 		DestroyGhost();
-		_selectedItem = null;
+		_selectedItemData = null;
+		Mouse.Visible = false;
+	}
+
+	public void StopMoving()
+	{
+		IsMoving = false;
+		IsPlacing = false;
+		DestroyGhost();
+		_selectedItemData = null;
+		if ( CurrentPlacedItem.IsValid() )
+		{
+			CurrentPlacedItem.Show();
+		}
+		CurrentPlacedItem = null;
 		Mouse.Visible = false;
 	}
 
 	public void CreateGhostFromInventory()
 	{
 		var item = InventorySlot.GetItem();
-		_selectedItem = item.ItemData;
+		_selectedItemData = item.ItemData;
 		var gameObject = item.ItemData.PlaceScene.Clone();
 		gameObject.WorldRotation =
 			Rotation.FromYaw( Player.PlayerController.Yaw ).Angles().SnapToGrid( RotationDistance );
@@ -178,7 +203,7 @@ public class ItemPlacer : Component, IWorldEvent
 	protected override void OnFixedUpdate()
 	{
 		if ( IsProxy ) return;
-		if ( !IsPlacing ) return;
+		if ( !IsPlacing && !IsMoving ) return;
 		if ( !_ghost.IsValid() ) return;
 		CheckInput();
 		UpdateGhostTransform();
@@ -191,7 +216,14 @@ public class ItemPlacer : Component, IWorldEvent
 		{
 			if ( _isValidPlacement )
 			{
-				PlaceItem();
+				if ( IsPlacing )
+				{
+					PlaceItem();
+				}
+				else if ( IsMoving )
+				{
+					MoveItem();
+				}
 			}
 			else
 			{
@@ -204,7 +236,14 @@ public class ItemPlacer : Component, IWorldEvent
 
 		if ( Input.Pressed( "attack2" ) )
 		{
-			StopPlacing();
+			if ( IsPlacing )
+			{
+				StopPlacing();
+			}
+			else if ( IsMoving )
+			{
+				StopMoving();
+			}
 		}
 
 		if ( Input.Pressed( "RotateClockwise" ) )
@@ -226,7 +265,7 @@ public class ItemPlacer : Component, IWorldEvent
 	{
 		try
 		{
-			Player.World.SpawnPlacedNode( _selectedItem, _ghost.WorldPosition, _ghost.WorldRotation );
+			Player.World.SpawnPlacedNode( _selectedItemData, _ghost.WorldPosition, _ghost.WorldRotation );
 		}
 		catch ( Exception e )
 		{
@@ -235,13 +274,32 @@ public class ItemPlacer : Component, IWorldEvent
 			return;
 		}
 
-		if ( _isPlacingFromInventory )
-		{
-			InventorySlot.TakeOneOrDelete();
-		}
+		InventorySlot.TakeOneOrDelete();
 
 		StopPlacing();
 	}
+
+
+	private void MoveItem()
+	{
+		
+		if ( !CurrentPlacedItem.IsValid() )
+		{
+			Log.Error( "CurrentPlacedItem is not valid" );
+			StopMoving();
+			return;
+		}
+		
+		CurrentPlacedItem.WorldPosition = _ghost.WorldPosition;
+		CurrentPlacedItem.WorldRotation = _ghost.WorldRotation;
+		CurrentPlacedItem.Transform.ClearInterpolation();
+		
+		StopMoving();
+		
+		Log.Info( "Moved item" );
+
+	}
+
 
 	private Material _invalidMaterial = Material.Load( "materials/ghost_invalid.vmat" );
 
@@ -298,7 +356,7 @@ public class ItemPlacer : Component, IWorldEvent
 		box = box.Rotate( _ghost.WorldRotation );
 
 		var trace = Scene.Trace.Box( box, ray, 1000f )
-			.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )
+			.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible", "invisible" )
 			.Run();
 
 		if ( !trace.Hit )
@@ -326,13 +384,17 @@ public class ItemPlacer : Component, IWorldEvent
 		{
 			endPosition = endPosition.SnapToGrid( SnapDistance );
 		}
+		else if ( !SnapEnabled && Input.Down( "Snap" ) )
+		{
+			endPosition = endPosition.SnapToGrid( SnapDistance );
+		}
 
-		endPosition += _selectedItem.PlaceModeOffset;
+		endPosition += _selectedItemData.PlaceModeOffset;
 
 		// var gridPosition = Player.World.WorldToItemGrid( endPosition );
 
 		// TODO: Check if the item can be placed here
-		_isValidPlacement = !Player.World.IsPositionOccupied( endPosition, 4f ) &&
+		_isValidPlacement = !Player.World.IsPositionOccupied( endPosition, CurrentPlacedItem?.GameObject, 4f ) &&
 		                    !Player.World.IsNearPlayer( endPosition );
 
 		_ghost.WorldPosition = endPosition;
@@ -360,7 +422,7 @@ public class ItemPlacer : Component, IWorldEvent
 			// Gizmo.Draw.Grid( Gizmo.GridAxis.XY, new Vector2( 32f, 32f ) );
 		}
 
-		if ( IsPlacing && _ghost.IsValid() )
+		if ( ( IsPlacing || IsMoving ) && _ghost.IsValid() )
 		{
 			var trace = Scene.Trace.Ray( _ghost.WorldPosition, _ghost.WorldPosition + Vector3.Down * 300f )
 				.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )

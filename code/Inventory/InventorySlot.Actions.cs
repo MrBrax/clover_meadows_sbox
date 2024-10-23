@@ -48,7 +48,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			return;
 		}
 
-		InventoryContainer.Player.ItemPlacer.StartPlacing( Index );
+		InventoryContainer.Player.ItemPlacer.StartPlacingInventorySlot( Index );
 		InventoryUi.Instance.Close();
 	}
 
