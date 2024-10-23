@@ -627,6 +627,16 @@ public class FishingRod : BaseCarriable
 		ReelIn( 128f );
 	}
 
+	public override string GetUseName()
+	{
+		if ( HasCasted )
+		{
+			return "Reel In";
+		}
+
+		return "Cast (hold)";
+	}
+
 	/*protected override void OnUpdate()
 	{
 		base.OnUpdate();
