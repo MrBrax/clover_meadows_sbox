@@ -41,6 +41,8 @@ public class Equips : Component
 
 	[Sync] public NetDictionary<EquipSlot, bool> EquippedSlots { get; set; } = new();
 	[Sync] public NetDictionary<EquipSlot, bool> VisibleSlots { get; set; } = new();
+	
+	private PlayerCharacter Player => GetComponent<PlayerCharacter>();
 
 	public GameObject GetEquippedItem( EquipSlot slot )
 	{
@@ -143,10 +145,18 @@ public class Equips : Component
 
 		throw new Exception( $"No item equipped in slot {slot}" );
 	}
+	
+	public bool CanUseTool()
+	{
+		if ( Player.ItemPlacer.IsPlacing || Player.ItemPlacer.IsMoving ) return false;
+		return true;
+	}
 
 	protected override void OnFixedUpdate()
 	{
 		if ( IsProxy ) return;
+
+		if ( !CanUseTool() ) return;
 
 		if ( Input.Pressed( "UseTool" ) )
 		{
@@ -174,7 +184,6 @@ public class Equips : Component
 				Log.Info( "No tool equipped" );
 			}
 		}
-
 		else if ( Input.Released( "UseTool" ) )
 		{
 			if ( HasEquippedItem( EquipSlot.Tool ) )

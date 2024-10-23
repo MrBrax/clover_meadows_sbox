@@ -87,7 +87,7 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 		// yield return new InputData( "use", "Use" );
 		var player = PlayerCharacter.Local;
 
-		if ( player.Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) )
+		if ( player.Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) && player.Equips.CanUseTool() )
 		{
 			yield return new InputData( "UseTool", tool.GetUseName() );
 
@@ -97,17 +97,20 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 			}
 		}
 
-		var interactable = player.PlayerInteract.FindInteractable();
-		if ( interactable != null )
+		if ( player.PlayerInteract.CanInteract() )
 		{
-			yield return new InputData( "Use", interactable.GetInteractName() );
-		}
+			var interactable = player.PlayerInteract.FindInteractable();
+			if ( interactable != null )
+			{
+				yield return new InputData( "Use", interactable.GetInteractName() );
+			}
 
-		var pickupable = player.PlayerInteract.GetPickupableNode();
-		if ( pickupable != null && pickupable.CanPickup( player ) )
-		{
-			yield return new InputData( "Pickup", $"Pick up {pickupable.GetPickupName()}" );
-			yield return new InputData( "Move", $"Move" );
+			var pickupable = player.PlayerInteract.GetPickupableNode();
+			if ( pickupable != null && pickupable.CanPickup( player ) )
+			{
+				yield return new InputData( "Pickup", $"Pick up {pickupable.GetPickupName()}" );
+				yield return new InputData( "Move", $"Move" );
+			}
 		}
 
 		if ( player.ItemPlacer.IsPlacing || player.ItemPlacer.IsMoving )

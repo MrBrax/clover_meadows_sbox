@@ -46,9 +46,8 @@ public class PlayerInteract : Component
 
 	public bool CanInteract()
 	{
-		if ( Player.ItemPlacer.IsPlacing ) return false;
+		if ( Player.ItemPlacer.IsPlacing || Player.ItemPlacer.IsMoving ) return false;
 		if ( Player.InCutscene ) return false;
-		if ( Player.ItemPlacer.IsPlacing ) return false;
 		if ( InteractionTarget.IsValid() )
 		{
 			if ( InteractionTarget.GetComponent<BaseNpc>().IsValid() ) return false;
