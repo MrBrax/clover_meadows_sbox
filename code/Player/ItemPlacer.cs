@@ -41,6 +41,9 @@ public class ItemPlacer : Component, IWorldEvent
 
 	private TimeSince _lastAction;
 
+	private const float MaxStartMoveDistance = 150f;
+	private const float MaxMoveDistance = 200f;
+
 	protected override void OnStart()
 	{
 		Mouse.Visible = true;
@@ -124,6 +127,7 @@ public class ItemPlacer : Component, IWorldEvent
 		DestroyGhost();
 		_selectedItemData = null;
 		_isAdjustingCamera = false;
+		_heightMode = false;
 		// Mouse.Visible = false;
 	}
 
@@ -145,6 +149,7 @@ public class ItemPlacer : Component, IWorldEvent
 
 		CurrentPlacedItem = null;
 		_isAdjustingCamera = false;
+		_heightMode = false;
 		// Mouse.Visible = false;
 	}
 
@@ -238,6 +243,9 @@ public class ItemPlacer : Component, IWorldEvent
 		// UpdateVisuals();
 	}*/
 
+	private bool _heightMode;
+	private Vector3 _heightModeStart;
+
 	private void CheckInput()
 	{
 		if ( Input.Pressed( "ItemPlacerConfirm" ) )
@@ -283,6 +291,20 @@ public class ItemPlacer : Component, IWorldEvent
 		{
 			PickUpMovingItem();
 			return;
+		}
+
+		if ( Input.Pressed( "ItemPlacerHeight" ) )
+		{
+			Log.Info( "Height mode on" );
+			_heightMode = true;
+			_heightModeStart = _ghost.WorldPosition;
+			_cameraAdjustmentStart = Mouse.Position;
+		}
+
+		if ( Input.Released( "ItemPlacerHeight" ) )
+		{
+			Log.Info( "Height mode off" );
+			_heightMode = false;
 		}
 
 		if ( Input.Pressed( "RotateClockwise" ) )
@@ -354,7 +376,7 @@ public class ItemPlacer : Component, IWorldEvent
 
 		if ( !worldItem.CanPickup( Player ) ) return;
 
-		var tooFarAway = worldItem.WorldPosition.Distance( Player.WorldPosition ) > 200f;
+		var tooFarAway = worldItem.WorldPosition.Distance( Player.WorldPosition ) > MaxStartMoveDistance;
 
 		if ( !tooFarAway )
 		{
@@ -427,7 +449,7 @@ public class ItemPlacer : Component, IWorldEvent
 			return;
 		}
 
-		if ( _ghost.WorldPosition.Distance( Player.WorldPosition ) > 300f )
+		if ( _ghost.WorldPosition.Distance( Player.WorldPosition ) > MaxMoveDistance )
 		{
 			Player.Notify( Notifications.NotificationType.Warning, "Item placed too far away" );
 			// StopMoving();
@@ -531,6 +553,12 @@ public class ItemPlacer : Component, IWorldEvent
 
 		endPosition += _selectedItemData.PlaceModeOffset;
 
+		if ( _heightMode )
+		{
+			var delta = Mouse.Position - _cameraAdjustmentStart;
+			endPosition = (_heightModeStart + new Vector3( 0, 0, -(delta.y / 5f) )).SnapToGrid( SnapDistance );
+		}
+
 		// var gridPosition = Player.World.WorldToItemGrid( endPosition );
 
 		// TODO: Check if the item can be placed here
@@ -592,5 +620,21 @@ public class ItemPlacer : Component, IWorldEvent
 
 		Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( _colliderCenter, _colliderSize )
 			.Rotate( _ghost.WorldRotation ).Translate( _ghost.WorldPosition ) );
+
+		foreach ( var worldItem in Scene.GetAllComponents<WorldItem>() )
+		{
+			if ( worldItem == CurrentPlacedItem ) continue;
+			if ( worldItem == CurrentHoveredItem ) continue;
+
+			var collider = worldItem.GameObject.GetComponent<BoxCollider>();
+
+			if ( collider == null ) continue;
+
+			var bbox = BBox.FromPositionAndSize( collider.Center, collider.Scale )
+				.Rotate( worldItem.WorldRotation )
+				.Translate( worldItem.WorldPosition );
+
+			Gizmo.Draw.LineBBox( bbox );
+		}
 	}
 }

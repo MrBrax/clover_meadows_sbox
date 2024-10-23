@@ -124,6 +124,8 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 
 			yield return new InputData( "Snap", "Snap" );
 
+			yield return new InputData( "ItemPlacerHeightUp", "Height mode" );
+
 			yield return new InputData( "CameraAdjust", "Adjust Camera" );
 		}
 		else if ( player.ItemPlacer.CurrentHoveredItem.IsValid() )
