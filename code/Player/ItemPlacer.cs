@@ -13,6 +13,22 @@ namespace Clover.Player;
 [Category( "Clover/Player" )]
 public class ItemPlacer : Component, IWorldEvent
 {
+	[ConVar( "clover_itemplacer_position_snap_enabled", Saved = true )]
+	public static bool PositionSnapEnabled { get; set; } = false;
+
+	[ConVar( "clover_itemplacer_position_snap_distance", Saved = true )]
+	public static float PositionSnapDistance { get; set; } = 16f;
+
+	public readonly float[] PositionSnapDistances = { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 };
+
+	[ConVar( "clover_itemplacer_show_grid", Saved = true )]
+	public static bool ShowGrid { get; set; } = true;
+
+	[ConVar( "clover_itemplacer_rotation_snap_distance", Saved = true )]
+	public static float RotationSnapDistance { get; set; } = 15f;
+
+	public readonly float[] RotationSnapDistances = { 1, 5, 15, 30, 45, 90 };
+
 	private PlayerCharacter Player => GetComponent<PlayerCharacter>();
 
 	[Property] public Model CursorModel { get; set; }
@@ -158,7 +174,7 @@ public class ItemPlacer : Component, IWorldEvent
 		var item = InventorySlot.GetItem();
 		_selectedItemData = item.ItemData;
 		var gameObject = item.ItemData.PlaceScene.Clone( Player.WorldPosition,
-			Rotation.FromYaw( Player.PlayerController.Yaw ).Angles().SnapToGrid( RotationDistance ) );
+			Rotation.FromYaw( Player.PlayerController.Yaw ).Angles().SnapToGrid( RotationSnapDistance ) );
 
 		PlaceGhostInternal( gameObject );
 	}
@@ -309,14 +325,14 @@ public class ItemPlacer : Component, IWorldEvent
 
 		if ( Input.Pressed( "RotateClockwise" ) )
 		{
-			_ghost.WorldRotation *= Rotation.FromYaw( -RotationDistance );
-			_ghost.WorldRotation = _ghost.WorldRotation.Angles().SnapToGrid( RotationDistance );
+			_ghost.WorldRotation *= Rotation.FromYaw( -RotationSnapDistance );
+			_ghost.WorldRotation = _ghost.WorldRotation.Angles().SnapToGrid( RotationSnapDistance );
 			Sound.Play( RotateSound );
 		}
 		else if ( Input.Pressed( "RotateCounterClockwise" ) )
 		{
-			_ghost.WorldRotation *= Rotation.FromYaw( RotationDistance );
-			_ghost.WorldRotation = _ghost.WorldRotation.Angles().SnapToGrid( RotationDistance );
+			_ghost.WorldRotation *= Rotation.FromYaw( RotationSnapDistance );
+			_ghost.WorldRotation = _ghost.WorldRotation.Angles().SnapToGrid( RotationSnapDistance );
 			Sound.Play( RotateSound );
 		}
 
@@ -345,15 +361,56 @@ public class ItemPlacer : Component, IWorldEvent
 			}
 		}
 
-		/*else if ( Input.Pressed( "cancel" ) )
+		if ( Input.Pressed( "ItemPlacerPositionSnapDecrease" ) )
 		{
-			StopPlacing();
-		}*/
+			var index = Array.IndexOf( PositionSnapDistances, PositionSnapDistance );
+
+			if ( index > 0 )
+			{
+				PositionSnapDistance = PositionSnapDistances[index - 1];
+				Sound.Play( RotateSound );
+			}
+		}
+		else if ( Input.Pressed( "ItemPlacerPositionSnapIncrease" ) )
+		{
+			var index = Array.IndexOf( PositionSnapDistances, PositionSnapDistance );
+
+			if ( index < 0 )
+			{
+				PositionSnapDistance = PositionSnapDistances[0];
+				Sound.Play( RotateSound );
+			}
+			else if ( index < PositionSnapDistances.Length - 1 )
+			{
+				PositionSnapDistance = PositionSnapDistances[index + 1];
+				Sound.Play( RotateSound );
+			}
+		}
+		else if ( Input.Pressed( "ItemPlacerRotationSnapDecrease" ) )
+		{
+			var index = Array.IndexOf( RotationSnapDistances, RotationSnapDistance );
+
+			if ( index > 0 )
+			{
+				RotationSnapDistance = RotationSnapDistances[index - 1];
+				Sound.Play( RotateSound );
+			}
+		}
+		else if ( Input.Pressed( "ItemPlacerRotationSnapIncrease" ) )
+		{
+			var index = Array.IndexOf( RotationSnapDistances, RotationSnapDistance );
+
+			if ( index < RotationSnapDistances.Length - 1 )
+			{
+				RotationSnapDistance = RotationSnapDistances[index + 1];
+				Sound.Play( RotateSound );
+			}
+		}
 	}
 
 	private void PickUpMovingItem()
 	{
-		if ( !CurrentPlacedItem.CanPickup( Player ) ) ;
+		if ( !CurrentPlacedItem.CanPickup( Player ) ) return;
 		CurrentPlacedItem.OnPickup( Player );
 		StopMoving();
 	}
@@ -542,13 +599,13 @@ public class ItemPlacer : Component, IWorldEvent
 
 		var endPosition = trace.EndPosition;
 
-		if ( SnapEnabled && !Input.Down( "Snap" ) )
+		if ( PositionSnapEnabled && !Input.Down( "Snap" ) )
 		{
-			endPosition = endPosition.SnapToGrid( SnapDistance );
+			endPosition = endPosition.SnapToGrid( PositionSnapDistance );
 		}
-		else if ( !SnapEnabled && Input.Down( "Snap" ) )
+		else if ( !PositionSnapEnabled && Input.Down( "Snap" ) )
 		{
-			endPosition = endPosition.SnapToGrid( SnapDistance );
+			endPosition = endPosition.SnapToGrid( PositionSnapDistance );
 		}
 
 		endPosition += _selectedItemData.PlaceModeOffset;
@@ -556,7 +613,7 @@ public class ItemPlacer : Component, IWorldEvent
 		if ( _heightMode )
 		{
 			var delta = Mouse.Position - _cameraAdjustmentStart;
-			endPosition = (_heightModeStart + new Vector3( 0, 0, -(delta.y / 5f) )).SnapToGrid( SnapDistance );
+			endPosition = (_heightModeStart + new Vector3( 0, 0, -(delta.y / 5f) )).SnapToGrid( PositionSnapDistance );
 		}
 
 		// var gridPosition = Player.World.WorldToItemGrid( endPosition );
@@ -567,18 +624,6 @@ public class ItemPlacer : Component, IWorldEvent
 
 		_ghost.WorldPosition = endPosition;
 	}
-
-	[ConVar( "clover_itemplacer_snap_enabled", Saved = true )]
-	public static bool SnapEnabled { get; set; } = false;
-
-	[ConVar( "clover_itemplacer_snap_distance", Saved = true )]
-	public static float SnapDistance { get; set; } = 16f;
-
-	[ConVar( "clover_itemplacer_show_grid", Saved = true )]
-	public static bool ShowGrid { get; set; } = true;
-
-	[ConVar( "clover_itemplacer_rotation_distance", Saved = true )]
-	public static float RotationDistance { get; set; } = 15f;
 
 
 	protected override void OnUpdate()
@@ -618,8 +663,11 @@ public class ItemPlacer : Component, IWorldEvent
 			Gizmo.Draw.Arrow( _ghost.WorldPosition, endPos );
 		}
 
-		Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( _colliderCenter, _colliderSize )
-			.Rotate( _ghost.WorldRotation ).Translate( _ghost.WorldPosition ) );
+		var bbox1 = BBox.FromPositionAndSize( _colliderCenter, _colliderSize );
+		bbox1 = bbox1.Rotate( _ghost.WorldRotation );
+		bbox1 = bbox1.Translate( _ghost.WorldPosition );
+
+		Gizmo.Draw.LineBBox( bbox1 );
 
 		foreach ( var worldItem in Scene.GetAllComponents<WorldItem>() )
 		{

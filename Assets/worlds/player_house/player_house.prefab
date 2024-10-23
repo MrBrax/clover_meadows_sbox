@@ -277,7 +277,7 @@
                   "DstName": "_signal"
                 },
                 {
-                  "Id": 2,
+                  "Id": 3,
                   "Value": "asdf",
                   "DstId": 1,
                   "DstName": "format"
@@ -2467,6 +2467,53 @@
               {
                 "__type": "Clover.WorldLayerObject",
                 "__guid": "8407ee0e-85f0-496b-8a18-74199e3a6572"
+              }
+            ]
+          },
+          {
+            "__guid": "a7066187-0f06-482e-a266-d92039d6334a",
+            "Flags": 0,
+            "Name": "interior_wall_1_doorway_2 (1)",
+            "Position": "448,320,0.00007306763",
+            "Rotation": "0,0,-0.7071067,0.7071068",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "c6e902e1-c0f9-4c6a-a52b-9fbc36983441",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/interior/interior_wall_1_doorway_2.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.ModelCollider",
+                "__guid": "04db0a58-e450-482f-b48d-7595c7b7df3d",
+                "IsTrigger": false,
+                "Model": "models/interior/interior_wall_1_doorway_2.vmdl",
+                "Static": true,
+                "SurfaceVelocity": "0,0,0"
+              },
+              {
+                "__type": "Clover.WorldBuilder.InteriorPiece",
+                "__guid": "e14ad591-2e62-4d90-a48c-0cda1c3a00b7",
+                "BelongsToRooms": [
+                  "entrance"
+                ],
+                "IsDarkness": false,
+                "IsDoorway": false,
+                "IsFloor": false,
+                "IsWall": true
+              },
+              {
+                "__type": "Clover.WorldLayerObject",
+                "__guid": "de6dfe80-3c6e-4c31-9421-67f928928aff"
               }
             ]
           }
