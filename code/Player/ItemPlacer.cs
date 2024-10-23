@@ -53,15 +53,17 @@ public class ItemPlacer : Component, IWorldEvent
 		IsMoving = true;
 		_selectedItemData = selectedGameObject.ItemData;
 		// selectedGameObject.DestroyGameObject();
-		
+
 		CurrentPlacedItem = selectedGameObject;
-		
-		PlaceGhostInternal( selectedGameObject.GameObject.Clone() );
+
+		var clone = selectedGameObject.GameObject.Clone( selectedGameObject.WorldPosition, selectedGameObject.WorldRotation );
+		PlaceGhostInternal( clone );
 
 		// TODO: hide worlditem
 		CurrentPlacedItem.Hide();
 
 		Mouse.Visible = true;
+		Mouse.Position = Scene.Camera.PointToScreenPixels( selectedGameObject.WorldPosition );
 	}
 
 	void IWorldEvent.OnWorldChanged( World world )
@@ -114,6 +116,7 @@ public class ItemPlacer : Component, IWorldEvent
 		{
 			CurrentPlacedItem.Show();
 		}
+
 		CurrentPlacedItem = null;
 		Mouse.Visible = false;
 	}
@@ -122,18 +125,18 @@ public class ItemPlacer : Component, IWorldEvent
 	{
 		var item = InventorySlot.GetItem();
 		_selectedItemData = item.ItemData;
-		var gameObject = item.ItemData.PlaceScene.Clone();
-		gameObject.WorldRotation =
-			Rotation.FromYaw( Player.PlayerController.Yaw ).Angles().SnapToGrid( RotationDistance );
+		var gameObject = item.ItemData.PlaceScene.Clone( Player.WorldPosition,
+			Rotation.FromYaw( Player.PlayerController.Yaw ).Angles().SnapToGrid( RotationDistance ) );
+
 		PlaceGhostInternal( gameObject );
 	}
 
-	private void PlaceGhostInternal( GameObject selectedGameObject )
+	private void PlaceGhostInternal( GameObject clonedGameObject )
 	{
-		selectedGameObject.NetworkMode = NetworkMode.Never;
+		clonedGameObject.NetworkMode = NetworkMode.Never;
 
 		// kill all colliders
-		foreach ( var collider in selectedGameObject.Components
+		foreach ( var collider in clonedGameObject.Components
 			         .GetAll<Collider>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
@@ -147,7 +150,7 @@ public class ItemPlacer : Component, IWorldEvent
 		}
 
 		// kill all worlditems
-		foreach ( var worldItem in selectedGameObject.Components
+		foreach ( var worldItem in clonedGameObject.Components
 			         .GetAll<WorldItem>( FindMode.EverythingInSelfAndDescendants )
 			         .ToList() )
 		{
@@ -155,15 +158,13 @@ public class ItemPlacer : Component, IWorldEvent
 		}
 
 		// tint the ghost
-		foreach ( var renderable in selectedGameObject.Components
+		foreach ( var renderable in clonedGameObject.Components
 			         .GetAll<ModelRenderer>( FindMode.EverythingInSelfAndDescendants ).ToList() )
 		{
 			renderable.Tint = renderable.Tint.WithAlpha( 0.5f );
 		}
 
-		selectedGameObject.WorldPosition = Player.WorldPosition;
-
-		_ghost = selectedGameObject;
+		_ghost = clonedGameObject;
 
 		// create cursor
 		/*cursor = Scene.CreateObject();
@@ -282,22 +283,20 @@ public class ItemPlacer : Component, IWorldEvent
 
 	private void MoveItem()
 	{
-		
 		if ( !CurrentPlacedItem.IsValid() )
 		{
 			Log.Error( "CurrentPlacedItem is not valid" );
 			StopMoving();
 			return;
 		}
-		
+
 		CurrentPlacedItem.WorldPosition = _ghost.WorldPosition;
 		CurrentPlacedItem.WorldRotation = _ghost.WorldRotation;
 		CurrentPlacedItem.Transform.ClearInterpolation();
-		
-		StopMoving();
-		
-		Log.Info( "Moved item" );
 
+		StopMoving();
+
+		Log.Info( "Moved item" );
 	}
 
 
@@ -422,7 +421,7 @@ public class ItemPlacer : Component, IWorldEvent
 			// Gizmo.Draw.Grid( Gizmo.GridAxis.XY, new Vector2( 32f, 32f ) );
 		}
 
-		if ( ( IsPlacing || IsMoving ) && _ghost.IsValid() )
+		if ( (IsPlacing || IsMoving) && _ghost.IsValid() )
 		{
 			var trace = Scene.Trace.Ray( _ghost.WorldPosition, _ghost.WorldPosition + Vector3.Down * 300f )
 				.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )
