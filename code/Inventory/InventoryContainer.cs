@@ -546,12 +546,11 @@ public sealed partial class InventoryContainer
 	{
 		if ( FreeSlots > 0 ) return true;
 
-		var slots = GetSlotsWithItem( item.ItemData );
-		if ( slots.Count() == 0 ) return false;
+		var slots = GetSlotsWithItem( item.ItemData ).ToList();
+		if ( !slots.Any() ) return false;
 
 		var slotWithStackSpaceLeft = slots.Where( s => s.Amount < s.PersistentItem.ItemData.StackSize ).ToList();
-
-		if ( slotWithStackSpaceLeft.Count() > 0 ) return true;
+		if ( slotWithStackSpaceLeft.Any() ) return true;
 
 		return false;
 	}

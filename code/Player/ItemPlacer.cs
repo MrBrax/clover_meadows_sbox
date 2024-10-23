@@ -240,7 +240,7 @@ public class ItemPlacer : Component, IWorldEvent
 
 	private void CheckInput()
 	{
-		if ( Input.Pressed( "attack1" ) )
+		if ( Input.Pressed( "ItemPlacerConfirm" ) )
 		{
 			if ( _isValidPlacement )
 			{
@@ -259,13 +259,13 @@ public class ItemPlacer : Component, IWorldEvent
 				Player.Notify( Notifications.NotificationType.Warning, "Invalid placement" );
 			}
 
-			Input.ReleaseAction( "attack1" );
-			Input.Clear( "attack1" );
+			Input.ReleaseAction( "ItemPlacerConfirm" );
+			Input.Clear( "ItemPlacerConfirm" );
 			_lastAction = 0;
 			return;
 		}
 
-		if ( Input.Pressed( "attack2" ) )
+		if ( Input.Pressed( "ItemPlacerCancel" ) )
 		{
 			if ( IsPlacing )
 			{
@@ -276,6 +276,12 @@ public class ItemPlacer : Component, IWorldEvent
 				StopMoving();
 			}
 
+			return;
+		}
+
+		if ( Input.Pressed( "PickUp" ) && IsMoving )
+		{
+			PickUpMovingItem();
 			return;
 		}
 
@@ -323,11 +329,19 @@ public class ItemPlacer : Component, IWorldEvent
 		}*/
 	}
 
-	// private WorldItem _clickedWorldItem;
-	// private Vector2 _clickedWorldItemScreenPosition;
+	private void PickUpMovingItem()
+	{
+		if ( !CurrentPlacedItem.CanPickup( Player ) ) ;
+		CurrentPlacedItem.OnPickup( Player );
+		StopMoving();
+	}
+
+	public WorldItem CurrentHoveredItem { get; set; }
 
 	private void CheckStartMove()
 	{
+		CurrentHoveredItem = null;
+
 		var trace = Scene.Trace.Ray( Scene.Camera.ScreenPixelToRay( Mouse.Position ), 1000f )
 			.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )
 			.Run();
@@ -340,15 +354,19 @@ public class ItemPlacer : Component, IWorldEvent
 
 		if ( !worldItem.CanPickup( Player ) ) return;
 
-		worldItem.ItemHighlight.Enabled = true;
-
 		var tooFarAway = worldItem.WorldPosition.Distance( Player.WorldPosition ) > 200f;
 
-		if ( Input.Released( "attack1" ) && _lastAction > 0.2f )
+		if ( !tooFarAway )
+		{
+			worldItem.ItemHighlight.Enabled = true;
+			CurrentHoveredItem = worldItem;
+		}
+
+		if ( Input.Released( "ItemPlacerConfirm" ) && _lastAction > 0.2f )
 		{
 			if ( tooFarAway )
 			{
-				Player.Notify( Notifications.NotificationType.Warning, "Too far away" );
+				Player.Notify( Notifications.NotificationType.Warning, $"{worldItem.ItemData.Name} is too far away" );
 				return;
 			}
 
@@ -357,12 +375,12 @@ public class ItemPlacer : Component, IWorldEvent
 			/*_clickedWorldItem = worldItem;
 			_clickedWorldItemScreenPosition = Mouse.Position;*/
 		}
-		/*else if ( Input.Released( "attack1" ) )
+		/*else if ( Input.Released( "ItemPlacerConfirm" ) )
 		{
 			_clickedWorldItem = null;
 		}
 
-		if ( Input.Down( "attack1" ) && _clickedWorldItem.IsValid() )
+		if ( Input.Down( "ItemPlacerConfirm" ) && _clickedWorldItem.IsValid() )
 		{
 			if ( tooFarAway )
 			{

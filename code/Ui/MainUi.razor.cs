@@ -87,7 +87,8 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 		// yield return new InputData( "use", "Use" );
 		var player = PlayerCharacter.Local;
 
-		if ( player.Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) && player.Equips.CanUseTool() )
+		if ( player.Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) &&
+		     player.Equips.CanUseTool() )
 		{
 			yield return new InputData( "UseTool", tool.GetUseName() );
 
@@ -109,21 +110,25 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 			if ( pickupable != null && pickupable.CanPickup( player ) )
 			{
 				yield return new InputData( "Pickup", $"Pick up {pickupable.GetPickupName()}" );
-				yield return new InputData( "Move", $"Move" );
+				// yield return new InputData( "Move", $"Move" );
 			}
 		}
 
 		if ( player.ItemPlacer.IsPlacing || player.ItemPlacer.IsMoving )
 		{
-			yield return new InputData( "attack1", "Place" );
-			yield return new InputData( "attack2", "Cancel" );
+			yield return new InputData( "ItemPlacerConfirm", "Place" );
+			yield return new InputData( "ItemPlacerCancel", "Cancel" );
 
 			yield return new InputData( "RotateClockwise", "Rotate Clockwise" );
 			yield return new InputData( "RotateCounterClockwise", "Rotate Counter Clockwise" );
 
 			yield return new InputData( "Snap", "Snap" );
-			
+
 			yield return new InputData( "CameraAdjust", "Adjust Camera" );
+		}
+		else if ( player.ItemPlacer.CurrentHoveredItem.IsValid() )
+		{
+			yield return new InputData( "move", $"Move {player.ItemPlacer.CurrentHoveredItem.GetPickupName()}" );
 		}
 
 		if ( ShowInputsObvious )
