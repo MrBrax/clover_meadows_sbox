@@ -17,6 +17,8 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 
 	public bool ShouldShowUi => LastInput < HideUiDelay;
 
+	public static bool IsIdle => !Instance?.ShouldShowUi ?? false;
+
 	[ConVar( "clover_ui_hide_delay" )] public static float HideUiDelay { get; set; } = 5;
 
 	protected override void OnAwake()
