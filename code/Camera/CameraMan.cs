@@ -97,25 +97,37 @@ public sealed class CameraMan : Component
 		else
 		{
 			wishedRot = mainCameraNode.WorldRotation;
+
+			// offset the camera when the player is moving to keep the player in the center of the screen
 			if ( !mainCameraNode.DollyNode.IsValid() && !mainCameraNode.Static && PlayerCharacter.Local.IsValid() )
 			{
 				wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.3f;
 			}
-
-			if ( mainCameraNode.Static && mainCameraNode.HasPivotRotation )
-			{
-			}
 		}
 
+		// idle mode
 		if ( MainUi.Instance.IsValid() && MainUi.Instance.LastInput > MainUi.HideUiDelay * 3 )
 		{
 			var p = Sandbox.Utility.Noise.Perlin( Time.Now * 5f, Time.Now * 7f, Time.Now * 9f ) - 0.5f;
 			wishedRot *= Rotation.From( p * 2, p * 3, p );
 			_lerpSpeed = 0.1f;
 		}
+
+		/*if ( mainCameraNode.Static && mainCameraNode.HasPivotRotation )
+		{
+			_positionLerp = wishedPos;
+			_rotationLerp = wishedRot;
+		}
+		else
+		{
+			_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * _lerpSpeed );
+			// _rotationLerp = Rotation.Slerp( _rotationLerp, wishedRot, Time.Delta * _lerpSpeed );
+			_rotationLerp = wishedRot;
+		}*/
 		
 		_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * _lerpSpeed );
 		_rotationLerp = Rotation.Slerp( _rotationLerp, wishedRot, Time.Delta * _lerpSpeed );
+
 		_fovLerp = _fovLerp.LerpTo( mainCameraNode.FieldOfView, Time.Delta * _lerpSpeed );
 
 		// var midpoint = GetTargetsMidpoint();
