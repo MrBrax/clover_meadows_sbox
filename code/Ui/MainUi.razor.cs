@@ -141,14 +141,14 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 			yield return new InputData( "Item Placer", "", "CameraAdjust", "Adjust Camera" );
 
 			yield return new InputData( "Item Placer", "PositionSnap", "ItemPlacerPositionSnapDecrease",
-				$"Change position snap ({ItemPlacer.PositionSnapDistance})" );
+				$"Change position snap ({ItemPlacer.PositionSnapDistance}u)" );
 			yield return new InputData( "Item Placer", "PositionSnap", "ItemPlacerPositionSnapIncrease",
-				$"Change position snap ({ItemPlacer.PositionSnapDistance})" );
+				$"Change position snap ({ItemPlacer.PositionSnapDistance}u)" );
 
 			yield return new InputData( "Item Placer", "RotationSnap", "ItemPlacerRotationSnapDecrease",
-				$"Change rotation snap ({ItemPlacer.RotationSnapDistance})" );
+				$"Change rotation snap ({ItemPlacer.RotationSnapDistance}°)" );
 			yield return new InputData( "Item Placer", "RotationSnap", "ItemPlacerRotationSnapIncrease",
-				$"Change rotation snap ({ItemPlacer.RotationSnapDistance})" );
+				$"Change rotation snap ({ItemPlacer.RotationSnapDistance}°)" );
 		}
 		else if ( player.ItemPlacer.CurrentHoveredItem.IsValid() )
 		{
