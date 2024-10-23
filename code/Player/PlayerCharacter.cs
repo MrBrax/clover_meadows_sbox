@@ -195,7 +195,7 @@ public sealed partial class PlayerCharacter : Component
 		if ( IsSitting ) return false;
 		if ( InCutscene ) return false;
 		if ( VehicleRider.Vehicle.IsValid() ) return false;
-		if ( ItemPlacer.IsPlacing ) return false;
+		if ( ItemPlacer.IsPlacing || ItemPlacer.IsMoving ) return false;
 		if ( Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) &&
 		     tool.ShouldDisableMovement() ) return false;
 		if ( PlayerInteract.InteractionTarget.IsValid() )

@@ -64,7 +64,7 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 		if ( !PlayerCharacter.Local.IsValid() )
 			return;
 
-		if ( PlayerCharacter.Local.ItemPlacer.IsPlacing )
+		if ( PlayerCharacter.Local.ItemPlacer.IsPlacing || PlayerCharacter.Local.ItemPlacer.IsMoving )
 		{
 			LastInput = 0;
 		}
@@ -110,7 +110,7 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 			yield return new InputData( "Move", $"Move" );
 		}
 
-		if ( player.ItemPlacer.IsPlacing )
+		if ( player.ItemPlacer.IsPlacing || player.ItemPlacer.IsMoving )
 		{
 			yield return new InputData( "attack1", "Place" );
 			yield return new InputData( "attack2", "Cancel" );
