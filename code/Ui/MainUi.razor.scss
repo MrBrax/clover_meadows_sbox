@@ -57,13 +57,15 @@ MainUi {
         left: 50px;
         bottom: 150px;
 
-        gap: 20px;
+        gap: 5px;
         flex-direction: column;
 
         font-family: Itim;
         font-size: 35px;
 
         color: white;
+
+        min-width: 600px;
 
         transform: translateX(-200%);
         transition: transform 0.5s ease;
@@ -80,14 +82,22 @@ MainUi {
         .input-entry {
             // background-color: rgba(0, 0, 0, 0.2);
 
-            gap: 15px;
+            gap: 10px;
 
             align-content: center;
             align-items: center;
 
+            flex-grow: 1;
+
             opacity: 1;
 
             transition: opacity 0.2s;
+
+            background-image: linear-gradient(0deg, rgba(0, 40, 80, 0.9), rgba(0, 0, 0, 0.1));
+
+            border-radius: 100% 0 0 100%;
+
+            padding: 5px 10px;
 
             &:intro {
                 opacity: 0;
@@ -98,6 +108,14 @@ MainUi {
             }
 
             image-rendering: trilinear;
+
+            .input-glyphs {
+                gap: 5px;
+            }
+
+            .input-name {
+
+            }
 
             Image, img {
                 image-rendering: trilinear;

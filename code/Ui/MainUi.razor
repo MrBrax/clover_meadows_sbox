@@ -55,17 +55,21 @@
 						var allPairs = GetCurrentInputs().Where( x => x.ActionPair == input.ActionPair ).ToList();
 
 						<div class="input-entry">
-							@foreach ( var pair in allPairs )
-							{
-								<Image Texture=@Input.GetGlyph( pair.Action, InputGlyphSize.Small, GlyphStyle.Dark )/>
-							}
+							<div class="input-glyphs">
+								@foreach ( var pair in allPairs )
+								{
+									<Image Texture=@Input.GetGlyph( pair.Action, InputGlyphSize.Small, GlyphStyle.Dark )/>
+								}
+							</div>
 							<div class="input-name">@input.Name</div>
 						</div>
 					}
 					else
 					{
 						<div class="input-entry">
-							<Image Texture=@Input.GetGlyph( input.Action, InputGlyphSize.Small, GlyphStyle.Dark )/>
+							<div class="input-glyphs">
+								<Image Texture=@Input.GetGlyph( input.Action, InputGlyphSize.Small, GlyphStyle.Dark )/>
+							</div>
 							<div class="input-name">@input.Name</div>
 						</div>
 					}
