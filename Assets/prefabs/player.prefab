@@ -140,7 +140,10 @@
       {
         "__type": "Clover.Player.ItemPlacer",
         "__guid": "bec44100-3b47-421b-acc1-f469e5cecee1",
-        "CursorModel": "models/tools/tile_cursor.vmdl"
+        "CursorModel": "models/tools/tile_cursor.vmdl",
+        "RotateSound": "sounds/interact/itemplacer/item_rotate.sound",
+        "StartPlacingSound": "sounds/interact/itemplacer/item_start_move.sound",
+        "StopPlacingSound": "sounds/interact/itemplacer/item_stop_move.sound"
       }
     ],
     "Children": [

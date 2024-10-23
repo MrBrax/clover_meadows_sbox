@@ -16,6 +16,10 @@ public class ItemPlacer : Component, IWorldEvent
 	private PlayerCharacter Player => GetComponent<PlayerCharacter>();
 
 	[Property] public Model CursorModel { get; set; }
+	
+	[Property] public SoundEvent StartPlacingSound { get; set; }
+	[Property] public SoundEvent StopPlacingSound { get; set; }
+	[Property] public SoundEvent RotateSound { get; set; }
 
 	public bool IsPlacing;
 	public bool IsMoving;
@@ -64,6 +68,8 @@ public class ItemPlacer : Component, IWorldEvent
 
 		Mouse.Visible = true;
 		Mouse.Position = Scene.Camera.PointToScreenPixels( selectedGameObject.WorldPosition );
+		
+		Sound.Play( StartPlacingSound );
 	}
 
 	void IWorldEvent.OnWorldChanged( World world )
@@ -95,6 +101,8 @@ public class ItemPlacer : Component, IWorldEvent
 		IsPlacing = true;
 		CreateGhostFromInventory();
 		Mouse.Visible = true;
+		
+		Sound.Play( StartPlacingSound );
 	}
 
 	public void StopPlacing()
@@ -104,6 +112,7 @@ public class ItemPlacer : Component, IWorldEvent
 		DestroyGhost();
 		_selectedItemData = null;
 		Mouse.Visible = false;
+		Sound.Play( StopPlacingSound );
 	}
 
 	public void StopMoving()
@@ -119,6 +128,7 @@ public class ItemPlacer : Component, IWorldEvent
 
 		CurrentPlacedItem = null;
 		Mouse.Visible = false;
+		Sound.Play( StopPlacingSound );
 	}
 
 	public void CreateGhostFromInventory()
@@ -206,9 +216,9 @@ public class ItemPlacer : Component, IWorldEvent
 		if ( IsProxy ) return;
 		if ( !IsPlacing && !IsMoving ) return;
 		if ( !_ghost.IsValid() ) return;
-		CheckInput();
-		UpdateGhostTransform();
-		UpdateVisuals();
+		// CheckInput();
+		// UpdateGhostTransform();
+		// UpdateVisuals();
 	}
 
 	private void CheckInput()
@@ -250,10 +260,12 @@ public class ItemPlacer : Component, IWorldEvent
 		if ( Input.Pressed( "RotateClockwise" ) )
 		{
 			_ghost.WorldRotation *= Rotation.FromYaw( -RotationDistance );
+			Sound.Play( RotateSound );
 		}
 		else if ( Input.Pressed( "RotateCounterClockwise" ) )
 		{
 			_ghost.WorldRotation *= Rotation.FromYaw( RotationDistance );
+			Sound.Play( RotateSound );
 		}
 
 		/*else if ( Input.Pressed( "cancel" ) )
@@ -414,27 +426,35 @@ public class ItemPlacer : Component, IWorldEvent
 
 	protected override void OnUpdate()
 	{
-		if ( IsPlacing && ShowGrid )
+		if ( IsProxy ) return;
+		if ( !IsPlacing && !IsMoving ) return;
+		if ( !Player.IsValid() ) return;
+		if ( !_ghost.IsValid() ) return;
+		
+		/*if ( IsPlacing && ShowGrid )
 		{
 			// TODO: re-add grid when it can be positioned relative to the player
 			// Gizmo.Transform = new Transform( Player.WorldPosition );
 			// Gizmo.Draw.Grid( Gizmo.GridAxis.XY, new Vector2( 32f, 32f ) );
 		}
+		*/
+		
+		CheckInput();
+		UpdateGhostTransform();
+		UpdateVisuals();
+		
+		var trace = Scene.Trace.Ray( _ghost.WorldPosition, _ghost.WorldPosition + Vector3.Down * 300f )
+			.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )
+			.Run();
 
-		if ( (IsPlacing || IsMoving) && _ghost.IsValid() )
+		if ( trace.Hit )
 		{
-			var trace = Scene.Trace.Ray( _ghost.WorldPosition, _ghost.WorldPosition + Vector3.Down * 300f )
-				.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )
-				.Run();
-
-			if ( trace.Hit )
-			{
-				var endPos = trace.EndPosition;
-				Gizmo.Draw.Arrow( _ghost.WorldPosition, endPos );
-			}
-
-			Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( _colliderCenter, _colliderSize )
-				.Rotate( _ghost.WorldRotation ).Translate( _ghost.WorldPosition ) );
+			var endPos = trace.EndPosition;
+			Gizmo.Draw.Arrow( _ghost.WorldPosition, endPos );
 		}
+
+		Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( _colliderCenter, _colliderSize )
+			.Rotate( _ghost.WorldRotation ).Translate( _ghost.WorldPosition ) );
+		
 	}
 }
