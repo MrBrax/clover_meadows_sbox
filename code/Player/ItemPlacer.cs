@@ -107,16 +107,24 @@ public class ItemPlacer : Component, IWorldEvent
 
 	public void StopPlacing()
 	{
+		if ( IsMoving || IsPlacing )
+		{
+			Sound.Play( StopPlacingSound );
+		}
 		IsMoving = false;
 		IsPlacing = false;
 		DestroyGhost();
 		_selectedItemData = null;
 		Mouse.Visible = false;
-		Sound.Play( StopPlacingSound );
 	}
 
 	public void StopMoving()
 	{
+		if ( IsMoving || IsPlacing )
+		{
+			Sound.Play( StopPlacingSound );
+		}
+		
 		IsMoving = false;
 		IsPlacing = false;
 		DestroyGhost();
@@ -128,7 +136,6 @@ public class ItemPlacer : Component, IWorldEvent
 
 		CurrentPlacedItem = null;
 		Mouse.Visible = false;
-		Sound.Play( StopPlacingSound );
 	}
 
 	public void CreateGhostFromInventory()
@@ -260,11 +267,13 @@ public class ItemPlacer : Component, IWorldEvent
 		if ( Input.Pressed( "RotateClockwise" ) )
 		{
 			_ghost.WorldRotation *= Rotation.FromYaw( -RotationDistance );
+			_ghost.WorldRotation = _ghost.WorldRotation.Angles().SnapToGrid( RotationDistance );
 			Sound.Play( RotateSound );
 		}
 		else if ( Input.Pressed( "RotateCounterClockwise" ) )
 		{
 			_ghost.WorldRotation *= Rotation.FromYaw( RotationDistance );
+			_ghost.WorldRotation = _ghost.WorldRotation.Angles().SnapToGrid( RotationDistance );
 			Sound.Play( RotateSound );
 		}
 
@@ -343,10 +352,7 @@ public class ItemPlacer : Component, IWorldEvent
 	}
 
 	private bool _isValidPlacement;
-
-	// private Vector2Int _lastGridPosition;
-	// private World.ItemRotation _lastGridRotation;
-	// private World.ItemPlacement _lastItemPlacement = World.ItemPlacement.Floor;
+	
 	private Vector3 _colliderSize;
 	private Vector3 _colliderCenter;
 
@@ -430,6 +436,7 @@ public class ItemPlacer : Component, IWorldEvent
 		if ( !IsPlacing && !IsMoving ) return;
 		if ( !Player.IsValid() ) return;
 		if ( !_ghost.IsValid() ) return;
+		if ( !Scene.IsValid() ) return;
 		
 		/*if ( IsPlacing && ShowGrid )
 		{
@@ -443,6 +450,8 @@ public class ItemPlacer : Component, IWorldEvent
 		UpdateGhostTransform();
 		UpdateVisuals();
 		
+		if ( !_ghost.IsValid() ) return;
+		
 		var trace = Scene.Trace.Ray( _ghost.WorldPosition, _ghost.WorldPosition + Vector3.Down * 300f )
 			.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )
 			.Run();
@@ -452,9 +461,9 @@ public class ItemPlacer : Component, IWorldEvent
 			var endPos = trace.EndPosition;
 			Gizmo.Draw.Arrow( _ghost.WorldPosition, endPos );
 		}
-
+		
 		Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( _colliderCenter, _colliderSize )
 			.Rotate( _ghost.WorldRotation ).Translate( _ghost.WorldPosition ) );
-		
+
 	}
 }
