@@ -170,7 +170,8 @@ public class WorldItem : Component, IPickupable
 
 	public bool CanPickup( PlayerCharacter player )
 	{
-		return CanPickupSimple;
+		return CanPickupSimple &&
+		       !WorldLayerObject.World.Data.DisableItemPlacement; // TODO: make a bool for picking up on world
 	}
 
 	/*[Obsolete]
@@ -248,11 +249,11 @@ public class WorldItem : Component, IPickupable
 	}*/
 	public void Hide()
 	{
-		Tags.Add("invisible");
+		Tags.Add( "invisible" );
 	}
 
 	public void Show()
 	{
-		Tags.Remove("invisible");
+		Tags.Remove( "invisible" );
 	}
 }
