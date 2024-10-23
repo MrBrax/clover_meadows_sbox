@@ -72,11 +72,21 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 
 	public struct InputData
 	{
+		public string Group;
+		public string ActionPair;
 		public string Action;
 		public string Name;
 
 		public InputData( string action, string name )
 		{
+			Action = action;
+			Name = name;
+		}
+
+		public InputData( string group, string actionPair, string action, string name )
+		{
+			Group = group;
+			ActionPair = actionPair;
 			Action = action;
 			Name = name;
 		}
@@ -116,27 +126,27 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 
 		if ( player.ItemPlacer.IsPlacing || player.ItemPlacer.IsMoving )
 		{
-			yield return new InputData( "ItemPlacerConfirm", "Place" );
-			yield return new InputData( "ItemPlacerCancel", "Cancel" );
+			yield return new InputData( "Item Placer", "", "ItemPlacerConfirm", "Place" );
+			yield return new InputData( "Item Placer", "", "ItemPlacerCancel", "Cancel" );
 
-			yield return new InputData( "RotateClockwise", "Rotate Clockwise" );
-			yield return new InputData( "RotateCounterClockwise", "Rotate Counter Clockwise" );
+			yield return new InputData( "Item Placer", "Rotate", "RotateClockwise", "Rotate" );
+			yield return new InputData( "Item Placer", "Rotate", "RotateCounterClockwise", "Rotate" );
 
-			yield return new InputData( "Snap", "Snap" );
+			yield return new InputData( "Item Placer", "", "Snap", "Snap" );
 
-			yield return new InputData( "ItemPlacerHeight", "Height mode" );
+			yield return new InputData( "Item Placer", "", "ItemPlacerHeight", "Height mode" );
 
-			yield return new InputData( "CameraAdjust", "Adjust Camera" );
+			yield return new InputData( "Item Placer", "", "CameraAdjust", "Adjust Camera" );
 
-			yield return new InputData( "ItemPlacerPositionSnapDecrease",
-				$"Decrease position snap ({ItemPlacer.PositionSnapDistance})" );
-			yield return new InputData( "ItemPlacerPositionSnapIncrease",
-				$"Increase position snap ({ItemPlacer.PositionSnapDistance})" );
+			yield return new InputData( "Item Placer", "PositionSnap", "ItemPlacerPositionSnapDecrease",
+				$"Change position snap ({ItemPlacer.PositionSnapDistance})" );
+			yield return new InputData( "Item Placer", "PositionSnap", "ItemPlacerPositionSnapIncrease",
+				$"Change position snap ({ItemPlacer.PositionSnapDistance})" );
 
-			yield return new InputData( "ItemPlacerRotationSnapDecrease",
-				$"Decrease rotation snap ({ItemPlacer.RotationSnapDistance})" );
-			yield return new InputData( "ItemPlacerRotationSnapIncrease",
-				$"Increase rotation snap ({ItemPlacer.RotationSnapDistance})" );
+			yield return new InputData( "Item Placer", "RotationSnap", "ItemPlacerRotationSnapDecrease",
+				$"Change rotation snap ({ItemPlacer.RotationSnapDistance})" );
+			yield return new InputData( "Item Placer", "RotationSnap", "ItemPlacerRotationSnapIncrease",
+				$"Change rotation snap ({ItemPlacer.RotationSnapDistance})" );
 		}
 		else if ( player.ItemPlacer.CurrentHoveredItem.IsValid() )
 		{

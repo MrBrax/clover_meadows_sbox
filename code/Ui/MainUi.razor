@@ -1,3 +1,4 @@
+@using System
 @using Clover.Carriable
 @using Clover.Components
 @using Clover.Player
@@ -30,12 +31,44 @@
 		@if ( ShowInputs )
 		{
 			<div class="inputs @( ShouldShowUi ? "active" : "" )">
-				@foreach ( var input in GetCurrentInputs() )
+				@{
+					var group = "";
+					var actionPairsPrinted = new List<string>();
+				}
+				@foreach ( var input in GetCurrentInputs().OrderBy( x => x.Group ).ThenBy( x => x.ActionPair ) )
 				{
-					<div class="input-entry">
-						<Image Texture=@Input.GetGlyph( input.Action, InputGlyphSize.Small, GlyphStyle.Dark )/>
-						<div class="input-name">@input.Name</div>
-					</div>
+					if ( input.Group != group )
+					{
+						group = input.Group;
+						<div class="input-group">@group</div>
+					}
+
+					if ( !string.IsNullOrEmpty( input.ActionPair ) && actionPairsPrinted.Contains( input.ActionPair ) )
+					{
+						continue;
+					}
+
+					if ( !string.IsNullOrEmpty( input.ActionPair ) && !actionPairsPrinted.Contains( input.ActionPair ) )
+					{
+						actionPairsPrinted.Add( input.ActionPair );
+
+						var allPairs = GetCurrentInputs().Where( x => x.ActionPair == input.ActionPair ).ToList();
+
+						<div class="input-entry">
+							@foreach ( var pair in allPairs )
+							{
+								<Image Texture=@Input.GetGlyph( pair.Action, InputGlyphSize.Small, GlyphStyle.Dark )/>
+							}
+							<div class="input-name">@input.Name</div>
+						</div>
+					}
+					else
+					{
+						<div class="input-entry">
+							<Image Texture=@Input.GetGlyph( input.Action, InputGlyphSize.Small, GlyphStyle.Dark )/>
+							<div class="input-name">@input.Name</div>
+						</div>
+					}
 				}
 			</div>
 		}
