@@ -138,7 +138,7 @@ public class PlayerInteract : Component
 			return;
 		}
 
-		if ( Input.Pressed( "move" ) )
+		/*if ( Input.Pressed( "move" ) )
 		{
 			if ( !Player.World.Data.DisableItemPlacement )
 			{
@@ -162,7 +162,7 @@ public class PlayerInteract : Component
 			}
 
 			return;
-		}
+		}*/
 
 
 		GameObject target = null;
@@ -178,7 +178,7 @@ public class PlayerInteract : Component
 		{
 			target = pickupableNodeComponent.GameObject;
 		}
-		
+
 		if ( target != null )
 		{
 			if ( target.Components.TryGet<WorldItem>( out var worldItem ) )
@@ -186,7 +186,6 @@ public class PlayerInteract : Component
 				worldItem.ItemHighlight.Enabled = true;
 			}
 		}
-		
 
 
 		if ( Cursor.IsValid() && Cursor.Enabled )

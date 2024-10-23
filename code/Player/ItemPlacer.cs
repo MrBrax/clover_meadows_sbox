@@ -41,7 +41,7 @@ public class ItemPlacer : Component, IWorldEvent
 
 	protected override void OnStart()
 	{
-		Mouse.Visible = false;
+		Mouse.Visible = true;
 	}
 
 	public void StartMovingPlacedItem( WorldItem selectedGameObject )
@@ -121,7 +121,7 @@ public class ItemPlacer : Component, IWorldEvent
 		DestroyGhost();
 		_selectedItemData = null;
 		_isAdjustingCamera = false;
-		Mouse.Visible = false;
+		// Mouse.Visible = false;
 	}
 
 	public void StopMoving()
@@ -142,7 +142,7 @@ public class ItemPlacer : Component, IWorldEvent
 
 		CurrentPlacedItem = null;
 		_isAdjustingCamera = false;
-		Mouse.Visible = false;
+		// Mouse.Visible = false;
 	}
 
 	public void CreateGhostFromInventory()
@@ -225,7 +225,7 @@ public class ItemPlacer : Component, IWorldEvent
 		DestroyGhost();
 	}
 
-	protected override void OnFixedUpdate()
+	/*protected override void OnFixedUpdate()
 	{
 		if ( IsProxy ) return;
 		if ( !IsPlacing && !IsMoving ) return;
@@ -233,11 +233,11 @@ public class ItemPlacer : Component, IWorldEvent
 		// CheckInput();
 		// UpdateGhostTransform();
 		// UpdateVisuals();
-	}
+	}*/
 
 	private void CheckInput()
 	{
-		if ( Input.Pressed( "attack1" ) )
+		if ( Input.Pressed( "attack1" ) || Input.Released( "attack1" ) )
 		{
 			if ( _isValidPlacement )
 			{
@@ -256,7 +256,7 @@ public class ItemPlacer : Component, IWorldEvent
 				Player.Notify( Notifications.NotificationType.Warning, "Invalid placement" );
 			}
 
-			Input.Clear( "use" );
+			Input.Clear( "attack1" );
 		}
 
 		if ( Input.Pressed( "attack2" ) )
@@ -313,6 +313,62 @@ public class ItemPlacer : Component, IWorldEvent
 		{
 			StopPlacing();
 		}*/
+	}
+
+	private WorldItem _clickedWorldItem;
+	private Vector2 _clickedWorldItemScreenPosition;
+
+	private void CheckStartMove()
+	{
+		var trace = Scene.Trace.Ray( Scene.Camera.ScreenPixelToRay( Mouse.Position ), 1000f )
+			.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )
+			.Run();
+
+		if ( !trace.Hit ) return;
+
+		var worldItem = trace.GameObject.GetComponent<WorldItem>();
+
+		if ( !worldItem.IsValid() ) return;
+
+		if ( !worldItem.CanPickup( Player ) ) return;
+
+		worldItem.ItemHighlight.Enabled = true;
+
+		var tooFarAway = worldItem.WorldPosition.Distance( Player.WorldPosition ) > 200f;
+
+		if ( Input.Pressed( "attack1" ) )
+		{
+			if ( tooFarAway )
+			{
+				Player.Notify( Notifications.NotificationType.Warning, "Too far away" );
+				return;
+			}
+
+			_clickedWorldItem = worldItem;
+			_clickedWorldItemScreenPosition = Mouse.Position;
+		}
+		else if ( Input.Released( "attack1" ) )
+		{
+			_clickedWorldItem = null;
+		}
+
+		if ( Input.Down( "attack1" ) && _clickedWorldItem.IsValid() )
+		{
+			if ( tooFarAway )
+			{
+				Player.Notify( Notifications.NotificationType.Warning, "Too far away" );
+				return;
+			}
+
+			var distance = Mouse.Position.Distance( _clickedWorldItemScreenPosition );
+
+			if ( distance > 10f )
+			{
+				_clickedWorldItem.ItemHighlight.Enabled = false;
+				StartMovingPlacedItem( _clickedWorldItem );
+				_clickedWorldItem = null;
+			}
+		}
 	}
 
 	private void PlaceItem()
@@ -465,7 +521,12 @@ public class ItemPlacer : Component, IWorldEvent
 	protected override void OnUpdate()
 	{
 		if ( IsProxy ) return;
-		if ( !IsPlacing && !IsMoving ) return;
+		if ( !IsPlacing && !IsMoving )
+		{
+			CheckStartMove();
+			return;
+		}
+
 		if ( !Player.IsValid() ) return;
 		if ( !_ghost.IsValid() ) return;
 		if ( !Scene.IsValid() ) return;
