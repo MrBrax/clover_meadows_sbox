@@ -83,7 +83,15 @@ public class InteriorPiece : Component
 				Gizmo.Draw.Text( "HIDE ME", new Transform( WorldPosition ) );
 			}*/
 
-			Tags.Set( "invisiblewall", dot > 0.3f );
+			if ( IsWall )
+			{
+				Tags.Set( "invisiblewall", dot > 0.3f );
+			}
+			else
+			{
+				var renderer = GetComponent<ModelRenderer>( true );
+				renderer.Tint = dot > 0.3f ? Color.White.WithAlpha( 0.02f ) : Color.White;
+			}
 		}
 		else if ( IsDoorway )
 		{

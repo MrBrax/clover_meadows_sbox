@@ -1,0 +1,21 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "shaders/lightness.shader"
+
+	//---- Rendering ----
+	F_DO_NOT_CAST_SHADOWS 1
+	F_RENDER_BACKFACES 1
+
+	g_flDist "0.000"
+	g_flOpacity "1.000"
+	g_vColor "[0.635294 0.615686 0.498039 1.000000]"
+	g_vEmission "[0.823529 0.858824 0.341176 1.000000]"
+
+	//---- Fog ----
+	g_bFogEnabled "0"
+
+	//---- Translucent ----
+	g_flOpacityScale "1.000"
+}
