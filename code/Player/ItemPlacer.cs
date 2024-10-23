@@ -16,7 +16,7 @@ public class ItemPlacer : Component, IWorldEvent
 	private PlayerCharacter Player => GetComponent<PlayerCharacter>();
 
 	[Property] public Model CursorModel { get; set; }
-	
+
 	[Property] public SoundEvent StartPlacingSound { get; set; }
 	[Property] public SoundEvent StopPlacingSound { get; set; }
 	[Property] public SoundEvent RotateSound { get; set; }
@@ -33,6 +33,9 @@ public class ItemPlacer : Component, IWorldEvent
 	private GameObject _ghost;
 	private ItemData _selectedItemData;
 	// private bool _isPlacingFromInventory;
+
+	private bool _isAdjustingCamera;
+	private Vector2 _cameraAdjustmentStart;
 
 	public WorldItem CurrentPlacedItem { get; set; }
 
@@ -60,7 +63,8 @@ public class ItemPlacer : Component, IWorldEvent
 
 		CurrentPlacedItem = selectedGameObject;
 
-		var clone = selectedGameObject.GameObject.Clone( selectedGameObject.WorldPosition, selectedGameObject.WorldRotation );
+		var clone = selectedGameObject.GameObject.Clone( selectedGameObject.WorldPosition,
+			selectedGameObject.WorldRotation );
 		PlaceGhostInternal( clone );
 
 		// TODO: hide worlditem
@@ -68,7 +72,7 @@ public class ItemPlacer : Component, IWorldEvent
 
 		Mouse.Visible = true;
 		Mouse.Position = Scene.Camera.PointToScreenPixels( selectedGameObject.WorldPosition );
-		
+
 		Sound.Play( StartPlacingSound );
 	}
 
@@ -101,7 +105,7 @@ public class ItemPlacer : Component, IWorldEvent
 		IsPlacing = true;
 		CreateGhostFromInventory();
 		Mouse.Visible = true;
-		
+
 		Sound.Play( StartPlacingSound );
 	}
 
@@ -111,10 +115,12 @@ public class ItemPlacer : Component, IWorldEvent
 		{
 			Sound.Play( StopPlacingSound );
 		}
+
 		IsMoving = false;
 		IsPlacing = false;
 		DestroyGhost();
 		_selectedItemData = null;
+		_isAdjustingCamera = false;
 		Mouse.Visible = false;
 	}
 
@@ -124,7 +130,7 @@ public class ItemPlacer : Component, IWorldEvent
 		{
 			Sound.Play( StopPlacingSound );
 		}
-		
+
 		IsMoving = false;
 		IsPlacing = false;
 		DestroyGhost();
@@ -135,6 +141,7 @@ public class ItemPlacer : Component, IWorldEvent
 		}
 
 		CurrentPlacedItem = null;
+		_isAdjustingCamera = false;
 		Mouse.Visible = false;
 	}
 
@@ -277,6 +284,31 @@ public class ItemPlacer : Component, IWorldEvent
 			Sound.Play( RotateSound );
 		}
 
+		if ( Input.Pressed( "CameraAdjust" ) )
+		{
+			_isAdjustingCamera = true;
+			_cameraAdjustmentStart = Mouse.Position;
+		}
+
+		if ( Input.Released( "CameraAdjust" ) )
+		{
+			_isAdjustingCamera = false;
+		}
+
+		if ( _isAdjustingCamera )
+		{
+			if ( Mouse.Position.x > _cameraAdjustmentStart.x + 30f )
+			{
+				Player.CameraController.RotateCamera( Rotation.FromYaw( -CameraController.CameraRotateSnapDistance ) );
+				_cameraAdjustmentStart = Mouse.Position;
+			}
+			else if ( Mouse.Position.x < _cameraAdjustmentStart.x - 30f )
+			{
+				Player.CameraController.RotateCamera( Rotation.FromYaw( CameraController.CameraRotateSnapDistance ) );
+				_cameraAdjustmentStart = Mouse.Position;
+			}
+		}
+
 		/*else if ( Input.Pressed( "cancel" ) )
 		{
 			StopPlacing();
@@ -352,7 +384,7 @@ public class ItemPlacer : Component, IWorldEvent
 	}
 
 	private bool _isValidPlacement;
-	
+
 	private Vector3 _colliderSize;
 	private Vector3 _colliderCenter;
 
@@ -437,7 +469,7 @@ public class ItemPlacer : Component, IWorldEvent
 		if ( !Player.IsValid() ) return;
 		if ( !_ghost.IsValid() ) return;
 		if ( !Scene.IsValid() ) return;
-		
+
 		/*if ( IsPlacing && ShowGrid )
 		{
 			// TODO: re-add grid when it can be positioned relative to the player
@@ -445,13 +477,13 @@ public class ItemPlacer : Component, IWorldEvent
 			// Gizmo.Draw.Grid( Gizmo.GridAxis.XY, new Vector2( 32f, 32f ) );
 		}
 		*/
-		
+
 		CheckInput();
 		UpdateGhostTransform();
 		UpdateVisuals();
-		
+
 		if ( !_ghost.IsValid() ) return;
-		
+
 		var trace = Scene.Trace.Ray( _ghost.WorldPosition, _ghost.WorldPosition + Vector3.Down * 300f )
 			.WithoutTags( "player", "invisiblewall", "doorway", "stairs", "room_invisible" )
 			.Run();
@@ -461,9 +493,8 @@ public class ItemPlacer : Component, IWorldEvent
 			var endPos = trace.EndPosition;
 			Gizmo.Draw.Arrow( _ghost.WorldPosition, endPos );
 		}
-		
+
 		Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( _colliderCenter, _colliderSize )
 			.Rotate( _ghost.WorldRotation ).Translate( _ghost.WorldPosition ) );
-
 	}
 }

@@ -122,6 +122,8 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 			yield return new InputData( "RotateCounterClockwise", "Rotate Counter Clockwise" );
 
 			yield return new InputData( "Snap", "Snap" );
+			
+			yield return new InputData( "CameraAdjust", "Adjust Camera" );
 		}
 
 		if ( ShowInputsObvious )

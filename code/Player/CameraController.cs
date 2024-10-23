@@ -97,7 +97,7 @@ public sealed class CameraController : Component, IWorldEvent
 			SkyCameraNode.Priority = 10;
 		}
 
-		if ( (CameraMan.Instance?.MainCameraNode.HasPivotRotation ?? false) && Player.World.Data.CanRotateCamera )
+		/*if ( (CameraMan.Instance?.MainCameraNode.HasPivotRotation ?? false) && Player.World.Data.CanRotateCamera )
 		{
 			if ( Input.Pressed( "CameraLeft" ) )
 			{
@@ -107,6 +107,27 @@ public sealed class CameraController : Component, IWorldEvent
 			{
 				CameraMan.Instance.MainCameraNode.RotatePivot( Rotation.FromYaw( -30 ) );
 			}
+		}*/
+		
+		if ( Input.Pressed( "CameraLeft" ) )
+		{
+			RotateCamera( Rotation.FromYaw( CameraRotateSnapDistance ) );
+		}
+		else if ( Input.Pressed( "CameraRight" ) )
+		{
+			RotateCamera( Rotation.FromYaw( -CameraRotateSnapDistance ) );
+		}
+	}
+	
+	public void RotateCamera( Rotation rotation )
+	{
+		if ( (CameraMan.Instance?.MainCameraNode.HasPivotRotation ?? false) && Player.World.Data.CanRotateCamera )
+		{
+			CameraMan.Instance.MainCameraNode.RotatePivot( rotation );
+		}
+		else
+		{
+			Log.Warning( "Cannot rotate camera" );
 		}
 	}
 
@@ -122,4 +143,7 @@ public sealed class CameraController : Component, IWorldEvent
 			CameraPivot.WorldRotation = Rotation.Identity;
 		}
 	}
+	
+	[ConVar("clover_camera_rotate_snap_distance", Saved = true)]
+	public static float CameraRotateSnapDistance { get; set; } = 30;
 }
