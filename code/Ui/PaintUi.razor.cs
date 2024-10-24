@@ -16,6 +16,18 @@ public partial class PaintUi
 		public string ResourcePath;
 	}
 
+	public enum PaintTool
+	{
+		Pencil,
+		Eraser,
+
+		// Line,
+		Fill,
+		Spray
+	}
+
+	private PaintTool CurrentTool = PaintTool.Pencil;
+
 	private List<DecalEntry> Decals = new();
 
 	private Texture DrawTexture;
@@ -217,8 +229,24 @@ public partial class PaintUi
 
 		var brushPosition = new Vector2( mousePosition.x - brushSizeOffset, mousePosition.y - brushSizeOffset );
 
-		var texturePixelScreenSize = CanvasSize / TextureSize;
+		DrawCrosshair( brushPosition );
 
+		if ( _isDrawing )
+		{
+			if ( CurrentTool == PaintTool.Pencil )
+			{
+				Draw( brushPosition );
+			}
+			else if ( CurrentTool == PaintTool.Fill )
+			{
+				Fill( brushPosition );
+			}
+		}
+	}
+
+	private void DrawCrosshair( Vector2 brushPosition )
+	{
+		var texturePixelScreenSize = CanvasSize / TextureSize;
 
 		var crosshairX = Canvas.Box.Left * Panel.ScaleFromScreen;
 		crosshairX += texturePixelScreenSize * brushPosition.x;
@@ -234,12 +262,6 @@ public partial class PaintUi
 		Crosshair.Style.Top = Length.Pixels( crosshairY );
 		Crosshair.Style.Width = crosshairSize;
 		Crosshair.Style.Height = crosshairSize;
-
-		if ( _isDrawing )
-		{
-			// DrawTexture.Update( GetCurrentColor(), (int)mousePosition.x, (int)mousePosition.y );
-			Draw( brushPosition );
-		}
 	}
 
 	private Vector2? _lastBrushPosition;
@@ -251,7 +273,6 @@ public partial class PaintUi
 
 		PushRectToByteData( rect );
 
-
 		// Draw line between last and current position
 		if ( _lastBrushPosition.HasValue && _lastBrushPosition.Value != brushPosition )
 		{
@@ -259,6 +280,40 @@ public partial class PaintUi
 		}
 
 		_lastBrushPosition = brushPosition;
+	}
+
+	private void Fill( Vector2 brushPosition )
+	{
+		var targetColor = DrawTextureData[(int)brushPosition.x + (int)brushPosition.y * DrawTexture.Width];
+		var replacementColor = (byte)CurrentPaletteIndex;
+
+		if ( targetColor == replacementColor )
+		{
+			return;
+		}
+
+		FloodFill( (int)brushPosition.x, (int)brushPosition.y, targetColor, replacementColor );
+	}
+
+	private void FloodFill( int positionX, int positionY, byte targetColor, byte replacementColor )
+	{
+		if ( positionX < 0 || positionX >= DrawTexture.Width || positionY < 0 || positionY >= DrawTexture.Height )
+		{
+			return;
+		}
+
+		if ( DrawTextureData[positionX + positionY * DrawTexture.Width] != targetColor )
+		{
+			return;
+		}
+
+		DrawTextureData[positionX + positionY * DrawTexture.Width] = replacementColor;
+		DrawTexture.Update( GetCurrentColor(), new Rect( positionX, positionY, BrushSize, BrushSize ) );
+
+		FloodFill( positionX + 1, positionY, targetColor, replacementColor );
+		FloodFill( positionX - 1, positionY, targetColor, replacementColor );
+		FloodFill( positionX, positionY + 1, targetColor, replacementColor );
+		FloodFill( positionX, positionY - 1, targetColor, replacementColor );
 	}
 
 	private void PushByteDataToTexture()

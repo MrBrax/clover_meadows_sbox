@@ -16,6 +16,18 @@
 				<div class="menu">
 					<section>
 						<h2>Tools</h2>
+						<button @onclick=@( () => CurrentTool = PaintTool.Pencil ) class="paint-button @( CurrentTool == PaintTool.Pencil ? "active" : "" )">
+							✏️
+						</button>
+						@*<button @onclick=@( () => CurrentTool = PaintTool.Eraser ) class="paint-button @( CurrentTool == PaintTool.Eraser ? "active" : "" )">
+							🧽
+						</button>*@
+						<button @onclick=@( () => CurrentTool = PaintTool.Fill ) class="paint-button @( CurrentTool == PaintTool.Fill ? "active" : "" )">
+							🖌️
+						</button>
+						<button @onclick=@( () => CurrentTool = PaintTool.Fill ) class="paint-button @( CurrentTool == PaintTool.Spray ? "active" : "" )">
+							Spray
+						</button>
 						<button class="paint-button" @onclick=@( () => ZoomIn() )>
 							🔎+
 						</button>

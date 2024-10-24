@@ -39,6 +39,11 @@ public class Decals
 	{
 		var paletteTexture = Texture.Load( FileSystem.Mounted, $"materials/palettes/{name}.png" );
 		var palette = paletteTexture.GetPixels();
+
+		// swap out last color for transparent
+		// TODO: do this in palettes
+		palette[255] = new Color32( 0, 0, 0, 0 );
+
 		return palette;
 	}
 
