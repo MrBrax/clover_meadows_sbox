@@ -241,6 +241,10 @@ public partial class PaintUi
 			{
 				Fill( brushPosition );
 			}
+			else if ( CurrentTool == PaintTool.Spray )
+			{
+				Spray( brushPosition );
+			}
 		}
 	}
 
@@ -314,6 +318,29 @@ public partial class PaintUi
 		FloodFill( positionX - 1, positionY, targetColor, replacementColor );
 		FloodFill( positionX, positionY + 1, targetColor, replacementColor );
 		FloodFill( positionX, positionY - 1, targetColor, replacementColor );
+	}
+
+
+	private void Spray( Vector2 brushPosition )
+	{
+		var random = new Random();
+		var radius = BrushSize * 5;
+		var density = 10;
+
+		for ( var i = 0; i < density; i++ )
+		{
+			var x = random.Next( (int)brushPosition.x - radius, (int)brushPosition.x + radius );
+			var y = random.Next( (int)brushPosition.y - radius, (int)brushPosition.y + radius );
+
+			if ( x < 0 || x >= DrawTexture.Width || y < 0 || y >= DrawTexture.Height )
+			{
+				continue;
+			}
+
+			var rect = new Rect( x, y, BrushSize, BrushSize );
+			DrawTexture.Update( GetCurrentColor(), rect );
+			PushRectToByteData( rect );
+		}
 	}
 
 	private void PushByteDataToTexture()

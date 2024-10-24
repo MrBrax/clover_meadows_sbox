@@ -25,7 +25,7 @@
 						<button @onclick=@( () => CurrentTool = PaintTool.Fill ) class="paint-button @( CurrentTool == PaintTool.Fill ? "active" : "" )">
 							🖌️
 						</button>
-						<button @onclick=@( () => CurrentTool = PaintTool.Fill ) class="paint-button @( CurrentTool == PaintTool.Spray ? "active" : "" )">
+						<button @onclick=@( () => CurrentTool = PaintTool.Spray ) class="paint-button @( CurrentTool == PaintTool.Spray ? "active" : "" )">
 							Spray
 						</button>
 						<button class="paint-button" @onclick=@( () => ZoomIn() )>
