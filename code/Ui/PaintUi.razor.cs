@@ -57,6 +57,9 @@ public partial class PaintUi
 
 	private int BrushSize = 1;
 
+	private Stack<byte[]> UndoStack = new(30);
+	private Stack<byte[]> RedoStack = new(30);
+
 	private Color32 ForegroundColor => Palette.ElementAtOrDefault( LeftPaletteIndex );
 	private Color32 BackgroundColor => Palette.ElementAtOrDefault( RightPaletteIndex );
 
@@ -73,6 +76,8 @@ public partial class PaintUi
 
 		InitialiseTexture();
 
+		ResetPaint();
+
 		Panel.ButtonInput = PanelInputType.UI;
 
 		Enabled = false;
@@ -80,11 +85,29 @@ public partial class PaintUi
 		PopulateDecals();
 	}
 
+	private void ResetPaint()
+	{
+		CurrentTool = PaintTool.Pencil;
+		CurrentPaletteIndex = 0;
+		LeftPaletteIndex = 0;
+		RightPaletteIndex = 1;
+		CurrentFileName = "";
+		CurrentName = "";
+		BrushSize = 1;
+		CanvasSize = 512;
+		RedoStack.Clear();
+		UndoStack.Clear();
+		UpdateCanvas();
+		Clear();
+	}
+
 	private void InitialiseTexture()
 	{
 		DrawTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
 		DrawTextureData = new byte[TextureSize * TextureSize];
 		Clear();
+
+		UndoStack = new();
 
 		// draw line grid with guide lines
 		GridTexture = Texture.Create( 1024, 1024 ).Finish();
@@ -185,6 +208,11 @@ public partial class PaintUi
 
 	private Vector2 GetCurrentMousePixel()
 	{
+		if ( !Canvas.IsValid() )
+		{
+			return Vector2.Zero;
+		}
+
 		var mousePosition = Mouse.Position;
 		var canvasPosition = Canvas.Box.Rect.Position;
 		var canvasSize = Canvas.Box.Rect.Size;
@@ -216,6 +244,17 @@ public partial class PaintUi
 			CanvasSize += (int)(Input.MouseWheel.x * 10);
 			Canvas.Style.Width = CanvasSize;
 			Canvas.Style.Height = CanvasSize;
+		}
+
+		if ( Input.Released( "PaintUndo" ) )
+		{
+			Undo();
+			return;
+		}
+		else if ( Input.Released( "PaintRedo" ) )
+		{
+			Redo();
+			return;
 		}
 
 		/*if ( !IsMouseInsideCanvas() )
@@ -378,7 +417,14 @@ public partial class PaintUi
 			for ( var y = (int)rect.Top; y < rect.Top + rect.Height; y++ )
 			{
 				var index = x + y * DrawTexture.Width;
-				DrawTextureData[index] = (byte)CurrentPaletteIndex;
+				if ( index < DrawTextureData.Length )
+				{
+					DrawTextureData[index] = (byte)CurrentPaletteIndex;
+				}
+				else
+				{
+					Log.Warning( $"Index {index} out of range" );
+				}
 			}
 		}
 	}
@@ -431,6 +477,8 @@ public partial class PaintUi
 
 	private void OnCanvasMouseDown( PanelEvent e )
 	{
+		PushUndo();
+
 		if ( e is MousePanelEvent ev )
 		{
 			if ( ev.MouseButton == MouseButtons.Left )
@@ -449,6 +497,10 @@ public partial class PaintUi
 			}
 		}
 
+		Log.Info( "MouseDown" );
+
+		RedoStack.Clear();
+
 		e.StopPropagation();
 	}
 
@@ -457,6 +509,7 @@ public partial class PaintUi
 		Log.Info( "MouseUp" );
 		_isDrawing = false;
 		_lastBrushPosition = null;
+		// PushUndo();
 	}
 
 	private void Save()
@@ -555,6 +608,8 @@ public partial class PaintUi
 			.ToArray();
 
 		_lastBrushPosition = null;
+
+		PushUndo();
 	}
 
 	private void ZoomIn()
@@ -602,6 +657,46 @@ public partial class PaintUi
 		Canvas.Style.Height = CanvasSize;
 		// Grid.Style.Width = CanvasSize;
 		// Grid.Style.Height = CanvasSize;
+	}
+
+	private void Undo()
+	{
+		if ( UndoStack.Count == 0 )
+		{
+			Log.Info( "Nothing to undo" );
+			return;
+		}
+
+		PushRedo();
+
+		DrawTextureData = UndoStack.Pop();
+		PushByteDataToTexture();
+	}
+
+	private void Redo()
+	{
+		if ( RedoStack.Count == 0 )
+		{
+			Log.Info( "Nothing to redo" );
+			return;
+		}
+
+		DrawTextureData = RedoStack.Pop();
+		PushByteDataToTexture();
+	}
+
+	private void PushUndo()
+	{
+		UndoStack.Push( DrawTextureData.ToArray() );
+		Log.Info( $"Undo stack size: {UndoStack.Count}" );
+		UndoStack.TrimExcess();
+	}
+
+	private void PushRedo()
+	{
+		RedoStack.Push( DrawTextureData.ToArray() );
+		Log.Info( $"Redo stack size: {RedoStack.Count}" );
+		RedoStack.TrimExcess();
 	}
 }
 

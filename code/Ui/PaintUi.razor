@@ -16,32 +16,57 @@
 				<div class="menu">
 					<section>
 						<h2>Tools</h2>
-						<button @onclick=@( () => CurrentTool = PaintTool.Pencil ) class="paint-button @( CurrentTool == PaintTool.Pencil ? "active" : "" )">
-							✏️
-						</button>
-						@*<button @onclick=@( () => CurrentTool = PaintTool.Eraser ) class="paint-button @( CurrentTool == PaintTool.Eraser ? "active" : "" )">
-							🧽
-						</button>*@
-						<button @onclick=@( () => CurrentTool = PaintTool.Fill ) class="paint-button @( CurrentTool == PaintTool.Fill ? "active" : "" )">
-							🖌️
-						</button>
-						<button @onclick=@( () => CurrentTool = PaintTool.Spray ) class="paint-button @( CurrentTool == PaintTool.Spray ? "active" : "" )">
-							Spray
-						</button>
-						<button class="paint-button" @onclick=@( () => ZoomIn() )>
-							🔎+
-						</button>
-						<button class="paint-button" @onclick=@( () => ZoomOut() )>
-							🔎-
-						</button>
+						<div class="tools">
+							<button @onclick=@( () => CurrentTool = PaintTool.Pencil ) class="paint-button @( CurrentTool == PaintTool.Pencil ? "active" : "" )">
+								<img src="ui/icons/paint/brush-solid-24.png"/>
+							</button>
+							@*<button @onclick=@( () => CurrentTool = PaintTool.Eraser ) class="paint-button @( CurrentTool == PaintTool.Eraser ? "active" : "" )">
+								🧽
+							</button>*@
+							<button @onclick=@( () => CurrentTool = PaintTool.Fill ) class="paint-button @( CurrentTool == PaintTool.Fill ? "active" : "" )">
+								<img src="ui/icons/paint/color-fill-solid-24.png"/>
+							</button>
+							<button @onclick=@( () => CurrentTool = PaintTool.Spray ) class="paint-button @( CurrentTool == PaintTool.Spray ? "active" : "" )">
+								<img src="ui/icons/paint/spray-can-solid-24.png"/>
+							</button>
+						</div>
 
-						<button class="paint-button" @onclick=@( () => IncreaseBrushSize() )>
-							✏️+
-						</button>
-						<button class="paint-button" @onclick=@( () => DecreaseBrushSize() )>
-							✏️-
-						</button>
+						<div class="button-pair">
+							<button class="paint-button" @onclick=@( () => ZoomIn() )>
+								<img src="ui/icons/paint/zoom-in-solid-24.png"/>
+							</button>
+							<button class="paint-button" @onclick=@( () => ZoomOut() )>
+								<img src="ui/icons/paint/zoom-out-solid-24.png"/>
+							</button>
+						</div>
+
+						<div class="button-pair">
+							<button class="paint-button" @onclick=@( () => Undo() )>
+								<img src="ui/icons/paint/undo-regular-24.png"/>
+							</button>
+
+							<button class="paint-button" @onclick=@( () => Redo() )>
+								<img src="ui/icons/paint/redo-regular-24.png"/>
+							</button>
+						</div>
+
 					</section>
+
+					@if ( CurrentTool == PaintTool.Pencil || CurrentTool == PaintTool.Spray )
+					{
+						<section>
+							<h2>Tool size</h2>
+							<div class="button-pair">
+								<button class="paint-button" @onclick=@( () => DecreaseBrushSize() )>
+									️-
+								</button>
+								<button class="paint-button" @onclick=@( () => IncreaseBrushSize() )>
+									+
+								</button>
+							</div>
+							<div>@( $"Brush Size: {BrushSize}" )</div>
+						</section>
+					}
 
 					<section>
 						<h2>Palettes</h2>
@@ -53,10 +78,10 @@
 						}
 					</section>
 
-					<section>
+					@*<section>
 						<h2>Stats</h2>
-						<div>@( $"Brush Size: {BrushSize}" )</div>
-					</section>
+						
+					</section>*@
 				</div>
 				<div class="main">
 					<div @ref=" CanvasContainer" class="canvas">
@@ -82,7 +107,7 @@
 							<TextEntry class="paint-input" Value:bind="@CurrentName" placeholder="Name"/>
 
 							<button class="paint-button" @onclick=@( () => Save() )>Save</button>
-							<button class="paint-button" @onclick=@( () => InitialiseTexture() )>Clear</button>
+							<button class="paint-button" @onclick=@( () => ResetPaint() )>Reset</button>
 						</div>
 					</div>
 				</div>

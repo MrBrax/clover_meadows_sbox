@@ -12,6 +12,9 @@ PaintUi {
         bottom: 40px;*/
         // box-shadow: 0 0 80px black;
 
+        font-family: Itim;
+        font-size: 20px;
+
         background-color: silver;
         gap: 10px;
         padding: 5px;
@@ -124,7 +127,7 @@ PaintUi {
     }
 
     .menu {
-        min-width: 100px;
+        width: 200px;
         flex-direction: column;
         gap: 15px;
 
@@ -135,6 +138,39 @@ PaintUi {
             h2 {
                 font-family: Itim;
                 font-size: 25px;
+                background-image: linear-gradient(to right, navy, #1084d0);
+                color: white;
+                padding: 2px 10px;
+            }
+
+            .tools {
+                flex-wrap: wrap;
+                gap: 5px;
+
+                .paint-button {
+                    aspect-ratio: 1;
+                    width: 68px;
+
+                    Image {
+                        image-rendering: trilinear;
+                    }
+                }
+            }
+
+            .button-pair {
+                gap: 5px;
+
+                .paint-button {
+                    flex-grow: 1;
+                }
+            }
+
+            .value-slider {
+                gap: 5px;
+
+                .paint-button {
+                    flex-grow: 1;
+                }
             }
 
         }
