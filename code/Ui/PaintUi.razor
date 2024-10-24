@@ -29,6 +29,9 @@
 							<button @onclick=@( () => CurrentTool = PaintTool.Eraser ) class="paint-button @( CurrentTool == PaintTool.Eraser ? "active" : "" )">
 								<img src="ui/icons/paint/eraser-solid-24.png"/>
 							</button>
+							<button @onclick=@( () => CurrentTool = PaintTool.Eyedropper ) class="paint-button @( CurrentTool == PaintTool.Eyedropper ? "active" : "" )">
+								<img src="ui/icons/paint/eyedropper-solid-24.png"/>
+							</button>
 						</div>
 
 						<div class="button-pair">

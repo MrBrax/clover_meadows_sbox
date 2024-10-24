@@ -97,4 +97,24 @@ public partial class PaintUi
 			}
 		}
 	}
+
+	private void Eraser( Vector2 brushPosition )
+	{
+		DrawTexture.Update( BackgroundColor,
+			new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
+		PushRectToByteData( new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
+	}
+
+	private void Eyedropper( Vector2 brushPosition, MouseButtons mouseButton )
+	{
+		var index = DrawTextureData[(int)brushPosition.x + (int)brushPosition.y * DrawTexture.Width];
+		if ( mouseButton == MouseButtons.Left )
+		{
+			LeftPaletteIndex = index;
+		}
+		else if ( mouseButton == MouseButtons.Right )
+		{
+			RightPaletteIndex = index;
+		}
+	}
 }

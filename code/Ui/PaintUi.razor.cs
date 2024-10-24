@@ -23,7 +23,8 @@ public partial class PaintUi
 
 		// Line,
 		Fill,
-		Spray
+		Spray,
+		Eyedropper
 	}
 
 	private PaintTool CurrentTool = PaintTool.Pencil;
@@ -57,9 +58,6 @@ public partial class PaintUi
 	private int CanvasSize = 512;
 
 	private int BrushSize = 1;
-
-	private Stack<byte[]> UndoStack = new(30);
-	private Stack<byte[]> RedoStack = new(30);
 
 	private Color32 ForegroundColor => Palette.ElementAtOrDefault( LeftPaletteIndex );
 	private Color32 BackgroundColor => Palette.ElementAtOrDefault( RightPaletteIndex );
@@ -297,6 +295,26 @@ public partial class PaintUi
 			Redo();
 			return;
 		}
+		else if ( Input.Released( "PaintPencil" ) )
+		{
+			CurrentTool = PaintTool.Pencil;
+		}
+		/*else if ( Input.Released( "PaintEraser" ) )
+		{
+			CurrentTool = PaintTool.Eraser;
+		}
+		else if ( Input.Released( "PaintFill" ) )
+		{
+			CurrentTool = PaintTool.Fill;
+		}
+		else if ( Input.Released( "PaintSpray" ) )
+		{
+			CurrentTool = PaintTool.Spray;
+		}*/
+		else if ( Input.Released( "PaintEyedropper" ) )
+		{
+			CurrentTool = PaintTool.Eyedropper;
+		}
 
 		/*if ( !IsMouseInsideCanvas() )
 		{
@@ -327,9 +345,7 @@ public partial class PaintUi
 			}
 			else if ( CurrentTool == PaintTool.Eraser )
 			{
-				DrawTexture.Update( BackgroundColor,
-					new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
-				PushRectToByteData( new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
+				Eraser( brushPosition );
 			}
 		}
 	}
@@ -445,19 +461,27 @@ public partial class PaintUi
 			{
 				CurrentPaletteIndex = LeftPaletteIndex;
 				_isDrawing = true;
+
+				if ( CurrentTool == PaintTool.Eyedropper )
+				{
+					Eyedropper( GetCurrentMousePixel(), ev.MouseButton );
+				}
 			}
 			else if ( ev.MouseButton == MouseButtons.Right )
 			{
 				CurrentPaletteIndex = RightPaletteIndex;
 				_isDrawing = true;
+
+				if ( CurrentTool == PaintTool.Eyedropper )
+				{
+					Eyedropper( GetCurrentMousePixel(), ev.MouseButton );
+				}
 			}
 			else
 			{
 				Log.Info( "Unknown mouse button" );
 			}
 		}
-
-		Log.Info( "MouseDown" );
 
 		RedoStack.Clear();
 
@@ -486,9 +510,6 @@ public partial class PaintUi
 			return;
 		}
 
-		var data = new byte[64 + (32 * 32)];
-
-		// var stream = new MemoryStream( data );
 		var stream = FileSystem.Data.OpenWrite( $"decals/{CurrentFileName}.decal" );
 		var writer = new BinaryWriter( stream, Encoding.UTF8 );
 
@@ -496,38 +517,17 @@ public partial class PaintUi
 		writer.Write( 'L' );
 		writer.Write( 'P' );
 		writer.Write( 'T' );
-		// writer.Write( 0 );
 
 		writer.Write( (int)2 ); // version
 
 		writer.Write( DrawTexture.Width ); // width
 		writer.Write( DrawTexture.Height ); // height
 
-		// writer.Write( 0 );
-
 		writer.Write( CurrentName ); // name, 16 chars
-
-		// writer.Write( 0 );
 
 		writer.Write( Game.SteamId ); // author
 
 		writer.Write( PaletteName ); // palette name
-
-		// writer.Seek( 64, SeekOrigin.Begin );
-
-		/*var texturePixels = DrawTexture.GetPixels();
-
-		for ( var i = 0; i < (32 * 32); i++ )
-		{
-			var paletteColor = GetClosestPaletteColor( texturePixels[i] );
-			if ( paletteColor == -1 )
-			{
-				Log.Error( $"Color {texturePixels[i]} not found in palette" );
-				paletteColor = 0;
-			}
-
-			writer.Write( (byte)paletteColor );
-		}*/
 
 		writer.Write( DrawTextureData );
 
@@ -599,44 +599,10 @@ public partial class PaintUi
 		// Grid.Style.Height = CanvasSize;
 	}
 
-	private void Undo()
+
+	protected override int BuildHash()
 	{
-		if ( UndoStack.Count == 0 )
-		{
-			Log.Info( "Nothing to undo" );
-			return;
-		}
-
-		PushRedo();
-
-		DrawTextureData = UndoStack.Pop();
-		PushByteDataToTexture();
-	}
-
-	private void Redo()
-	{
-		if ( RedoStack.Count == 0 )
-		{
-			Log.Info( "Nothing to redo" );
-			return;
-		}
-
-		DrawTextureData = RedoStack.Pop();
-		PushByteDataToTexture();
-	}
-
-	private void PushUndo()
-	{
-		UndoStack.Push( DrawTextureData.ToArray() );
-		Log.Info( $"Undo stack size: {UndoStack.Count}" );
-		UndoStack.TrimExcess();
-	}
-
-	private void PushRedo()
-	{
-		RedoStack.Push( DrawTextureData.ToArray() );
-		Log.Info( $"Redo stack size: {RedoStack.Count}" );
-		RedoStack.TrimExcess();
+		return HashCode.Combine( CurrentTool );
 	}
 }
 
