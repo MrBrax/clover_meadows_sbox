@@ -27,6 +27,8 @@ public partial class PaintUi
 		Eyedropper,
 
 		Line,
+		Rectangle,
+		Circle
 	}
 
 	private PaintTool CurrentTool = PaintTool.Pencil;
@@ -61,7 +63,25 @@ public partial class PaintUi
 
 	private int CanvasSize = 512;
 
-	private int BrushSize = 1;
+	// private int BrushSize = 1;
+
+	private Dictionary<PaintTool, int> BrushSizes = new()
+	{
+		{ PaintTool.Pencil, 1 },
+		{ PaintTool.Eraser, 1 },
+		{ PaintTool.Fill, 1 },
+		{ PaintTool.Spray, 1 },
+		{ PaintTool.Eyedropper, 1 },
+		{ PaintTool.Line, 1 },
+		{ PaintTool.Rectangle, 1 },
+		{ PaintTool.Circle, 1 }
+	};
+
+	private int BrushSize
+	{
+		get => BrushSizes[CurrentTool];
+		set => BrushSizes[CurrentTool] = value;
+	}
 
 	private Color32 ForegroundColor => Palette.ElementAtOrDefault( LeftPaletteIndex );
 	private Color32 BackgroundColor => Palette.ElementAtOrDefault( RightPaletteIndex );
@@ -397,11 +417,22 @@ public partial class PaintUi
 		Crosshair.Style.Height = crosshairSize;
 	}
 
+	private void PushRectToBoth( Rect rect )
+	{
+		PushRectToByteData( rect );
+		PushRectToTexture( rect );
+	}
+
 	private void PushByteDataToTexture()
 	{
 		DrawTexture.Update( Utilities.Decals.ByteArrayToColor32( DrawTextureData, Palette.ToArray() ), 0, 0,
 			DrawTexture.Width,
 			DrawTexture.Height );
+	}
+
+	private void PushRectToTexture( Rect rect )
+	{
+		DrawTexture.Update( GetCurrentColor(), rect );
 	}
 
 	private void PushRectToByteData( Rect rect )
@@ -446,8 +477,9 @@ public partial class PaintUi
 		while ( true )
 		{
 			var rect = new Rect( x0, y0, BrushSize, BrushSize );
-			DrawTexture.Update( GetCurrentColor(), rect );
-			PushRectToByteData( rect );
+			// DrawTexture.Update( GetCurrentColor(), rect );
+			// PushRectToByteData( rect );
+			PushRectToBoth( rect );
 
 			if ( x0 == x1 && y0 == y1 )
 			{
@@ -569,6 +601,14 @@ public partial class PaintUi
 			if ( CurrentTool == PaintTool.Line )
 			{
 				DrawLineBetween( _mouseDownPosition.Value, _mouseUpPosition.Value );
+			}
+			else if ( CurrentTool == PaintTool.Rectangle )
+			{
+				DrawRectangle( _mouseDownPosition.Value, _mouseUpPosition.Value );
+			}
+			else if ( CurrentTool == PaintTool.Circle )
+			{
+				DrawCircle( DrawTexture, _mouseDownPosition.Value, _mouseUpPosition.Value );
 			}
 		}
 

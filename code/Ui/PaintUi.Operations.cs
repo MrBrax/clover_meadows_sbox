@@ -9,9 +9,10 @@ public partial class PaintUi
 	private void Draw( Vector2 brushPosition )
 	{
 		var rect = new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize );
-		DrawTexture.Update( GetCurrentColor(), rect );
+		// DrawTexture.Update( GetCurrentColor(), rect );
 
-		PushRectToByteData( rect );
+		// PushRectToByteData( rect );
+		PushRectToBoth( rect );
 
 		// Draw line between last and current position
 		if ( _lastBrushPosition.HasValue && _lastBrushPosition.Value != brushPosition )
@@ -47,8 +48,9 @@ public partial class PaintUi
 			return;
 		}
 
-		DrawTextureData[positionX + positionY * DrawTexture.Width] = replacementColor;
-		DrawTexture.Update( GetCurrentColor(), new Rect( positionX, positionY, 1, 1 ) );
+		// DrawTextureData[positionX + positionY * DrawTexture.Width] = replacementColor;
+		// DrawTexture.Update( GetCurrentColor(), new Rect( positionX, positionY, 1, 1 ) );
+		PushRectToBoth( new Rect( positionX, positionY, 1, 1 ) );
 
 		FloodFill( positionX + 1, positionY, targetColor, replacementColor );
 		FloodFill( positionX - 1, positionY, targetColor, replacementColor );
@@ -91,8 +93,9 @@ public partial class PaintUi
 				if ( x >= 0 && x < DrawTexture.Width && y >= 0 && y < DrawTexture.Height )
 				{
 					var rect = new Rect( x, y, 1, 1 );
-					DrawTexture.Update( GetCurrentColor(), rect );
-					PushRectToByteData( rect );
+					// DrawTexture.Update( GetCurrentColor(), rect );
+					// PushRectToByteData( rect );
+					PushRectToBoth( rect );
 				}
 			}
 		}
@@ -100,9 +103,10 @@ public partial class PaintUi
 
 	private void Eraser( Vector2 brushPosition )
 	{
-		DrawTexture.Update( BackgroundColor,
-			new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
-		PushRectToByteData( new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
+		// DrawTexture.Update( BackgroundColor,
+		// 	new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
+		// PushRectToByteData( new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
+		PushRectToBoth( new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
 	}
 
 	private void Eyedropper( Vector2 brushPosition, MouseButtons mouseButton )
@@ -128,5 +132,18 @@ public partial class PaintUi
 		}
 
 		DrawLineBetweenTex( PreviewTexture, Color32.Black, _mouseDownPosition.Value, brushPosition );
+	}
+
+	// draw outline of rectangle
+	private void DrawRectangle( Vector2 mouseDownPosition, Vector2 mouseUpPosition )
+	{
+		var x = Math.Min( mouseDownPosition.x, mouseUpPosition.x );
+		var y = Math.Min( mouseDownPosition.y, mouseUpPosition.y );
+		var width = Math.Abs( mouseDownPosition.x - mouseUpPosition.x );
+		var height = Math.Abs( mouseDownPosition.y - mouseUpPosition.y );
+	}
+
+	private void DrawCircle( Texture tex, Vector2 mouseDownPosition, Vector2 mouseUpPosition )
+	{
 	}
 }

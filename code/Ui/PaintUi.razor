@@ -33,7 +33,13 @@
 								<img src="ui/icons/paint/eyedropper-solid-24.png"/>
 							</button>
 							<button @onclick=@( () => CurrentTool = PaintTool.Line ) class="paint-button @( CurrentTool == PaintTool.Line ? "active" : "" )">
-								L
+								<img src="ui/icons/paint/minus-regular-24.png"/>
+							</button>
+							<button @onclick=@( () => CurrentTool = PaintTool.Rectangle ) class="paint-button @( CurrentTool == PaintTool.Rectangle ? "active" : "" )">
+								<img src="ui/icons/paint/rectangle-regular-24.png"/>
+							</button>
+							<button @onclick=@( () => CurrentTool = PaintTool.Circle ) class="paint-button @( CurrentTool == PaintTool.Circle ? "active" : "" )">
+								<img src="ui/icons/paint/circle-regular-24.png"/>
 							</button>
 						</div>
 

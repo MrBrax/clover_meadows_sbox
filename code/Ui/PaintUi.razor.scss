@@ -140,7 +140,7 @@ PaintUi {
     }
 
     .menu {
-        width: 250px;
+        width: 300px;
         flex-direction: column;
         gap: 15px;
 
@@ -162,10 +162,16 @@ PaintUi {
             .tools {
                 flex-wrap: wrap;
                 gap: 5px;
+                flex-shrink: 0;
+
+                align-content: center;
+                justify-content: center;
 
                 .paint-button {
-                    aspect-ratio: 1;
-                    width: 78px;
+                    // aspect-ratio: 1;
+                    // width: 78px;
+                    // flex-basis: calc(25%);
+                    flex-grow: 1;
 
                     Image {
                         image-rendering: trilinear;
