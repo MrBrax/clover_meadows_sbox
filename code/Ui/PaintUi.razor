@@ -20,14 +20,14 @@
 							<button @onclick=@( () => CurrentTool = PaintTool.Pencil ) class="paint-button @( CurrentTool == PaintTool.Pencil ? "active" : "" )">
 								<img src="ui/icons/paint/brush-solid-24.png"/>
 							</button>
-							<button @onclick=@( () => CurrentTool = PaintTool.Eraser ) class="paint-button @( CurrentTool == PaintTool.Eraser ? "active" : "" )">
-								<img src="ui/icons/paint/eraser-solid-24.png"/>
-							</button>
 							<button @onclick=@( () => CurrentTool = PaintTool.Fill ) class="paint-button @( CurrentTool == PaintTool.Fill ? "active" : "" )">
 								<img src="ui/icons/paint/color-fill-solid-24.png"/>
 							</button>
 							<button @onclick=@( () => CurrentTool = PaintTool.Spray ) class="paint-button @( CurrentTool == PaintTool.Spray ? "active" : "" )">
 								<img src="ui/icons/paint/spray-can-solid-24.png"/>
+							</button>
+							<button @onclick=@( () => CurrentTool = PaintTool.Eraser ) class="paint-button @( CurrentTool == PaintTool.Eraser ? "active" : "" )">
+								<img src="ui/icons/paint/eraser-solid-24.png"/>
 							</button>
 						</div>
 

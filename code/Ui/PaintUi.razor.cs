@@ -307,6 +307,15 @@ public partial class PaintUi
 
 		var crosshairSize = texturePixelScreenSize * BrushSize;
 
+		/*if ( CurrentTool == PaintTool.Fill )
+		{
+			crosshairSize = texturePixelScreenSize;
+		}
+		else if ( CurrentTool == PaintTool.Spray )
+		{
+			// crosshairSize = texturePixelScreenSize;
+		}*/
+
 		Crosshair.Style.Left = Length.Pixels( crosshairX );
 		Crosshair.Style.Top = Length.Pixels( crosshairY );
 		Crosshair.Style.Width = crosshairSize;
@@ -357,7 +366,7 @@ public partial class PaintUi
 		}
 
 		DrawTextureData[positionX + positionY * DrawTexture.Width] = replacementColor;
-		DrawTexture.Update( GetCurrentColor(), new Rect( positionX, positionY, BrushSize, BrushSize ) );
+		DrawTexture.Update( GetCurrentColor(), new Rect( positionX, positionY, 1, 1 ) );
 
 		FloodFill( positionX + 1, positionY, targetColor, replacementColor );
 		FloodFill( positionX - 1, positionY, targetColor, replacementColor );
