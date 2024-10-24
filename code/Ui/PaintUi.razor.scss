@@ -117,15 +117,18 @@ PaintUi
 	.canvas {
 		position: relative;
 		background-color: #aaa;
-		padding: 10px;
+		// padding: 10px;
 		flex-grow: 1;
 		min-height: 670px;
 		
-		overflow: hidden;
+		overflow: scroll;
+		
+		align-items: center;
+		justify-content: center;
 		
 		.canvas-texture {
-			width: 650px;
-			height: 650px;
+			width: 512px;
+			height: 512px;
 			image-rendering: pixelated;
 		}
 		

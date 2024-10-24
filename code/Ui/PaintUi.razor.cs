@@ -34,6 +34,8 @@ public partial class PaintUi
 	
 	private int TextureSize = 32;
 	
+	private int CanvasSize = 512;
+	
 	private Color32 ForegroundColor => Palette.ElementAtOrDefault(LeftPaletteIndex);
 	private Color32 BackgroundColor => Palette.ElementAtOrDefault(RightPaletteIndex);
 	
@@ -156,9 +158,29 @@ public partial class PaintUi
 		return mousePosition.x >= canvasPosition.x && mousePosition.x <= canvasPosition.x + canvasSize.x &&
 		       mousePosition.y >= canvasPosition.y && mousePosition.y <= canvasPosition.y + canvasSize.y;
 	}
-
+	
+	/*private void OnCanvasWheel( PanelEvent e )
+	{
+		Log.Info( "Wheel" );
+		if ( e is MousePanelEvent ev )
+		{
+			// CanvasSize += (int)(ev.MouseWheel.x * 10);
+			Canvas.Style.Width = CanvasSize;
+			Canvas.Style.Height = CanvasSize;
+		}
+		Panel.AddEventListener();
+	}*/
+	
 	protected override void OnUpdate()
 	{
+		
+		// TODO: mouse inputs don't work in panels
+		if ( Input.MouseWheel.x != 0 )
+		{
+			CanvasSize += (int)(Input.MouseWheel.x * 10);
+			Canvas.Style.Width = CanvasSize;
+			Canvas.Style.Height = CanvasSize;
+		}
 		
 		if ( !IsMouseInsideCanvas() )
 		{
@@ -168,10 +190,11 @@ public partial class PaintUi
 		var mousePosition = GetCurrentMousePixel();
 		
 		var crosshairX = (mousePosition.x / DrawTexture.Width * Canvas.Box.Rect.Width) * Panel.ScaleFromScreen;
-		crosshairX += 10;
+		crosshairX += Canvas.Box.Rect.Position.x * Panel.ScaleFromScreen;
 		
 		var crosshairY = (mousePosition.y / DrawTexture.Height * Canvas.Box.Rect.Height) * Panel.ScaleFromScreen;
-		crosshairY += 10;
+		crosshairY += Canvas.Box.Rect.Position.y * Panel.ScaleFromScreen;
+		
 		
 		var crosshairSize = ( Canvas.Box.Rect.Width / TextureSize ) * Panel.ScaleFromScreen;
 		
@@ -208,6 +231,8 @@ public partial class PaintUi
 			}
 				
 		}
+		
+		e.StopPropagation();
 	}
 	
 	private void OnCanvasMouseUp( PanelEvent e )
