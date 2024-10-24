@@ -37,6 +37,8 @@ public sealed class CameraNode : Component
 			
 			// CameraPivot.WorldRotation = Rotation.Slerp( CameraPivot.WorldRotation, _wishedPivotRotation, Time.Delta * 5f );
 			// CameraPivot.WorldRotation = _wishedPivotRotation;
+			
+			// Gizmo.Draw.Text( CameraPivot.WorldRotation.Angles().ToString(), new Transform( CameraPivot.WorldPosition ) );
 		}
 		
 		if ( DollyNode.IsValid() && CameraPivot.IsValid() )
@@ -106,9 +108,17 @@ public sealed class CameraNode : Component
 			Log.Error( "RotatePivot called but HasPivotRotation is false" );
 			return;
 		}
+		
+		
 
-		CameraPivot.WorldRotation *= rotation;
-		// _wishedPivotRotation *= rotation;
+		var newAngles = (CameraPivot.WorldRotation * rotation).Angles();
+		
+		
+		newAngles.pitch = newAngles.pitch.SnapToGrid( CameraController.CameraRotateSnapDistance ).Clamp( -45, 30 );
+		newAngles.roll = 0;
+		newAngles.yaw = newAngles.yaw.SnapToGrid( CameraController.CameraRotateSnapDistance );
+		
+		CameraPivot.WorldRotation = Rotation.From( newAngles );
 		
 		Log.Info( $"Rotating pivot by {rotation}" );
 		
