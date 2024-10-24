@@ -20,6 +20,7 @@ public partial class PaintUi
 	private Texture GridTexture;
 
 	private Panel Window;
+	private Panel CanvasContainer;
 	private Panel Canvas;
 	private Panel Grid;
 	private Panel Crosshair;
@@ -187,7 +188,7 @@ public partial class PaintUi
 
 		var mousePosition = GetCurrentMousePixel();
 
-		var brushSizeOffset = BrushSize / 2f;
+		var brushSizeOffset = BrushSize == 1 ? 0 : BrushSize / 2f;
 
 		var brushPosition = new Vector2( mousePosition.x - brushSizeOffset, mousePosition.y - brushSizeOffset );
 		// var brushPosition = new Vector2( mousePosition.x, mousePosition.y );
@@ -202,14 +203,20 @@ public partial class PaintUi
 		// crosshairY -= BrushSize / 2f * texturePixelScreenSize;
 
 		var crosshairX = Canvas.Box.Left * Panel.ScaleFromScreen;
-		crosshairX += (brushPosition.x / DrawTexture.Width * Canvas.Box.Rect.Width) * Panel.ScaleFromScreen;
+		crosshairX += texturePixelScreenSize * brushPosition.x;
+		crosshairX += CanvasContainer.ScrollOffset.x * Panel.ScaleFromScreen;
+		// crosshairX += (brushPosition.x / DrawTexture.Width * Canvas.Box.Rect.Width) * Panel.ScaleFromScreen;
+
 		// crosshairX -= brushSizeOffset * texturePixelScreenSize;
 
 
 		var crosshairY = Canvas.Box.Top * Panel.ScaleFromScreen;
-		crosshairY += (brushPosition.y / DrawTexture.Height * Canvas.Box.Rect.Height) * Panel.ScaleFromScreen;
-		// crosshairY -= brushSizeOffset * texturePixelScreenSize;
+		crosshairY += texturePixelScreenSize * brushPosition.y;
+		crosshairY += CanvasContainer.ScrollOffset.y * Panel.ScaleFromScreen;
 
+		// crosshairY += (brushPosition.y / DrawTexture.Height * Canvas.Box.Rect.Height) * Panel.ScaleFromScreen;
+
+		// crosshairY -= brushSizeOffset * texturePixelScreenSize;
 		var crosshairSize = texturePixelScreenSize * BrushSize;
 
 		/*var crosshairX = (mousePosition.x / DrawTexture.Width * Canvas.Box.Rect.Width) * Panel.ScaleFromScreen;
@@ -360,15 +367,23 @@ public partial class PaintUi
 	private void ZoomIn()
 	{
 		CanvasSize *= 2;
-		Canvas.Style.Width = CanvasSize;
-		Canvas.Style.Height = CanvasSize;
+		CanvasSize = CanvasSize.SnapToGrid( 32 );
+		UpdateCanvas();
 	}
 
 	private void ZoomOut()
 	{
 		CanvasSize /= 2;
+		CanvasSize = CanvasSize.SnapToGrid( 32 );
+		UpdateCanvas();
+	}
+
+	private void UpdateCanvas()
+	{
 		Canvas.Style.Width = CanvasSize;
 		Canvas.Style.Height = CanvasSize;
+		// Grid.Style.Width = CanvasSize;
+		// Grid.Style.Height = CanvasSize;
 	}
 }
 

@@ -14,15 +14,28 @@
 			</div>
 			<div class="hsplit">
 				<div class="menu">
-					<button class="paint-button" @onclick=@( () => BrushSize++ )>+</button>
-					<button class="paint-button" @onclick=@( () => BrushSize-- )>-</button>
-					<button class="paint-button" @onclick=@( () => ZoomIn() )>Zoom In</button>
-					<button class="paint-button" @onclick=@( () => ZoomOut() )>Zoom Out</button>
+					<button class="paint-button" @onclick=@( () => ZoomIn() )>
+						🔎+
+					</button>
+					<button class="paint-button" @onclick=@( () => ZoomOut() )>
+						🔎-
+					</button>
+
+					<button class="paint-button" @onclick=@( () => BrushSize++ )>
+						✏️+
+					</button>
+					<button class="paint-button" @onclick=@( () => BrushSize-- )>
+						✏️-
+					</button>
+
+					<div>
+						@( $"Brush Size: {BrushSize}" )
+					</div
 				</div>
 				<div class="main">
-					<div class="canvas">
+					<div @ref=" CanvasContainer" class="canvas">
 						<Image class="canvas-texture" @ref=" Canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
-						@*<Image class="grid" @ref="Grid" Texture=@GridTexture/>*@
+						@*<Image class="grid" @ref=" Grid" Texture=@GridTexture/>*@
 						<div @ref=" Crosshair" class="crosshair"></div>
 					</div>
 					<div class="toolbar">

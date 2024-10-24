@@ -33,6 +33,7 @@ PaintUi {
 
     .header {
         flex-direction: row;
+        flex-shrink: 0;
         gap: 10px;
         background-image: linear-gradient(to right, #143f8f, #668cd6);
         color: white;
@@ -93,6 +94,7 @@ PaintUi {
     .menu {
         min-width: 100px;
         flex-direction: column;
+        gap: 5px;
     }
 
     .sidebar {
@@ -127,25 +129,33 @@ PaintUi {
         // position: relative;
 
         background-color: #aaa;
-        // padding: 10px;
+        padding: 50px;
+        gap: 50px;
         flex-grow: 1;
         min-height: 670px;
 
-        // overflow: scroll;
+        overflow: scroll;
 
         align-items: center;
         justify-content: center;
 
         .canvas-texture {
+            flex-shrink: 0;
             width: 512px;
             height: 512px;
             image-rendering: pixelated;
+            transition: width 0.2s, height 0.2s;
+            box-shadow: 5px 5px 10px #777;
         }
 
+        /*.canvas-rect {
+            position: relative;
+        }*/
+
         .grid {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+            // position: absolute;
+            // top: 0px;
+            // left: 0px;
             width: 650px;
             height: 650px;
             pointer-events: none;
