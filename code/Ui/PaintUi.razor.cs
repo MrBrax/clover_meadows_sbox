@@ -321,25 +321,45 @@ public partial class PaintUi
 	}
 
 
+	private TimeSince _lastSpray;
+
+	/// <summary>
+	///  Spray random paint in a circle around the brush position
+	/// </summary>
+	/// <param name="brushPosition"></param>
 	private void Spray( Vector2 brushPosition )
 	{
-		var random = new Random();
 		var radius = BrushSize * 5;
-		var density = 10;
+		var radiusSquared = radius * radius;
 
-		for ( var i = 0; i < density; i++ )
+		if ( _lastSpray > 0.03f )
 		{
-			var x = random.Next( (int)brushPosition.x - radius, (int)brushPosition.x + radius );
-			var y = random.Next( (int)brushPosition.y - radius, (int)brushPosition.y + radius );
+			_lastSpray = 0;
+		}
+		else
+		{
+			return;
+		}
 
-			if ( x < 0 || x >= DrawTexture.Width || y < 0 || y >= DrawTexture.Height )
+		for ( var i = 0; i < 30; i++ )
+		{
+			// var randomX = MathF.RoundToInt( MathF.Random.Range( -radius, radius ) );
+			// var randomY = MathF.RoundToInt( MathF.Random.Range( -radius, radius ) );
+			var randomX = Random.Shared.Next( -radius, radius );
+			var randomY = Random.Shared.Next( -radius, radius );
+
+			if ( randomX * randomX + randomY * randomY <= radiusSquared )
 			{
-				continue;
-			}
+				var x = brushPosition.x + randomX;
+				var y = brushPosition.y + randomY;
 
-			var rect = new Rect( x, y, BrushSize, BrushSize );
-			DrawTexture.Update( GetCurrentColor(), rect );
-			PushRectToByteData( rect );
+				if ( x >= 0 && x < DrawTexture.Width && y >= 0 && y < DrawTexture.Height )
+				{
+					var rect = new Rect( x, y, BrushSize, BrushSize );
+					DrawTexture.Update( GetCurrentColor(), rect );
+					PushRectToByteData( rect );
+				}
+			}
 		}
 	}
 
