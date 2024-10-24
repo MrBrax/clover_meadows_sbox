@@ -24,7 +24,9 @@ public partial class PaintUi
 		// Line,
 		Fill,
 		Spray,
-		Eyedropper
+		Eyedropper,
+
+		Line,
 	}
 
 	private PaintTool CurrentTool = PaintTool.Pencil;
@@ -34,6 +36,7 @@ public partial class PaintUi
 
 	private Texture DrawTexture;
 	private Texture GridTexture;
+	private Texture PreviewTexture;
 
 	private byte[] DrawTextureData;
 
@@ -42,6 +45,7 @@ public partial class PaintUi
 	private Panel Canvas;
 	private Panel Grid;
 	private Panel Crosshair;
+	private Panel PreviewOverlay;
 
 	private string PaletteName = "windows-95-256-colours-1x";
 	private List<Color32> Palette = new List<Color32>();
@@ -137,6 +141,9 @@ public partial class PaintUi
 		}
 
 		GridTexture.Update( pixels );
+
+		// draw preview overlay
+		PreviewTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
 	}
 
 	private void PopulateDecals()
@@ -334,6 +341,8 @@ public partial class PaintUi
 
 		DrawCrosshair( brushPosition );
 
+		// PreviewTexture.Update( Color.Red, brushPosition.x, brushPosition.y );
+
 		if ( _isDrawing )
 		{
 			if ( CurrentTool == PaintTool.Pencil )
@@ -351,6 +360,10 @@ public partial class PaintUi
 			else if ( CurrentTool == PaintTool.Eraser )
 			{
 				Eraser( brushPosition );
+			}
+			else if ( CurrentTool == PaintTool.Line )
+			{
+				LinePreview( brushPosition );
 			}
 		}
 	}
@@ -456,6 +469,50 @@ public partial class PaintUi
 		}
 	}
 
+	// TODO: this is a duplicate of DrawLineBetween
+	private void DrawLineBetweenTex( Texture tex, Color32 col, Vector2 lastBrushPosition, Vector2 brushPosition )
+	{
+		var x0 = (int)lastBrushPosition.x;
+		var y0 = (int)lastBrushPosition.y;
+		var x1 = (int)brushPosition.x;
+		var y1 = (int)brushPosition.y;
+
+		var dx = Math.Abs( x1 - x0 );
+		var dy = Math.Abs( y1 - y0 );
+
+		var sx = x0 < x1 ? 1 : -1;
+		var sy = y0 < y1 ? 1 : -1;
+
+		var err = dx - dy;
+
+		while ( true )
+		{
+			tex.Update( col, x0, y0 );
+
+			if ( x0 == x1 && y0 == y1 )
+			{
+				break;
+			}
+
+			var e2 = 2 * err;
+			if ( e2 > -dy )
+			{
+				err -= dy;
+				x0 += sx;
+			}
+
+			if ( e2 < dx )
+			{
+				err += dx;
+				y0 += sy;
+			}
+		}
+	}
+
+
+	private Vector2? _mouseDownPosition;
+	private Vector2? _mouseUpPosition;
+
 	private void OnCanvasMouseDown( PanelEvent e )
 	{
 		PushUndo();
@@ -467,6 +524,9 @@ public partial class PaintUi
 				CurrentPaletteIndex = LeftPaletteIndex;
 				_isDrawing = true;
 
+				_mouseUpPosition = null;
+				_mouseDownPosition = GetCurrentMousePixel();
+
 				if ( CurrentTool == PaintTool.Eyedropper )
 				{
 					Eyedropper( GetCurrentMousePixel(), ev.MouseButton );
@@ -476,6 +536,9 @@ public partial class PaintUi
 			{
 				CurrentPaletteIndex = RightPaletteIndex;
 				_isDrawing = true;
+
+				_mouseUpPosition = null;
+				_mouseDownPosition = GetCurrentMousePixel();
 
 				if ( CurrentTool == PaintTool.Eyedropper )
 				{
@@ -498,7 +561,18 @@ public partial class PaintUi
 		Log.Info( "MouseUp" );
 		_isDrawing = false;
 		_lastBrushPosition = null;
-		// PushUndo();
+
+		_mouseUpPosition = GetCurrentMousePixel();
+
+		if ( _mouseDownPosition.HasValue && _mouseUpPosition.HasValue )
+		{
+			if ( CurrentTool == PaintTool.Line )
+			{
+				DrawLineBetween( _mouseDownPosition.Value, _mouseUpPosition.Value );
+			}
+		}
+
+		_mouseDownPosition = null;
 	}
 
 	private void Save()
@@ -551,6 +625,8 @@ public partial class PaintUi
 		DrawTexture.Update( Palette[RightPaletteIndex], new Rect( 0, 0, DrawTexture.Width, DrawTexture.Height ) );
 		DrawTextureData = Enumerable.Repeat( (byte)RightPaletteIndex, DrawTexture.Width * DrawTexture.Height )
 			.ToArray();
+
+		PreviewTexture.Update( Color32.Transparent, new Rect( 0, 0, PreviewTexture.Width, PreviewTexture.Height ) );
 
 		_lastBrushPosition = null;
 

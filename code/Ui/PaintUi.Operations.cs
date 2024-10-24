@@ -117,4 +117,16 @@ public partial class PaintUi
 			RightPaletteIndex = index;
 		}
 	}
+
+	private void LinePreview( Vector2 brushPosition )
+	{
+		PreviewTexture.Update( Color32.Transparent, new Rect( 0, 0, PreviewTexture.Width, PreviewTexture.Height ) );
+
+		if ( !_mouseDownPosition.HasValue )
+		{
+			return;
+		}
+
+		DrawLineBetweenTex( PreviewTexture, Color32.Black, _mouseDownPosition.Value, brushPosition );
+	}
 }

@@ -32,6 +32,9 @@
 							<button @onclick=@( () => CurrentTool = PaintTool.Eyedropper ) class="paint-button @( CurrentTool == PaintTool.Eyedropper ? "active" : "" )">
 								<img src="ui/icons/paint/eyedropper-solid-24.png"/>
 							</button>
+							<button @onclick=@( () => CurrentTool = PaintTool.Line ) class="paint-button @( CurrentTool == PaintTool.Line ? "active" : "" )">
+								L
+							</button>
 						</div>
 
 						<div class="button-pair">
@@ -100,7 +103,8 @@
 					<div @ref=" CanvasContainer" class="canvas">
 						<div class="canvas-container">
 							<Image class="canvas-texture" @ref=" Canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
-							<Image class="grid" @ref=" Grid" Texture=@GridTexture/>
+							@*<Image class="grid" @ref=" Grid" Texture=@GridTexture/>*@
+							<Image class="preview-overlay" @ref=" PreviewOverlay" Texture=@PreviewTexture/>
 						</div>
 						<div @ref=" Crosshair" class="crosshair"></div>
 					</div>
