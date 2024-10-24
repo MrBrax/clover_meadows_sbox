@@ -142,7 +142,7 @@
 						<button class="paint-button" @onclick=@( () => PopulateDecals() )>Refresh (@Decals.Count)</button>
 					</div>
 					<div class="images">
-						<h2 class="section-title">Images</h2>
+						<h2 class="section-title">Import</h2>
 						@foreach ( var image in Images )
 						{
 							<button @onclick=@( () => LoadImage( image ) ) class="image">
