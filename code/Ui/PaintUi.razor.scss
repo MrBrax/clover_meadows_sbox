@@ -1,213 +1,238 @@
-PaintUi
-{
-	pointer-events: all;
-	
-	.paint-window {
+PaintUi {
+    pointer-events: all;
 
-		position: absolute;
-		top: 40px;
-		left: 40px;
-		right: 40px;
-		bottom: 40px;
-		// box-shadow: 0 0 80px black;
-		
-		background-color: #ccc;
-		gap: 10px;
-		padding: 5px;
-		
-		border: 1px solid #444;
-		border-top-color: #eee;
-		border-left-color: #eee;
-	}
-	
-	.hsplit {
-		flex-direction: row;
-		gap: 10px;
-	}
-	
-	.vsplit {
-		flex-direction: column;
-		gap: 10px;
-	}
-	
-	.header {
-		flex-direction: row;
-		gap: 10px;
-		background-image: linear-gradient(to right, #143f8f, #668cd6);
-		color: white;
-		padding: 5px;
-		
-		h1 {
-			flex-grow: 1;
-			padding: 0 5px;
-			align-items: center;
-			font-family: Itim;
-			font-size: 40px;
-		}
-		
-		button {
-			background-color: #bbb;
-			border: 1px solid #777;
-			border-top-color: #eee;
-			border-left-color: #eee;
-			color: black;
-			padding: 5px;
-		}
-	}
-	
-	.main {
-		flex-direction: column;
-		gap: 10px;
-	}
-	
-	.paint-button {
-		font-family: Roboto;
-		font-size: 25px;
-		padding: 5px;
-		align-items: center;
-		align-content: center;
-		justify-content: center;
-		background-color: #bbb;
-		border: 1px solid #777;
-		border-top-color: #eee;
-		border-left-color: #eee;
-	}
-	
-	.paint-input {
-		font-family: Roboto;
-		font-size: 25px;
-		// padding: 5px;
-		background-color: #eee;
-		border: 1px solid #555;
-		border-bottom-color: #eee;
-		border-right-color: #eee;
-		
-		.placeholder {
-			opacity: 1;
-			color: #999;
-			font-style: italic;
-		}
-	}
-	
-	.sidebar {
-		width: 150px;
-		gap: 10px;
-		flex-shrink: 0;
-		
-		.decals {
-			flex-direction: column;
-			gap: 5px;
-			
-			.decal {
-				padding: 5px;
-				background-color: #eee;
-				flex-direction: column;
-				Image {
-					width: 150px;
-					height: 150px;
-					background-size: contain;
-					image-rendering: pixelated;
-				}
-				font-family: Itim;
-				font-size: 25px;
-			}
-		}
-	}
-	
-	.canvas {
-		position: relative;
-		background-color: #aaa;
-		// padding: 10px;
-		flex-grow: 1;
-		min-height: 670px;
-		
-		overflow: scroll;
-		
-		align-items: center;
-		justify-content: center;
-		
-		.canvas-texture {
-			width: 512px;
-			height: 512px;
-			image-rendering: pixelated;
-		}
-		
-		.grid {
-			position: absolute;
-			top: 10px;
-			left: 10px;
-			width: 650px;
-			height: 650px;
-			pointer-events: none;
-			image-rendering: trilinear;
-		}
-		
-		.crosshair {
-			position: absolute;
-			width: 10px;
-			height: 10px;
-			border: 1px solid black;
-			pointer-events: none;
-		}
-	}
-	
-	.palette {
-		flex-wrap: wrap;
-		gap: 2px;
-		
-		button {
-			width: 30px;
-			height: 30px;
-			border: 2px solid;
-			border-left-color: #777;
-			border-top-color: #777;
-			border-right-color: #ccc;
-			border-bottom-color: #ccc;
-			
-			&:hover {
-				border-color: black;
-			}
-		}
-	}
-	
-	.toolbar {
-		gap: 10px;
-	}
-	
-	.current-colors {
-		width: 110px;
-		height: 110px;
-		position: relative;
-		flex-shrink: 0;
-		
-		background-color: #eee;
-		border: 1px solid #aaa;
-		
-		.color-fg, .color-bg {
-			width: 50px;
-			height: 50px;
-			border: 1px solid black;
-		}
-		
-		.color-fg {
-			position: absolute;
-			top: 20px;
-			left: 20px;
-			z-index: 2;
-		}
-		
-		.color-bg {
-			position: absolute;
-			top: 40px;
-			left: 40px;
-		}
-	}
-	
-	.actions {
-		min-width: 150px;
-		flex-shrink: 0;
-		flex-direction: column;
-		gap: 5px;
-	}
-	
+    padding: 40px;
+
+    .paint-window {
+
+        /*position: absolute;
+        top: 40px;
+        left: 40px;
+        right: 40px;
+        bottom: 40px;*/
+        // box-shadow: 0 0 80px black;
+
+        background-color: #ccc;
+        gap: 10px;
+        padding: 5px;
+
+        border: 1px solid #444;
+        border-top-color: #eee;
+        border-left-color: #eee;
+    }
+
+    .hsplit {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .vsplit {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .header {
+        flex-direction: row;
+        gap: 10px;
+        background-image: linear-gradient(to right, #143f8f, #668cd6);
+        color: white;
+        padding: 5px;
+
+        h1 {
+            flex-grow: 1;
+            padding: 0 5px;
+            align-items: center;
+            font-family: Itim;
+            font-size: 40px;
+        }
+
+        button {
+            background-color: #bbb;
+            border: 1px solid #777;
+            border-top-color: #eee;
+            border-left-color: #eee;
+            color: black;
+            padding: 5px;
+        }
+    }
+
+    .main {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .paint-button {
+        font-family: Roboto;
+        font-size: 25px;
+        padding: 5px;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        background-color: #bbb;
+        border: 1px solid #777;
+        border-top-color: #eee;
+        border-left-color: #eee;
+    }
+
+    .paint-input {
+        font-family: Roboto;
+        font-size: 25px;
+        // padding: 5px;
+        background-color: #eee;
+        border: 1px solid #555;
+        border-bottom-color: #eee;
+        border-right-color: #eee;
+
+        .placeholder {
+            opacity: 1;
+            color: #999;
+            font-style: italic;
+        }
+    }
+
+    .menu {
+        min-width: 100px;
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 150px;
+        gap: 10px;
+        flex-shrink: 0;
+
+        .decals {
+            flex-direction: column;
+            gap: 5px;
+
+            .decal {
+                padding: 5px;
+                background-color: #eee;
+                flex-direction: column;
+
+                Image {
+                    width: 150px;
+                    height: 150px;
+                    background-size: contain;
+                    image-rendering: pixelated;
+                }
+
+                font-family: Itim;
+                font-size: 25px;
+            }
+        }
+    }
+
+    .canvas {
+
+        // position: relative;
+
+        background-color: #aaa;
+        // padding: 10px;
+        flex-grow: 1;
+        min-height: 670px;
+
+        // overflow: scroll;
+
+        align-items: center;
+        justify-content: center;
+
+        .canvas-texture {
+            width: 512px;
+            height: 512px;
+            image-rendering: pixelated;
+        }
+
+        .grid {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 650px;
+            height: 650px;
+            pointer-events: none;
+            image-rendering: trilinear;
+        }
+
+        .crosshair {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border: 1px solid black;
+            pointer-events: none;
+            animation: crosshair 1s infinite;
+            // mix-blend-mode: lighten;
+        }
+    }
+
+    .palette {
+        flex-wrap: wrap;
+        gap: 2px;
+
+        button {
+            width: 30px;
+            height: 30px;
+            border: 2px solid;
+            border-left-color: #777;
+            border-top-color: #777;
+            border-right-color: #ccc;
+            border-bottom-color: #ccc;
+
+            &:hover {
+                border-color: black;
+            }
+        }
+    }
+
+    .toolbar {
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    .current-colors {
+        width: 110px;
+        height: 110px;
+        position: relative;
+        flex-shrink: 0;
+
+        background-color: #eee;
+        border: 1px solid #aaa;
+
+        .color-fg, .color-bg {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+        }
+
+        .color-fg {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 2;
+        }
+
+        .color-bg {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+        }
+    }
+
+    .actions {
+        min-width: 150px;
+        flex-shrink: 0;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+}
+
+@keyframes crosshair {
+    0% {
+        border-color: black;
+    }
+    50% {
+        border-color: rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        border-color: black;
+    }
 }
