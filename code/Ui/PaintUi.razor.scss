@@ -1,8 +1,5 @@
 PaintUi
 {
-	
-	
-	
 	pointer-events: all;
 	
 	.paint-window {
@@ -85,8 +82,6 @@ PaintUi
 		border-bottom-color: #eee;
 		border-right-color: #eee;
 		
-		caret-color: black;
-		
 		.placeholder {
 			opacity: 1;
 			color: #999;
@@ -120,10 +115,15 @@ PaintUi
 	}
 	
 	.canvas {
-		width: 700px;
-		height: 700px;
-		border: 1px solid black;
-		image-rendering: pixelated;
+		background-color: #aaa;
+		padding: 5px;
+		flex-grow: 1;
+		Image {
+			width: 600px;
+			height: 600px;
+			border: 1px solid black;
+			image-rendering: pixelated;
+		}
 	}
 	
 	.palette {

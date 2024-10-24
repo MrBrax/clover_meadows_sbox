@@ -14,7 +14,9 @@
 			</div>
 			<div class="hsplit">
 				<div class="main">
-					<Image @ref=" Canvas" class="canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
+					<div class="canvas">
+						<Image @ref=" Canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
+					</div>
 					<div class="toolbar">
 						<div class="current-colors">
 							<div class="color-fg" style="background-color: @ForegroundColor.Hex"></div>
@@ -29,8 +31,8 @@
 							}
 						</div>
 						<div class="actions">
-							<TextEntry class="paint-input" Value:bind="@CurrentFileName" placeholder="Filename" />
-							<TextEntry class="paint-input" Value:bind="@CurrentName" placeholder="Name" />
+							<TextEntry class="paint-input" Value:bind="@CurrentFileName" placeholder="Filename"/>
+							<TextEntry class="paint-input" Value:bind="@CurrentName" placeholder="Name"/>
 
 							<button class="paint-button" @onclick=@( () => Save() )>Save</button>
 							<button class="paint-button" @onclick=@( () => Clear() )>Clear</button>
