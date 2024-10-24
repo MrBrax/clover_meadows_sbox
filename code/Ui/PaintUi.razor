@@ -98,8 +98,10 @@
 				</div>
 				<div class="main">
 					<div @ref=" CanvasContainer" class="canvas">
-						<Image class="canvas-texture" @ref=" Canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
-						@*<Image class="grid" @ref=" Grid" Texture=@GridTexture/>*@
+						<div class="canvas-container">
+							<Image class="canvas-texture" @ref=" Canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
+							<Image class="grid" @ref=" Grid" Texture=@GridTexture/>
+						</div>
 						<div @ref=" Crosshair" class="crosshair"></div>
 					</div>
 					<div class="toolbar">
