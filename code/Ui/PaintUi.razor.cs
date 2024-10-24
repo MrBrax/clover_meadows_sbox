@@ -7,6 +7,14 @@ namespace Clover.Ui;
 
 public partial class PaintUi
 {
+	public struct DecalEntry
+	{
+		public FloorDecal.DecalData Decal;
+		public string ResourcePath;
+	}
+	
+	private List<DecalEntry> Decals = new();
+	
 	private Texture DrawTexture;
 
 	private Panel Canvas;
@@ -17,8 +25,11 @@ public partial class PaintUi
 	private int RightPaletteIndex = 1;
 	private int CurrentPaletteIndex = 0;
 	
-	private Color32 ForegroundColor => Palette[LeftPaletteIndex];
-	private Color32 BackgroundColor => Palette[RightPaletteIndex];
+	private string CurrentFileName = "test";
+	private string CurrentName = "Test Pattern AAA";
+	
+	private Color32 ForegroundColor => Palette.ElementAtOrDefault(LeftPaletteIndex);
+	private Color32 BackgroundColor => Palette.ElementAtOrDefault(RightPaletteIndex);
 	
 	private Color GetCurrentColor()
 	{
@@ -33,36 +44,39 @@ public partial class PaintUi
 
 		DrawTexture = Texture.Create( 32, 32 ).WithDynamicUsage().Finish();
 
+		Clear();
+
 		Panel.ButtonInput = PanelInputType.UI;
+
+		Enabled = false;
 		
-		Panel.AddEventListener( "onmousedown", ( e ) =>
+		PopulateDecals();
+	}
+
+	private void PopulateDecals()
+	{
+		Decals.Clear();
+		
+		var files = FileSystem.Data.FindFile( "decals", "*.decal" );
+		foreach ( var file in files )
 		{
-			
-			if ( e is MousePanelEvent ev )
+			var decal = FloorDecal.ReadDecal( $"decals/{file}" );
+			Decals.Add( new DecalEntry
 			{
-				if ( ev.MouseButton == MouseButtons.Left )
-				{
-					CurrentPaletteIndex = LeftPaletteIndex;
-					_isDrawing = true;
-				}
-				else if ( ev.MouseButton == MouseButtons.Right )
-				{
-					CurrentPaletteIndex = RightPaletteIndex;
-					_isDrawing = true;
-				}
-				else
-				{
-					Log.Info( "Unknown mouse button" );
-				}
-				
-			}
-		} );
+				Decal = decal,
+				ResourcePath = $"decals/{file}"
+			} );
+		}
 		
-		Panel.AddEventListener( "onmouseup", ( e ) =>
-		{
-			Log.Info("MouseUp");
-			_isDrawing = false;
-		} );
+	}
+	
+	private void LoadDecal( string path )
+	{
+		Log.Info( $"Loading decal {path}" );
+		var decal = FloorDecal.ReadDecal( path );
+		CurrentName = decal.Name;
+		CurrentFileName = Path.GetFileNameWithoutExtension( path );
+		DrawTexture.Update( decal.Texture.GetPixels(), 0, 0, decal.Width, decal.Height );
 	}
 
 	private void SetColor( PanelEvent ev, int index )
@@ -111,46 +125,34 @@ public partial class PaintUi
 		}
 		
 	}
-
-	/*private void OnCanvasClick( PanelEvent e )
-	{
-		var mousePosition = (e.This.MousePosition / e.This.Box.Rect.Width);
-
-		// Log.Info( $"Mouse Position: {mousePosition}" );
-		
-		var x = (int)(mousePosition.x * DrawTexture.Width);
-		var y = (int)(mousePosition.y * DrawTexture.Height);
-		
-		Log.Info( $"X: {x}, Y: {y}" );
-
-		DrawTexture.Update( Color.Red, x, y );
-	}*/
 	
-	
-	/*private void OnCanvasMouseDown( PanelEvent e )
+	private void OnCanvasMouseDown( PanelEvent e )
 	{
-		// var mousePosition = GetCurrentMousePixel();
-
-		// DrawTexture.Update( Color.Red, (int)mousePosition.x, (int)mousePosition.y );
-		Log.Info("MouseDown");
+		if ( e is MousePanelEvent ev )
+		{
+			if ( ev.MouseButton == MouseButtons.Left )
+			{
+				CurrentPaletteIndex = LeftPaletteIndex;
+				_isDrawing = true;
+			}
+			else if ( ev.MouseButton == MouseButtons.Right )
+			{
+				CurrentPaletteIndex = RightPaletteIndex;
+				_isDrawing = true;
+			}
+			else
+			{
+				Log.Info( "Unknown mouse button" );
+			}
+				
+		}
 	}
 	
 	private void OnCanvasMouseUp( PanelEvent e )
 	{
-		// DrawTexture.Apply();
 		Log.Info("MouseUp");
+		_isDrawing = false;
 	}
-	
-	private void OnCanvasMouseMove( MousePanelEvent e )
-	{
-		
-		Log.Info( e.MouseButton  );
-		// if ( e.MouseButton != MouseButtons.Left ) return;
-
-		// var mousePosition = GetCurrentMousePixel();
-
-		// DrawTexture.Update( Color.Red, (int)mousePosition.x, (int)mousePosition.y );
-	}*/
 	
 	private void Save()
 	{
@@ -158,7 +160,7 @@ public partial class PaintUi
 		var data = new byte[64 + (32 * 32)];
 
 		// var stream = new MemoryStream( data );
-		var stream = FileSystem.Data.OpenWrite( "decals/test.decal" );
+		var stream = FileSystem.Data.OpenWrite( $"decals/{CurrentFileName}.decal" );
 		var writer = new BinaryWriter( stream, Encoding.UTF8 );
 	
 		writer.Write( 'C');
@@ -167,14 +169,14 @@ public partial class PaintUi
 		writer.Write( 'T');
 		// writer.Write( 0 );
 	
-		writer.Write( 1 ); // version
+		writer.Write( (int)1 ); // version
 	
 		writer.Write( DrawTexture.Width ); // width
 		writer.Write( DrawTexture.Height ); // height
 	
 		// writer.Write( 0 );
 	
-		writer.Write( "Test Pattern AAA" ); // name, 16 chars
+		writer.Write( CurrentName ); // name, 16 chars
 	
 		// writer.Write( 0 );
 	
@@ -200,6 +202,8 @@ public partial class PaintUi
 		writer.Flush();
 	
 		stream.Close();
+		
+		PopulateDecals();
 		
 	}
 

@@ -5,24 +5,43 @@
 
 <root>
 	<div class="paint-window">
-		<Image @ref="Canvas" class="canvas" Texture=@DrawTexture />
-		<div class="toolbar">
-			<div class="current-colors">
-				<div class="color-fg" style="background-color: @ForegroundColor.Hex"></div>
-				<div class="color-bg" style="background-color: @BackgroundColor.Hex"></div>
-			</div>
-			<div class="palette">
-				@for ( var i = 0; i < Palette.Count; i++ )
-				{
-					var index = i;
-					var color = Palette[index];
-					<button @onmousedown=@( ( PanelEvent e ) => SetColor( e, index ) ) style="background-color: @color.Hex"></button>
-				}
-			</div>
-			<div class="actions">
-				<button @onclick=@( () => Save())>Save</button>
-				<button @onclick=@( () => Clear())>Clear</button>
+		<div class="main">
+			<Image @ref=" Canvas" class="canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
+			<div class="toolbar">
+				<div class="current-colors">
+					<div class="color-fg" style="background-color: @ForegroundColor.Hex"></div>
+					<div class="color-bg" style="background-color: @BackgroundColor.Hex"></div>
+				</div>
+				<div class="palette">
+					@for ( var i = 0; i < Palette.Count; i++ )
+					{
+						var index = i;
+						var color = Palette[index];
+						<button @onmousedown=@( ( PanelEvent e ) => SetColor( e, index ) ) style="background-color: @color.Hex"></button>
+					}
+				</div>
+				<div class="actions">
+					<TextEntry Value:bind="@CurrentFileName"/>
+					<TextEntry Value:bind="@CurrentName"/>
+
+					<button @onclick=@( () => Save() )>Save</button>
+					<button @onclick=@( () => Clear() )>Clear</button>
+				</div>
 			</div>
 		</div>
+		<div class="sidebar">
+			<div class="decals">
+				@foreach ( var decal in Decals )
+				{
+					<button @onclick=@( () => LoadDecal( decal.ResourcePath ) ) class="decal">
+						<Image Texture=@decal.Decal.Texture/>
+						@decal.Decal.Name
+					</button>
+				}
+				<button @onclick=@( () => PopulateDecals() )>Refresh (@Decals.Count)</button>
+				
+			</div>
+		</div>
+		
 	</div>
 </root>

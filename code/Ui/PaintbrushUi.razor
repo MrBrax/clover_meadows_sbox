@@ -2,6 +2,7 @@
 @using Clover.Carriable
 @using Clover.Components
 @using Clover.Data
+@using Clover.Items
 @using Clover.Player
 @using Sandbox;
 @using Sandbox.Network
@@ -11,15 +12,15 @@
 @attribute [StyleSheet]
 
 <root>
-	@foreach ( var texture in Textures )
+	@foreach ( var decal in Decals )
 	{
-		<Image Texture=@texture class="@( Paintbrush.CurrentTexturePath == texture.ResourcePath ? "selected" : "" )"/>
+		<Image Texture=@decal.Decal.Texture class="@( Paintbrush.CurrentTexturePath == decal.ResourcePath ? "selected" : "" )"/>
 	}
 </root>
 
 @code {
 	
-	private List<Texture> Textures = new();
+	private List<PaintUi.DecalEntry> Decals = new();
 
 	private Paintbrush Paintbrush => PlayerCharacter.Local.Equips.GetEquippedItem<Paintbrush>( Equips.EquipSlot.Tool );
 
@@ -41,20 +42,25 @@
 			return;
 		}
 		
-		Textures.Clear();
+		Decals.Clear();
 
 		foreach ( var path in Paintbrush.GetTextures() )
 		{
-			Textures.Add( Texture.Load( FileSystem.Data, $"decals/{path}" ) );
+			// Textures.Add( Texture.Load( FileSystem.Data, $"decals/{path}" ) );
+			Decals.Add( new PaintUi.DecalEntry()
+			{
+				Decal = FloorDecal.ReadDecal( $"decals/{path}" ),
+				ResourcePath = path
+			} );
 		}
 		
-		Log.Info( $"Paintbrush has {Textures.Count} textures" );
+		Log.Info( $"Paintbrush has {Decals.Count} textures" );
 
 	}
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( Textures, Paintbrush.CurrentTexturePath );
+		return HashCode.Combine( Decals, Paintbrush.CurrentTexturePath );
 	}
 
 }

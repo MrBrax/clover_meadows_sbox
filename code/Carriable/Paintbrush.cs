@@ -102,13 +102,13 @@ public class Paintbrush : BaseCarriable
 
 	protected override void OnStart()
 	{
-		CurrentTexture = FileSystem.Data.FindFile( "decals", "*" ).FirstOrDefault();
+		CurrentTexture = FileSystem.Data.FindFile( "decals", "*.decal" ).FirstOrDefault();
 	}
 
 	public List<string> GetTextures()
 	{
 		FileSystem.Data.CreateDirectory( "decals" );
-		return FileSystem.Data.FindFile( "decals", "*" ).ToList();
+		return FileSystem.Data.FindFile( "decals", "*.decal" ).ToList();
 	}
 
 	protected override void OnFixedUpdate()

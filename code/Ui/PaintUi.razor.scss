@@ -4,15 +4,43 @@ PaintUi
 	top: 50px;
 	left: 50px;
 	
-	padding: 20px;
-	background-color: white;
-	
 	pointer-events: all;
 	
 	.paint-window {
+		background-color: #ccc;
 		gap: 10px;
+		padding: 5px;
+		width: 1400px;
+	}
+	
+	.main {
 		flex-direction: column;
-		width: 700px;
+		gap: 10px;
+	}
+	
+	.sidebar {
+		width: 150px;
+		gap: 10px;
+		flex-shrink: 0;
+		
+		.decals {
+			flex-direction: column;
+			gap: 5px;
+			
+			.decal {
+				padding: 5px;
+				background-color: #eee;
+				flex-direction: column;
+				Image {
+					width: 150px;
+					height: 150px;
+					background-size: contain;
+					image-rendering: pixelated;
+				}
+				font-family: Itim;
+				font-size: 25px;
+			}
+		}
 	}
 	
 	.canvas {
@@ -24,35 +52,53 @@ PaintUi
 	
 	.palette {
 		flex-wrap: wrap;
+		// gap: 1px;
+		
 		button {
-			width: 18px;
-			height: 18px;
+			width: 25px;
+			height: 25px;
+			border: 2px solid;
+			border-left-color: #777;
+			border-top-color: #777;
+			border-right-color: #ccc;
+			border-bottom-color: #ccc;
+			
+			&:hover {
+				border-color: black;
+			}
 		}
 	}
 	
+	.toolbar {
+		gap: 10px;
+	}
+	
 	.current-colors {
-		width: 120px;
-		height: 120px;
+		width: 110px;
+		height: 110px;
 		position: relative;
 		flex-shrink: 0;
 		
+		background-color: #eee;
+		border: 1px solid #aaa;
+		
 		.color-fg, .color-bg {
-			width: 60px;
-			height: 60px;
+			width: 50px;
+			height: 50px;
 			border: 1px solid black;
 		}
 		
 		.color-fg {
 			position: absolute;
-			top: 0;
-			left: 0;
+			top: 20px;
+			left: 20px;
 			z-index: 2;
 		}
 		
 		.color-bg {
 			position: absolute;
-			top: 30px;
-			left: 30px;
+			top: 40px;
+			left: 40px;
 		}
 	}
 	

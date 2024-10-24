@@ -16,6 +16,7 @@
 			<InventoryUiCloverBalance/>
 		</div>
 		<div class="inventory-slots" @ref=" SlotContainer"></div>
+		<button @onclick=@( () => { Components.Get<PaintUi>( true ).Enabled = true; })>paint</button>
 
 	</div>
 </root>
