@@ -284,6 +284,12 @@ public partial class PaintUi
 			{
 				Spray( brushPosition );
 			}
+			else if ( CurrentTool == PaintTool.Eraser )
+			{
+				DrawTexture.Update( BackgroundColor,
+					new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
+				PushRectToByteData( new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
+			}
 		}
 	}
 
@@ -368,7 +374,7 @@ public partial class PaintUi
 	/// <param name="brushPosition"></param>
 	private void Spray( Vector2 brushPosition )
 	{
-		var radius = BrushSize * 5;
+		var radius = BrushSize * 3;
 		var radiusSquared = radius * radius;
 
 		if ( _lastSpray > 0.03f )
@@ -394,7 +400,7 @@ public partial class PaintUi
 
 				if ( x >= 0 && x < DrawTexture.Width && y >= 0 && y < DrawTexture.Height )
 				{
-					var rect = new Rect( x, y, BrushSize, BrushSize );
+					var rect = new Rect( x, y, 1, 1 );
 					DrawTexture.Update( GetCurrentColor(), rect );
 					PushRectToByteData( rect );
 				}
