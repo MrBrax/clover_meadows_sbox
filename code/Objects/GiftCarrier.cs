@@ -62,6 +62,11 @@ public class GiftCarrier : Component, IShootable
 				)
 			.Clone();
 		
+		giftCarrierGameObject.SetParent( world.GameObject );
+
+		var worldLayerObject = giftCarrierGameObject.GetComponent<WorldLayerObject>();
+		worldLayerObject.Layer = world.Layer;
+		
 		var giftCarrier = giftCarrierGameObject.GetComponent<GiftCarrier>();
 
 		var height = 256f;
