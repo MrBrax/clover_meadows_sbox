@@ -12,7 +12,7 @@ PaintUi {
         bottom: 40px;*/
         // box-shadow: 0 0 80px black;
 
-        background-color: #ccc;
+        background-color: silver;
         gap: 10px;
         padding: 5px;
 
@@ -35,7 +35,7 @@ PaintUi {
         flex-direction: row;
         flex-shrink: 0;
         gap: 10px;
-        background-image: linear-gradient(to right, #143f8f, #668cd6);
+        background-image: linear-gradient(to right, navy, #1084d0);
         color: white;
         padding: 5px;
 
@@ -48,12 +48,21 @@ PaintUi {
         }
 
         button {
+            aspect-ratio: 1;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
             background-color: #bbb;
             border: 1px solid #777;
             border-top-color: #eee;
             border-left-color: #eee;
             color: black;
-            padding: 5px;
+            // padding: 5px;
+
+            &:hover {
+                background-color: #aaa;
+                cursor: pointer;
+            }
         }
     }
 
@@ -63,16 +72,39 @@ PaintUi {
     }
 
     .paint-button {
-        font-family: Roboto;
+        font-family: Itim;
         font-size: 25px;
         padding: 5px;
         align-items: center;
         align-content: center;
         justify-content: center;
-        background-color: #bbb;
-        border: 1px solid #777;
+        background-color: silver;
+
+        border: 2px solid #777;
         border-top-color: #eee;
         border-left-color: #eee;
+        border-radius: 2px;
+
+        &:hover {
+            background-color: #ccc;
+            cursor: pointer;
+            sound-in: "sounds/ui/button_hover.sound";
+        }
+
+        &:active {
+            background-color: #bbb;
+            sound-in: "sounds/ui/button_down.sound";
+            sound-out: "sounds/ui/button_up.sound";
+        }
+
+        &.small {
+            font-size: 16px;
+            padding: 2px;
+        }
+
+        &.active {
+            background-color: #b6cbef;
+        }
     }
 
     .paint-input {
@@ -94,7 +126,18 @@ PaintUi {
     .menu {
         min-width: 100px;
         flex-direction: column;
-        gap: 5px;
+        gap: 15px;
+
+        section {
+            flex-direction: column;
+            gap: 5px;
+
+            h2 {
+                font-family: Itim;
+                font-size: 25px;
+            }
+
+        }
     }
 
     .sidebar {
@@ -105,11 +148,18 @@ PaintUi {
         .decals {
             flex-direction: column;
             gap: 5px;
+            overflow: scroll;
 
             .decal {
                 padding: 5px;
                 background-color: #eee;
                 flex-direction: column;
+
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #fff;
+                }
 
                 Image {
                     width: 150px;
@@ -177,6 +227,9 @@ PaintUi {
         flex-wrap: wrap;
         gap: 2px;
 
+        // overflow: scroll;
+        // max-height: 200px;
+
         button {
             width: 30px;
             height: 30px;
@@ -188,6 +241,13 @@ PaintUi {
 
             &:hover {
                 border-color: black;
+                sound-in: "sounds/ui/button_hover.sound";
+            }
+
+            &:active {
+                border-color: white;
+                sound-in: "sounds/ui/button_down.sound";
+                sound-out: "sounds/ui/button_up.sound";
             }
         }
     }

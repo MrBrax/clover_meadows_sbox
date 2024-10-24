@@ -14,23 +14,37 @@
 			</div>
 			<div class="hsplit">
 				<div class="menu">
-					<button class="paint-button" @onclick=@( () => ZoomIn() )>
-						🔎+
-					</button>
-					<button class="paint-button" @onclick=@( () => ZoomOut() )>
-						🔎-
-					</button>
+					<section>
+						<h2>Tools</h2>
+						<button class="paint-button" @onclick=@( () => ZoomIn() )>
+							🔎+
+						</button>
+						<button class="paint-button" @onclick=@( () => ZoomOut() )>
+							🔎-
+						</button>
 
-					<button class="paint-button" @onclick=@( () => IncreaseBrushSize() )>
-						✏️+
-					</button>
-					<button class="paint-button" @onclick=@( () => DecreaseBrushSize() )>
-						✏️-
-					</button>
+						<button class="paint-button" @onclick=@( () => IncreaseBrushSize() )>
+							✏️+
+						</button>
+						<button class="paint-button" @onclick=@( () => DecreaseBrushSize() )>
+							✏️-
+						</button>
+					</section>
 
-					<div>
-						@( $"Brush Size: {BrushSize}" )
-					</div
+					<section>
+						<h2>Palettes</h2>
+						@foreach ( var palette in Utilities.Decals.GetPalettes() )
+						{
+							<button @onclick=@( () => SetPalette( palette ) ) class="paint-button small @( palette == PaletteName ? "active" : "" )">
+								@palette
+							</button>
+						}
+					</section>
+
+					<section>
+						<h2>Stats</h2>
+						<div>@( $"Brush Size: {BrushSize}" )</div>
+					</section>
 				</div>
 				<div class="main">
 					<div @ref=" CanvasContainer" class="canvas">

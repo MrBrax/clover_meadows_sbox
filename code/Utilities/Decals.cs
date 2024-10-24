@@ -14,8 +14,25 @@ public class Decals
 
 		public ulong Author;
 
+		public string Palette;
+
 		public byte[] Image;
 		public Texture Texture;
+	}
+
+	public static List<string> GetPalettes()
+	{
+		var palettes = new List<string>();
+
+		var files = FileSystem.Mounted.FindFile( "materials/palettes", "*.png" );
+
+		foreach ( var file in files )
+		{
+			var name = Path.GetFileNameWithoutExtension( file );
+			palettes.Add( name );
+		}
+
+		return palettes;
 	}
 
 	public static Color32[] GetPalette( string name )
@@ -30,8 +47,6 @@ public class Decals
 		Log.Info( "Loading palette" );
 		// var palette = new Color[256];
 
-		var palette = GetPalette( "windows-95-256-colours-1x" );
-
 		Log.Info( "Loading decal" );
 
 		var stream = FileSystem.Data.OpenRead( filePath );
@@ -43,10 +58,11 @@ public class Decals
 		var version = reader.ReadUInt32();
 		Log.Info( $"Version: {version}" );
 
-		if ( version < 1 )
+		if ( version < 2 )
 		{
-			Log.Error( "Decal version is too old" );
-			return default;
+			// Log.Error( "Decal version is too old" );
+			// return default;
+			throw new System.Exception( "Decal version is too old" );
 		}
 
 		var width = reader.ReadInt32();
@@ -58,9 +74,12 @@ public class Decals
 		var author = reader.ReadUInt64();
 		Log.Info( $"Author: {author}" );
 
+		var paletteName = reader.ReadString();
+		Log.Info( $"Palette: {paletteName}" );
+
 		// seek to 64 for now
 		// var pos = reader.BaseStream.Position;
-		reader.BaseStream.Seek( 64, SeekOrigin.Begin );
+		// reader.BaseStream.Seek( 64, SeekOrigin.Begin );
 
 		Log.Info( reader.BaseStream.Length - reader.BaseStream.Position );
 		Log.Info( (width * height) );
@@ -75,44 +94,36 @@ public class Decals
 			Height = height,
 			Name = name,
 			Author = author,
+			Palette = paletteName,
 			Image = imageBytes
 		};
 
 		reader.Close();
 		stream.Close();
 
+		var palette = GetPalette( paletteName );
+
 		var texture = Texture.Create( decalData.Width, decalData.Height ).Finish();
 
-
-		Log.Info( $"Texture: {texture}" );
-
-		var allPixels = new Color32[decalData.Width * decalData.Height];
-
-		// 4x 0-63 colors per byte packed
-		for ( var i = 0; i < decalData.Image.Length; i++ )
-		{
-			/*var rawByte = decalData.Image[i];
-
-			Log.Info( $"Raw byte: {rawByte}" );
-
-			var values = new byte[4];
-			values[0] =
-
-			for ( var j = 0; j < values.Length; j++ )
-			{
-				Log.Info( $"Pixel {(i * 4) + j}: {values[j]}/64 {(int)values[j]}" );
-				var color = Palette[values[j]];
-				allPixels[(i * 4) + j] = color;
-			}*/
-
-			var color = palette.ElementAtOrDefault( decalData.Image[i] );
-			allPixels[i] = color;
-		}
+		var allPixels = ByteArrayToColor32( decalData.Image, palette );
 
 		texture.Update( allPixels, 0, 0, decalData.Width, decalData.Height );
 
 		decalData.Texture = texture;
 
 		return decalData;
+	}
+
+	public static Color32[] ByteArrayToColor32( byte[] byteArray, Color32[] palette )
+	{
+		var result = new Color32[byteArray.Length];
+
+		for ( var i = 0; i < byteArray.Length; i++ )
+		{
+			var color = palette.ElementAtOrDefault( byteArray[i] );
+			result[i] = color;
+		}
+
+		return result;
 	}
 }

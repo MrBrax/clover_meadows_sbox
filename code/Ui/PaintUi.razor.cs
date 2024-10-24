@@ -21,6 +21,8 @@ public partial class PaintUi
 	private Texture DrawTexture;
 	private Texture GridTexture;
 
+	private byte[] DrawTextureData;
+
 	private Panel Window;
 	private Panel CanvasContainer;
 	private Panel Canvas;
@@ -69,6 +71,7 @@ public partial class PaintUi
 	private void InitialiseTexture()
 	{
 		DrawTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
+		DrawTextureData = new byte[TextureSize * TextureSize];
 		Clear();
 
 		// draw line grid with guide lines
@@ -103,7 +106,17 @@ public partial class PaintUi
 		var files = FileSystem.Data.FindFile( "decals", "*.decal" );
 		foreach ( var file in files )
 		{
-			var decal = Utilities.Decals.ReadDecal( $"decals/{file}" );
+			Decals.DecalData decal;
+			try
+			{
+				decal = Utilities.Decals.ReadDecal( $"decals/{file}" );
+			}
+			catch ( Exception e )
+			{
+				Log.Error( e.Message );
+				continue;
+			}
+
 			Decals.Add( new DecalEntry { Decal = decal, ResourcePath = $"decals/{file}" } );
 		}
 	}
@@ -111,10 +124,24 @@ public partial class PaintUi
 	private void LoadDecal( string path )
 	{
 		Log.Info( $"Loading decal {path}" );
-		var decal = Utilities.Decals.ReadDecal( path );
+
+		Decals.DecalData decal;
+
+		try
+		{
+			decal = Utilities.Decals.ReadDecal( path );
+		}
+		catch ( Exception e )
+		{
+			Log.Error( e.Message );
+			return;
+		}
+
 		CurrentName = decal.Name;
+		PaletteName = decal.Palette;
 		CurrentFileName = Path.GetFileNameWithoutExtension( path );
 		DrawTexture.Update( decal.Texture.GetPixels(), 0, 0, decal.Width, decal.Height );
+		DrawTextureData = decal.Image;
 	}
 
 	private void SetColor( PanelEvent ev, int index )
@@ -133,6 +160,13 @@ public partial class PaintUi
 		{
 			Log.Info( "Unknown mouse button" );
 		}
+	}
+
+	private void SetPalette( string name )
+	{
+		PaletteName = name;
+		Palette = Utilities.Decals.GetPalette( PaletteName ).ToList();
+		PushByteDataToTexture();
 	}
 
 	private bool _isDrawing;
@@ -162,18 +196,6 @@ public partial class PaintUi
 		       mousePosition.y >= canvasPosition.y && mousePosition.y <= canvasPosition.y + canvasSize.y;
 	}
 
-	/*private void OnCanvasWheel( PanelEvent e )
-	{
-		Log.Info( "Wheel" );
-		if ( e is MousePanelEvent ev )
-		{
-			// CanvasSize += (int)(ev.MouseWheel.x * 10);
-			Canvas.Style.Width = CanvasSize;
-			Canvas.Style.Height = CanvasSize;
-		}
-		Panel.AddEventListener();
-	}*/
-
 	protected override void OnUpdate()
 	{
 		// TODO: mouse inputs don't work in panels
@@ -194,45 +216,19 @@ public partial class PaintUi
 		var brushSizeOffset = BrushSize == 1 ? 0 : MathF.Ceiling( BrushSize / 2f );
 
 		var brushPosition = new Vector2( mousePosition.x - brushSizeOffset, mousePosition.y - brushSizeOffset );
-		// var brushPosition = new Vector2( mousePosition.x, mousePosition.y );
 
 		var texturePixelScreenSize = CanvasSize / TextureSize;
 
 
-		// var crosshairX = mousePosition.x * texturePixelScreenSize;
-		// crosshairX -= BrushSize / 2f * texturePixelScreenSize;
-		// 
-		// var crosshairY = mousePosition.y * texturePixelScreenSize;
-		// crosshairY -= BrushSize / 2f * texturePixelScreenSize;
-
 		var crosshairX = Canvas.Box.Left * Panel.ScaleFromScreen;
 		crosshairX += texturePixelScreenSize * brushPosition.x;
 		crosshairX += CanvasContainer.ScrollOffset.x * Panel.ScaleFromScreen;
-		// crosshairX += (brushPosition.x / DrawTexture.Width * Canvas.Box.Rect.Width) * Panel.ScaleFromScreen;
-
-		// crosshairX -= brushSizeOffset * texturePixelScreenSize;
-
 
 		var crosshairY = Canvas.Box.Top * Panel.ScaleFromScreen;
 		crosshairY += texturePixelScreenSize * brushPosition.y;
 		crosshairY += CanvasContainer.ScrollOffset.y * Panel.ScaleFromScreen;
 
-		// crosshairY += (brushPosition.y / DrawTexture.Height * Canvas.Box.Rect.Height) * Panel.ScaleFromScreen;
-
-		// crosshairY -= brushSizeOffset * texturePixelScreenSize;
 		var crosshairSize = texturePixelScreenSize * BrushSize;
-
-		/*var crosshairX = (mousePosition.x / DrawTexture.Width * Canvas.Box.Rect.Width) * Panel.ScaleFromScreen;
-		crosshairX += Canvas.Box.Rect.Position.x * Panel.ScaleFromScreen;
-
-		var crosshairY = (mousePosition.y / DrawTexture.Height * Canvas.Box.Rect.Height) * Panel.ScaleFromScreen;
-		crosshairY += Canvas.Box.Rect.Position.y * Panel.ScaleFromScreen;
-
-		var crosshairSize = (Canvas.Box.Rect.Width / TextureSize) * Panel.ScaleFromScreen;
-		crosshairSize *= BrushSize;*/
-
-		// Crosshair.Style.Set( "left", $"{crosshairX}px" );
-		// Crosshair.Style.Set( "top", $"{crosshairY}px" );
 
 		Crosshair.Style.Left = Length.Pixels( crosshairX );
 		Crosshair.Style.Top = Length.Pixels( crosshairY );
@@ -250,9 +246,11 @@ public partial class PaintUi
 
 	private void Draw( Vector2 brushPosition )
 	{
-		DrawTexture.Update( GetCurrentColor(),
-			new Rect( brushPosition.x, brushPosition.y, BrushSize,
-				BrushSize ) );
+		var rect = new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize );
+		DrawTexture.Update( GetCurrentColor(), rect );
+
+		PushRectToByteData( rect );
+
 
 		// Draw line between last and current position
 		if ( _lastBrushPosition.HasValue && _lastBrushPosition.Value != brushPosition )
@@ -261,6 +259,26 @@ public partial class PaintUi
 		}
 
 		_lastBrushPosition = brushPosition;
+	}
+
+	private void PushByteDataToTexture()
+	{
+		Log.Info( DrawTextureData.Length );
+		DrawTexture.Update( Utilities.Decals.ByteArrayToColor32( DrawTextureData, Palette.ToArray() ), 0, 0,
+			DrawTexture.Width,
+			DrawTexture.Height );
+	}
+
+	private void PushRectToByteData( Rect rect )
+	{
+		for ( var x = (int)rect.Left; x < rect.Left + rect.Width; x++ )
+		{
+			for ( var y = (int)rect.Top; y < rect.Top + rect.Height; y++ )
+			{
+				var index = x + y * DrawTexture.Width;
+				DrawTextureData[index] = (byte)CurrentPaletteIndex;
+			}
+		}
 	}
 
 	/// <summary>
@@ -285,7 +303,9 @@ public partial class PaintUi
 
 		while ( true )
 		{
-			DrawTexture.Update( GetCurrentColor(), new Rect( x0, y0, BrushSize, BrushSize ) );
+			var rect = new Rect( x0, y0, BrushSize, BrushSize );
+			DrawTexture.Update( GetCurrentColor(), rect );
+			PushRectToByteData( rect );
 
 			if ( x0 == x1 && y0 == y1 )
 			{
@@ -363,7 +383,7 @@ public partial class PaintUi
 		writer.Write( 'T' );
 		// writer.Write( 0 );
 
-		writer.Write( (int)1 ); // version
+		writer.Write( (int)2 ); // version
 
 		writer.Write( DrawTexture.Width ); // width
 		writer.Write( DrawTexture.Height ); // height
@@ -376,9 +396,11 @@ public partial class PaintUi
 
 		writer.Write( Game.SteamId ); // author
 
-		writer.Seek( 64, SeekOrigin.Begin );
+		writer.Write( PaletteName ); // palette name
 
-		var texturePixels = DrawTexture.GetPixels();
+		// writer.Seek( 64, SeekOrigin.Begin );
+
+		/*var texturePixels = DrawTexture.GetPixels();
 
 		for ( var i = 0; i < (32 * 32); i++ )
 		{
@@ -390,7 +412,9 @@ public partial class PaintUi
 			}
 
 			writer.Write( (byte)paletteColor );
-		}
+		}*/
+
+		writer.Write( DrawTextureData );
 
 		writer.Flush();
 
@@ -425,6 +449,9 @@ public partial class PaintUi
 	private void Clear()
 	{
 		DrawTexture.Update( Palette[RightPaletteIndex], new Rect( 0, 0, DrawTexture.Width, DrawTexture.Height ) );
+		DrawTextureData = Enumerable.Repeat( (byte)RightPaletteIndex, DrawTexture.Width * DrawTexture.Height )
+			.ToArray();
+
 		_lastBrushPosition = null;
 	}
 

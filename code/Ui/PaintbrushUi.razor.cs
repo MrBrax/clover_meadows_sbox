@@ -29,10 +29,20 @@ public partial class PaintbrushUi : IPaintEvent, IEquipChanged
 		foreach ( var path in Paintbrush.GetTextures() )
 		{
 			Log.Info( $"Loading decal {path}" );
-			Decals.Add( new PaintUi.DecalEntry()
+
+			Utilities.Decals.DecalData decal;
+
+			try
 			{
-				Decal = Utilities.Decals.ReadDecal( $"decals/{path}" ), ResourcePath = $"decals/{path}"
-			} );
+				decal = Utilities.Decals.ReadDecal( $"decals/{path}" );
+			}
+			catch ( Exception e )
+			{
+				Log.Error( e.Message );
+				continue;
+			}
+
+			Decals.Add( new PaintUi.DecalEntry() { Decal = decal, ResourcePath = $"decals/{path}" } );
 		}
 
 		Log.Info( $"Paintbrush has {Decals.Count} textures" );

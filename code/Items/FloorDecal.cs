@@ -27,7 +27,17 @@ public class FloorDecal : Component, IPersistent, IPaintEvent
 		{
 			var material = Material.Create( $"{TexturePath}.vmat", "shaders/floor_decal.shader" );
 
-			var decal = Decals.ReadDecal( TexturePath );
+			Decals.DecalData decal;
+
+			try
+			{
+				decal = Decals.ReadDecal( TexturePath );
+			}
+			catch ( System.Exception e )
+			{
+				Log.Error( e.Message );
+				return;
+			}
 
 			material.Set( "Color", decal.Texture );
 
