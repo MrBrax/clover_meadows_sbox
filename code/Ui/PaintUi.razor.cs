@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using Clover.Items;
 using Clover.Player;
@@ -239,9 +240,68 @@ public partial class PaintUi
 		if ( _isDrawing )
 		{
 			// DrawTexture.Update( GetCurrentColor(), (int)mousePosition.x, (int)mousePosition.y );
-			DrawTexture.Update( GetCurrentColor(),
-				new Rect( brushPosition.x, brushPosition.y, BrushSize,
-					BrushSize ) );
+			Draw( brushPosition );
+		}
+	}
+
+	private Vector2? _lastBrushPosition;
+
+	private void Draw( Vector2 brushPosition )
+	{
+		DrawTexture.Update( GetCurrentColor(),
+			new Rect( brushPosition.x, brushPosition.y, BrushSize,
+				BrushSize ) );
+
+		// Draw line between last and current position
+		if ( _lastBrushPosition.HasValue && _lastBrushPosition.Value != brushPosition )
+		{
+			DrawLineBetween( _lastBrushPosition.Value, brushPosition );
+		}
+
+		_lastBrushPosition = brushPosition;
+	}
+
+	/// <summary>
+	///  Draw a line between two points using Bresenham's line algorithm
+	/// </summary>
+	/// <param name="lastBrushPosition"></param>
+	/// <param name="brushPosition"></param>
+	private void DrawLineBetween( Vector2 lastBrushPosition, Vector2 brushPosition )
+	{
+		var x0 = (int)lastBrushPosition.x;
+		var y0 = (int)lastBrushPosition.y;
+		var x1 = (int)brushPosition.x;
+		var y1 = (int)brushPosition.y;
+
+		var dx = Math.Abs( x1 - x0 );
+		var dy = Math.Abs( y1 - y0 );
+
+		var sx = x0 < x1 ? 1 : -1;
+		var sy = y0 < y1 ? 1 : -1;
+
+		var err = dx - dy;
+
+		while ( true )
+		{
+			DrawTexture.Update( GetCurrentColor(), new Rect( x0, y0, BrushSize, BrushSize ) );
+
+			if ( x0 == x1 && y0 == y1 )
+			{
+				break;
+			}
+
+			var e2 = 2 * err;
+			if ( e2 > -dy )
+			{
+				err -= dy;
+				x0 += sx;
+			}
+
+			if ( e2 < dx )
+			{
+				err += dx;
+				y0 += sy;
+			}
 		}
 	}
 
@@ -272,6 +332,7 @@ public partial class PaintUi
 	{
 		Log.Info( "MouseUp" );
 		_isDrawing = false;
+		_lastBrushPosition = null;
 	}
 
 	private void Save()
@@ -362,6 +423,7 @@ public partial class PaintUi
 	private void Clear()
 	{
 		DrawTexture.Update( Palette[RightPaletteIndex], new Rect( 0, 0, DrawTexture.Width, DrawTexture.Height ) );
+		_lastBrushPosition = null;
 	}
 
 	private void ZoomIn()
