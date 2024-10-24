@@ -15,7 +15,9 @@
 			<div class="hsplit">
 				<div class="main">
 					<div class="canvas">
-						<Image @ref=" Canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
+						<Image class="canvas-texture" @ref="Canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
+						@*<Image class="grid" @ref="Grid" Texture=@GridTexture/>*@
+						<div @ref="Crosshair" class="crosshair"></div>
 					</div>
 					<div class="toolbar">
 						<div class="current-colors">
@@ -35,7 +37,7 @@
 							<TextEntry class="paint-input" Value:bind="@CurrentName" placeholder="Name"/>
 
 							<button class="paint-button" @onclick=@( () => Save() )>Save</button>
-							<button class="paint-button" @onclick=@( () => Clear() )>Clear</button>
+							<button class="paint-button" @onclick=@( () => InitialiseTexture() )>Clear</button>
 						</div>
 					</div>
 				</div>

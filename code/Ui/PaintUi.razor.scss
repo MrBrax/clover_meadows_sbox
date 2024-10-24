@@ -5,10 +5,10 @@ PaintUi
 	.paint-window {
 
 		position: absolute;
-		top: 50px;
-		left: 50px;
-		right: 50px;
-		bottom: 50px;
+		top: 40px;
+		left: 40px;
+		right: 40px;
+		bottom: 40px;
 		// box-shadow: 0 0 80px black;
 		
 		background-color: #ccc;
@@ -115,24 +115,46 @@ PaintUi
 	}
 	
 	.canvas {
+		position: relative;
 		background-color: #aaa;
-		padding: 5px;
+		padding: 10px;
 		flex-grow: 1;
-		Image {
-			width: 600px;
-			height: 600px;
-			border: 1px solid black;
+		min-height: 670px;
+		
+		overflow: hidden;
+		
+		.canvas-texture {
+			width: 650px;
+			height: 650px;
 			image-rendering: pixelated;
+		}
+		
+		.grid {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			width: 650px;
+			height: 650px;
+			pointer-events: none;
+			image-rendering: trilinear;
+		}
+		
+		.crosshair {
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			border: 1px solid black;
+			pointer-events: none;
 		}
 	}
 	
 	.palette {
 		flex-wrap: wrap;
-		// gap: 1px;
+		gap: 2px;
 		
 		button {
-			width: 25px;
-			height: 25px;
+			width: 30px;
+			height: 30px;
 			border: 2px solid;
 			border-left-color: #777;
 			border-top-color: #777;

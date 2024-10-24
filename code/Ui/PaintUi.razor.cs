@@ -17,8 +17,11 @@ public partial class PaintUi
 	private List<DecalEntry> Decals = new();
 	
 	private Texture DrawTexture;
+	private Texture GridTexture;
 
 	private Panel Canvas;
+	private Panel Grid;
+	private Panel Crosshair;
 	
 	private List<Color32> Palette = new List<Color32>();
 	
@@ -28,6 +31,8 @@ public partial class PaintUi
 	
 	private string CurrentFileName = "";
 	private string CurrentName = "";
+	
+	private int TextureSize = 32;
 	
 	private Color32 ForegroundColor => Palette.ElementAtOrDefault(LeftPaletteIndex);
 	private Color32 BackgroundColor => Palette.ElementAtOrDefault(RightPaletteIndex);
@@ -43,15 +48,41 @@ public partial class PaintUi
 		
 		Palette = FloorDecal.GetPalette().ToList();
 
-		DrawTexture = Texture.Create( 32, 32 ).WithDynamicUsage().Finish();
-
-		Clear();
+		InitialiseTexture();
 
 		Panel.ButtonInput = PanelInputType.UI;
 
 		Enabled = false;
 		
 		PopulateDecals();
+	}
+
+	private void InitialiseTexture()
+	{
+		DrawTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
+		Clear();
+		
+		// draw line grid with guide lines
+		GridTexture = Texture.Create( 1024, 1024 ).Finish();
+		var pixels = new Color32[1024 * 1024];
+		for ( var x = 0; x < 1024; x++ )
+		{
+			for ( var y = 0; y < 1024; y++ )
+			{
+				var color = Color.Transparent;
+				if ( x % 32 == 0 || y % 32 == 0 )
+				{
+					color = Color.Gray;
+				}
+				if ( x % 128 == 0 || y % 128 == 0 )
+				{
+					color = Color.White;
+				}
+				pixels[x + y * 1024] = color;
+			}
+		}
+		GridTexture.Update( pixels );
+		
 	}
 
 	private void PopulateDecals()
@@ -115,13 +146,43 @@ public partial class PaintUi
 		return new Vector2( x, y );
 		
 	}
+	
+	private bool IsMouseInsideCanvas()
+	{
+		var mousePosition = Mouse.Position;
+		var canvasPosition = Canvas.Box.Rect.Position;
+		var canvasSize = Canvas.Box.Rect.Size;
+
+		return mousePosition.x >= canvasPosition.x && mousePosition.x <= canvasPosition.x + canvasSize.x &&
+		       mousePosition.y >= canvasPosition.y && mousePosition.y <= canvasPosition.y + canvasSize.y;
+	}
 
 	protected override void OnUpdate()
 	{
+		
+		if ( !IsMouseInsideCanvas() )
+		{
+			return;
+		}
+		
+		var mousePosition = GetCurrentMousePixel();
+		
+		var crosshairX = (mousePosition.x / DrawTexture.Width * Canvas.Box.Rect.Width) * Panel.ScaleFromScreen;
+		crosshairX += 10;
+		
+		var crosshairY = (mousePosition.y / DrawTexture.Height * Canvas.Box.Rect.Height) * Panel.ScaleFromScreen;
+		crosshairY += 10;
+		
+		var crosshairSize = ( Canvas.Box.Rect.Width / TextureSize ) * Panel.ScaleFromScreen;
+		
+		Crosshair.Style.Set( "left", $"{crosshairX}px" );
+		Crosshair.Style.Set( "top", $"{crosshairY}px" );
+		Crosshair.Style.Width = crosshairSize;
+		Crosshair.Style.Height = crosshairSize;
 
 		if ( _isDrawing )
 		{
-			var mousePosition = GetCurrentMousePixel();
+			
 			DrawTexture.Update( GetCurrentColor(), (int)mousePosition.x, (int)mousePosition.y );
 		}
 		
