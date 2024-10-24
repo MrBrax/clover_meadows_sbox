@@ -206,11 +206,12 @@ public partial class PaintUi
 
 			if ( preview )
 			{
-				PreviewTexture.Update( PreviewColor, new Rect( circleX, circleY, 1, 1 ) );
+				PreviewTexture.Update( PreviewColor,
+					new Rect( (int)Math.Round( circleX ), (int)Math.Round( circleY ), 1, 1 ) );
 			}
 			else
 			{
-				PushRectToBoth( new Rect( circleX, circleY, 1, 1 ) );
+				PushRectToBoth( new Rect( (int)Math.Round( circleX ), (int)Math.Round( circleY ), 1, 1 ) );
 			}
 		}
 	}
