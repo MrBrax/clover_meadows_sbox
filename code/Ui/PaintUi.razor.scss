@@ -126,6 +126,14 @@ PaintUi {
         }
     }
 
+    .section-title {
+        font-family: Itim;
+        font-size: 25px;
+        background-image: linear-gradient(to right, navy, #1084d0);
+        color: white;
+        padding: 2px 10px;
+    }
+
     .menu {
         width: 200px;
         flex-direction: column;
@@ -181,10 +189,15 @@ PaintUi {
         gap: 10px;
         flex-shrink: 0;
 
+        flex-direction: column;
+
+        overflow: scroll;
+
         .decals {
             flex-direction: column;
             gap: 5px;
-            overflow: scroll;
+
+            flex-shrink: 0;
 
             .decal {
                 padding: 5px;
@@ -193,6 +206,8 @@ PaintUi {
 
                 cursor: pointer;
 
+                flex-shrink: 0;
+
                 &:hover {
                     background-color: #fff;
                 }
@@ -200,6 +215,39 @@ PaintUi {
                 Image {
                     width: 150px;
                     height: 150px;
+                    background-size: contain;
+                    image-rendering: pixelated;
+                }
+
+                font-family: Itim;
+                font-size: 25px;
+            }
+        }
+
+        .images {
+            flex-direction: column;
+            gap: 5px;
+
+            flex-shrink: 0;
+
+            .image {
+                padding: 5px;
+                background-color: #eee;
+                flex-direction: column;
+
+                flex-shrink: 0;
+
+                cursor: pointer;
+
+                align-items: center;
+
+                &:hover {
+                    background-color: #fff;
+                }
+
+                Image {
+                    width: 100px;
+                    height: 100px;
                     background-size: contain;
                     image-rendering: pixelated;
                 }

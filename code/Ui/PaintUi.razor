@@ -69,7 +69,7 @@
 					}
 
 					<section>
-						<h2>Palettes</h2>
+						<h2 class="section-title">Palettes</h2>
 						@foreach ( var palette in Utilities.Decals.GetPalettes() )
 						{
 							<button @onclick=@( () => SetPalette( palette ) ) class="paint-button small @( palette == PaletteName ? "active" : "" )">
@@ -113,6 +113,7 @@
 				</div>
 				<div class="sidebar">
 					<div class="decals">
+						<h2 class="section-title">Decals</h2>
 						@foreach ( var decal in Decals )
 						{
 							<button @onclick=@( () => LoadDecal( decal.ResourcePath ) ) class="decal">
@@ -121,7 +122,16 @@
 							</button>
 						}
 						<button class="paint-button" @onclick=@( () => PopulateDecals() )>Refresh (@Decals.Count)</button>
-
+					</div>
+					<div class="images">
+						<h2 class="section-title">Images</h2>
+						@foreach ( var image in Images )
+						{
+							<button @onclick=@( () => LoadImage( image ) ) class="image">
+								<Image Texture=@image/>
+								<div class="image-name">@image.ResourceName</div>
+							</button>
+						}
 					</div>
 				</div>
 			</div>

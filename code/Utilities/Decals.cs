@@ -47,6 +47,27 @@ public class Decals
 		return palette;
 	}
 
+	public static int GetClosestPaletteColor( Color32[] palette, Color32 texturePixel )
+	{
+		var minDistance = float.MaxValue;
+		var closestColor = -1;
+
+		for ( var i = 0; i < palette.Length; i++ )
+		{
+			var paletteColor = palette[i];
+			var distance =
+				new Vector3( texturePixel.r, texturePixel.g, texturePixel.b ).Distance( new Vector3( paletteColor.r,
+					paletteColor.g, paletteColor.b ) );
+			if ( distance < minDistance )
+			{
+				minDistance = distance;
+				closestColor = i;
+			}
+		}
+
+		return closestColor;
+	}
+
 	public static DecalData ReadDecal( string filePath )
 	{
 		Log.Info( "Loading palette" );
