@@ -101,6 +101,11 @@ public partial class PaintUi
 		Clear();
 	}
 
+	private void New()
+	{
+		ResetPaint();
+	}
+
 	private void InitialiseTexture()
 	{
 		DrawTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();

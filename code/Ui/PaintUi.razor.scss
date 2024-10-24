@@ -112,12 +112,16 @@ PaintUi {
 
     .paint-input {
         font-family: Roboto;
-        font-size: 25px;
+        font-size: 20px;
         // padding: 5px;
         background-color: #eee;
         border: 1px solid #555;
         border-bottom-color: #eee;
         border-right-color: #eee;
+
+        .content-label, .placeholder {
+            padding: 5px;
+        }
 
         .placeholder {
             opacity: 1;
@@ -132,24 +136,28 @@ PaintUi {
         background-image: linear-gradient(to right, navy, #1084d0);
         color: white;
         padding: 2px 10px;
+        flex-shrink: 0;
     }
 
     .menu {
-        width: 200px;
+        width: 250px;
         flex-direction: column;
         gap: 15px;
+
+        overflow: scroll;
+        flex-shrink: 0;
 
         section {
             flex-direction: column;
             gap: 5px;
 
-            h2 {
+            /* h2 {
                 font-family: Itim;
                 font-size: 25px;
                 background-image: linear-gradient(to right, navy, #1084d0);
                 color: white;
                 padding: 2px 10px;
-            }
+            }*/
 
             .tools {
                 flex-wrap: wrap;
@@ -157,7 +165,7 @@ PaintUi {
 
                 .paint-button {
                     aspect-ratio: 1;
-                    width: 68px;
+                    width: 78px;
 
                     Image {
                         image-rendering: trilinear;
