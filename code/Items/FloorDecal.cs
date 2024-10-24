@@ -1,12 +1,13 @@
 ﻿using System.IO;
 using System.Text;
 using Clover.Persistence;
+using Clover.Ui;
 using Sandbox.Diagnostics;
 
 namespace Clover.Items;
 
 [Category( "Clover/Items" )]
-public class FloorDecal : Component, IPersistent
+public class FloorDecal : Component, IPersistent, IPaintEvent
 {
 	[RequireComponent] public WorldItem WorldItem { get; private set; }
 
@@ -166,5 +167,14 @@ public class FloorDecal : Component, IPersistent
 	{
 		TexturePath = item.GetArbitraryData<string>( "TexturePath" );
 		UpdateDecal();
+	}
+
+	void IPaintEvent.OnFileSaved( string path )
+	{
+		if ( TexturePath == path )
+		{
+			Log.Info( "Updating decal" );
+			UpdateDecal();
+		}
 	}
 }

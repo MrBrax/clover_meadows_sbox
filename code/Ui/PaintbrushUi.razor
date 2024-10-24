@@ -1,66 +1,21 @@
-@using System
 @using Clover.Carriable
 @using Clover.Components
-@using Clover.Data
-@using Clover.Items
 @using Clover.Player
-@using Sandbox;
-@using Sandbox.Network
 @using Sandbox.UI;
-@inherits Panel
+@inherits PanelComponent
 @namespace Clover.Ui
 @attribute [StyleSheet]
 
-<root>
-	@foreach ( var decal in Decals )
-	{
-		<Image Texture=@decal.Decal.Texture class="@( Paintbrush.CurrentTexturePath == decal.ResourcePath ? "selected" : "" )"/>
-	}
-</root>
-
-@code {
-	
-	private List<PaintUi.DecalEntry> Decals = new();
-
-	private Paintbrush Paintbrush => PlayerCharacter.Local.Equips.GetEquippedItem<Paintbrush>( Equips.EquipSlot.Tool );
-
-	protected override void OnAfterTreeRender( bool firstTime )
-	{
-		base.OnAfterTreeRender( firstTime );
-		
-		if ( firstTime )
-		{
-			Refresh();
-		}
-	}
-
-	private void Refresh()
-	{
-		if ( !Paintbrush.IsValid() )
-		{
-			Log.Warning( "Paintbrush is not valid" );
-			return;
-		}
-		
-		Decals.Clear();
-
-		foreach ( var path in Paintbrush.GetTextures() )
-		{
-			// Textures.Add( Texture.Load( FileSystem.Data, $"decals/{path}" ) );
-			Decals.Add( new PaintUi.DecalEntry()
-			{
-				Decal = FloorDecal.ReadDecal( $"decals/{path}" ),
-				ResourcePath = path
-			} );
-		}
-		
-		Log.Info( $"Paintbrush has {Decals.Count} textures" );
-
-	}
-
-	protected override int BuildHash()
-	{
-		return HashCode.Combine( Decals, Paintbrush.CurrentTexturePath );
-	}
-
+@if ( !PlayerCharacter.Local.IsValid() || !PlayerCharacter.Local.Equips.HasEquippedItem<Paintbrush>( Equips.EquipSlot.Tool ) )
+{
+	return;
 }
+
+<root>
+	<div class="paintbrush-bar">
+		@foreach ( var decal in Decals )
+		{
+			<Image Texture=@decal.Decal.Texture class="@( Paintbrush.CurrentTexturePath == decal.ResourcePath ? "selected" : "" )"/>
+		}
+	</div>
+</root>

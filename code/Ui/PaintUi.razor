@@ -29,8 +29,8 @@
 							}
 						</div>
 						<div class="actions">
-							<TextEntry class="paint-input" Value:bind="@CurrentFileName"/>
-							<TextEntry class="paint-input" Value:bind="@CurrentName"/>
+							<TextEntry class="paint-input" Value:bind="@CurrentFileName" placeholder="Filename" />
+							<TextEntry class="paint-input" Value:bind="@CurrentName" placeholder="Name" />
 
 							<button class="paint-button" @onclick=@( () => Save() )>Save</button>
 							<button class="paint-button" @onclick=@( () => Clear() )>Clear</button>
@@ -43,7 +43,7 @@
 						{
 							<button @onclick=@( () => LoadDecal( decal.ResourcePath ) ) class="decal">
 								<Image Texture=@decal.Decal.Texture/>
-								@decal.Decal.Name
+								<div class="decal-name">@decal.Decal.Name</div>
 							</button>
 						}
 						<button class="paint-button" @onclick=@( () => PopulateDecals() )>Refresh (@Decals.Count)</button>

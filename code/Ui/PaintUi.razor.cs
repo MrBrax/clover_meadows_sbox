@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using Clover.Items;
+using Clover.Player;
 using Sandbox.UI;
 
 namespace Clover.Ui;
@@ -25,8 +26,8 @@ public partial class PaintUi
 	private int RightPaletteIndex = 1;
 	private int CurrentPaletteIndex = 0;
 	
-	private string CurrentFileName = "test";
-	private string CurrentName = "Test Pattern AAA";
+	private string CurrentFileName = "";
+	private string CurrentName = "";
 	
 	private Color32 ForegroundColor => Palette.ElementAtOrDefault(LeftPaletteIndex);
 	private Color32 BackgroundColor => Palette.ElementAtOrDefault(RightPaletteIndex);
@@ -157,6 +158,18 @@ public partial class PaintUi
 	private void Save()
 	{
 		
+		if ( string.IsNullOrEmpty( CurrentFileName ) )
+		{
+			PlayerCharacter.Local.Notify( Notifications.NotificationType.Error, "No file name" );
+			return;
+		}
+		
+		if ( string.IsNullOrEmpty( CurrentName ) )
+		{
+			PlayerCharacter.Local.Notify( Notifications.NotificationType.Error, "No name" );
+			return;
+		}
+		
 		var data = new byte[64 + (32 * 32)];
 
 		// var stream = new MemoryStream( data );
@@ -205,6 +218,8 @@ public partial class PaintUi
 		
 		PopulateDecals();
 		
+		Scene.RunEvent<IPaintEvent>( x => x.OnFileSaved( $"decals/{CurrentFileName}.decal" ) );
+		
 	}
 
 	private int GetClosestPaletteColor( Color32 texturePixel )
@@ -232,4 +247,9 @@ public partial class PaintUi
 		DrawTexture.Update( Palette[ RightPaletteIndex ], new Rect(0, 0, DrawTexture.Width, DrawTexture.Height) );
 	}
 	
+}
+
+public interface IPaintEvent
+{
+	public void OnFileSaved( string path );
 }

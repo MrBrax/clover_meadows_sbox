@@ -203,8 +203,11 @@
         },
         {
           "__type": "Clover.Ui.PaintUi",
-          "__guid": "1fbe1934-c822-482e-af8b-dafae885bad5",
-          "MyStringValue": "Hello World!"
+          "__guid": "1fbe1934-c822-482e-af8b-dafae885bad5"
+        },
+        {
+          "__type": "Clover.Ui.PaintbrushUi",
+          "__guid": "e533ce68-9df2-4b37-81df-4713a2181882"
         }
       ]
     },

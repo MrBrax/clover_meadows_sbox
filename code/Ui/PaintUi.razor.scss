@@ -1,16 +1,22 @@
 PaintUi
 {
-	position: absolute;
-	top: 20px;
-	left: 20px;
+	
+	
 	
 	pointer-events: all;
 	
 	.paint-window {
+
+		position: absolute;
+		top: 50px;
+		left: 50px;
+		right: 50px;
+		bottom: 50px;
+		// box-shadow: 0 0 80px black;
+		
 		background-color: #ccc;
 		gap: 10px;
 		padding: 5px;
-		width: 1400px;
 		
 		border: 1px solid #444;
 		border-top-color: #eee;
@@ -78,6 +84,14 @@ PaintUi
 		border: 1px solid #555;
 		border-bottom-color: #eee;
 		border-right-color: #eee;
+		
+		caret-color: black;
+		
+		.placeholder {
+			opacity: 1;
+			color: #999;
+			font-style: italic;
+		}
 	}
 	
 	.sidebar {

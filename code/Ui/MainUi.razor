@@ -76,11 +76,7 @@
 				}
 			</div>
 		}
-
-		@if ( PlayerCharacter.Local.Equips.HasEquippedItem<Paintbrush>( Equips.EquipSlot.Tool ) )
-		{
-			<PaintbrushUi/>
-		}
+		
 	}
 	else if ( string.IsNullOrEmpty( PlayerCharacter.SpawnPlayerId ) )
 	{
