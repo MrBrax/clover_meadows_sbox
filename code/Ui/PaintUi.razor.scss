@@ -1,8 +1,8 @@
 PaintUi
 {
 	position: absolute;
-	top: 50px;
-	left: 50px;
+	top: 20px;
+	left: 20px;
 	
 	pointer-events: all;
 	
@@ -11,11 +11,73 @@ PaintUi
 		gap: 10px;
 		padding: 5px;
 		width: 1400px;
+		
+		border: 1px solid #444;
+		border-top-color: #eee;
+		border-left-color: #eee;
+	}
+	
+	.hsplit {
+		flex-direction: row;
+		gap: 10px;
+	}
+	
+	.vsplit {
+		flex-direction: column;
+		gap: 10px;
+	}
+	
+	.header {
+		flex-direction: row;
+		gap: 10px;
+		background-image: linear-gradient(to right, #143f8f, #668cd6);
+		color: white;
+		padding: 5px;
+		
+		h1 {
+			flex-grow: 1;
+			padding: 0 5px;
+			align-items: center;
+			font-family: Itim;
+			font-size: 40px;
+		}
+		
+		button {
+			background-color: #bbb;
+			border: 1px solid #777;
+			border-top-color: #eee;
+			border-left-color: #eee;
+			color: black;
+			padding: 5px;
+		}
 	}
 	
 	.main {
 		flex-direction: column;
 		gap: 10px;
+	}
+	
+	.paint-button {
+		font-family: Roboto;
+		font-size: 25px;
+		padding: 5px;
+		align-items: center;
+		align-content: center;
+		justify-content: center;
+		background-color: #bbb;
+		border: 1px solid #777;
+		border-top-color: #eee;
+		border-left-color: #eee;
+	}
+	
+	.paint-input {
+		font-family: Roboto;
+		font-size: 25px;
+		// padding: 5px;
+		background-color: #eee;
+		border: 1px solid #555;
+		border-bottom-color: #eee;
+		border-right-color: #eee;
 	}
 	
 	.sidebar {
@@ -107,10 +169,6 @@ PaintUi
 		flex-shrink: 0;
 		flex-direction: column;
 		gap: 5px;
-		button {
-			padding: 5px;
-			background-color: deepskyblue;
-		}
 	}
 	
 }
