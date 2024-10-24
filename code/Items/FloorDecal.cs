@@ -1,4 +1,7 @@
-﻿using Clover.Persistence;
+﻿using System.IO;
+using System.Text;
+using Clover.Persistence;
+using Sandbox.Diagnostics;
 
 namespace Clover.Items;
 
@@ -12,22 +15,184 @@ public class FloorDecal : Component, IPersistent
 	[Property] public ModelRenderer ModelRenderer { get; set; }
 
 	public string TexturePath;
+	
+	// 64 colors in the palette
+	public Color[] Palette = new Color[64]
+	{
+		new Color( 0, 0, 0, 0 ),
+		new Color( 0, 0, 0, 255 ),
+		new Color( 0, 0, 85, 255 ),
+		new Color( 0, 0, 170, 255 ),
+		new Color( 85, 0, 0, 255 ),
+		new Color( 85, 0, 85, 255 ),
+		new Color( 85, 0, 170, 255 ),
+		new Color( 85, 0, 255, 255 ),
+		new Color( 0, 85, 0, 255 ),
+		new Color( 0, 85, 85, 255 ),
+		new Color( 0, 85, 170, 255 ),
+		new Color( 0, 85, 255, 255 ),
+		new Color( 85, 85, 0, 255 ),
+		new Color( 85, 85, 85, 255 ),
+		new Color( 85, 85, 170, 255 ),
+		new Color( 85, 85, 255, 255 ),
+		new Color( 170, 0, 0, 255 ),
+		new Color( 170, 0, 85, 255 ),
+		new Color( 170, 0, 170, 255 ),
+		new Color( 170, 0, 255, 255 ),
+		new Color( 255, 0, 0, 255 ),
+		new Color( 255, 0, 85, 255 ),
+		new Color( 255, 0, 170, 255 ),
+		new Color( 255, 0, 255, 255 ),
+		new Color( 170, 85, 0, 255 ),
+		new Color( 170, 85, 85, 255 ),
+		new Color( 170, 85, 170, 255 ),
+		new Color( 170, 85, 255, 255 ),
+		new Color( 255, 85, 0, 255 ),
+		new Color( 255, 85, 85, 255 ),
+		new Color( 255, 85, 170, 255 ),
+		new Color( 255, 85, 255, 255 ),
+		new Color( 170, 170, 0, 255 ),
+		new Color( 170, 170, 85, 255 ),
+		new Color( 170, 170, 170, 255 ),
+		new Color( 170, 170, 255, 255 ),
+		new Color( 255, 170, 0, 255 ),
+		new Color( 255, 170, 85, 255 ),
+		new Color( 255, 170, 170, 255 ),
+		new Color( 255, 170, 255, 255 ),
+		new Color( 0, 255, 0, 255 ),
+		new Color( 0, 255, 85, 255 ),
+		new Color( 0, 255, 170, 255 ),
+		new Color( 0, 255, 255, 255 ),
+		new Color( 85, 255, 0, 255 ),
+		new Color( 85, 255, 85, 255 ),
+		new Color( 85, 255, 170, 255 ),
+		new Color( 85, 255, 255, 255 ),
+		new Color( 170, 255, 0, 255 ),
+		new Color( 170, 255, 85, 255 ),
+		new Color( 170, 255, 170, 255 ),
+		new Color( 170, 255, 255, 255 ),
+		new Color( 255, 255, 0, 255 ),
+		new Color( 255, 255, 85, 255 ),
+		new Color( 255, 255, 170, 255 ),
+		new Color( 255, 255, 255, 255 ),
+		new Color( 0, 0, 0, 0 ),
+		new Color( 0, 0, 0, 255 ),
+		new Color( 0, 0, 85, 255 ),
+		new Color( 0, 0, 170, 255 ),
+		new Color( 85, 0, 0, 255 ),
+		new Color( 85, 0, 85, 255 ),
+		new Color( 85, 0, 170, 255 ),
+		new Color( 85, 0, 255, 255 ),
+	};
+
+	public struct DecalData
+	{
+		public int Width;
+		public int Height;
+
+		public string Name;
+
+		public ulong Author;
+
+		public byte[] Image;
+	}
 
 	public void UpdateDecal()
 	{
 		// Update decal
 
-		var material = Material.Create( $"{TexturePath}.vmat", "shaders/floor_decal.shader" );
+		if ( TexturePath.EndsWith( ".decal" ) )
+		{
+			Log.Info( "Loading decal" );
 
-		// material.Set( "Normal", Texture.Load( FileSystem.Mounted, "materials/default/default_normal.tga" ) );
-		// material.Set( "Roughness", Texture.Load( FileSystem.Mounted, "materials/default/default_rough.tga" ) );
-		// material.Set( "Metalness", Texture.Load( FileSystem.Mounted, "materials/default/default_metal.tga" ) );
-		// material.Set( "AmbientOcclusion", Texture.Load( FileSystem.Mounted, "materials/default/default_ao.tga" ) );
+			var stream = FileSystem.Data.OpenRead( TexturePath );
+			var reader = new BinaryReader( stream, Encoding.UTF8 );
 
-		material.Set( "Color", Texture.Load( FileSystem.Data, TexturePath ) );
+			var magic = new string( reader.ReadChars( 4 ) );
+			Log.Info( $"Magic: {magic}" );
 
-		// DecalRenderer.Material = material;
-		ModelRenderer.MaterialOverride = material;
+			var version = reader.ReadUInt32();
+			Log.Info( $"Version: {version}" );
+
+			var width = reader.ReadInt32();
+			var height = reader.ReadInt32();
+
+			var name = reader.ReadString();
+			Log.Info( $"Name: {name}" );
+
+			var author = reader.ReadUInt64();
+			Log.Info( $"Author: {author}" );
+
+			// seek to 64 for now
+			// var pos = reader.BaseStream.Position;
+			reader.BaseStream.Seek( 64, SeekOrigin.Begin );
+
+			Log.Info( reader.BaseStream.Length - reader.BaseStream.Position );
+			Log.Info( (width * height) / 4 );
+
+			var imageBytes = reader.ReadBytes( (width * height) / 4 );
+
+			Log.Info( $"Image bytes: {imageBytes.Length}" );
+
+			var decalData = new DecalData
+			{
+				Width = width,
+				Height = height,
+				Name = name,
+				Author = author,
+				Image = imageBytes
+			};
+
+			reader.Close();
+			stream.Close();
+
+			var material = Material.Create( $"{TexturePath}.vmat", "shaders/floor_decal.shader" );
+
+			var texture = Texture.Create( 32, 32 ).Finish();
+
+			Log.Info( $"Texture: {texture}" );
+
+			// 4 pixels per byte
+			for ( var i = 0; i < ((width * height) / 4); i++ )
+			{
+				var x = i % width;
+				var y = i / width;
+
+				var rawByte = imageBytes[i];
+
+				var pixels = new[]
+				{
+					(byte)(rawByte & 0b11), (byte)((rawByte >> 2) & 0b11), (byte)((rawByte >> 4) & 0b11),
+					(byte)((rawByte >> 6) & 0b11),
+				};
+
+				for ( var j = 0; j < 4; j++ )
+				{
+					var pixel = pixels[j];
+					var color = Palette[pixel];
+					// texture.Update( x * 4 + j, y, color );
+					texture.Update( color, x * 4 + j, y );
+				}
+			}
+
+			material.Set( "Color", texture );
+
+			ModelRenderer.MaterialOverride = material;
+		}
+		else
+		{
+			var material = Material.Create( $"{TexturePath}.vmat", "shaders/floor_decal.shader" );
+
+			// material.Set( "Normal", Texture.Load( FileSystem.Mounted, "materials/default/default_normal.tga" ) );
+			// material.Set( "Roughness", Texture.Load( FileSystem.Mounted, "materials/default/default_rough.tga" ) );
+			// material.Set( "Metalness", Texture.Load( FileSystem.Mounted, "materials/default/default_metal.tga" ) );
+			// material.Set( "AmbientOcclusion", Texture.Load( FileSystem.Mounted, "materials/default/default_ao.tga" ) );
+
+			material.Set( "Color", Texture.Load( FileSystem.Data, TexturePath ) );
+
+			// DecalRenderer.Material = material;
+			ModelRenderer.MaterialOverride = material;
+		}
 	}
 
 	public void OnSave( PersistentItem item )

@@ -1,4 +1,6 @@
-﻿using Braxnet;
+﻿using System.IO;
+using System.Text;
+using Braxnet;
 using Clover.Items;
 using Clover.Persistence;
 using Clover.Player;
@@ -17,6 +19,8 @@ public class Paintbrush : BaseCarriable
 
 	public override void OnUseDown()
 	{
+		GenerateTestDecal();
+		
 		var pos = Player.GetAimingGridPosition();
 
 		var item = Player.World.GetItems( pos ).FirstOrDefault();
@@ -86,6 +90,50 @@ public class Paintbrush : BaseCarriable
 		}
 	}
 
+	private void GenerateTestDecal()
+	{
+		var data = new byte[64 + (32 * 32)];
+
+		// var stream = new MemoryStream( data );
+		var stream = FileSystem.Data.OpenWrite( "decals/test.decal" );
+		var writer = new BinaryWriter( stream, Encoding.UTF8 );
+		
+		writer.Write( 'C');
+		writer.Write( 'L');
+		writer.Write( 'P');
+		writer.Write( 'T');
+		// writer.Write( 0 );
+		
+		writer.Write( 1 ); // version
+		
+		writer.Write( 32 ); // width
+		writer.Write( 32 ); // height
+		
+		// writer.Write( 0 );
+		
+		writer.Write( "Test Pattern AAA" ); // name, 16 chars
+		
+		// writer.Write( 0 );
+		
+		writer.Write( Game.SteamId ); // author
+
+		writer.Seek( 64, SeekOrigin.Begin );
+		
+		
+		// 4 pixels per byte, test pattern
+		for ( var i = 0; i < 32 * 32; i += 4 )
+		{
+			var b = (byte)( ( i / 4 ) % 256 );
+			writer.Write( b );
+		}
+		
+		
+		writer.Flush();
+		
+		stream.Close();
+
+	}
+
 	public override string GetUseName()
 	{
 		return "Paint";
@@ -99,13 +147,13 @@ public class Paintbrush : BaseCarriable
 
 	protected override void OnStart()
 	{
-		CurrentTexture = FileSystem.Data.FindFile( "decals", "*.png" ).FirstOrDefault();
+		CurrentTexture = FileSystem.Data.FindFile( "decals", "*" ).FirstOrDefault();
 	}
 
 	public List<string> GetTextures()
 	{
 		FileSystem.Data.CreateDirectory( "decals" );
-		return FileSystem.Data.FindFile( "decals", "*.png" ).ToList();
+		return FileSystem.Data.FindFile( "decals", "*" ).ToList();
 	}
 
 	protected override void OnFixedUpdate()
