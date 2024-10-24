@@ -148,30 +148,32 @@ public class FloorDecal : Component, IPersistent
 
 			var material = Material.Create( $"{TexturePath}.vmat", "shaders/floor_decal.shader" );
 
-			var texture = Texture.Create( 32, 32 ).Finish();
+			var texture = Texture.Create( decalData.Width, decalData.Height ).Finish();
 
 			Log.Info( $"Texture: {texture}" );
 
 			// 4 pixels per byte
-			for ( var i = 0; i < ((width * height) / 4); i++ )
+			for ( var i = 0; i < decalData.Image.Length; i++ )
 			{
-				var x = i % width;
-				var y = i / width;
-
-				var rawByte = imageBytes[i];
+				var rawByte = decalData.Image[i];
 
 				var pixels = new[]
 				{
-					(byte)(rawByte & 0b11), (byte)((rawByte >> 2) & 0b11), (byte)((rawByte >> 4) & 0b11),
-					(byte)((rawByte >> 6) & 0b11),
+					( rawByte >> 0 ) & 0x3,
+					( rawByte >> 2 ) & 0x3,
+					( rawByte >> 4 ) & 0x3,
+					( rawByte >> 6 ) & 0x3,
 				};
+				
+				var y = i / 32;
 
 				for ( var j = 0; j < 4; j++ )
 				{
+					var x = ( i % 32 ) * 4 + j;
 					var pixel = pixels[j];
+					Log.Info( $"Pixel: {pixel} @ {x}, {y}" );
 					var color = Palette[pixel];
-					// texture.Update( x * 4 + j, y, color );
-					texture.Update( color, x * 4 + j, y );
+					texture.Update( color, x, y );
 				}
 			}
 

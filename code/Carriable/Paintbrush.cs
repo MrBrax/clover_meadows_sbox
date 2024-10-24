@@ -120,13 +120,11 @@ public class Paintbrush : BaseCarriable
 		writer.Seek( 64, SeekOrigin.Begin );
 		
 		
-		// 4 pixels per byte, test pattern
-		for ( var i = 0; i < 32 * 32; i += 4 )
+		// 4 pixels per byte, go through all 64 indexed colors
+		for ( var i = 0; i < ( (32 * 32) / 4 ); i++ )
 		{
-			var b = (byte)( ( i / 4 ) % 256 );
-			writer.Write( b );
+			writer.Write( (byte)i );
 		}
-		
 		
 		writer.Flush();
 		
