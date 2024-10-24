@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using Clover.Items;
 using Clover.Player;
+using Clover.Utilities;
 using Sandbox.UI;
 
 namespace Clover.Ui;
@@ -11,7 +12,7 @@ public partial class PaintUi
 {
 	public struct DecalEntry
 	{
-		public FloorDecal.DecalData Decal;
+		public Decals.DecalData Decal;
 		public string ResourcePath;
 	}
 
@@ -26,6 +27,7 @@ public partial class PaintUi
 	private Panel Grid;
 	private Panel Crosshair;
 
+	private string PaletteName = "windows-95-256-colours-1x";
 	private List<Color32> Palette = new List<Color32>();
 
 	private int LeftPaletteIndex = 0;
@@ -53,7 +55,7 @@ public partial class PaintUi
 	{
 		base.OnStart();
 
-		Palette = FloorDecal.GetPalette().ToList();
+		Palette = Utilities.Decals.GetPalette( PaletteName ).ToList();
 
 		InitialiseTexture();
 
@@ -101,7 +103,7 @@ public partial class PaintUi
 		var files = FileSystem.Data.FindFile( "decals", "*.decal" );
 		foreach ( var file in files )
 		{
-			var decal = FloorDecal.ReadDecal( $"decals/{file}" );
+			var decal = Utilities.Decals.ReadDecal( $"decals/{file}" );
 			Decals.Add( new DecalEntry { Decal = decal, ResourcePath = $"decals/{file}" } );
 		}
 	}
@@ -109,7 +111,7 @@ public partial class PaintUi
 	private void LoadDecal( string path )
 	{
 		Log.Info( $"Loading decal {path}" );
-		var decal = FloorDecal.ReadDecal( path );
+		var decal = Utilities.Decals.ReadDecal( path );
 		CurrentName = decal.Name;
 		CurrentFileName = Path.GetFileNameWithoutExtension( path );
 		DrawTexture.Update( decal.Texture.GetPixels(), 0, 0, decal.Width, decal.Height );
@@ -189,7 +191,7 @@ public partial class PaintUi
 
 		var mousePosition = GetCurrentMousePixel();
 
-		var brushSizeOffset = BrushSize == 1 ? 0 : BrushSize / 2f;
+		var brushSizeOffset = BrushSize == 1 ? 0 : MathF.Ceiling( BrushSize / 2f );
 
 		var brushPosition = new Vector2( mousePosition.x - brushSizeOffset, mousePosition.y - brushSizeOffset );
 		// var brushPosition = new Vector2( mousePosition.x, mousePosition.y );
@@ -438,6 +440,31 @@ public partial class PaintUi
 		CanvasSize /= 2;
 		CanvasSize = CanvasSize.SnapToGrid( 32 );
 		UpdateCanvas();
+	}
+
+	private void ZoomReset()
+	{
+		CanvasSize = 512;
+		UpdateCanvas();
+	}
+
+	private void SetBrushSize( int size )
+	{
+		BrushSize = size;
+	}
+
+	private void IncreaseBrushSize()
+	{
+		BrushSize++;
+	}
+
+	private void DecreaseBrushSize()
+	{
+		BrushSize--;
+		if ( BrushSize < 1 )
+		{
+			BrushSize = 1;
+		}
 	}
 
 	private void UpdateCanvas()

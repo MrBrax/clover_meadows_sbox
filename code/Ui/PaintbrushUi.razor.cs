@@ -31,7 +31,7 @@ public partial class PaintbrushUi : IPaintEvent, IEquipChanged
 			Log.Info( $"Loading decal {path}" );
 			Decals.Add( new PaintUi.DecalEntry()
 			{
-				Decal = FloorDecal.ReadDecal( $"decals/{path}" ), ResourcePath = $"decals/{path}"
+				Decal = Utilities.Decals.ReadDecal( $"decals/{path}" ), ResourcePath = $"decals/{path}"
 			} );
 		}
 
