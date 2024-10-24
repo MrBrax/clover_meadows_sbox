@@ -206,6 +206,8 @@ PaintUi {
 
                 cursor: pointer;
 
+                align-items: center;
+
                 flex-shrink: 0;
 
                 &:hover {
@@ -213,8 +215,8 @@ PaintUi {
                 }
 
                 Image {
-                    width: 150px;
-                    height: 150px;
+                    width: 100px;
+                    height: 100px;
                     background-size: contain;
                     image-rendering: pixelated;
                 }
