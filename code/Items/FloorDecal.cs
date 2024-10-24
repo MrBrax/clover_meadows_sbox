@@ -16,75 +16,6 @@ public class FloorDecal : Component, IPersistent
 
 	public string TexturePath;
 	
-	// 64 colors in the palette
-	public Color[] Palette = new Color[64]
-	{
-		new Color( 0, 0, 0, 0 ),
-		new Color( 0, 0, 0, 255 ),
-		new Color( 0, 0, 85, 255 ),
-		new Color( 0, 0, 170, 255 ),
-		new Color( 85, 0, 0, 255 ),
-		new Color( 85, 0, 85, 255 ),
-		new Color( 85, 0, 170, 255 ),
-		new Color( 85, 0, 255, 255 ),
-		new Color( 0, 85, 0, 255 ),
-		new Color( 0, 85, 85, 255 ),
-		new Color( 0, 85, 170, 255 ),
-		new Color( 0, 85, 255, 255 ),
-		new Color( 85, 85, 0, 255 ),
-		new Color( 85, 85, 85, 255 ),
-		new Color( 85, 85, 170, 255 ),
-		new Color( 85, 85, 255, 255 ),
-		new Color( 170, 0, 0, 255 ),
-		new Color( 170, 0, 85, 255 ),
-		new Color( 170, 0, 170, 255 ),
-		new Color( 170, 0, 255, 255 ),
-		new Color( 255, 0, 0, 255 ),
-		new Color( 255, 0, 85, 255 ),
-		new Color( 255, 0, 170, 255 ),
-		new Color( 255, 0, 255, 255 ),
-		new Color( 170, 85, 0, 255 ),
-		new Color( 170, 85, 85, 255 ),
-		new Color( 170, 85, 170, 255 ),
-		new Color( 170, 85, 255, 255 ),
-		new Color( 255, 85, 0, 255 ),
-		new Color( 255, 85, 85, 255 ),
-		new Color( 255, 85, 170, 255 ),
-		new Color( 255, 85, 255, 255 ),
-		new Color( 170, 170, 0, 255 ),
-		new Color( 170, 170, 85, 255 ),
-		new Color( 170, 170, 170, 255 ),
-		new Color( 170, 170, 255, 255 ),
-		new Color( 255, 170, 0, 255 ),
-		new Color( 255, 170, 85, 255 ),
-		new Color( 255, 170, 170, 255 ),
-		new Color( 255, 170, 255, 255 ),
-		new Color( 0, 255, 0, 255 ),
-		new Color( 0, 255, 85, 255 ),
-		new Color( 0, 255, 170, 255 ),
-		new Color( 0, 255, 255, 255 ),
-		new Color( 85, 255, 0, 255 ),
-		new Color( 85, 255, 85, 255 ),
-		new Color( 85, 255, 170, 255 ),
-		new Color( 85, 255, 255, 255 ),
-		new Color( 170, 255, 0, 255 ),
-		new Color( 170, 255, 85, 255 ),
-		new Color( 170, 255, 170, 255 ),
-		new Color( 170, 255, 255, 255 ),
-		new Color( 255, 255, 0, 255 ),
-		new Color( 255, 255, 85, 255 ),
-		new Color( 255, 255, 170, 255 ),
-		new Color( 255, 255, 255, 255 ),
-		new Color( 0, 0, 0, 0 ),
-		new Color( 0, 0, 0, 255 ),
-		new Color( 0, 0, 85, 255 ),
-		new Color( 0, 0, 170, 255 ),
-		new Color( 85, 0, 0, 255 ),
-		new Color( 85, 0, 85, 255 ),
-		new Color( 85, 0, 170, 255 ),
-		new Color( 85, 0, 255, 255 ),
-	};
-
 	public struct DecalData
 	{
 		public int Width;
@@ -103,6 +34,13 @@ public class FloorDecal : Component, IPersistent
 
 		if ( TexturePath.EndsWith( ".decal" ) )
 		{
+			
+			Log.Info( "Loading palette");
+			// var palette = new Color[256];
+
+			var paletteTexture = Texture.Load( FileSystem.Mounted, "materials/windows-95-256-colours-1x.png" );
+			var palette = paletteTexture.GetPixels();
+			
 			Log.Info( "Loading decal" );
 
 			var stream = FileSystem.Data.OpenRead( TexturePath );
@@ -128,9 +66,9 @@ public class FloorDecal : Component, IPersistent
 			reader.BaseStream.Seek( 64, SeekOrigin.Begin );
 
 			Log.Info( reader.BaseStream.Length - reader.BaseStream.Position );
-			Log.Info( (width * height) / 4 );
+			Log.Info( (width * height) );
 
-			var imageBytes = reader.ReadBytes( (width * height) / 4 );
+			var imageBytes = reader.ReadBytes( width * height );
 
 			Log.Info( $"Image bytes: {imageBytes.Length}" );
 
@@ -151,31 +89,32 @@ public class FloorDecal : Component, IPersistent
 			var texture = Texture.Create( decalData.Width, decalData.Height ).Finish();
 
 			Log.Info( $"Texture: {texture}" );
+			
+			var allPixels = new Color32[decalData.Width * decalData.Height];
 
-			// 4 pixels per byte
+			// 4x 0-63 colors per byte packed
 			for ( var i = 0; i < decalData.Image.Length; i++ )
 			{
-				var rawByte = decalData.Image[i];
-
-				var pixels = new[]
-				{
-					( rawByte >> 0 ) & 0x3,
-					( rawByte >> 2 ) & 0x3,
-					( rawByte >> 4 ) & 0x3,
-					( rawByte >> 6 ) & 0x3,
-				};
+				/*var rawByte = decalData.Image[i];
 				
-				var y = i / 32;
-
-				for ( var j = 0; j < 4; j++ )
+				Log.Info( $"Raw byte: {rawByte}" );
+				
+				var values = new byte[4];
+				values[0] = 
+				
+				for ( var j = 0; j < values.Length; j++ )
 				{
-					var x = ( i % 32 ) * 4 + j;
-					var pixel = pixels[j];
-					Log.Info( $"Pixel: {pixel} @ {x}, {y}" );
-					var color = Palette[pixel];
-					texture.Update( color, x, y );
-				}
+					Log.Info( $"Pixel {(i * 4) + j}: {values[j]}/64 {(int)values[j]}" );
+					var color = Palette[values[j]];
+					allPixels[(i * 4) + j] = color;
+				}*/
+				
+				var color = palette.ElementAtOrDefault( decalData.Image[i] );
+				allPixels[i] = color;
+				
 			}
+			
+			texture.Update( allPixels, 0, 0, decalData.Width, decalData.Height);
 
 			material.Set( "Color", texture );
 

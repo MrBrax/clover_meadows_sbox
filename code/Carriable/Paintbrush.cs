@@ -121,7 +121,7 @@ public class Paintbrush : BaseCarriable
 		
 		
 		// 4 pixels per byte, go through all 64 indexed colors
-		for ( var i = 0; i < ( (32 * 32) / 4 ); i++ )
+		for ( var i = 0; i < ( 32 * 32 ); i++ )
 		{
 			writer.Write( (byte)i );
 		}
