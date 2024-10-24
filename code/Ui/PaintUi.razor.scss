@@ -1,0 +1,70 @@
+PaintUi
+{
+	position: absolute;
+	top: 50px;
+	left: 50px;
+	
+	padding: 20px;
+	background-color: white;
+	
+	pointer-events: all;
+	
+	.paint-window {
+		gap: 10px;
+		flex-direction: column;
+		width: 700px;
+	}
+	
+	.canvas {
+		width: 700px;
+		height: 700px;
+		border: 1px solid black;
+		image-rendering: pixelated;
+	}
+	
+	.palette {
+		flex-wrap: wrap;
+		button {
+			width: 18px;
+			height: 18px;
+		}
+	}
+	
+	.current-colors {
+		width: 120px;
+		height: 120px;
+		position: relative;
+		flex-shrink: 0;
+		
+		.color-fg, .color-bg {
+			width: 60px;
+			height: 60px;
+			border: 1px solid black;
+		}
+		
+		.color-fg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 2;
+		}
+		
+		.color-bg {
+			position: absolute;
+			top: 30px;
+			left: 30px;
+		}
+	}
+	
+	.actions {
+		min-width: 150px;
+		flex-shrink: 0;
+		flex-direction: column;
+		gap: 5px;
+		button {
+			padding: 5px;
+			background-color: deepskyblue;
+		}
+	}
+	
+}

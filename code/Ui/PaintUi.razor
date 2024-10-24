@@ -1,0 +1,28 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Clover.Ui
+
+<root>
+	<div class="paint-window">
+		<Image @ref="Canvas" class="canvas" Texture=@DrawTexture />
+		<div class="toolbar">
+			<div class="current-colors">
+				<div class="color-fg" style="background-color: @ForegroundColor.Hex"></div>
+				<div class="color-bg" style="background-color: @BackgroundColor.Hex"></div>
+			</div>
+			<div class="palette">
+				@for ( var i = 0; i < Palette.Count; i++ )
+				{
+					var index = i;
+					var color = Palette[index];
+					<button @onmousedown=@( ( PanelEvent e ) => SetColor( e, index ) ) style="background-color: @color.Hex"></button>
+				}
+			</div>
+			<div class="actions">
+				<button @onclick=@( () => Save())>Save</button>
+				<button @onclick=@( () => Clear())>Clear</button>
+			</div>
+		</div>
+	</div>
+</root>

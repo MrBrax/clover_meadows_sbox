@@ -199,7 +199,11 @@
         },
         {
           "__type": "Clover.Chat",
-          "__guid": "17147b21-9928-4c82-bf51-23e01e520f34",
+          "__guid": "17147b21-9928-4c82-bf51-23e01e520f34"
+        },
+        {
+          "__type": "Clover.Ui.PaintUi",
+          "__guid": "1fbe1934-c822-482e-af8b-dafae885bad5",
           "MyStringValue": "Hello World!"
         }
       ]

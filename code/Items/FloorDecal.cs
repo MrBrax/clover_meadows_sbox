@@ -27,6 +27,13 @@ public class FloorDecal : Component, IPersistent
 
 		public byte[] Image;
 	}
+	
+	public static Color32[] GetPalette()
+	{
+		var paletteTexture = Texture.Load( FileSystem.Mounted, "materials/windows-95-256-colours-1x.png" );
+		var palette = paletteTexture.GetPixels();
+		return palette;
+	}
 
 	public void UpdateDecal()
 	{
@@ -37,9 +44,8 @@ public class FloorDecal : Component, IPersistent
 			
 			Log.Info( "Loading palette");
 			// var palette = new Color[256];
-
-			var paletteTexture = Texture.Load( FileSystem.Mounted, "materials/windows-95-256-colours-1x.png" );
-			var palette = paletteTexture.GetPixels();
+			
+			var palette = GetPalette();
 			
 			Log.Info( "Loading decal" );
 
