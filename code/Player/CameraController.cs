@@ -14,6 +14,7 @@ public sealed class CameraController : Component, IWorldEvent
 	[Property] public SoundEvent CameraInSound { get; set; }
 	[Property] public SoundEvent CameraOutSound { get; set; }
 	[Property] public SoundEvent CameraErrorSound { get; set; }
+	[Property] public SoundEvent CameraRotateSound { get; set; }
 
 	[Property] public GameObject CameraPivot { get; set; }
 
@@ -124,10 +125,12 @@ public sealed class CameraController : Component, IWorldEvent
 		if ( (CameraMan.Instance?.MainCameraNode.HasPivotRotation ?? false) && Player.World.Data.CanRotateCamera )
 		{
 			CameraMan.Instance.MainCameraNode.RotatePivot( rotation );
+			Sound.Play( CameraRotateSound );
 		}
 		else
 		{
 			Log.Warning( "Cannot rotate camera" );
+			Sound.Play( CameraErrorSound );
 		}
 	}
 

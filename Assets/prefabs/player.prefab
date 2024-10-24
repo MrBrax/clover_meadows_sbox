@@ -55,6 +55,7 @@
           "_type": "gameobject",
           "go": "9521c9ab-19f0-4ff9-a519-0f2781a129cd"
         },
+        "CameraRotateSound": "sounds/camera/camera_rotate.sound",
         "MainCameraNode": {
           "_type": "component",
           "component_id": "2fb1ce16-d463-4554-980e-59a3a3a2e355",
