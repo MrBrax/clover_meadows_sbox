@@ -112,19 +112,19 @@ public sealed class CameraController : Component, IWorldEvent
 
 		if ( Input.Pressed( "CameraLeft" ) )
 		{
-			RotateCamera( Rotation.FromYaw( CameraRotateSnapDistance ) );
+			RotateCamera( Rotation.FromYaw( -CameraRotateSnapDistance ) );
 		}
 		else if ( Input.Pressed( "CameraRight" ) )
 		{
-			RotateCamera( Rotation.FromYaw( -CameraRotateSnapDistance ) );
+			RotateCamera( Rotation.FromYaw( CameraRotateSnapDistance ) );
 		}
 		else if ( Input.Pressed( "CameraUp" ) )
 		{
-			RotateCamera( Rotation.FromPitch( CameraRotateSnapDistance ) );
+			RotateCamera( Rotation.FromPitch( -CameraRotateSnapDistance ) );
 		}
 		else if ( Input.Pressed( "CameraDown" ) )
 		{
-			RotateCamera( Rotation.FromPitch( -CameraRotateSnapDistance ) );
+			RotateCamera( Rotation.FromPitch( CameraRotateSnapDistance ) );
 		}
 	}
 
