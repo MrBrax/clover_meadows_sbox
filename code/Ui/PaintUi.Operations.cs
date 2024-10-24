@@ -122,28 +122,96 @@ public partial class PaintUi
 		}
 	}
 
+	private void DrawLine( Vector2 startPos, Vector2 endPos )
+	{
+		DrawLineBetween( startPos, endPos );
+	}
+
 	private void LinePreview( Vector2 brushPosition )
 	{
-		PreviewTexture.Update( Color32.Transparent, new Rect( 0, 0, PreviewTexture.Width, PreviewTexture.Height ) );
+		ClearPreview();
 
 		if ( !_mouseDownPosition.HasValue )
 		{
 			return;
 		}
 
-		DrawLineBetweenTex( PreviewTexture, Color32.Black, _mouseDownPosition.Value, brushPosition );
+		DrawLineBetweenTex( PreviewTexture, PreviewColor, _mouseDownPosition.Value, brushPosition );
+	}
+
+	private void RectanglePreview( Vector2 brushPosition )
+	{
+		ClearPreview();
+
+		if ( !_mouseDownPosition.HasValue )
+		{
+			return;
+		}
+
+		DrawRectangle( _mouseDownPosition.Value, brushPosition, true );
 	}
 
 	// draw outline of rectangle
-	private void DrawRectangle( Vector2 mouseDownPosition, Vector2 mouseUpPosition )
+	private void DrawRectangle( Vector2 mouseDownPosition, Vector2 mouseUpPosition, bool preview = false )
 	{
 		var x = Math.Min( mouseDownPosition.x, mouseUpPosition.x );
 		var y = Math.Min( mouseDownPosition.y, mouseUpPosition.y );
 		var width = Math.Abs( mouseDownPosition.x - mouseUpPosition.x );
 		var height = Math.Abs( mouseDownPosition.y - mouseUpPosition.y );
+
+		if ( preview )
+		{
+			PreviewTexture.Update( PreviewColor, new Rect( x, y, width, 1 ) );
+			PreviewTexture.Update( PreviewColor, new Rect( x, y, 1, height ) );
+			PreviewTexture.Update( PreviewColor, new Rect( x + width, y, 1, height ) );
+			PreviewTexture.Update( PreviewColor, new Rect( x, y + height, width + 1, 1 ) ); // TODO: why +1?
+		}
+		else
+		{
+			PushRectToBoth( new Rect( x, y, width, 1 ) );
+			PushRectToBoth( new Rect( x, y, 1, height ) );
+			PushRectToBoth( new Rect( x + width, y, 1, height ) );
+			PushRectToBoth( new Rect( x, y + height, width + 1, 1 ) ); // TODO: why +1?
+		}
 	}
 
-	private void DrawCircle( Texture tex, Vector2 mouseDownPosition, Vector2 mouseUpPosition )
+	private void CirclePreview( Vector2 brushPosition )
 	{
+		ClearPreview();
+
+		if ( !_mouseDownPosition.HasValue )
+		{
+			return;
+		}
+
+		DrawCircle( _mouseDownPosition.Value, brushPosition, true );
+	}
+
+	private void DrawCircle( Vector2 mouseDownPosition, Vector2 mouseUpPosition, bool preview = false )
+	{
+		var x = Math.Min( mouseDownPosition.x, mouseUpPosition.x );
+		var y = Math.Min( mouseDownPosition.y, mouseUpPosition.y );
+		var width = Math.Abs( mouseDownPosition.x - mouseUpPosition.x );
+		var height = Math.Abs( mouseDownPosition.y - mouseUpPosition.y );
+
+		var radius = Math.Min( width, height ) / 2;
+		var centerX = x + width / 2;
+		var centerY = y + height / 2;
+
+		for ( var i = 0; i < 360; i++ )
+		{
+			var angle = MathX.DegreeToRadian( i );
+			var circleX = centerX + MathF.Cos( angle ) * radius;
+			var circleY = centerY + MathF.Sin( angle ) * radius;
+
+			if ( preview )
+			{
+				PreviewTexture.Update( PreviewColor, new Rect( circleX, circleY, 1, 1 ) );
+			}
+			else
+			{
+				PushRectToBoth( new Rect( circleX, circleY, 1, 1 ) );
+			}
+		}
 	}
 }

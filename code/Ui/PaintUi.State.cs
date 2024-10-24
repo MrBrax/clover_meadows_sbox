@@ -34,14 +34,14 @@ public partial class PaintUi
 	private void PushUndo()
 	{
 		UndoStack.Push( DrawTextureData.ToArray() );
-		Log.Info( $"Undo stack size: {UndoStack.Count}" );
+		Log.Info( $"PUSHED UNDO | Size: {UndoStack.Count}" );
 		UndoStack.TrimExcess();
 	}
 
 	private void PushRedo()
 	{
 		RedoStack.Push( DrawTextureData.ToArray() );
-		Log.Info( $"Redo stack size: {RedoStack.Count}" );
+		Log.Info( $"PUSHED REDO | Size: {RedoStack.Count}" );
 		RedoStack.TrimExcess();
 	}
 }

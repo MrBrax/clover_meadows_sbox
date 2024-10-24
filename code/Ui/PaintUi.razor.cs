@@ -63,6 +63,9 @@ public partial class PaintUi
 
 	private int CanvasSize = 512;
 
+	// private Color PreviewColor = Color.Red;
+	private Color PreviewColor => GetCurrentColor();
+
 	// private int BrushSize = 1;
 
 	private Dictionary<PaintTool, int> BrushSizes = new()
@@ -385,6 +388,14 @@ public partial class PaintUi
 			{
 				LinePreview( brushPosition );
 			}
+			else if ( CurrentTool == PaintTool.Rectangle )
+			{
+				RectanglePreview( brushPosition );
+			}
+			else if ( CurrentTool == PaintTool.Circle )
+			{
+				CirclePreview( brushPosition );
+			}
 		}
 	}
 
@@ -600,7 +611,7 @@ public partial class PaintUi
 		{
 			if ( CurrentTool == PaintTool.Line )
 			{
-				DrawLineBetween( _mouseDownPosition.Value, _mouseUpPosition.Value );
+				DrawLine( _mouseDownPosition.Value, _mouseUpPosition.Value );
 			}
 			else if ( CurrentTool == PaintTool.Rectangle )
 			{
@@ -608,9 +619,11 @@ public partial class PaintUi
 			}
 			else if ( CurrentTool == PaintTool.Circle )
 			{
-				DrawCircle( DrawTexture, _mouseDownPosition.Value, _mouseUpPosition.Value );
+				DrawCircle( _mouseDownPosition.Value, _mouseUpPosition.Value );
 			}
 		}
+
+		ClearPreview();
 
 		_mouseDownPosition = null;
 	}
@@ -666,11 +679,16 @@ public partial class PaintUi
 		DrawTextureData = Enumerable.Repeat( (byte)RightPaletteIndex, DrawTexture.Width * DrawTexture.Height )
 			.ToArray();
 
-		PreviewTexture.Update( Color32.Transparent, new Rect( 0, 0, PreviewTexture.Width, PreviewTexture.Height ) );
+		ClearPreview();
 
 		_lastBrushPosition = null;
 
 		PushUndo();
+	}
+
+	private void ClearPreview()
+	{
+		PreviewTexture.Update( Color32.Transparent, new Rect( 0, 0, PreviewTexture.Width, PreviewTexture.Height ) );
 	}
 
 	private void ZoomIn()
