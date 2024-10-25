@@ -223,4 +223,75 @@ public partial class PaintUi
 			}
 		}
 	}
+	
+	private void PasteClipboard( Vector2Int position )
+	{
+		Log.Info( $"Pasting clipboard at {position}, size {ClipboardSize}" );
+		
+		/*var x = position.x;
+		var y = position.y;
+
+		for ( var i = 0; i < ClipboardSize.x; i++ )
+		{
+			for ( var j = 0; j < ClipboardSize.y; j++ )
+			{
+				var index = x + i + (y + j) * DrawTexture.Width;
+				if ( index >= 0 && index < DrawTextureData.Length )
+				{
+					DrawTextureData[index] = ClipboardData[i + j * ClipboardSize.x];
+				}
+			}
+		}*/
+		
+		var width = ClipboardSize.x;
+		var height = ClipboardSize.y;
+		
+		// clamp so it doesn't go out of bounds
+		var x = Math.Clamp( position.x, 0, DrawTexture.Width );
+		var y = Math.Clamp( position.y, 0, DrawTexture.Height );
+		
+		width = Math.Min( width, DrawTexture.Width - x );
+		height = Math.Min( height, DrawTexture.Height - y );
+		
+		if ( width == 0 || height == 0 )
+		{
+			return;
+		}
+		
+		for ( var i = 0; i < width; i++ )
+		{
+			for ( var j = 0; j < height; j++ )
+			{
+				var index = i + j * width;
+				DrawTextureData[x + i + (y + j) * DrawTexture.Width] = ClipboardData[index];
+			}
+		}
+
+		PushByteDataToTexture();
+	}
+	
+	private void FillArea( Vector2Int start, Vector2Int end, int colorIndex )
+	{
+		var x = Math.Min( start.x, end.x );
+		var y = Math.Min( start.y, end.y );
+		var width = Math.Abs( start.x - end.x );
+		var height = Math.Abs( start.y - end.y );
+		
+		PushRectToBoth( new Rect( x, y, width, height ), colorIndex );
+
+		/*for ( var i = 0; i < width; i++ )
+		{
+			for ( var j = 0; j < height; j++ )
+			{
+				var index = x + i + (y + j) * DrawTexture.Width;
+				if ( index >= 0 && index < DrawTextureData.Length )
+				{
+					DrawTextureData[index] = (byte)colorIndex;
+				}
+			}
+		}
+
+		PushByteDataToTexture();*/
+	}
+	
 }

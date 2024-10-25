@@ -47,6 +47,12 @@
 							<button @onclick=@( () => CurrentTool = PaintTool.Clone ) class="paint-button @( CurrentTool == PaintTool.Clone ? "active" : "" )" tooltip="Clone">
 								CL
 							</button>
+							<button @onclick=@( () => CurrentTool = PaintTool.Dodge ) class="paint-button @( CurrentTool == PaintTool.Dodge ? "active" : "" )" tooltip="Dodge">
+								DG
+							</button>
+							<button @onclick=@( () => CurrentTool = PaintTool.Burn ) class="paint-button @( CurrentTool == PaintTool.Burn ? "active" : "" )" tooltip="Burn">
+								BN
+							</button>
 						</div>
 
 						<div class="button-pair">
