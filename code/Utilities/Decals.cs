@@ -209,6 +209,11 @@ public class Decals
 	{
 		Log.Info( "Loading decal" );
 
+		if ( !filePath.EndsWith( ".decal" ) )
+		{
+			throw new Exception( $"Invalid file extension: {filePath}" );
+		}
+
 		var stream = FileSystem.Data.OpenRead( filePath );
 		var reader = new BinaryReader( stream, Encoding.UTF8 );
 

@@ -39,6 +39,7 @@ public class FloorDecal : Component, IPersistent, IPaintEvent
 
 	public void UpdateDecal()
 	{
+		if ( Scene.IsEditor ) return;
 		if ( IsProxy )
 		{
 			FileSystem.Data.CreateDirectory( "decalcache" );
