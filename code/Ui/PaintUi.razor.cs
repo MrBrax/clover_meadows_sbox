@@ -284,6 +284,8 @@ public partial class PaintUi
 
 	private void LoadImage( Texture texture )
 	{
+		Log.Info( $"Loading image {texture.ResourcePath}, {texture.Width}x{texture.Height}" );
+		
 		// resize image to 32x32
 		var resizedTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
 		resizedTexture.Update( texture.GetPixels(), 0, 0, TextureSize, TextureSize );

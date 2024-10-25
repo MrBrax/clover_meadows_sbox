@@ -121,7 +121,11 @@ PaintUi {
         }
 
         &.active {
-            background-color: #b6cbef;
+            // background-color: #b6cbef;
+            background-color: #999;
+            border-color: #555;
+            border-right-color: #ccc;
+            border-bottom-color: #ccc;
         }
         
         &.disabled {
