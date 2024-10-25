@@ -37,6 +37,8 @@ public partial class PaintUi
 		Burn,
 	}
 
+	private PaintTool _previousTool = PaintTool.Pencil;
+
 	private PaintTool _currentTool = PaintTool.Pencil;
 
 	private PaintTool CurrentTool
@@ -44,14 +46,13 @@ public partial class PaintUi
 		get => _currentTool;
 		set
 		{
+			_previousTool = _currentTool;
 			_currentTool = value;
 			_isDrawing = false;
 			_isMoving = false;
 			ClearPreview();
 		}
 	}
-
-	private BasePaintTool PaintToolClass;
 
 	private List<DecalEntry> Decals = new();
 	private List<Texture> Images = new();
@@ -88,7 +89,7 @@ public partial class PaintUi
 	private int BaseCanvasSize = 512;
 	private float CanvasZoom = 1.0f;
 	private float MinCanvasZoom = 0.1f;
-	private float MaxCanvasZoom = 20.0f;
+	private float MaxCanvasZoom = 2.5f;
 
 	private int CanvasSize;
 
@@ -98,7 +99,7 @@ public partial class PaintUi
 	private bool ShowFileActions = false;
 	private bool ShowFavoritesEditor = false;
 
-	private int SelectedFavorite = -1;
+	private int SelectedFavorite = -1; // TODO: don't allow setting when -1
 
 
 	private Vector2Int ClipboardSize;
@@ -148,8 +149,6 @@ public partial class PaintUi
 	protected override void OnStart()
 	{
 		base.OnStart();
-
-		PaintToolClass = new DrawTool( this );
 
 		Palette = Utilities.Decals.GetPalette( PaletteName ).ToList();
 
@@ -359,11 +358,6 @@ public partial class PaintUi
 		DrawCrosshair( brushPosition );
 
 		// PreviewTexture.Update( Color.Red, brushPosition.x, brushPosition.y );
-
-		if ( PaintToolClass != null )
-		{
-			PaintToolClass.OnUpdate();
-		}
 
 		if ( (CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone) && _isMoving )
 		{
@@ -650,25 +644,18 @@ public partial class PaintUi
 		PreviewTexture?.Update( Color32.Transparent, new Rect( 0, 0, PreviewTexture.Width, PreviewTexture.Height ) );
 	}
 
-	private void Zoom( float value, Vector2Int target = default )
+	private void Zoom( float value, Vector2 target = default )
 	{
 		CanvasZoom += value;
 		CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
 
 		// CanvasSize = (int)(BaseCanvasSize * CanvasZoom);
 
+		Log.Info( $"Zooming to {CanvasZoom}" );
+
 		CanvasSize = (int)Math.Round( (BaseCanvasSize * CanvasZoom).SnapToGrid( 32 ) );
 
 		UpdateCanvas();
-
-		/*if ( target != default )
-		{
-			var canvasSquarePositionX = CanvasSquare.Style.Left.GetValueOrDefault().GetPixels( 1 );
-			var canvasSquarePositionY = CanvasSquare.Style.Top.GetValueOrDefault().GetPixels( 1 );
-
-			var offset = new Vector2( target.x - canvasSquarePositionX, target.y - canvasSquarePositionY );
-			SetCanvasSquareOffset( offset );
-		}*/
 	}
 
 	/*private Vector2 GetCanvasSquareOffset()
@@ -696,22 +683,12 @@ public partial class PaintUi
 
 	private void ZoomIn()
 	{
-		// CanvasSize *= 2;
-		// CanvasSize = CanvasSize.SnapToGrid( 32 );
-		// CanvasZoom *= 2;
-		// CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
-		// UpdateCanvas();
-		Zoom( 0.1f );
+		Zoom( 0.2f );
 	}
 
 	private void ZoomOut()
 	{
-		// CanvasSize /= 2;
-		// CanvasSize = CanvasSize.SnapToGrid( 32 );
-		// CanvasZoom /= 2;
-		// CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
-		// UpdateCanvas();
-		Zoom( -0.1f );
+		Zoom( -0.2f );
 	}
 
 	private void ZoomReset()

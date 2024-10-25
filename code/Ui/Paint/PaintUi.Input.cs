@@ -16,19 +16,7 @@ public partial class PaintUi
 
 		if ( _isPanning ) return;
 
-		// CanvasSize += (int)(value.y * -30);
-		// var zoomFactor = (int)(1 + (value.y * 0.1f));
-		// Log.Info( $"Zoom factor: {zoomFactor}" );
-		// CanvasSize *= zoomFactor;
-		// CanvasSize = Math.Clamp( CanvasSize, 32, 2048 );
-
-		// CanvasZoom += value.y * -0.2f;
-		// CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
-		// UpdateCanvas();
-
-		Log.Info( $"Zoom: {value.y}" );
-
-		Zoom( value.y * -0.2f, GetCurrentMousePixel() );
+		Zoom( value.y * -0.2f, Mouse.Position );
 	}
 
 	private bool _isPanning;
@@ -100,6 +88,7 @@ public partial class PaintUi
 				if ( CurrentTool == PaintTool.Eyedropper )
 				{
 					Eyedropper( GetCurrentMousePixel(), ev.MouseButton );
+					CurrentTool = _previousTool;
 				}
 
 				if ( (CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone) && _isMoving )
@@ -139,6 +128,7 @@ public partial class PaintUi
 				if ( CurrentTool == PaintTool.Eyedropper )
 				{
 					Eyedropper( GetCurrentMousePixel(), ev.MouseButton );
+					CurrentTool = _previousTool;
 				}
 
 				if ( CurrentTool == PaintTool.Clone )

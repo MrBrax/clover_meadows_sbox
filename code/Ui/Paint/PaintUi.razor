@@ -140,8 +140,9 @@
 					<div @ref=" CanvasContainer" class="canvas">
 						<div @ref=" CanvasSquare" class="canvas-square">
 							<Image class="canvas-texture" @ref=" CanvasImage" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
-							@*<Image class="grid" @ref=" Grid" Texture=@GridTexture/>*@
 							<Image class="preview-overlay" @ref=" PreviewOverlay" Texture=@PreviewTexture/>
+							@*<Image class="grid" @ref=" Grid" Texture=@GridTexture/>*@
+							<GridRenderer class="grid"/>
 						</div>
 						<div @ref=" Crosshair" class="crosshair"></div>
 					</div>
