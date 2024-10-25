@@ -42,9 +42,9 @@ public partial class GridRenderer
 
 		bgAttribs.Set( "Texture", Texture.White );
 
-		bgAttribs.Set( "BgTint", Color.Red );
+		// bgAttribs.Set( "BgTint", Color.Red );
 
-		bgAttribs.SetCombo( "D_BACKGROUND_IMAGE", 1 );
+		// bgAttribs.SetCombo( "D_BACKGROUND_IMAGE", 1 );
 
 		// Draw grid
 		for ( int i = 0; i < TotalGridDivisions; i++ )
