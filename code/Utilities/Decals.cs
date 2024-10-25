@@ -267,8 +267,8 @@ public class Decals
 			Author = author,
 			AuthorName = authorName,
 			Palette = paletteName,
-			// Created = created,
-			// Modified = modified,
+			Created = created,
+			Modified = modified,
 			Image = imageBytes
 		};
 
