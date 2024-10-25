@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using Clover.Items;
 using Clover.Player;
 using Clover.Utilities;
 using Sandbox.UI;
@@ -28,10 +27,25 @@ public partial class PaintUi
 
 		Line,
 		Rectangle,
-		Circle
+		Circle,
+		
+		Move,
+		Clone,
 	}
 
-	private PaintTool CurrentTool = PaintTool.Pencil;
+	private PaintTool _currentTool = PaintTool.Pencil;
+
+	private PaintTool CurrentTool
+	{
+		get => _currentTool;
+		set
+		{
+			_currentTool = value;
+			_isDrawing = false;
+			_isMoving = false;
+			ClearPreview();
+		}
+	}
 
 	private List<DecalEntry> Decals = new();
 	private List<Texture> Images = new();
@@ -50,7 +64,7 @@ public partial class PaintUi
 	private Panel PreviewOverlay;
 
 	private string PaletteName = "windows-95-256-colours-1x";
-	private List<Color32> Palette = new List<Color32>();
+	private List<Color32> Palette = new();
 
 	private byte[] FavoriteColors = new byte[FavoriteColorAmount];
 
@@ -73,6 +87,10 @@ public partial class PaintUi
 
 	private int SelectedFavorite = -1;
 
+
+	private Vector2Int ClipboardSize;
+	private byte[] ClipboardData;
+
 	// private Color PreviewColor = Color.Red;
 	private Color PreviewColor => GetCurrentColor();
 
@@ -87,7 +105,9 @@ public partial class PaintUi
 		{ PaintTool.Eyedropper, 1 },
 		{ PaintTool.Line, 1 },
 		{ PaintTool.Rectangle, 1 },
-		{ PaintTool.Circle, 1 }
+		{ PaintTool.Circle, 1 },
+		{ PaintTool.Move, 1 },
+		{ PaintTool.Clone, 1 },
 	};
 
 	private int BrushSize
@@ -137,6 +157,10 @@ public partial class PaintUi
 		CurrentName = "";
 		// BrushSize = 1;
 		CanvasSize = 512;
+		
+		_isDrawing = false;
+		_isMoving = false;
+		
 		RedoStack.Clear();
 		UndoStack.Clear();
 		UpdateCanvas();
@@ -386,6 +410,13 @@ public partial class PaintUi
 
 		// PreviewTexture.Update( Color.Red, brushPosition.x, brushPosition.y );
 
+		if ( ( CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone ) && _isMoving )
+		{
+			// Log.Info( "Moving" );
+			ClearPreview();
+			PasteClipboardToPreview( brushPosition );
+		}
+
 		if ( _isDrawing )
 		{
 			if ( CurrentTool == PaintTool.Pencil )
@@ -408,7 +439,7 @@ public partial class PaintUi
 			{
 				LinePreview( brushPosition );
 			}
-			else if ( CurrentTool == PaintTool.Rectangle )
+			else if ( CurrentTool == PaintTool.Rectangle || CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone )
 			{
 				RectanglePreview( brushPosition );
 			}
@@ -448,10 +479,10 @@ public partial class PaintUi
 		Crosshair.Style.Height = crosshairSize;
 	}
 
-	private void PushRectToBoth( Rect rect )
+	private void PushRectToBoth( Rect rect, int colorIndex = -1 )
 	{
-		PushRectToByteData( rect );
-		PushRectToTexture( rect );
+		PushRectToByteData( rect, colorIndex );
+		PushRectToTexture( rect, colorIndex );
 	}
 
 	private void PushByteDataToTexture()
@@ -461,12 +492,12 @@ public partial class PaintUi
 			DrawTexture.Height );
 	}
 
-	private void PushRectToTexture( Rect rect )
+	private void PushRectToTexture( Rect rect, int colorIndex = -1 )
 	{
-		DrawTexture.Update( GetCurrentColor(), rect );
+		DrawTexture.Update( colorIndex == -1 ? GetCurrentColor() : Palette[colorIndex], rect );
 	}
 
-	private void PushRectToByteData( Rect rect )
+	private void PushRectToByteData( Rect rect, int colorIndex = -1 )
 	{
 		for ( var x = (int)rect.Left; x < rect.Left + rect.Width; x++ )
 		{
@@ -475,7 +506,7 @@ public partial class PaintUi
 				var index = x + y * DrawTexture.Width;
 				if ( index >= 0 && index < DrawTextureData.Length )
 				{
-					DrawTextureData[index] = (byte)CurrentPaletteIndex;
+					DrawTextureData[index] = (byte)(colorIndex == -1 ? CurrentPaletteIndex : colorIndex);
 				}
 			}
 		}
@@ -590,6 +621,19 @@ public partial class PaintUi
 				{
 					Eyedropper( GetCurrentMousePixel(), ev.MouseButton );
 				}
+				
+				if ( ( CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone ) && _isMoving )
+				{
+					PasteClipboard( _mouseDownPosition.Value );
+
+					if ( CurrentTool == PaintTool.Move )
+					{
+						ClearPreview();
+						_isDrawing = false;
+						_isMoving = false;
+					}
+				}
+				
 			}
 			else if ( ev.MouseButton == MouseButtons.Right )
 			{
@@ -602,6 +646,12 @@ public partial class PaintUi
 				if ( CurrentTool == PaintTool.Eyedropper )
 				{
 					Eyedropper( GetCurrentMousePixel(), ev.MouseButton );
+				}
+
+				if ( CurrentTool == PaintTool.Clone )
+				{
+					_isMoving = false;
+					ClearPreview();
 				}
 			}
 			else
@@ -639,11 +689,131 @@ public partial class PaintUi
 			{
 				DrawCircle( _mouseDownPosition.Value, _mouseUpPosition.Value );
 			}
+			else if ( CurrentTool == PaintTool.Move && !_isMoving )
+			{
+				SetClipboard( _mouseDownPosition.Value, _mouseUpPosition.Value );
+				FillArea( _mouseDownPosition.Value, _mouseUpPosition.Value, RightPaletteIndex );
+				_isMoving = true;
+			}
+			else if ( CurrentTool == PaintTool.Clone && !_isMoving )
+			{
+				SetClipboard( _mouseDownPosition.Value, _mouseUpPosition.Value );
+				_isMoving = true;
+				// _isDrawing = true;
+			}
 		}
 
 		ClearPreview();
 
 		_mouseDownPosition = null;
+	}
+	
+	private void FillArea( Vector2Int start, Vector2Int end, int colorIndex )
+	{
+		var x = Math.Min( start.x, end.x );
+		var y = Math.Min( start.y, end.y );
+		var width = Math.Abs( start.x - end.x );
+		var height = Math.Abs( start.y - end.y );
+		
+		PushRectToBoth( new Rect( x, y, width, height ), colorIndex );
+
+		/*for ( var i = 0; i < width; i++ )
+		{
+			for ( var j = 0; j < height; j++ )
+			{
+				var index = x + i + (y + j) * DrawTexture.Width;
+				if ( index >= 0 && index < DrawTextureData.Length )
+				{
+					DrawTextureData[index] = (byte)colorIndex;
+				}
+			}
+		}
+
+		PushByteDataToTexture();*/
+	}
+	
+	
+	private bool _isMoving;
+	
+	
+	private void SetClipboard( Vector2Int start, Vector2Int end )
+	{
+		Log.Info( $"Setting clipboard at {start} to {end}" );
+		
+		var x = Math.Min( start.x, end.x );
+		var y = Math.Min( start.y, end.y );
+		var width = Math.Abs( start.x - end.x );
+		var height = Math.Abs( start.y - end.y );
+
+		ClipboardSize = new Vector2Int( width, height );
+		ClipboardData = new byte[width * height];
+
+		for ( var i = 0; i < width; i++ )
+		{
+			for ( var j = 0; j < height; j++ )
+			{
+				var index = x + i + (y + j) * DrawTexture.Width;
+				if ( index >= 0 && index < DrawTextureData.Length )
+				{
+					ClipboardData[i + j * width] = DrawTextureData[index];
+				}
+			}
+		}
+	}
+	
+	private void PasteClipboard( Vector2Int position )
+	{
+		Log.Info( $"Pasting clipboard at {position}, size {ClipboardSize}" );
+		
+		var x = position.x;
+		var y = position.y;
+
+		for ( var i = 0; i < ClipboardSize.x; i++ )
+		{
+			for ( var j = 0; j < ClipboardSize.y; j++ )
+			{
+				var index = x + i + (y + j) * DrawTexture.Width;
+				if ( index >= 0 && index < DrawTextureData.Length )
+				{
+					DrawTextureData[index] = ClipboardData[i + j * ClipboardSize.x];
+				}
+			}
+		}
+
+		PushByteDataToTexture();
+	}
+	
+	private void PasteClipboardToPreview( Vector2Int position )
+	{
+		// Log.Info( $"Pasting clipboard to preview at {position}, size {ClipboardSize}" );
+		
+		var width = ClipboardSize.x;
+		var height = ClipboardSize.y;
+		
+		// clamp so it doesn't go out of bounds
+		var x = Math.Clamp( position.x, 0, DrawTexture.Width );
+		var y = Math.Clamp( position.y, 0, DrawTexture.Height );
+		
+		width = Math.Min( width, DrawTexture.Width - x );
+		height = Math.Min( height, DrawTexture.Height - y );
+		
+		if ( width == 0 || height == 0 )
+		{
+			return;
+		}
+		
+		var colors = new Color32[width * height];
+		
+		for ( var i = 0; i < width; i++ )
+		{
+			for ( var j = 0; j < height; j++ )
+			{
+				var index = i + j * width;
+				colors[index] = Palette[ClipboardData[i + j * ClipboardSize.x]];
+			}
+		}
+		
+		PreviewTexture.Update( colors, x, y, width, height );
 	}
 
 	private void Save()

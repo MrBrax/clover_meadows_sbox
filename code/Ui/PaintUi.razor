@@ -41,6 +41,12 @@
 							<button @onclick=@( () => CurrentTool = PaintTool.Circle ) class="paint-button @( CurrentTool == PaintTool.Circle ? "active" : "" )" tooltip="Circle">
 								<img src="ui/icons/paint/circle-regular-24.png"/>
 							</button>
+							<button @onclick=@( () => CurrentTool = PaintTool.Move ) class="paint-button @( CurrentTool == PaintTool.Move ? "active" : "" )" tooltip="Move">
+								<img src="ui/icons/paint/move-regular-24.png"/>
+							</button>
+							<button @onclick=@( () => CurrentTool = PaintTool.Clone ) class="paint-button @( CurrentTool == PaintTool.Clone ? "active" : "" )" tooltip="Clone">
+								CL
+							</button>
 						</div>
 
 						<div class="button-pair">
@@ -53,11 +59,11 @@
 						</div>
 
 						<div class="button-pair">
-							<button class="paint-button" @onclick=@( () => Undo() )>
+							<button class="paint-button @(UndoStack.Count == 0 ? "disabled" : "")" @onclick=@( () => Undo() )>
 								<img src="ui/icons/paint/undo-regular-24.png"/>
 							</button>
 
-							<button class="paint-button" @onclick=@( () => Redo() )>
+							<button class="paint-button @(RedoStack.Count == 0 ? "disabled" : "")" @onclick=@( () => Redo() )>
 								<img src="ui/icons/paint/redo-regular-24.png"/>
 							</button>
 						</div>

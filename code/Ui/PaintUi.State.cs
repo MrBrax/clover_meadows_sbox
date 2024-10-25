@@ -19,6 +19,10 @@ public partial class PaintUi
 
 		DrawTextureData = UndoStack.Pop();
 		PushByteDataToTexture();
+		
+		_isDrawing = false;
+		_isMoving = false;
+		_lastBrushPosition = null;
 	}
 
 	private void Redo()
@@ -35,6 +39,10 @@ public partial class PaintUi
 
 		DrawTextureData = RedoStack.Pop();
 		PushByteDataToTexture();
+		
+		_isDrawing = false;
+		_isMoving = false;
+		_lastBrushPosition = null;
 	}
 
 	private void PushUndo()

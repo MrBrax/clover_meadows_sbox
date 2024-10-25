@@ -123,6 +123,13 @@ PaintUi {
         &.active {
             background-color: #b6cbef;
         }
+        
+        &.disabled {
+            background-color: #ccc;
+            color: #777;
+            border-color: #aaa;
+            cursor: not-allowed;
+        }
     }
 
     .paint-input {
