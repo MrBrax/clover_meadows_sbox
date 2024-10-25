@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+using Sandbox.Diagnostics;
 
 namespace Clover.Utilities;
 
@@ -13,11 +14,69 @@ public class Decals
 		public string Name;
 
 		public ulong Author;
+		public string AuthorName;
 
 		public string Palette;
 
 		public byte[] Image;
 		public Texture Texture;
+
+		public DecalDataRpc ToRpc()
+		{
+			return new DecalDataRpc
+			{
+				Width = Width,
+				Height = Height,
+				Name = Name,
+				Author = Author,
+				Palette = Palette,
+				Image = Image
+			};
+		}
+	}
+
+	public struct DecalDataRpc
+	{
+		public int Width;
+		public int Height;
+
+		public string Name;
+
+		public ulong Author;
+		public string AuthorName;
+
+		public string Palette;
+
+		public byte[] Image;
+
+		public Texture GetTexture()
+		{
+			Assert.NotNull( Palette, "Palette is null" );
+
+			var palette = GetPalette( Palette );
+
+			var texture = Texture.Create( Width, Height ).Finish();
+
+			var allPixels = ByteArrayToColor32( Image, palette );
+
+			texture.Update( allPixels, 0, 0, Width, Height );
+
+			return texture;
+		}
+
+		public DecalData ToDecalData()
+		{
+			return new DecalData
+			{
+				Width = Width,
+				Height = Height,
+				Name = Name,
+				Author = Author,
+				Palette = Palette,
+				Image = Image,
+				Texture = GetTexture()
+			};
+		}
 	}
 
 	public static List<string> GetPalettes()
@@ -38,6 +97,12 @@ public class Decals
 	public static Color32[] GetPalette( string name )
 	{
 		var paletteTexture = Texture.Load( FileSystem.Mounted, $"materials/palettes/{name}.png" );
+		if ( !paletteTexture.IsValid() )
+		{
+			Log.Error( $"Failed to load palette {name}" );
+			return null;
+		}
+
 		var palette = paletteTexture.GetPixels();
 
 		// swap out last color for transparent
@@ -84,7 +149,7 @@ public class Decals
 		var version = reader.ReadUInt32();
 		Log.Info( $"Version: {version}" );
 
-		if ( version < 2 )
+		if ( version < 3 )
 		{
 			// Log.Error( "Decal version is too old" );
 			// return default;
@@ -99,6 +164,9 @@ public class Decals
 
 		var author = reader.ReadUInt64();
 		Log.Info( $"Author: {author}" );
+		
+		var authorName = reader.ReadString();
+		Log.Info( $"Author Name: {authorName}" );
 
 		var paletteName = reader.ReadString();
 		Log.Info( $"Palette: {paletteName}" );
@@ -120,6 +188,7 @@ public class Decals
 			Height = height,
 			Name = name,
 			Author = author,
+			AuthorName = authorName,
 			Palette = paletteName,
 			Image = imageBytes
 		};

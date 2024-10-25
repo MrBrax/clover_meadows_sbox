@@ -668,7 +668,7 @@ public partial class PaintUi
 		writer.Write( 'P' );
 		writer.Write( 'T' );
 
-		writer.Write( (int)2 ); // version
+		writer.Write( 3 ); // version
 
 		writer.Write( DrawTexture.Width ); // width
 		writer.Write( DrawTexture.Height ); // height
@@ -676,6 +676,8 @@ public partial class PaintUi
 		writer.Write( CurrentName ); // name, 16 chars
 
 		writer.Write( Game.SteamId ); // author
+		
+		writer.Write( Connection.Local.DisplayName ); // author name
 
 		writer.Write( PaletteName ); // palette name
 
