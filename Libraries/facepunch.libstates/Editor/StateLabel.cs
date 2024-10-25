@@ -33,16 +33,7 @@ public sealed class StateLabel : GraphicsItem, IContextMenuSource, IDeletable, I
 	public void Layout()
 	{
 		PrepareGeometryChange();
-
-		if ( !Source.IsValid )
-		{
-			Size = 0f;
-		}
-		else
-		{
-			Size = 32f;
-			Tooltip = Source.Description;
-		}
+		Size = !Source.IsValid ? 0f : 32f;
 	}
 
 	protected override void OnPaint()
