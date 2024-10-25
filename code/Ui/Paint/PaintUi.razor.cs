@@ -318,8 +318,6 @@ public partial class PaintUi
 
 	protected override void OnUpdate()
 	{
-		// SetCanvasSquareOffset( new Vector2( MathF.Sin( Time.Now * 3f ) * 100f, MathF.Sin( Time.Now * 3f ) * 100f ) );
-
 		if ( Input.Released( "PaintUndo" ) )
 		{
 			Undo();

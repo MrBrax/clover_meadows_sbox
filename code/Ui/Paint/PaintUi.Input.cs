@@ -14,6 +14,8 @@ public partial class PaintUi
 			return;
 		}
 
+		if ( _isPanning ) return;
+
 		// CanvasSize += (int)(value.y * -30);
 		// var zoomFactor = (int)(1 + (value.y * 0.1f));
 		// Log.Info( $"Zoom factor: {zoomFactor}" );
@@ -38,7 +40,7 @@ public partial class PaintUi
 		if ( e.MouseButton == MouseButtons.Middle && IsMouseInsideCanvasContainer() )
 		{
 			_isPanning = true;
-			_lastPanPosition = e.LocalPosition;
+			_lastPanPosition = Panel.MousePosition;
 			Log.Info( "Panning on" );
 			e.StopPropagation();
 		}
@@ -64,8 +66,8 @@ public partial class PaintUi
 
 		if ( _isPanning )
 		{
-			Pan( e.LocalPosition - _lastPanPosition );
-			_lastPanPosition = e.LocalPosition;
+			Pan( Panel.MousePosition - _lastPanPosition );
+			_lastPanPosition = Panel.MousePosition;
 			e.StopPropagation();
 		}
 	}
@@ -73,8 +75,12 @@ public partial class PaintUi
 	private void Pan( Vector2 delta )
 	{
 		var panSpeed = 1.0f * Panel.ScaleFromScreen;
-		CanvasSquare.Style.Left = CanvasSquare.Style.Left.GetValueOrDefault().GetPixels( 1 ) + (delta.x * panSpeed);
-		CanvasSquare.Style.Top = CanvasSquare.Style.Top.GetValueOrDefault().GetPixels( 1 ) + (delta.y * panSpeed);
+
+		CanvasSquare.Style.Left =
+			Length.Pixels( CanvasSquare.Style.Left.GetValueOrDefault().GetPixels( 1 ) + (delta.x * panSpeed) );
+
+		CanvasSquare.Style.Top =
+			Length.Pixels( CanvasSquare.Style.Top.GetValueOrDefault().GetPixels( 1 ) + (delta.y * panSpeed) );
 	}
 
 	private void OnCanvasMouseDown( PanelEvent e )
