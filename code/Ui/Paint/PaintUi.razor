@@ -138,8 +138,8 @@
 				</div>
 				<div class="vsplit expand main">
 					<div @ref=" CanvasContainer" class="canvas">
-						<div class="canvas-container">
-							<Image class="canvas-texture" @ref=" Canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
+						<div @ref=" CanvasSquare" class="canvas-square">
+							<Image class="canvas-texture" @ref=" CanvasImage" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
 							@*<Image class="grid" @ref=" Grid" Texture=@GridTexture/>*@
 							<Image class="preview-overlay" @ref=" PreviewOverlay" Texture=@PreviewTexture/>
 						</div>

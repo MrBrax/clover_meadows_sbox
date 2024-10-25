@@ -24,7 +24,7 @@ public partial class PaintUi
 		// CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
 		// UpdateCanvas();
 
-		Zoom( value.y * -0.2f );
+		Zoom( value.y * -0.2f, GetCurrentMousePixel() );
 	}
 
 	private void OnCanvasMouseDown( PanelEvent e )

@@ -64,7 +64,8 @@ public partial class PaintUi
 
 	private Panel Window;
 	private Panel CanvasContainer;
-	private Panel Canvas;
+	private Panel CanvasSquare;
+	private Panel CanvasImage;
 	private Panel Grid;
 	private Panel Crosshair;
 	private Panel PreviewOverlay;
@@ -351,14 +352,14 @@ public partial class PaintUi
 
 	private Vector2Int GetCurrentMousePixel()
 	{
-		if ( !Canvas.IsValid() )
+		if ( !CanvasImage.IsValid() )
 		{
 			return Vector2Int.Zero;
 		}
 
 		var mousePosition = Mouse.Position;
-		var canvasPosition = Canvas.Box.Rect.Position;
-		var canvasSize = Canvas.Box.Rect.Size;
+		var canvasPosition = CanvasImage.Box.Rect.Position;
+		var canvasSize = CanvasImage.Box.Rect.Size;
 
 		var mousePositionInCanvas = mousePosition - canvasPosition;
 		var mousePositionInCanvasNormalized = mousePositionInCanvas / canvasSize;
@@ -383,8 +384,8 @@ public partial class PaintUi
 	private bool IsMouseInsideCanvas()
 	{
 		var mousePosition = Mouse.Position;
-		var canvasPosition = Canvas.Box.Rect.Position;
-		var canvasSize = Canvas.Box.Rect.Size;
+		var canvasPosition = CanvasImage.Box.Rect.Position;
+		var canvasSize = CanvasImage.Box.Rect.Size;
 
 		return mousePosition.x >= canvasPosition.x && mousePosition.x <= canvasPosition.x + canvasSize.x &&
 		       mousePosition.y >= canvasPosition.y && mousePosition.y <= canvasPosition.y + canvasSize.y;
@@ -505,11 +506,11 @@ public partial class PaintUi
 
 		var crosshairRound = false;
 
-		var crosshairX = Canvas.Box.Left * Panel.ScaleFromScreen;
+		var crosshairX = CanvasImage.Box.Left * Panel.ScaleFromScreen;
 		crosshairX += texturePixelScreenSize * brushPosition.x;
 		crosshairX += CanvasContainer.ScrollOffset.x * Panel.ScaleFromScreen;
 
-		var crosshairY = Canvas.Box.Top * Panel.ScaleFromScreen;
+		var crosshairY = CanvasImage.Box.Top * Panel.ScaleFromScreen;
 		crosshairY += texturePixelScreenSize * brushPosition.y;
 		crosshairY += CanvasContainer.ScrollOffset.y * Panel.ScaleFromScreen;
 
@@ -790,9 +791,8 @@ public partial class PaintUi
 		PreviewTexture?.Update( Color32.Transparent, new Rect( 0, 0, PreviewTexture.Width, PreviewTexture.Height ) );
 	}
 
-	private void Zoom( float value )
+	private void Zoom( float value, Vector2Int target = default )
 	{
-		Log.Info( $"Zooming {value}" );
 		CanvasZoom += value;
 		CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
 
@@ -801,6 +801,15 @@ public partial class PaintUi
 		CanvasSize = (int)Math.Round( (BaseCanvasSize * CanvasZoom).SnapToGrid( 32 ) );
 
 		UpdateCanvas();
+
+		if ( target != default )
+		{
+			var scroll = CanvasContainer.ScrollOffset;
+			var targetPosition = target * CanvasZoom;
+			var targetOffset = targetPosition - scroll;
+			CanvasContainer.Style.Top = Length.Pixels( -targetOffset.y );
+			CanvasContainer.Style.Left = Length.Pixels( -targetOffset.x );
+		}
 	}
 
 	private void ZoomIn()
@@ -853,10 +862,8 @@ public partial class PaintUi
 	{
 		// var size = BaseCanvasSize * CanvasZoom;
 
-		Canvas.Style.Width = Length.Pixels( CanvasSize );
-		Canvas.Style.Height = Length.Pixels( CanvasSize );
-
-		Log.Info( $"Canvas size: {Canvas.Style.Width}" );
+		CanvasImage.Style.Width = Length.Pixels( CanvasSize );
+		CanvasImage.Style.Height = Length.Pixels( CanvasSize );
 
 		// Grid.Style.Width = CanvasSize;
 		// Grid.Style.Height = CanvasSize;

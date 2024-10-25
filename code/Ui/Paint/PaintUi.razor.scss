@@ -325,7 +325,7 @@ PaintUi {
 
         // position: relative;
 
-        .canvas-container {
+        .canvas-square {
             position: relative;
             background-image: url("/ui/transparent.png");
 
@@ -340,10 +340,10 @@ PaintUi {
         // overflow: scroll;
         overflow: hidden;
 
-        align-items: center;
-        justify-content: center;
+        // align-items: center;
+        // justify-content: center;
 
-        // align-items: flex-start;
+        align-items: flex-start;
 
         .canvas-texture {
             flex-shrink: 0;
