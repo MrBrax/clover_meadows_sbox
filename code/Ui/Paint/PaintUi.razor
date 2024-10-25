@@ -56,11 +56,14 @@
 						</div>
 
 						<div class="button-pair">
-							<button class="paint-button" @onclick=@( () => ZoomIn() )>
+							@*<button class="paint-button" @onclick=@( () => ZoomIn() )>
 								<img src="ui/icons/paint/zoom-in-solid-24.png"/>
 							</button>
 							<button class="paint-button" @onclick=@( () => ZoomOut() )>
 								<img src="ui/icons/paint/zoom-out-solid-24.png"/>
+							</button>*@
+							<button class="paint-button" @onclick=@( () => ShowGrid = !ShowGrid ) tooltip="Toggle Grid">
+								<img src="ui/icons/paint/table-regular-24.png"/>
 							</button>
 						</div>
 
@@ -142,7 +145,10 @@
 							<Image class="canvas-texture" @ref=" CanvasImage" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
 							<Image class="preview-overlay" @ref=" PreviewOverlay" Texture=@PreviewTexture/>
 							@*<Image class="grid" @ref=" Grid" Texture=@GridTexture/>*@
-							<GridRenderer class="grid"/>
+							@if ( ShowGrid )
+							{
+								<GridRenderer class="grid"/>
+							}
 						</div>
 						<div @ref=" Crosshair" class="crosshair"></div>
 					</div>

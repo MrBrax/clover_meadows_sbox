@@ -6,7 +6,7 @@ public partial class GridRenderer
 {
 	[Property] public int TotalGridDivisions { get; set; } = 32;
 	[Property] public int GridDivisionSize { get; set; } = 8;
-	[Property] public int GridLineThickness { get; set; } = 20;
+	[Property] public int GridLineThickness { get; set; } = 1;
 
 	[Property] public Color GridColor { get; set; } = Color.Black;
 	[Property] public Color GridSubdivisionColor { get; set; } = Color.Gray;

@@ -58,7 +58,8 @@ public partial class PaintUi
 	private List<Texture> Images = new();
 
 	private Texture DrawTexture;
-	private Texture GridTexture;
+
+	// private Texture GridTexture;
 	private Texture PreviewTexture;
 
 	private byte[] DrawTextureData;
@@ -101,6 +102,7 @@ public partial class PaintUi
 
 	private int SelectedFavorite = -1; // TODO: don't allow setting when -1
 
+	private bool ShowGrid = true;
 
 	private Vector2Int ClipboardSize;
 	private byte[] ClipboardData;
@@ -206,7 +208,7 @@ public partial class PaintUi
 
 		UndoStack = new();
 
-		// draw line grid with guide lines
+		/*// draw line grid with guide lines
 		GridTexture = Texture.Create( 1024, 1024 ).Finish();
 		var pixels = new Color32[1024 * 1024];
 		for ( var x = 0; x < 1024; x++ )
@@ -228,7 +230,7 @@ public partial class PaintUi
 			}
 		}
 
-		GridTexture.Update( pixels );
+		GridTexture.Update( pixels );*/
 
 		// draw preview overlay
 		PreviewTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
