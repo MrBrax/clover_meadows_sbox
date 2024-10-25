@@ -72,7 +72,13 @@ public partial class PaintUi
 	{
 		Log.Info( $"Loading image {texture.ResourcePath}, {texture.Width}x{texture.Height}" );
 
-		// resize image to 32x32
+		if ( texture.Width != TextureSize )
+		{
+			Log.Error( $"Image must be {TextureSize}x{TextureSize} at the moment" );
+			return;
+		}
+
+		// resize image
 		var resizedTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
 		resizedTexture.Update( texture.GetPixels(), 0, 0, TextureSize, TextureSize );
 
