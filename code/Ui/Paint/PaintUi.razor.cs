@@ -820,6 +820,34 @@ public partial class PaintUi
 	{
 		return HashCode.Combine( CurrentTool );
 	}
+
+	private static ReadOnlySpan<Color32> ResizeTexture( Color32[] sourcePixels, int sourceSize, int destinationSize )
+	{
+		if ( sourceSize == destinationSize )
+		{
+			return sourcePixels;
+		}
+
+		var destinationPixels = new Color32[destinationSize * destinationSize];
+
+		var ratio = (float)destinationSize / sourceSize;
+
+		for ( var y = 0; y < destinationSize; y++ )
+		{
+			for ( var x = 0; x < destinationSize; x++ )
+			{
+				var sourceX = (int)(x / ratio);
+				var sourceY = (int)(y / ratio);
+
+				var sourceIndex = sourceX + sourceY * sourceSize;
+				var destinationIndex = x + y * destinationSize;
+
+				destinationPixels[destinationIndex] = sourcePixels[sourceIndex];
+			}
+		}
+
+		return destinationPixels;
+	}
 }
 
 public interface IPaintEvent
