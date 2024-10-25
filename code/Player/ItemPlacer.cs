@@ -482,7 +482,7 @@ public class ItemPlacer : Component, IWorldEvent
 	{
 		try
 		{
-			Player.World.SpawnPlacedNode( _selectedItemData, _ghost.WorldPosition, _ghost.WorldRotation );
+			Player.World.SpawnPlacedNode( InventorySlot.GetItem(), _ghost.WorldPosition, _ghost.WorldRotation );
 		}
 		catch ( Exception e )
 		{
@@ -663,7 +663,8 @@ public class ItemPlacer : Component, IWorldEvent
 			Gizmo.Draw.Color = Color.Yellow;
 			Gizmo.Draw.Arrow( _ghost.WorldPosition, endPos );
 			Gizmo.Draw.Color = Color.White;
-			Gizmo.Draw.Text( Math.Round( trace.Distance ).ToString(), new Transform( endPos + Vector3.Right * 16 ), "Roboto", 24 );
+			Gizmo.Draw.Text( Math.Round( trace.Distance ).ToString(), new Transform( endPos + Vector3.Right * 16 ),
+				"Roboto", 24 );
 		}
 
 		var bbox1 = BBox.FromPositionAndSize( _colliderCenter, _colliderSize );
@@ -671,8 +672,7 @@ public class ItemPlacer : Component, IWorldEvent
 		bbox1 = bbox1.Translate( _ghost.WorldPosition );
 
 		Gizmo.Draw.LineBBox( bbox1 );
-		
-		
+
 
 		foreach ( var worldItem in Scene.GetAllComponents<WorldItem>() )
 		{
