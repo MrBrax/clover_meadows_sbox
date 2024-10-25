@@ -19,8 +19,13 @@ public class Paintbrush : BaseCarriable
 
 	public override void OnUseDown()
 	{
-		
 		var pos = Player.GetAimingGridPosition();
+
+		if ( pos == Vector2Int.Zero )
+		{
+			Log.Error( "Invalid position" );
+			return;
+		}
 
 		var item = Player.World.GetItems( pos ).FirstOrDefault();
 

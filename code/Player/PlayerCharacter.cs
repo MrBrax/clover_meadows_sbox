@@ -125,17 +125,25 @@ public sealed partial class PlayerCharacter : Component
 
 	public Vector2Int GetAimingGridPosition()
 	{
-		var boxPos = InteractPoint.WorldPosition;
+		var boxPos = InteractPoint.WorldPosition /*+ (Vector3.Down * WorldManager.WorldOffset)*/;
+		// DebugOverlay.Sphere( new Sphere( boxPos, 8f ), Color.Red, 1f );
+
+		var boxPosHeight = boxPos.z;
 
 		var world = WorldManager.Instance.ActiveWorld;
 
 		var gridPosition = world.WorldToItemGrid( boxPos );
 		var worldPosition = world.ItemGridToWorld( gridPosition );
 
-		if ( MathF.Abs( boxPos.z - worldPosition.z ) > 16f )
+		// Log.Info( $"Aiming at {boxPos} -> {gridPosition} -> {worldPosition}" );
+
+		// DebugOverlay.Sphere( new Sphere( worldPosition, 8f ), Color.Green, 1f );
+
+		if ( MathF.Abs( boxPosHeight - worldPosition.z ) > 16f )
 		{
 			// throw new System.Exception( $"Aiming at a higher position: {boxPos} -> {worldPosition}" );
-			// Log.Warning( $"Aiming at a higher position: {boxPos} -> {worldPosition}" );
+			Log.Warning(
+				$"Aiming at a higher position: {boxPos} -> {worldPosition} ({MathF.Abs( boxPosHeight - worldPosition.z )})" );
 			return default;
 		}
 

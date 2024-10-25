@@ -171,16 +171,16 @@ public sealed partial class World : Component
 		var bottomRight = new Vector3( basePosition.x + margin, basePosition.y + margin, baseHeight );
 
 		var traceTopLeft = Scene.Trace.Ray( topLeft, topLeft + (Vector3.Down * traceDistance) )
-			.WithTag( "terrain" )
+			.WithAnyTags( "terrain", "floor" )
 			.Run();
 		var traceTopRight = Scene.Trace.Ray( topRight, topRight + (Vector3.Down * traceDistance) )
-			.WithTag( "terrain" )
+			.WithAnyTags( "terrain", "floor" )
 			.Run();
 		var traceBottomLeft = Scene.Trace.Ray( bottomLeft, bottomLeft + (Vector3.Down * traceDistance) )
-			.WithTag( "terrain" )
+			.WithAnyTags( "terrain", "floor" )
 			.Run();
 		var traceBottomRight = Scene.Trace.Ray( bottomRight, bottomRight + (Vector3.Down * traceDistance) )
-			.WithTag( "terrain" )
+			.WithAnyTags( "terrain", "floor" )
 			.Run();
 
 		if ( !traceTopLeft.Hit || !traceTopRight.Hit || !traceBottomLeft.Hit || !traceBottomRight.Hit )

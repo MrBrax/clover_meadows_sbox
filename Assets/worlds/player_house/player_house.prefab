@@ -277,7 +277,7 @@
                   "DstName": "_signal"
                 },
                 {
-                  "Id": 3,
+                  "Id": 2,
                   "Value": "asdf",
                   "DstId": 1,
                   "DstName": "format"
@@ -944,6 +944,7 @@
             "Flags": 0,
             "Name": "interior_floor_1",
             "Position": "320,320,0.00009608794",
+            "Tags": "floor",
             "Enabled": true,
             "Components": [
               {
@@ -1576,6 +1577,7 @@
             "Flags": 0,
             "Name": "interior_floor_1",
             "Position": "320,96,0.00006657232",
+            "Tags": "floor",
             "Enabled": true,
             "Components": [
               {
@@ -2565,6 +2567,7 @@
             "Flags": 0,
             "Name": "interior_floor_1",
             "Position": "96,320,0.00009608794",
+            "Tags": "floor",
             "Enabled": true,
             "Components": [
               {
@@ -2611,6 +2614,7 @@
             "Flags": 0,
             "Name": "interior_floor_1",
             "Position": "96,128,0.00009608794",
+            "Tags": "floor",
             "Enabled": true,
             "Components": [
               {
@@ -3078,6 +3082,7 @@
             "Flags": 0,
             "Name": "interior_floor_1",
             "Position": "320,544,0.00009608794",
+            "Tags": "floor",
             "Enabled": true,
             "Components": [
               {
@@ -3124,6 +3129,7 @@
             "Flags": 0,
             "Name": "interior_floor_1",
             "Position": "128,544,0.00009608794",
+            "Tags": "floor",
             "Enabled": true,
             "Components": [
               {
