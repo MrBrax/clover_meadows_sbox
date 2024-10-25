@@ -297,4 +297,24 @@ public class Decals
 
 		return result;
 	}
+
+	public static byte[] CompressBytes( byte[] bytes )
+	{
+		using var memoryStream = new MemoryStream();
+		using var gZipStream =
+			new System.IO.Compression.GZipStream( memoryStream, System.IO.Compression.CompressionMode.Compress );
+		gZipStream.Write( bytes, 0, bytes.Length );
+		gZipStream.Close();
+		return memoryStream.ToArray();
+	}
+
+	public static byte[] DecompressBytes( byte[] bytes )
+	{
+		using var memoryStream = new MemoryStream();
+		using var gZipStream =
+			new System.IO.Compression.GZipStream( new MemoryStream( bytes ),
+				System.IO.Compression.CompressionMode.Decompress );
+		gZipStream.CopyTo( memoryStream );
+		return memoryStream.ToArray();
+	}
 }
