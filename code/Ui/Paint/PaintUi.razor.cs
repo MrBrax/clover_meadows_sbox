@@ -84,7 +84,12 @@ public partial class PaintUi
 
 	private int TextureSize = 32;
 
-	private int CanvasSize = 512;
+	private int BaseCanvasSize = 512;
+	private float CanvasZoom = 1.0f;
+	private float MinCanvasZoom = 0.1f;
+	private float MaxCanvasZoom = 20.0f;
+
+	private int CanvasSize;
 
 	private static int FavoriteColorAmount = 40;
 
@@ -174,7 +179,7 @@ public partial class PaintUi
 		CurrentFileName = "";
 		CurrentName = "";
 		// BrushSize = 1;
-		CanvasSize = 512;
+		CanvasZoom = 1.0f;
 
 		_isDrawing = false;
 		_isMoving = false;
@@ -385,15 +390,48 @@ public partial class PaintUi
 		       mousePosition.y >= canvasPosition.y && mousePosition.y <= canvasPosition.y + canvasSize.y;
 	}
 
+	private bool IsMouseInsideCanvasContainer()
+	{
+		var mousePosition = Mouse.Position;
+		var canvasPosition = CanvasContainer.Box.Rect.Position;
+		var canvasSize = CanvasContainer.Box.Rect.Size;
+
+		return mousePosition.x >= canvasPosition.x && mousePosition.x <= canvasPosition.x + canvasSize.x &&
+		       mousePosition.y >= canvasPosition.y && mousePosition.y <= canvasPosition.y + canvasSize.y;
+	}
+
+	protected override void OnMouseWheel( Vector2 value )
+	{
+		base.OnMouseWheel( value );
+
+		if ( !IsMouseInsideCanvasContainer() )
+		{
+			Log.Info( "Mouse not inside canvas" );
+			return;
+		}
+
+		// CanvasSize += (int)(value.y * -30);
+		// var zoomFactor = (int)(1 + (value.y * 0.1f));
+		// Log.Info( $"Zoom factor: {zoomFactor}" );
+		// CanvasSize *= zoomFactor;
+		// CanvasSize = Math.Clamp( CanvasSize, 32, 2048 );
+
+		// CanvasZoom += value.y * -0.2f;
+		// CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
+		// UpdateCanvas();
+
+		Zoom( value.y * -0.2f );
+	}
+
 	protected override void OnUpdate()
 	{
 		// TODO: mouse inputs don't work in panels
-		if ( Input.MouseWheel.x != 0 )
+		/*if ( Input.MouseWheel.x != 0 )
 		{
 			CanvasSize += (int)(Input.MouseWheel.x * 10);
 			Canvas.Style.Width = CanvasSize;
 			Canvas.Style.Height = CanvasSize;
-		}
+		}*/
 
 		if ( Input.Released( "PaintUndo" ) )
 		{
@@ -728,7 +766,6 @@ public partial class PaintUi
 	{
 		if ( !_isDrawing ) return;
 
-		Log.Info( "MouseUp" );
 		_isDrawing = false;
 		_lastBrushPosition = null;
 
@@ -924,23 +961,43 @@ public partial class PaintUi
 		PreviewTexture?.Update( Color32.Transparent, new Rect( 0, 0, PreviewTexture.Width, PreviewTexture.Height ) );
 	}
 
+	private void Zoom( float value )
+	{
+		Log.Info( $"Zooming {value}" );
+		CanvasZoom += value;
+		CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
+
+		// CanvasSize = (int)(BaseCanvasSize * CanvasZoom);
+
+		CanvasSize = (int)Math.Round( (BaseCanvasSize * CanvasZoom).SnapToGrid( 32 ) );
+
+		UpdateCanvas();
+	}
+
 	private void ZoomIn()
 	{
-		CanvasSize *= 2;
-		CanvasSize = CanvasSize.SnapToGrid( 32 );
-		UpdateCanvas();
+		// CanvasSize *= 2;
+		// CanvasSize = CanvasSize.SnapToGrid( 32 );
+		// CanvasZoom *= 2;
+		// CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
+		// UpdateCanvas();
+		Zoom( 0.1f );
 	}
 
 	private void ZoomOut()
 	{
-		CanvasSize /= 2;
-		CanvasSize = CanvasSize.SnapToGrid( 32 );
-		UpdateCanvas();
+		// CanvasSize /= 2;
+		// CanvasSize = CanvasSize.SnapToGrid( 32 );
+		// CanvasZoom /= 2;
+		// CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
+		// UpdateCanvas();
+		Zoom( -0.1f );
 	}
 
 	private void ZoomReset()
 	{
-		CanvasSize = 512;
+		// CanvasSize = 512;
+		CanvasZoom = 1.0f;
 		UpdateCanvas();
 	}
 
@@ -965,8 +1022,13 @@ public partial class PaintUi
 
 	private void UpdateCanvas()
 	{
-		Canvas.Style.Width = CanvasSize;
-		Canvas.Style.Height = CanvasSize;
+		// var size = BaseCanvasSize * CanvasZoom;
+
+		Canvas.Style.Width = Length.Pixels( CanvasSize );
+		Canvas.Style.Height = Length.Pixels( CanvasSize );
+
+		Log.Info( $"Canvas size: {Canvas.Style.Width}" );
+
 		// Grid.Style.Width = CanvasSize;
 		// Grid.Style.Height = CanvasSize;
 	}

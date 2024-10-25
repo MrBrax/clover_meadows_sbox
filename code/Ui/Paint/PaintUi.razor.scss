@@ -12,7 +12,7 @@ PaintUi {
         right: 40px;
         bottom: 40px;*/
         // box-shadow: 0 0 80px black;
-        
+
         flex-grow: 1;
 
         font-family: Itim;
@@ -30,9 +30,11 @@ PaintUi {
     .hsplit {
         flex-direction: row;
         gap: 10px;
+
         &.expand {
             flex-grow: 1;
         }
+
         &.no-shrink {
             flex-shrink: 0;
         }
@@ -41,9 +43,11 @@ PaintUi {
     .vsplit {
         flex-direction: column;
         gap: 10px;
+
         &.expand {
             flex-grow: 1;
         }
+
         &.no-shrink {
             flex-shrink: 0;
         }
@@ -127,7 +131,7 @@ PaintUi {
             border-right-color: #ccc;
             border-bottom-color: #ccc;
         }
-        
+
         &.disabled {
             background-color: #ccc;
             color: #777;
@@ -155,7 +159,7 @@ PaintUi {
             font-style: italic;
         }
     }
-    
+
     .paint-popup {
         // position: absolute;
         // top: 600px;
@@ -191,7 +195,7 @@ PaintUi {
         section {
             flex-direction: column;
             gap: 5px;
-            
+
             // position: relative;
 
             /* h2 {
@@ -324,6 +328,7 @@ PaintUi {
         .canvas-container {
             position: relative;
             background-image: url("/ui/transparent.png");
+
         }
 
         background-color: #aaa;
@@ -332,10 +337,13 @@ PaintUi {
         flex-grow: 1;
         // min-height: 670px;
 
-        overflow: scroll;
+        // overflow: scroll;
+        overflow: hidden;
 
         align-items: center;
         justify-content: center;
+
+        // align-items: flex-start;
 
         .canvas-texture {
             flex-shrink: 0;
@@ -387,9 +395,9 @@ PaintUi {
 
         // overflow: scroll;
         // max-height: 140px;
-        
+
     }
-    
+
     .palette-favorites {
         flex-wrap: wrap;
         gap: 5px;
@@ -397,12 +405,12 @@ PaintUi {
         align-content: center;
         // flex-shrink: 0;
     }
-    
+
     .favorites-editor {
-        
+
         flex-wrap: wrap;
         flex-shrink: 0;
-       
+
     }
 
     .color-button {
@@ -413,7 +421,7 @@ PaintUi {
         border-top-color: #777;
         border-right-color: #ccc;
         border-bottom-color: #ccc;
-        
+
         &.big {
             width: 50px;
             height: 50px;
@@ -429,7 +437,7 @@ PaintUi {
             sound-in: "sounds/ui/button_down.sound";
             sound-out: "sounds/ui/button_up.sound";
         }
-        
+
         &.selected {
             border-color: white;
         }
