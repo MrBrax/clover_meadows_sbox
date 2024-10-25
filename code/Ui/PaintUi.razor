@@ -48,10 +48,10 @@
 								<img src="ui/icons/paint/select-multiple-regular-24.png"/>
 							</button>
 							<button @onclick=@( () => CurrentTool = PaintTool.Dodge ) class="paint-button @( CurrentTool == PaintTool.Dodge ? "active" : "" )" tooltip="Dodge">
-								<img src="ui/icons/paint/moon-solid-24.png"/>
+								<img src="ui/icons/paint/sun-regular-24.png"/>
 							</button>
 							<button @onclick=@( () => CurrentTool = PaintTool.Burn ) class="paint-button @( CurrentTool == PaintTool.Burn ? "active" : "" )" tooltip="Burn">
-								<img src="ui/icons/paint/sun-regular-24.png"/>
+								<img src="ui/icons/paint/moon-solid-24.png"/>
 							</button>
 						</div>
 
@@ -65,11 +65,11 @@
 						</div>
 
 						<div class="button-pair">
-							<button class="paint-button @(UndoStack.Count == 0 ? "disabled" : "")" @onclick=@( () => Undo() )>
+							<button class="paint-button @( UndoStack.Count == 0 ? "disabled" : "" )" @onclick=@( () => Undo() )>
 								<img src="ui/icons/paint/undo-regular-24.png"/>
 							</button>
 
-							<button class="paint-button @(RedoStack.Count == 0 ? "disabled" : "")" @onclick=@( () => Redo() )>
+							<button class="paint-button @( RedoStack.Count == 0 ? "disabled" : "" )" @onclick=@( () => Redo() )>
 								<img src="ui/icons/paint/redo-regular-24.png"/>
 							</button>
 						</div>
@@ -179,11 +179,11 @@
 											style="background-color: @GetColorFromByte( color ).Hex">
 										</button>
 									}
-									
-									<button class="paint-button @( ShowFavoritesEditor ? "active" : "")" @onclick=@ToggleShowFavoritesEditor>
+
+									<button class="paint-button @( ShowFavoritesEditor ? "active" : "" )" @onclick=@ToggleShowFavoritesEditor>
 										<i class="icon">edit</i>
 									</button>
-									
+
 									<button class="paint-button" @onclick=@GenerateFavoriteColors>
 										<i class="icon">refresh</i>
 									</button>
@@ -220,5 +220,5 @@
 			</div>
 		</div>
 	</div>
-	
+
 </root>

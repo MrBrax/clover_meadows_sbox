@@ -285,7 +285,7 @@ public partial class PaintUi
 	private void LoadImage( Texture texture )
 	{
 		Log.Info( $"Loading image {texture.ResourcePath}, {texture.Width}x{texture.Height}" );
-		
+
 		// resize image to 32x32
 		var resizedTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
 		resizedTexture.Update( texture.GetPixels(), 0, 0, TextureSize, TextureSize );
@@ -475,6 +475,8 @@ public partial class PaintUi
 	{
 		var texturePixelScreenSize = CanvasSize / TextureSize;
 
+		var crosshairRound = false;
+
 		var crosshairX = Canvas.Box.Left * Panel.ScaleFromScreen;
 		crosshairX += texturePixelScreenSize * brushPosition.x;
 		crosshairX += CanvasContainer.ScrollOffset.x * Panel.ScaleFromScreen;
@@ -483,21 +485,31 @@ public partial class PaintUi
 		crosshairY += texturePixelScreenSize * brushPosition.y;
 		crosshairY += CanvasContainer.ScrollOffset.y * Panel.ScaleFromScreen;
 
-		var crosshairSize = texturePixelScreenSize * BrushSize;
+		var crosshairSize = texturePixelScreenSize * BrushSize; // 
 
-		/*if ( CurrentTool == PaintTool.Fill )
+		if ( CurrentTool == PaintTool.Fill )
 		{
-			crosshairSize = texturePixelScreenSize;
+			// crosshairSize = texturePixelScreenSize;
 		}
 		else if ( CurrentTool == PaintTool.Spray )
 		{
-			// crosshairSize = texturePixelScreenSize;
-		}*/
+			crosshairSize *= 6;
+			crosshairX -= crosshairSize / 2f;
+			crosshairY -= crosshairSize / 2f;
+			crosshairRound = true;
+		}
 
-		Crosshair.Style.Left = Length.Pixels( crosshairX );
-		Crosshair.Style.Top = Length.Pixels( crosshairY );
+
+		Crosshair.Style.Left = Length.Pixels( (int)crosshairX );
+		Crosshair.Style.Top = Length.Pixels( (int)crosshairY );
 		Crosshair.Style.Width = crosshairSize;
 		Crosshair.Style.Height = crosshairSize;
+
+
+		Crosshair.Style.BorderTopLeftRadius = crosshairRound ? Length.Percent( 100 ) : Length.Pixels( 0 );
+		Crosshair.Style.BorderTopRightRadius = crosshairRound ? Length.Percent( 100 ) : Length.Pixels( 0 );
+		Crosshair.Style.BorderBottomLeftRadius = crosshairRound ? Length.Percent( 100 ) : Length.Pixels( 0 );
+		Crosshair.Style.BorderBottomRightRadius = crosshairRound ? Length.Percent( 100 ) : Length.Pixels( 0 );
 	}
 
 	private void PushRectToBoth( Rect rect, int colorIndex = -1 )

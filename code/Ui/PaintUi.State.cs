@@ -12,14 +12,14 @@ public partial class PaintUi
 			Log.Info( "Nothing to undo" );
 			return;
 		}
-		
+
 		Log.Info( $"UNDO | Size: {UndoStack.Count}" );
 
 		PushRedo();
 
 		DrawTextureData = UndoStack.Pop();
 		PushByteDataToTexture();
-		
+
 		_isDrawing = false;
 		_isMoving = false;
 		_lastBrushPosition = null;
@@ -32,14 +32,14 @@ public partial class PaintUi
 			Log.Info( "Nothing to redo" );
 			return;
 		}
-		
+
 		Log.Info( $"REDO | Size: {RedoStack.Count}" );
-		
+
 		PushUndo();
 
 		DrawTextureData = RedoStack.Pop();
 		PushByteDataToTexture();
-		
+
 		_isDrawing = false;
 		_isMoving = false;
 		_lastBrushPosition = null;
