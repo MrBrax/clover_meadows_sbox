@@ -183,7 +183,7 @@ public class Decals
 		writer.Write( 'P' );
 		writer.Write( 'T' );
 
-		writer.Write( 3 ); // version
+		writer.Write( 4 ); // version
 
 		writer.Write( decalData.Width ); // width
 		writer.Write( decalData.Height ); // height
@@ -196,9 +196,9 @@ public class Decals
 
 		writer.Write( decalData.Palette ); // palette name
 
-		// writer.Write( decalData.Created.ToBinary() );
+		writer.Write( decalData.Created.ToBinary() );
 
-		// writer.Write( decalData.Modified.ToBinary() );
+		writer.Write( decalData.Modified.ToBinary() );
 
 		writer.Write( decalData.Image );
 
@@ -218,7 +218,7 @@ public class Decals
 		var version = reader.ReadUInt32();
 		Log.Info( $"Version: {version}" );
 
-		if ( version < 3 )
+		if ( version < 4 )
 		{
 			stream.Close();
 			reader.Close();
@@ -240,9 +240,9 @@ public class Decals
 		var paletteName = reader.ReadString();
 		Log.Info( $"Palette: {paletteName}" );
 
-		// var created = DateTime.FromBinary( reader.ReadInt64() );
+		var created = DateTime.FromBinary( reader.ReadInt64() );
 
-		// var modified = DateTime.FromBinary( reader.ReadInt64() );
+		var modified = DateTime.FromBinary( reader.ReadInt64() );
 
 		var imageBytes = reader.ReadBytes( width * height );
 
