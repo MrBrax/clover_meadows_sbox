@@ -4,9 +4,9 @@ namespace Clover.Ui;
 
 public partial class PaintUi
 {
-	private Vector2? _lastBrushPosition;
+	private Vector2Int? _lastBrushPosition;
 
-	private void Draw( Vector2 brushPosition )
+	private void Draw( Vector2Int brushPosition )
 	{
 		var rect = new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize );
 		// DrawTexture.Update( GetCurrentColor(), rect );
@@ -23,9 +23,9 @@ public partial class PaintUi
 		_lastBrushPosition = brushPosition;
 	}
 
-	private void Fill( Vector2 brushPosition )
+	private void Fill( Vector2Int brushPosition )
 	{
-		var targetColor = DrawTextureData[(int)brushPosition.x + (int)brushPosition.y * DrawTexture.Width];
+		var targetColor = DrawTextureData[brushPosition.x + brushPosition.y * DrawTexture.Width];
 		var replacementColor = (byte)CurrentPaletteIndex;
 
 		if ( targetColor == replacementColor )
@@ -33,11 +33,13 @@ public partial class PaintUi
 			return;
 		}
 
-		FloodFill( (int)brushPosition.x, (int)brushPosition.y, targetColor, replacementColor );
+		FloodFill( brushPosition, targetColor, replacementColor );
 	}
 
-	private void FloodFill( int positionX, int positionY, byte targetColor, byte replacementColor )
+	private void FloodFill( Vector2Int position, byte targetColor, byte replacementColor )
 	{
+		var positionX = position.x;
+		var positionY = position.y;
 		if ( positionX < 0 || positionX >= DrawTexture.Width || positionY < 0 || positionY >= DrawTexture.Height )
 		{
 			return;
@@ -52,10 +54,16 @@ public partial class PaintUi
 		// DrawTexture.Update( GetCurrentColor(), new Rect( positionX, positionY, 1, 1 ) );
 		PushRectToBoth( new Rect( positionX, positionY, 1, 1 ) );
 
-		FloodFill( positionX + 1, positionY, targetColor, replacementColor );
-		FloodFill( positionX - 1, positionY, targetColor, replacementColor );
-		FloodFill( positionX, positionY + 1, targetColor, replacementColor );
-		FloodFill( positionX, positionY - 1, targetColor, replacementColor );
+		// FloodFill( positionX + 1, positionY, targetColor, replacementColor );
+		// FloodFill( positionX - 1, positionY, targetColor, replacementColor );
+		// FloodFill( positionX, positionY + 1, targetColor, replacementColor );
+		// FloodFill( positionX, positionY - 1, targetColor, replacementColor );
+		
+		FloodFill( position + Vector2Int.Right, targetColor, replacementColor );
+		FloodFill( position + Vector2Int.Left, targetColor, replacementColor );
+		FloodFill( position + Vector2Int.Up, targetColor, replacementColor );
+		FloodFill( position + Vector2Int.Down, targetColor, replacementColor );
+		
 	}
 
 	private TimeSince _lastSpray;
@@ -64,7 +72,7 @@ public partial class PaintUi
 	///  Spray random paint in a circle around the brush position
 	/// </summary>
 	/// <param name="brushPosition"></param>
-	private void Spray( Vector2 brushPosition )
+	private void Spray( Vector2Int brushPosition )
 	{
 		var radius = BrushSize * 3;
 		var radiusSquared = radius * radius;
@@ -101,7 +109,7 @@ public partial class PaintUi
 		}
 	}
 
-	private void Eraser( Vector2 brushPosition )
+	private void Eraser( Vector2Int brushPosition )
 	{
 		// DrawTexture.Update( BackgroundColor,
 		// 	new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
@@ -109,9 +117,9 @@ public partial class PaintUi
 		PushRectToBoth( new Rect( brushPosition.x, brushPosition.y, BrushSize, BrushSize ) );
 	}
 
-	private void Eyedropper( Vector2 brushPosition, MouseButtons mouseButton )
+	private void Eyedropper( Vector2Int brushPosition, MouseButtons mouseButton )
 	{
-		var index = DrawTextureData[(int)brushPosition.x + (int)brushPosition.y * DrawTexture.Width];
+		var index = DrawTextureData[brushPosition.x + brushPosition.y * DrawTexture.Width];
 		if ( mouseButton == MouseButtons.Left )
 		{
 			LeftPaletteIndex = index;
@@ -122,12 +130,12 @@ public partial class PaintUi
 		}
 	}
 
-	private void DrawLine( Vector2 startPos, Vector2 endPos )
+	private void DrawLine( Vector2Int startPos, Vector2Int endPos )
 	{
 		DrawLineBetween( startPos, endPos );
 	}
 
-	private void LinePreview( Vector2 brushPosition )
+	private void LinePreview( Vector2Int brushPosition )
 	{
 		ClearPreview();
 
@@ -139,7 +147,7 @@ public partial class PaintUi
 		DrawLineBetweenTex( PreviewTexture, PreviewColor, _mouseDownPosition.Value, brushPosition );
 	}
 
-	private void RectanglePreview( Vector2 brushPosition )
+	private void RectanglePreview( Vector2Int brushPosition )
 	{
 		ClearPreview();
 
@@ -152,7 +160,7 @@ public partial class PaintUi
 	}
 
 	// draw outline of rectangle
-	private void DrawRectangle( Vector2 mouseDownPosition, Vector2 mouseUpPosition, bool preview = false )
+	private void DrawRectangle( Vector2Int mouseDownPosition, Vector2Int mouseUpPosition, bool preview = false )
 	{
 		var x = Math.Min( mouseDownPosition.x, mouseUpPosition.x );
 		var y = Math.Min( mouseDownPosition.y, mouseUpPosition.y );
@@ -175,7 +183,7 @@ public partial class PaintUi
 		}
 	}
 
-	private void CirclePreview( Vector2 brushPosition )
+	private void CirclePreview( Vector2Int brushPosition )
 	{
 		ClearPreview();
 
@@ -187,12 +195,12 @@ public partial class PaintUi
 		DrawCircle( _mouseDownPosition.Value, brushPosition, true );
 	}
 
-	private void DrawCircle( Vector2 mouseDownPosition, Vector2 mouseUpPosition, bool preview = false )
+	private void DrawCircle( Vector2Int startPosition, Vector2Int endPosition, bool preview = false )
 	{
-		var x = Math.Min( mouseDownPosition.x, mouseUpPosition.x );
-		var y = Math.Min( mouseDownPosition.y, mouseUpPosition.y );
-		var width = Math.Abs( mouseDownPosition.x - mouseUpPosition.x );
-		var height = Math.Abs( mouseDownPosition.y - mouseUpPosition.y );
+		var x = Math.Min( startPosition.x, endPosition.x );
+		var y = Math.Min( startPosition.y, endPosition.y );
+		var width = Math.Abs( startPosition.x - endPosition.x );
+		var height = Math.Abs( startPosition.y - endPosition.y );
 
 		var radius = Math.Min( width, height ) / 2;
 		var centerX = x + width / 2;

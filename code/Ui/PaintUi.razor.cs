@@ -114,13 +114,14 @@ public partial class PaintUi
 
 	private void ResetPaint()
 	{
-		CurrentTool = PaintTool.Pencil;
+		Log.Info( "[Paint] Reset" );
+		// CurrentTool = PaintTool.Pencil;
 		CurrentPaletteIndex = 0;
 		LeftPaletteIndex = 0;
 		RightPaletteIndex = 1;
 		CurrentFileName = "";
 		CurrentName = "";
-		BrushSize = 1;
+		// BrushSize = 1;
 		CanvasSize = 512;
 		RedoStack.Clear();
 		UndoStack.Clear();
@@ -130,11 +131,14 @@ public partial class PaintUi
 
 	private void New()
 	{
+		Log.Info( "[Paint] New" );
 		ResetPaint();
 	}
 
 	private void InitialiseTexture()
 	{
+		Log.Info( "[Paint] Initialising texture" );
+		
 		DrawTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
 		DrawTextureData = new byte[TextureSize * TextureSize];
 		Clear();
@@ -294,8 +298,8 @@ public partial class PaintUi
 		var mousePositionInCanvas = mousePosition - canvasPosition;
 		var mousePositionInCanvasNormalized = mousePositionInCanvas / canvasSize;
 
-		var x = (int)(mousePositionInCanvasNormalized.x * DrawTexture.Width);
-		var y = (int)(mousePositionInCanvasNormalized.y * DrawTexture.Height);
+		var x = (int)Math.Round(mousePositionInCanvasNormalized.x * DrawTexture.Width);
+		var y = (int)Math.Round(mousePositionInCanvasNormalized.y * DrawTexture.Height);
 
 		return new Vector2Int( x, y );
 	}
@@ -454,13 +458,9 @@ public partial class PaintUi
 			for ( var y = (int)rect.Top; y < rect.Top + rect.Height; y++ )
 			{
 				var index = x + y * DrawTexture.Width;
-				if ( index < DrawTextureData.Length )
+				if ( index >= 0 && index < DrawTextureData.Length )
 				{
 					DrawTextureData[index] = (byte)CurrentPaletteIndex;
-				}
-				else
-				{
-					Log.Warning( $"Index {index} out of range" );
 				}
 			}
 		}
@@ -471,7 +471,7 @@ public partial class PaintUi
 	/// </summary>
 	/// <param name="lastBrushPosition"></param>
 	/// <param name="brushPosition"></param>
-	private void DrawLineBetween( Vector2 lastBrushPosition, Vector2 brushPosition )
+	private void DrawLineBetween( Vector2Int lastBrushPosition, Vector2Int brushPosition )
 	{
 		var x0 = (int)lastBrushPosition.x;
 		var y0 = (int)lastBrushPosition.y;
@@ -514,7 +514,7 @@ public partial class PaintUi
 	}
 
 	// TODO: this is a duplicate of DrawLineBetween
-	private void DrawLineBetweenTex( Texture tex, Color32 col, Vector2 lastBrushPosition, Vector2 brushPosition )
+	private void DrawLineBetweenTex( Texture tex, Color32 col, Vector2Int lastBrushPosition, Vector2Int brushPosition )
 	{
 		var x0 = (int)lastBrushPosition.x;
 		var y0 = (int)lastBrushPosition.y;
@@ -554,8 +554,8 @@ public partial class PaintUi
 	}
 
 
-	private Vector2? _mouseDownPosition;
-	private Vector2? _mouseUpPosition;
+	private Vector2Int? _mouseDownPosition;
+	private Vector2Int? _mouseUpPosition;
 
 	private void OnCanvasMouseDown( PanelEvent e )
 	{
@@ -602,6 +602,8 @@ public partial class PaintUi
 
 	private void OnCanvasMouseUp( PanelEvent e )
 	{
+		if ( !_isDrawing ) return;
+		
 		Log.Info( "MouseUp" );
 		_isDrawing = false;
 		_lastBrushPosition = null;
@@ -689,7 +691,7 @@ public partial class PaintUi
 
 	private void ClearPreview()
 	{
-		PreviewTexture.Update( Color32.Transparent, new Rect( 0, 0, PreviewTexture.Width, PreviewTexture.Height ) );
+		PreviewTexture?.Update( Color32.Transparent, new Rect( 0, 0, PreviewTexture.Width, PreviewTexture.Height ) );
 	}
 
 	private void ZoomIn()
