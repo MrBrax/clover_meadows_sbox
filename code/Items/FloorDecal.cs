@@ -35,13 +35,12 @@ public class FloorDecal : Component, IPersistent, IPaintEvent
 
 	public void UpdateDecal()
 	{
-
 		if ( IsProxy )
 		{
 			RequestDecal();
 			return;
 		}
-		
+
 		// Update decal
 		var material = Material.Create( $"{TexturePath}.vmat", "shaders/floor_decal.shader" );
 
@@ -58,9 +57,8 @@ public class FloorDecal : Component, IPersistent, IPaintEvent
 		material.Set( "Color", _decalData.Texture );
 
 		ModelRenderer.MaterialOverride = material;
-		
-		Log.Info( $"Updated decal with texture: {TexturePath}" );
-		
+
+		Log.Info( $"Updated decal '{_decalData.Name}' with texture: {TexturePath}" );
 	}
 
 	[Authority]
@@ -69,33 +67,53 @@ public class FloorDecal : Component, IPersistent, IPaintEvent
 		Assert.True( Networking.IsHost );
 
 		var caller = Rpc.Caller;
-		
-		Log.Info( $"Sending decal {_decalData.Name} to {caller}" );
+
+		if ( string.IsNullOrEmpty( _texturePath ) )
+		{
+			Log.Warning( "Texture path is null or empty" );
+			return;
+		}
+
+		if ( string.IsNullOrEmpty( _decalData.Name ) )
+		{
+			Log.Warning( "Decal name is null or empty" );
+			return;
+		}
+
+		var rpcDecal = _decalData.ToRpc();
+
+		Log.Info( $"Sending decal '{rpcDecal.Name}' by '{rpcDecal.Author}' to {caller}" );
 
 		using ( Rpc.FilterInclude( caller ) )
 		{
-			RecieveDecal( _decalData.ToRpc() );
+			RecieveDecal( _texturePath, rpcDecal );
 		}
-
 	}
 
 
 	[Broadcast]
-	public void RecieveDecal( Decals.DecalDataRpc decal )
+	public void RecieveDecal( string filename, Decals.DecalDataRpc decal )
 	{
-		
-		Log.Info( "Recieved decal:" );
+		Log.Info( $"Recieved decal '{filename}':" );
 		Log.Info( $"Size: {decal.Width}x{decal.Height}" );
 		Log.Info( $"Name: {decal.Name}" );
 		Log.Info( $"Author: {decal.Author}" );
 		Log.Info( $"Palette: {decal.Palette}" );
-		
-		_decalData = decal.ToDecalData();
+		Log.Info( $"Image: {decal.Image?.Length} bytes" );
+
+		if ( string.IsNullOrEmpty( decal.Name ) )
+		{
+			Log.Error( "Decal name is null or empty" );
+			return;
+		}
+
+		// _decalData = decal.ToDecalData();
+		_decalData = Decals.ToDecalData( decal );
 
 		var hash = Crc64.FromBytes( decal.Image );
-		
+
 		var material = Material.Create( $"{hash}.vmat", "shaders/floor_decal.shader" );
-		material.Set( "Color", decal.GetTexture() );
+		material.Set( "Color", Decals.GetDecalTexture( decal ) );
 		ModelRenderer.MaterialOverride = material;
 	}
 
@@ -116,6 +134,13 @@ public class FloorDecal : Component, IPersistent, IPaintEvent
 		{
 			Log.Info( "Updating decal" );
 			UpdateDecal();
+
+			RecieveDecal( path, _decalData.ToRpc() );
 		}
 	}
+
+	/*protected override void OnUpdate()
+	{
+		DebugOverlay.Text( WorldPosition + Vector3.Up * 8f, _texturePath, 16f );
+	}*/
 }

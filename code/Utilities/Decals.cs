@@ -29,6 +29,7 @@ public class Decals
 				Height = Height,
 				Name = Name,
 				Author = Author,
+				AuthorName = AuthorName,
 				Palette = Palette,
 				Image = Image
 			};
@@ -37,19 +38,19 @@ public class Decals
 
 	public struct DecalDataRpc
 	{
-		public int Width;
-		public int Height;
+		public int Width { get; set; }
+		public int Height { get; set; }
 
-		public string Name;
+		public string Name { get; set; }
 
-		public ulong Author;
-		public string AuthorName;
+		public ulong Author { get; set; }
+		public string AuthorName { get; set; }
 
-		public string Palette;
+		public string Palette { get; set; }
 
-		public byte[] Image;
+		public byte[] Image { get; set; }
 
-		public Texture GetTexture()
+		/*public Texture GetTexture()
 		{
 			Assert.NotNull( Palette, "Palette is null" );
 
@@ -72,11 +73,42 @@ public class Decals
 				Height = Height,
 				Name = Name,
 				Author = Author,
+				AuthorName = AuthorName,
 				Palette = Palette,
 				Image = Image,
 				Texture = GetTexture()
 			};
-		}
+		}*/
+	}
+
+	public static Texture GetDecalTexture( DecalDataRpc decal )
+	{
+		Assert.NotNull( decal.Palette, "Palette is null" );
+
+		var palette = GetPalette( decal.Palette );
+
+		var texture = Texture.Create( decal.Width, decal.Height ).Finish();
+
+		var allPixels = ByteArrayToColor32( decal.Image, palette );
+
+		texture.Update( allPixels, 0, 0, decal.Width, decal.Height );
+
+		return texture;
+	}
+
+	public static DecalData ToDecalData( DecalDataRpc decal )
+	{
+		return new DecalData
+		{
+			Width = decal.Width,
+			Height = decal.Height,
+			Name = decal.Name,
+			Author = decal.Author,
+			AuthorName = decal.AuthorName,
+			Palette = decal.Palette,
+			Image = decal.Image,
+			Texture = GetDecalTexture( decal )
+		};
 	}
 
 	public static List<string> GetPalettes()
@@ -161,7 +193,7 @@ public class Decals
 
 		var author = reader.ReadUInt64();
 		Log.Info( $"Author: {author}" );
-		
+
 		var authorName = reader.ReadString();
 		Log.Info( $"Author Name: {authorName}" );
 
@@ -198,13 +230,15 @@ public class Decals
 			return default;
 		}
 
-		var texture = Texture.Create( decalData.Width, decalData.Height ).Finish();
+		/*var texture = Texture.Create( decalData.Width, decalData.Height ).Finish();
 
 		var allPixels = ByteArrayToColor32( decalData.Image, palette );
 
 		texture.Update( allPixels, 0, 0, decalData.Width, decalData.Height );
 
-		decalData.Texture = texture;
+		decalData.Texture = texture;*/
+
+		decalData.Texture = GetDecalTexture( decalData.ToRpc() );
 
 		return decalData;
 	}
