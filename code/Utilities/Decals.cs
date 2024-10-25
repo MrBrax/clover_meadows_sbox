@@ -148,8 +148,8 @@ public class Decals
 
 		if ( version < 3 )
 		{
-			// Log.Error( "Decal version is too old" );
-			// return default;
+			stream.Close();
+			reader.Close();
 			throw new System.Exception( "Decal version is too old" );
 		}
 
