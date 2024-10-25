@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using Clover.Player;
+using Clover.Ui.Tools;
 using Clover.Utilities;
 using Sandbox.UI;
 
@@ -49,6 +50,8 @@ public partial class PaintUi
 			ClearPreview();
 		}
 	}
+
+	private BasePaintTool PaintToolClass;
 
 	private List<DecalEntry> Decals = new();
 	private List<Texture> Images = new();
@@ -138,6 +141,8 @@ public partial class PaintUi
 	protected override void OnStart()
 	{
 		base.OnStart();
+
+		PaintToolClass = new DrawTool( this );
 
 		Palette = Utilities.Decals.GetPalette( PaletteName ).ToList();
 
@@ -356,7 +361,7 @@ public partial class PaintUi
 		return new Vector2Int( x, y );
 	}
 
-	private Vector2Int GetCurrentBrushPosition()
+	public Vector2Int GetCurrentBrushPosition()
 	{
 		var mousePosition = GetCurrentMousePixel();
 
@@ -428,6 +433,11 @@ public partial class PaintUi
 		DrawCrosshair( brushPosition );
 
 		// PreviewTexture.Update( Color.Red, brushPosition.x, brushPosition.y );
+
+		if ( PaintToolClass != null )
+		{
+			PaintToolClass.OnUpdate();
+		}
 
 		if ( (CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone) && _isMoving )
 		{
@@ -512,7 +522,7 @@ public partial class PaintUi
 		Crosshair.Style.BorderBottomRightRadius = crosshairRound ? Length.Percent( 100 ) : Length.Pixels( 0 );
 	}
 
-	private void PushRectToBoth( Rect rect, int colorIndex = -1 )
+	public void PushRectToBoth( Rect rect, int colorIndex = -1 )
 	{
 		PushRectToByteData( rect, colorIndex );
 		PushRectToTexture( rect, colorIndex );
@@ -642,6 +652,11 @@ public partial class PaintUi
 
 		if ( e is MousePanelEvent ev )
 		{
+			if ( PaintToolClass != null )
+			{
+				PaintToolClass.OnMouseDown( ev.MouseButton );
+			}
+
 			if ( ev.MouseButton == MouseButtons.Left )
 			{
 				CurrentPaletteIndex = LeftPaletteIndex;
@@ -718,6 +733,12 @@ public partial class PaintUi
 
 		if ( _mouseDownPosition.HasValue && _mouseUpPosition.HasValue )
 		{
+			if ( PaintToolClass != null )
+			{
+				PaintToolClass.OnMouseUp();
+			}
+
+
 			if ( CurrentTool == PaintTool.Line )
 			{
 				DrawLine( _mouseDownPosition.Value, _mouseUpPosition.Value );
