@@ -135,9 +135,6 @@ public class Decals
 
 	public static DecalData ReadDecal( string filePath )
 	{
-		Log.Info( "Loading palette" );
-		// var palette = new Color[256];
-
 		Log.Info( "Loading decal" );
 
 		var stream = FileSystem.Data.OpenRead( filePath );
@@ -175,9 +172,6 @@ public class Decals
 		// var pos = reader.BaseStream.Position;
 		// reader.BaseStream.Seek( 64, SeekOrigin.Begin );
 
-		Log.Info( reader.BaseStream.Length - reader.BaseStream.Position );
-		Log.Info( (width * height) );
-
 		var imageBytes = reader.ReadBytes( width * height );
 
 		Log.Info( $"Image bytes: {imageBytes.Length}" );
@@ -197,6 +191,12 @@ public class Decals
 		stream.Close();
 
 		var palette = GetPalette( paletteName );
+
+		if ( palette == null )
+		{
+			Log.Error( "Failed to load palette" );
+			return default;
+		}
 
 		var texture = Texture.Create( decalData.Width, decalData.Height ).Finish();
 

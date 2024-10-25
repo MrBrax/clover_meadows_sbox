@@ -660,7 +660,19 @@ public partial class PaintUi
 			return;
 		}
 
-		var stream = FileSystem.Data.OpenWrite( $"decals/{CurrentFileName}.decal" );
+		Stream stream;
+
+		try
+		{
+			stream = FileSystem.Data.OpenWrite( $"decals/{CurrentFileName}.decal" );
+		}
+		catch ( Exception e )
+		{
+			Log.Error( e.Message );
+			PlayerCharacter.Local.Notify( Notifications.NotificationType.Error, "Failed to save file" );
+			return;
+		}
+
 		var writer = new BinaryWriter( stream, Encoding.UTF8 );
 
 		writer.Write( 'C' );
@@ -676,7 +688,7 @@ public partial class PaintUi
 		writer.Write( CurrentName ); // name, 16 chars
 
 		writer.Write( Game.SteamId ); // author
-		
+
 		writer.Write( Connection.Local.DisplayName ); // author name
 
 		writer.Write( PaletteName ); // palette name
@@ -807,7 +819,7 @@ public partial class PaintUi
 
 		stream.Close();
 	}
-	
+
 	private void GenerateFavoriteColors()
 	{
 		FavoriteColors = new byte[FavoriteColorAmount];
@@ -815,7 +827,7 @@ public partial class PaintUi
 		{
 			FavoriteColors[i] = (byte)i;
 		}
-		
+
 		FavoriteColors[0] = (byte)Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.Black );
 		FavoriteColors[1] = (byte)Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.White );
 		FavoriteColors[2] = 255;
