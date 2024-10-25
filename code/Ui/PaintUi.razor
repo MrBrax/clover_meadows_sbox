@@ -5,14 +5,14 @@
 
 <root>
 	<div class="paint-window" @ref=" Window">
-		<div class="vsplit">
+		<div class="vsplit expand">
 			<div class="header">
 				<h1>Paint</h1>
 				<button class="close" @onclick=@( () => { Enabled = false; } )>
 					<i class="icon">close</i>
 				</button>
 			</div>
-			<div class="hsplit">
+			<div class="hsplit expand">
 				<div class="menu">
 					<section>
 						<h2 class="section-title">Tools</h2>
@@ -124,7 +124,7 @@
 						
 					</section>*@
 				</div>
-				<div class="main">
+				<div class="vsplit expand main">
 					<div @ref=" CanvasContainer" class="canvas">
 						<div class="canvas-container">
 							<Image class="canvas-texture" @ref=" Canvas" Texture=@DrawTexture @onmousedown=@OnCanvasMouseDown @onmouseup=@OnCanvasMouseUp/>
@@ -134,17 +134,50 @@
 						<div @ref=" Crosshair" class="crosshair"></div>
 					</div>
 					<div class="toolbar">
-						<div class="current-colors">
-							<div class="color-fg" style="background-color: @ForegroundColor.Hex"></div>
-							<div class="color-bg" style="background-color: @BackgroundColor.Hex"></div>
-						</div>
-						<div class="palette">
-							@for ( var i = 0; i < Palette.Count; i++ )
+						<div class="vsplit">
+							@if ( ShowFavoritesEditor )
 							{
-								var index = i;
-								var color = Palette[index];
-								<button @onmousedown=@( ( PanelEvent e ) => SetColor( e, index ) ) style="background-color: @color.Hex"></button>
+								<div class="favorites-editor">
+									@for ( var i = 0; i < Palette.Count; i++ )
+									{
+										var index = i;
+										var color = Palette[index];
+										<button
+											class="color-button"
+											@onmousedown=@( ( PanelEvent e ) => FavoriteEditorColorButtonClick( e, index ) )
+											style="background-color: @color.Hex">
+										</button>
+									}
+								</div>
 							}
+							<div class="hsplit expand no-shrink">
+								<div class="current-colors">
+									<div class="color-fg" style="background-color: @ForegroundColor.Hex"></div>
+									<div class="color-bg" style="background-color: @BackgroundColor.Hex"></div>
+								</div>
+								<div class="palette-favorites">
+
+									@for ( var i = 0; i < FavoriteColors.Length; i++ )
+									{
+										var index = i;
+										var color = FavoriteColors[index];
+										<button
+											class="color-button big @( ShowFavoritesEditor && SelectedFavorite == index ? "selected" : "" )"
+											@onmousedown=@( ( PanelEvent e ) => FavoriteColorButtonClick( e, index ) )
+											style="background-color: @GetColorFromByte( color ).Hex">
+										</button>
+									}
+									
+									<button class="paint-button" @onclick=@ToggleShowFavoritesEditor>
+										<i class="icon">edit</i>
+									</button>
+									
+									<button class="paint-button" @onclick=@GenerateFavoriteColors>
+										<i class="icon">refresh</i>
+									</button>
+
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -175,4 +208,5 @@
 			</div>
 		</div>
 	</div>
+	
 </root>

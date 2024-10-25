@@ -52,6 +52,8 @@ public partial class PaintUi
 	private string PaletteName = "windows-95-256-colours-1x";
 	private List<Color32> Palette = new List<Color32>();
 
+	private byte[] FavoriteColors = new byte[FavoriteColorAmount];
+
 	private int LeftPaletteIndex = 0;
 	private int RightPaletteIndex = 1;
 	private int CurrentPaletteIndex = 0;
@@ -63,8 +65,13 @@ public partial class PaintUi
 
 	private int CanvasSize = 512;
 
+	private static int FavoriteColorAmount = 40;
+
 	private bool ShowPalettes = false;
 	private bool ShowFileActions = false;
+	private bool ShowFavoritesEditor = false;
+
+	private int SelectedFavorite = -1;
 
 	// private Color PreviewColor = Color.Red;
 	private Color PreviewColor => GetCurrentColor();
@@ -113,17 +120,19 @@ public partial class PaintUi
 
 		PopulateDecals();
 		PopulateImages();
+
+		LoadFavoriteColors();
 	}
 
 	private void ResetPaint()
 	{
 		Log.Info( "[Paint] Reset" );
 		// CurrentTool = PaintTool.Pencil;
-		
+
 		LeftPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.Black );
 		RightPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.White );
 		CurrentPaletteIndex = LeftPaletteIndex;
-		
+
 		CurrentFileName = "";
 		CurrentName = "";
 		// BrushSize = 1;
@@ -143,7 +152,7 @@ public partial class PaintUi
 	private void InitialiseTexture()
 	{
 		Log.Info( "[Paint] Initialising texture" );
-		
+
 		DrawTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
 		DrawTextureData = new byte[TextureSize * TextureSize];
 		Clear();
@@ -285,6 +294,7 @@ public partial class PaintUi
 		PaletteName = name;
 		Palette = Utilities.Decals.GetPalette( PaletteName ).ToList();
 		PushByteDataToTexture();
+		LoadFavoriteColors();
 	}
 
 	private bool _isDrawing;
@@ -303,8 +313,8 @@ public partial class PaintUi
 		var mousePositionInCanvas = mousePosition - canvasPosition;
 		var mousePositionInCanvasNormalized = mousePositionInCanvas / canvasSize;
 
-		var x = (int)Math.Round(mousePositionInCanvasNormalized.x * DrawTexture.Width);
-		var y = (int)Math.Round(mousePositionInCanvasNormalized.y * DrawTexture.Height);
+		var x = (int)(mousePositionInCanvasNormalized.x * DrawTexture.Width);
+		var y = (int)(mousePositionInCanvasNormalized.y * DrawTexture.Height);
 
 		return new Vector2Int( x, y );
 	}
@@ -608,7 +618,7 @@ public partial class PaintUi
 	private void OnCanvasMouseUp( PanelEvent e )
 	{
 		if ( !_isDrawing ) return;
-		
+
 		Log.Info( "MouseUp" );
 		_isDrawing = false;
 		_lastBrushPosition = null;
@@ -744,6 +754,86 @@ public partial class PaintUi
 		Canvas.Style.Height = CanvasSize;
 		// Grid.Style.Width = CanvasSize;
 		// Grid.Style.Height = CanvasSize;
+	}
+
+	private Color GetColorFromByte( byte index )
+	{
+		return Palette[index];
+	}
+
+	private void ToggleShowFavoritesEditor()
+	{
+		ShowFavoritesEditor = !ShowFavoritesEditor;
+		if ( !ShowFavoritesEditor )
+		{
+			SaveFavoriteColors();
+		}
+	}
+
+	private void LoadFavoriteColors()
+	{
+		var path = $"colorfavorites-{PaletteName}.dat";
+		if ( !FileSystem.Data.FileExists( path ) )
+		{
+			GenerateFavoriteColors();
+			return;
+		}
+
+		try
+		{
+			var stream = FileSystem.Data.OpenRead( path );
+			var reader = new BinaryReader( stream, Encoding.UTF8 );
+
+			FavoriteColors = reader.ReadBytes( FavoriteColorAmount );
+
+			stream.Close();
+		}
+		catch ( Exception e )
+		{
+			Log.Error( e.Message );
+		}
+	}
+
+	private void SaveFavoriteColors()
+	{
+		var stream = FileSystem.Data.OpenWrite( $"colorfavorites-{PaletteName}.dat" );
+		var writer = new BinaryWriter( stream, Encoding.UTF8 );
+
+		writer.Write( FavoriteColors );
+
+		writer.Flush();
+
+		stream.Close();
+	}
+	
+	private void GenerateFavoriteColors()
+	{
+		FavoriteColors = new byte[FavoriteColorAmount];
+		for ( var i = 0; i < FavoriteColorAmount; i++ )
+		{
+			FavoriteColors[i] = (byte)i;
+		}
+		
+		FavoriteColors[0] = (byte)Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.Black );
+		FavoriteColors[1] = (byte)Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.White );
+		FavoriteColors[2] = 255;
+	}
+
+	private void FavoriteEditorColorButtonClick( PanelEvent e, int colorIndex )
+	{
+		FavoriteColors[SelectedFavorite] = (byte)colorIndex;
+	}
+
+	private void FavoriteColorButtonClick( PanelEvent e, int index )
+	{
+		if ( ShowFavoritesEditor )
+		{
+			SelectedFavorite = index;
+		}
+		else
+		{
+			SetColor( e, FavoriteColors[index] );
+		}
 	}
 
 
