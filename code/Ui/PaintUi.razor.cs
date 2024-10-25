@@ -280,11 +280,11 @@ public partial class PaintUi
 
 	private bool _isDrawing;
 
-	private Vector2 GetCurrentMousePixel()
+	private Vector2Int GetCurrentMousePixel()
 	{
 		if ( !Canvas.IsValid() )
 		{
-			return Vector2.Zero;
+			return Vector2Int.Zero;
 		}
 
 		var mousePosition = Mouse.Position;
@@ -297,7 +297,7 @@ public partial class PaintUi
 		var x = (int)(mousePositionInCanvasNormalized.x * DrawTexture.Width);
 		var y = (int)(mousePositionInCanvasNormalized.y * DrawTexture.Height);
 
-		return new Vector2( x, y );
+		return new Vector2Int( x, y );
 	}
 
 	private bool IsMouseInsideCanvas()
@@ -360,7 +360,8 @@ public partial class PaintUi
 
 		var brushSizeOffset = BrushSize == 1 ? 0 : MathF.Ceiling( BrushSize / 2f );
 
-		var brushPosition = new Vector2( mousePosition.x - brushSizeOffset, mousePosition.y - brushSizeOffset );
+		var brushPosition = new Vector2Int( (int)Math.Round( mousePosition.x - brushSizeOffset ),
+			(int)Math.Round( mousePosition.y - brushSizeOffset ) );
 
 		DrawCrosshair( brushPosition );
 
@@ -399,7 +400,7 @@ public partial class PaintUi
 		}
 	}
 
-	private void DrawCrosshair( Vector2 brushPosition )
+	private void DrawCrosshair( Vector2Int brushPosition )
 	{
 		var texturePixelScreenSize = CanvasSize / TextureSize;
 
