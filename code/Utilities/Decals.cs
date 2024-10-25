@@ -183,7 +183,7 @@ public class Decals
 		writer.Write( 'P' );
 		writer.Write( 'T' );
 
-		writer.Write( 4 ); // version
+		writer.Write( 5 ); // version
 
 		writer.Write( decalData.Width ); // width
 		writer.Write( decalData.Height ); // height
@@ -200,7 +200,10 @@ public class Decals
 
 		writer.Write( decalData.Modified.ToBinary() );
 
-		writer.Write( decalData.Image );
+		// writer.Write( decalData.Image );
+		var cbytes = CompressBytes( decalData.Image );
+		writer.Write( cbytes.Length );
+		writer.Write( cbytes );
 
 		writer.Flush();
 	}
@@ -223,7 +226,7 @@ public class Decals
 		var version = reader.ReadUInt32();
 		Log.Info( $"Version: {version}" );
 
-		if ( version < 4 )
+		if ( version < 5 )
 		{
 			stream.Close();
 			reader.Close();
@@ -249,7 +252,10 @@ public class Decals
 
 		var modified = DateTime.FromBinary( reader.ReadInt64() );
 
-		var imageBytes = reader.ReadBytes( width * height );
+		var cbyteLength = reader.ReadInt32();
+
+		var imageBytes = reader.ReadBytes( cbyteLength );
+		imageBytes = DecompressBytes( imageBytes );
 
 		Log.Info( $"Image bytes: {imageBytes.Length}" );
 
@@ -276,14 +282,6 @@ public class Decals
 			Log.Error( "Failed to load palette" );
 			return default;
 		}
-
-		/*var texture = Texture.Create( decalData.Width, decalData.Height ).Finish();
-
-		var allPixels = ByteArrayToColor32( decalData.Image, palette );
-
-		texture.Update( allPixels, 0, 0, decalData.Width, decalData.Height );
-
-		decalData.Texture = texture;*/
 
 		decalData.Texture = GetDecalTexture( decalData.ToRpc() );
 
