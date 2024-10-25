@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using Sandbox.Diagnostics;
 
@@ -20,6 +21,9 @@ public class Decals
 
 		public byte[] Image;
 		public Texture Texture;
+
+		public DateTime Created;
+		public DateTime Modified;
 
 		public DecalDataRpc ToRpc()
 		{
@@ -50,7 +54,12 @@ public class Decals
 
 		public byte[] Image { get; set; }
 
-		/*public Texture GetTexture()
+		public bool Dummy()
+		{
+			return true;
+		}
+
+		public Texture GetTexture()
 		{
 			Assert.NotNull( Palette, "Palette is null" );
 
@@ -78,7 +87,7 @@ public class Decals
 				Image = Image,
 				Texture = GetTexture()
 			};
-		}*/
+		}
 	}
 
 	public static Texture GetDecalTexture( DecalDataRpc decal )
@@ -165,6 +174,37 @@ public class Decals
 		return closestColor;
 	}
 
+	public static void WriteDecal( Stream stream, DecalData decalData )
+	{
+		var writer = new BinaryWriter( stream, Encoding.UTF8 );
+
+		writer.Write( 'C' );
+		writer.Write( 'L' );
+		writer.Write( 'P' );
+		writer.Write( 'T' );
+
+		writer.Write( 3 ); // version
+
+		writer.Write( decalData.Width ); // width
+		writer.Write( decalData.Height ); // height
+
+		writer.Write( decalData.Name ); // name, 16 chars
+
+		writer.Write( decalData.Author ); // author
+
+		writer.Write( decalData.AuthorName ); // author name
+
+		writer.Write( decalData.Palette ); // palette name
+
+		// writer.Write( decalData.Created.ToBinary() );
+
+		// writer.Write( decalData.Modified.ToBinary() );
+
+		writer.Write( decalData.Image );
+
+		writer.Flush();
+	}
+
 	public static DecalData ReadDecal( string filePath )
 	{
 		Log.Info( "Loading decal" );
@@ -200,9 +240,9 @@ public class Decals
 		var paletteName = reader.ReadString();
 		Log.Info( $"Palette: {paletteName}" );
 
-		// seek to 64 for now
-		// var pos = reader.BaseStream.Position;
-		// reader.BaseStream.Seek( 64, SeekOrigin.Begin );
+		// var created = DateTime.FromBinary( reader.ReadInt64() );
+
+		// var modified = DateTime.FromBinary( reader.ReadInt64() );
 
 		var imageBytes = reader.ReadBytes( width * height );
 
@@ -216,6 +256,8 @@ public class Decals
 			Author = author,
 			AuthorName = authorName,
 			Palette = paletteName,
+			// Created = created,
+			// Modified = modified,
 			Image = imageBytes
 		};
 

@@ -78,6 +78,7 @@ public partial class PaintUi
 	private int RightPaletteIndex = 1;
 	private int CurrentPaletteIndex = 0;
 
+	private Decals.DecalData CurrentDecalData;
 	private string CurrentFileName = "";
 	private string CurrentName = "";
 
@@ -169,6 +170,7 @@ public partial class PaintUi
 		RightPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.White );
 		CurrentPaletteIndex = LeftPaletteIndex;
 
+		CurrentDecalData = new Decals.DecalData();
 		CurrentFileName = "";
 		CurrentName = "";
 		// BrushSize = 1;
@@ -268,6 +270,7 @@ public partial class PaintUi
 
 		CurrentName = decal.Name;
 		PaletteName = decal.Palette;
+		CurrentDecalData = decal;
 		CurrentFileName = Path.GetFileNameWithoutExtension( path );
 		DrawTexture.Update( decal.Texture.GetPixels(), 0, 0, decal.Width, decal.Height );
 		DrawTextureData = decal.Image;
@@ -857,7 +860,7 @@ public partial class PaintUi
 			return;
 		}
 
-		var writer = new BinaryWriter( stream, Encoding.UTF8 );
+		/*var writer = new BinaryWriter( stream, Encoding.UTF8 );
 
 		writer.Write( 'C' );
 		writer.Write( 'L' );
@@ -879,7 +882,21 @@ public partial class PaintUi
 
 		writer.Write( DrawTextureData );
 
-		writer.Flush();
+		writer.Flush();*/
+
+		Utilities.Decals.WriteDecal( stream,
+			new Decals.DecalData
+			{
+				Width = DrawTexture.Width,
+				Height = DrawTexture.Height,
+				Name = CurrentName,
+				Palette = PaletteName,
+				Image = DrawTextureData,
+				Author = (ulong)Game.SteamId,
+				AuthorName = Connection.Local.DisplayName,
+				Created = CurrentDecalData.Created == DateTime.MinValue ? DateTime.Now : CurrentDecalData.Created,
+				Modified = DateTime.Now,
+			} );
 
 		stream.Close();
 

@@ -17,6 +17,8 @@ public class FloorDecal : Component, IPersistent, IPaintEvent
 
 	[Property] public ModelRenderer ModelRenderer { get; set; }
 
+	// private static HashSet<string> _decalCache = new();
+
 	private Decals.DecalData _decalData;
 
 	private string _texturePath;
@@ -32,11 +34,24 @@ public class FloorDecal : Component, IPersistent, IPaintEvent
 		}
 	}
 
+	[Sync] public string DecalHash { get; set; }
+
 
 	public void UpdateDecal()
 	{
 		if ( IsProxy )
 		{
+			FileSystem.Data.CreateDirectory( "decalcache" );
+			if ( FileSystem.Data.FileExists( $"decalcache/{DecalHash}.decal" ) )
+			{
+				_decalData = Decals.ReadDecal( $"decalcache/{DecalHash}.decal" );
+				var material1 = Material.Create( $"{DecalHash}.vmat", "shaders/floor_decal.shader" );
+				material1.Set( "Color", Decals.GetDecalTexture( _decalData.ToRpc() ) );
+				ModelRenderer.MaterialOverride = material1;
+				Log.Info( $"Updated cached decal '{_decalData.Name}' with texture: {TexturePath}" );
+				return;
+			}
+
 			RequestDecal();
 			return;
 		}
@@ -57,6 +72,8 @@ public class FloorDecal : Component, IPersistent, IPaintEvent
 		material.Set( "Color", _decalData.Texture );
 
 		ModelRenderer.MaterialOverride = material;
+
+		DecalHash = Crc64.FromBytes( _decalData.Image ).ToString();
 
 		Log.Info( $"Updated decal '{_decalData.Name}' with texture: {TexturePath}" );
 	}
@@ -107,14 +124,19 @@ public class FloorDecal : Component, IPersistent, IPaintEvent
 			return;
 		}
 
-		// _decalData = decal.ToDecalData();
-		_decalData = Decals.ToDecalData( decal );
+		_decalData = decal.ToDecalData();
+		// _decalData = Decals.ToDecalData( decal );
 
 		var hash = Crc64.FromBytes( decal.Image );
 
 		var material = Material.Create( $"{hash}.vmat", "shaders/floor_decal.shader" );
 		material.Set( "Color", Decals.GetDecalTexture( decal ) );
 		ModelRenderer.MaterialOverride = material;
+
+		FileSystem.Data.CreateDirectory( "decalcache" );
+		var file = FileSystem.Data.OpenWrite( $"decalcache/{hash}.decal" );
+		Decals.WriteDecal( file, decal.ToDecalData() );
+		file.Close();
 	}
 
 	public void OnSave( PersistentItem item )
