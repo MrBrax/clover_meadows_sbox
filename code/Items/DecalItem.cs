@@ -28,6 +28,8 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 	public void UpdateDecal()
 	{
 		if ( Scene.IsEditor ) return;
+		if ( string.IsNullOrEmpty( TexturePath ) ) return;
+
 		if ( IsProxy )
 		{
 			FileSystem.Data.CreateDirectory( "decalcache" );
