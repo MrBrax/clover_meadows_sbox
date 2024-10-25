@@ -24,22 +24,67 @@ public partial class PaintUi
 		// CanvasZoom = Math.Clamp( CanvasZoom, MinCanvasZoom, MaxCanvasZoom );
 		// UpdateCanvas();
 
+		Log.Info( $"Zoom: {value.y}" );
+
 		Zoom( value.y * -0.2f, GetCurrentMousePixel() );
+	}
+
+	private bool _isPanning;
+
+	protected override void OnMouseDown( MousePanelEvent e )
+	{
+		base.OnMouseDown( e );
+
+		if ( e.MouseButton == MouseButtons.Middle && IsMouseInsideCanvasContainer() )
+		{
+			_isPanning = true;
+			_lastPanPosition = e.LocalPosition;
+			Log.Info( "Panning on" );
+			e.StopPropagation();
+		}
+	}
+
+	protected override void OnMouseUp( MousePanelEvent e )
+	{
+		base.OnMouseUp( e );
+
+		if ( e.MouseButton == MouseButtons.Middle )
+		{
+			_isPanning = false;
+			Log.Info( "Panning off" );
+			e.StopPropagation();
+		}
+	}
+
+	private Vector2 _lastPanPosition;
+
+	protected override void OnMouseMove( MousePanelEvent e )
+	{
+		base.OnMouseMove( e );
+
+		if ( _isPanning )
+		{
+			Pan( e.LocalPosition - _lastPanPosition );
+			_lastPanPosition = e.LocalPosition;
+			e.StopPropagation();
+		}
+	}
+
+	private void Pan( Vector2 delta )
+	{
+		var panSpeed = 1.0f * Panel.ScaleFromScreen;
+		CanvasSquare.Style.Left = CanvasSquare.Style.Left.GetValueOrDefault().GetPixels( 1 ) + (delta.x * panSpeed);
+		CanvasSquare.Style.Top = CanvasSquare.Style.Top.GetValueOrDefault().GetPixels( 1 ) + (delta.y * panSpeed);
 	}
 
 	private void OnCanvasMouseDown( PanelEvent e )
 	{
-		PushUndo();
-
 		if ( e is MousePanelEvent ev )
 		{
-			if ( PaintToolClass != null )
-			{
-				PaintToolClass.OnMouseDown( ev.MouseButton );
-			}
-
 			if ( ev.MouseButton == MouseButtons.Left )
 			{
+				PushUndo();
+
 				CurrentPaletteIndex = LeftPaletteIndex;
 				_isDrawing = true;
 
@@ -71,9 +116,14 @@ public partial class PaintUi
 				{
 					Dodge( GetCurrentBrushPosition() );
 				}
+
+				RedoStack.Clear();
+				e.StopPropagation();
 			}
 			else if ( ev.MouseButton == MouseButtons.Right )
 			{
+				PushUndo();
+
 				CurrentPaletteIndex = RightPaletteIndex;
 				_isDrawing = true;
 
@@ -90,16 +140,15 @@ public partial class PaintUi
 					_isMoving = false;
 					ClearPreview();
 				}
+
+				RedoStack.Clear();
+				e.StopPropagation();
 			}
 			else
 			{
 				Log.Info( "Unknown mouse button" );
 			}
 		}
-
-		RedoStack.Clear();
-
-		e.StopPropagation();
 	}
 
 	private void OnCanvasMouseUp( PanelEvent e )
@@ -113,12 +162,6 @@ public partial class PaintUi
 
 		if ( _mouseDownPosition.HasValue && _mouseUpPosition.HasValue )
 		{
-			if ( PaintToolClass != null )
-			{
-				PaintToolClass.OnMouseUp();
-			}
-
-
 			if ( CurrentTool == PaintTool.Line )
 			{
 				DrawLine( _mouseDownPosition.Value, _mouseUpPosition.Value );

@@ -315,15 +315,10 @@ public partial class PaintUi
 		       mousePosition.y >= canvasPosition.y && mousePosition.y <= canvasPosition.y + canvasSize.y;
 	}
 
+
 	protected override void OnUpdate()
 	{
-		// TODO: mouse inputs don't work in panels
-		/*if ( Input.MouseWheel.x != 0 )
-		{
-			CanvasSize += (int)(Input.MouseWheel.x * 10);
-			Canvas.Style.Width = CanvasSize;
-			Canvas.Style.Height = CanvasSize;
-		}*/
+		// SetCanvasSquareOffset( new Vector2( MathF.Sin( Time.Now * 3f ) * 100f, MathF.Sin( Time.Now * 3f ) * 100f ) );
 
 		if ( Input.Released( "PaintUndo" ) )
 		{
@@ -678,11 +673,28 @@ public partial class PaintUi
 		}*/
 	}
 
+	/*private Vector2 GetCanvasSquareOffset()
+	{
+		/*var canvasSquarePositionX = CanvasSquare.Style.Left.GetValueOrDefault().GetPixels( 1 );
+		var canvasSquarePositionY = CanvasSquare.Style.Top.GetValueOrDefault().GetPixels( 1 );#1#
+
+		var canvasSquarePositionX = CanvasSquare.Style.Left.GetValueOrDefault().GetPixels( 1 );
+		var canvasSquarePositionY = CanvasSquare.Style.Top.GetValueOrDefault().GetPixels( 1 );
+
+		return new Vector2( canvasSquarePositionX, canvasSquarePositionY );
+	}
+
 	private void SetCanvasSquareOffset( Vector2 offset )
 	{
 		CanvasSquare.Style.Top = Length.Pixels( offset.y );
 		CanvasSquare.Style.Left = Length.Pixels( offset.x );
-	}
+
+		// CanvasSquare.Style.Top = Length.Pixels( 0 );
+		// CanvasSquare.Style.Left = Length.Pixels( 0 );
+
+		// CanvasContainer.Style.PaddingLeft = Length.Pixels( offset.x * CanvasZoom );
+		// CanvasContainer.Style.PaddingTop = Length.Pixels( offset.y * CanvasZoom );
+	}*/
 
 	private void ZoomIn()
 	{
