@@ -45,13 +45,13 @@
 								<img src="ui/icons/paint/move-regular-24.png"/>
 							</button>
 							<button @onclick=@( () => CurrentTool = PaintTool.Clone ) class="paint-button @( CurrentTool == PaintTool.Clone ? "active" : "" )" tooltip="Clone">
-								CL
+								<img src="ui/icons/paint/select-multiple-regular-24.png"/>
 							</button>
 							<button @onclick=@( () => CurrentTool = PaintTool.Dodge ) class="paint-button @( CurrentTool == PaintTool.Dodge ? "active" : "" )" tooltip="Dodge">
-								DG
+								<img src="ui/icons/paint/moon-solid-24.png"/>
 							</button>
 							<button @onclick=@( () => CurrentTool = PaintTool.Burn ) class="paint-button @( CurrentTool == PaintTool.Burn ? "active" : "" )" tooltip="Burn">
-								BN
+								<img src="ui/icons/paint/sun-regular-24.png"/>
 							</button>
 						</div>
 
@@ -76,7 +76,7 @@
 
 					</section>
 
-					@if ( CurrentTool == PaintTool.Pencil || CurrentTool == PaintTool.Spray || CurrentTool == PaintTool.Eraser )
+					@if ( ShowBrushSizeForCurrentTool() )
 					{
 						<section>
 							<h2 class="section-title">Tool size</h2>

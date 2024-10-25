@@ -28,10 +28,10 @@ public partial class PaintUi
 		Line,
 		Rectangle,
 		Circle,
-		
+
 		Move,
 		Clone,
-		
+
 		Dodge,
 		Burn,
 	}
@@ -111,7 +111,15 @@ public partial class PaintUi
 		{ PaintTool.Circle, 1 },
 		{ PaintTool.Move, 1 },
 		{ PaintTool.Clone, 1 },
+		{ PaintTool.Dodge, 1 },
+		{ PaintTool.Burn, 1 },
 	};
+
+	private bool ShowBrushSizeForCurrentTool()
+	{
+		return CurrentTool is PaintTool.Pencil or PaintTool.Spray or PaintTool.Eraser or PaintTool.Burn
+			or PaintTool.Dodge;
+	}
 
 	private int BrushSize
 	{
@@ -160,10 +168,10 @@ public partial class PaintUi
 		CurrentName = "";
 		// BrushSize = 1;
 		CanvasSize = 512;
-		
+
 		_isDrawing = false;
 		_isMoving = false;
-		
+
 		RedoStack.Clear();
 		UndoStack.Clear();
 		UpdateCanvas();
@@ -346,6 +354,17 @@ public partial class PaintUi
 		return new Vector2Int( x, y );
 	}
 
+	private Vector2Int GetCurrentBrushPosition()
+	{
+		var mousePosition = GetCurrentMousePixel();
+
+		var brushSizeOffset = BrushSize == 1 ? 0 : MathF.Ceiling( BrushSize / 2f );
+
+		var brushPosition = new Vector2Int( (int)Math.Round( mousePosition.x - brushSizeOffset ),
+			(int)Math.Round( mousePosition.y - brushSizeOffset ) );
+		return brushPosition;
+	}
+
 	private bool IsMouseInsideCanvas()
 	{
 		var mousePosition = Mouse.Position;
@@ -402,18 +421,13 @@ public partial class PaintUi
 			return;
 		}*/
 
-		var mousePosition = GetCurrentMousePixel();
-
-		var brushSizeOffset = BrushSize == 1 ? 0 : MathF.Ceiling( BrushSize / 2f );
-
-		var brushPosition = new Vector2Int( (int)Math.Round( mousePosition.x - brushSizeOffset ),
-			(int)Math.Round( mousePosition.y - brushSizeOffset ) );
+		var brushPosition = GetCurrentBrushPosition();
 
 		DrawCrosshair( brushPosition );
 
 		// PreviewTexture.Update( Color.Red, brushPosition.x, brushPosition.y );
 
-		if ( ( CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone ) && _isMoving )
+		if ( (CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone) && _isMoving )
 		{
 			// Log.Info( "Moving" );
 			ClearPreview();
@@ -442,7 +456,8 @@ public partial class PaintUi
 			{
 				LinePreview( brushPosition );
 			}
-			else if ( CurrentTool == PaintTool.Rectangle || CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone )
+			else if ( CurrentTool == PaintTool.Rectangle || CurrentTool == PaintTool.Move ||
+			          CurrentTool == PaintTool.Clone )
 			{
 				RectanglePreview( brushPosition );
 			}
@@ -452,6 +467,7 @@ public partial class PaintUi
 			}
 		}
 	}
+
 
 	private void DrawCrosshair( Vector2Int brushPosition )
 	{
@@ -624,8 +640,8 @@ public partial class PaintUi
 				{
 					Eyedropper( GetCurrentMousePixel(), ev.MouseButton );
 				}
-				
-				if ( ( CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone ) && _isMoving )
+
+				if ( (CurrentTool == PaintTool.Move || CurrentTool == PaintTool.Clone) && _isMoving )
 				{
 					PasteClipboard( _mouseDownPosition.Value );
 
@@ -636,7 +652,15 @@ public partial class PaintUi
 						_isMoving = false;
 					}
 				}
-				
+
+				if ( CurrentTool == PaintTool.Burn )
+				{
+					Burn( GetCurrentBrushPosition() );
+				}
+				else if ( CurrentTool == PaintTool.Dodge )
+				{
+					Dodge( GetCurrentBrushPosition() );
+				}
 			}
 			else if ( ev.MouseButton == MouseButtons.Right )
 			{
@@ -710,13 +734,13 @@ public partial class PaintUi
 
 		_mouseDownPosition = null;
 	}
-	
+
 	private bool _isMoving;
-	
+
 	private void SetClipboard( Vector2Int start, Vector2Int end )
 	{
 		Log.Info( $"Setting clipboard at {start} to {end}" );
-		
+
 		var x = Math.Min( start.x, end.x );
 		var y = Math.Min( start.y, end.y );
 		var width = Math.Abs( start.x - end.x );
@@ -737,28 +761,28 @@ public partial class PaintUi
 			}
 		}
 	}
-	
+
 	private void PasteClipboardToPreview( Vector2Int position )
 	{
 		// Log.Info( $"Pasting clipboard to preview at {position}, size {ClipboardSize}" );
-		
+
 		var width = ClipboardSize.x;
 		var height = ClipboardSize.y;
-		
+
 		// clamp so it doesn't go out of bounds
 		var x = Math.Clamp( position.x, 0, DrawTexture.Width );
 		var y = Math.Clamp( position.y, 0, DrawTexture.Height );
-		
+
 		width = Math.Min( width, DrawTexture.Width - x );
 		height = Math.Min( height, DrawTexture.Height - y );
-		
+
 		if ( width == 0 || height == 0 )
 		{
 			return;
 		}
-		
+
 		var colors = new Color32[width * height];
-		
+
 		for ( var i = 0; i < width; i++ )
 		{
 			for ( var j = 0; j < height; j++ )
@@ -767,7 +791,7 @@ public partial class PaintUi
 				colors[index] = Palette[ClipboardData[i + j * ClipboardSize.x]];
 			}
 		}
-		
+
 		PreviewTexture.Update( colors, x, y, width, height );
 	}
 
@@ -896,6 +920,11 @@ public partial class PaintUi
 	}
 
 	private Color GetColorFromByte( byte index )
+	{
+		return Palette[index];
+	}
+
+	private Color GetColorFromByte( int index )
 	{
 		return Palette[index];
 	}

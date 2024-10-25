@@ -293,5 +293,104 @@ public partial class PaintUi
 
 		PushByteDataToTexture();*/
 	}
+
+	private void Burn( Vector2Int position )
+	{
+		Log.Info( $"Burning at {position}" );
+		
+		var rect = new Rect( position.x, position.y, BrushSize, BrushSize );
+		
+		// go through each pixel in the rect and darken it
+		for ( var i = 0; i < rect.Width; i++ )
+		{
+			for ( var j = 0; j < rect.Height; j++ )
+			{
+				var index = (int)Math.Round( rect.Left + i + (rect.Top + j) * DrawTexture.Width);
+				if ( index >= 0 && index < DrawTextureData.Length )
+				{
+					var color = DrawTextureData[index];
+					if ( color > 0 )
+					{
+						var darkenedColor = GetClosestColorWithValueOffset( color, false );
+						DrawTextureData[index] = darkenedColor;
+					}
+				}
+			}
+		}
+		
+		PushByteDataToTexture();
+	}
+	
+	/// <summary>
+	///  
+	/// </summary>
+	/// <param name="colorIndex"></param>
+	/// <param name="brighter">If true, will find a brighter color, otherwise a darker color</param>
+	/// <returns></returns>
+	private byte GetClosestColorWithValueOffset( int colorIndex, bool brighter )
+	{
+		var realColor = GetColorFromByte( colorIndex );
+
+		var foundIndex = colorIndex;
+
+		ColorHsv hsv = realColor;
+		
+		while ( hsv.Value > 0.1f && hsv.Value < 1.0f )
+		{
+			// hsv.Value -= 0.1f;
+			if ( brighter )
+			{
+				hsv.Value += 0.1f;
+			}
+			else
+			{
+				hsv.Value -= 0.1f;
+			}
+
+			var testColor = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), hsv.ToColor() );
+			
+			if ( testColor != colorIndex )
+			{
+				foundIndex = testColor;
+				break;
+			}
+
+		}
+		
+		if ( foundIndex == colorIndex )
+		{
+			Log.Warning( $"Could not find a darker color for {colorIndex}" );
+		}
+		
+		return (byte)foundIndex;
+		
+	}
+	
+	private void Dodge( Vector2Int position )
+	{
+		Log.Info( $"Dodging at {position}" );
+		
+		var rect = new Rect( position.x, position.y, BrushSize, BrushSize );
+		
+		// go through each pixel in the rect and lighten it
+		for ( var i = 0; i < rect.Width; i++ )
+		{
+			for ( var j = 0; j < rect.Height; j++ )
+			{
+				var index = (int)Math.Round( rect.Left + i + (rect.Top + j) * DrawTexture.Width);
+				if ( index >= 0 && index < DrawTextureData.Length )
+				{
+					var color = DrawTextureData[index];
+					if ( color > 0 )
+					{
+						var lightenedColor = GetClosestColorWithValueOffset( color, true );
+						DrawTextureData[index] = lightenedColor;
+					}
+				}
+			}
+		}
+		
+		PushByteDataToTexture();
+	}
 	
 }
