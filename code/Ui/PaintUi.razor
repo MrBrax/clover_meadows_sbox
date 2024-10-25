@@ -17,28 +17,28 @@
 					<section>
 						<h2 class="section-title">Tools</h2>
 						<div class="tools">
-							<button @onclick=@( () => CurrentTool = PaintTool.Pencil ) class="paint-button @( CurrentTool == PaintTool.Pencil ? "active" : "" )">
+							<button @onclick=@( () => CurrentTool = PaintTool.Pencil ) class="paint-button @( CurrentTool == PaintTool.Pencil ? "active" : "" )" tooltip="Pencil">
 								<img src="ui/icons/paint/pencil-solid-24.png"/>
 							</button>
-							<button @onclick=@( () => CurrentTool = PaintTool.Fill ) class="paint-button @( CurrentTool == PaintTool.Fill ? "active" : "" )">
+							<button @onclick=@( () => CurrentTool = PaintTool.Fill ) class="paint-button @( CurrentTool == PaintTool.Fill ? "active" : "" )" tooltip="Fill">
 								<img src="ui/icons/paint/color-fill-solid-24.png"/>
 							</button>
-							<button @onclick=@( () => CurrentTool = PaintTool.Spray ) class="paint-button @( CurrentTool == PaintTool.Spray ? "active" : "" )">
+							<button @onclick=@( () => CurrentTool = PaintTool.Spray ) class="paint-button @( CurrentTool == PaintTool.Spray ? "active" : "" )" tooltip="Spray">
 								<img src="ui/icons/paint/spray-can-solid-24.png"/>
 							</button>
-							<button @onclick=@( () => CurrentTool = PaintTool.Eraser ) class="paint-button @( CurrentTool == PaintTool.Eraser ? "active" : "" )">
+							<button @onclick=@( () => CurrentTool = PaintTool.Eraser ) class="paint-button @( CurrentTool == PaintTool.Eraser ? "active" : "" )" tooltip="Eraser">
 								<img src="ui/icons/paint/eraser-solid-24.png"/>
 							</button>
-							<button @onclick=@( () => CurrentTool = PaintTool.Eyedropper ) class="paint-button @( CurrentTool == PaintTool.Eyedropper ? "active" : "" )">
+							<button @onclick=@( () => CurrentTool = PaintTool.Eyedropper ) class="paint-button @( CurrentTool == PaintTool.Eyedropper ? "active" : "" )" tooltip="Eyedropper">
 								<img src="ui/icons/paint/eyedropper-solid-24.png"/>
 							</button>
-							<button @onclick=@( () => CurrentTool = PaintTool.Line ) class="paint-button @( CurrentTool == PaintTool.Line ? "active" : "" )">
+							<button @onclick=@( () => CurrentTool = PaintTool.Line ) class="paint-button @( CurrentTool == PaintTool.Line ? "active" : "" )" tooltip="Line">
 								<img src="ui/icons/paint/minus-regular-24.png"/>
 							</button>
-							<button @onclick=@( () => CurrentTool = PaintTool.Rectangle ) class="paint-button @( CurrentTool == PaintTool.Rectangle ? "active" : "" )">
+							<button @onclick=@( () => CurrentTool = PaintTool.Rectangle ) class="paint-button @( CurrentTool == PaintTool.Rectangle ? "active" : "" )" tooltip="Rectangle">
 								<img src="ui/icons/paint/rectangle-regular-24.png"/>
 							</button>
-							<button @onclick=@( () => CurrentTool = PaintTool.Circle ) class="paint-button @( CurrentTool == PaintTool.Circle ? "active" : "" )">
+							<button @onclick=@( () => CurrentTool = PaintTool.Circle ) class="paint-button @( CurrentTool == PaintTool.Circle ? "active" : "" )" tooltip="Circle">
 								<img src="ui/icons/paint/circle-regular-24.png"/>
 							</button>
 						</div>
@@ -82,22 +82,41 @@
 
 					<section>
 						<h2 class="section-title">Palettes</h2>
-						@foreach ( var palette in Utilities.Decals.GetPalettes() )
+						<button @onclick=@( () => ShowPalettes = !ShowPalettes ) class="paint-button small">
+							<i class="icon">@( ShowPalettes ? "chevron_right" : "expand_more" )</i>
+							@PaletteName
+						</button>
+						@if ( ShowPalettes )
 						{
-							<button @onclick=@( () => SetPalette( palette ) ) class="paint-button small @( palette == PaletteName ? "active" : "" )">
-								@palette
-							</button>
+							<dialog class="paint-popup">
+								@foreach ( var palette in Utilities.Decals.GetPalettes() )
+								{
+									<button @onclick=@( () => SetPalette( palette ) ) class="paint-button small @( palette == PaletteName ? "active" : "" )">
+										@palette
+									</button>
+								}
+							</dialog>
 						}
 					</section>
 
 					<section class="actions">
 						<h2 class="section-title">Actions</h2>
-						<TextEntry class="paint-input" Value:bind="@CurrentFileName" placeholder="Filename"/>
-						<TextEntry class="paint-input" Value:bind="@CurrentName" placeholder="Name"/>
+						<button class="paint-button" @onclick=@( () => ShowFileActions = !ShowFileActions )>
+							<i class="icon">@( ShowFileActions ? "chevron_right" : "expand_more" )</i>
+							File
+						</button>
+						@if ( ShowFileActions )
+						{
+							<dialog class="paint-popup">
 
-						<button class="paint-button" @onclick=@( () => Save() )>Save</button>
-						<button class="paint-button" @onclick=@( () => ResetPaint() )>Reset</button>
-						<button class="paint-button" @onclick=@( () => New() )>New</button>
+								<TextEntry class="paint-input" Value:bind="@CurrentFileName" placeholder="Filename"/>
+								<TextEntry class="paint-input" Value:bind="@CurrentName" placeholder="Name"/>
+
+								<button class="paint-button" @onclick=@( () => Save() )>Save</button>
+								@*<button class="paint-button" @onclick=@( () => ResetPaint() )>Reset</button>*@
+								<button class="paint-button" @onclick=@( () => New() )>New</button>
+							</dialog>
+						}
 					</section>
 
 					@*<section>

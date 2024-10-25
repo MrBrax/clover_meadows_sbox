@@ -63,6 +63,9 @@ public partial class PaintUi
 
 	private int CanvasSize = 512;
 
+	private bool ShowPalettes = false;
+	private bool ShowFileActions = false;
+
 	// private Color PreviewColor = Color.Red;
 	private Color PreviewColor => GetCurrentColor();
 
@@ -116,9 +119,11 @@ public partial class PaintUi
 	{
 		Log.Info( "[Paint] Reset" );
 		// CurrentTool = PaintTool.Pencil;
-		CurrentPaletteIndex = 0;
-		LeftPaletteIndex = 0;
-		RightPaletteIndex = 1;
+		
+		LeftPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.Black );
+		RightPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.White );
+		CurrentPaletteIndex = LeftPaletteIndex;
+		
 		CurrentFileName = "";
 		CurrentName = "";
 		// BrushSize = 1;

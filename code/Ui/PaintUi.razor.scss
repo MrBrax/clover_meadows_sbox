@@ -129,6 +129,20 @@ PaintUi {
             font-style: italic;
         }
     }
+    
+    .paint-popup {
+        // position: absolute;
+        // top: 600px;
+        // left: 30px;
+        background-color: #ddd;
+        /*border: 1px solid #555;
+        border-top-color: #ccc;
+        border-left-color: #ccc;
+        border-radius: 5px;*/
+        padding: 5px;
+        z-index: 1000;
+        flex-direction: column;
+    }
 
     .section-title {
         font-family: Itim;
@@ -144,12 +158,15 @@ PaintUi {
         flex-direction: column;
         gap: 15px;
 
-        overflow: scroll;
+        // overflow: scroll;
+        // overflow: visible;
         flex-shrink: 0;
 
         section {
             flex-direction: column;
             gap: 5px;
+            
+            // position: relative;
 
             /* h2 {
                 font-family: Itim;
