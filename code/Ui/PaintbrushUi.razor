@@ -24,6 +24,10 @@
 					<div>@decal.FileName</div>
 				</button>
 			}
+			<button class="icon-button" @onclick=@( () => MainUi.Instance.Components.Get<PaintUi>( true ).Enabled = true )>
+				<i class="icon">edit</i>
+				<div>Paint</div>
+			</button>
 		</div>
 	</div>
 </root>

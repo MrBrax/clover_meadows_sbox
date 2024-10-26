@@ -55,6 +55,23 @@ PaintbrushUi {
                     opacity: 0.9;
                 }
 
+                .icon {
+                    font-size: 60px;
+                    width: 100px;
+                    height: 100px;
+
+                    align-items: center;
+                    justify-content: center;
+                    align-content: center;
+
+                    text-align: center;
+
+                    background-color: rgba(42, 102, 149, 0.5);
+                    border-radius: 20px;
+
+                    color: #444;
+                }
+
                 &.selected {
                     Image {
                         border-color: #2b79f1;
