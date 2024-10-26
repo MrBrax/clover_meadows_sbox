@@ -11,17 +11,18 @@ public class GiftCarrier : Component, IShootable
 	[Property] public float Speed = 50f;
 
 	[Property] public GameObject GiftInHolderVisual { get; set; }
+
 	// [Property] public GameObject GiftFallingScene { get; set; }
 	[Property] public GameObject GiftModelSpawn { get; set; }
-	
+
 	[Property] public ItemData GiftItem { get; set; }
-	
+
 	[Property] public SoundEvent WingSound { get; set; }
 
 	public List<PersistentItem> Items { get; set; } = new();
 
 	private bool _hasDroppedGift;
-	
+
 	private SoundHandle _wingSoundHandle;
 
 	protected override void OnStart()
@@ -43,13 +44,12 @@ public class GiftCarrier : Component, IShootable
 			DestroyGameObject();
 		}
 	}
-	
+
 	public static void SpawnRandom()
 	{
-
 		Log.Info( "Spawning random gift carrier" );
 
-		var world = NodeManager.WorldManager.ActiveWorld;
+		var world = NodeManager.WorldManager.GetWorld( "island" );
 
 		if ( world == null )
 		{
@@ -57,16 +57,17 @@ public class GiftCarrier : Component, IShootable
 			return;
 		}
 
-		var giftCarrierGameObject = SceneUtility.GetPrefabScene( 
-				ResourceLibrary.Get<PrefabFile>( "objects/stork/stork.prefab" ) 
-				)
+		var giftCarrierGameObject = SceneUtility.GetPrefabScene(
+				ResourceLibrary.Get<PrefabFile>( "objects/stork/stork.prefab" )
+			)
 			.Clone();
-		
+
 		giftCarrierGameObject.SetParent( world.GameObject );
 
 		var worldLayerObject = giftCarrierGameObject.GetComponent<WorldLayerObject>();
 		worldLayerObject.Layer = world.Layer;
-		
+		worldLayerObject.RebuildVisibility( world.Layer );
+
 		var giftCarrier = giftCarrierGameObject.GetComponent<GiftCarrier>();
 
 		var height = 256f;
@@ -84,15 +85,14 @@ public class GiftCarrier : Component, IShootable
 		giftCarrier.WorldRotation = Rotation.LookAt( midpoint - giftCarrier.WorldPosition, Vector3.Up );
 		// giftCarrier.RotateObjectLocal( Vector3.Up, Mathf.Pi );
 
-		Log.Info( $"Facing {midpoint} ({giftCarrier.WorldRotation}) ({giftCarrier.WorldRotation.Forward}) ({giftCarrier.WorldRotation.Yaw()})" );
+		Log.Info(
+			$"Facing {midpoint} ({giftCarrier.WorldRotation}) ({giftCarrier.WorldRotation.Forward}) ({giftCarrier.WorldRotation.Yaw()})" );
 
 		giftCarrier.Items = GenerateRandomItems();
-
 	}
-	
+
 	public void OnShot( Pellet pellet )
 	{
-
 		if ( _hasDroppedGift ) return;
 
 		Log.Info( "Shot" );
@@ -114,14 +114,14 @@ public class GiftCarrier : Component, IShootable
 			giftModel.QueueFree();
 			SpawnGift( endPosWorld );
 		} ) );*/
-		
+
 		// SpawnGift( endPosWorld );
-		
+
 		CameraMan.Instance.Targets.Add( giftModel );
 
 		var tween = TweenManager.CreateTween();
 		tween.AddPosition( giftModel, endPosWorld, 2f ).SetEasing( Sandbox.Utility.Easing.BounceOut );
-		
+
 		tween.OnFinish += () =>
 		{
 			giftModel.Destroy();
@@ -136,20 +136,18 @@ public class GiftCarrier : Component, IShootable
 		Speed *= 2f;
 		// AnimationPlayer.SpeedScale = 2f;
 	}
-	
+
 	public void SpawnGift( Vector3 position )
 	{
-
 		var world = NodeManager.WorldManager.ActiveWorld;
 
 		var gridPos = world.WorldToItemGrid( position );
-		
-		
+
+
 		var pItem = PersistentItem.Create( GiftItem );
 		pItem.SetArbitraryData( "Items", Items );
 
 		var nodeLink = world.SpawnPlacedNode( pItem, gridPos, World.ItemRotation.North );
-
 	}
 
 	private static List<PersistentItem> GenerateRandomItems()
