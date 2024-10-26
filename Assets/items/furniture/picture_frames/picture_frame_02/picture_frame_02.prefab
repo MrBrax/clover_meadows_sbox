@@ -1,0 +1,106 @@
+{
+  "RootObject": {
+    "__guid": "5b40af82-dd8d-4a00-aeae-5327a09c1052",
+    "Flags": 0,
+    "Name": "picture_frame_02",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "84352cf0-24bd-455b-8bb4-1e9195a764f6",
+        "CanPickupSimple": true,
+        "ItemData": "items/furniture/picture_frames/picture_frame_02/picture_frame_02.item",
+        "PlaceModeOffset": "0,0,0",
+        "Prefab": "items/furniture/picture_frames/picture_frame_02/picture_frame_02.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "1ea7d920-a8b0-434c-95de-b82bf715e556"
+      },
+      {
+        "__type": "Clover.Interactable.ItemHighlight",
+        "__guid": "c4d0b27b-d265-43ee-8730-ff6e8cb3a14c",
+        "__enabled": false,
+        "Color": "1,1,1,1",
+        "InsideColor": "0,0,0,0",
+        "InsideObscuredColor": "0,0,0,0",
+        "ObscuredColor": "0,0,0,0.4",
+        "Width": 0.25
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "cb7ec2f5-9bf0-4692-ba0f-5aa894f09355",
+        "Center": "0,0,16",
+        "IsTrigger": false,
+        "Scale": "32,2,32",
+        "Static": false,
+        "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "Clover.Items.PictureFrame",
+        "__guid": "05e92741-39b5-4329-9f1b-15b596e1cdec",
+        "ModelRenderer": {
+          "_type": "component",
+          "component_id": "d42ac05d-12e9-4897-b0c3-a7f829567aeb",
+          "go": "5209272e-ba51-4c00-ae96-89c1ac2f9f1c",
+          "component_type": "ModelRenderer"
+        }
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "5209272e-ba51-4c00-ae96-89c1ac2f9f1c",
+        "Flags": 0,
+        "Name": "picture_frame_01",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "d42ac05d-12e9-4897-b0c3-a7f829567aeb",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/furniture/picture_frames/picture_frame_02/picture_frame_02.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

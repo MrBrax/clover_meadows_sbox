@@ -19,6 +19,26 @@ public class Paintbrush : BaseCarriable
 
 	public override void OnUseDown()
 	{
+		var itemColliders = Player.PlayerInteract.InteractCollider.Touching;
+		foreach ( var itemCollider in itemColliders )
+		{
+			if ( itemCollider.GameObject.Components.TryGet<PictureFrame>( out var pictureFrame ) )
+			{
+				if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) )
+				{
+					Player.Notify( Notifications.NotificationType.Error, "No texture selected" );
+					return;
+				}
+
+				pictureFrame.TexturePath = CurrentTexturePath;
+
+				SoundEx.Play( PaintSound, Player.WorldPosition );
+				ParticleManager.PoofAt( pictureFrame.WorldPosition );
+
+				return;
+			}
+		}
+
 		var pos = Player.GetAimingGridPosition();
 
 		if ( pos == Vector2Int.Zero )
