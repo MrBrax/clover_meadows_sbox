@@ -174,6 +174,12 @@ public class Decals
 		return closestColor;
 	}
 
+	public static List<string> GetAllDecals()
+	{
+		FileSystem.Data.CreateDirectory( "decals" );
+		return FileSystem.Data.FindFile( "decals", "*.decal" ).Select( Path.GetFileNameWithoutExtension ).ToList();
+	}
+
 	public static void WriteDecal( Stream stream, DecalData decalData )
 	{
 		var writer = new BinaryWriter( stream, Encoding.UTF8 );

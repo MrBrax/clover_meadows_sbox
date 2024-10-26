@@ -2,7 +2,6 @@
 using System.IO;
 using Clover.Player;
 using Clover.Utilities;
-using Sandbox.Utility;
 
 namespace Clover.Ui;
 
@@ -12,13 +11,13 @@ public partial class PaintUi
 	{
 		Decals.Clear();
 
-		var files = FileSystem.Data.FindFile( "decals", "*.decal" );
+		var files = Utilities.Decals.GetAllDecals();
 		foreach ( var file in files )
 		{
 			Decals.DecalData decal;
 			try
 			{
-				decal = Utilities.Decals.ReadDecal( $"decals/{file}" );
+				decal = Utilities.Decals.ReadDecal( $"decals/{file}.decal" );
 			}
 			catch ( Exception e )
 			{
@@ -26,20 +25,20 @@ public partial class PaintUi
 				continue;
 			}
 
-			Decals.Add( new DecalEntry { Decal = decal, ResourcePath = $"decals/{file}" } );
+			Decals.Add( new DecalEntry { Decal = decal, FileName = file } );
 		}
 	}
 
 
-	private void LoadDecal( string path )
+	private void LoadDecal( string fileName )
 	{
-		Log.Info( $"Loading decal {path}" );
+		Log.Info( $"Loading decal {fileName}" );
 
 		Decals.DecalData decal;
 
 		try
 		{
-			decal = Utilities.Decals.ReadDecal( path );
+			decal = Utilities.Decals.ReadDecal( $"decals/{fileName}.decal" );
 		}
 		catch ( Exception e )
 		{
@@ -50,19 +49,29 @@ public partial class PaintUi
 		CurrentName = decal.Name;
 		PaletteName = decal.Palette;
 		CurrentDecalData = decal;
-		CurrentFileName = Path.GetFileNameWithoutExtension( path );
+		CurrentFileName = Path.GetFileNameWithoutExtension( fileName );
 		DrawTexture.Update( decal.Texture.GetPixels(), 0, 0, decal.Width, decal.Height );
 		DrawTextureData = decal.Image;
 	}
+
+	private static readonly string[] supportedImageTypes = new[] { ".png", ".jpg", ".jpeg", ".bmp", ".tga", ".webp" };
 
 	private void PopulateImages()
 	{
 		Images.Clear();
 
-		var files = FileSystem.Data.FindFile( "decals", "*.png" );
+		FileSystem.Data.CreateDirectory( "decals/import" );
+
+		var files = FileSystem.Data.FindFile( "decals/import", "*" );
 		foreach ( var file in files )
 		{
-			var texture = Texture.Load( FileSystem.Data, $"decals/{file}" );
+			if ( !supportedImageTypes.Contains( Path.GetExtension( file ) ) )
+			{
+				PlayerCharacter.Local.Notify( Notifications.NotificationType.Error, $"Unsupported image type {file}" );
+				continue;
+			}
+
+			var texture = Texture.Load( FileSystem.Data, $"decals/import/{file}" );
 			Images.Add( texture );
 		}
 

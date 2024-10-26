@@ -26,15 +26,15 @@ public partial class PaintbrushUi : IPaintEvent, IEquipChanged
 
 		Decals.Clear();
 
-		foreach ( var path in Paintbrush.GetTextures() )
+		foreach ( var fileName in Utilities.Decals.GetAllDecals() )
 		{
-			Log.Info( $"Loading decal {path}" );
+			Log.Info( $"Loading decal {fileName}" );
 
 			Utilities.Decals.DecalData decal;
 
 			try
 			{
-				decal = Utilities.Decals.ReadDecal( $"decals/{path}" );
+				decal = Utilities.Decals.ReadDecal( $"decals/{fileName}.decal" );
 			}
 			catch ( Exception e )
 			{
@@ -42,7 +42,7 @@ public partial class PaintbrushUi : IPaintEvent, IEquipChanged
 				continue;
 			}
 
-			Decals.Add( new PaintUi.DecalEntry() { Decal = decal, ResourcePath = $"decals/{path}" } );
+			Decals.Add( new PaintUi.DecalEntry() { Decal = decal, FileName = fileName } );
 		}
 
 		Log.Info( $"Paintbrush has {Decals.Count} textures" );
@@ -50,7 +50,7 @@ public partial class PaintbrushUi : IPaintEvent, IEquipChanged
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( Decals, Paintbrush?.CurrentTexturePath );
+		return HashCode.Combine( Decals, Paintbrush?.CurrentTexturePath, Paintbrush?.CurrentTextureName );
 	}
 
 	void IPaintEvent.OnFileSaved( string path )

@@ -5,6 +5,7 @@ using Clover.Items;
 using Clover.Persistence;
 using Clover.Player;
 using Clover.Ui;
+using Clover.Utilities;
 
 namespace Clover.Carriable;
 
@@ -14,8 +15,8 @@ public class Paintbrush : BaseCarriable
 	[Property] public SoundEvent PaintSound { get; set; }
 	[Property] public SoundEvent TextureChangeSound { get; set; }
 
-	public string CurrentTexture { get; set; }
-	public string CurrentTexturePath => $"decals/{CurrentTexture}";
+	public string CurrentTextureName { get; set; }
+	public string CurrentTexturePath => $"decals/{CurrentTextureName}.decal";
 
 	public override void OnUseDown()
 	{
@@ -127,13 +128,7 @@ public class Paintbrush : BaseCarriable
 
 	protected override void OnStart()
 	{
-		CurrentTexture = FileSystem.Data.FindFile( "decals", "*.decal" ).FirstOrDefault();
-	}
-
-	public List<string> GetTextures()
-	{
-		FileSystem.Data.CreateDirectory( "decals" );
-		return FileSystem.Data.FindFile( "decals", "*.decal" ).ToList();
+		CurrentTextureName = Decals.GetAllDecals().FirstOrDefault();
 	}
 
 	protected override void OnFixedUpdate()
@@ -142,20 +137,32 @@ public class Paintbrush : BaseCarriable
 
 		if ( Input.MouseWheel.y != 0 )
 		{
-			var textures = GetTextures();
+			var decals = Decals.GetAllDecals();
 
-			if ( !textures.Any() ) return;
+			if ( !decals.Any() )
+			{
+				Player.Notify( Notifications.NotificationType.Error, "No decals found" );
+				return;
+			}
 
-			var index = textures.IndexOf( CurrentTexture );
+			var index = decals.IndexOf( CurrentTextureName );
 
 			index += Input.MouseWheel.y > 0 ? 1 : -1;
 
-			if ( index < 0 ) index = textures.Count - 1;
-			if ( index >= textures.Count ) index = 0;
+			if ( index < 0 ) index = decals.Count - 1;
+			if ( index >= decals.Count ) index = 0;
 
-			CurrentTexture = textures[index];
+			CurrentTextureName = decals[index];
+
+			if ( string.IsNullOrEmpty( CurrentTextureName ) )
+			{
+				Log.Warning( "No texture selected" );
+				return;
+			}
 
 			Sound.Play( TextureChangeSound );
+
+			Log.Info( $"Selected texture: {CurrentTextureName}" );
 
 			// Player.Notify( Notifications.NotificationType.Info, $"Selected texture: {CurrentTexture}" );
 		}

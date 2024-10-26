@@ -13,9 +13,17 @@
 
 <root>
 	<div class="paintbrush-bar">
-		@foreach ( var decal in Decals )
-		{
-			<Image Texture=@decal.Decal.Texture class="@( Paintbrush.CurrentTexturePath == decal.ResourcePath ? "selected" : "" )"/>
-		}
+		<h2>
+			Decals
+		</h2>
+		<div class="paintbrush-decals">
+			@foreach ( var decal in Decals )
+			{
+				<button class="@( Paintbrush.CurrentTextureName == decal.FileName ? "selected" : "" )" @onclick=@( () => { Paintbrush.CurrentTextureName = decal.FileName; } )>
+					<Image Texture=@decal.Decal.Texture/>
+					<div>@decal.FileName</div>
+				</button>
+			}
+		</div>
 	</div>
 </root>

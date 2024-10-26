@@ -205,7 +205,7 @@
 						<h2 class="section-title">Decals</h2>
 						@foreach ( var decal in Decals )
 						{
-							<button @onclick=@( () => LoadDecal( decal.ResourcePath ) ) class="decal">
+							<button @onclick=@( () => LoadDecal( decal.FileName ) ) class="decal">
 								<Image Texture=@decal.Decal.Texture/>
 								<div class="decal-name">@decal.Decal.Name</div>
 							</button>

@@ -13,7 +13,9 @@ public partial class PaintUi
 	public struct DecalEntry
 	{
 		public Decals.DecalData Decal;
-		public string ResourcePath;
+
+		// public string ResourcePath;
+		public string FileName;
 	}
 
 	public enum PaintTool
