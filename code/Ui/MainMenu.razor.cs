@@ -19,20 +19,13 @@ public partial class MainMenu
 
 	public MenuState State { get; set; } = MenuState.Title;
 
-	public List<RealmInfo> Realms { get; set; } = new();
+	public List<RealmManager.RealmInfo> Realms { get; set; } = new();
 
 	public void SetState( MenuState state )
 	{
 		State = state;
 	}
 
-	public struct RealmInfo
-	{
-		public string Id { get; set; }
-		public string Name { get; set; }
-		public DateTime Created { get; set; }
-		public string Path => $"realms/{Id}";
-	}
 
 	protected override void OnStart()
 	{
@@ -46,12 +39,13 @@ public partial class MainMenu
 			if ( !FileSystem.Data.FileExists( $"{path}/.realminfo" ) )
 			{
 				Log.Warning( $"Realm folder {folder} is missing .realminfo file" );
-				var json1 = new RealmInfo { Id = folder, Name = folder, Created = DateTime.Now };
+				var json1 = new RealmManager.RealmInfo { Id = folder, Name = folder, Created = DateTime.Now };
 				FileSystem.Data.WriteAllText( $"{path}/.realminfo", JsonSerializer.Serialize( json1,
 					GameManager.JsonOptions ) );
 			}
 
-			var json = JsonSerializer.Deserialize<RealmInfo>( FileSystem.Data.ReadAllText( $"{path}/.realminfo" ),
+			var json = JsonSerializer.Deserialize<RealmManager.RealmInfo>(
+				FileSystem.Data.ReadAllText( $"{path}/.realminfo" ),
 				GameManager.JsonOptions );
 
 			Realms.Add( json );
@@ -81,8 +75,9 @@ public partial class MainMenu
 
 		FileSystem.Data.CreateDirectory( path );
 
-		var json = new RealmInfo { Id = folder_name, Name = _newRealmName, Created = DateTime.Now };
-		FileSystem.Data.WriteJson( $"{path}/.realminfo", json );
+		var json = new RealmManager.RealmInfo { Id = folder_name, Name = _newRealmName, Created = DateTime.Now };
+		// FileSystem.Data.WriteJson( $"{path}/.realminfo", json );
+		json.Save();
 
 		Realms.Add( json );
 
@@ -91,11 +86,10 @@ public partial class MainMenu
 		SetState( MenuState.SelectRealm );
 	}
 
-	private void SelectRealm( RealmInfo realm )
+	private void SelectRealm( RealmManager.RealmInfo realm )
 	{
 		PlayerCharacter.SpawnPlayerId = null;
-		GameManager.Realm = realm;
+		RealmManager.CurrentRealm = realm;
 		GameManager.LoadRealm();
-		
 	}
 }

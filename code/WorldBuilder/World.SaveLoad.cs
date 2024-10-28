@@ -8,7 +8,7 @@ namespace Clover;
 
 public sealed partial class World
 {
-	private string SaveFileName => $"{GameManager.Realm.Path}/worlds/{Data.ResourceName}.json";
+	private string SaveFileName => $"{RealmManager.CurrentRealm.Path}/worlds/{Data.ResourceName}.json";
 
 	private WorldSaveData _saveData = new();
 
@@ -96,7 +96,7 @@ public sealed partial class World
 		Log.Info( $"Saving {savedObjects.Count} objects" );
 		_saveData.Objects = savedObjects;
 
-		FileSystem.Data.CreateDirectory( $"{GameManager.Realm.Path}/worlds" );
+		FileSystem.Data.CreateDirectory( $"{RealmManager.CurrentRealm.Path}/worlds" );
 
 		Log.Info( $"Writing save data to {SaveFileName}" );
 
@@ -143,7 +143,7 @@ public sealed partial class World
 					Log.Warning( $"Could not fetch package {item.Item.PackageIdent}" );
 					continue;
 				}
-				
+
 				Log.Info( $"Fetched package {package.Title}" );
 			}
 
@@ -156,8 +156,7 @@ public sealed partial class World
 
 			var nodeLink = new WorldNodeLink( this, gameObject )
 			{
-				ItemId = item.ItemId, 
-				PlacementType = item.PlacementType
+				ItemId = item.ItemId, PlacementType = item.PlacementType
 			};
 
 			nodeLink.OnNodeLoad( item );

@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Clover.Player;
@@ -8,8 +9,6 @@ namespace Clover;
 
 public class GameManager : Component, Component.INetworkListener, ISceneStartup
 {
-	public static MainMenu.RealmInfo Realm { get; set; }
-
 	public static GameManager Instance;
 
 	[Property] public GameObject PlayerPrefab { get; set; }

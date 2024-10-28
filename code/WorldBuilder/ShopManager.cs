@@ -99,7 +99,7 @@ public class ShopManager : Component
 		}
 	}
 
-	private string GetStatePath() => $"{GameManager.Realm.Path}/shops/{StoreId}.json";
+	private string GetStatePath() => $"{RealmManager.CurrentRealm.Path}/shops/{StoreId}.json";
 
 	public void LoadState()
 	{
@@ -140,7 +140,7 @@ public class ShopManager : Component
 	public void SaveState()
 	{
 		Log.Info( "Shop: Saving shop state." );
-		FileSystem.Data.CreateDirectory( $"{GameManager.Realm.Path}/shops" );
+		FileSystem.Data.CreateDirectory( $"{RealmManager.CurrentRealm.Path}/shops" );
 		FileSystem.Data.WriteAllText( GetStatePath(), JsonSerializer.Serialize( State, GameManager.JsonOptions ) );
 	}
 
