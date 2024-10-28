@@ -52,7 +52,7 @@ public sealed class TransitionLabel : GraphicsItem, IContextMenuSource, IDeletab
 
 	protected override void OnHoverEnter( GraphicsHoverEvent e )
 	{
-		Tooltip = Source.Description;
+		ToolTip = Source.Description;
 	}
 
 	protected override void OnSelectionChanged()

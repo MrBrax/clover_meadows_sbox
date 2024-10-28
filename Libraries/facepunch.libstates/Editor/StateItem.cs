@@ -242,7 +242,7 @@ public sealed class StateItem : GraphicsItem, IContextMenuSource, IDeletable
 
 	private void UpdateTooltip()
 	{
-		Tooltip = State.StateMachine.InitialState == State ? $"State <b>{State.Name}</b> <i>(initial)</i>" : $"State <b>{State.Name}</b>";
+		ToolTip = State.StateMachine.InitialState == State ? $"State <b>{State.Name}</b> <i>(initial)</i>" : $"State <b>{State.Name}</b>";
 	}
 
 	private void AlignLabels()

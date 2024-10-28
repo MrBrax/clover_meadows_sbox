@@ -120,7 +120,7 @@ public abstract record ActionGraphLabelSource<T> : ILabelSource
 		var inner = (ActionGraph)graph;
 
 		inner.Title = title;
-		inner.SourceLocation = new SourceLocation( StateMachine.GameObject.Scene.Source );
+		inner.SourceLocation = StateMachine.GameObject.Scene.GetSourceLocation();
 		inner.SetParameters(
 			inner.Inputs.Values.Concat( InputDefinition.Target( typeof( GameObject ), StateMachine.GameObject ) ),
 			inner.Outputs.Values.ToArray() );

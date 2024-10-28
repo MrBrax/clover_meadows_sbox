@@ -186,7 +186,7 @@ public sealed partial class TransitionItem : GraphicsItem, IContextMenuSource, I
 
 		if ( Target is not null )
 		{
-			Tooltip = $"Transition <b>{Source.State.Name}</b> \u2192 <b>{Target.State.Name}</b>";
+			ToolTip = $"Transition <b>{Source.State.Name}</b> \u2192 <b>{Target.State.Name}</b>";
 		}
 
 		LabelLayout();
