@@ -39,6 +39,7 @@ public class Dialogue : GameResource
 		// [Property] public string Id { get; set; }
 		// [Property] public string IdTarget { get; set; }
 		[Property] public DialogueAction OnSelect { get; set; }
+		[Property] public string JumpToId { get; set; }
 
 		[Property, Description( "Will only show if OnSelect is null" )]
 
@@ -46,6 +47,15 @@ public class Dialogue : GameResource
 
 		public override string ToString()
 		{
+			if ( Nodes.Count == 0 && !string.IsNullOrEmpty( JumpToId ) )
+			{
+				return $"{Label} -> JUMP:{JumpToId}";
+			}
+			else if ( Nodes.Count == 0 && OnSelect != null )
+			{
+				return $"{Label} -> ACTION";
+			}
+
 			return $"{Label} -> {Nodes.Count} nodes";
 		}
 	}

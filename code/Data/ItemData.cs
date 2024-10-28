@@ -68,7 +68,7 @@ public class ItemData : GameResource
 
 
 	[Hide]
-	public delegate int GetPriceDelegate( ItemData itemData, DateTime dateTime );
+	public delegate int GetPriceDelegate( DateTime dateTime );
 
 	[Property, Group( "Shop" )] public int BaseBuyPrice { get; set; } = 0;
 	[Property, Group( "Shop" )] public bool CanSell { get; set; } = true;

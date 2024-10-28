@@ -148,7 +148,7 @@ public class BaseNpc : Component, IInteract
 		Agent.MoveTo( TargetPosition.Value );
 	}
 
-	public void StartInteract( PlayerCharacter player )
+	public virtual void StartInteract( PlayerCharacter player )
 	{
 		Log.Info( "BaseNpc StartInteract" );
 
@@ -179,7 +179,7 @@ public class BaseNpc : Component, IInteract
 		SetState( NpcState.Idle );
 	}
 
-	private void DispatchDialogue()
+	protected void DispatchDialogue()
 	{
 		if ( DialogueCollection == null )
 		{

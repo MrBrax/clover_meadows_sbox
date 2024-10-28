@@ -1,6 +1,10 @@
 {
-  "Name": "Dialogue Collection",
-  "Entries": [],
+  "Name": "Shop",
+  "Entries": [
+    {
+      "DialogueData": "dialogue/shop/sell_item.dlg"
+    }
+  ],
   "__references": [],
   "__version": 0
 }

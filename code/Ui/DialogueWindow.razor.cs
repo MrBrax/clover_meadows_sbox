@@ -489,15 +489,21 @@ public partial class DialogueWindow
 		}
 		else
 		{
-			if ( choice.Nodes.Count == 0 )
+			if ( choice.Nodes.Count == 0 && string.IsNullOrEmpty( choice.JumpToId ) )
 			{
 				Log.Error( "OnChoice1: No nodes found for choice" );
 				End();
 				return;
 			}
 
-
 			CurrentNode.OnExit?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
+
+			if ( !string.IsNullOrEmpty( choice.JumpToId ) )
+			{
+				JumpToId( choice.JumpToId );
+				return;
+			}
+
 			CurrentNodeList = choice.Nodes;
 			CurrentNodeIndex = 0;
 			// CurrentChoice = choice;

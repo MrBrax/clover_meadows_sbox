@@ -208,6 +208,11 @@
         {
           "__type": "Clover.Ui.PaintbrushUi",
           "__guid": "e533ce68-9df2-4b37-81df-4713a2181882"
+        },
+        {
+          "__type": "Clover.Ui.InventorySelectUi",
+          "__guid": "4ddc71fe-a16e-4ce2-9ea2-753adc4c6c6e",
+          "MyStringValue": "Hello World!"
         }
       ]
     },

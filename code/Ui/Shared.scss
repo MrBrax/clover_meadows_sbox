@@ -8,6 +8,10 @@
     justify-content: center;
     align-items: center;
     pointer-events: all;
+
+    &.blurry {
+        backdrop-filter: blur(5px);
+    }
 }
 
 .durability-bar {
@@ -26,7 +30,7 @@
         transition: width 0.2s ease;
         border-radius: 10px;
     }
-    
+
     .durability-bar-text {
         position: absolute;
         top: 0;
@@ -39,7 +43,7 @@
         font-weight: bold;
         justify-content: center;
         align-items: center;
-        
+
         text-stroke: 3px rgba(34, 94, 152, 0.8);
     }
 }
@@ -66,18 +70,26 @@
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.1s ease;
-    
+
     align-items: center;
     align-content: center;
 
     text-shadow: 3px 3px 0 #000;
 
-    &:hover {
+    &.disabled {
+        background-color: #888;
+        text-shadow: none;
+        cursor: not-allowed;
+    }
+
+    &:not(.disabled):hover {
         background-color: #3ea1ed;
     }
-    
+
     &.small {
         padding: 5px 10px;
         font-size: 30px;
     }
+
+
 }

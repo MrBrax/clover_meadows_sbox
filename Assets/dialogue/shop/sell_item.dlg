@@ -1,0 +1,149 @@
+{
+  "Nodes": [
+    {
+      "Id": "274d6c79",
+      "Text": "You wanna sell some items?",
+      "Choices": [
+        {
+          "Label": "Yes",
+          "OnSelect": {
+            "__version": 8,
+            "__guid": "13f712a1-af11-4297-9adc-6fb8cb6cd1ae",
+            "__changeId": 17,
+            "UserData": {
+              "Title": "On Select",
+              "ReferencedComponentTypes": []
+            },
+            "Variables": [],
+            "Nodes": [
+              {
+                "Id": 0,
+                "Type": "input"
+              },
+              {
+                "Id": 1,
+                "Type": "call",
+                "Properties": {
+                  "_isStatic": false,
+                  "_name": "RunAction",
+                  "_type": "Clover.DialogueWindow"
+                },
+                "UserData": {
+                  "Position": "312,0"
+                }
+              }
+            ],
+            "Links": [
+              {
+                "SrcId": 0,
+                "SrcName": "_signal",
+                "DstId": 1,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 0,
+                "SrcName": "window",
+                "DstId": 1,
+                "DstName": "_target"
+              },
+              {
+                "Id": 3,
+                "Value": "SelectItem",
+                "DstId": 1,
+                "DstName": "key"
+              }
+            ]
+          },
+          "Nodes": [
+            {
+              "Id": "selected_items",
+              "Text": "Do you want to sell these {{ItemAmount}} item(s) for {{TotalItemPrice}}?",
+              "Choices": [
+                {
+                  "Label": "Yes",
+                  "OnSelect": {
+                    "__version": 8,
+                    "__guid": "e8b30186-3ba4-49fb-9dfe-d31188cd94ca",
+                    "__changeId": 14,
+                    "UserData": {
+                      "Title": "On Select",
+                      "ReferencedComponentTypes": []
+                    },
+                    "Variables": [],
+                    "Nodes": [
+                      {
+                        "Id": 0,
+                        "Type": "input"
+                      },
+                      {
+                        "Id": 1,
+                        "Type": "call",
+                        "Properties": {
+                          "_isStatic": false,
+                          "_name": "RunAction",
+                          "_type": "Clover.DialogueWindow"
+                        },
+                        "UserData": {
+                          "Position": "252,0"
+                        }
+                      }
+                    ],
+                    "Links": [
+                      {
+                        "SrcId": 0,
+                        "SrcName": "_signal",
+                        "DstId": 1,
+                        "DstName": "_signal"
+                      },
+                      {
+                        "SrcId": 0,
+                        "SrcName": "window",
+                        "DstId": 1,
+                        "DstName": "_target"
+                      },
+                      {
+                        "Id": 10,
+                        "Value": "SellItems",
+                        "DstId": 1,
+                        "DstName": "key"
+                      }
+                    ]
+                  },
+                  "Nodes": [
+                    {
+                      "Id": "ea01588a",
+                      "Text": "Thank you!",
+                      "Choices": []
+                    }
+                  ]
+                },
+                {
+                  "Label": "No",
+                  "JumpToId": "canceled",
+                  "Nodes": []
+                }
+              ]
+            },
+            {
+              "Id": "canceled",
+              "Text": "Ok!",
+              "Choices": []
+            }
+          ]
+        },
+        {
+          "Label": "No",
+          "Nodes": [
+            {
+              "Id": "9132327c",
+              "Text": "Ok!",
+              "Choices": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}
