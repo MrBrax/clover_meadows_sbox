@@ -66,7 +66,7 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 		// ModelRenderer.MaterialOverride = material;
 		OnMaterialUpdate( material );
 
-		DecalHash = Crc64.FromBytes( _decalData.Image ).ToString();
+		DecalHash = _decalData.GetHash();
 
 		Log.Info( $"Updated decal '{_decalData.Name}' with texture: {TexturePath}" );
 	}
@@ -120,7 +120,7 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 		_decalData = decal.ToDecalData();
 		// _decalData = Decals.ToDecalData( decal );
 
-		var hash = Crc64.FromBytes( decal.Image );
+		var hash = _decalData.GetHash();
 
 		var material = Material.Create( $"{hash}.vmat", "shaders/floor_decal.shader" );
 		material.Set( "Color", Decals.GetDecalTexture( decal ) );

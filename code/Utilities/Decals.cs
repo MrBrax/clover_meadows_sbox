@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using Sandbox.Diagnostics;
+using Sandbox.Utility;
 
 namespace Clover.Utilities;
 
@@ -20,10 +21,18 @@ public class Decals
 		public string Palette;
 
 		public byte[] Image;
-		public Texture Texture;
 
 		public DateTime Created;
 		public DateTime Modified;
+
+		// not stored in file
+		public Texture Texture;
+
+		public string GetHash()
+		{
+			var data = Crc64.FromBytes( Image ).ToString();
+			return Crc64.FromString( $"{Name}:{Author}:{Palette}:{Modified}:{data}" ).ToString();
+		}
 
 		public DecalDataRpc ToRpc()
 		{
