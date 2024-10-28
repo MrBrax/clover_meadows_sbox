@@ -236,10 +236,10 @@ public class Decals
 		var reader = new BinaryReader( stream, Encoding.UTF8 );
 
 		var magic = new string( reader.ReadChars( 4 ) );
-		Log.Info( $"Magic: {magic}" );
+		// Log.Info( $"Magic: {magic}" );
 
 		var version = reader.ReadUInt32();
-		Log.Info( $"Version: {version}" );
+		// Log.Info( $"Version: {version}" );
 
 		if ( version < 5 )
 		{
@@ -252,16 +252,16 @@ public class Decals
 		var height = reader.ReadInt32();
 
 		var name = reader.ReadString();
-		Log.Info( $"Name: {name}" );
+		// Log.Info( $"Name: {name}" );
 
 		var author = reader.ReadUInt64();
-		Log.Info( $"Author: {author}" );
+		// Log.Info( $"Author: {author}" );
 
 		var authorName = reader.ReadString();
-		Log.Info( $"Author Name: {authorName}" );
+		// Log.Info( $"Author Name: {authorName}" );
 
 		var paletteName = reader.ReadString();
-		Log.Info( $"Palette: {paletteName}" );
+		// Log.Info( $"Palette: {paletteName}" );
 
 		var created = DateTime.FromBinary( reader.ReadInt64() );
 
@@ -272,7 +272,7 @@ public class Decals
 		var imageBytes = reader.ReadBytes( cbyteLength );
 		imageBytes = DecompressBytes( imageBytes );
 
-		Log.Info( $"Image bytes: {imageBytes.Length}" );
+		// Log.Info( $"Image bytes: {imageBytes.Length}" );
 
 		var decalData = new DecalData
 		{

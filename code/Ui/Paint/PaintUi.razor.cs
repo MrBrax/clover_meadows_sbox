@@ -734,11 +734,23 @@ public partial class PaintUi
 
 	private Color GetColorFromByte( byte index )
 	{
+		if ( index >= Palette.Count )
+		{
+			Log.Error( $"Index {index} is out of bounds" );
+			return Color.Transparent;
+		}
+
 		return Palette[index];
 	}
 
 	private Color GetColorFromByte( int index )
 	{
+		if ( index >= Palette.Count )
+		{
+			Log.Error( $"Index {index} is out of bounds" );
+			return Color.Transparent;
+		}
+
 		return Palette[index];
 	}
 
