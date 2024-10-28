@@ -25,6 +25,11 @@
   "HideInSpawnMenu": false,
   "PlaceModeOffset": "0,0,0",
   "BaseBuyPrice": 50,
+  "CanSell": true,
+  "BaseSellPrice": 0,
+  "CanBuy": true,
+  "GetCustomSellPrice": null,
+  "GetCustomBuyPrice": null,
   "__references": [],
   "__version": 0
 }

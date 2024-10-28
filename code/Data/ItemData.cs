@@ -66,7 +66,16 @@ public class ItemData : GameResource
 
 	public Vector3 PlaceModeOffset { get; set; }
 
+
+	[Hide]
+	public delegate int GetPriceDelegate( ItemData itemData, DateTime dateTime );
+
 	[Property, Group( "Shop" )] public int BaseBuyPrice { get; set; } = 0;
+	[Property, Group( "Shop" )] public bool CanSell { get; set; } = true;
+	[Property, Group( "Shop" )] public int BaseSellPrice { get; set; } = 0;
+	[Property, Group( "Shop" )] public bool CanBuy { get; set; } = true;
+	[Property, Group( "Shop" )] public GetPriceDelegate GetCustomSellPrice { get; set; }
+	[Property, Group( "Shop" )] public GetPriceDelegate GetCustomBuyPrice { get; set; }
 
 
 	public static T GetById<T>( string id ) where T : ItemData
