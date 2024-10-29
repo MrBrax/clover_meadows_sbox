@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Text.Json.Serialization;
-using Clover;
 using Clover.Player;
 
-namespace Sandbox;
+namespace Clover.Data;
 
 [GameResource( "Dialogue", "dlg", "dialogue", Icon = "chat" )]
 public class Dialogue : GameResource
@@ -34,12 +32,12 @@ public class Dialogue : GameResource
 
 	public class DialogueChoice
 	{
-		[Property] public string Label { get; set; }
+		[Property] public string Label { get; set; } = null;
 
 		// [Property] public string Id { get; set; }
 		// [Property] public string IdTarget { get; set; }
-		[Property] public DialogueAction OnSelect { get; set; }
-		[Property] public string JumpToId { get; set; }
+		[Property] public DialogueAction OnSelect { get; set; } = null;
+		[Property] public string JumpToId { get; set; } = null;
 
 		[Property, Description( "Will only show if OnSelect is null" )]
 
@@ -65,27 +63,27 @@ public class Dialogue : GameResource
 		[Property] public string Id { get; set; } = Guid.NewGuid().ToString()[..8];
 
 		[Property, Description( "I don't think the player ever talks, but this is here just in case." )]
-		public bool IsPlayer { get; set; }
+		public bool IsPlayer { get; set; } = false;
 
 
 		[Property, HideIf( nameof(IsPlayer), true )]
-		public int Speaker { get; set; }
+		public int Speaker { get; set; } = 0;
 
-		[Property, TextArea] public string Text { get; set; }
+		[Property, TextArea] public string Text { get; set; } = null;
 
 		// [Property] public List<string> Choices { get; set; } = new();
 		[Property] public List<DialogueChoice> Choices { get; set; } = new();
 
 		[Property, Description( "This is the action that will be executed when this node is entered." )]
-		public DialogueAction OnEnter { get; set; }
+		public DialogueAction OnEnter { get; set; } = null;
 
-		[Property] public DialogueAction OnExit { get; set; }
+		[Property] public DialogueAction OnExit { get; set; } = null;
 
 		/// <summary>
 		///   If true, this node will not be advanced to automatically, and must be jumped to manually.
 		/// </summary>
 		[Property]
-		public bool IsHidden { get; set; }
+		public bool IsHidden { get; set; } = false;
 
 		public override string ToString()
 		{
