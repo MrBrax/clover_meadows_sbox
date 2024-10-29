@@ -5,10 +5,12 @@ DialogueWindow {
     right: 0;
     bottom: 50px;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     border-radius: 20px;
 
     pointer-events: all;
+
+    gap: 20px;
 
     .dialogue-window {
         width: 1200px;
@@ -18,8 +20,8 @@ DialogueWindow {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
         padding: 50px;
-        font-family: Poppins;
-        font-size: 40px;
+        font-family: Itim;
+        font-size: 50px;
 
         pointer-events: all;
 
@@ -45,22 +47,28 @@ DialogueWindow {
             flex-grow: 1;
         }
 
-        .choices {
-            flex-direction: column;
-            gap: 20px;
-            min-width: 200px;
 
-            button {
-                width: 100%;
-                padding: 10px;
-                background-color: #eee;
-                align-content: center;
-                justify-content: center;
-                border-radius: 10px;
-                font-size: 30px;
-                cursor: pointer;
+    }
+
+    .choices {
+        flex-direction: column;
+        gap: 20px;
+        min-width: 300px;
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #ffdcb0;
+            align-content: center;
+            justify-content: center;
+            border-radius: 20px;
+            font-family: Itim;
+            font-size: 40px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #ffe079;
             }
-
         }
 
     }

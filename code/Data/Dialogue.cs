@@ -32,7 +32,7 @@ public class Dialogue : GameResource
 
 		DialogueManager.Instance.DialogueWindow.Enabled = true;
 
-		DialogueManager.Instance.DialogueWindow.ChoicesPanel.DeleteChildren();
+		DialogueManager.Instance.DialogueWindow.ChoicesPanel?.DeleteChildren();
 
 		DialogueManager.Instance.DialogueWindow.DispatchText( speaker, text );
 
@@ -71,7 +71,7 @@ public class Dialogue : GameResource
 		DialogueManager.Instance.DialogueWindow.DispatchText( speaker, text );
 		DialogueManager.Instance.DialogueWindow.IsCurrentNodeChoice = true;
 
-		DialogueManager.Instance.DialogueWindow.ChoicesPanel.DeleteChildren();
+		DialogueManager.Instance.DialogueWindow.ChoicesPanel?.DeleteChildren();
 
 		int index = 0;
 		foreach ( var choice in choices )
