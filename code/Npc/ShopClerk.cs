@@ -69,7 +69,7 @@ public class ShopClerk : BaseNpc
 		var selectedItems = new HashSet<int>();
 		var totalPrice = 0;
 
-		DialogueManager.Instance.DialogueWindow.SetAction( "SelectItem", () =>
+		/*DialogueManager.Instance.DialogueWindow.SetAction( "SelectItem", () =>
 		{
 			MainUi.Instance.Components.Get<InventorySelectUi>().Open( 10,
 				( inventorySlot ) => inventorySlot.GetItem().ItemData.CanSell, ( items ) =>
@@ -94,9 +94,9 @@ public class ShopClerk : BaseNpc
 					Log.Info( "Cancelled" );
 					DialogueManager.Instance.DialogueWindow.JumpToId( "canceled" );
 				} );
-		} );
+		} );*/
 
-		DialogueManager.Instance.DialogueWindow.SetAction( "SellItems", () =>
+		/*DialogueManager.Instance.DialogueWindow.SetAction( "SellItems", () =>
 		{
 			if ( selectedItems.Count == 0 )
 			{
@@ -120,13 +120,13 @@ public class ShopClerk : BaseNpc
 				/*var item = slot.GetItem();
 				if ( item == null ) continue;
 
-				player.Inventory.Container.RemoveItem( item );*/
+				player.Inventory.Container.RemoveItem( item );#1#
 
 				slot.TakeOneOrDelete();
 			}
 
 			DialogueManager.Instance.DialogueWindow.JumpToId( "sold" );
-		} );
+		} );*/
 
 		DispatchDialogue();
 	}

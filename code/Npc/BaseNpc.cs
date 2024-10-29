@@ -3,6 +3,7 @@ using Clover.Components;
 using Clover.Data;
 using Clover.Interactable;
 using Clover.Player;
+using Sandbox.Diagnostics;
 using Sandbox.States;
 
 namespace Clover.Npc;
@@ -188,10 +189,16 @@ public class BaseNpc : Component, IInteract
 			return;
 		}
 
+		Assert.NotNull( DialogueManager.Instance.DialogueWindow, "BaseNpc DispatchDialogue: No dialogue window found" );
+		Assert.NotNull( PlayerCharacter.Local, "BaseNpc DispatchDialogue: No player found" );
+		Assert.NotNull( DialogueCollection.Entries, "BaseNpc DispatchDialogue: No dialogue entries found" );
+		Assert.True( DialogueCollection.Entries.Count > 0, "BaseNpc DispatchDialogue: No dialogue entries found" );
+
 		var entries = DialogueCollection.Entries.ToList().OrderBy( x => Guid.NewGuid() );
 		foreach ( var dialogue in entries )
 		{
-			if ( dialogue.Condition( DialogueManager.Instance.DialogueWindow, PlayerCharacter.Local,
+			if ( dialogue.Condition == null || dialogue.Condition.Invoke( DialogueManager.Instance.DialogueWindow,
+				    PlayerCharacter.Local,
 				    new List<GameObject>() { GameObject } ) )
 			{
 				DialogueManager.Instance.DialogueWindow.SetData( "PlayerName", PlayerCharacter.Local.PlayerName );

@@ -75,14 +75,14 @@ public class FishSpot : Component
 
 			if ( !fishData.IsValid() )
 			{
-				Log.Warning( $"No fish data found for location {Location}." );
+				Log.Trace( $"No fish data found for location {Location}." );
 				return;
 			}
 		}
 
 		if ( fishData == null )
 		{
-			Log.Warning( $"No fish data found." );
+			Log.Trace( $"No fish data found." );
 			return;
 		}
 
@@ -135,7 +135,7 @@ public class FishSpot : Component
 
 				gameObject.NetworkSpawn();
 
-				Log.Info( $"Spawned fish {fishData.Name} at {randomPosition}." );
+				Log.Trace( $"Spawned fish {fishData.Name} at {randomPosition}." );
 
 				return;
 			}

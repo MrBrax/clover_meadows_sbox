@@ -1,149 +1,239 @@
 {
-  "Nodes": [
-    {
-      "Id": "274d6c79",
-      "Text": "You wanna sell some items?",
-      "Choices": [
-        {
-          "Label": "Yes",
-          "OnSelect": {
-            "__version": 8,
-            "__guid": "13f712a1-af11-4297-9adc-6fb8cb6cd1ae",
-            "__changeId": 17,
-            "UserData": {
-              "Title": "On Select",
-              "ReferencedComponentTypes": []
-            },
-            "Variables": [],
-            "Nodes": [
-              {
-                "Id": 0,
-                "Type": "input"
-              },
-              {
-                "Id": 1,
-                "Type": "call",
-                "Properties": {
-                  "_isStatic": false,
-                  "_name": "RunAction",
-                  "_type": "Clover.DialogueWindow"
-                },
-                "UserData": {
-                  "Position": "312,0"
-                }
-              }
-            ],
-            "Links": [
-              {
-                "SrcId": 0,
-                "SrcName": "_signal",
-                "DstId": 1,
-                "DstName": "_signal"
-              },
-              {
-                "SrcId": 0,
-                "SrcName": "window",
-                "DstId": 1,
-                "DstName": "_target"
-              },
-              {
-                "Id": 3,
-                "Value": "SelectItem",
-                "DstId": 1,
-                "DstName": "key"
-              }
-            ]
-          },
-          "Nodes": [
-            {
-              "Id": "selected_items",
-              "Text": "Do you want to sell these {{ItemAmount}} item(s) for {{TotalItemPrice}}?",
-              "Choices": [
-                {
-                  "Label": "Yes",
-                  "OnSelect": {
-                    "__version": 8,
-                    "__guid": "e8b30186-3ba4-49fb-9dfe-d31188cd94ca",
-                    "__changeId": 14,
-                    "UserData": {
-                      "Title": "On Select",
-                      "ReferencedComponentTypes": []
-                    },
-                    "Variables": [],
-                    "Nodes": [
-                      {
-                        "Id": 0,
-                        "Type": "input"
-                      },
-                      {
-                        "Id": 1,
-                        "Type": "call",
-                        "Properties": {
-                          "_isStatic": false,
-                          "_name": "RunAction",
-                          "_type": "Clover.DialogueWindow"
-                        },
-                        "UserData": {
-                          "Position": "252,0"
-                        }
-                      }
-                    ],
-                    "Links": [
-                      {
-                        "SrcId": 0,
-                        "SrcName": "_signal",
-                        "DstId": 1,
-                        "DstName": "_signal"
-                      },
-                      {
-                        "SrcId": 0,
-                        "SrcName": "window",
-                        "DstId": 1,
-                        "DstName": "_target"
-                      },
-                      {
-                        "Id": 10,
-                        "Value": "SellItems",
-                        "DstId": 1,
-                        "DstName": "key"
-                      }
-                    ]
-                  },
-                  "Nodes": [
-                    {
-                      "Id": "ea01588a",
-                      "Text": "Thank you!",
-                      "Choices": []
-                    }
-                  ]
-                },
-                {
-                  "Label": "No",
-                  "JumpToId": "canceled",
-                  "Nodes": []
-                }
-              ]
-            },
-            {
-              "Id": "canceled",
-              "Text": "Ok!",
-              "Choices": []
-            }
-          ]
-        },
-        {
-          "Label": "No",
-          "Nodes": [
-            {
-              "Id": "9132327c",
-              "Text": "Ok!",
-              "Choices": []
-            }
-          ]
+  "Tree": {
+    "__version": 8,
+    "__guid": "4d46a6e4-9c11-4d03-b576-a6133d996dde",
+    "__changeId": 180,
+    "UserData": {
+      "Title": "Tree",
+      "ReferencedComponentTypes": []
+    },
+    "Variables": [
+      {
+        "Name": "npc",
+        "Type": "Sandbox.GameObject"
+      }
+    ],
+    "Nodes": [
+      {
+        "Id": 0,
+        "Type": "input",
+        "UserData": {
+          "Position": "-132,-48"
         }
-      ]
-    }
-  ],
+      },
+      {
+        "Id": 1,
+        "Type": "clover.dialogue.textnode",
+        "UserData": {
+          "Position": "360,-24"
+        }
+      },
+      {
+        "Id": 2,
+        "Type": "list.get",
+        "UserData": {
+          "Position": "12,-0"
+        }
+      },
+      {
+        "Id": 17,
+        "Type": "clover.dialogue.end",
+        "UserData": {
+          "Position": "1680,204"
+        }
+      },
+      {
+        "Id": 22,
+        "Type": "clover.dialogue.textnode",
+        "UserData": {
+          "Position": "636,60"
+        }
+      },
+      {
+        "Id": 49,
+        "Type": "clover.dialogue.choicenode",
+        "UserData": {
+          "Position": "864,180"
+        }
+      },
+      {
+        "Id": 77,
+        "Type": "var",
+        "Properties": {
+          "_var": "npc"
+        },
+        "UserData": {
+          "Position": "144,-60"
+        }
+      },
+      {
+        "Id": 82,
+        "Type": "clover.dialogue.textnode",
+        "UserData": {
+          "Position": "1380,204"
+        }
+      },
+      {
+        "Id": 95,
+        "Type": "clover.dialogue.textnode",
+        "UserData": {
+          "Position": "1380,288"
+        }
+      },
+      {
+        "Id": 99,
+        "Type": "clover.dialogue.end",
+        "UserData": {
+          "Position": "1680,288"
+        }
+      }
+    ],
+    "Links": [
+      {
+        "SrcId": 77,
+        "SrcName": "_signal",
+        "DstId": 1,
+        "DstName": "_signal"
+      },
+      {
+        "VarName": "npc",
+        "DstId": 1,
+        "DstName": "speaker"
+      },
+      {
+        "Id": 127,
+        "Value": "hello world",
+        "DstId": 1,
+        "DstName": "text"
+      },
+      {
+        "Id": 128,
+        "Value": 0,
+        "DstId": 2,
+        "DstName": "index"
+      },
+      {
+        "SrcId": 0,
+        "SrcName": "targets",
+        "DstId": 2,
+        "DstName": "list"
+      },
+      {
+        "SrcId": 82,
+        "SrcName": "_signal",
+        "DstId": 17,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 1,
+        "SrcName": "_signal",
+        "DstId": 22,
+        "DstName": "_signal"
+      },
+      {
+        "VarName": "npc",
+        "DstId": 22,
+        "DstName": "speaker"
+      },
+      {
+        "Id": 130,
+        "Value": "asdf asdf",
+        "DstId": 22,
+        "DstName": "text"
+      },
+      {
+        "SrcId": 22,
+        "SrcName": "_signal",
+        "DstId": 49,
+        "DstName": "_signal"
+      },
+      {
+        "Id": 131,
+        "Value": "choice 1",
+        "DstId": 49,
+        "DstName": "choices",
+        "DstIndex": 0
+      },
+      {
+        "Id": 132,
+        "Value": "choice 2",
+        "DstId": 49,
+        "DstName": "choices",
+        "DstIndex": 1
+      },
+      {
+        "Id": 133,
+        "Value": "restart",
+        "DstId": 49,
+        "DstName": "choices",
+        "DstIndex": 2
+      },
+      {
+        "VarName": "npc",
+        "DstId": 49,
+        "DstName": "speaker"
+      },
+      {
+        "Id": 135,
+        "Value": "what choice",
+        "DstId": 49,
+        "DstName": "text"
+      },
+      {
+        "SrcId": 0,
+        "SrcName": "_signal",
+        "DstId": 77,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 2,
+        "SrcName": "_result",
+        "DstId": 77,
+        "DstName": "_value"
+      },
+      {
+        "SrcId": 49,
+        "SrcName": "onChoose0",
+        "DstId": 82,
+        "DstName": "_signal"
+      },
+      {
+        "VarName": "npc",
+        "DstId": 82,
+        "DstName": "speaker"
+      },
+      {
+        "Id": 137,
+        "Value": "you chose 1",
+        "DstId": 82,
+        "DstName": "text"
+      },
+      {
+        "SrcId": 49,
+        "SrcName": "onChoose1",
+        "DstId": 95,
+        "DstName": "_signal"
+      },
+      {
+        "VarName": "npc",
+        "DstId": 95,
+        "DstName": "speaker"
+      },
+      {
+        "Id": 143,
+        "Value": "you chose 2",
+        "DstId": 95,
+        "DstName": "text"
+      },
+      {
+        "SrcId": 95,
+        "SrcName": "_signal",
+        "DstId": 99,
+        "DstName": "_signal"
+      }
+    ]
+  },
+  "Nodes": [],
   "__references": [],
   "__version": 0
 }

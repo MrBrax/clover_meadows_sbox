@@ -16,32 +16,63 @@ public class Dialogue : GameResource
 		[Property] public DialogueNode Node { get; set; }
 		[Property] public DialogueChoice Choice { get; set; }
 	}*/
-	
+
 	public DialogueAction Tree { get; set; } = null;
-	
+
 	[ActionGraphNode( "clover.dialogue.textnode" )]
 	[Title( "Dialogue Text Node" ), Group( "Dialogue" ), Icon( "chat" )]
 	public static async Task DialogueTextNode( GameObject speaker, [TextArea] string text )
 	{
-		
+		Log.Info( "New DialogueTextNode" );
+		if ( DialogueManager.Instance.DialogueWindow.DialogueNodeCompletedTaskSource != null )
+		{
+			Log.Error( "DialogueTextNode: DialogueNodeCompletedTaskSource is not null." );
+			return;
+		}
+
+		DialogueManager.Instance.DialogueWindow.Enabled = true;
+
+		DialogueManager.Instance.DialogueWindow.ChoicesPanel.DeleteChildren();
+
+		DialogueManager.Instance.DialogueWindow.DispatchText( speaker, text );
+
+		DialogueManager.Instance.DialogueWindow.IsCurrentNodeChoice = false;
+
+		Log.Info( "Creating new dialogue node completed task source." );
+		DialogueManager.Instance.DialogueWindow.DialogueNodeCompletedTaskSource = new TaskCompletionSource();
+
+		Log.Info( "Waiting for dialogue node to complete." );
+		await DialogueManager.Instance.DialogueWindow.DialogueNodeCompletedTaskSource.Task;
+
+		Log.Info( "Dialogue node completed." );
+		DialogueManager.Instance.DialogueWindow.DialogueNodeCompletedTaskSource = null;
 	}
-	
+
 	[ActionGraphNode( "clover.dialogue.choicenode" )]
 	[Title( "Dialogue Choice Node" ), Group( "Dialogue" ), Icon( "chat" )]
-	public static async Task DialogueChoiceNode( GameObject speaker, [TextArea] string text, string[] choices, Action onChoose0, Action onChoose1, Action onChoose2, Action onChoose3, Action onChoose4, Action onChoose5 )
+	public static async Task DialogueChoiceNode( GameObject speaker, [TextArea] string text, string[] choices,
+		Action onChoose0, Action onChoose1, Action onChoose2, Action onChoose3, Action onChoose4, Action onChoose5 )
 	{
 		if ( choices.Length == 0 )
 		{
 			Log.Error( "DialogueChoiceNode: No choices provided." );
 			return;
 		}
-		
+
 		if ( choices.Length > 6 )
 		{
 			Log.Error( "DialogueChoiceNode: Too many choices provided." );
 			return;
 		}
-		
+
+		Log.Info( "DialogueChoiceNode" );
+
+		DialogueManager.Instance.DialogueWindow.Enabled = true;
+		DialogueManager.Instance.DialogueWindow.DispatchText( speaker, text );
+		DialogueManager.Instance.DialogueWindow.IsCurrentNodeChoice = true;
+
+		DialogueManager.Instance.DialogueWindow.ChoicesPanel.DeleteChildren();
+
 		int index = 0;
 		foreach ( var choice in choices )
 		{
@@ -50,11 +81,12 @@ public class Dialogue : GameResource
 				Log.Error( "DialogueChoiceNode: Empty choice provided." );
 				return;
 			}
-			
+
 			var _index = index;
 
 			var button = new Button( choice );
-			button.AddEventListener( "onclick", () => {
+			button.AddEventListener( "onclick", ( PanelEvent e ) =>
+			{
 				switch ( _index )
 				{
 					case 0:
@@ -76,16 +108,24 @@ public class Dialogue : GameResource
 						onChoose5();
 						break;
 				}
+
+				e.StopPropagation();
 			} );
 
-			DialogueManager.Instance.DialogueWindow.Panel.AddChild( button );
-			
+			DialogueManager.Instance.DialogueWindow.ChoicesPanel.AddChild( button );
+
 			index++;
 		}
-		
-		
 	}
-	
+
+	[ActionGraphNode( "clover.dialogue.end" )]
+	[Title( "End Dialogue" ), Group( "Dialogue" ), Icon( "chat" )]
+	public static void EndDialogue()
+	{
+		Log.Info( "EndDialogue" );
+		DialogueManager.Instance.DialogueWindow.End();
+	}
+
 	/*[ActionGraphNode( "clover.dialogue.quickcompare" )]
 	public static Task<bool> QuickCompare( int a, int b )
 	{
@@ -97,9 +137,9 @@ public class Dialogue : GameResource
 		{
 			return Task.FromResult( false );
 		}
-		
+
 	}*/
-	
+
 
 	public delegate void DialogueAction(
 		DialogueWindow window,

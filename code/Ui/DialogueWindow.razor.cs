@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Clover.Data;
 using Clover.Npc;
 using Clover.Player;
@@ -8,6 +9,8 @@ namespace Clover;
 
 public partial class DialogueWindow
 {
+	public Panel ChoicesPanel;
+
 	[Property] public Dialogue Dialogue { get; set; }
 
 	[Property] public Dictionary<string, object> Data { get; set; } = new();
@@ -37,7 +40,11 @@ public partial class DialogueWindow
 	private TimeSince _lastLetter;
 	// private bool _skipped;
 
+	public bool IsCurrentNodeChoice;
+
 	public Action OnDialogueEnd { get; set; }
+
+	public TaskCompletionSource DialogueNodeCompletedTaskSource { get; set; }
 
 
 	protected override void OnStart()
@@ -58,11 +65,27 @@ public partial class DialogueWindow
 
 	public void LoadDialogue( Dialogue dialogue )
 	{
-		Dialogue = dialogue;
+		/*Dialogue = dialogue;
 		CurrentNodeList = Dialogue.Nodes;
 		CurrentNodeIndex = 0;
 		CurrentNode.OnEnter?.Invoke( this, PlayerCharacter.Local, CurrentTargets, CurrentNode, null );
-		Read();
+		Read();*/
+
+		if ( dialogue == null )
+		{
+			Log.Error( "DialogueWindow LoadDialogue: No dialogue found" );
+			return;
+		}
+
+		Dialogue = dialogue;
+
+		if ( Dialogue.Tree == null )
+		{
+			Log.Error( "DialogueWindow LoadDialogue: No dialogue tree found" );
+			return;
+		}
+
+		Dialogue.Tree.Invoke( this, PlayerCharacter.Local, CurrentTargets, null, null );
 	}
 
 	[Pure]
@@ -178,7 +201,7 @@ public partial class DialogueWindow
 		}
 	}
 
-	/// <summary>
+	/*/// <summary>
 	///  Searches for a node with the given id recursively and sets it as the current node.
 	/// </summary>
 	/// <param name="id"></param>
@@ -186,40 +209,6 @@ public partial class DialogueWindow
 	[Icon( "search" )]
 	public void JumpToId( string id )
 	{
-		/*Dialogue.DialogueNode FindNode( List<Dialogue.DialogueNode> nodes )
-		{
-			foreach ( var node in nodes )
-			{
-				if ( node.Id == id )
-					return node;
-
-				if ( node.Choices.Count > 0 )
-				{
-					foreach ( var choice in node.Choices )
-					{
-						var found = FindNode( choice.Nodes );
-						if ( found != null )
-							return found;
-					}
-				}
-			}
-
-			return null;
-		}
-
-		var node = FindNode( Dialogue.Nodes );
-		if ( node != null )
-		{
-			CurrentNode?.OnExit?.Invoke( this, Data, null, null, CurrentNode, null );
-			CurrentNode = node;
-			CurrentNodeList = null;
-			CurrentNode.OnEnter?.Invoke( this, Data, null, null, CurrentNode, null );
-			Read();
-		}
-		else
-		{
-			Log.Warning( $"Could not find node with id {id}" );
-		}*/
 
 		( Dialogue.DialogueNode node, List<Dialogue.DialogueNode> list ) FindNode( List<Dialogue.DialogueNode> nodes )
 		{
@@ -264,9 +253,25 @@ public partial class DialogueWindow
 		{
 			Log.Warning( $"Could not find node with id {id}" );
 		}
-	}
+	}*/
 
 	public void Advance()
+	{
+		Log.Info( "Advancing dialogue" );
+		if ( DialogueNodeCompletedTaskSource != null )
+		{
+			Log.Info( "Completing task" );
+			DialogueNodeCompletedTaskSource.SetResult();
+			// DialogueNodeCompletedTaskSource = null;
+		}
+		else
+		{
+			Log.Warning( "No task completion found" );
+			End();
+		}
+	}
+
+	/*public void Advance()
 	{
 		if ( IsOnLastNode && CurrentNode.Choices.Count == 0 )
 		{
@@ -304,9 +309,9 @@ public partial class DialogueWindow
 		}
 
 		Log.Error( "Choices found" );
-	}
+	}*/
 
-	private void Read()
+	/*private void Read()
 	{
 		Log.Info( $"Reading {CurrentNode}" );
 		Text = "";
@@ -350,7 +355,7 @@ public partial class DialogueWindow
 
 		// _skipped = false;
 		// Panel.FlashClass( "noclick", 0.1f );
-	}
+	}*/
 
 	private string ParseVariables( string text )
 	{
@@ -448,7 +453,7 @@ public partial class DialogueWindow
 		e.StopPropagation();
 
 		// If we're still typing, finish the text
-		if ( Text.Length < _textTarget.Length )
+		if ( Text != null && _textTarget != null && Text.Length < _textTarget.Length )
 		{
 			Log.Info( "Skipping text" );
 			// _skipped = true;
@@ -457,19 +462,17 @@ public partial class DialogueWindow
 			return;
 		}
 
-		// if we're at the last node, close the window
-		if ( IsOnLastNode && CurrentNode.Choices.Count == 0 )
+		if ( IsCurrentNodeChoice )
 		{
-			Log.Info( "Closing window" );
-			End();
 			return;
 		}
 
 		Advance();
 	}
 
-	private void End()
+	public void End()
 	{
+		Log.Info( "Ending dialogue" );
 		Enabled = false;
 		ClearTargets();
 		CurrentNodeList = null;
@@ -479,7 +482,7 @@ public partial class DialogueWindow
 		OnDialogueEnd = null;
 	}
 
-	private void OnChoice( Dialogue.DialogueChoice choice )
+	/*private void OnChoice( Dialogue.DialogueChoice choice )
 	{
 		Log.Info( $"Selected {choice.Label}" );
 
@@ -519,10 +522,40 @@ public partial class DialogueWindow
 				Log.Error( "OnChoice2: No nodes found for choice" );
 			}
 		}
-	}
+	}*/
 
 	protected override int BuildHash()
 	{
 		return HashCode.Combine( Text );
+	}
+
+	private string GetSpeakerName( GameObject speaker )
+	{
+		if ( speaker.IsValid() )
+		{
+			if ( speaker.Components.TryGet<BaseNpc>( out var npc ) )
+			{
+				return npc.Name;
+			}
+			else if ( speaker.Components.TryGet<PlayerCharacter>( out var player ) )
+			{
+				return player.PlayerName;
+			}
+			else
+			{
+				return speaker.Name;
+			}
+		}
+
+		return "UNKNOWN";
+	}
+
+	public void DispatchText( GameObject speaker, string text )
+	{
+		Name = GetSpeakerName( speaker );
+		_textTarget = ParseVariables( text );
+		_textIndex = 0;
+		Text = "";
+		Log.Info( $"Dispatching text: {text}" );
 	}
 }

@@ -9,25 +9,10 @@
 			@Name
 		</div>
 		<div class="text">
-			@if ( CurrentNode != null )
-			{
-				@Text
-			}
-			else
-			{
-				@($"[ERROR: CurrentNode {CurrentNodeIndex} is null on dialogue {Dialogue}]")
-			}
+			@Text
 		</div>
-		@if ( CurrentNode != null && CurrentNode.Choices.Count > 0 )
-		{
-			<div class="choices">
-				@foreach ( var button in CurrentNode.Choices )
-				{
-					<button @onclick=@( ( PanelEvent e ) => { OnChoice( button ); e.StopPropagation(); } )>
-						@button.Label
-					</button>
-				}
-			</div>
-		}
+		<div class="choices" @ref=" ChoicesPanel">
+
+		</div>
 	</div>
 </root>
