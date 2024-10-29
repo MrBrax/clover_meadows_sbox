@@ -158,4 +158,18 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 			RecieveDecal( path, _decalData.ToRpc() );
 		}
 	}
+	
+	[ConCmd( "clover_delete_old_decals" )]
+	public static void DeleteOldDecals()
+	{
+		var decals = Game.ActiveScene.GetAllComponents<DecalItem>();
+		foreach ( var decal in decals )
+		{
+			if ( decal.DecalHash == null )
+			{
+				Log.Info( $"Deleting old decal: {decal.TexturePath}" );
+				// decal.Delete();
+			}
+		}
+	}
 }
