@@ -161,9 +161,10 @@ public partial class MainUi : IPlayerSaved, IWorldSaved
 			yield return new InputData( "Inventory", "Inventory" );
 			yield return new InputData( "Run", "Run" );
 			yield return new InputData( "Walk", "Walk" );
-			yield return new InputData( "DebugWindow", "Debug" );
 			yield return new InputData( "Chat", "Chat" );
 		}
+
+		yield return new InputData( "DebugWindow", "Debug" );
 	}
 
 	[ConVar( "clover_ui_show_inputs", Saved = true )]
