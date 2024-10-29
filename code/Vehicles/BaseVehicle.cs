@@ -90,10 +90,10 @@ public class BaseVehicle : Component, IInteract
 		GameObject.PlaySound( StartEngineSound );
 
 		_idleSoundHandle = GameObject.PlaySound( IdleSound );
-		_idleSoundHandle.Volume = 0;
+		if ( _idleSoundHandle.IsValid() ) _idleSoundHandle.Volume = 0;
 
 		_engineSoundHandle = GameObject.PlaySound( EngineSound );
-		_engineSoundHandle.Volume = 0;
+		if ( _engineSoundHandle.IsValid() ) _engineSoundHandle.Volume = 0;
 
 		_startEngineTime = 0;
 
@@ -419,17 +419,25 @@ public class BaseVehicle : Component, IInteract
 
 		if ( velocity < 2f )
 		{
-			_idleSoundHandle.Volume = _idleSoundHandle.Volume.LerpTo( IdleSound.Volume.FixedValue, Time.Delta * 2.0f );
-			_engineSoundHandle.Volume = _engineSoundHandle.Volume.LerpTo( 0, Time.Delta * 2.0f );
+			if ( _idleSoundHandle.IsValid() )
+				_idleSoundHandle.Volume =
+					_idleSoundHandle.Volume.LerpTo( IdleSound.Volume.FixedValue, Time.Delta * 2.0f );
+
+			if ( _engineSoundHandle.IsValid() )
+				_engineSoundHandle.Volume = _engineSoundHandle.Volume.LerpTo( 0, Time.Delta * 2.0f );
 		}
 		else
 		{
-			_idleSoundHandle.Volume = _idleSoundHandle.Volume.LerpTo( 0, Time.Delta * 2.0f );
-			_engineSoundHandle.Volume =
-				_engineSoundHandle.Volume.LerpTo( EngineSound.Volume.FixedValue, Time.Delta * 2.0f );
+			if ( _idleSoundHandle.IsValid() )
+				_idleSoundHandle.Volume = _idleSoundHandle.Volume.LerpTo( 0, Time.Delta * 2.0f );
+
+			if ( _engineSoundHandle.IsValid() )
+				_engineSoundHandle.Volume =
+					_engineSoundHandle.Volume.LerpTo( EngineSound.Volume.FixedValue, Time.Delta * 2.0f );
 		}
 
-		_engineSoundHandle.Pitch = MathX.Lerp( 0.5f, 1.5f, MathF.Abs( velocity / 500 ) );
+		if ( _engineSoundHandle.IsValid() )
+			_engineSoundHandle.Pitch = MathX.Lerp( 0.5f, 1.5f, MathF.Abs( velocity / 500 ) );
 	}
 
 	public Vector3 WishVelocity { get; private set; }
