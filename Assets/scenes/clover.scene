@@ -212,7 +212,7 @@
         {
           "__type": "Clover.Ui.InventorySelectUi",
           "__guid": "4ddc71fe-a16e-4ce2-9ea2-753adc4c6c6e",
-          "MyStringValue": "Hello World!"
+          "__enabled": false
         }
       ]
     },
