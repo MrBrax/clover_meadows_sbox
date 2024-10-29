@@ -2,6 +2,21 @@
   "__guid": "fb8f5a57-18bd-4eac-8caf-5576cc37bd81",
   "GameObjects": [
     {
+      "__guid": "8a1c1ac0-7a87-486c-b628-ce8434260dad",
+      "Flags": 0,
+      "Name": "Scene Information",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.SceneInformation",
+          "__guid": "1943a29d-7e1b-4d3c-a76f-10ecc1b2b6b8",
+          "Description": "",
+          "SceneTags": "",
+          "Title": "mainmenu"
+        }
+      ]
+    },
+    {
       "__guid": "a3e49cd1-e5e1-4f9c-a65d-0445dc943e4b",
       "Flags": 0,
       "Name": "Screen",
@@ -19,7 +34,7 @@
         },
         {
           "__type": "Clover.Ui.MainMenu",
-          "__guid": "89ba711e-1dd1-44a5-aa2a-9abfb3ebbdc4"
+          "__guid": "ac967635-868a-46a7-9425-9b2d198392b6"
         }
       ]
     },
@@ -183,6 +198,9 @@
     "ThreadedAnimation": true,
     "TimeScale": 1,
     "UseFixedUpdate": true,
+    "Metadata": {
+      "Title": "mainmenu"
+    },
     "NavMesh": {
       "Enabled": false,
       "IncludeStaticBodies": true,
@@ -196,9 +214,9 @@
       "IncludedBodies": ""
     }
   },
+  "ResourceVersion": 2,
   "Title": "mainmenu",
-  "Description": "",
-  "ResourceVersion": 1,
+  "Description": null,
   "__references": [],
-  "__version": 1
+  "__version": 2
 }
