@@ -433,6 +433,8 @@ public class ItemPlacer : Component, IWorldEvent
 
 		if ( !worldItem.CanPickup( Player ) ) return;
 
+		if ( !worldItem.ItemData.CanPlace ) return;
+
 		var tooFarAway = worldItem.WorldPosition.Distance( Player.WorldPosition ) > MaxStartMoveDistance;
 
 		if ( !tooFarAway )

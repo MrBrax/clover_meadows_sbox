@@ -82,6 +82,12 @@ public partial class InventoryUiEquip : IEquipChanged
 		// hardcode for now 
 		if ( item.Components.TryGet<CarriedEdible>( out var edible ) )
 		{
+			if ( !edible.EdibleData.IsValid() )
+			{
+				Log.Error( $"Edible data is invalid on {item}" );
+				return;
+			}
+
 			var actualItem = PersistentItem.Create( edible.EdibleData.GetIdentifier() );
 
 			Inventory.Container.AddItemToIndex( actualItem, targetSlot );

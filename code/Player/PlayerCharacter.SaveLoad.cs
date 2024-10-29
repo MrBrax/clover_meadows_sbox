@@ -11,7 +11,7 @@ namespace Clover.Player;
 public sealed partial class PlayerCharacter
 {
 	public static string SpawnPlayerId { get; set; }
-	
+
 	public string SaveFilePath => $"players/{PlayerId}.json";
 	public PlayerSaveData SaveData { get; set; }
 
@@ -44,8 +44,15 @@ public sealed partial class PlayerCharacter
 		SaveData.EquippedItems.Clear();
 		foreach ( var (slot, item) in Equips.EquippedItems )
 		{
-			var persistentItem = PersistentItem.Create( item );
-			SaveData.EquippedItems.Add( slot, persistentItem );
+			try
+			{
+				var persistentItem = PersistentItem.Create( item );
+				SaveData.EquippedItems.Add( slot, persistentItem );
+			}
+			catch ( Exception e )
+			{
+				Log.Error( $"Failed to save equipped item: {e.Message}" );
+			}
 		}
 
 		Log.Info( $"Saved {SaveData.EquippedItems.Count} equipped items" );
@@ -104,7 +111,7 @@ public sealed partial class PlayerCharacter
 				return;
 			}*/
 			PlayerId = SpawnPlayerId;
-			
+
 			if ( string.IsNullOrEmpty( PlayerId ) )
 			{
 				throw new Exception( "PlayerId is null" );
@@ -123,7 +130,7 @@ public sealed partial class PlayerCharacter
 		PlayerName = SaveData.Name;
 
 		CloverBalanceController.SetClovers( SaveData.Clovers );
-		
+
 		SaveData.LastLoad = DateTime.Now;
 
 		// limit inventory slots if for some reason it exceeds max items

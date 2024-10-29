@@ -24,7 +24,7 @@ public class CarriedEdible : BaseCarriable
 	public override void OnSave( PersistentItem item )
 	{
 		base.OnSave( item );
-		item.SetArbitraryData( "EdibleData", EdibleData.GetIdentifier() );
+		item.SetArbitraryData( "EdibleData", EdibleData?.GetIdentifier() );
 	}
 
 	public override void OnUnequip()
