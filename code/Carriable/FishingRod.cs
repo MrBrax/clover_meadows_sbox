@@ -477,7 +477,7 @@ public class FishingRod : BaseCarriable
 		var tween = TweenManager.CreateTween();
 		tween.AddPosition( Bobber.GameObject, reelPosition, 0.4f ).SetEasing( Sandbox.Utility.Easing.QuadraticOut );
 
-		_reelSound.Volume = 1f;
+		if ( _reelSound.IsValid() ) _reelSound.Volume = 1f;
 		// _reelSound.Pitch = 2f;
 
 		NextUse = 0.5f;
