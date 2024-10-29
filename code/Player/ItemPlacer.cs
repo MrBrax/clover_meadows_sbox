@@ -193,6 +193,11 @@ public class ItemPlacer : Component, IWorldEvent
 				_colliderSize = boxCollider.Scale;
 				_colliderCenter = boxCollider.Center;
 			}
+			else if ( collider is HullCollider hullCollider )
+			{
+				_colliderSize = hullCollider.BoxSize;
+				_colliderCenter = hullCollider.Center;
+			}
 
 			collider.Destroy();
 		}
