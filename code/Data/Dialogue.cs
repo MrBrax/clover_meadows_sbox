@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Clover.Components;
 using Clover.Player;
+using Sandbox.UI;
 
 namespace Clover.Data;
 
@@ -13,6 +16,90 @@ public class Dialogue : GameResource
 		[Property] public DialogueNode Node { get; set; }
 		[Property] public DialogueChoice Choice { get; set; }
 	}*/
+	
+	public DialogueAction Tree { get; set; } = null;
+	
+	[ActionGraphNode( "clover.dialogue.textnode" )]
+	[Title( "Dialogue Text Node" ), Group( "Dialogue" ), Icon( "chat" )]
+	public static async Task DialogueTextNode( GameObject speaker, [TextArea] string text )
+	{
+		
+	}
+	
+	[ActionGraphNode( "clover.dialogue.choicenode" )]
+	[Title( "Dialogue Choice Node" ), Group( "Dialogue" ), Icon( "chat" )]
+	public static async Task DialogueChoiceNode( GameObject speaker, [TextArea] string text, string[] choices, Action onChoose0, Action onChoose1, Action onChoose2, Action onChoose3, Action onChoose4, Action onChoose5 )
+	{
+		if ( choices.Length == 0 )
+		{
+			Log.Error( "DialogueChoiceNode: No choices provided." );
+			return;
+		}
+		
+		if ( choices.Length > 6 )
+		{
+			Log.Error( "DialogueChoiceNode: Too many choices provided." );
+			return;
+		}
+		
+		int index = 0;
+		foreach ( var choice in choices )
+		{
+			if ( string.IsNullOrEmpty( choice ) )
+			{
+				Log.Error( "DialogueChoiceNode: Empty choice provided." );
+				return;
+			}
+			
+			var _index = index;
+
+			var button = new Button( choice );
+			button.AddEventListener( "onclick", () => {
+				switch ( _index )
+				{
+					case 0:
+						onChoose0();
+						break;
+					case 1:
+						onChoose1();
+						break;
+					case 2:
+						onChoose2();
+						break;
+					case 3:
+						onChoose3();
+						break;
+					case 4:
+						onChoose4();
+						break;
+					case 5:
+						onChoose5();
+						break;
+				}
+			} );
+
+			DialogueManager.Instance.DialogueWindow.Panel.AddChild( button );
+			
+			index++;
+		}
+		
+		
+	}
+	
+	/*[ActionGraphNode( "clover.dialogue.quickcompare" )]
+	public static Task<bool> QuickCompare( int a, int b )
+	{
+		if ( a == b )
+		{
+			return Task.FromResult( true );
+		}
+		else
+		{
+			return Task.FromResult( false );
+		}
+		
+	}*/
+	
 
 	public delegate void DialogueAction(
 		DialogueWindow window,
