@@ -14,6 +14,8 @@ public class DialogueNodeEditor  : ControlWidget
 
 		PaintBackground = false;
 
+		var sheet = new ControlSheet();
+
 		// Serialize the property as a MyClass object
 		var serializedObject = property.GetValue<Dialogue.DialogueNode>().GetSerialized();
 		if ( serializedObject is null )
@@ -22,7 +24,14 @@ public class DialogueNodeEditor  : ControlWidget
 			return;
 		}
 
-		serializedObject.TryGetProperty( nameof(Dialogue.DialogueNode.Id), out var id );
+		foreach ( var prop in serializedObject )
+		{
+			sheet.AddRow( prop, 0 );
+		}
+		
+		Layout.Add( sheet );
+
+		/*serializedObject.TryGetProperty( nameof(Dialogue.DialogueNode.Id), out var id );
 		serializedObject.TryGetProperty( nameof(Dialogue.DialogueNode.Text), out var text );
 		serializedObject.TryGetProperty( nameof(Dialogue.DialogueNode.Choices), out var choices );
 		serializedObject.TryGetProperty( nameof(Dialogue.DialogueNode.OnEnter), out var onEnter );
@@ -68,7 +77,7 @@ public class DialogueNodeEditor  : ControlWidget
 		Layout.Add( new TextAreaControlWidget( text ) { HorizontalSizeMode = SizeMode.Expand } );
 		
 		Layout.Add( new Label( "Choices" ) { HorizontalSizeMode = SizeMode.Default } );
-		Layout.Add( new ListControlWidget( choices ) { HorizontalSizeMode = SizeMode.Expand } );
+		Layout.Add( new ListControlWidget( choices ) { HorizontalSizeMode = SizeMode.Expand } );*/
 		
 	}
 }
@@ -91,8 +100,17 @@ public class DialogueChoiceEditor : ControlWidget
 			Log.Error( "Failed to get serialized object" );
 			return;
 		}
+		
+		var sheet = new ControlSheet();
+		
+		foreach ( var prop in serializedObject )
+		{
+			sheet.AddRow( prop, 0 );
+		}
+		
+		Layout.Add( sheet );
 
-		serializedObject.TryGetProperty( nameof(Dialogue.DialogueChoice.Label), out var label );
+		/*serializedObject.TryGetProperty( nameof(Dialogue.DialogueChoice.Label), out var label );
 		serializedObject.TryGetProperty( nameof(Dialogue.DialogueChoice.OnSelect), out var onSelect );
 		serializedObject.TryGetProperty( nameof(Dialogue.DialogueChoice.JumpToId), out var jumpToId );
 		serializedObject.TryGetProperty( nameof(Dialogue.DialogueChoice.Nodes), out var nodes );
@@ -117,6 +135,7 @@ public class DialogueChoiceEditor : ControlWidget
 		
 		Layout.Add( new Label( "Nodes" ) { HorizontalSizeMode = SizeMode.Default } );
 		Layout.Add( new ListControlWidget( nodes ) { HorizontalSizeMode = SizeMode.Expand } );
+		*/
 		
 
 		
