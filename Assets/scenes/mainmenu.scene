@@ -68,16 +68,18 @@
           "__type": "Sandbox.DepthOfField",
           "__guid": "95dcb510-96b4-4379-9f5a-64264b355f41",
           "BackBlur": true,
-          "BlurSize": 97.65,
+          "BlurSize": 9.06,
           "FocalDistance": 268.95,
-          "FrontBlur": false
+          "FocusRange": 500,
+          "FrontBlur": false,
+          "QualityLevel": "High"
         }
       ]
     },
     {
       "__guid": "a5c036f1-cec4-4d93-9392-4b67336a9b20",
       "Flags": 0,
-      "Name": "Object",
+      "Name": "Sound",
       "Enabled": true,
       "Components": [
         {
@@ -167,7 +169,7 @@
     {
       "__guid": "a84f4e0c-c3ff-42d7-a120-2f1fd6376f06",
       "Flags": 0,
-      "Name": "Object",
+      "Name": "World",
       "Position": "-2733.748,2620.808,0.0003132075",
       "Rotation": "0,-0,-0.7181254,0.6959137",
       "Enabled": true,
@@ -177,6 +179,78 @@
           "__guid": "ecbf496a-f5b8-4677-921a-8ae46b73ab55",
           "BodyGroups": 18446744073709551615,
           "Model": "models/island/world.vmdl",
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        }
+      ]
+    },
+    {
+      "__guid": "331ae95d-92d5-46b0-acfb-ef2bb151673c",
+      "Flags": 0,
+      "Name": "tree_shared",
+      "Position": "129.5378,-36.03036,0.02222098",
+      "Rotation": "0,0,-0.1305262,0.9914449",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "8013f482-609c-4b53-8510-5b83af2703a1",
+          "BodyGroups": 18446744073709551615,
+          "Model": "items/trees/tree_shared/tree_shared.vmdl",
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        }
+      ]
+    },
+    {
+      "__guid": "ba4a6d88-f1b7-4bc5-8e9d-6dc2d25635dd",
+      "Flags": 0,
+      "Name": "tree_shared (1)",
+      "Position": "74.41825,-131.6407,0.02223403",
+      "Rotation": "0,0,-0.5,0.8660256",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "d4940d9f-9377-4aa0-ac20-34ff2fa7f19e",
+          "BodyGroups": 18446744073709551615,
+          "Model": "items/trees/tree_shared/tree_shared.vmdl",
+          "RenderOptions": {
+            "GameLayer": true,
+            "OverlayLayer": false,
+            "BloomLayer": false,
+            "AfterUILayer": false
+          },
+          "RenderType": "On",
+          "Tint": "1,1,1,1"
+        }
+      ]
+    },
+    {
+      "__guid": "333b1b92-6712-4f26-a9d8-7f90d7a664ed",
+      "Flags": 0,
+      "Name": "vdog",
+      "Position": "79.86416,-134.3554,-1.263237",
+      "Rotation": "0.04995021,0.1205905,0.9159757,0.3794096",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ModelRenderer",
+          "__guid": "8721a0f2-7c29-49ce-98cd-1bb31744fb1e",
+          "BodyGroups": 18446744073709551615,
+          "Model": "models/npc/vdog/vdog.vmdl",
           "RenderOptions": {
             "GameLayer": true,
             "OverlayLayer": false,
