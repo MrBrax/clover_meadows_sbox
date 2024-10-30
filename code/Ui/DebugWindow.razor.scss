@@ -2,57 +2,62 @@
     position: absolute;
     top: 10px;
     right: 10px;
-	bottom: 10px;
+    bottom: 10px;
     background-color: rgba(0, 0, 0, 0.5);
-	backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     padding: 20px;
     color: white;
-	
-	pointer-events: all;
+
+    pointer-events: all;
 
     flex-direction: column;
     gap: 10px;
-	
-	min-width: 300px;
+
+    min-width: 300px;
 
     h1 {
         font-size: 30px;
         font-weight: bold;
-		flex-shrink: 0;
+        flex-shrink: 0;
     }
-	
-	h2 {
-		font-size: 25px;
-		font-weight: bold;
-		flex-shrink: 0;
-	}
-	
-	.lists {
-		gap: 10px;
-	}
-	
-	section {
-		flex-direction: column;
-		gap: 10px;
-		flex-shrink: 0;
-		overflow-y: scroll;
-	}
-	
-	button {
-		flex-shrink: 0;
-		background-color: rgba(0, 0, 0, 0.6);
-		color: white;
-		padding: 10px;
-		cursor: pointer;
-		&:hover {
-			background-color: rgba(0, 0, 0, 0.8);
-		}
-		gap: 10px;
-		align-items: center;
-		align-content: center;
-		img {
-			width: 30px;
-			height: 30px;
-		}
-	}
+
+    h2 {
+        font-size: 25px;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+    .lists {
+        gap: 10px;
+    }
+
+    section {
+        flex-direction: column;
+        gap: 10px;
+        flex-shrink: 0;
+        overflow-y: scroll;
+    }
+
+    button {
+        font-family: Itim;
+        font-size: 20px;
+        flex-shrink: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        gap: 10px;
+        align-items: center;
+        align-content: center;
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
 }
