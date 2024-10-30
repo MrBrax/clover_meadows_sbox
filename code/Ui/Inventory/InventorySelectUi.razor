@@ -18,7 +18,7 @@
 			{
 				@if ( slot.HasSlot )
 				{
-					<div class="select-item @( SelectedItemIndexes.Contains( slot.Index ) ? "selected" : "" )" @onclick=@( () => ToggleItem( slot.Index ) )>
+					<div class="select-item @( _selectedItemIndexes.Contains( slot.Index ) ? "selected" : "" )" @onclick=@( () => ToggleItem( slot.Index ) )>
 						<Image class="icon" Texture=@slot.Slot.GetIconTexture()/>
 						<div class="name">@slot.Slot.GetName()</div>
 					</div>
@@ -26,14 +26,14 @@
 			}
 		</div>
 		<div class="buttons">
-			<button class="clover-button @( SelectedItemIndexes.Count == 0 ? "disabled" : "" )" @onclick=@Select>
+			<button class="clover-button @( _selectedItemIndexes.Count == 0 ? "disabled" : "" )" @onclick=@Select>
 				Select
 			</button>
 			<button class="clover-button" @onclick=@Cancel>
 				Cancel
 			</button>
 			<div>
-				@( $"{SelectedItemIndexes.Count} / {MaxItems} selected" )
+				@( $"{_selectedItemIndexes.Count} / {MaxItems} selected" )
 			</div>
 		</div>
 	</div>

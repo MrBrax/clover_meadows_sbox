@@ -2,7 +2,7 @@
   "Tree": {
     "__version": 8,
     "__guid": "4d46a6e4-9c11-4d03-b576-a6133d996dde",
-    "__changeId": 180,
+    "__changeId": 480,
     "UserData": {
       "Title": "Tree",
       "ReferencedComponentTypes": []
@@ -11,6 +11,10 @@
       {
         "Name": "npc",
         "Type": "Sandbox.GameObject"
+      },
+      {
+        "Name": "player",
+        "Type": "Clover.Player.PlayerCharacter"
       }
     ],
     "Nodes": [
@@ -18,14 +22,7 @@
         "Id": 0,
         "Type": "input",
         "UserData": {
-          "Position": "-132,-48"
-        }
-      },
-      {
-        "Id": 1,
-        "Type": "clover.dialogue.textnode",
-        "UserData": {
-          "Position": "360,-24"
+          "Position": "-264,-48"
         }
       },
       {
@@ -39,21 +36,14 @@
         "Id": 17,
         "Type": "clover.dialogue.end",
         "UserData": {
-          "Position": "1680,204"
-        }
-      },
-      {
-        "Id": 22,
-        "Type": "clover.dialogue.textnode",
-        "UserData": {
-          "Position": "636,60"
+          "Position": "2676,-24"
         }
       },
       {
         "Id": 49,
         "Type": "clover.dialogue.choicenode",
         "UserData": {
-          "Position": "864,180"
+          "Position": "444,-60"
         }
       },
       {
@@ -67,47 +57,200 @@
         }
       },
       {
-        "Id": 82,
-        "Type": "clover.dialogue.textnode",
-        "UserData": {
-          "Position": "1380,204"
-        }
-      },
-      {
-        "Id": 95,
-        "Type": "clover.dialogue.textnode",
-        "UserData": {
-          "Position": "1380,288"
-        }
-      },
-      {
         "Id": 99,
         "Type": "clover.dialogue.end",
         "UserData": {
-          "Position": "1680,288"
+          "Position": "720,48"
+        }
+      },
+      {
+        "Id": 128,
+        "Type": "clover.dialogue.itemselectnode",
+        "UserData": {
+          "Position": "720,-48"
+        }
+      },
+      {
+        "Id": 179,
+        "Type": "property",
+        "Properties": {
+          "_name": "Inventory",
+          "_type": "Clover.Player.PlayerCharacter"
+        },
+        "UserData": {
+          "Position": "156,-180"
+        }
+      },
+      {
+        "Id": 180,
+        "Type": "property",
+        "Properties": {
+          "_name": "Container",
+          "_type": "Clover.Inventory.Inventory"
+        },
+        "UserData": {
+          "Position": "444,-180"
+        }
+      },
+      {
+        "Id": 184,
+        "Type": "clover.dialogue.inventoryindexestoslots",
+        "UserData": {
+          "Position": "1344,-108"
+        }
+      },
+      {
+        "Id": 187,
+        "Type": "clover.dialogue.getitemssellprice.slot",
+        "UserData": {
+          "Position": "1608,-108"
+        }
+      },
+      {
+        "Id": 188,
+        "Type": "var",
+        "Properties": {
+          "_var": "player"
+        },
+        "UserData": {
+          "Position": "-144,-24"
+        }
+      },
+      {
+        "Id": 189,
+        "Type": "var",
+        "Properties": {
+          "_var": "player"
+        },
+        "UserData": {
+          "Position": "1344,-144"
+        }
+      },
+      {
+        "Id": 190,
+        "Type": "property",
+        "Properties": {
+          "_name": "CloverBalanceController",
+          "_type": "Clover.Player.PlayerCharacter"
+        },
+        "UserData": {
+          "Position": "1488,-144"
+        }
+      },
+      {
+        "Id": 191,
+        "Type": "call",
+        "Properties": {
+          "_isStatic": false,
+          "_name": "AddClover",
+          "_type": "Clover.Player.Clover.CloverBalanceController"
+        },
+        "UserData": {
+          "Position": "2700,-180"
+        }
+      },
+      {
+        "Id": 192,
+        "Type": "clover.dialogue.choicenode",
+        "UserData": {
+          "Position": "2364,-132"
+        }
+      },
+      {
+        "Id": 252,
+        "Type": "clover.dialogue.setdata",
+        "UserData": {
+          "Position": "1920,-132"
+        }
+      },
+      {
+        "Id": 264,
+        "Type": "nop",
+        "UserData": {
+          "Position": "2604,192"
+        }
+      },
+      {
+        "Id": 265,
+        "Type": "clover.dialogue.textnode",
+        "UserData": {
+          "Position": "3252,-180"
+        }
+      },
+      {
+        "Id": 305,
+        "Type": "clover.dialogue.end",
+        "UserData": {
+          "Position": "3480,-180"
+        }
+      },
+      {
+        "Id": 306,
+        "Type": "nop",
+        "UserData": {
+          "Position": "1824,-276"
+        }
+      },
+      {
+        "Id": 307,
+        "Type": "foreach",
+        "UserData": {
+          "Position": "3048,-312"
+        }
+      },
+      {
+        "Id": 308,
+        "Type": "call",
+        "Properties": {
+          "_isStatic": false,
+          "_name": "TakeOneOrDelete",
+          "_type": "Clover.Inventory.InventorySlot\u00601"
+        },
+        "UserData": {
+          "Position": "3228,-288"
+        }
+      },
+      {
+        "Id": 310,
+        "Type": "property",
+        "ParentId": 128,
+        "Properties": {
+          "_name": "Length",
+          "_type": "System.Array"
+        }
+      },
+      {
+        "Id": 311,
+        "Type": "op.greaterthan",
+        "UserData": {
+          "Position": "960,0"
+        }
+      },
+      {
+        "Id": 313,
+        "Type": "if",
+        "UserData": {
+          "Position": "1044,-36"
+        }
+      },
+      {
+        "Id": 314,
+        "Type": "clover.dialogue.textnode",
+        "UserData": {
+          "Position": "1320,108"
+        }
+      },
+      {
+        "Id": 315,
+        "Type": "clover.dialogue.end",
+        "UserData": {
+          "Position": "1548,108"
         }
       }
     ],
     "Links": [
       {
-        "SrcId": 77,
-        "SrcName": "_signal",
-        "DstId": 1,
-        "DstName": "_signal"
-      },
-      {
-        "VarName": "npc",
-        "DstId": 1,
-        "DstName": "speaker"
-      },
-      {
-        "Id": 127,
-        "Value": "hello world",
-        "DstId": 1,
-        "DstName": "text"
-      },
-      {
-        "Id": 128,
+        "Id": 116,
         "Value": 0,
         "DstId": 2,
         "DstName": "index"
@@ -119,54 +262,30 @@
         "DstName": "list"
       },
       {
-        "SrcId": 82,
-        "SrcName": "_signal",
+        "SrcId": 192,
+        "SrcName": "onChoose1",
         "DstId": 17,
         "DstName": "_signal"
       },
       {
-        "SrcId": 1,
-        "SrcName": "_signal",
-        "DstId": 22,
-        "DstName": "_signal"
-      },
-      {
-        "VarName": "npc",
-        "DstId": 22,
-        "DstName": "speaker"
-      },
-      {
-        "Id": 130,
-        "Value": "asdf asdf",
-        "DstId": 22,
-        "DstName": "text"
-      },
-      {
-        "SrcId": 22,
+        "SrcId": 77,
         "SrcName": "_signal",
         "DstId": 49,
         "DstName": "_signal"
       },
       {
-        "Id": 131,
-        "Value": "choice 1",
+        "Id": 173,
+        "Value": "Yeah",
         "DstId": 49,
         "DstName": "choices",
         "DstIndex": 0
       },
       {
-        "Id": 132,
-        "Value": "choice 2",
+        "Id": 176,
+        "Value": "Nah",
         "DstId": 49,
         "DstName": "choices",
         "DstIndex": 1
-      },
-      {
-        "Id": 133,
-        "Value": "restart",
-        "DstId": 49,
-        "DstName": "choices",
-        "DstIndex": 2
       },
       {
         "VarName": "npc",
@@ -174,13 +293,13 @@
         "DstName": "speaker"
       },
       {
-        "Id": 135,
-        "Value": "what choice",
+        "Id": 169,
+        "Value": "You want to sell some items?",
         "DstId": 49,
         "DstName": "text"
       },
       {
-        "SrcId": 0,
+        "SrcId": 188,
         "SrcName": "_signal",
         "DstId": 77,
         "DstName": "_signal"
@@ -193,42 +312,259 @@
       },
       {
         "SrcId": 49,
-        "SrcName": "onChoose0",
-        "DstId": 82,
+        "SrcName": "onChoose1",
+        "DstId": 99,
         "DstName": "_signal"
-      },
-      {
-        "VarName": "npc",
-        "DstId": 82,
-        "DstName": "speaker"
-      },
-      {
-        "Id": 137,
-        "Value": "you chose 1",
-        "DstId": 82,
-        "DstName": "text"
       },
       {
         "SrcId": 49,
-        "SrcName": "onChoose1",
-        "DstId": 95,
+        "SrcName": "onChoose0",
+        "DstId": 128,
+        "DstName": "_signal"
+      },
+      {
+        "Id": 183,
+        "Value": 5,
+        "DstId": 128,
+        "DstName": "maxItems"
+      },
+      {
+        "SrcId": 0,
+        "SrcName": "player",
+        "DstId": 179,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 179,
+        "SrcName": "_result",
+        "DstId": 180,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 313,
+        "SrcName": "true",
+        "DstId": 184,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 180,
+        "SrcName": "_result",
+        "DstId": 184,
+        "DstName": "container"
+      },
+      {
+        "SrcId": 128,
+        "SrcName": "_result",
+        "DstId": 184,
+        "DstName": "indexes"
+      },
+      {
+        "SrcId": 184,
+        "SrcName": "_signal",
+        "DstId": 187,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 184,
+        "SrcName": "_result",
+        "DstId": 187,
+        "DstName": "slots"
+      },
+      {
+        "SrcId": 0,
+        "SrcName": "_signal",
+        "DstId": 188,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 0,
+        "SrcName": "player",
+        "DstId": 188,
+        "DstName": "_value"
+      },
+      {
+        "SrcId": 189,
+        "SrcName": "_result",
+        "DstId": 190,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 192,
+        "SrcName": "onChoose0",
+        "DstId": 191,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 190,
+        "SrcName": "_result",
+        "DstId": 191,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 264,
+        "SrcName": "out",
+        "DstId": 191,
+        "DstName": "addAmount"
+      },
+      {
+        "SrcId": 252,
+        "SrcName": "_signal",
+        "DstId": 192,
+        "DstName": "_signal"
+      },
+      {
+        "Id": 196,
+        "Value": "Yeah",
+        "DstId": 192,
+        "DstName": "choices",
+        "DstIndex": 0
+      },
+      {
+        "Id": 197,
+        "Value": "Nah",
+        "DstId": 192,
+        "DstName": "choices",
+        "DstIndex": 1
+      },
+      {
+        "VarName": "npc",
+        "DstId": 192,
+        "DstName": "speaker"
+      },
+      {
+        "Id": 251,
+        "Value": "Do you want to sell that for {{TotalPrice}}?",
+        "DstId": 192,
+        "DstName": "text"
+      },
+      {
+        "SrcId": 187,
+        "SrcName": "_signal",
+        "DstId": 252,
+        "DstName": "_signal"
+      },
+      {
+        "Id": 262,
+        "Value": "TotalPrice",
+        "DstId": 252,
+        "DstName": "key"
+      },
+      {
+        "SrcId": 187,
+        "SrcName": "_result",
+        "DstId": 252,
+        "DstName": "value"
+      },
+      {
+        "SrcId": 187,
+        "SrcName": "_result",
+        "DstId": 264,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 307,
+        "SrcName": "_signal",
+        "DstId": 265,
         "DstName": "_signal"
       },
       {
         "VarName": "npc",
-        "DstId": 95,
+        "DstId": 265,
         "DstName": "speaker"
       },
       {
-        "Id": 143,
-        "Value": "you chose 2",
-        "DstId": 95,
+        "Id": 304,
+        "Value": "Thank you, come back any time!",
+        "DstId": 265,
         "DstName": "text"
       },
       {
-        "SrcId": 95,
+        "SrcId": 265,
         "SrcName": "_signal",
-        "DstId": 99,
+        "DstId": 305,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 184,
+        "SrcName": "_result",
+        "DstId": 306,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 191,
+        "SrcName": "_signal",
+        "DstId": 307,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 306,
+        "SrcName": "out",
+        "DstId": 307,
+        "DstName": "enumerable"
+      },
+      {
+        "SrcId": 307,
+        "SrcName": "body",
+        "DstId": 308,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 307,
+        "SrcName": "body.value",
+        "DstId": 308,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 128,
+        "SrcName": "_result",
+        "DstId": 310,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 310,
+        "SrcName": "_result",
+        "DstId": 311,
+        "DstName": "a"
+      },
+      {
+        "Id": 312,
+        "Value": 0,
+        "DstId": 311,
+        "DstName": "b"
+      },
+      {
+        "SrcId": 128,
+        "SrcName": "_signal",
+        "DstId": 313,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 311,
+        "SrcName": "_result",
+        "DstId": 313,
+        "DstName": "condition"
+      },
+      {
+        "SrcId": 313,
+        "SrcName": "false",
+        "DstId": 314,
+        "DstName": "_signal"
+      },
+      {
+        "VarName": "npc",
+        "DstId": 314,
+        "DstName": "speaker"
+      },
+      {
+        "Id": 356,
+        "Value": "Come back if you\u0027ve changed your mind.",
+        "DstId": 314,
+        "DstName": "text"
+      },
+      {
+        "SrcId": 314,
+        "SrcName": "_signal",
+        "DstId": 315,
         "DstName": "_signal"
       }
     ]

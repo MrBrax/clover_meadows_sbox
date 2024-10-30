@@ -32,17 +32,14 @@
           "ZIndex": 100
         },
         {
-          "__type": "Clover.DialogueWindow",
-          "__guid": "e4381c2f-796e-44b0-81a2-d666d662876e",
-          "__enabled": false,
-          "Actions": {},
-          "CurrentNodeList": [],
-          "CurrentTargets": [],
-          "Data": {}
-        },
-        {
           "__type": "Clover.Components.DialogueManager",
-          "__guid": "b67517c1-1ce5-4afe-bfc5-0a00e6697212"
+          "__guid": "b67517c1-1ce5-4afe-bfc5-0a00e6697212",
+          "DialogueWindow": {
+            "_type": "component",
+            "component_id": "93049725-79c4-48d3-82f1-a2f0575434ff",
+            "go": "d500dd67-6bfc-481e-8fa0-8337c45a60e0",
+            "component_type": "DialogueWindow"
+          }
         }
       ]
     },
@@ -200,6 +197,15 @@
         {
           "__type": "Clover.Chat",
           "__guid": "17147b21-9928-4c82-bf51-23e01e520f34"
+        },
+        {
+          "__type": "Clover.DialogueWindow",
+          "__guid": "93049725-79c4-48d3-82f1-a2f0575434ff",
+          "__enabled": false,
+          "Actions": {},
+          "CurrentNodeList": [],
+          "CurrentTargets": [],
+          "Data": {}
         },
         {
           "__type": "Clover.Ui.PaintUi",

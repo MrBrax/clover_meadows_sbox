@@ -9,7 +9,7 @@ namespace Clover.Ui;
 public partial class InventorySelectUi
 {
 	private InventoryContainer Inventory => PlayerCharacter.Local?.Inventory.Container;
-	private HashSet<int> SelectedItemIndexes = new();
+	private readonly HashSet<int> _selectedItemIndexes = new();
 	public int MaxItems { get; set; } = 1;
 
 	public delegate bool CanSelectItemDelegate( InventorySlot<PersistentItem> slot );
@@ -26,6 +26,7 @@ public partial class InventorySelectUi
 
 	public async Task<HashSet<int>> SelectItems( int maxItems, CanSelectItemDelegate canSelectItem )
 	{
+		Log.Info( $"SelectItems setup: {maxItems}" );
 		_selectTaskCompletionSource = new TaskCompletionSource<HashSet<int>>();
 		Open( maxItems, canSelectItem, OnSelectTask, OnCancelTask );
 		return await _selectTaskCompletionSource.Task;
@@ -38,7 +39,7 @@ public partial class InventorySelectUi
 
 	private void OnCancelTask()
 	{
-		_selectTaskCompletionSource.SetResult( null );
+		_selectTaskCompletionSource.SetResult( new HashSet<int>() ); // TODO: null doesn't play nice with actiongraph
 	}
 
 	private void ToggleItem( int index )
@@ -49,18 +50,18 @@ public partial class InventorySelectUi
 			return;
 		}
 
-		if ( SelectedItemIndexes.Contains( index ) )
+		if ( _selectedItemIndexes.Contains( index ) )
 		{
-			SelectedItemIndexes.Remove( index );
+			_selectedItemIndexes.Remove( index );
 			return;
 		}
 
-		if ( SelectedItemIndexes.Count >= MaxItems )
+		if ( _selectedItemIndexes.Count >= MaxItems )
 		{
 			if ( MaxItems == 1 )
 			{
-				SelectedItemIndexes.Clear();
-				SelectedItemIndexes.Add( index );
+				_selectedItemIndexes.Clear();
+				_selectedItemIndexes.Add( index );
 			}
 			else
 			{
@@ -70,21 +71,21 @@ public partial class InventorySelectUi
 			return;
 		}
 
-		if ( !SelectedItemIndexes.Add( index ) )
+		if ( !_selectedItemIndexes.Add( index ) )
 		{
-			SelectedItemIndexes.Remove( index );
+			_selectedItemIndexes.Remove( index );
 		}
 	}
 
 	private void Select()
 	{
-		if ( SelectedItemIndexes.Count == 0 )
+		if ( _selectedItemIndexes.Count == 0 )
 		{
 			PlayerCharacter.Local.Notify( Notifications.NotificationType.Error, "You must select at least one item" );
 			return;
 		}
 
-		OnSelect?.Invoke( SelectedItemIndexes );
+		OnSelect?.Invoke( _selectedItemIndexes );
 		ResetSelection();
 		Enabled = false;
 	}
@@ -98,19 +99,22 @@ public partial class InventorySelectUi
 
 	private void ResetSelection()
 	{
-		SelectedItemIndexes.Clear();
+		_selectedItemIndexes.Clear();
 		OnSelect = null;
 		OnCancel = null;
 	}
 
-	public async void Open( int maxItems, CanSelectItemDelegate canSelectItem, Action<HashSet<int>> onSelect,
+	private void Open( int maxItems, CanSelectItemDelegate canSelectItem, Action<HashSet<int>> onSelect,
 		Action onCancel )
 	{
+		Log.Info( $"Opening inventory select ui: {maxItems}" );
+		_selectedItemIndexes.Clear();
+		Enabled = true;
 		MaxItems = maxItems;
 		CanSelectItem = canSelectItem;
 		OnSelect = onSelect;
 		OnCancel = onCancel;
-		await Task.Delay( 1 );
+		// await Task.Delay( 1 );
 		StateHasChanged();
 	}
 
@@ -118,5 +122,5 @@ public partial class InventorySelectUi
 	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
 	/// </summary>
 	protected override int BuildHash() =>
-		System.HashCode.Combine( MaxItems, CanSelectItem, OnSelect, OnCancel, SelectedItemIndexes );
+		HashCode.Combine( Enabled, MaxItems, CanSelectItem, OnSelect, OnCancel, _selectedItemIndexes );
 }

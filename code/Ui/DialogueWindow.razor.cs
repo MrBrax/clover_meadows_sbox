@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Clover.Data;
 using Clover.Npc;
@@ -140,6 +141,33 @@ public partial class DialogueWindow
 		}
 
 		return false;
+	}
+
+	[Pure]
+	[Icon( "description" )]
+	public T GetData<T>( string key )
+	{
+		var obj = Data.GetValueOrDefault( key );
+
+		if ( obj == null )
+		{
+			Log.Warning( $"Could not find key {key}" );
+			return default;
+		}
+
+		// i don't even know why this started happening but apparently it sometimes doesn't need to deserialize
+		if ( obj is T t )
+		{
+			return t;
+		}
+
+		if ( obj is not JsonElement jsonElement )
+		{
+			Log.Error( $"Arbitrary data {key} on {this} is not a JsonElement: {obj} ({obj.GetType()})" );
+			return default;
+		}
+
+		return JsonSerializer.Deserialize<T>( jsonElement.GetRawText(), GameManager.JsonOptions );
 	}
 
 	[Pure]

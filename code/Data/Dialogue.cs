@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Clover.Components;
+using Clover.Inventory;
+using Clover.Persistence;
 using Clover.Player;
+using Clover.Ui;
+using Clover.WorldBuilder;
+using Sandbox.Diagnostics;
 using Sandbox.UI;
 
 namespace Clover.Data;
@@ -71,7 +76,15 @@ public class Dialogue : GameResource
 		DialogueManager.Instance.DialogueWindow.DispatchText( speaker, text );
 		DialogueManager.Instance.DialogueWindow.IsCurrentNodeChoice = true;
 
-		DialogueManager.Instance.DialogueWindow.ChoicesPanel?.DeleteChildren();
+		await Task.Delay( 100 );
+
+		if ( !DialogueManager.Instance.DialogueWindow.ChoicesPanel.IsValid() )
+		{
+			Log.Error( "DialogueChoiceNode: ChoicesPanel is null." );
+			return;
+		}
+
+		DialogueManager.Instance.DialogueWindow.ChoicesPanel.DeleteChildren();
 
 		int index = 0;
 		foreach ( var choice in choices )
@@ -118,6 +131,33 @@ public class Dialogue : GameResource
 		}
 	}
 
+	[ActionGraphNode( "clover.dialogue.itemselectnode" )]
+	[Title( "Item Select Node" ), Group( "Dialogue" ), Icon( "chat" )]
+	public static async Task<int[]> ItemSelectNode( int maxItems )
+	{
+		Log.Info( "ItemSelectNode" );
+
+		if ( DialogueManager.Instance.DialogueWindow.ChoicesPanel.IsValid() )
+		{
+			DialogueManager.Instance.DialogueWindow.ChoicesPanel.DeleteChildren();
+		}
+
+		var result = await MainUi.Instance.Components.Get<InventorySelectUi>( true )
+			.SelectItems( maxItems, ( item ) => item.GetItem().ItemData.CanSell );
+
+		Log.Info( "ItemSelectNode: Selected items" );
+
+		return result.ToArray();
+	}
+
+	[ActionGraphNode( "clover.dialogue.inventoryindexestoslots" )]
+	[Title( "Inventory Indexes To Slots" ), Group( "Dialogue" ), Icon( "chat" )]
+	public static List<InventorySlot<PersistentItem>> InventoryIndexesToSlots( InventoryContainer container,
+		int[] indexes )
+	{
+		return indexes.Select( container.GetSlotByIndex ).Where( slot => slot != null ).ToList();
+	}
+
 	[ActionGraphNode( "clover.dialogue.end" )]
 	[Title( "End Dialogue" ), Group( "Dialogue" ), Icon( "chat" )]
 	public static void EndDialogue()
@@ -125,6 +165,39 @@ public class Dialogue : GameResource
 		Log.Info( "EndDialogue" );
 		DialogueManager.Instance.DialogueWindow.End();
 	}
+
+	[ActionGraphNode( "clover.dialogue.setdata" )]
+	[Title( "Set Dialogue Data" ), Group( "Dialogue" ), Icon( "chat" )]
+	public static void SetData( string key, object value )
+	{
+		Log.Info( $"SetData: {key} = {value}" );
+		DialogueManager.Instance.DialogueWindow.SetData( key, value );
+	}
+
+	[ActionGraphNode( "clover.dialogue.getdatageneric" )]
+	[Title( "Get Dialogue Data" ), Group( "Dialogue" ), Icon( "chat" )]
+	public static T GetData<T>( string key )
+	{
+		Log.Info( $"GetData: {key}" );
+		return DialogueManager.Instance.DialogueWindow.GetData<T>( key );
+	}
+
+	[ActionGraphNode( "clover.dialogue.getitemssellprice.itemdata" )]
+	[Title( "Get Items Sell Price (ItemData)" ), Group( "Dialogue" ), Icon( "chat" )]
+	public static int GetItemsSellPrice( List<ItemData> items )
+	{
+		return items.Sum( item => item.GetCustomSellPrice?.Invoke( TimeManager.Time ) ?? item.BaseSellPrice );
+	}
+
+	[ActionGraphNode( "clover.dialogue.getitemssellprice.slot" )]
+	[Title( "Get Items Sell Price (Slot)" ), Group( "Dialogue" ), Icon( "chat" )]
+	public static int GetItemsSellPrice( List<InventorySlot<PersistentItem>> slots )
+	{
+		return slots.Sum( slot =>
+			slot.GetItem().ItemData.GetCustomSellPrice?.Invoke( TimeManager.Time ) ??
+			slot.GetItem().ItemData.BaseSellPrice );
+	}
+
 
 	/*[ActionGraphNode( "clover.dialogue.quickcompare" )]
 	public static Task<bool> QuickCompare( int a, int b )
