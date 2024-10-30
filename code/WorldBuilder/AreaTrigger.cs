@@ -13,9 +13,9 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 	[Property] public string DestinationEntranceId { get; set; }
 
 	[Property] public bool UnloadPreviousWorld { get; set; } = true;
-	
+
 	[Property] public bool NoWalk { get; set; }
-	
+
 	private HashSet<GameObject> _triggerQueue = new();
 
 
@@ -36,14 +36,14 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 		var player = other.GetComponent<PlayerCharacter>();
 		if ( !player.IsValid() )
 		{
-			Log.Warning( $"AreaTrigger: OnTriggerEnter: Not a player: {other}" );
+			// Log.Warning( $"AreaTrigger: OnTriggerEnter: Not a player: {other}" );
 			return;
 		}
 
 		// Enter( player );
 		_triggerQueue.Add( other.GameObject );
 	}
-	
+
 	void ITriggerListener.OnTriggerExit( Collider other )
 	{
 		_triggerQueue.Remove( other.GameObject );
@@ -66,7 +66,7 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			var currentWorld = WorldManager.Instance.GetWorld( WorldLayerObject.Layer );
 
 			currentWorld.Save();
-			
+
 			player.StartCutscene( WorldPosition + WorldRotation.Forward * 64f );
 
 			if ( !player.Network.Owner.IsHost )
@@ -76,10 +76,11 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			}
 
 			// await Fader.Instance.FadeToBlack( true );
-			using( Rpc.FilterInclude( player.Network.Owner ) )
+			using ( Rpc.FilterInclude( player.Network.Owner ) )
 			{
 				Fader.Instance.FadeToBlackRpc( true );
 			}
+
 			await Task.DelayRealtimeSeconds( Fader.Instance.FadeTime );
 
 			player.SetLayer( entrance.WorldLayerObject.Layer );
@@ -92,17 +93,17 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 			{
 				WorldManager.Instance.UnloadWorld( currentWorld );
 			}
-			
+
 			await GameTask.DelayRealtimeSeconds( 0.25f );
 
 			player.StartCutscene( entrance.WorldPosition + entrance.WorldRotation.Forward * 64f );
-			
+
 			// await Fader.Instance.FadeFromBlack( true );
-			using( Rpc.FilterInclude( player.Network.Owner ) )
+			using ( Rpc.FilterInclude( player.Network.Owner ) )
 			{
 				Fader.Instance.FadeFromBlackRpc( true );
 			}
-			
+
 			await GameTask.DelayRealtimeSeconds( Fader.Instance.FadeTime );
 
 			// await GameTask.DelayRealtimeSeconds( 0.25f );
@@ -131,6 +132,5 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 				_triggerQueue.Remove( go );
 			}
 		}
-		
 	}
 }
