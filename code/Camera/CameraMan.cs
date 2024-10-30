@@ -102,6 +102,11 @@ public sealed class CameraMan : Component
 			if ( !mainCameraNode.DollyNode.IsValid() && !mainCameraNode.Static && PlayerCharacter.Local.IsValid() )
 			{
 				wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.3f;
+
+				if ( PlayerCharacter.Local.PlayerController.WishVelocity.Length == 0 )
+				{
+					_lerpSpeed /= 2;
+				}
 			}
 		}
 
@@ -113,46 +118,10 @@ public sealed class CameraMan : Component
 			_lerpSpeed = 0.1f;
 		}
 
-		/*if ( mainCameraNode.Static && mainCameraNode.HasPivotRotation )
-		{
-			/*var basePosition = mainCameraNode.CameraPivot.WorldPosition;
-			var cameraPosition = wishedPos;
-			var distance = mainCameraNode.CameraPivot.WorldPosition.Distance( wishedPos );
-			
-			var direction = (cameraPosition - basePosition).Normal;
-			var position = basePosition + direction * distance;
-			
-			_positionLerp = Vector3.Lerp( _positionLerp, position, Time.Delta * _lerpSpeed );
-			// _rotationLerp = Rotation.Slerp( _rotationLerp, wishedRot, Time.Delta * _lerpSpeed );#1#
-			
-			var dir1 = (_positionLerp - mainCameraNode.CameraPivot.WorldPosition).Normal;
-			var dir2 = (wishedPos - mainCameraNode.CameraPivot.WorldPosition).Normal;
-			
-			var rot1 = Rotation.LookAt( dir1 );
-			var rot2 = Rotation.LookAt( dir2 );
-			
-			var newRot = Rotation.Slerp( rot1, rot2, Time.Delta * _lerpSpeed );
-			var newPos = newRot.Forward * mainCameraNode.CameraPivot.WorldPosition.Distance( wishedPos );
 
-			var cameraRotation = Rotation.LookAt( -newRot.Forward );
-			
-			_positionLerp = newPos + mainCameraNode.CameraPivot.WorldPosition;
-			_rotationLerp = cameraRotation;
-			
-			
-		}
-		else
-		{
-			_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * _lerpSpeed );
-			_rotationLerp = Rotation.Slerp( _rotationLerp, wishedRot, Time.Delta * _lerpSpeed );
-		}*/
-		
 		_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * _lerpSpeed );
 		_rotationLerp = Rotation.Slerp( _rotationLerp, wishedRot, Time.Delta * _lerpSpeed );
 		_fovLerp = _fovLerp.LerpTo( mainCameraNode.FieldOfView, Time.Delta * _lerpSpeed );
-
-		// var midpoint = GetTargetsMidpoint();
-		// _rotationLerp = Rotation.Lerp( _rotationLerp, Rotation.LookAt( midpoint - _positionLerp, Vector3.Up ), Time.Delta * LerpSpeed );
 
 		if ( mainCameraNode.Lerping )
 		{
