@@ -74,6 +74,7 @@ public sealed class CameraMan : Component
 			_currentCameraNode.OnActivated();
 		}
 
+		// when the camera changes
 		if ( _currentCameraNode.IsValid() && _currentCameraNode != mainCameraNode )
 		{
 			/*_positionLerp = mainCameraNode.WorldPosition;
@@ -83,6 +84,13 @@ public sealed class CameraMan : Component
 			_currentCameraNode.OnDeactivated();
 			mainCameraNode.OnActivated();
 			_currentCameraNode = mainCameraNode;
+
+			if ( mainCameraNode.ShouldSnapInstantly )
+			{
+				_positionLerp = mainCameraNode.WorldPosition;
+				_rotationLerp = mainCameraNode.WorldRotation;
+				_fovLerp = mainCameraNode.FieldOfView;
+			}
 		}
 
 		Rotation wishedRot;

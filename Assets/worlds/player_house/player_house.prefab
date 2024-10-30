@@ -91,6 +91,21 @@
             "LightColor": "0.91373,0.98039,1,1",
             "Radius": 400,
             "Shadows": true
+          },
+          {
+            "__type": "Clover.WorldBuilder.InteriorPiece",
+            "__guid": "b7d46209-11dc-493d-828f-c351e4720790",
+            "BelongsToRooms": [
+              "room1"
+            ],
+            "IsDarkness": false,
+            "IsDoorway": false,
+            "IsFloor": false,
+            "IsWall": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "7fdc1596-293e-4664-9f02-73dad96323e7"
           }
         ]
       },
@@ -111,6 +126,21 @@
             "LightColor": "0.91373,0.98039,1,1",
             "Radius": 400,
             "Shadows": true
+          },
+          {
+            "__type": "Clover.WorldBuilder.InteriorPiece",
+            "__guid": "c2babe06-6385-4021-aa93-791a024f56fc",
+            "BelongsToRooms": [
+              "room2"
+            ],
+            "IsDarkness": false,
+            "IsDoorway": false,
+            "IsFloor": false,
+            "IsWall": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "33bc6cc5-f1e3-435e-a19f-da559eac9dbc"
           }
         ]
       },
@@ -131,6 +161,21 @@
             "LightColor": "0.91373,0.98039,1,1",
             "Radius": 400,
             "Shadows": true
+          },
+          {
+            "__type": "Clover.WorldBuilder.InteriorPiece",
+            "__guid": "f77bbf39-8a13-482e-b139-cd75faff114d",
+            "BelongsToRooms": [
+              "room4"
+            ],
+            "IsDarkness": false,
+            "IsDoorway": false,
+            "IsFloor": false,
+            "IsWall": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "5c500541-c674-41f7-9c67-a12ffb7573cc"
           }
         ]
       },
@@ -151,6 +196,21 @@
             "LightColor": "0.91373,0.98039,1,1",
             "Radius": 400,
             "Shadows": true
+          },
+          {
+            "__type": "Clover.WorldBuilder.InteriorPiece",
+            "__guid": "15c173ee-099f-4616-b971-5b156e4dd47f",
+            "BelongsToRooms": [
+              "room3"
+            ],
+            "IsDarkness": false,
+            "IsDoorway": false,
+            "IsFloor": false,
+            "IsWall": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "cc0919ac-425f-4c33-848f-bae13673afda"
           }
         ]
       },
@@ -486,6 +546,7 @@
             "HasPivotRotation": false,
             "Lerping": true,
             "Priority": 0,
+            "ShouldSnapInstantly": false,
             "ShouldSyncWithPlayerCameraRotation": false,
             "Static": true
           }
@@ -512,9 +573,9 @@
             "MaxDistance": 512,
             "MultiBounce": false,
             "Projection": "Box",
-            "RenderDynamically": false,
+            "RenderDynamically": true,
             "TintColor": "1,1,1,1",
-            "UpdateStrategy": "OnEnabled",
+            "UpdateStrategy": "FrameInterval",
             "ZFar": 4096,
             "ZNear": 16
           }
@@ -537,6 +598,21 @@
             "LightColor": "14.91207,15.99148,16.32,1",
             "Radius": 100,
             "Shadows": true
+          },
+          {
+            "__type": "Clover.WorldBuilder.InteriorPiece",
+            "__guid": "ae8522e2-d707-4118-9b6b-eabf35a4f875",
+            "BelongsToRooms": [
+              "entrance"
+            ],
+            "IsDarkness": false,
+            "IsDoorway": false,
+            "IsFloor": false,
+            "IsWall": false
+          },
+          {
+            "__type": "Clover.WorldLayerObject",
+            "__guid": "032e88b8-4f53-4156-adb2-6f0b2ff163b7"
           }
         ]
       },
@@ -1470,6 +1546,7 @@
                     "HasPivotRotation": true,
                     "Lerping": true,
                     "Priority": 0,
+                    "ShouldSnapInstantly": false,
                     "ShouldSyncWithPlayerCameraRotation": true,
                     "Static": true
                   }
@@ -1868,6 +1945,7 @@
                     "HasPivotRotation": true,
                     "Lerping": true,
                     "Priority": 0,
+                    "ShouldSnapInstantly": false,
                     "ShouldSyncWithPlayerCameraRotation": true,
                     "Static": true
                   }
@@ -2966,6 +3044,7 @@
                     "HasPivotRotation": true,
                     "Lerping": true,
                     "Priority": 0,
+                    "ShouldSnapInstantly": false,
                     "ShouldSyncWithPlayerCameraRotation": true,
                     "Static": false
                   }
@@ -3542,6 +3621,7 @@
                     "HasPivotRotation": true,
                     "Lerping": true,
                     "Priority": 0,
+                    "ShouldSnapInstantly": false,
                     "ShouldSyncWithPlayerCameraRotation": true,
                     "Static": false
                   }
