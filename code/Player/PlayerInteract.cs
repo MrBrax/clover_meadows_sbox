@@ -48,6 +48,7 @@ public class PlayerInteract : Component
 	{
 		if ( Player.ItemPlacer.IsPlacing || Player.ItemPlacer.IsMoving ) return false;
 		if ( Player.InCutscene ) return false;
+		if ( Player.VehicleRider.Vehicle.IsValid() ) return false;
 		if ( InteractionTarget.IsValid() )
 		{
 			if ( InteractionTarget.GetComponent<BaseNpc>().IsValid() ) return false;
