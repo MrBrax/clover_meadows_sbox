@@ -1,6 +1,7 @@
 using System;
 using Clover;
 using Clover.Player;
+using Clover.Utilities;
 using Sandbox;
 
 [Category( "Clover/Camera" )]
@@ -23,6 +24,7 @@ public sealed class CameraMan : Component
 	private float _fovLerp;
 
 	public const float LerpSpeed = 5;
+	public const float DecaySpeed = 2.5f;
 
 	private CameraComponent CameraComponent;
 
@@ -86,6 +88,7 @@ public sealed class CameraMan : Component
 		Rotation wishedRot;
 		Vector3 wishedPos;
 		var _lerpSpeed = LerpSpeed;
+		var _decaySpeed = DecaySpeed;
 
 		wishedPos = mainCameraNode.WorldPosition;
 
@@ -101,7 +104,7 @@ public sealed class CameraMan : Component
 			// offset the camera when the player is moving to keep the player in the center of the screen
 			if ( !mainCameraNode.DollyNode.IsValid() && !mainCameraNode.Static && PlayerCharacter.Local.IsValid() )
 			{
-				wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.3f;
+				wishedPos += PlayerCharacter.Local.CharacterController.Velocity * 0.4f;
 
 				if ( PlayerCharacter.Local.PlayerController.WishVelocity.Length == 0 )
 				{
@@ -116,10 +119,11 @@ public sealed class CameraMan : Component
 			var p = Sandbox.Utility.Noise.Perlin( Time.Now * 5f, Time.Now * 7f, Time.Now * 9f ) - 0.5f;
 			wishedRot *= Rotation.From( p * 2, p * 3, p );
 			_lerpSpeed = 0.1f;
+			_decaySpeed = 0.2f;
 		}
 
 
-		_positionLerp = Vector3.Lerp( _positionLerp, wishedPos, Time.Delta * _lerpSpeed );
+		_positionLerp = _positionLerp.ExpDecayTo( wishedPos, _decaySpeed );
 		_rotationLerp = Rotation.Slerp( _rotationLerp, wishedRot, Time.Delta * _lerpSpeed );
 		_fovLerp = _fovLerp.LerpTo( mainCameraNode.FieldOfView, Time.Delta * _lerpSpeed );
 
