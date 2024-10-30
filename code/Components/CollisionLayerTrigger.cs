@@ -1,4 +1,6 @@
-﻿namespace Clover.Components;
+﻿using Clover.Player;
+
+namespace Clover.Components;
 
 /// <summary>
 ///  A trigger that adds/removes a tag to the GameObject that enters/exits the trigger.
@@ -12,12 +14,14 @@ public class CollisionLayerTrigger : Component, Component.ITriggerListener
 
 	void ITriggerListener.OnTriggerEnter( Collider other )
 	{
-		Log.Info( $"OnTriggerEnter {other.GameObject}" );
+		// Log.Info( $"OnTriggerEnter {other.GameObject}" );
 		if ( !other.GameObject.IsValid() )
 		{
 			Log.Warning( "Invalid GameObject" );
 			return;
 		}
+
+		if ( other.GameObject.Components.Get<PlayerCharacter>() == null ) return;
 
 		Log.Info( $"Adding {Layer} to {other.GameObject}" );
 		other.GameObject.Tags.Add( Layer );
@@ -25,12 +29,14 @@ public class CollisionLayerTrigger : Component, Component.ITriggerListener
 
 	void ITriggerListener.OnTriggerExit( Collider other )
 	{
-		Log.Info( $"OnTriggerExit {other.GameObject}" );
+		// Log.Info( $"OnTriggerExit {other.GameObject}" );
 		if ( !other.GameObject.IsValid() )
 		{
 			Log.Warning( "Invalid GameObject" );
 			return;
 		}
+
+		if ( other.GameObject.Components.Get<PlayerCharacter>() == null ) return;
 
 		Log.Info( $"Removing {Layer} from {other.GameObject}" );
 		other.GameObject.Tags.Remove( Layer );

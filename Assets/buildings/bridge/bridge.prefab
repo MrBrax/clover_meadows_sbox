@@ -30,14 +30,16 @@
             "__guid": "3befb9a1-4482-495d-b882-2eaba47c253f",
             "IsTrigger": false,
             "Model": "buildings/bridge/bridge.vmdl",
-            "Static": false
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
           }
         ]
       },
       {
         "__guid": "364cbc2c-27cd-4a2f-928c-efe271986225",
         "Flags": 0,
-        "Name": "Object",
+        "Name": "BridgeTrigger",
+        "Tags": "trigger",
         "Enabled": true,
         "Components": [
           {
@@ -46,7 +48,8 @@
             "Center": "0,0,25",
             "IsTrigger": true,
             "Scale": "250,60,50",
-            "Static": false
+            "Static": false,
+            "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.Components.CollisionLayerTrigger",
@@ -56,7 +59,30 @@
         ]
       }
     ],
-    "__variables": []
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
   },
   "ShowInMenu": false,
   "MenuPath": null,
@@ -64,6 +90,5 @@
   "DontBreakAsTemplate": false,
   "ResourceVersion": 1,
   "__references": [],
-  "IsValid": true,
   "__version": 1
 }
