@@ -65,6 +65,8 @@ public sealed partial class PlayerCharacter : Component
 		_ = Fader.Instance.FadeFromBlack();
 
 		CameraMan.Instance.Targets.Add( GameObject );
+
+		MainUi.Instance.LastInput = 0;
 	}
 
 	// TODO: maybe stop using yaw
