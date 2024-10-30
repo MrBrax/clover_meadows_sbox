@@ -16,11 +16,20 @@
 	else if ( State == MenuState.SelectRealm )
 	{
 		<div class="title">Select Realm</div>
-		<div class="menu-items">
-			@foreach ( var realm in Realms )
+
+		<div class="realm-list">
+			@foreach ( var realm in Realms.OrderBy( x => x.LastPlayed ).Reverse() )
 			{
-				<button @onclick=@( () => SelectRealm( realm ) )>
-					@realm.Name
+				<button class="realm-entry" @onclick=@( () => SelectRealm( realm ) )>
+					<div class="name">
+						@realm.Name
+					</div>
+					<div class="last-played">
+						@( $"Last played {realm.LastPlayed.ToString( "yyyy-MM-dd HH:mm" )}" )
+					</div>
+					<div class="created">
+						@( $"Created {realm.Created.ToString( "yyyy-MM-dd HH:mm" )}" )
+					</div>
 				</button>
 			}
 			@if ( Realms.Count == 0 )
@@ -28,15 +37,17 @@
 				<div>No realms found</div>
 			}
 		</div>
+
 		<div class="menu-items">
 			<button @onclick=@( () => SetState( MenuState.CreateRealm ) )>Create</button>
 			<button @onclick=@( () => SetState( MenuState.Title ) )>Back</button>
 		</div>
-	} else if ( State == MenuState.CreateRealm )
+	}
+	else if ( State == MenuState.CreateRealm )
 	{
 		<div class="title">Create Realm</div>
 		<div class="menu-items">
-			<TextEntry class="text-input" Value:bind=@_newRealmName />
+			<TextEntry class="text-input" Value:bind=@_newRealmName/>
 			<button @onclick=@( () => CreateRealm() )>Perfect</button>
 			<button @onclick=@( () => SetState( MenuState.SelectRealm ) )>Back</button>
 		</div>

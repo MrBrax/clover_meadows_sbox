@@ -90,6 +90,10 @@ public partial class MainMenu
 	{
 		PlayerCharacter.SpawnPlayerId = null;
 		RealmManager.CurrentRealm = realm;
+
+		realm.LastPlayed = DateTime.Now;
+		realm.Save();
+
 		GameManager.LoadRealm();
 	}
 }

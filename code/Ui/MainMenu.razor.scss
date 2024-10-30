@@ -1,56 +1,90 @@
 @import "./Shared.scss";
 
-MainMenu
-{
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	
-	justify-content: center;
-	align-items: center;
-	font-weight: bold;
-	
-	flex-direction: column;
-	
-	gap: 50px;
-	
-	pointer-events: all;
-	
-	font-family: Itim;
-	font-size: 30px;
-	color: white;
+MainMenu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-	.title
-	{
-		font-size: 120px;
-		font-family: Itim;
-		color: #fff;
-	}
-	
-	.menu-items {
-		flex-direction: column;
-		gap: 20px;
-		align-items: center;
-		
-		button {
-			padding: 10px 20px;
-			font-size: 40px;
-			font-family: Itim;
-			background-color: #0c83dd;
-			color: white;
-			border-radius: 20px;
-			cursor: pointer;
-			transition: all 0.1s ease;
-			
-			text-shadow: 3px 3px 0 #000;
-			
-			&:hover {
-				background-color: #3ea1ed;
-			}
-		}
-	}
-	
-	
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+
+    flex-direction: column;
+
+    gap: 50px;
+
+    pointer-events: all;
+
+    font-family: Itim;
+    font-size: 30px;
+    color: white;
+
+    .title {
+        font-size: 120px;
+        font-family: Itim;
+        color: #fff;
+    }
+
+    .menu-items {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+
+        button {
+            padding: 10px 20px;
+            font-size: 40px;
+            font-family: Itim;
+            background-color: #0c83dd;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+
+            text-shadow: 3px 3px 0 #000;
+
+            &:hover {
+                background-color: #3ea1ed;
+            }
+        }
+    }
+
+    .realm-list {
+        flex-direction: column;
+        gap: 20px;
+        // align-items: center;
+
+        width: 700px;
+        height: 500px;
+        background-color: #0c83dd;
+        border-radius: 20px;
+        padding: 20px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        .realm-entry {
+            padding: 10px 15px;
+            background-color: #1174bf;
+            border-radius: 10px;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+
+            font-size: 35px;
+
+            flex-shrink: 0;
+
+            .created, .last-played {
+                font-size: 20px;
+            }
+
+            &:hover {
+                background-color: #3ea1ed;
+            }
+        }
+    }
+
+
 }

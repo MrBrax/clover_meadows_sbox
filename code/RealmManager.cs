@@ -11,6 +11,7 @@ public class RealmManager
 		public string Id { get; set; }
 		public string Name { get; set; }
 		public DateTime Created { get; set; }
+		public DateTime LastPlayed { get; set; }
 
 		[JsonIgnore] public string Path => $"realms/{Id}";
 		[JsonIgnore] public string SavePath => $"{Path}/.realminfo";
