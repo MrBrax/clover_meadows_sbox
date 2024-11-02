@@ -87,7 +87,8 @@ public partial class PaintUi
 	private string CurrentFileName = "";
 	private string CurrentName = "";
 
-	private int TextureSize = 32;
+	// private int TextureSize = 32;
+	private Vector2Int TextureSize = new(32, 32);
 
 	private int BaseCanvasSize = 512;
 	private float CanvasZoom = 1.0f;
@@ -150,6 +151,11 @@ public partial class PaintUi
 		return Palette[CurrentPaletteIndex];
 	}
 
+	public void OpenPaint( int width, bool height, bool monochrome )
+	{
+		Enabled = true;
+	}
+
 	protected override void OnStart()
 	{
 		base.OnStart();
@@ -204,8 +210,8 @@ public partial class PaintUi
 	{
 		Log.Info( "[Paint] Initialising texture" );
 
-		DrawTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
-		DrawTextureData = new byte[TextureSize * TextureSize];
+		DrawTexture = Texture.Create( TextureSize.x, TextureSize.y ).WithDynamicUsage().Finish();
+		DrawTextureData = new byte[TextureSize.x * TextureSize.y];
 		Clear();
 
 		UndoStack = new();
@@ -235,7 +241,7 @@ public partial class PaintUi
 		GridTexture.Update( pixels );*/
 
 		// draw preview overlay
-		PreviewTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
+		PreviewTexture = Texture.Create( TextureSize.x, TextureSize.y ).WithDynamicUsage().Finish();
 	}
 
 
@@ -407,7 +413,7 @@ public partial class PaintUi
 
 	private void DrawCrosshair( Vector2Int brushPosition )
 	{
-		var texturePixelScreenSize = CanvasSize / TextureSize;
+		var texturePixelScreenSize = CanvasSize / TextureSize.y;
 
 		var crosshairRound = false;
 
@@ -419,7 +425,7 @@ public partial class PaintUi
 		crosshairY += texturePixelScreenSize * brushPosition.y;
 		crosshairY += CanvasContainer.ScrollOffset.y * Panel.ScaleFromScreen;
 
-		var crosshairSize = texturePixelScreenSize * BrushSize; // 
+		var crosshairSize = texturePixelScreenSize * BrushSize;
 
 		if ( CurrentTool == PaintTool.Fill )
 		{
@@ -835,26 +841,28 @@ public partial class PaintUi
 		return HashCode.Combine( CurrentTool );
 	}
 
-	private static ReadOnlySpan<Color32> ResizeTexture( Color32[] sourcePixels, int sourceSize, int destinationSize )
+	private static ReadOnlySpan<Color32> ResizeTexture( Color32[] sourcePixels, Vector2Int sourceSize,
+		Vector2Int destinationSize )
 	{
 		if ( sourceSize == destinationSize )
 		{
 			return sourcePixels;
 		}
 
-		var destinationPixels = new Color32[destinationSize * destinationSize];
+		var destinationPixels = new Color32[destinationSize.x * destinationSize.y];
 
-		var ratio = (float)destinationSize / sourceSize;
+		// var ratio = (float)destinationSize / sourceSize;
+		var ratio = (float)sourceSize.x / destinationSize.x;
 
-		for ( var y = 0; y < destinationSize; y++ )
+		for ( var y = 0; y < destinationSize.y; y++ )
 		{
-			for ( var x = 0; x < destinationSize; x++ )
+			for ( var x = 0; x < destinationSize.x; x++ )
 			{
 				var sourceX = (int)(x / ratio);
 				var sourceY = (int)(y / ratio);
 
-				var sourceIndex = sourceX + sourceY * sourceSize;
-				var destinationIndex = x + y * destinationSize;
+				var sourceIndex = sourceX + sourceY * sourceSize.x;
+				var destinationIndex = x + y * destinationSize.x;
 
 				destinationPixels[destinationIndex] = sourcePixels[sourceIndex];
 			}

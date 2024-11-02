@@ -89,15 +89,20 @@ public partial class PaintUi
 		}*/
 
 		// resize image
-		var resizedTexture = Texture.Create( TextureSize, TextureSize ).WithDynamicUsage().Finish();
+		var resizedTexture = Texture.Create( TextureSize.x, TextureSize.y ).WithDynamicUsage().Finish();
 
-		resizedTexture.Update( ResizeTexture( texture.GetPixels(), texture.Width, TextureSize ), 0, 0, TextureSize,
-			TextureSize );
+		resizedTexture.Update(
+			ResizeTexture( texture.GetPixels(), new Vector2Int( texture.Width, texture.Height ), TextureSize ),
+			0,
+			0,
+			TextureSize.x,
+			TextureSize.y
+		);
 
 		// pick best fitting colors
 		var pixels = resizedTexture.GetPixels();
 
-		var newBytes = new byte[TextureSize * TextureSize];
+		var newBytes = new byte[TextureSize.x * TextureSize.y];
 
 		for ( var i = 0; i < pixels.Length; i++ )
 		{
