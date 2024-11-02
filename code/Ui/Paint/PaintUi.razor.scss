@@ -325,7 +325,7 @@ PaintUi {
 
     .canvas {
 
-        // position: relative;
+        position: relative;
 
         .canvas-square {
             position: relative;
@@ -488,6 +488,38 @@ PaintUi {
         flex-shrink: 0;
         flex-direction: column;
         gap: 5px;
+    }
+
+    .preview {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 150px;
+        // height: 100px;
+        // border: 1px solid #777;
+        // background-color: #f00;
+
+        align-items: flex-end;
+        justify-content: flex-end;
+
+        opacity: 0.8;
+
+        pointer-events: none;
+
+        Image {
+            image-rendering: pixelated;
+        }
+
+        PumpkinPanel {
+            width: 150px;
+            height: 150px;
+            // background-color: red;
+
+            ScenePanel {
+                width: 150px;
+                height: 150px;
+            }
+        }
     }
 
 }

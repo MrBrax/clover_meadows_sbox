@@ -524,10 +524,12 @@ public partial class PaintUi
 		var crosshairX = CanvasImage.Box.Left * Panel.ScaleFromScreen;
 		crosshairX += texturePixelScreenSize * brushPosition.x;
 		crosshairX += CanvasContainer.ScrollOffset.x * Panel.ScaleFromScreen;
+		crosshairX -= CanvasContainer.Box.Left * Panel.ScaleFromScreen;
 
 		var crosshairY = CanvasImage.Box.Top * Panel.ScaleFromScreen;
 		crosshairY += texturePixelScreenSize * brushPosition.y;
 		crosshairY += CanvasContainer.ScrollOffset.y * Panel.ScaleFromScreen;
+		crosshairY -= CanvasContainer.Box.Top * Panel.ScaleFromScreen;
 
 		var crosshairSize = texturePixelScreenSize * BrushSize;
 

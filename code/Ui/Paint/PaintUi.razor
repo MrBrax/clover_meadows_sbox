@@ -154,6 +154,16 @@
 							}
 						</div>
 						<div @ref=" Crosshair" class="crosshair"></div>
+						<div class="preview">
+							@if ( _currentPaintType == PaintType.Pumpkin )
+							{
+								<PumpkinPanel Texture=@DrawTexture/>
+							}
+							else
+							{
+								<Image Texture=@DrawTexture/>
+							}
+						</div>
 					</div>
 					<div class="toolbar">
 						<div class="vsplit">
