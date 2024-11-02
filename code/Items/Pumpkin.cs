@@ -13,6 +13,8 @@ public class Pumpkin : DecalItem, IInteract
 	[Property] public Material PumpkinMaterial { get; set; }
 	[Property, ImageAssetPath] public string PumpkinColor { get; set; }
 
+	[Property] public SpotLight SpotLight { get; set; }
+
 	public override void OnMaterialUpdate( Material material )
 	{
 		base.OnMaterialUpdate( material );
@@ -105,6 +107,11 @@ public class Pumpkin : DecalItem, IInteract
 
 
 		ModelRenderer.SetMaterialOverride( pumpkinMaterial, "paint" );
+
+		if ( SpotLight.IsValid() )
+		{
+			SpotLight.Cookie = DecalTexture;
+		}
 
 		Log.Info( $"Pumpkin material updated, mat: {pumpkinMaterial.ResourcePath}" );
 	}

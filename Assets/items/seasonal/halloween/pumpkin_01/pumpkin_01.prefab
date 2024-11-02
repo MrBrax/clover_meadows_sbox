@@ -15,7 +15,13 @@
           "component_type": "ModelRenderer"
         },
         "PumpkinColor": "items/seasonal/halloween/pumpkin_01/pumpkin_body.png",
-        "PumpkinMaterial": "items/seasonal/halloween/pumpkin_01/pumpkin_body.vmat"
+        "PumpkinMaterial": "items/seasonal/halloween/pumpkin_01/pumpkin_body.vmat",
+        "SpotLight": {
+          "_type": "component",
+          "component_id": "e0344920-bca7-41d7-8ace-ef0328c286d2",
+          "go": "7a190e82-6a19-4499-9590-7f592b56d67f",
+          "component_type": "SpotLight"
+        }
       },
       {
         "__type": "Clover.Items.WorldItem",
@@ -86,8 +92,31 @@
             "Attenuation": 1,
             "FogMode": "Enabled",
             "FogStrength": 1,
-            "LightColor": "0.51889,0.53023,0.30334,0.29",
+            "LightColor": "0.34724,0.35349,0.22853,0.29",
             "Radius": 400,
+            "Shadows": true
+          }
+        ]
+      },
+      {
+        "__guid": "7a190e82-6a19-4499-9590-7f592b56d67f",
+        "Flags": 0,
+        "Name": "Spot Light",
+        "Position": "0,4,8",
+        "Rotation": "0.09229594,-0.09229594,0.7010573,0.7010574",
+        "Tags": "light_spot,light",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SpotLight",
+            "__guid": "e0344920-bca7-41d7-8ace-ef0328c286d2",
+            "Attenuation": 1,
+            "ConeInner": 15,
+            "ConeOuter": 65,
+            "FogMode": "Enabled",
+            "FogStrength": 1,
+            "LightColor": "0.99364,1,0.6186,1",
+            "Radius": 500,
             "Shadows": true
           }
         ]
