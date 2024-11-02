@@ -4,6 +4,7 @@ using System.Text;
 using Clover.Player;
 using Clover.Ui.Tools;
 using Clover.Utilities;
+using Sandbox.Diagnostics;
 using Sandbox.UI;
 
 namespace Clover.Ui;
@@ -19,11 +20,11 @@ public partial class PaintUi
 	}
 
 	// TODO: maybe don't hardcode this
-	public enum PaintMode
+	public enum PaintType
 	{
-		Decal,
-		Pumpkin,
-		Image,
+		Decal = 1,
+		Pumpkin = 2,
+		Image = 3,
 	}
 
 	public enum PaintTool
@@ -64,7 +65,7 @@ public partial class PaintUi
 		}
 	}
 
-	private PaintMode _currentMode = PaintMode.Decal;
+	private PaintType _currentPaintType = PaintType.Decal;
 
 	private List<DecalEntry> Decals = new();
 	private List<Texture> Images = new();
@@ -160,10 +161,16 @@ public partial class PaintUi
 
 	private Color GetCurrentColor()
 	{
+		if ( CurrentPaletteIndex >= Palette.Count )
+		{
+			Log.Error( $"CurrentPaletteIndex {CurrentPaletteIndex} is out of bounds" );
+			return default;
+		}
+
 		return Palette[CurrentPaletteIndex];
 	}
 
-	public void OpenPaint( PaintMode mode, int width, int height, bool monochrome )
+	public void OpenPaint( PaintType type, int width, int height, bool monochrome )
 	{
 		if ( !ValidateTextureSize( width, height ) )
 		{
@@ -171,12 +178,12 @@ public partial class PaintUi
 			return;
 		}
 
-		_currentMode = mode;
+		_currentPaintType = type;
 		TextureSize = new Vector2Int( width, height );
 		Monochrome = monochrome;
 		Enabled = true;
-		InitialiseTexture();
 		ResetPaint();
+		InitialiseTexture();
 		LoadFavoriteColors();
 	}
 
@@ -223,17 +230,9 @@ public partial class PaintUi
 
 	private void ResetPaint()
 	{
-		Log.Info( "[Paint] Reset" );
-		// CurrentTool = PaintTool.Pencil;
-
-		LeftPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.Black );
-		RightPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.White );
-		CurrentPaletteIndex = LeftPaletteIndex;
-
 		CurrentDecalData = new Decals.DecalData();
 		CurrentFileName = "";
 		CurrentName = "";
-		// BrushSize = 1;
 		ZoomReset();
 
 		_isDrawing = false;
@@ -241,6 +240,49 @@ public partial class PaintUi
 
 		RedoStack.Clear();
 		UndoStack.Clear();
+
+		switch ( _currentPaintType )
+		{
+			case PaintType.Decal:
+				ResetDecalPaint();
+				break;
+			case PaintType.Pumpkin:
+				ResetPumpkinPaint();
+				break;
+			/*case PaintMode.Image:
+				ResetImagePaint();
+				break;*/
+		}
+	}
+
+	private void ResetDecalPaint()
+	{
+		Log.Info( "[Paint] Reset" );
+
+		// PaletteName = "windows-95-256-colours-1x";
+		// Palette = Utilities.Decals.GetPalette( PaletteName ).ToList();
+		SetPalette( "windows-95-256-colours-1x" );
+
+		LeftPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.Black );
+		RightPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.White );
+		CurrentPaletteIndex = LeftPaletteIndex;
+
+		UpdateCanvas();
+		Clear();
+	}
+
+	private void ResetPumpkinPaint()
+	{
+		Log.Info( "[Paint] Reset" );
+
+		// PaletteName = "monochrome";
+		// Palette = Utilities.Decals.GetPalette( PaletteName ).ToList();
+		SetPalette( "monochrome" );
+
+		LeftPaletteIndex = 0;
+		RightPaletteIndex = 1;
+		CurrentPaletteIndex = LeftPaletteIndex;
+
 		UpdateCanvas();
 		Clear();
 	}
@@ -292,19 +334,25 @@ public partial class PaintUi
 
 	private void SetColor( PanelEvent ev, int index )
 	{
-		var e = ev as MousePanelEvent;
-		Log.Info( $"Setting color to {index}" );
+		if ( ev is not MousePanelEvent e )
+		{
+			Log.Warning( "Event is not MousePanelEvent" );
+			return;
+		}
+
 		if ( e.MouseButton == MouseButtons.Left )
 		{
+			Log.Info( $"Setting left color to {index}" );
 			LeftPaletteIndex = index;
 		}
 		else if ( e.MouseButton == MouseButtons.Right )
 		{
+			Log.Info( $"Setting right color to {index}" );
 			RightPaletteIndex = index;
 		}
 		else
 		{
-			Log.Info( "Unknown mouse button" );
+			Log.Warning( "Unknown mouse button" );
 		}
 	}
 
@@ -312,7 +360,12 @@ public partial class PaintUi
 	{
 		PaletteName = name;
 		Palette = Utilities.Decals.GetPalette( PaletteName ).ToList();
-		PushByteDataToTexture();
+
+		LeftPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.Black );
+		RightPaletteIndex = Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.White );
+		CurrentPaletteIndex = LeftPaletteIndex;
+
+		if ( DrawTextureData != null ) PushByteDataToTexture();
 		LoadFavoriteColors();
 	}
 
@@ -458,6 +511,12 @@ public partial class PaintUi
 
 	private void DrawCrosshair( Vector2Int brushPosition )
 	{
+		if ( !CanvasImage.IsValid() )
+		{
+			Log.Warning( "CanvasImage is not valid in DrawCrosshair" );
+			return;
+		}
+
 		// var texturePixelScreenSize = CanvasSize / TextureSize.y;
 		var texturePixelScreenSize = DrawTexture.Width * CanvasZoom / TextureSize.x;
 
@@ -506,7 +565,16 @@ public partial class PaintUi
 
 	private void PushByteDataToTexture()
 	{
-		DrawTexture.Update( Utilities.Decals.ByteArrayToColor32( DrawTextureData, Palette.ToArray() ), 0, 0,
+		Assert.NotNull( DrawTextureData, "DrawTextureData is null" );
+		Assert.NotNull( Palette, "Palette is null" );
+		Assert.True( Palette.Count > 0, "Palette is empty" );
+		Assert.True( DrawTextureData.Length > 0, "DrawTextureData is empty" );
+		Assert.True( DrawTextureData.Length == DrawTexture.Width * DrawTexture.Height,
+			"DrawTextureData length does not match texture size" );
+
+		var data = Utilities.Decals.ByteArrayToColor32( DrawTextureData, Palette.ToArray() );
+
+		DrawTexture.Update( data, 0, 0,
 			DrawTexture.Width,
 			DrawTexture.Height );
 	}
@@ -684,9 +752,24 @@ public partial class PaintUi
 
 	private void Clear()
 	{
-		DrawTexture.Update( Palette[RightPaletteIndex], new Rect( 0, 0, DrawTexture.Width, DrawTexture.Height ) );
-		DrawTextureData = Enumerable.Repeat( (byte)RightPaletteIndex, DrawTexture.Width * DrawTexture.Height )
-			.ToArray();
+		if ( DrawTexture.IsValid() && DrawTextureData != null )
+		{
+			if ( RightPaletteIndex < Palette.Count )
+			{
+				DrawTexture.Update( Palette[RightPaletteIndex],
+					new Rect( 0, 0, DrawTexture.Width, DrawTexture.Height ) );
+				DrawTextureData = Enumerable.Repeat( (byte)RightPaletteIndex, DrawTexture.Width * DrawTexture.Height )
+					.ToArray();
+			}
+			else
+			{
+				Log.Warning( "Right palette index is out of bounds" );
+			}
+		}
+		else
+		{
+			Log.Warning( "DrawTexture/DrawTextureData is not valid" );
+		}
 
 		ClearPreview();
 
@@ -755,6 +838,12 @@ public partial class PaintUi
 		// CanvasImage.Style.Width = Length.Pixels( CanvasSize );
 		// CanvasImage.Style.Height = Length.Pixels( CanvasSize );
 
+		if ( !CanvasImage.IsValid() )
+		{
+			Log.Warning( "CanvasImage is not valid" );
+			return;
+		}
+
 		CanvasImage.Style.Width = Length.Pixels( DrawTexture.Width * CanvasZoom );
 		CanvasImage.Style.Height = Length.Pixels( DrawTexture.Height * CanvasZoom );
 	}
@@ -779,81 +868,6 @@ public partial class PaintUi
 		}
 
 		return Palette[index];
-	}
-
-	private void ToggleShowFavoritesEditor()
-	{
-		ShowFavoritesEditor = !ShowFavoritesEditor;
-		if ( !ShowFavoritesEditor )
-		{
-			SaveFavoriteColors();
-		}
-	}
-
-	private void LoadFavoriteColors()
-	{
-		var path = $"colorfavorites-{PaletteName}.dat";
-		if ( !FileSystem.Data.FileExists( path ) )
-		{
-			GenerateFavoriteColors();
-			return;
-		}
-
-		try
-		{
-			var stream = FileSystem.Data.OpenRead( path );
-			var reader = new BinaryReader( stream, Encoding.UTF8 );
-
-			FavoriteColors = reader.ReadBytes( FavoriteColorAmount );
-
-			stream.Close();
-		}
-		catch ( Exception e )
-		{
-			Log.Error( e.Message );
-		}
-	}
-
-	private void SaveFavoriteColors()
-	{
-		var stream = FileSystem.Data.OpenWrite( $"colorfavorites-{PaletteName}.dat" );
-		var writer = new BinaryWriter( stream, Encoding.UTF8 );
-
-		writer.Write( FavoriteColors );
-
-		writer.Flush();
-
-		stream.Close();
-	}
-
-	private void GenerateFavoriteColors()
-	{
-		FavoriteColors = new byte[FavoriteColorAmount];
-		for ( var i = 0; i < FavoriteColorAmount; i++ )
-		{
-			FavoriteColors[i] = (byte)i;
-		}
-
-		FavoriteColors[0] = (byte)Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.Black );
-		FavoriteColors[1] = (byte)Utilities.Decals.GetClosestPaletteColor( Palette.ToArray(), Color.White );
-		FavoriteColors[2] = 255;
-	}
-
-	private void FavoriteEditorColorButtonClick( PanelEvent e, int colorIndex )
-	{
-		FavoriteColors[SelectedFavorite] = (byte)colorIndex;
-	}
-
-	private void FavoriteColorButtonClick( PanelEvent e, int index )
-	{
-		if ( ShowFavoritesEditor )
-		{
-			SelectedFavorite = index;
-		}
-		else
-		{
-			SetColor( e, FavoriteColors[index] );
-		}
 	}
 
 

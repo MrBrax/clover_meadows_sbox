@@ -4,6 +4,49 @@
     "Flags": 0,
     "Name": "pumpkin_01",
     "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.Pumpkin",
+        "__guid": "1c7c4d01-4207-4597-9bb3-7d984a47e988",
+        "ModelRenderer": {
+          "_type": "component",
+          "component_id": "33f2ff65-2af5-456c-ba90-3e3e050ef8dc",
+          "go": "0045914f-422e-4a19-969c-b8aa4e353b99",
+          "component_type": "ModelRenderer"
+        }
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "bce29bed-2d33-47e7-9b9f-327866a45d00",
+        "CanPickupSimple": true,
+        "ItemData": "items/seasonal/halloween/pumpkin_01/pumpkin_01.item",
+        "PlaceModeOffset": "0,0,0",
+        "Prefab": "items/seasonal/halloween/pumpkin_01/pumpkin_01.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "fa39df57-6b93-4f7e-a20e-96b15615fc4b"
+      },
+      {
+        "__type": "Clover.Interactable.ItemHighlight",
+        "__guid": "5cb03cd9-6be9-4a53-8199-91f1c8e7c11e",
+        "__enabled": false,
+        "Color": "1,1,1,1",
+        "InsideColor": "0,0,0,0",
+        "InsideObscuredColor": "0,0,0,0",
+        "ObscuredColor": "0,0,0,0.4",
+        "Width": 0.25
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "79dee7fc-09d1-40a1-a301-074b8dcf20c2",
+        "Center": "0,0,10",
+        "IsTrigger": false,
+        "Scale": "24,24,20",
+        "Static": false,
+        "SurfaceVelocity": "0,0,0"
+      }
+    ],
     "Children": [
       {
         "__guid": "0045914f-422e-4a19-969c-b8aa4e353b99",

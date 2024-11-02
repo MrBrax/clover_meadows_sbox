@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using Clover.Ui;
 using Sandbox.Diagnostics;
 using Sandbox.Utility;
 
@@ -12,6 +13,8 @@ public class Decals
 	{
 		public int Width;
 		public int Height;
+
+		public PaintUi.PaintType PaintType;
 
 		public string Name;
 
@@ -40,6 +43,7 @@ public class Decals
 			{
 				Width = Width,
 				Height = Height,
+				PaintType = PaintType,
 				Name = Name,
 				Author = Author,
 				AuthorName = AuthorName,
@@ -53,6 +57,8 @@ public class Decals
 	{
 		public int Width { get; set; }
 		public int Height { get; set; }
+
+		public PaintUi.PaintType PaintType { get; set; }
 
 		public string Name { get; set; }
 
@@ -89,6 +95,7 @@ public class Decals
 			{
 				Width = Width,
 				Height = Height,
+				PaintType = PaintType,
 				Name = Name,
 				Author = Author,
 				AuthorName = AuthorName,
@@ -157,7 +164,8 @@ public class Decals
 
 		// swap out last color for transparent
 		// TODO: do this in palettes
-		palette[255] = new Color32( 0, 0, 0, 0 );
+		if ( palette.Length == 256 )
+			palette[255] = new Color32( 0, 0, 0, 0 );
 
 		return palette;
 	}
@@ -198,10 +206,12 @@ public class Decals
 		writer.Write( 'P' );
 		writer.Write( 'T' );
 
-		writer.Write( 5 ); // version
+		writer.Write( 6 ); // version
 
 		writer.Write( decalData.Width ); // width
 		writer.Write( decalData.Height ); // height
+
+		writer.Write( decalData.PaintType.AsInt() ); // paint type
 
 		writer.Write( decalData.Name ); // name, 16 chars
 
@@ -241,7 +251,7 @@ public class Decals
 		var version = reader.ReadUInt32();
 		// Log.Info( $"Version: {version}" );
 
-		if ( version < 5 )
+		if ( version < 6 )
 		{
 			stream.Close();
 			reader.Close();
@@ -250,6 +260,8 @@ public class Decals
 
 		var width = reader.ReadInt32();
 		var height = reader.ReadInt32();
+
+		var paintType = (PaintUi.PaintType)reader.ReadInt32();
 
 		var name = reader.ReadString();
 		// Log.Info( $"Name: {name}" );
@@ -278,6 +290,7 @@ public class Decals
 		{
 			Width = width,
 			Height = height,
+			PaintType = paintType,
 			Name = name,
 			Author = author,
 			AuthorName = authorName,
@@ -305,6 +318,11 @@ public class Decals
 
 	public static Color32[] ByteArrayToColor32( byte[] byteArray, Color32[] palette )
 	{
+		Assert.NotNull( palette, "Palette is null" );
+		Assert.NotNull( byteArray, "Byte array is null" );
+		Assert.True( palette.Length > 0, "Palette is empty" );
+		Assert.True( byteArray.Length > 0, "Byte array is empty" );
+
 		var result = new Color32[byteArray.Length];
 
 		for ( var i = 0; i < byteArray.Length; i++ )

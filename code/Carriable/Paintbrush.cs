@@ -38,6 +38,22 @@ public class Paintbrush : BaseCarriable
 
 				return;
 			}
+
+			if ( itemCollider.GameObject.Components.TryGet<Pumpkin>( out var pumpkin ) )
+			{
+				if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) )
+				{
+					Player.Notify( Notifications.NotificationType.Error, "No texture selected" );
+					return;
+				}
+
+				pumpkin.TexturePath = CurrentTexturePath;
+
+				SoundEx.Play( PaintSound, Player.WorldPosition );
+				ParticleManager.PoofAt( pumpkin.WorldPosition );
+
+				return;
+			}
 		}
 
 		var pos = Player.GetAimingGridPosition();

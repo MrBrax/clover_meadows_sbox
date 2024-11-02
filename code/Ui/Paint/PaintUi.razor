@@ -176,24 +176,41 @@
 								</div>
 								<div class="palette-favorites">
 
-									@for ( var i = 0; i < FavoriteColors.Length; i++ )
+									@if ( Palette.Count > FavoriteColors.Length )
 									{
-										var index = i;
-										var color = FavoriteColors[index];
-										<button
-											class="color-button big @( ShowFavoritesEditor && SelectedFavorite == index ? "selected" : "" )"
-											@onmousedown=@( ( PanelEvent e ) => FavoriteColorButtonClick( e, index ) )
-											style="background-color: @GetColorFromByte( color ).Hex">
+										@for ( var i = 0; i < FavoriteColors.Length; i++ )
+										{
+											var index = i;
+											var color = FavoriteColors[index];
+											<button
+												class="color-button big @( ShowFavoritesEditor && SelectedFavorite == index ? "selected" : "" )"
+												@onmousedown=@( ( PanelEvent e ) => FavoriteColorButtonClick( e, index ) )
+												style="background-color: @GetColorFromByte( color ).Hex">
+											</button>
+										}
+
+										<button class="paint-button @( ShowFavoritesEditor ? "active" : "" )" @onclick=@ToggleShowFavoritesEditor>
+											<i class="icon">edit</i>
+										</button>
+
+										<button class="paint-button" @onclick=@GenerateFavoriteColors>
+											<i class="icon">refresh</i>
 										</button>
 									}
-
-									<button class="paint-button @( ShowFavoritesEditor ? "active" : "" )" @onclick=@ToggleShowFavoritesEditor>
-										<i class="icon">edit</i>
-									</button>
-
-									<button class="paint-button" @onclick=@GenerateFavoriteColors>
-										<i class="icon">refresh</i>
-									</button>
+									else
+									{
+										@for ( var i = 0; i < Palette.Count; i++ )
+										{
+											var index = i;
+											var color = Palette[index];
+											<button
+												class="color-button big"
+												@onmousedown=@( ( PanelEvent e ) => SetColor( e, index ) ))
+												@onclick=@( ( PanelEvent e ) => SetColor( e, index ) ))
+												style="background-color: @color.Hex">
+											</button>
+										}
+									}
 
 								</div>
 							</div>

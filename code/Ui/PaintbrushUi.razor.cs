@@ -72,6 +72,6 @@ public partial class PaintbrushUi : IPaintEvent, IEquipChanged
 
 	private void OpenPaintMode()
 	{
-		MainUi.Instance.Components.Get<PaintUi>( true ).OpenPaint( PaintUi.PaintMode.Decal, 32, 32, false );
+		MainUi.Instance.Components.Get<PaintUi>( true ).OpenPaint( PaintUi.PaintType.Decal, 32, 32, false );
 	}
 }

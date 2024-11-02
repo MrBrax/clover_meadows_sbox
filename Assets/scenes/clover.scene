@@ -209,7 +209,8 @@
         },
         {
           "__type": "Clover.Ui.PaintUi",
-          "__guid": "1fbe1934-c822-482e-af8b-dafae885bad5"
+          "__guid": "1fbe1934-c822-482e-af8b-dafae885bad5",
+          "__enabled": false
         },
         {
           "__type": "Clover.Ui.PaintbrushUi",

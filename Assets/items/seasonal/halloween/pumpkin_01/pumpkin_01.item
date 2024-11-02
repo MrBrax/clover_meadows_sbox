@@ -1,0 +1,35 @@
+{
+  "Id": "pumpkin_01:4411413467518089944",
+  "Name": "Pumpkin 1",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "CanBeBuried": true,
+  "CanDrop": true,
+  "CanPlace": true,
+  "DisablePickup": false,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": null,
+  "DropScene": null,
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/seasonal/halloween/pumpkin_01/pumpkin_01.prefab"
+  },
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/seasonal/halloween/pumpkin_01/pumpkin_01.prefab"
+  },
+  "Icon": null,
+  "ObjectData": null,
+  "HideInSpawnMenu": false,
+  "PlaceModeOffset": "0,0,0",
+  "BaseBuyPrice": 0,
+  "CanSell": true,
+  "BaseSellPrice": 0,
+  "CanBuy": true,
+  "GetCustomSellPrice": null,
+  "GetCustomBuyPrice": null,
+  "__references": [],
+  "__version": 0
+}

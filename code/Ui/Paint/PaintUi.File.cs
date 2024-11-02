@@ -46,10 +46,11 @@ public partial class PaintUi
 			return;
 		}
 
-		OpenPaint( PaintMode.Decal, decal.Width, decal.Height, false );
+		OpenPaint( PaintType.Decal, decal.Width, decal.Height, false );
 
 		CurrentName = decal.Name;
-		PaletteName = decal.Palette;
+		SetPalette( decal.Palette );
+		_currentPaintType = decal.PaintType;
 		CurrentDecalData = decal;
 		CurrentFileName = Path.GetFileNameWithoutExtension( fileName );
 		DrawTexture.Update( decal.Texture.GetPixels(), 0, 0, decal.Width, decal.Height );
@@ -150,6 +151,7 @@ public partial class PaintUi
 			{
 				Width = DrawTexture.Width,
 				Height = DrawTexture.Height,
+				PaintType = _currentPaintType,
 				Name = CurrentName,
 				Palette = PaletteName,
 				Image = DrawTextureData,

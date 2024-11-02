@@ -9,8 +9,10 @@ namespace Clover.Items;
 public class DecalItem : Component, IPersistent, IPaintEvent
 {
 	private Decals.DecalData _decalData;
+	protected Texture DecalTexture;
 
 	private string _texturePath;
+
 
 	[Sync]
 	public string TexturePath
@@ -36,8 +38,9 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 			if ( FileSystem.Data.FileExists( $"decalcache/{DecalHash}.decal" ) )
 			{
 				_decalData = Decals.ReadDecal( $"decalcache/{DecalHash}.decal" );
+				DecalTexture = Decals.GetDecalTexture( _decalData.ToRpc() );
 				var material1 = Material.Create( $"{DecalHash}.vmat", "shaders/floor_decal.shader" );
-				material1.Set( "Color", Decals.GetDecalTexture( _decalData.ToRpc() ) );
+				material1.Set( "Color", DecalTexture );
 				// ModelRenderer.MaterialOverride = material1;
 				OnMaterialUpdate( material1 );
 				Log.Info( $"Updated cached decal '{_decalData.Name}' with texture: {TexturePath}" );
@@ -60,6 +63,8 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 			Log.Error( e.Message );
 			return;
 		}
+
+		DecalTexture = _decalData.Texture;
 
 		material.Set( "Color", _decalData.Texture );
 
@@ -158,7 +163,7 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 			RecieveDecal( path, _decalData.ToRpc() );
 		}
 	}
-	
+
 	[ConCmd( "clover_delete_old_decals" )]
 	public static void DeleteOldDecals()
 	{
