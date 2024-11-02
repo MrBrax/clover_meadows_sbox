@@ -571,11 +571,11 @@
             "Feathering": 0.02,
             "FrameInterval": 5,
             "MaxDistance": 512,
-            "MultiBounce": false,
+            "MultiBounce": true,
             "Projection": "Box",
             "RenderDynamically": true,
             "TintColor": "1,1,1,1",
-            "UpdateStrategy": "FrameInterval",
+            "UpdateStrategy": "OnEnabled",
             "ZFar": 4096,
             "ZNear": 16
           }
