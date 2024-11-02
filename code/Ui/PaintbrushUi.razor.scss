@@ -52,6 +52,9 @@ PaintbrushUi {
                     border: 5px solid transparent;
                     border-radius: 20px;
                     image-rendering: pixelated;
+                    background-position: center;
+                    background-size: contain;
+                    background-repeat: no-repeat;
                     opacity: 0.9;
                 }
 

@@ -142,12 +142,12 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 	{
 	}
 
-	public void OnSave( PersistentItem item )
+	public virtual void OnSave( PersistentItem item )
 	{
 		item.SetArbitraryData( "TexturePath", TexturePath );
 	}
 
-	public void OnLoad( PersistentItem item )
+	public virtual void OnLoad( PersistentItem item )
 	{
 		TexturePath = item.GetArbitraryData<string>( "TexturePath" );
 		// UpdateDecal();

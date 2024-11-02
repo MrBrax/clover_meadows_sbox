@@ -25,6 +25,7 @@ public partial class PaintUi
 		Decal = 1,
 		Pumpkin = 2,
 		Image = 3,
+		Snowman = 4,
 	}
 
 	public enum PaintTool

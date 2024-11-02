@@ -12,7 +12,7 @@ public sealed partial class World
 	/// </summary>
 	/// <param name="gridPos">The grid position to retrieve items from.</param>
 	/// <returns>An enumerable collection of WorldNodeLink items at the specified grid position.</returns>
-	public IEnumerable<WorldNodeLink> GetItems( Vector2Int gridPos )
+	public IEnumerable<WorldNodeLink> GetItems( Vector2Int gridPos, float radius = 16f )
 	{
 		if ( !Networking.IsHost )
 		{
@@ -26,7 +26,8 @@ public sealed partial class World
 
 		// TODO: rework for new system
 		var w = ItemGridToWorld( gridPos );
-		return Items.Where( x => x.WorldPosition.Distance( w ) < GridSize );
+
+		return Items.Where( x => x.WorldPosition.Distance( w ) < radius );
 	}
 
 	public IEnumerable<WorldNodeLink> GetItems( Vector3 worldPos, float radius = 16f )
@@ -39,6 +40,11 @@ public sealed partial class World
 		return Items.Where( x => x.WorldPosition.Distance( worldPos ) < radius );
 	}
 
+	public T GetItem<T>( Vector2Int gridPos, float radius = 16f ) where T : Component
+	{
+		return GetItems( gridPos, radius ).Select( x => x.Node.GetComponent<T>() ).FirstOrDefault();
+	}
+
 	public bool IsPositionOccupied( Vector2Int gridPos )
 	{
 		return GetItems( gridPos ).Any();
@@ -48,7 +54,7 @@ public sealed partial class World
 	{
 		return GetItems( worldPos, radius ).Any();
 	}
-	
+
 	public bool IsPositionOccupied( Vector3 endPosition, GameObject ignoreMe, float f )
 	{
 		return Items.Any( x => x.Node != ignoreMe && x.WorldPosition.Distance( endPosition ) < f );
@@ -92,6 +98,4 @@ public sealed partial class World
 		return Items.FirstOrDefault( x =>
 			x.WorldPosition == ItemGridToWorld( gridPos ) && x.Node.GetComponent<T>() != null );
 	}
-
-	
 }

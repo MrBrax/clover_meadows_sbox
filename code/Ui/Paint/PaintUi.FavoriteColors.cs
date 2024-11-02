@@ -67,6 +67,23 @@ public partial class PaintUi
 
 	private void FavoriteEditorColorButtonClick( PanelEvent e, int colorIndex )
 	{
+		if ( SelectedFavorite == -1 )
+		{
+			Log.Error( "No favorite selected" );
+		}
+
+		if ( colorIndex < 0 || colorIndex >= Palette.Count )
+		{
+			Log.Error( $"Invalid color index: {colorIndex}" );
+			return;
+		}
+
+		if ( SelectedFavorite < 0 || SelectedFavorite >= FavoriteColors.Length )
+		{
+			Log.Error( $"Invalid favorite index: {SelectedFavorite}" );
+			return;
+		}
+
 		FavoriteColors[SelectedFavorite] = (byte)colorIndex;
 	}
 

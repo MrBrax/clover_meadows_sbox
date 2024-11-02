@@ -302,15 +302,20 @@ public sealed partial class World : Component
 		Gizmo.Transform = new Transform( WorldPosition );
 		// Log.Info( WorldId + ": " + WorldPosition  );
 
+		foreach ( var item in Items )
+		{
+			Gizmo.Draw.Text( $"{item.GridPosition} ({item.GetName()})",
+				new Transform( ItemGridToWorld( item.GridPosition ) ) );
+
+			Gizmo.Draw.LineSphere( item.WorldPosition, 8f );
+		}
+
 		/*foreach ( var pos in _blockedTiles )
 		{
 			Gizmo.Draw.Text( pos.ToString(), new Transform( ItemGridToWorld( pos ) ) );
 		}
 
-		foreach ( var item in Items.Values.SelectMany( x => x.Values ) )
-		{
-			Gizmo.Draw.Text( item.GridPosition.ToString(), new Transform( ItemGridToWorld( item.GridPosition ) ) );
-		}*/
+		*/
 
 		/*var i = 0;
 		foreach ( var item in _nodeLinkGridMap )

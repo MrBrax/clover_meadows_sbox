@@ -79,8 +79,8 @@ PS
 	CreateInputTexture2D( Emission, Srgb, 8, "None", "_color", ",0/,0/0", Default4( 1.00, 1.00, 1.00, 1.00 ) );
 	Texture2D g_tColor < Channel( RGBA, Box( Color ), Srgb ); OutputFormat( DXT5 ); SrgbRead( True ); >;
 	Texture2D g_tEmission < Channel( RGBA, Box( Emission ), Srgb ); OutputFormat( DXT5 ); SrgbRead( True ); >;
-	float4 g_vEmissionColor < UiType( Color ); UiGroup( ",0/,0/0" ); Default4( 0.63, 0.52, 0.26, 1.00 ); >;
-	float g_flEmissionStrength < UiGroup( ",0/,0/0" ); Default1( 30 ); Range1( 0, 30 ); >;
+	float g_flEmissionStrength < UiGroup( ",0/,0/0" ); Default1( 13.254586 ); Range1( 0, 30 ); >;
+	float4 g_vEmissionColor < UiType( Color ); UiGroup( ",0/,0/0" ); Default4( 0.93, 0.70, 0.17, 1.00 ); >;
 	
 	float4 MainPs( PixelInput i ) : SV_Target0
 	{
@@ -98,16 +98,14 @@ PS
 		float2 l_0 = i.vTextureCoords.xy * float2( 1, 1 );
 		float4 l_1 = Tex2DS( g_tColor, g_sSampler0, l_0 );
 		float4 l_2 = float4( 0, 0, 0, 1 );
-		float4 l_3 = g_vEmissionColor;
-		float4 l_4 = Tex2DS( g_tEmission, g_sSampler1, l_0 );
-		float l_5 = g_flEmissionStrength;
-		float l_6 = l_4.r * l_5;
-		float l_7 = l_6 + 0;
-		float4 l_8 = lerp( l_3, max( l_3, float4( l_7, l_7, l_7, l_7 ) ), 1 );
-		float4 l_9 = lerp( float4( l_2.r, l_2.r, l_2.r, l_2.r ), l_8, l_4.r );
+		float l_3 = g_flEmissionStrength;
+		float4 l_4 = g_vEmissionColor;
+		float4 l_5 = lerp( float4( l_3, l_3, l_3, l_3 ), float4( l_3, l_3, l_3, l_3 )*l_4, 1 );
+		float4 l_6 = Tex2DS( g_tEmission, g_sSampler1, l_0 );
+		float4 l_7 = lerp( float4( l_2.r, l_2.r, l_2.r, l_2.r ), l_5, l_6.r );
 		
 		m.Albedo = l_1.xyz;
-		m.Emission = l_9.xyz;
+		m.Emission = l_7.xyz;
 		m.Opacity = 1;
 		m.Roughness = 1;
 		m.Metalness = 0;

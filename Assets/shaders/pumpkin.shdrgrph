@@ -10,13 +10,13 @@
       "DefaultMetalness": 0,
       "DefaultAmbientOcclusion": 1,
       "Identifier": "0",
-      "Position": "1116,-132",
+      "Position": "1248,-132",
       "Albedo": {
         "Identifier": "1",
         "Output": "Result"
       },
       "Emission": {
-        "Identifier": "16",
+        "Identifier": "15",
         "Output": "Result"
       }
     },
@@ -82,7 +82,7 @@
       "_class": "Float",
       "Min": 0,
       "Max": 30,
-      "Value": 30,
+      "Value": 13.254586,
       "Name": "EmissionStrength",
       "IsAttribute": false,
       "UI": {},
@@ -91,7 +91,7 @@
     },
     {
       "_class": "Float4",
-      "Value": "0.63256,0.52223,0.26479,1",
+      "Value": "0.93023,0.70178,0.16874,1",
       "Name": "EmissionColor",
       "IsAttribute": false,
       "UI": {
@@ -107,7 +107,7 @@
       "Identifier": "7",
       "Position": "-120,504",
       "A": {
-        "Identifier": "20",
+        "Identifier": "19",
         "Output": "Result"
       }
     },
@@ -146,41 +146,30 @@
       "Position": "-768,468"
     },
     {
-      "_class": "Add",
-      "DefaultA": 0,
-      "DefaultB": 0,
-      "Identifier": "11",
-      "Position": "432,144",
-      "A": {
-        "Identifier": "4",
-        "Output": "Result"
-      }
-    },
-    {
       "_class": "Multiply",
       "DefaultA": 0,
       "DefaultB": 3,
-      "Identifier": "12",
+      "Identifier": "11",
       "Position": "288,360",
       "A": {
         "Identifier": "9",
         "Output": "Result"
       },
       "B": {
-        "Identifier": "17",
+        "Identifier": "16",
         "Output": "Result"
       }
     },
     {
       "_class": "WorldPosition",
-      "Identifier": "13",
+      "Identifier": "12",
       "Position": "-1620,504"
     },
     {
       "_class": "Multiply",
       "DefaultA": 0,
       "DefaultB": 100,
-      "Identifier": "14",
+      "Identifier": "13",
       "Position": "-432,468",
       "A": {
         "Identifier": "10",
@@ -189,10 +178,10 @@
     },
     {
       "_class": "SplitVector",
-      "Identifier": "15",
+      "Identifier": "14",
       "Position": "-1380,504",
       "Input": {
-        "Identifier": "13",
+        "Identifier": "12",
         "Output": "Result"
       }
     },
@@ -201,14 +190,14 @@
       "Fraction": 0.5,
       "BlendMode": "Mix",
       "Clamp": false,
-      "Identifier": "16",
+      "Identifier": "15",
       "Position": "852,-72",
       "A": {
-        "Identifier": "18",
+        "Identifier": "17",
         "Output": "R"
       },
       "B": {
-        "Identifier": "19",
+        "Identifier": "18",
         "Output": "Result"
       },
       "C": {
@@ -224,7 +213,7 @@
       "Name": "",
       "IsAttribute": false,
       "UI": {},
-      "Identifier": "17",
+      "Identifier": "16",
       "Position": "0,588"
     },
     {
@@ -235,22 +224,22 @@
       "UI": {
         "Type": "Color"
       },
-      "Identifier": "18",
+      "Identifier": "17",
       "Position": "348,-300"
     },
     {
       "_class": "Blend",
       "Fraction": 1,
-      "BlendMode": "Lighten",
+      "BlendMode": "Multiply",
       "Clamp": false,
-      "Identifier": "19",
-      "Position": "612,60",
+      "Identifier": "18",
+      "Position": "516,144",
       "A": {
-        "Identifier": "6",
+        "Identifier": "5",
         "Output": "Result"
       },
       "B": {
-        "Identifier": "11",
+        "Identifier": "6",
         "Output": "Result"
       }
     },
@@ -258,14 +247,14 @@
       "_class": "Add",
       "DefaultA": 0,
       "DefaultB": 1,
-      "Identifier": "20",
+      "Identifier": "19",
       "Position": "-276,516",
       "A": {
-        "Identifier": "14",
+        "Identifier": "13",
         "Output": "Result"
       },
       "B": {
-        "Identifier": "21",
+        "Identifier": "20",
         "Output": "Result"
       }
     },
@@ -273,14 +262,14 @@
       "_class": "Step",
       "DefaultInput": 0,
       "DefaultEdge": 0,
-      "Identifier": "21",
+      "Identifier": "20",
       "Position": "-612,612",
       "Input": {
-        "Identifier": "23",
+        "Identifier": "22",
         "Output": "Result"
       },
       "Edge": {
-        "Identifier": "22",
+        "Identifier": "21",
         "Output": "Result"
       }
     },
@@ -292,37 +281,37 @@
       "Name": "",
       "IsAttribute": false,
       "UI": {},
-      "Identifier": "22",
+      "Identifier": "21",
       "Position": "-900,732"
     },
     {
       "_class": "Multiply",
       "DefaultA": 0,
       "DefaultB": 500,
-      "Identifier": "23",
+      "Identifier": "22",
       "Position": "-744,600",
       "A": {
-        "Identifier": "26",
+        "Identifier": "25",
         "Output": "Result"
       }
     },
     {
       "_class": "ScreenPosition",
-      "Identifier": "24",
+      "Identifier": "23",
       "Position": "-696,264"
     },
     {
       "_class": "Mod",
       "DefaultA": 0.20003127,
       "DefaultB": 94.200005,
-      "Identifier": "25",
+      "Identifier": "24",
       "Position": "-1128,540",
       "A": {
-        "Identifier": "15",
+        "Identifier": "14",
         "Output": "X"
       },
       "B": {
-        "Identifier": "15",
+        "Identifier": "14",
         "Output": "Z"
       }
     },
@@ -334,10 +323,10 @@
       "OutMin": 0,
       "OutMax": 1,
       "Clamp": true,
-      "Identifier": "26",
+      "Identifier": "25",
       "Position": "-984,444",
       "A": {
-        "Identifier": "25",
+        "Identifier": "24",
         "Output": "Result"
       }
     }

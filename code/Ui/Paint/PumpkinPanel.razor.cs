@@ -34,7 +34,7 @@ public partial class PumpkinPanel : Panel
 		_pumpkin = new SceneModel( _sceneWorld, "items/seasonal/halloween/pumpkin_01/pumpkin_01.vmdl",
 			new Transform( Vector3.Zero, Rotation.From( 0, _yaw, 0 ) ) );
 
-		_sceneWorld.AmbientLightColor = Color.Red;
+		_sceneWorld.AmbientLightColor = Color.White;
 
 		_scenePanel.World = _sceneWorld;
 		_scenePanel.Camera.FieldOfView = 20f;

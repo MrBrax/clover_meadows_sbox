@@ -1,0 +1,130 @@
+{
+  "RootObject": {
+    "__guid": "f95f140f-0d97-4ecc-b9e9-1b748896f978",
+    "Flags": 0,
+    "Name": "snowman_piece",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.SnowmanPiece",
+        "__guid": "afc84231-0859-431a-acef-410a8e9d3bf3",
+        "ModelRenderer": {
+          "_type": "component",
+          "component_id": "f5b203e8-703f-426a-8a24-66e63d9e5a8d",
+          "go": "0cd85f76-7efd-4643-876e-e6a8814c3de7",
+          "component_type": "ModelRenderer"
+        },
+        "PieceType": "Small"
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "c7b7ebd3-d240-4f98-8782-271dc054edd4",
+        "CanPickupSimple": true,
+        "ItemData": "items/seasonal/winter/snowman_piece/snowman_piece.item",
+        "PlaceModeOffset": "0,0,0",
+        "Prefab": "items/seasonal/winter/snowman_piece/snowman_piece.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "576d1c1e-4bdb-4fe9-8b9a-d9b0e98b96ac"
+      },
+      {
+        "__type": "Clover.Interactable.ItemHighlight",
+        "__guid": "39ef7719-2f3f-41b0-af3d-a96b0ea4d06f",
+        "__enabled": false,
+        "Color": "1,1,1,1",
+        "InsideColor": "0,0,0,0",
+        "InsideObscuredColor": "0,0,0,0",
+        "ObscuredColor": "0,0,0,0.4",
+        "Width": 0.25
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "1dd11c6d-d1ad-41d0-bac0-0ddfa7cde803",
+        "Center": "0,0,8",
+        "IsTrigger": false,
+        "Scale": "16,16,16",
+        "Static": false,
+        "SurfaceVelocity": "0,0,0"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "0cd85f76-7efd-4643-876e-e6a8814c3de7",
+        "Flags": 0,
+        "Name": "snowman_piece",
+        "Position": "0,0,38.11757",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "f5b203e8-703f-426a-8a24-66e63d9e5a8d",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/seasonal/winter/snowman_piece/snowman_piece.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "fdba497f-cfba-43c1-bff0-02129b0487cb",
+        "Flags": 0,
+        "Name": "snowman_body",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "10731818-1867-44ad-b6dd-3db319509e4a",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/seasonal/winter/snowman_body/snowman_body.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

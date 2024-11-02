@@ -54,6 +54,22 @@ public class Paintbrush : BaseCarriable
 
 				return;
 			}
+
+			if ( itemCollider.GameObject.Components.TryGet<SnowmanPiece>( out var snowmanPiece ) )
+			{
+				if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) )
+				{
+					Player.Notify( Notifications.NotificationType.Error, "No texture selected" );
+					return;
+				}
+
+				snowmanPiece.TexturePath = CurrentTexturePath;
+
+				SoundEx.Play( PaintSound, Player.WorldPosition );
+				ParticleManager.PoofAt( snowmanPiece.WorldPosition );
+
+				return;
+			}
 		}
 
 		var pos = Player.GetAimingGridPosition();
@@ -64,24 +80,24 @@ public class Paintbrush : BaseCarriable
 			return;
 		}
 
-		var item = Player.World.GetItems( pos ).FirstOrDefault();
+		var item = Player.World.GetItem<FloorDecal>( pos, 16f );
 
-		if ( item != null && item.Node.Components.TryGet<FloorDecal>( out var floorDecal ) )
+		if ( item != null )
 		{
-			if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) || CurrentTexturePath == floorDecal.TexturePath )
+			if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) || CurrentTexturePath == item.TexturePath )
 			{
-				Log.Info( "Removing decal" );
-				item.Remove();
+				Log.Info( $"Removing decal {item.TexturePath}" );
+				item.WorldItem.NodeLink.Remove();
 			}
 			else
 			{
-				Log.Info( "Updating decal" );
-				floorDecal.TexturePath = CurrentTexturePath;
-				floorDecal.UpdateDecal();
+				Log.Info( $"Updating decal {item.TexturePath} -> {CurrentTexturePath}" );
+				item.TexturePath = CurrentTexturePath;
+				item.UpdateDecal();
 			}
 
 			SoundEx.Play( PaintSound, Player.WorldPosition );
-			ParticleManager.PoofAt( floorDecal.WorldPosition );
+			ParticleManager.PoofAt( item.WorldPosition );
 		}
 		else
 		{
@@ -93,6 +109,8 @@ public class Paintbrush : BaseCarriable
 
 			var playerRotation = World.GetItemRotationFromDirection(
 				World.Get4Direction( Player.PlayerController.Yaw ) );
+
+			Log.Info( $"Spawning decal at {pos} with texture {CurrentTexturePath}" );
 
 			/*var newItem = PersistentItem.Create<Persistence.FloorDecal>( Data.ItemData.GetById( "floor_decal" ) );
 			if ( newItem == null ) throw new System.Exception( "Failed to create floor decal" );

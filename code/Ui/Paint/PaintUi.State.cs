@@ -47,6 +47,18 @@ public partial class PaintUi
 
 	private void PushUndo()
 	{
+		if ( DrawTextureData == null )
+		{
+			Log.Error( "DrawTextureData is null" );
+			return;
+		}
+
+		if ( DrawTextureData.Length == 0 )
+		{
+			Log.Error( "DrawTextureData is empty" );
+			return;
+		}
+
 		UndoStack.Push( DrawTextureData.ToArray() );
 		Log.Info( $"PUSHED UNDO | Size: {UndoStack.Count}" );
 		UndoStack.TrimExcess();
