@@ -107,7 +107,7 @@ public partial class PaintUi
 	private float MinCanvasZoom = 0.1f;
 	private float MaxCanvasZoom = 20f;
 
-	private int CanvasSize;
+	// private int CanvasSize;
 
 	private static int FavoriteColorAmount = 40;
 
@@ -458,7 +458,8 @@ public partial class PaintUi
 
 	private void DrawCrosshair( Vector2Int brushPosition )
 	{
-		var texturePixelScreenSize = CanvasSize / TextureSize.y;
+		// var texturePixelScreenSize = CanvasSize / TextureSize.y;
+		var texturePixelScreenSize = DrawTexture.Width * CanvasZoom / TextureSize.x;
 
 		var crosshairRound = false;
 
@@ -708,7 +709,7 @@ public partial class PaintUi
 
 		Log.Info( $"Zooming to {CanvasZoom}" );
 
-		CanvasSize = (int)Math.Round( (BaseCanvasSize * CanvasZoom).SnapToGrid( 32 ) );
+		// CanvasSize = (int)Math.Round( (BaseCanvasSize * CanvasZoom).SnapToGrid( 32 ) );
 
 		UpdateCanvas();
 	}
