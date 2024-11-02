@@ -8,6 +8,7 @@ using Clover.Npc;
 using Clover.Persistence;
 using Clover.Player;
 using Clover.Ui;
+using Sandbox.Diagnostics;
 
 namespace Clover.WorldBuilder;
 
@@ -183,7 +184,9 @@ public class ShopManager : Component
 			return;
 		}
 
-		CameraMan.Instance.Targets.Add( ShopClerk.GameObject );
+		Assert.NotNull( ShopClerk, "ShopClerk is not set." );
+
+		CameraMan.Instance?.AddTarget( ShopClerk.GameObject );
 
 		var window = DialogueManager.Instance.DialogueWindow;
 
@@ -209,7 +212,7 @@ public class ShopManager : Component
 		window.OnDialogueEnd += () =>
 		{
 			ShopClerk.SetState( BaseNpc.NpcState.Idle );
-			CameraMan.Instance.Targets.Remove( ShopClerk.GameObject );
+			CameraMan.Instance.RemoveTarget( ShopClerk.GameObject );
 		};
 	}
 

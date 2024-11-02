@@ -5,19 +5,18 @@ namespace Clover.Objects;
 
 public class FishingBobber : Component
 {
-	
 	[Property] public SoundEvent SplashSound { get; set; }
-	
+
 	[Property] public SkinnedModelRenderer Bobber { get; set; }
-	
+
 	[Property] public GameObject Tip { get; set; }
 
 	public CatchableFish Fish;
 
 	public FishingRod Rod;
-	
+
 	public bool IsInWater { get; set; }
-	
+
 	// private TimeSince _lastNibble;
 
 	public void OnHitWater()
@@ -28,32 +27,32 @@ public class FishingBobber : Component
 		// Bobber.Set("anim", 0);
 		// Bobber.Set("bobbing", true);
 		IsInWater = true;
-		
+
 		// Bobber.SceneModel.DirectPlayback.Play( "bobbing" );
 		// Log.Info( string.Join(",", Bobber.SceneModel.DirectPlayback.Animations ));
 	}
 
 	public void OnNibble()
 	{
-		Bobber.Set("nibble", true);
+		Bobber.Set( "nibble", true );
 	}
-	
+
 	public void OnFight()
 	{
-		Bobber.Set("fight", true);
+		Bobber.Set( "fight", true );
 	}
 
 	protected override void OnDestroy()
 	{
 		base.OnDestroy();
-		
-		CameraMan.Instance?.Targets.Remove( GameObject );
+
+		CameraMan.Instance?.RemoveTarget( GameObject );
 	}
 
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
-		
+
 		if ( !IsInWater )
 			return;
 

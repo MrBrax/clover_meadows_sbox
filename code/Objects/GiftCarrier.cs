@@ -117,7 +117,7 @@ public class GiftCarrier : Component, IShootable
 
 		// SpawnGift( endPosWorld );
 
-		CameraMan.Instance.Targets.Add( giftModel );
+		CameraMan.Instance.AddTarget( giftModel );
 
 		var tween = TweenManager.CreateTween();
 		tween.AddPosition( giftModel, endPosWorld, 2f ).SetEasing( Sandbox.Utility.Easing.BounceOut );

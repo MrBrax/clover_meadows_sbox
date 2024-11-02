@@ -280,7 +280,7 @@ public class FishingRod : BaseCarriable
 			Bobber.WorldPosition = LineStartPoint.WorldPosition;
 			Bobber.WorldRotation = Rotation.FromYaw( Player.Model.WorldRotation.Yaw() );
 
-			CameraMan.Instance.Targets.Add( Bobber.GameObject );
+			CameraMan.Instance.AddTarget( Bobber.GameObject );
 
 			Bobber.GameObject.NetworkSpawn();
 

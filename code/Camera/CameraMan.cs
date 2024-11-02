@@ -12,7 +12,7 @@ public sealed class CameraMan : Component
 
 	[Property] public GameObject CameraPrefab { get; set; }
 
-	public HashSet<GameObject> Targets { get; set; } = new();
+	public HashSet<GameObject> Targets { get; private set; } = new();
 
 	private IEnumerable<CameraNode> _cameraNodes => Scene.GetAllComponents<CameraNode>().Where( x => !x.IsProxy );
 
@@ -158,7 +158,7 @@ public sealed class CameraMan : Component
 		{
 			if ( !target.IsValid() )
 			{
-				Targets.Remove( target );
+				RemoveTarget( target );
 				continue;
 			}
 
@@ -172,5 +172,15 @@ public sealed class CameraMan : Component
 	{
 		_positionLerp = transformPosition;
 		_rotationLerp = transformRotation;
+	}
+
+	public void AddTarget( GameObject gameObject )
+	{
+		Targets.Add( gameObject );
+	}
+
+	public void RemoveTarget( GameObject gameObject )
+	{
+		Targets.Remove( gameObject );
 	}
 }

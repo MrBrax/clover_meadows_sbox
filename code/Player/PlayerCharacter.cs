@@ -64,7 +64,7 @@ public sealed partial class PlayerCharacter : Component
 
 		_ = Fader.Instance.FadeFromBlack();
 
-		CameraMan.Instance.Targets.Add( GameObject );
+		CameraMan.Instance.AddTarget( GameObject );
 
 		MainUi.Instance.LastInput = 0;
 	}
