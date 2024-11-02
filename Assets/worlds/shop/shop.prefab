@@ -295,42 +295,47 @@
             "Displays": [
               {
                 "_type": "component",
-                "component_id": "54871707-bcc6-41e4-9af3-339f9591d130",
+                "component_id": "b3fa23c9-d6c7-48d3-9ec3-5b2a89e6822f",
                 "go": "b664a362-cc2c-4654-916b-49a642d2dbfd",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "c19d6e3b-b844-4541-9752-9f9db9d3952f",
+                "component_id": "ac2d53db-fc47-4599-ab95-0ccdc9043be6",
                 "go": "48205435-d897-40bc-8c65-b3380d408850",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "88befc71-e8a3-404a-ad90-1ca802a1334c",
+                "component_id": "41426cc0-075d-45fb-9920-85c570d77b93",
                 "go": "47e84f87-91d0-4a14-9701-aca88304b704",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "b6790e9c-be50-4a6b-ba42-1d49be680769",
+                "component_id": "a5d3e9d3-9fcd-4187-a63c-24511d132970",
                 "go": "daa05fcf-c2b3-494d-a4a3-f37dc453e630",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "cf1d5537-38a8-48fd-add4-9102a8d64ca9",
+                "component_id": "1e48e230-3eb0-4631-ba38-f06c22b55949",
                 "go": "b965aa8c-b7ab-4c1f-beec-c7024197316e",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "0f56c524-dc3c-491e-84fa-99148e1495c5",
+                "component_id": "e2e8e79a-4d89-43f9-b8eb-5614377788f8",
                 "go": "7c38a36a-7ade-4861-a119-ccf310e95b79",
                 "component_type": "ShopDisplay"
               }
             ],
-            "ShopClerk": null,
+            "ShopClerk": {
+              "_type": "component",
+              "component_id": "93b4c06b-a9b3-46d2-923c-d62933cf27b0",
+              "go": "1618499e-9729-429e-a00a-d61ee2b7978d",
+              "component_type": "ShopClerk"
+            },
             "StoreId": "shop"
           }
         ]
@@ -346,7 +351,30 @@
         "__PrefabVariables": {}
       }
     ],
-    "__variables": []
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
   },
   "ShowInMenu": false,
   "MenuPath": null,

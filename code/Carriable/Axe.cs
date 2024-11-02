@@ -1,5 +1,7 @@
-﻿using Braxnet;
+﻿using System;
+using Braxnet;
 using Clover.Items;
+using Clover.Ui;
 
 namespace Clover.Carriable;
 
@@ -26,7 +28,17 @@ public class Axe : BaseCarriable
 
 		var pos = Player.GetAimingGridPosition();
 
-		var worldItems = Player.World.GetItems( pos ).ToList();
+		List<WorldNodeLink> worldItems;
+
+		try
+		{
+			worldItems = Player.World.GetItems( pos ).ToList();
+		}
+		catch ( Exception e )
+		{
+			Player.Notify( Notifications.NotificationType.Error, "Error getting items to axe" );
+			return;
+		}
 
 		if ( worldItems.Count == 0 )
 		{
