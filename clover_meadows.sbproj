@@ -5,7 +5,7 @@
   "Ident": "clovermeadows",
   "Schema": 1,
   "IncludeSourceFiles": false,
-  "Resources": "/ui/*png\n/items/*.png\n/materials/palettes/*.png",
+  "Resources": "/ui/*png\n/items/*.png\n/materials/palettes/*.png\n/items/seasonal/pumpkin_01/*.vmat",
   "PackageReferences": [],
   "EditorReferences": null,
   "IsWhitelistDisabled": false,

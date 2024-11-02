@@ -13,7 +13,9 @@
           "component_id": "33f2ff65-2af5-456c-ba90-3e3e050ef8dc",
           "go": "0045914f-422e-4a19-969c-b8aa4e353b99",
           "component_type": "ModelRenderer"
-        }
+        },
+        "PumpkinColor": "items/seasonal/halloween/pumpkin_01/pumpkin_body.png",
+        "PumpkinMaterial": "items/seasonal/halloween/pumpkin_01/pumpkin_body.vmat"
       },
       {
         "__type": "Clover.Items.WorldItem",
@@ -84,7 +86,7 @@
             "Attenuation": 1,
             "FogMode": "Enabled",
             "FogStrength": 1,
-            "LightColor": "0.87169,0.90233,0.28958,1",
+            "LightColor": "0.51889,0.53023,0.30334,0.29",
             "Radius": 400,
             "Shadows": true
           }
