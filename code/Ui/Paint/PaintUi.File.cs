@@ -51,10 +51,14 @@ public partial class PaintUi
 		CurrentName = decal.Name;
 		SetPalette( decal.Palette );
 		_currentPaintType = decal.PaintType;
+		Monochrome = decal.PaintType == PaintType.Pumpkin || decal.Palette == "monochrome";
 		CurrentDecalData = decal;
 		CurrentFileName = Path.GetFileNameWithoutExtension( fileName );
+
 		DrawTexture.Update( decal.Texture.GetPixels(), 0, 0, decal.Width, decal.Height );
 		DrawTextureData = decal.Image;
+
+		ZoomReset();
 	}
 
 	private static readonly string[] supportedImageTypes = new[] { ".png", ".jpg", ".jpeg", ".bmp", ".tga", ".webp" };
@@ -166,5 +170,11 @@ public partial class PaintUi
 		PopulateDecals();
 
 		Scene.RunEvent<IPaintEvent>( x => x.OnFileSaved( $"decals/{CurrentFileName}.decal" ) );
+	}
+
+	public void Open( string texturePath )
+	{
+		// TODO: actually load with the full path
+		LoadDecal( Path.GetFileNameWithoutExtension( texturePath ) );
 	}
 }

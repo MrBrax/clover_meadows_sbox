@@ -95,24 +95,27 @@
 						</section>
 					}
 
-					<section>
-						<h2 class="section-title">Palettes</h2>
-						<button @onclick=@( () => ShowPalettes = !ShowPalettes ) class="paint-button small">
-							<i class="icon">@( ShowPalettes ? "chevron_right" : "expand_more" )</i>
-							@PaletteName
-						</button>
-						@if ( ShowPalettes )
-						{
-							<dialog class="paint-popup">
-								@foreach ( var palette in Utilities.Decals.GetPalettes() )
-								{
-									<button @onclick=@( () => SetPalette( palette ) ) class="paint-button small @( palette == PaletteName ? "active" : "" )">
-										@palette
-									</button>
-								}
-							</dialog>
-						}
-					</section>
+					@if ( !Monochrome )
+					{
+						<section>
+							<h2 class="section-title">Palettes</h2>
+							<button @onclick=@( () => ShowPalettes = !ShowPalettes ) class="paint-button small">
+								<i class="icon">@( ShowPalettes ? "chevron_right" : "expand_more" )</i>
+								@PaletteName
+							</button>
+							@if ( ShowPalettes )
+							{
+								<dialog class="paint-popup">
+									@foreach ( var palette in Utilities.Decals.GetPalettes() )
+									{
+										<button @onclick=@( () => SetPalette( palette ) ) class="paint-button small @( palette == PaletteName ? "active" : "" )">
+											@palette
+										</button>
+									}
+								</dialog>
+							}
+						</section>
+					}
 
 					<section class="actions">
 						<h2 class="section-title">Actions</h2>
@@ -205,8 +208,8 @@
 											var color = Palette[index];
 											<button
 												class="color-button big"
-												@onmousedown=@( ( PanelEvent e ) => SetColor( e, index ) ))
-												@onclick=@( ( PanelEvent e ) => SetColor( e, index ) ))
+												@onmousedown=@( ( PanelEvent e ) => SetColor( e, index ) )
+												tooltip="@color.Hex"
 												style="background-color: @color.Hex">
 											</button>
 										}
@@ -227,7 +230,7 @@
 								<div class="decal-name">@decal.Decal.Name</div>
 							</button>
 						}
-						<button class="paint-button" @onclick=@( () => PopulateDecals() )>Refresh (@Decals.Count)</button>
+						<button class="paint-button" @onclick=@PopulateDecals>Refresh (@Decals.Count)</button>
 					</div>
 					<div class="images">
 						<h2 class="section-title">Import</h2>
@@ -238,7 +241,7 @@
 								<div class="image-name">@image.ResourceName</div>
 							</button>
 						}
-						<button class="paint-button" @onclick=@( () => PopulateImages() )>Refresh (@Images.Count)</button>
+						<button class="paint-button" @onclick=@PopulateImages>Refresh (@Images.Count)</button>
 					</div>
 				</div>
 			</div>

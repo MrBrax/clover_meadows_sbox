@@ -182,7 +182,16 @@ public partial class PaintUi
 		TextureSize = new Vector2Int( width, height );
 		Monochrome = monochrome;
 		Enabled = true;
-		ResetPaint();
+
+		if ( Monochrome )
+		{
+			SetPalette( "monochrome" );
+		}
+		else
+		{
+			SetPalette( "windows-95-256-colours-1x" );
+		}
+
 		InitialiseTexture();
 		LoadFavoriteColors();
 	}
@@ -216,8 +225,6 @@ public partial class PaintUi
 
 		InitialiseTexture();
 
-		ResetPaint();
-
 		Panel.ButtonInput = PanelInputType.UI;
 
 		Enabled = false;
@@ -241,21 +248,10 @@ public partial class PaintUi
 		RedoStack.Clear();
 		UndoStack.Clear();
 
-		switch ( _currentPaintType )
-		{
-			case PaintType.Decal:
-				ResetDecalPaint();
-				break;
-			case PaintType.Pumpkin:
-				ResetPumpkinPaint();
-				break;
-			/*case PaintMode.Image:
-				ResetImagePaint();
-				break;*/
-		}
+		ClearTexture();
 	}
 
-	private void ResetDecalPaint()
+	/*private void ResetDecalPaint()
 	{
 		Log.Info( "[Paint] Reset" );
 
@@ -285,11 +281,12 @@ public partial class PaintUi
 
 		UpdateCanvas();
 		Clear();
-	}
+	}*/
 
 	private void New()
 	{
 		Log.Info( "[Paint] New" );
+
 		ResetPaint();
 	}
 
@@ -299,7 +296,7 @@ public partial class PaintUi
 
 		DrawTexture = Texture.Create( TextureSize.x, TextureSize.y ).WithDynamicUsage().Finish();
 		DrawTextureData = new byte[TextureSize.x * TextureSize.y];
-		Clear();
+		ClearTexture();
 
 		UndoStack = new();
 
@@ -339,6 +336,8 @@ public partial class PaintUi
 			Log.Warning( "Event is not MousePanelEvent" );
 			return;
 		}
+
+		Log.Info( $"Setting color to {index}" );
 
 		if ( e.MouseButton == MouseButtons.Left )
 		{
@@ -750,7 +749,7 @@ public partial class PaintUi
 		PreviewTexture.Update( colors, x, y, width, height );
 	}
 
-	private void Clear()
+	private void ClearTexture()
 	{
 		if ( DrawTexture.IsValid() && DrawTextureData != null )
 		{
@@ -841,6 +840,18 @@ public partial class PaintUi
 		if ( !CanvasImage.IsValid() )
 		{
 			Log.Warning( "CanvasImage is not valid" );
+
+			Task.Frame().ContinueWith( _ =>
+			{
+				if ( !CanvasImage.IsValid() )
+				{
+					Log.Warning( "CanvasImage is still not valid" );
+					return;
+				}
+
+				UpdateCanvas();
+			} );
+
 			return;
 		}
 

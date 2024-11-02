@@ -58,7 +58,15 @@ public class Pumpkin : DecalItem, IInteract
 
 	public void StartInteract( PlayerCharacter player )
 	{
-		MainUi.Instance.Components.Get<PaintUi>( true ).OpenPaint( PaintUi.PaintType.Pumpkin, 64, 32, true );
+		// MainUi.Instance.Components.Get<PaintUi>( true ).OpenPaint( PaintUi.PaintType.Pumpkin, 128, 64, true );
+		if ( string.IsNullOrEmpty( TexturePath ) )
+		{
+			MainUi.Instance.Components.Get<PaintUi>( true ).OpenPaint( PaintUi.PaintType.Pumpkin, 128, 64, true );
+		}
+		else
+		{
+			MainUi.Instance.Components.Get<PaintUi>( true ).Open( TexturePath );
+		}
 	}
 
 	public string GetInteractName()
