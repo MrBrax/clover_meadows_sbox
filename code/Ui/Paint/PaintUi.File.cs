@@ -46,6 +46,8 @@ public partial class PaintUi
 			return;
 		}
 
+		OpenPaint( PaintMode.Decal, decal.Width, decal.Height, false );
+
 		CurrentName = decal.Name;
 		PaletteName = decal.Palette;
 		CurrentDecalData = decal;

@@ -24,7 +24,7 @@
 					<div>@decal.FileName</div>
 				</button>
 			}
-			<button class="icon-button" @onclick=@( () => MainUi.Instance.Components.Get<PaintUi>( true ).Enabled = true )>
+			<button class="icon-button" @onclick=@OpenPaintMode>
 				<i class="icon">edit</i>
 				<div>Paint</div>
 			</button>

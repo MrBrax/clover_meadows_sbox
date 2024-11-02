@@ -18,6 +18,14 @@ public partial class PaintUi
 		public string FileName;
 	}
 
+	// TODO: maybe don't hardcode this
+	public enum PaintMode
+	{
+		Decal,
+		Pumpkin,
+		Image,
+	}
+
 	public enum PaintTool
 	{
 		Pencil,
@@ -56,6 +64,8 @@ public partial class PaintUi
 		}
 	}
 
+	private PaintMode _currentMode = PaintMode.Decal;
+
 	private List<DecalEntry> Decals = new();
 	private List<Texture> Images = new();
 
@@ -74,6 +84,8 @@ public partial class PaintUi
 	private Panel Crosshair;
 	private Panel PreviewOverlay;
 
+	private bool Monochrome = false;
+
 	private string PaletteName = "windows-95-256-colours-1x";
 	private List<Color32> Palette = new();
 
@@ -91,9 +103,9 @@ public partial class PaintUi
 	private Vector2Int TextureSize = new(32, 32);
 
 	private int BaseCanvasSize = 512;
-	private float CanvasZoom = 1.0f;
+	private float CanvasZoom = 10.0f;
 	private float MinCanvasZoom = 0.1f;
-	private float MaxCanvasZoom = 2.5f;
+	private float MaxCanvasZoom = 20f;
 
 	private int CanvasSize;
 
@@ -151,9 +163,42 @@ public partial class PaintUi
 		return Palette[CurrentPaletteIndex];
 	}
 
-	public void OpenPaint( int width, bool height, bool monochrome )
+	public void OpenPaint( PaintMode mode, int width, int height, bool monochrome )
 	{
+		if ( !ValidateTextureSize( width, height ) )
+		{
+			Log.Error( "Invalid texture size" );
+			return;
+		}
+
+		_currentMode = mode;
+		TextureSize = new Vector2Int( width, height );
+		Monochrome = monochrome;
 		Enabled = true;
+		InitialiseTexture();
+		ResetPaint();
+		LoadFavoriteColors();
+	}
+
+	private static bool ValidateTextureSize( int width, int height )
+	{
+		if ( width < 1 || height < 1 )
+		{
+			return false;
+		}
+
+		if ( width > 1024 || height > 1024 )
+		{
+			return false;
+		}
+
+		// check if it's a power of 2 (thanks copilot)
+		if ( (width & (width - 1)) != 0 || (height & (height - 1)) != 0 )
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	protected override void OnStart()
@@ -189,7 +234,7 @@ public partial class PaintUi
 		CurrentFileName = "";
 		CurrentName = "";
 		// BrushSize = 1;
-		CanvasZoom = 1.0f;
+		ZoomReset();
 
 		_isDrawing = false;
 		_isMoving = false;
@@ -668,29 +713,6 @@ public partial class PaintUi
 		UpdateCanvas();
 	}
 
-	/*private Vector2 GetCanvasSquareOffset()
-	{
-		/*var canvasSquarePositionX = CanvasSquare.Style.Left.GetValueOrDefault().GetPixels( 1 );
-		var canvasSquarePositionY = CanvasSquare.Style.Top.GetValueOrDefault().GetPixels( 1 );#1#
-
-		var canvasSquarePositionX = CanvasSquare.Style.Left.GetValueOrDefault().GetPixels( 1 );
-		var canvasSquarePositionY = CanvasSquare.Style.Top.GetValueOrDefault().GetPixels( 1 );
-
-		return new Vector2( canvasSquarePositionX, canvasSquarePositionY );
-	}
-
-	private void SetCanvasSquareOffset( Vector2 offset )
-	{
-		CanvasSquare.Style.Top = Length.Pixels( offset.y );
-		CanvasSquare.Style.Left = Length.Pixels( offset.x );
-
-		// CanvasSquare.Style.Top = Length.Pixels( 0 );
-		// CanvasSquare.Style.Left = Length.Pixels( 0 );
-
-		// CanvasContainer.Style.PaddingLeft = Length.Pixels( offset.x * CanvasZoom );
-		// CanvasContainer.Style.PaddingTop = Length.Pixels( offset.y * CanvasZoom );
-	}*/
-
 	private void ZoomIn()
 	{
 		Zoom( 0.2f );
@@ -704,7 +726,7 @@ public partial class PaintUi
 	private void ZoomReset()
 	{
 		// CanvasSize = 512;
-		CanvasZoom = 1.0f;
+		CanvasZoom = 10.0f;
 		UpdateCanvas();
 	}
 
@@ -729,13 +751,11 @@ public partial class PaintUi
 
 	private void UpdateCanvas()
 	{
-		// var size = BaseCanvasSize * CanvasZoom;
+		// CanvasImage.Style.Width = Length.Pixels( CanvasSize );
+		// CanvasImage.Style.Height = Length.Pixels( CanvasSize );
 
-		CanvasImage.Style.Width = Length.Pixels( CanvasSize );
-		CanvasImage.Style.Height = Length.Pixels( CanvasSize );
-
-		// Grid.Style.Width = CanvasSize;
-		// Grid.Style.Height = CanvasSize;
+		CanvasImage.Style.Width = Length.Pixels( DrawTexture.Width * CanvasZoom );
+		CanvasImage.Style.Height = Length.Pixels( DrawTexture.Height * CanvasZoom );
 	}
 
 	private Color GetColorFromByte( byte index )
@@ -849,17 +869,36 @@ public partial class PaintUi
 			return sourcePixels;
 		}
 
+		// Old square code
+		/*var destinationPixels = new Color32[destinationSize * destinationSize];
+
+		var ratio = (float)destinationSize / sourceSize;
+
+		for ( var y = 0; y < destinationSize; y++ )
+		{
+			for ( var x = 0; x < destinationSize; x++ )
+			{
+				var sourceX = (int)(x / ratio);
+				var sourceY = (int)(y / ratio);
+
+				var sourceIndex = sourceX + sourceY * sourceSize;
+				var destinationIndex = x + y * destinationSize;
+
+				destinationPixels[destinationIndex] = sourcePixels[sourceIndex];
+			}
+		}*/
+
 		var destinationPixels = new Color32[destinationSize.x * destinationSize.y];
 
-		// var ratio = (float)destinationSize / sourceSize;
-		var ratio = (float)sourceSize.x / destinationSize.x;
+		var ratioX = (float)destinationSize.x / sourceSize.x;
+		var ratioY = (float)destinationSize.y / sourceSize.y;
 
 		for ( var y = 0; y < destinationSize.y; y++ )
 		{
 			for ( var x = 0; x < destinationSize.x; x++ )
 			{
-				var sourceX = (int)(x / ratio);
-				var sourceY = (int)(y / ratio);
+				var sourceX = (int)(x / ratioX);
+				var sourceY = (int)(y / ratioY);
 
 				var sourceIndex = sourceX + sourceY * sourceSize.x;
 				var destinationIndex = x + y * destinationSize.x;
@@ -867,6 +906,7 @@ public partial class PaintUi
 				destinationPixels[destinationIndex] = sourcePixels[sourceIndex];
 			}
 		}
+
 
 		return destinationPixels;
 	}

@@ -4,7 +4,8 @@ namespace Clover.Ui;
 
 public partial class GridRenderer
 {
-	[Property] public int TotalGridDivisions { get; set; } = 32;
+	// [Property] public int TotalGridDivisions { get; set; } = 32;
+	[Property] public Vector2Int TextureSize { get; set; } = new(32, 32);
 	[Property] public int GridDivisionSize { get; set; } = 8;
 	[Property] public int GridLineThickness { get; set; } = 1;
 
@@ -20,7 +21,7 @@ public partial class GridRenderer
 		var baseOffset = new Vector2( Box.Left, Box.Top );
 		var size = new Vector2( Box.Rect.Width, Box.Rect.Height );
 
-		var gridCellSize = size.x / TotalGridDivisions;
+		var gridCellSize = size.x / TextureSize.x;
 
 		/*
 			DRAWING USAGE:
@@ -47,7 +48,7 @@ public partial class GridRenderer
 		// bgAttribs.SetCombo( "D_BACKGROUND_IMAGE", 1 );
 
 		// Draw grid
-		for ( int i = 0; i < TotalGridDivisions; i++ )
+		for ( int i = 0; i < TextureSize.x; i++ )
 		{
 			var x = (int)(baseOffset.x + i * gridCellSize);
 			var y = (int)(baseOffset.y + i * gridCellSize);
@@ -55,12 +56,16 @@ public partial class GridRenderer
 			var color = i % GridDivisionSize == 0 ? GridColor : GridSubdivisionColor;
 
 			// Draw vertical line
+
 			Graphics.DrawQuad( new Rect( x, baseOffset.y, GridLineThickness, size.y ), _material, color,
 				bgAttribs );
 
-			// Draw horizontal line
-			Graphics.DrawQuad( new Rect( baseOffset.x, y, size.x, GridLineThickness ), _material, color,
-				bgAttribs );
+			if ( i < TextureSize.y )
+			{
+				// Draw horizontal line
+				Graphics.DrawQuad( new Rect( baseOffset.x, y, size.x, GridLineThickness ), _material, color,
+					bgAttribs );
+			}
 		}
 	}
 }

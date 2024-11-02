@@ -279,6 +279,8 @@ PaintUi {
                     width: 100px;
                     height: 100px;
                     background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
                     image-rendering: pixelated;
                 }
 
@@ -347,8 +349,8 @@ PaintUi {
 
         .canvas-texture {
             flex-shrink: 0;
-            width: 512px;
-            height: 512px;
+            // width: 512px;
+            // height: 512px;
             image-rendering: pixelated;
             transition: width 0.2s, height 0.2s;
             box-shadow: 5px 5px 10px #777;

@@ -69,4 +69,9 @@ public partial class PaintbrushUi : IPaintEvent, IEquipChanged
 	public void OnEquippedItemRemoved( GameObject owner, Equips.EquipSlot slot )
 	{
 	}
+
+	private void OpenPaintMode()
+	{
+		MainUi.Instance.Components.Get<PaintUi>( true ).OpenPaint( PaintUi.PaintMode.Decal, 64, 32, false );
+	}
 }
