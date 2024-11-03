@@ -4,6 +4,8 @@ namespace Clover.Interactable;
 
 public interface IInteract
 {
+	bool CanInteract( PlayerCharacter player ) { return true; }
+
 	/// <summary>
 	///  Called when the player presses down the interact button. Only called once.
 	/// </summary>

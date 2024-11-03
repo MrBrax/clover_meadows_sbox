@@ -76,7 +76,49 @@
 				}
 			</div>
 		}
-		
+
+		@if ( PlayerCharacter.Local.Components.TryGet<HideAndSeek>( out var hideAndSeek ) && HideAndSeek.Leader.IsValid() && HideAndSeek.Leader.IsRoundActive )
+		{
+			if ( hideAndSeek.IsBlind )
+			{
+				<div class="hide-and-seek-blind">
+					<h1>Hiding...</h1>
+					<div class="sub">
+						<div class="blind-icon">
+							<i class="icon">visibility_off</i>
+						</div>
+						<div class="blind-text">@Math.Round( HideAndSeek.Leader.BlindSecondsLeft )</div>
+					</div>
+				</div>
+			}
+			else
+			{
+				<div class="hide-and-seek">
+					@if ( hideAndSeek.IsSeeker )
+					{
+						<h1>Seeking...</h1>
+					}
+					else
+					{
+						<h1>Hiding...</h1>
+					}
+					@if ( hideAndSeek.BlindSecondsLeft > 0 )
+					{
+						<div class="time">
+							<i class="icon">visibility_off</i>
+							<span>@Math.Round( hideAndSeek.BlindSecondsLeft )</span>
+						</div>
+					}
+					else
+					{
+						<div class="time">
+							<i class="icon">timer</i>
+							<span>@Math.Round( hideAndSeek.RoundSecondsLeft )</span>
+						</div>
+					}
+				</div>
+			}
+		}
 	}
 	else if ( string.IsNullOrEmpty( PlayerCharacter.SpawnPlayerId ) )
 	{

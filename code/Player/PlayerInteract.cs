@@ -254,10 +254,19 @@ public class PlayerInteract : Component
 				checkGameObject = checkGameObject.Parent;
 			}*/
 
-			if ( collider.GameObject.Components.TryGet<IInteract>( out var interactable,
+			/*if ( collider.GameObject.Components.TryGet<IInteract>( out var interactable,
 				    FindMode.EverythingInSelfAndAncestors ) )
 			{
 				return interactable;
+			}*/
+
+			var components = collider.GameObject.Components.GetAll<IInteract>( FindMode.EverythingInSelfAndAncestors );
+			foreach ( var component in components )
+			{
+				if ( component.CanInteract( Player ) )
+				{
+					return component;
+				}
 			}
 		}
 

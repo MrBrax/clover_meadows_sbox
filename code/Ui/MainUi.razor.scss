@@ -177,6 +177,56 @@ MainUi {
 
 }
 
+.hide-and-seek-blind {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: black;
+
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    font-family: Itim;
+    font-size: 80px;
+
+    flex-direction: column;
+
+    gap: 60px;
+
+    .sub {
+        gap: 50px;
+        font-size: 60px;
+        align-items: center;
+    }
+
+}
+
+.hide-and-seek {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    font-family: Itim;
+    font-size: 60px;
+    color: white;
+
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
+
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+
+    .time {
+        font-size: 50px;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
 @keyframes saving {
     0% {
         transform: scale(1);

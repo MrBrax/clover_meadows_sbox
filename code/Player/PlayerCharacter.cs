@@ -213,6 +213,14 @@ public sealed partial class PlayerCharacter : Component
 			if ( PlayerInteract.InteractionTarget.GetComponent<BaseNpc>().IsValid() ) return false;
 		}
 
+		if ( Components.TryGet<HideAndSeek>( out var hideAndSeek ) )
+		{
+			if ( HideAndSeek.Leader.IsValid() && HideAndSeek.Leader.IsRoundActive && hideAndSeek.IsBlind )
+			{
+				return false;
+			}
+		}
+
 		return true;
 	}
 
