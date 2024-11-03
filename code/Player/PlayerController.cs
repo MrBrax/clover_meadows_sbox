@@ -190,7 +190,7 @@ public class PlayerController : Component, IEquipChanged
 			return;
 		}
 
-		if ( cc.IsOnGround && Input.Down( "Jump" ) )
+		if ( JumpEnabled && cc.IsOnGround && Input.Down( "Jump" ) )
 		{
 			float flGroundFactor = 1.0f;
 			float flMul = 268.3281572999747f * 1.2f;
@@ -229,6 +229,9 @@ public class PlayerController : Component, IEquipChanged
 			cc.Velocity = cc.Velocity.WithZ( 0 );
 		}
 	}
+
+	[ConVar( "clover_player_jump_enabled" )]
+	public static bool JumpEnabled { get; set; }
 
 	public void BuildWishVelocity()
 	{
