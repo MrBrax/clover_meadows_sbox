@@ -10,11 +10,17 @@ public class HideAndSeek : Component, IInteract
 	public static HideAndSeek Leader =>
 		Game.ActiveScene.GetAllComponents<HideAndSeek>().FirstOrDefault( x => x.Network.Owner.IsHost );
 
-	[Sync, Property, ReadOnly] public bool IsSeeker { get; set; }
+	[Sync, HostSync] public bool IsSeeker { get; set; }
 
-	[Sync, Property, ReadOnly] public TimeSince RoundStart { get; set; }
+	[Sync, Property] public TimeSince RoundStart { get; set; }
 
-	[Sync, Property, ReadOnly] public bool IsRoundActive { get; set; }
+	[Sync, Property] public bool IsRoundActive { get; set; }
+
+	[Property] public SoundEvent RoundStartSound { get; set; }
+	[Property] public SoundEvent RoundEndSound { get; set; }
+	[Property] public SoundEvent CatchSound { get; set; }
+	[Property] public SoundEvent BlindCountdownSound { get; set; }
+	[Property] public SoundEvent BlindEndSound { get; set; }
 
 	private bool IsLeader => Networking.IsHost;
 
@@ -68,6 +74,14 @@ public class HideAndSeek : Component, IInteract
 		Leader.IsRoundActive = true;
 
 		Log.Info( "Started a game of hide and seek" );
+
+		foreach ( var player in players )
+		{
+			player.GetComponent<PlayerCharacter>()
+				.Notify( Notifications.NotificationType.Info, "A new round of hide and seek has started!" );
+		}
+
+		SoundEx.Play( Leader.RoundStartSound );
 	}
 
 	[Authority]
@@ -77,6 +91,8 @@ public class HideAndSeek : Component, IInteract
 		Log.Info( $"Player {GameObject.Name} is now a {(isSeeker ? "seeker" : "hider")}" );
 	}
 
+
+	private TimeSince _lastBlindCountdownSound;
 
 	protected override void OnFixedUpdate()
 	{
@@ -92,16 +108,21 @@ public class HideAndSeek : Component, IInteract
 					.Notify( Notifications.NotificationType.Info, "The round has ended." );
 			}
 
+			SoundEx.Play( RoundEndSound );
+
 			return;
 		}
 
 		if ( IsSeeker )
 		{
-			// seeker logic
+			if ( IsBlind && _lastBlindCountdownSound > 1 )
+			{
+				Sound.Play( BlindCountdownSound );
+				_lastBlindCountdownSound = 0;
+			}
 		}
 		else
 		{
-			// hider logic
 		}
 	}
 
@@ -135,7 +156,10 @@ public class HideAndSeek : Component, IInteract
 		catcher.Notify( Notifications.NotificationType.Success, $"You caught {caught.GameObject.Name}!" );
 		Log.Info( $"{catcher.GameObject.Name} caught {caught.GameObject.Name}" );
 
+		target.IsSeeker = true;
 		target.SetSeeker( true );
+
+		SoundEx.Play( CatchSound, target.WorldPosition );
 
 		CheckRoundEnd();
 	}
@@ -157,6 +181,8 @@ public class HideAndSeek : Component, IInteract
 				.Notify( Notifications.NotificationType.Info,
 					"All players have been caught. The round has ended." );
 		}
+
+		SoundEx.Play( RoundEndSound );
 	}
 
 	public string GetInteractName()

@@ -148,7 +148,17 @@
       },
       {
         "__type": "Clover.Components.HideAndSeek",
-        "__guid": "c04d6886-397b-4ad3-8749-73f1ac98977b"
+        "__guid": "c04d6886-397b-4ad3-8749-73f1ac98977b",
+        "BlindCountdownSound": "sounds/hns/blind_countdown.sound",
+        "BlindEndSound": "sounds/hns/blind_end.sound",
+        "CatchSound": "sounds/hns/catch.sound",
+        "IsRoundActive": false,
+        "IsSeeker": false,
+        "RoundEndSound": "sounds/hns/round_end.sound",
+        "RoundStart": {
+          "Relative": 12087.776
+        },
+        "RoundStartSound": "sounds/hns/round_start.sound"
       }
     ],
     "Children": [
