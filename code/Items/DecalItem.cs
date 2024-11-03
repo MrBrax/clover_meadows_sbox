@@ -47,6 +47,8 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 				return;
 			}
 
+			Log.Info( $"Decal '{TexturePath}' not found in cache, requesting..." );
+
 			RequestDecal();
 			return;
 		}
@@ -127,8 +129,10 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 
 		var hash = _decalData.GetHash();
 
+		DecalTexture = Decals.GetDecalTexture( decal );
+
 		var material = Material.Create( $"{hash}.vmat", "shaders/floor_decal.shader" );
-		material.Set( "Color", Decals.GetDecalTexture( decal ) );
+		material.Set( "Color", DecalTexture );
 		// ModelRenderer.MaterialOverride = material;
 		OnMaterialUpdate( material );
 
