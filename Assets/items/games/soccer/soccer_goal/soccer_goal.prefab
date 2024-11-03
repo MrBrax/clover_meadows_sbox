@@ -1,0 +1,135 @@
+{
+  "RootObject": {
+    "__guid": "db9ea6ec-6273-47ff-9a01-e72ffa18300f",
+    "Flags": 0,
+    "Name": "soccer_goal",
+    "Tags": "goal",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.SoccerGoal",
+        "__guid": "9252fa2e-f5be-4815-945e-7acf0d0a12da",
+        "GoalModel": {
+          "_type": "component",
+          "component_id": "6de5f86c-2639-4dd3-b31c-eb3825dc8eab",
+          "go": "bb3f4033-5e93-4560-a674-b3a082f0abf9",
+          "component_type": "ModelRenderer"
+        }
+      },
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "864ac0d1-8827-4873-a966-a85576aac8cb",
+        "CanPickupSimple": true,
+        "ItemData": "items/games/soccer/soccer_goal/soccer_goal.item",
+        "PlaceModeOffset": "0,0,0",
+        "Prefab": "items/games/soccer/soccer_goal/soccer_goal.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "d944e739-810f-4e2d-b562-e23362eaf407"
+      },
+      {
+        "__type": "Clover.Interactable.ItemHighlight",
+        "__guid": "2e48e894-14a0-46b9-b147-db941bfdf447",
+        "__enabled": false,
+        "Color": "1,1,1,1",
+        "InsideColor": "0,0,0,0",
+        "InsideObscuredColor": "0,0,0,0",
+        "ObscuredColor": "0,0,0,0.4",
+        "Width": 0.25
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "58ac256a-feaa-402c-be82-868be0265314",
+        "Center": "0,-48.00001,16",
+        "IsTrigger": false,
+        "Scale": "32,2,32",
+        "Static": true,
+        "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "1df706fe-adf7-4825-a1c3-c6153a884f4e",
+        "Center": "0,48,16",
+        "IsTrigger": false,
+        "Scale": "32,2,32",
+        "Static": true,
+        "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "e27b6ca7-9051-48f7-9f21-546173b4af28",
+        "Center": "-16,0,16",
+        "IsTrigger": false,
+        "Scale": "2,96,32",
+        "Static": true,
+        "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "b021321c-3e11-4107-b246-927fcb27d4cb",
+        "Center": "0,0,16",
+        "IsTrigger": true,
+        "Scale": "30,92,32",
+        "Static": false,
+        "SurfaceVelocity": "0,0,0"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "bb3f4033-5e93-4560-a674-b3a082f0abf9",
+        "Flags": 0,
+        "Name": "soccer_goal",
+        "Position": "0,0,0.9999971",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "6de5f86c-2639-4dd3-b31c-eb3825dc8eab",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/games/soccer/soccer_goal/soccer_goal.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

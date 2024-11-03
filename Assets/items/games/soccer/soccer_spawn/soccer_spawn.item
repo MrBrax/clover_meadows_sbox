@@ -1,0 +1,35 @@
+{
+  "Id": "soccer_spawn:7384895249288970170",
+  "Name": "Soccer spawn",
+  "Description": null,
+  "Width": 1,
+  "Height": 1,
+  "CanBeBuried": true,
+  "CanDrop": true,
+  "CanPlace": true,
+  "DisablePickup": false,
+  "IsStackable": false,
+  "StackSize": 1,
+  "ModelScene": null,
+  "DropScene": null,
+  "PlaceScene": {
+    "_type": "gameobject",
+    "prefab": "items/games/soccer/soccer_spawn/soccer_spawn.prefab"
+  },
+  "DefaultTypeScene": {
+    "_type": "gameobject",
+    "prefab": "items/games/soccer/soccer_spawn/soccer_spawn.prefab"
+  },
+  "Icon": null,
+  "ObjectData": null,
+  "HideInSpawnMenu": false,
+  "PlaceModeOffset": "0,0,-16",
+  "BaseBuyPrice": 0,
+  "CanSell": true,
+  "BaseSellPrice": 0,
+  "CanBuy": true,
+  "GetCustomSellPrice": null,
+  "GetCustomBuyPrice": null,
+  "__references": [],
+  "__version": 0
+}

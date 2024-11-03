@@ -1,0 +1,101 @@
+{
+  "RootObject": {
+    "__guid": "1def2bec-3a30-4dfd-a661-943d9a68f47d",
+    "Flags": 0,
+    "Name": "soccer_spawn",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Items.WorldItem",
+        "__guid": "803c3676-a5bd-4573-b310-963840893640",
+        "CanPickupSimple": true,
+        "ItemData": "items/games/soccer/soccer_spawn/soccer_spawn.item",
+        "PlaceModeOffset": "0,0,0",
+        "Prefab": "items/games/soccer/soccer_spawn/soccer_spawn.prefab"
+      },
+      {
+        "__type": "Clover.WorldLayerObject",
+        "__guid": "7f8dbef9-1f28-4a0d-ab88-2178fee5a4ba"
+      },
+      {
+        "__type": "Clover.Interactable.ItemHighlight",
+        "__guid": "bb37c4fd-94f8-465f-8c37-1d89f121e84b",
+        "__enabled": false,
+        "Color": "1,1,1,1",
+        "InsideColor": "0,0,0,0",
+        "InsideObscuredColor": "0,0,0,0",
+        "ObscuredColor": "0,0,0,0.4",
+        "Width": 0.25
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "6d5b4281-6d85-4685-8f62-6f7f8d3fc8ca",
+        "Center": "0,0,-8",
+        "IsTrigger": false,
+        "Scale": "64,64,16",
+        "Static": true,
+        "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "Clover.Items.SoccerSpawn",
+        "__guid": "a0ca96f8-63c9-4122-b25b-baa507dacd58"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "75761020-b781-4371-ac10-f55752668162",
+        "Flags": 0,
+        "Name": "soccer_spawn",
+        "Position": "0,0,0.1",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "b234b0ec-22f4-4902-9621-67b5ea952337",
+            "BodyGroups": 18446744073709551615,
+            "Model": "items/games/soccer/soccer_spawn/soccer_spawn.vmdl",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ],
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
