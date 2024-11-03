@@ -14,7 +14,8 @@
           "component_id": "6de5f86c-2639-4dd3-b31c-eb3825dc8eab",
           "go": "bb3f4033-5e93-4560-a674-b3a082f0abf9",
           "component_type": "ModelRenderer"
-        }
+        },
+        "ScoreSound": "sounds/soccer/goal.sound"
       },
       {
         "__type": "Clover.Items.WorldItem",

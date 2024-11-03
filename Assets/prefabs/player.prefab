@@ -153,10 +153,9 @@
         "BlindEndSound": "sounds/hns/blind_end.sound",
         "CatchSound": "sounds/hns/catch.sound",
         "IsRoundActive": false,
-        "IsSeeker": false,
         "RoundEndSound": "sounds/hns/round_end.sound",
         "RoundStart": {
-          "Relative": 12087.776
+          "Relative": 19874.807
         },
         "RoundStartSound": "sounds/hns/round_start.sound"
       }

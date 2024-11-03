@@ -38,7 +38,8 @@
       },
       {
         "__type": "Clover.Items.SoccerSpawn",
-        "__guid": "a0ca96f8-63c9-4122-b25b-baa507dacd58"
+        "__guid": "a0ca96f8-63c9-4122-b25b-baa507dacd58",
+        "WinSound": "sounds/soccer/win.sound"
       }
     ],
     "Children": [

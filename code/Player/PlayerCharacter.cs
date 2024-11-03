@@ -282,6 +282,15 @@ public sealed partial class PlayerCharacter : Component
 	{
 		Notifications.Instance.AddNotification( type, text, duration );
 	}
+
+	[Broadcast]
+	public static void NotifyAll( Notifications.NotificationType type, string text, float duration = 5f )
+	{
+		foreach ( var player in Game.ActiveScene.GetAllComponents<PlayerCharacter>() )
+		{
+			player.Notify( type, text, duration );
+		}
+	}
 }
 
 public interface IPlayerSaved

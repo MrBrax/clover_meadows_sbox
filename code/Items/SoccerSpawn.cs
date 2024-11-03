@@ -1,11 +1,15 @@
-﻿namespace Clover.Items;
+﻿using Clover.Player;
+using Clover.Ui;
+
+namespace Clover.Items;
 
 public class SoccerSpawn : Component
 {
 	[RequireComponent] public WorldItem WorldItem { get; set; }
 
-	public int MaxScore { get; set; } = 5;
+	[Property] public SoundEvent WinSound { get; set; }
 
+	public int MaxScore { get; set; } = 5;
 
 	public List<SoccerGoal> GetGoals()
 	{
@@ -22,6 +26,10 @@ public class SoccerSpawn : Component
 			if ( goal.Score >= MaxScore )
 			{
 				Log.Info( $"{teamColor} wins!" );
+
+				// PlayerCharacter.NotifyAll( Notifications.NotificationType.Info, $"{teamColor} wins!" );
+
+				SoundEx.Play( WinSound, WorldPosition );
 				ResetGame();
 			}
 		}
