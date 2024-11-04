@@ -1,4 +1,6 @@
-﻿using Clover.Data;
+﻿using Clover.Carriable;
+using Clover.Components;
+using Clover.Data;
 using Clover.Interactable;
 using Clover.Inventory;
 using Clover.Items;
@@ -53,6 +55,14 @@ public class PlayerInteract : Component
 		{
 			if ( InteractionTarget.GetComponent<BaseNpc>().IsValid() ) return false;
 		}
+
+		return true;
+	}
+
+	public bool CanPickUp()
+	{
+		if ( Player.Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) &&
+		     tool.ShouldDisableMovement() ) return false;
 
 		return true;
 	}
@@ -122,7 +132,7 @@ public class PlayerInteract : Component
 			return;
 		}
 
-		if ( Input.Pressed( "pickup" ) )
+		if ( Input.Pressed( "pickup" ) && CanPickUp() )
 		{
 			if ( pickupableNode != null )
 			{

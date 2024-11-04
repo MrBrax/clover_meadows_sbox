@@ -33,7 +33,7 @@ public sealed class CameraController : Component, IWorldEvent
 		}
 
 		// SkyCameraNode.Priority = Input.Down("View") ? 10 : 0;
-		if ( Input.Down( "View" ) )
+		if ( Player.ShouldMove() && Input.Down( "View" ) )
 		{
 			if ( (CameraMan.Instance?.MainCameraNode.IsValid() ?? false) && CameraMan.Instance.MainCameraNode.Static )
 			{

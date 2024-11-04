@@ -1,0 +1,114 @@
+{
+  "RootObject": {
+    "__guid": "2405b046-5cc2-4d28-81da-5c9372ea2793",
+    "Flags": 0,
+    "Name": "acoustic_guitar_carry",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.BaseInstrument",
+        "__guid": "49b23900-4230-4c11-8e5a-4251605a3f68",
+        "ItemData": "items/instruments/acoustic_guitar/acoustic_guitar.tool",
+        "Model": {
+          "_type": "gameobject",
+          "go": "d195102c-aad6-4cd6-9079-f3414c3ca65f"
+        },
+        "Notes": [
+          {
+            "Octave": 3,
+            "Note": "CSharp",
+            "SoundFile": "items/instruments/acoustic_guitar/csharp3.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 3,
+            "Note": "A",
+            "SoundFile": "items/instruments/acoustic_guitar/a3.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 2,
+            "Note": "B",
+            "SoundFile": "items/instruments/acoustic_guitar/b2.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 4,
+            "Note": "B",
+            "SoundFile": "items/instruments/acoustic_guitar/b4.vsnd",
+            "Pitchable": true
+          }
+        ],
+        "UseTime": 1
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "d195102c-aad6-4cd6-9079-f3414c3ca65f",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "94ffbecc-ab90-4e20-8e15-71c372e1efe6",
+            "Flags": 0,
+            "Name": "guitar",
+            "Position": "7.463806,13.33435,-3.613908",
+            "Rotation": "-0.2810947,0.539978,-0.7037131,0.3663298",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "f6ebe2b5-ba4d-4185-897d-e013613b9b30",
+                "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "Model": "guitar/guitar.vmdl",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "alpherusapeus.guitar#21050"
+  ],
+  "__version": 1
+}
