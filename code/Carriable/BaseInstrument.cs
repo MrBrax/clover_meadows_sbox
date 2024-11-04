@@ -66,9 +66,14 @@ public class BaseInstrument : BaseCarriable
 	[Property, InlineEditor] public List<NoteEntry> Notes { get; set; }
 
 
-	[Sync] private bool IsPlaying { get; set; }
+	[Sync] public bool IsPlaying { get; set; }
 
 	[Sync] private int CurrentOctave { get; set; } = 3;
+
+	public override string GetUseName()
+	{
+		return IsPlaying ? "Stop" : "Play";
+	}
 
 	public override void OnUseDown()
 	{
@@ -173,7 +178,22 @@ public class BaseInstrument : BaseCarriable
 			{
 				Log.Info( $"Playing note {(Note)note} (PlayNote{(Note)note})" );
 				PlayNote( CurrentOctave, (Note)note );
+				Input.Clear( $"PlayNote{(Note)note}" );
 			}
 		}
+
+		/*if ( Input.Pressed( "OctaveUp" ) )
+		{
+			CurrentOctave++;
+		}
+		else if ( Input.Pressed( "OctaveDown" ) )
+		{
+			CurrentOctave--;
+		}*/
+
+		if ( Input.Pressed( "PlayOctave1" ) ) CurrentOctave = 1;
+		if ( Input.Pressed( "PlayOctave2" ) ) CurrentOctave = 2;
+		if ( Input.Pressed( "PlayOctave3" ) ) CurrentOctave = 3;
+		if ( Input.Pressed( "PlayOctave4" ) ) CurrentOctave = 4;
 	}
 }

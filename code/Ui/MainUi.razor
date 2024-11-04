@@ -119,6 +119,11 @@
 				</div>
 			}
 		}
+
+		@if ( PlayerCharacter.Local.Equips.TryGetEquippedItem<BaseInstrument>( Equips.EquipSlot.Tool, out var instrument ) && instrument.IsPlaying )
+		{
+			<InstrumentUi/>
+		}
 	}
 	else if ( string.IsNullOrEmpty( PlayerCharacter.SpawnPlayerId ) )
 	{

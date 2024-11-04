@@ -56,6 +56,9 @@ public class PlayerInteract : Component
 			if ( InteractionTarget.GetComponent<BaseNpc>().IsValid() ) return false;
 		}
 
+		if ( Player.Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) &&
+		     tool.ShouldDisableMovement() ) return false;
+
 		return true;
 	}
 

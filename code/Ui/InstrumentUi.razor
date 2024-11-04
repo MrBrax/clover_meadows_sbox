@@ -1,0 +1,23 @@
+﻿@using System
+@using Clover.Carriable
+@using Sandbox.UI;
+@inherits Panel
+@namespace Clover.Ui
+@attribute [StyleSheet]
+
+<root>
+	@foreach ( var note in Enum.GetValues( typeof(BaseInstrument.Note) ) )
+	{
+		<div class="note">
+			<div class="name">@BaseInstrument.NoteNames[(BaseInstrument.Note)note]</div>
+			<div class="action">
+				<Image Texture=@Input.GetGlyph( $"PlayNote{(BaseInstrument.Note)note}", InputGlyphSize.Small, GlyphStyle.Light )/>
+			</div>
+		</div>
+	}
+</root>
+
+@code {
+
+
+}

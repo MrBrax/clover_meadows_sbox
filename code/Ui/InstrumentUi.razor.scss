@@ -1,0 +1,29 @@
+﻿InstrumentUi {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    right: 50px;
+
+    color: white;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    font-family: Itim;
+    font-size: 40px;
+
+    .note {
+        flex-direction: column;
+        min-width: 50px;
+        align-items: center;
+        justify-content: center;
+
+        Image {
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+}
