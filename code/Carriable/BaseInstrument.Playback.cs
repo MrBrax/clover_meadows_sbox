@@ -1,4 +1,6 @@
-﻿namespace Clover.Carriable;
+﻿using System;
+
+namespace Clover.Carriable;
 
 public partial class BaseInstrument
 {
@@ -62,5 +64,17 @@ public partial class BaseInstrument
 		{
 			Log.Warning( "Unknown playback entry" );
 		}
+	}
+
+	public void StartPlayback( string file )
+	{
+		_isPlayingBack = true;
+		_nextPlaybackEntry = 0.0f;
+		LoadFile( file );
+	}
+
+	private void LoadFile( string file )
+	{
+		throw new NotImplementedException();
 	}
 }
