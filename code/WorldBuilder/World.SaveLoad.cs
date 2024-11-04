@@ -110,6 +110,26 @@ public sealed partial class World
 
 	public async Task Load()
 	{
+		Log.Info( $"Loading world {Data.ResourceName} async..." );
+
+		if ( RealmManager.CurrentRealm == null )
+		{
+			Log.Error( "Current realm is null" );
+			return;
+		}
+
+		if ( string.IsNullOrEmpty( RealmManager.CurrentRealm.Path ) )
+		{
+			Log.Error( "Current realm path is null or empty" );
+			return;
+		}
+
+		if ( string.IsNullOrEmpty( SaveFileName ) )
+		{
+			Log.Error( "Save file name is null or empty" );
+			return;
+		}
+
 		if ( !FileSystem.Data.FileExists( SaveFileName ) )
 		{
 			Log.Warning( $"File {SaveFileName} does not exist" );

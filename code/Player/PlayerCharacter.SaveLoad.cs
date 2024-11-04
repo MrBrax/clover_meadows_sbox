@@ -25,6 +25,12 @@ public sealed partial class PlayerCharacter
 			return;
 		}
 
+		if ( Network.Owner == null )
+		{
+			Log.Error( "Network owner is null" );
+			return;
+		}
+
 		Log.Info( $"Saving player {PlayerId}" );
 
 		Scene.RunEvent<IPlayerSaved>( x => x.PrePlayerSave( this ) );
@@ -110,6 +116,13 @@ public sealed partial class PlayerCharacter
 				NewGame();
 				return;
 			}*/
+
+			if ( string.IsNullOrEmpty( SpawnPlayerId ) )
+			{
+				Log.Error( "SpawnPlayerId is null" );
+				return;
+			}
+
 			PlayerId = SpawnPlayerId;
 
 			if ( string.IsNullOrEmpty( PlayerId ) )

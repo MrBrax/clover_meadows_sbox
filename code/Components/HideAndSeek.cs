@@ -8,7 +8,8 @@ namespace Clover.Components;
 public class HideAndSeek : Component, IInteract
 {
 	public static HideAndSeek Leader =>
-		Game.ActiveScene.GetAllComponents<HideAndSeek>().FirstOrDefault( x => x.Network.Owner.IsHost );
+		Game.ActiveScene?.GetAllComponents<HideAndSeek>()
+			.FirstOrDefault( x => x.Network.Owner != null && x.Network.Owner.IsHost );
 
 	[Sync, HostSync] public bool IsSeeker { get; set; }
 
