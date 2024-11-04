@@ -88,6 +88,8 @@ public partial class MainMenu
 
 	private void SelectRealm( RealmManager.RealmInfo realm )
 	{
+		Log.Info( $"Selected realm: {realm.Name}" );
+
 		PlayerCharacter.SpawnPlayerId = null;
 		RealmManager.CurrentRealm = realm;
 
