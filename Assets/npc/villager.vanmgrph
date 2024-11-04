@@ -24,7 +24,7 @@
 					m_tagSpans = [  ]
 					m_sequenceName = "Clover"
 					m_playbackSpeed = 1.0
-					m_bLoop = false
+					m_bLoop = true
 				}
 			},
 			{
