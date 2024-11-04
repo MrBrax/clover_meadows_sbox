@@ -2,9 +2,16 @@
 
 namespace Clover.Carriable;
 
-public class BaseInstrument : BaseCarriable
+public partial class BaseInstrument : BaseCarriable
 {
 	public enum Note { C, CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, ASharp, B }
+
+
+	/*public class InstrumentPlaybackLoop : InstrumentPlaybackEntry
+	{
+		public int LoopCount { get; set; }
+		public Queue<InstrumentPlaybackEntry> Entries { get; set; }
+	}*/
 
 	public record struct NoteEntry
 	{
@@ -171,6 +178,11 @@ public class BaseInstrument : BaseCarriable
 		{
 			PlayNote( 3, Note.D );
 		}*/
+
+		if ( _isPlayingBack )
+		{
+			Playback();
+		}
 
 		foreach ( var note in Enum.GetValues( typeof(Note) ) )
 		{
