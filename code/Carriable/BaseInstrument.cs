@@ -86,6 +86,8 @@ public partial class BaseInstrument : BaseCarriable
 	{
 		base.OnUseDown();
 		IsPlaying = !IsPlaying;
+		_isPlayingBack = false;
+		_midiFile = null;
 	}
 
 	public override bool ShouldDisableMovement()
@@ -94,13 +96,13 @@ public partial class BaseInstrument : BaseCarriable
 	}
 
 	[Broadcast]
-	public void PlayNote( int octave, Note note )
+	public void PlayNote( int octave, Note note, float velocity = 1.0f )
 	{
 		var entry = Notes.FirstOrDefault( x => x.Octave == octave && x.Note == note );
 		if ( entry.Equals( default ) )
 		{
 			// Log.Warning( $"No note found for {octave} {note}" );
-			PlayPitched( octave, note );
+			PlayPitched( octave, note, velocity );
 			return;
 		}
 
@@ -109,6 +111,7 @@ public partial class BaseInstrument : BaseCarriable
 			var s = Sound.Play( entry.SoundEvent );
 			s.Position = WorldPosition;
 			s.Pitch = 1.0f;
+			s.Volume = velocity;
 			Log.Info( $"Played {entry.Note} {entry.Octave}" );
 		}
 		else if ( entry.SoundFile != null )
@@ -116,6 +119,7 @@ public partial class BaseInstrument : BaseCarriable
 			var s = Sound.PlayFile( entry.SoundFile );
 			s.Position = WorldPosition;
 			s.Pitch = 1.0f;
+			s.Volume = velocity;
 			Log.Info( $"Played {entry.Note} {entry.Octave}" );
 		}
 		else
@@ -129,7 +133,8 @@ public partial class BaseInstrument : BaseCarriable
 	/// </summary>
 	/// <param name="octave"></param>
 	/// <param name="note"></param>
-	private void PlayPitched( int octave, Note note )
+	/// <param name="velocity"></param>
+	private void PlayPitched( int octave, Note note, float velocity = 1.0f )
 	{
 		// var entry = Notes.FirstOrDefault( x => x.Octave == octave && x.Pitchable );
 		var entry = Notes.FirstOrDefault( x => x.Octave == octave && x.Note < note );
@@ -154,9 +159,10 @@ public partial class BaseInstrument : BaseCarriable
 		var s = entry.SoundEvent != null ? Sound.Play( entry.SoundEvent ) : Sound.PlayFile( entry.SoundFile );
 		s.Pitch = frequency / NoteFrequencies[entry.Note];
 		s.Position = WorldPosition;
+		s.Volume = velocity;
 
 		// Log.Info( $"Playing pitched {entry.Note} at {frequency} Hz" );
-		Log.Info( $"Played {note} {octave}" );
+		Log.Info( $"Played {note} {octave} @ {velocity}" );
 	}
 
 	protected override void OnUpdate()
@@ -188,6 +194,11 @@ public partial class BaseInstrument : BaseCarriable
 		{
 			CurrentOctave--;
 		}*/
+
+		if ( Input.Pressed( "PlayOctave1" ) )
+		{
+			LoadFile( "1243344656.midi.mid" );
+		}
 
 		if ( Input.Pressed( "PlayOctave1" ) ) CurrentOctave = 1;
 		if ( Input.Pressed( "PlayOctave2" ) ) CurrentOctave = 2;

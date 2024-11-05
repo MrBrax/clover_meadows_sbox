@@ -37,6 +37,12 @@
             "Note": "B",
             "SoundFile": "items/instruments/acoustic_guitar/b4.vsnd",
             "Pitchable": true
+          },
+          {
+            "Octave": 5,
+            "Note": "D",
+            "SoundFile": "items/instruments/acoustic_guitar/d5.vsnd",
+            "Pitchable": true
           }
         ],
         "UseTime": 1
