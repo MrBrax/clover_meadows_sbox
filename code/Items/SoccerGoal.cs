@@ -186,6 +186,7 @@ public class SoccerGoal : Component, IInteract, Component.ITriggerListener, IPer
 	protected override void OnUpdate()
 	{
 		base.OnUpdate();
+		if ( Gizmo.Camera == null ) return;
 		Gizmo.Draw.Text( Score.ToString(), new Transform( WorldPosition + Vector3.Up * 32f ), "Roboto", 36f );
 	}
 
