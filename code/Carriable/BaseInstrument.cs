@@ -109,14 +109,14 @@ public partial class BaseInstrument : BaseCarriable
 			var s = Sound.Play( entry.SoundEvent );
 			s.Position = WorldPosition;
 			s.Pitch = 1.0f;
-			Log.Info( $"Playing event {entry.Note} at {entry.Octave}" );
+			Log.Info( $"Played {entry.Note} {entry.Octave}" );
 		}
 		else if ( entry.SoundFile != null )
 		{
 			var s = Sound.PlayFile( entry.SoundFile );
 			s.Position = WorldPosition;
 			s.Pitch = 1.0f;
-			Log.Info( $"Playing file {entry.Note} at {entry.Octave}" );
+			Log.Info( $"Played {entry.Note} {entry.Octave}" );
 		}
 		else
 		{
@@ -155,7 +155,8 @@ public partial class BaseInstrument : BaseCarriable
 		s.Pitch = frequency / NoteFrequencies[entry.Note];
 		s.Position = WorldPosition;
 
-		Log.Info( $"Playing pitched {entry.Note} at {frequency} Hz" );
+		// Log.Info( $"Playing pitched {entry.Note} at {frequency} Hz" );
+		Log.Info( $"Played {note} {octave}" );
 	}
 
 	protected override void OnUpdate()
@@ -164,20 +165,6 @@ public partial class BaseInstrument : BaseCarriable
 		if ( !IsPlaying )
 			return;
 
-		/*if ( Input.Pressed( "PlayNoteC" ) )
-		{
-			PlayNote( 3, Note.C );
-		}
-
-		if ( Input.Pressed( "PlayNoteCSharp" ) )
-		{
-			PlayNote( 3, Note.CSharp );
-		}
-
-		if ( Input.Pressed( "PlayNoteD" ) )
-		{
-			PlayNote( 3, Note.D );
-		}*/
 
 		if ( _isPlayingBack )
 		{
@@ -188,7 +175,6 @@ public partial class BaseInstrument : BaseCarriable
 		{
 			if ( Input.Pressed( $"PlayNote{(Note)note}" ) )
 			{
-				Log.Info( $"Playing note {(Note)note} (PlayNote{(Note)note})" );
 				PlayNote( CurrentOctave, (Note)note );
 				Input.Clear( $"PlayNote{(Note)note}" );
 			}
@@ -207,5 +193,10 @@ public partial class BaseInstrument : BaseCarriable
 		if ( Input.Pressed( "PlayOctave2" ) ) CurrentOctave = 2;
 		if ( Input.Pressed( "PlayOctave3" ) ) CurrentOctave = 3;
 		if ( Input.Pressed( "PlayOctave4" ) ) CurrentOctave = 4;
+	}
+
+	public static bool IsBlackNote( Note note )
+	{
+		return note is Note.CSharp or Note.DSharp or Note.FSharp or Note.GSharp or Note.ASharp;
 	}
 }

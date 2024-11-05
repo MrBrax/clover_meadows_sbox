@@ -8,10 +8,10 @@
 <root>
 	@foreach ( var note in Enum.GetValues( typeof(BaseInstrument.Note) ) )
 	{
-		<div class="note">
+		<div class="note @( BaseInstrument.IsBlackNote( (BaseInstrument.Note)note ) ? "black" : "white" )">
 			<div class="name">@BaseInstrument.NoteNames[(BaseInstrument.Note)note]</div>
 			<div class="action">
-				<Image Texture=@Input.GetGlyph( $"PlayNote{(BaseInstrument.Note)note}", InputGlyphSize.Small, GlyphStyle.Light )/>
+				<Image Texture=@Input.GetGlyph( $"PlayNote{(BaseInstrument.Note)note}", InputGlyphSize.Small, GlyphStyle.Knockout )/>
 			</div>
 		</div>
 	}

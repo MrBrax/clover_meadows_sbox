@@ -9,16 +9,33 @@
     align-items: center;
     justify-content: center;
 
-    gap: 10px;
+    gap: 5px;
 
     font-family: Itim;
-    font-size: 40px;
+    font-size: 30px;
 
     .note {
         flex-direction: column;
         min-width: 50px;
         align-items: center;
         justify-content: center;
+
+        padding: 5px 10px;
+
+        gap: 5px;
+
+        border-radius: 5px;
+
+        &.white {
+            background-color: #ccc;
+            color: black;
+        }
+
+        &.black {
+            background-color: black;
+            color: white;
+            margin-bottom: 50px;
+        }
 
         Image {
             width: 50px;
