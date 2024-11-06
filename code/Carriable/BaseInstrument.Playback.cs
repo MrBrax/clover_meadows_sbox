@@ -6,8 +6,11 @@ namespace Clover.Carriable;
 public partial class BaseInstrument
 {
 	[Sync] public bool IsPlayingBack { get; set; }
+
 	[Sync] public string PlaybackTitle { get; set; } = "";
-	[Sync] public NetList<bool> PlaybackTracksEnabled { get; set; } = new();
+
+	// [Sync] public NetList<bool> PlaybackTracksEnabled { get; set; } = new();
+	[Sync] public NetList<BaseInstrument> PlaybackTracksInstruments { get; set; } = new();
 	[Sync] public int TransposePlayback { get; set; } = 0;
 
 	// private TimeUntil _nextPlaybackEntry;
@@ -82,7 +85,7 @@ public partial class BaseInstrument
 					break;
 				}
 
-				if ( trackIndex > PlaybackTracksEnabled.Count || !PlaybackTracksEnabled[trackIndex] )
+				if ( trackIndex > PlaybackTracksInstruments.Count || !PlaybackTracksInstruments[trackIndex].IsValid() )
 				{
 					_currentTrackEventIndices[trackIndex] = i + 1;
 					continue;
@@ -202,7 +205,7 @@ public partial class BaseInstrument
 	///  Play a midi note to the instrument, converting the midi note to a note enum
 	/// </summary>
 	/// <param name="note"></param>
-	private void PlayMidiNote( int track, int note, int velocity )
+	private void PlayMidiNote( int trackIndex, int note, int velocity )
 	{
 		if ( TransposePlayback != 0 )
 		{
@@ -216,9 +219,16 @@ public partial class BaseInstrument
 
 		var volume = velocity / 127.0f;
 
-		volume *= _currentTrackVolumes[track];
+		volume *= _currentTrackVolumes[trackIndex];
 
-		PlayNote( octave, noteEnum, volume );
+		var instrument = PlaybackTracksInstruments[trackIndex];
+		if ( !instrument.IsValid() )
+		{
+			PlaybackTracksInstruments[trackIndex] = this;
+			instrument = this;
+		}
+
+		instrument.PlayNote( octave, noteEnum, volume );
 	}
 
 	/*public void StartPlayback( string file )
@@ -282,14 +292,14 @@ public partial class BaseInstrument
 		// _currentIndex = 0;
 		// _transposePlayback = -12;
 
-		PlaybackTracksEnabled.Clear();
+		PlaybackTracksInstruments.Clear();
 
 		_currentTrackEventIndices.Clear();
 
 		foreach ( var track in _midiFile.Tracks )
 		{
 			_currentTrackEventIndices.Add( 0 );
-			PlaybackTracksEnabled.Add( true );
+			PlaybackTracksInstruments.Add( this );
 		}
 
 		PlaybackTitle = file;
@@ -324,23 +334,49 @@ public partial class BaseInstrument
 
 	public void ToggleTrackPlayback( int index )
 	{
-		if ( index >= PlaybackTracksEnabled.Count )
+		if ( index >= PlaybackTracksInstruments.Count )
 		{
 			return;
 		}
 
-		PlaybackTracksEnabled[index] = !PlaybackTracksEnabled[index];
+		// PlaybackTracksEnabled[index] = !PlaybackTracksEnabled[index];
+		if ( PlaybackTracksInstruments[index] == this )
+		{
+			PlaybackTracksInstruments[index] = null;
+		}
+		else
+		{
+			PlaybackTracksInstruments[index] = this;
+		}
 
 		// _currentTrackEventIndices[index] = 0;
 	}
 
 	public bool IsPlaybackTrackEnabled( int index )
 	{
-		if ( index >= PlaybackTracksEnabled.Count )
+		if ( index >= PlaybackTracksInstruments.Count )
 		{
 			return false;
 		}
 
-		return PlaybackTracksEnabled[index];
+		return PlaybackTracksInstruments[index].IsValid();
+	}
+
+
+	[Authority]
+	public void RequestTrackPlayback( BaseInstrument instrument, int trackIndex )
+	{
+		if ( instrument == this )
+		{
+			return;
+		}
+
+		if ( trackIndex >= PlaybackTracksInstruments.Count )
+		{
+			return;
+		}
+
+		Log.Info( $"Player {Rpc.Caller.DisplayName} added themselves to track {trackIndex}" );
+		PlaybackTracksInstruments[trackIndex] = instrument;
 	}
 }

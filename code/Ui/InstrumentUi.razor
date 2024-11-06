@@ -8,6 +8,36 @@
 @attribute [StyleSheet]
 
 <root>
+	@if ( PlayAlongMaster.IsValid() && !string.IsNullOrEmpty( PlayAlongMaster.PlaybackTitle ) )
+	{
+		<div class="playalong">
+			<h1>@( $"Play along with {PlayAlongMaster.Player.Network.Owner.DisplayName}" )</h1>
+			<section>
+				<h2>Song</h2>
+				<main>
+					@PlayAlongMaster.PlaybackTitle
+				</main>
+			</section>
+			<section>
+				<h2>Tracks</h2>
+				<main class="tracks">
+					@for ( int i = 0; i < PlayAlongMaster.PlaybackTracksInstruments.Count; i++ )
+					{
+						var i1 = i;
+						<button class="track-button @( PlayAlongMaster.IsPlaybackTrackEnabled( i ) ? "enabled" : "disabled" ) @( PlayAlongMaster.PlaybackTracksInstruments[i1] == Instrument ? "me" : "other" ) button-sounds" @onclick=@( () => PlayAlongMaster.RequestTrackPlayback( Instrument, i1 ) )>
+							<div class="index">@i1</div>
+							<div class="player">
+								@if ( PlayAlongMaster.PlaybackTracksInstruments[i].IsValid() )
+								{
+									<img src="@( $"avatar://{PlayAlongMaster.PlaybackTracksInstruments[i].Network.Owner.SteamId}" )"/>
+								}
+							</div>
+						</button>
+					}
+				</main>
+			</section>
+		</div>
+	}
 	<div class="playback">
 		<h1>
 			@( $"Loaded: {Instrument.PlaybackTitle}" )
@@ -38,11 +68,17 @@
 			<section class="tracks">
 				<h2 class="title">Tracks</h2>
 				<main>
-					@for ( int i = 0; i < Instrument.PlaybackTracksEnabled.Count; i++ )
+					@for ( int i = 0; i < Instrument.PlaybackTracksInstruments.Count; i++ )
 					{
 						var i1 = i;
-						<button class="track-button @( Instrument.IsPlaybackTrackEnabled( i ) ? "enabled" : "disabled" ) button-sounds" @onclick=@( () => Instrument.ToggleTrackPlayback( i1 ) )>
-							@i1
+						<button class="track-button @( Instrument.IsPlaybackTrackEnabled( i ) ? "enabled" : "disabled" ) @( Instrument.PlaybackTracksInstruments[i1] == Instrument ? "me" : "other" ) button-sounds" @onclick=@( () => Instrument.ToggleTrackPlayback( i1 ) )>
+							<div class="index">@i1</div>
+							<div class="player">
+								@if ( Instrument.PlaybackTracksInstruments[i].IsValid() )
+								{
+									<img src="@( $"avatar://{Instrument.PlaybackTracksInstruments[i].Network.Owner.SteamId}" )"/>
+								}
+							</div>
 						</button>
 					}
 				</main>
@@ -75,6 +111,8 @@
 
 	private BaseInstrument Instrument => PlayerCharacter.Local.Equips.GetEquippedItem<BaseInstrument>( Equips.EquipSlot.Tool );
 
+	private BaseInstrument PlayAlongMaster => Scene.GetAllComponents<BaseInstrument>().FirstOrDefault( x => x != Instrument && x.Player.IsValid() && x.WorldPosition.Distance( Instrument.WorldPosition ) < 300 );
+
 	private List<string> GetMidiFiles()
 	{
 		return FileSystem.Data.FindFile( "midi", "*.mid" ).ToList();
@@ -82,7 +120,7 @@
 
 	protected override int BuildHash()
 	{
-		return HashCode.Combine( Instrument?.PlaybackProgress );
+		return HashCode.Combine( Instrument?.PlaybackProgress, PlayAlongMaster?.PlaybackTracksInstruments.Select( x => x.Network.Owner.SteamId ).ToArray() );
 	}
 
 }

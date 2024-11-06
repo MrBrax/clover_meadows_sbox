@@ -51,6 +51,64 @@ InstrumentUi {
         }
     }
 
+    .track-button {
+        padding: 5px;
+        color: #ccc;
+        background-color: #3778ac;
+        border-radius: 10px;
+        cursor: pointer;
+
+        flex-direction: column;
+        gap: 5px;
+
+        align-items: center;
+        justify-content: center;
+
+        .player {
+            img {
+                width: 32px;
+                height: 32px;
+                border-radius: 100%;
+                // border: 3px solid #00efdc;
+            }
+        }
+
+        &.me {
+            .player img {
+                border: 3px solid #00efdc;
+            }
+        }
+
+        &.enabled {
+            color: white;
+            background-color: #4ea6e4;
+        }
+    }
+
+    .playalong {
+        pointer-events: all;
+        background-color: rgba(14, 95, 158, 0.7);
+        padding: 10px 20px;
+        flex-direction: column;
+        gap: 10px;
+
+        section {
+            flex-direction: column;
+            gap: 5px;
+
+            background-color: #3778ac;
+
+            padding: 5px 10px;
+
+            border-radius: 10px;
+
+            .tracks {
+                gap: 5px;
+            }
+
+        }
+    }
+
     .playback {
         pointer-events: all;
         background-color: rgba(14, 95, 158, 0.7);
@@ -91,18 +149,7 @@ InstrumentUi {
 
                 }
 
-                .track-button {
-                    padding: 5px;
-                    color: #ccc;
-                    background-color: #3778ac;
-                    border-radius: 10px;
-                    cursor: pointer;
 
-                    &.enabled {
-                        color: white;
-                        background-color: #4ea6e4;
-                    }
-                }
             }
 
             /*.transpose {
