@@ -15,33 +15,38 @@
         },
         "Notes": [
           {
-            "Octave": 3,
-            "Note": "CSharp",
-            "SoundFile": "items/instruments/acoustic_guitar/csharp3.vsnd",
-            "Pitchable": true
-          },
-          {
-            "Octave": 3,
-            "Note": "A",
-            "SoundFile": "items/instruments/acoustic_guitar/a3.vsnd",
+            "Octave": 1,
+            "SoundFile": "items/instruments/acoustic_guitar/r_c1.vsnd",
             "Pitchable": true
           },
           {
             "Octave": 2,
-            "Note": "B",
-            "SoundFile": "items/instruments/acoustic_guitar/b2.vsnd",
+            "SoundFile": "items/instruments/acoustic_guitar/r_c2.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 3,
+            "SoundFile": "items/instruments/acoustic_guitar/r_c3.vsnd",
             "Pitchable": true
           },
           {
             "Octave": 4,
-            "Note": "B",
-            "SoundFile": "items/instruments/acoustic_guitar/b4.vsnd",
+            "SoundFile": "items/instruments/acoustic_guitar/r_c4.vsnd",
             "Pitchable": true
           },
           {
             "Octave": 5,
-            "Note": "D",
-            "SoundFile": "items/instruments/acoustic_guitar/d5.vsnd",
+            "SoundFile": "items/instruments/acoustic_guitar/r_c5.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 6,
+            "SoundFile": "items/instruments/acoustic_guitar/r_c6.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 7,
+            "SoundFile": "items/instruments/acoustic_guitar/r_c7.vsnd",
             "Pitchable": true
           }
         ],
