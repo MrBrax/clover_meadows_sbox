@@ -16,6 +16,8 @@ public class ShopClerk : BaseNpc
 
 	protected override void OnFixedUpdate()
 	{
+		if ( IsProxy ) return;
+
 		WorldRotation = Rotation.Slerp( WorldRotation, TargetLookAt, Time.Delta * 5f );
 
 		var players = Components.Get<WorldLayerObject>().World.PlayersInWorld.ToList();
