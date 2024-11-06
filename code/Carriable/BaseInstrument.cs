@@ -201,11 +201,6 @@ public partial class BaseInstrument : BaseCarriable
 			CurrentOctave--;
 		}*/
 
-		if ( Input.Pressed( "PlayOctave1" ) )
-		{
-			LoadFile( "1243344656.midi.mid" );
-		}
-
 		if ( Input.Pressed( "PlayOctave1" ) ) CurrentOctave = 1;
 		if ( Input.Pressed( "PlayOctave2" ) ) CurrentOctave = 2;
 		if ( Input.Pressed( "PlayOctave3" ) ) CurrentOctave = 3;
