@@ -91,5 +91,15 @@
         font-size: 30px;
     }
 
+}
 
+.button-sounds {
+    &:not(.disabled):hover {
+        sound-in: "sounds/ui/button_hover.sound";
+    }
+
+    &:active {
+        sound-in: "sounds/ui/button_down.sound";
+        sound-out: "sounds/ui/button_up.sound";
+    }
 }

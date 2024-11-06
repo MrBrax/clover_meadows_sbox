@@ -5,99 +5,37 @@ namespace Clover.Carriable;
 
 public partial class BaseInstrument
 {
+	[Sync] public bool IsPlayingBack { get; set; }
+	[Sync] public string PlaybackTitle { get; set; } = "";
+	[Sync] public NetList<bool> PlaybackTracksEnabled { get; set; } = new();
+	[Sync] public int TransposePlayback { get; set; } = 0;
+
 	// private TimeUntil _nextPlaybackEntry;
-	private TimeSince _playbackStarted;
+	[Sync] public TimeSince PlaybackStarted { get; set; }
+
+	public float PlaybackProgress;
 
 	// private int _playbackTimeSignature = 4;
 	private int _playbackTempo = 0;
 
-	private bool _isPlayingBack;
 
 	private MidiFile _midiFile;
 
 	// private int _currentIndex;
 	private List<int> _currentTrackEventIndices = new();
-	private int _transposePlayback = 0;
+	private List<float> _currentTrackVolumes = new();
 
-	// private List<bool> _tracksEnabled = new();
-	private int _playbackTrackIndex;
 
-	/*private Queue<InstrumentPlaybackEntry> _playbackQueue = new();
+	// private int _playbackTrackIndex;
 
-	public class InstrumentPlaybackEntry
-	{
-		public float Time { get; set; }
-	}
-
-	public class InstrumentPlaybackNote : InstrumentPlaybackEntry
-	{
-
-		public int Octave { get; set; }
-		public Note Note { get; set; }
-		public float Duration { get; set; }
-	}*/
-
-	/*public class InstrumentPlaybackPause : InstrumentPlaybackEntry
-	{
-		public float Duration { get; set; }
-	}*/
-
-	/*public class InstrumentPlaybackLoop : InstrumentPlaybackEntry
-	{
-		public int LoopCount { get; set; }
-		public Queue<InstrumentPlaybackEntry> Entries { get; set; }
-	}*/
-
-	/*public void AddPlaybackEntry( InstrumentPlaybackEntry entry )
-	{
-		_playbackQueue.Enqueue( entry );
-	}*/
-
-	/*public void ClearPlayback()
-	{
-		_playbackQueue.Clear();
-	}*/
-
-	// private InstrumentPlaybackEntry _nextPlaybackEntry;
 
 	private void Playback()
 	{
-		/*if ( _playbackQueue.Count == 0 )
-		{
-			_isPlayingBack = false;
-			return;
-		}*/
-
-		/*if ( !_nextPlaybackEntry ) return;
-
-		var entry = _playbackQueue.Dequeue();
-		if ( entry is InstrumentPlaybackNote note )
-		{
-			PlayNote( note.Octave, note.Note );
-			_nextPlaybackEntry = note.Duration;
-		}
-		else if ( entry is InstrumentPlaybackPause pause )
-		{
-			_nextPlaybackEntry = pause.Duration;
-		}
-		else
-		{
-			Log.Warning( "Unknown playback entry" );
-		}*/
-
-		/*if ( _nextPlaybackEntry == null )
-		{
-			_nextPlaybackEntry = _playbackQueue.Dequeue();
-		}*/
+		var finished = 0;
 
 		for ( var trackIndex = 0; trackIndex < _midiFile.Tracks.Length; trackIndex++ )
 		{
 			var track = _midiFile.Tracks[trackIndex];
-
-			/*if ( !_tracksEnabled[trackIndex] )
-			{
-				continue;
-			}*/
 
 			// TODO: play multiple tracks at once or just one?
 			/*if ( trackIndex != _playbackTrackIndex )
@@ -105,11 +43,20 @@ public partial class BaseInstrument
 				continue;
 			}*/
 
+			// Log.Info( $"{_currentTrackEventIndices[trackIndex]} / {track.MidiEvents.Count}" );
+			if ( _currentTrackEventIndices[trackIndex] >= track.MidiEvents.Count )
+			{
+				finished++;
+				continue;
+			}
+
 			for ( var i = _currentTrackEventIndices[trackIndex]; i < track.MidiEvents.Count; i++ )
 			{
+				// skip if track is disabled but keep track of the current index
+
 				var midiEvent = track.MidiEvents[i];
 
-				if ( midiEvent.MidiEventType != MidiEventType.NoteOn )
+				/*if ( midiEvent.MidiEventType != MidiEventType.NoteOn )
 				{
 					Log.Info( $"Event: {midiEvent.MidiEventType} {midiEvent.Time}" );
 
@@ -124,16 +71,21 @@ public partial class BaseInstrument
 
 					_currentTrackEventIndices[trackIndex] = i + 1;
 					continue;
-				}
+				}*/
 
 				var bps = 60.0f / _playbackTempo;
 
 				var time = ((float)midiEvent.Time / (float)_midiFile.TicksPerQuarterNote) * bps;
 
-
-				if ( time > _playbackStarted )
+				if ( time > PlaybackStarted )
 				{
 					break;
+				}
+
+				if ( trackIndex > PlaybackTracksEnabled.Count || !PlaybackTracksEnabled[trackIndex] )
+				{
+					_currentTrackEventIndices[trackIndex] = i + 1;
+					continue;
 				}
 
 				/*if ( i <= _currentIndex )
@@ -153,7 +105,66 @@ public partial class BaseInstrument
 					var velocity = midiEvent.Velocity;
 					// Log.Info( $"Note on: {note} {velocity} @ {midiEvent.Time}" );
 
-					PlayMidiNote( note, velocity );
+					PlayMidiNote( trackIndex, note, velocity );
+				}
+				else if ( midiEvent.MidiEventType == MidiEventType.NoteOff )
+				{
+					var channel = midiEvent.Channel;
+					var note = midiEvent.Note;
+					var velocity = midiEvent.Velocity;
+					// Log.Info( $"Note off: {note} {velocity} @ {midiEvent.Time}" );
+				}
+				else if ( midiEvent.MidiEventType == MidiEventType.MetaEvent )
+				{
+					if ( midiEvent.MetaEventType == MetaEventType.Tempo )
+					{
+						var tempo = midiEvent.Arg1;
+						var beatsPerMinute = midiEvent.Arg2;
+						_playbackTempo = beatsPerMinute;
+						Log.Info( $"Tempo change: {midiEvent.Arg1}, {midiEvent.Arg2}, {midiEvent.Arg3}" );
+					}
+				}
+				else if ( midiEvent.MidiEventType == MidiEventType.PitchBendChange )
+				{
+					var channel = midiEvent.Arg1;
+					var value1 = midiEvent.Arg2;
+					var value2 = midiEvent.Arg3;
+					Log.Info( $"Pitch bend: {channel} {value1} {value2}" );
+				}
+				else if ( midiEvent.MidiEventType == MidiEventType.ProgramChange )
+				{
+					var channel = midiEvent.Arg1;
+					var program = midiEvent.Arg2;
+					Log.Info( $"Program change: {channel} {program}" );
+				}
+				else if ( midiEvent.MidiEventType == MidiEventType.ChannelAfterTouch )
+				{
+					var channel = midiEvent.Arg1;
+					var value = midiEvent.Arg2;
+					Log.Info( $"Channel after touch: {channel} {value}" );
+				}
+				else if ( midiEvent.MidiEventType == MidiEventType.KeyAfterTouch )
+				{
+					var channel = midiEvent.Arg1;
+					var note = midiEvent.Arg2;
+					var value = midiEvent.Arg3;
+					Log.Info( $"Key after touch: {channel} {note} {value}" );
+				}
+				else if ( midiEvent.MidiEventType == MidiEventType.ControlChange )
+				{
+					var channel = midiEvent.Arg1;
+					var controlChangeType = midiEvent.ControlChangeType;
+					var value = midiEvent.Value;
+					Log.Info( $"Control change: {channel} {controlChangeType} {value}" );
+
+					if ( controlChangeType == ControlChangeType.Volume )
+					{
+						_currentTrackVolumes[trackIndex] = value / 127.0f;
+					}
+				}
+				else
+				{
+					Log.Info( $"Event: {midiEvent.MidiEventType} {midiEvent.Time}" );
 				}
 
 				// _currentIndex = i;
@@ -161,24 +172,53 @@ public partial class BaseInstrument
 				_currentTrackEventIndices[trackIndex] = i + 1;
 			}
 		}
+
+		if ( finished >= _midiFile.Tracks.Length )
+		{
+			IsPlayingBack = false;
+			Log.Info( "Finished playback" );
+			return;
+		}
+
+		CalculateProgress();
+	}
+
+	private void CalculateProgress()
+	{
+		// add all the ticks from all the tracks
+		var totalTicks = _midiFile.Tracks.Sum( x => x.MidiEvents.Count );
+
+		// add all the ticks from the current track
+		var currentTicks = _currentTrackEventIndices.Sum( x => x );
+
+		// calculate the progress
+		PlaybackProgress = (float)currentTicks / (float)totalTicks;
+
+
+		// Log.Info( $"Progress: {PlaybackProgress}, {currentTicks} / {totalTicks}" );
 	}
 
 	/// <summary>
 	///  Play a midi note to the instrument, converting the midi note to a note enum
 	/// </summary>
 	/// <param name="note"></param>
-	private void PlayMidiNote( int note, int velocity )
+	private void PlayMidiNote( int track, int note, int velocity )
 	{
-		if ( _transposePlayback != 0 )
+		if ( TransposePlayback != 0 )
 		{
-			note += _transposePlayback;
+			note += TransposePlayback;
 		}
 
 		var octave = note / 12;
 		var noteIndex = note % 12;
 
 		Note noteEnum = (Note)noteIndex;
-		PlayNote( octave, noteEnum, (float)velocity / 127.0f );
+
+		var volume = velocity / 127.0f;
+
+		volume *= _currentTrackVolumes[track];
+
+		PlayNote( octave, noteEnum, volume );
 	}
 
 	/*public void StartPlayback( string file )
@@ -188,9 +228,13 @@ public partial class BaseInstrument
 		LoadFile( file );
 	}*/
 
-	private void LoadFile( string file )
+	public void LoadFile( string file )
 	{
-		var midiFile = new MidiFile( file );
+		IsPlayingBack = false;
+
+		Log.Info( $"Loading midi file: {file}" );
+
+		var midiFile = new MidiFile( $"midi/{file}" );
 
 		// 0 = single-track, 1 = multi-track, 2 = multi-pattern
 		var midiFileformat = midiFile.Format;
@@ -233,16 +277,22 @@ public partial class BaseInstrument
 		}
 
 		_midiFile = midiFile;
-		_playbackStarted = 0.0f;
-		_isPlayingBack = true;
+		PlaybackStarted = 0.0f;
+		// IsPlayingBack = true;
 		// _currentIndex = 0;
-		_transposePlayback = -12;
+		// _transposePlayback = -12;
+
+		PlaybackTracksEnabled.Clear();
 
 		_currentTrackEventIndices.Clear();
+
 		foreach ( var track in _midiFile.Tracks )
 		{
 			_currentTrackEventIndices.Add( 0 );
+			PlaybackTracksEnabled.Add( true );
 		}
+
+		PlaybackTitle = file;
 
 		/*_tracksEnabled.Clear();
 		foreach ( var track in _midiFile.Tracks )
@@ -251,7 +301,46 @@ public partial class BaseInstrument
 		}
 
 		_tracksEnabled[0] = true;*/
+	}
 
-		_playbackTrackIndex = 0;
+	public void StartPlayback()
+	{
+		_currentTrackEventIndices.Clear();
+		_currentTrackEventIndices.AddRange( Enumerable.Repeat( 0, _midiFile.Tracks.Length ) );
+
+		_currentTrackVolumes.Clear();
+		_currentTrackVolumes.AddRange( Enumerable.Repeat( 1.0f, _midiFile.Tracks.Length ) );
+
+		PlaybackStarted = 0.0f;
+		IsPlayingBack = true;
+	}
+
+	public void StopPlayback()
+	{
+		IsPlayingBack = false;
+		PlaybackStarted = 0.0f;
+		PlaybackProgress = 0.0f;
+	}
+
+	public void ToggleTrackPlayback( int index )
+	{
+		if ( index >= PlaybackTracksEnabled.Count )
+		{
+			return;
+		}
+
+		PlaybackTracksEnabled[index] = !PlaybackTracksEnabled[index];
+
+		// _currentTrackEventIndices[index] = 0;
+	}
+
+	public bool IsPlaybackTrackEnabled( int index )
+	{
+		if ( index >= PlaybackTracksEnabled.Count )
+		{
+			return false;
+		}
+
+		return PlaybackTracksEnabled[index];
 	}
 }

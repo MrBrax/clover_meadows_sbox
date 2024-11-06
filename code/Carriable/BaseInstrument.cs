@@ -1,4 +1,5 @@
 ﻿using System;
+using Sandbox.Audio;
 
 namespace Clover.Carriable;
 
@@ -77,6 +78,8 @@ public partial class BaseInstrument : BaseCarriable
 
 	[Sync] private int CurrentOctave { get; set; } = 3;
 
+	private Mixer InstrumentMixer => Mixer.FindMixerByName( "Instrument" );
+
 	public override string GetUseName()
 	{
 		return IsPlaying ? "Stop" : "Play";
@@ -86,7 +89,7 @@ public partial class BaseInstrument : BaseCarriable
 	{
 		base.OnUseDown();
 		IsPlaying = !IsPlaying;
-		_isPlayingBack = false;
+		IsPlayingBack = false;
 		_midiFile = null;
 	}
 
@@ -96,13 +99,13 @@ public partial class BaseInstrument : BaseCarriable
 	}
 
 	[Broadcast]
-	public void PlayNote( int octave, Note note, float velocity = 1.0f )
+	public void PlayNote( int octave, Note note, float volume = 1.0f )
 	{
 		var entry = Notes.FirstOrDefault( x => x.Octave == octave && x.Note == note );
 		if ( entry.Equals( default ) )
 		{
 			// Log.Warning( $"No note found for {octave} {note}" );
-			PlayPitched( octave, note, velocity );
+			PlayPitched( octave, note, volume );
 			return;
 		}
 
@@ -111,16 +114,18 @@ public partial class BaseInstrument : BaseCarriable
 			var s = Sound.Play( entry.SoundEvent );
 			s.Position = WorldPosition;
 			s.Pitch = 1.0f;
-			s.Volume = velocity;
-			Log.Info( $"Played {entry.Note} {entry.Octave}" );
+			s.Volume = volume;
+			s.TargetMixer = InstrumentMixer;
+			// Log.Info( $"Played {entry.Note} {entry.Octave}" );
 		}
 		else if ( entry.SoundFile != null )
 		{
 			var s = Sound.PlayFile( entry.SoundFile );
 			s.Position = WorldPosition;
 			s.Pitch = 1.0f;
-			s.Volume = velocity;
-			Log.Info( $"Played {entry.Note} {entry.Octave}" );
+			s.Volume = volume;
+			s.TargetMixer = InstrumentMixer;
+			// Log.Info( $"Played {entry.Note} {entry.Octave}" );
 		}
 		else
 		{
@@ -133,8 +138,8 @@ public partial class BaseInstrument : BaseCarriable
 	/// </summary>
 	/// <param name="octave"></param>
 	/// <param name="note"></param>
-	/// <param name="velocity"></param>
-	private void PlayPitched( int octave, Note note, float velocity = 1.0f )
+	/// <param name="volume"></param>
+	private void PlayPitched( int octave, Note note, float volume = 1.0f )
 	{
 		// var entry = Notes.FirstOrDefault( x => x.Octave == octave && x.Pitchable );
 		var entry = Notes.FirstOrDefault( x => x.Octave == octave && x.Note < note );
@@ -159,10 +164,11 @@ public partial class BaseInstrument : BaseCarriable
 		var s = entry.SoundEvent != null ? Sound.Play( entry.SoundEvent ) : Sound.PlayFile( entry.SoundFile );
 		s.Pitch = frequency / NoteFrequencies[entry.Note];
 		s.Position = WorldPosition;
-		s.Volume = velocity;
+		s.Volume = volume;
+		s.TargetMixer = InstrumentMixer;
 
 		// Log.Info( $"Playing pitched {entry.Note} at {frequency} Hz" );
-		Log.Info( $"Played {note} {octave} @ {velocity}" );
+		// Log.Info( $"Played {note} {octave} @ {volume}" );
 	}
 
 	protected override void OnUpdate()
@@ -172,7 +178,7 @@ public partial class BaseInstrument : BaseCarriable
 			return;
 
 
-		if ( _isPlayingBack )
+		if ( IsPlayingBack )
 		{
 			Playback();
 		}

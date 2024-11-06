@@ -1,4 +1,6 @@
-﻿InstrumentUi {
+﻿@import "./Shared.scss";
+
+InstrumentUi {
     position: absolute;
     bottom: 50px;
     left: 50px;
@@ -9,10 +11,16 @@
     align-items: center;
     justify-content: center;
 
-    gap: 5px;
+    gap: 20px;
 
     font-family: Itim;
     font-size: 30px;
+
+    flex-direction: column;
+
+    .notes {
+        gap: 5px;
+    }
 
     .note {
         flex-direction: column;
@@ -40,6 +48,85 @@
         Image {
             width: 50px;
             height: 50px;
+        }
+    }
+
+    .playback {
+        pointer-events: all;
+        background-color: #0e5f9e;
+        padding: 10px 20px;
+        flex-direction: column;
+        gap: 10px;
+
+        h1 {
+            font-size: 40px;
+        }
+
+        .actions {
+            gap: 15px;
+
+            section {
+                flex-direction: column;
+                gap: 5px;
+
+                .title {
+                    font-size: 35px;
+                }
+
+                .value {
+                    font-size: 30px;
+                }
+
+                main {
+                    gap: 10px;
+                    align-items: center;
+                    align-content: center;
+
+                }
+
+                .track-button {
+                    padding: 5px;
+                    color: #ccc;
+                    background-color: #3778ac;
+                    border-radius: 10px;
+                    cursor: pointer;
+
+                    &.enabled {
+                        color: white;
+                        background-color: #4ea6e4;
+                    }
+                }
+            }
+
+            /*.transpose {
+                align-items: center;
+                gap: 10px;
+
+                .value {
+                    font-size: 40px;
+                }
+            }*/
+        }
+    }
+
+    .midis {
+        flex-direction: column;
+        gap: 3px;
+
+        max-height: 200px;
+        overflow: scroll;
+
+        .midi {
+            flex-shrink: 0;
+            padding: 5px 10px;
+            background-color: #3f98dc;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 20px;
+
+            &:hover {
+                background-color: #4ea6e4;
+            }
         }
     }
 

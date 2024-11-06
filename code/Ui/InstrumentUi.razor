@@ -1,23 +1,83 @@
 ﻿@using System
 @using Clover.Carriable
+@using Clover.Components
+@using Clover.Player
 @using Sandbox.UI;
 @inherits Panel
 @namespace Clover.Ui
 @attribute [StyleSheet]
 
 <root>
-	@foreach ( var note in Enum.GetValues( typeof(BaseInstrument.Note) ) )
-	{
-		<div class="note @( BaseInstrument.IsBlackNote( (BaseInstrument.Note)note ) ? "black" : "white" )">
-			<div class="name">@BaseInstrument.NoteNames[(BaseInstrument.Note)note]</div>
-			<div class="action">
-				<Image Texture=@Input.GetGlyph( $"PlayNote{(BaseInstrument.Note)note}", InputGlyphSize.Small, GlyphStyle.Knockout )/>
-			</div>
+	<div class="playback">
+		<h1>@( $"Playing: {Instrument.PlaybackTitle}" )</h1>
+		<div class="midis">
+			@foreach ( var midi in GetMidiFiles() )
+			{
+				<button class="midi button-sounds" @onclick=@( () => Instrument.LoadFile( midi ) )>
+					@System.IO.Path.GetFileNameWithoutExtension( midi )
+				</button>
+			}
 		</div>
-	}
+		<div class="actions">
+			<button class="clover-button button-sounds" @onclick=@( () => Instrument.StartPlayback() )>Play</button>
+			<button class="clover-button button-sounds" @onclick=@( () => Instrument.StopPlayback() )>Stop</button>
+			@*<TextEntry Numeric=@( true ) Value:bind=@Instrument.TransposePlayback/>*@
+			<section class="transpose">
+				<h2 class="title">Transpose</h2>
+				<main>
+					<button class="clover-button small button-sounds" @onclick=@( () => Instrument.TransposePlayback -= 12 )>-1</button>
+					<div class="value">@( Instrument.TransposePlayback / 12 )</div>
+					<button class="clover-button small button-sounds" @onclick=@( () => Instrument.TransposePlayback += 12 )>+1</button>
+				</main>
+			</section>
+			<section class="tracks">
+				<h2 class="title">Tracks</h2>
+				<main>
+					@for ( int i = 0; i < Instrument.PlaybackTracksEnabled.Count; i++ )
+					{
+						var i1 = i;
+						<button class="track-button @( Instrument.IsPlaybackTrackEnabled( i ) ? "enabled" : "disabled" ) button-sounds" @onclick=@( () => Instrument.ToggleTrackPlayback( i1 ) )>
+							@i1
+						</button>
+					}
+				</main>
+			</section>
+			<section class="progress">
+				<h2 class="title">Progress</h2>
+				<main>
+					@*<div class="progress-bar">
+						<div class="progress-bar-fill" style="width: @( Instrument.PlaybackProgress * 100 )px"></div>
+					</div>*@
+					@( $"{Math.Round( Instrument.PlaybackProgress * 100 )}%" )
+				</main>
+			</section>
+		</div>
+	</div>
+	<div class="notes">
+		@foreach ( var note in Enum.GetValues( typeof(BaseInstrument.Note) ) )
+		{
+			<div class="note @( BaseInstrument.IsBlackNote( (BaseInstrument.Note)note ) ? "black" : "white" )">
+				<div class="name">@BaseInstrument.NoteNames[(BaseInstrument.Note)note]</div>
+				<div class="action">
+					<Image Texture=@Input.GetGlyph( $"PlayNote{(BaseInstrument.Note)note}", InputGlyphSize.Small, GlyphStyle.Knockout )/>
+				</div>
+			</div>
+		}
+	</div>
 </root>
 
 @code {
 
+	private BaseInstrument Instrument => PlayerCharacter.Local.Equips.GetEquippedItem<BaseInstrument>( Equips.EquipSlot.Tool );
+
+	private List<string> GetMidiFiles()
+	{
+		return FileSystem.Data.FindFile( "midi", "*.mid" ).ToList();
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Instrument?.PlaybackProgress );
+	}
 
 }
