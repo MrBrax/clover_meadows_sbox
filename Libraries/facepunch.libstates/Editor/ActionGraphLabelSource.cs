@@ -62,7 +62,7 @@ public abstract record ActionGraphLabelSource<T> : ILabelSource
 
 	protected ActionGraph? ActionGraph
 	{
-		get => Delegate.TryGetActionGraphImplementation( out var graph, out _ ) ? graph : null;
+		get => Delegate.GetActionGraphInstance() is { Graph: var graph } ? graph : null;
 		set => Delegate = (ActionGraph<T>?)value;
 	}
 
