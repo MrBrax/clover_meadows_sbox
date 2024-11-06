@@ -86,6 +86,8 @@ public partial class BaseInstrument : BaseCarriable
 	{
 		base.OnStart();
 		ParticleEmitter.Rate = 0;
+
+		FileSystem.Data.CreateDirectory( "midi" );
 	}
 
 	public override string GetUseName()
