@@ -1,0 +1,328 @@
+{
+  "RootObject": {
+    "__guid": "64f352d4-a18b-4e02-80a0-fd3cbfa1feea",
+    "Flags": 0,
+    "Name": "piano_carry",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Clover.Carriable.BaseInstrument",
+        "__guid": "06d37bba-5610-47b4-811c-427508a6fe8c",
+        "ItemData": "items/instruments/piano/piano.tool",
+        "Model": {
+          "_type": "gameobject",
+          "go": "61bf4c90-dcf6-4fb4-9f08-9b28b6fab9cf"
+        },
+        "Notes": [
+          {
+            "Octave": 1,
+            "SoundFile": "items/instruments/piano/c1.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 2,
+            "SoundFile": "items/instruments/piano/c2.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 3,
+            "SoundFile": "items/instruments/piano/c3.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 4,
+            "SoundFile": "items/instruments/piano/c4.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 5,
+            "SoundFile": "items/instruments/piano/c5.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 6,
+            "SoundFile": "items/instruments/piano/c6.vsnd",
+            "Pitchable": true
+          },
+          {
+            "Octave": 7,
+            "SoundFile": "items/instruments/piano/c7.vsnd",
+            "Pitchable": true
+          }
+        ],
+        "ParticleEmitter": {
+          "_type": "component",
+          "component_id": "2329ea4f-ec79-4ef6-83e9-e4505e39302e",
+          "go": "47b3a4f4-5480-48f9-95bb-6cfb786f8a62",
+          "component_type": "ParticleConeEmitter"
+        },
+        "UseTime": 1
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "61bf4c90-dcf6-4fb4-9f08-9b28b6fab9cf",
+        "Flags": 0,
+        "Name": "Object",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "47b3a4f4-5480-48f9-95bb-6cfb786f8a62",
+            "Flags": 0,
+            "Name": "Particle",
+            "Position": "-5.111313,1.707398,-0.000001192093",
+            "Rotation": "-0.6963643,0.1227878,-0.2988364,0.6408564",
+            "Tags": "particles",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ParticleEffect",
+                "__guid": "1bc2acd3-eef1-4d0e-9c7c-a21847003c86",
+                "__version": 1,
+                "Alpha": {
+                  "Type": "Curve",
+                  "CurveA": [
+                    {
+                      "y": 1
+                    },
+                    {
+                      "x": 1,
+                      "in": 2.4285717,
+                      "out": -2.4285717
+                    }
+                  ],
+                  "Constants": "1,0,0,0"
+                },
+                "ApplyAlpha": true,
+                "ApplyColor": true,
+                "ApplyRotation": false,
+                "ApplyShape": false,
+                "Bounce": {
+                  "Constants": "1,0,0,0"
+                },
+                "Brightness": {
+                  "Constants": "1,0,0,0"
+                },
+                "Bumpiness": {},
+                "Collision": false,
+                "CollisionRadius": 1,
+                "Damping": {
+                  "Constants": "0.2,0,0,0"
+                },
+                "DieOnCollisionChance": {},
+                "Force": true,
+                "ForceDirection": "0,0,-70",
+                "ForceScale": {
+                  "Constants": "1,0,0,0"
+                },
+                "Friction": {
+                  "Constants": "1,0,0,0"
+                },
+                "Gradient": {
+                  "Type": "Gradient",
+                  "Evaluation": "Particle",
+                  "GradientA": {
+                    "color": [
+                      {
+                        "c": "0.9814,0,0,1"
+                      },
+                      {
+                        "t": 0.1474359,
+                        "c": "0.91667,1,0,1"
+                      },
+                      {
+                        "t": 0.32692307,
+                        "c": "0.18333,1,0,1"
+                      },
+                      {
+                        "t": 0.4679487,
+                        "c": "0,1,0.85,1"
+                      },
+                      {
+                        "t": 0.6282051,
+                        "c": "0,0.33333,1,1"
+                      },
+                      {
+                        "t": 0.78205127,
+                        "c": "0.55,0,1,1"
+                      },
+                      {
+                        "t": 0.87606835,
+                        "c": "1,0.04902,0.8732,1"
+                      },
+                      {
+                        "t": 1,
+                        "c": "1,0,0,1"
+                      }
+                    ],
+                    "alpha": []
+                  },
+                  "GradientB": {
+                    "color": [
+                      {
+                        "t": 0.5,
+                        "c": "1,1,1,1"
+                      }
+                    ],
+                    "alpha": []
+                  },
+                  "ConstantA": "1,1,1,1",
+                  "ConstantB": "1,1,1,1"
+                },
+                "Lifetime": {
+                  "Type": "Range",
+                  "Evaluation": "Particle",
+                  "Constants": "1,2,0,0"
+                },
+                "MaxParticles": 1000,
+                "OrbitalForce": {},
+                "OrbitalPull": {},
+                "PerParticleTimeScale": {
+                  "Constants": "1,0,0,0"
+                },
+                "Pitch": {},
+                "PreWarm": 0,
+                "PushStrength": {},
+                "Roll": {},
+                "Scale": {
+                  "Constants": "1,0,0,0"
+                },
+                "SequenceId": {},
+                "SequenceSpeed": {
+                  "Constants": "1,0,0,0"
+                },
+                "SequenceTime": {
+                  "Constants": "1,0,0,0"
+                },
+                "SheetSequence": false,
+                "Space": "World",
+                "StartDelay": {},
+                "StartVelocity": {
+                  "Type": "Range",
+                  "Evaluation": "Particle",
+                  "Constants": "30,150,0,0"
+                },
+                "Stretch": {},
+                "TimeScale": 1,
+                "Tint": "0.73488,0.76581,1,1",
+                "Yaw": {}
+              },
+              {
+                "__type": "Sandbox.ParticleSpriteRenderer",
+                "__guid": "7c402ffd-91f6-4752-bc4c-736172314e5b",
+                "Additive": false,
+                "Alignment": "LookAtCamera",
+                "BlurAmount": 0.5,
+                "BlurOpacity": 0.5,
+                "BlurSpacing": 0.5,
+                "DepthFeather": 0,
+                "FaceVelocity": false,
+                "FogStrength": 1,
+                "LeadingTrail": true,
+                "Lighting": false,
+                "MotionBlur": false,
+                "Opaque": false,
+                "Pivot": "0.5,0.5",
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RotationOffset": 0,
+                "Scale": 1,
+                "Shadows": false,
+                "SortMode": "Unsorted",
+                "Texture": "items/instruments/music-solid-24.vtex"
+              },
+              {
+                "__type": "Sandbox.ParticleConeEmitter",
+                "__guid": "2329ea4f-ec79-4ef6-83e9-e4505e39302e",
+                "Burst": 0,
+                "ConeAngle": 30,
+                "ConeFar": 50,
+                "ConeNear": 1,
+                "Delay": 0,
+                "DestroyOnEnd": false,
+                "Duration": 10,
+                "InVolume": false,
+                "Loop": true,
+                "OnEdge": false,
+                "Rate": 39.72,
+                "RateOverDistance": 0
+              }
+            ]
+          },
+          {
+            "__guid": "153505cc-1ce7-47b0-aae5-be9d7e083485",
+            "Flags": 0,
+            "Name": "grand_piano",
+            "Position": "-1.161205,3.31855,-6.811262",
+            "Scale": "0.2058543,0.2058543,0.2058543",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.SkinnedModelRenderer",
+                "__guid": "cdc37caf-8c97-4e0f-903f-410be48dbec9",
+                "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "CreateBoneObjects": false,
+                "Model": "models/items/instruments/grand_piano.vmdl",
+                "Morphs": {},
+                "Parameters": {
+                  "bools": {},
+                  "ints": {},
+                  "floats": {},
+                  "vectors": {},
+                  "rotations": {}
+                },
+                "RenderOptions": {
+                  "GameLayer": true,
+                  "OverlayLayer": false,
+                  "BloomLayer": false,
+                  "AfterUILayer": false
+                },
+                "RenderType": "On",
+                "Tint": "1,1,1,1",
+                "UseAnimGraph": true
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "luke.grand_piano#22909"
+  ],
+  "__version": 1
+}

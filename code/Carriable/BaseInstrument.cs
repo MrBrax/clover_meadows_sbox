@@ -85,7 +85,11 @@ public partial class BaseInstrument : BaseCarriable
 	protected override void OnStart()
 	{
 		base.OnStart();
-		ParticleEmitter.Rate = 0;
+
+		if ( ParticleEmitter.IsValid() )
+		{
+			ParticleEmitter.Rate = 0;
+		}
 
 		FileSystem.Data.CreateDirectory( "midi" );
 	}
@@ -148,6 +152,7 @@ public partial class BaseInstrument : BaseCarriable
 
 	private void NoteParticle()
 	{
+		if ( !ParticleEmitter.IsValid() ) return;
 		ParticleEmitter.Emit( ParticleEmitter.Components.GetInAncestorsOrSelf<ParticleEffect>() );
 	}
 
