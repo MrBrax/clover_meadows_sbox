@@ -24,7 +24,7 @@
 			</div>
 		}
 		<div class="actions">
-			<button class="clover-button button-sounds" @onclick=@( () => Instrument.StartPlayback() )>Play</button>
+			<button class="clover-button button-sounds @( string.IsNullOrEmpty( Instrument.PlaybackTitle ) ? "disabled" : "" )" @onclick=@( () => Instrument.StartPlayback() )>Play</button>
 			<button class="clover-button button-sounds" @onclick=@( () => Instrument.StopPlayback() )>Stop</button>
 			@*<TextEntry Numeric=@( true ) Value:bind=@Instrument.TransposePlayback/>*@
 			<section class="transpose">
