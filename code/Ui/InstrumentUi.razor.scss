@@ -53,7 +53,7 @@ InstrumentUi {
 
     .playback {
         pointer-events: all;
-        background-color: #0e5f9e;
+        background-color: rgba(14, 95, 158, 0.7);
         padding: 10px 20px;
         flex-direction: column;
         gap: 10px;
@@ -69,8 +69,15 @@ InstrumentUi {
                 flex-direction: column;
                 gap: 5px;
 
+                background-color: #3778ac;
+
+                padding: 5px 10px;
+
+                border-radius: 10px;
+
                 .title {
-                    font-size: 35px;
+                    font-size: 25px;
+                    color: yellow;
                 }
 
                 .value {
@@ -123,6 +130,11 @@ InstrumentUi {
             cursor: pointer;
             border-radius: 10px;
             font-size: 20px;
+
+            &.active {
+                background-color: #16bd65;
+                color: yellow;
+            }
 
             &:hover {
                 background-color: #4ea6e4;

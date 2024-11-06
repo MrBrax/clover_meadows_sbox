@@ -7,6 +7,8 @@ public partial class BaseInstrument : BaseCarriable
 {
 	public enum Note { C, CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, ASharp, B }
 
+	[Property] public ParticleEmitter ParticleEmitter { get; set; }
+
 
 	/*public class InstrumentPlaybackLoop : InstrumentPlaybackEntry
 	{
@@ -80,6 +82,12 @@ public partial class BaseInstrument : BaseCarriable
 
 	private Mixer InstrumentMixer => Mixer.FindMixerByName( "Instrument" );
 
+	protected override void OnStart()
+	{
+		base.OnStart();
+		ParticleEmitter.Rate = 0;
+	}
+
 	public override string GetUseName()
 	{
 		return IsPlaying ? "Stop" : "Play";
@@ -117,6 +125,8 @@ public partial class BaseInstrument : BaseCarriable
 			s.Volume = volume;
 			s.TargetMixer = InstrumentMixer;
 			// Log.Info( $"Played {entry.Note} {entry.Octave}" );
+
+			NoteParticle();
 		}
 		else if ( entry.SoundFile != null )
 		{
@@ -126,11 +136,17 @@ public partial class BaseInstrument : BaseCarriable
 			s.Volume = volume;
 			s.TargetMixer = InstrumentMixer;
 			// Log.Info( $"Played {entry.Note} {entry.Octave}" );
+			NoteParticle();
 		}
 		else
 		{
 			Log.Warning( $"No sound event or sound file found for {octave} {note}" );
 		}
+	}
+
+	private void NoteParticle()
+	{
+		ParticleEmitter.Emit( ParticleEmitter.Components.GetInAncestorsOrSelf<ParticleEffect>() );
 	}
 
 	/// <summary>
@@ -166,6 +182,8 @@ public partial class BaseInstrument : BaseCarriable
 		s.Position = WorldPosition;
 		s.Volume = volume;
 		s.TargetMixer = InstrumentMixer;
+
+		NoteParticle();
 
 		// Log.Info( $"Playing pitched {entry.Note} at {frequency} Hz" );
 		// Log.Info( $"Played {note} {octave} @ {volume}" );

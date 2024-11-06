@@ -9,15 +9,20 @@
 
 <root>
 	<div class="playback">
-		<h1>@( $"Playing: {Instrument.PlaybackTitle}" )</h1>
-		<div class="midis">
-			@foreach ( var midi in GetMidiFiles() )
-			{
-				<button class="midi button-sounds" @onclick=@( () => Instrument.LoadFile( midi ) )>
-					@System.IO.Path.GetFileNameWithoutExtension( midi )
-				</button>
-			}
-		</div>
+		<h1>
+			@( $"Loaded: {Instrument.PlaybackTitle}" )
+		</h1>
+		@if ( !Instrument.IsPlayingBack )
+		{
+			<div class="midis">
+				@foreach ( var midi in GetMidiFiles() )
+				{
+					<button class="midi button-sounds @( Instrument.PlaybackTitle == midi ? "active" : "" )" @onclick=@( () => Instrument.LoadFile( midi ) )>
+						@midi
+					</button>
+				}
+			</div>
+		}
 		<div class="actions">
 			<button class="clover-button button-sounds" @onclick=@( () => Instrument.StartPlayback() )>Play</button>
 			<button class="clover-button button-sounds" @onclick=@( () => Instrument.StopPlayback() )>Stop</button>
@@ -48,7 +53,7 @@
 					@*<div class="progress-bar">
 						<div class="progress-bar-fill" style="width: @( Instrument.PlaybackProgress * 100 )px"></div>
 					</div>*@
-					@( $"{Math.Round( Instrument.PlaybackProgress * 100 )}%" )
+					@( $"{(Instrument.PlaybackProgress * 100):0.00}%" )
 				</main>
 			</section>
 		</div>
