@@ -193,7 +193,8 @@ public partial class BaseInstrument : BaseCarriable
 		NoteParticle();
 
 		// Log.Info( $"Playing pitched {entry.Note} at {frequency} Hz" );
-		// Log.Info( $"Played {note} {octave} @ {volume}" );
+		// Log.Info(
+		// 	$"Played {note} {octave} @ {volume} (pitched to {entry.Note} @ {frequency} Hz), using file: {entry.SoundEvent?.ResourceName}" );
 	}
 
 	protected override void OnUpdate()

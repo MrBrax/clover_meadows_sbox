@@ -65,9 +65,9 @@
 					<button class="clover-button small button-sounds" @onclick=@( () => Instrument.TransposePlayback += 12 )>+1</button>
 				</main>
 			</section>
-			<section class="tracks">
+			<section>
 				<h2 class="title">Tracks</h2>
-				<main>
+				<main class="tracks">
 					@for ( int i = 0; i < Instrument.PlaybackTracksInstruments.Count; i++ )
 					{
 						var i1 = i;

@@ -16,37 +16,43 @@
         "Notes": [
           {
             "Octave": 1,
-            "SoundFile": "items/instruments/piano/c1.vsnd",
+            "SoundEvent": "items/instruments/piano/piano_c1.sound",
             "Pitchable": true
           },
           {
             "Octave": 2,
-            "SoundFile": "items/instruments/piano/c2.vsnd",
+            "SoundEvent": "items/instruments/piano/piano_c2.sound",
+            "Pitchable": true
+          },
+          {
+            "Octave": 2,
+            "Note": "E",
+            "SoundEvent": "items/instruments/piano/piano_e2.sound",
             "Pitchable": true
           },
           {
             "Octave": 3,
-            "SoundFile": "items/instruments/piano/c3.vsnd",
+            "SoundEvent": "items/instruments/piano/piano_c3.sound",
             "Pitchable": true
           },
           {
             "Octave": 4,
-            "SoundFile": "items/instruments/piano/c4.vsnd",
+            "SoundEvent": "items/instruments/piano/piano_c4.sound",
             "Pitchable": true
           },
           {
             "Octave": 5,
-            "SoundFile": "items/instruments/piano/c5.vsnd",
+            "SoundEvent": "items/instruments/piano/piano_c5.sound",
             "Pitchable": true
           },
           {
             "Octave": 6,
-            "SoundFile": "items/instruments/piano/c6.vsnd",
+            "SoundEvent": "items/instruments/piano/piano_c6.sound",
             "Pitchable": true
           },
           {
             "Octave": 7,
-            "SoundFile": "items/instruments/piano/c7.vsnd",
+            "SoundEvent": "items/instruments/piano/piano_c7.sound",
             "Pitchable": true
           }
         ],
