@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using Braxnet.Persistence;
 using Clover.Components;
 using Clover.Data;
 using Clover.Items;
@@ -179,6 +180,32 @@ public class WorldNodeLink : IValid
 
 	public void RunSavePersistence()
 	{
+		var components = Node.GetComponents<Component>();
+
+		var keys = new List<string>();
+
+		foreach ( var component in components )
+		{
+			var properties = TypeLibrary.GetPropertyDescriptions( component );
+
+			foreach ( var property in properties )
+			{
+				if ( property.HasAttribute<ArbitraryDataAttribute>() )
+				{
+					if ( keys.Contains( property.Name ) )
+					{
+						Log.Error( $"Duplicate arbitrary data key {property.Name} on {component}" );
+						continue;
+					}
+
+					var value = property.GetValue( component );
+					Persistence.SetArbitraryData( property.Name, value );
+					// XLog.Info( this, $"Saving arbitrary data {property.Name} = {value}" );
+					keys.Add( property.Name );
+				}
+			}
+		}
+
 		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			persistent.OnSave( Persistence );
@@ -192,6 +219,23 @@ public class WorldNodeLink : IValid
 
 	public void RunLoadPersistence()
 	{
+		var components = Node.GetComponents<Component>();
+
+		foreach ( var component in components )
+		{
+			var properties = TypeLibrary.GetPropertyDescriptions( component );
+
+			foreach ( var property in properties )
+			{
+				if ( property.HasAttribute<ArbitraryDataAttribute>() )
+				{
+					var value = Persistence.GetArbitraryData( property.PropertyType, property.Name );
+					property.SetValue( component, value );
+					// XLog.Info( this, $"Set {property.Name} to {value} on {component}" );
+				}
+			}
+		}
+
 		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			persistent.OnLoad( Persistence );

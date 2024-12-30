@@ -38,6 +38,49 @@ public class PersistentItem
 		ItemData?.OnPersistentItemInitialize( this );
 	}
 
+	public object GetArbitraryData( Type type, string key )
+	{
+		// XLog.Info( this, "Keys: " + string.Join( ", ", ArbitraryData.Keys ) );
+		if ( ArbitraryData.TryGetValue( key, out var obj ) )
+		{
+			if ( obj == null )
+			{
+				return null;
+			}
+
+			// i don't even know why this started happening but apparently it sometimes doesn't need to deserialize
+			if ( obj.GetType() == type )
+			{
+				return obj;
+			}
+
+			/*if ( obj is float single )
+			{
+				return Convert.ChangeType( single, type );
+			}
+
+			if ( obj is double @double )
+			{
+				return Convert.ChangeType( @double, type );
+			}
+
+			if ( obj is int integer )
+			{
+				return Convert.ChangeType( integer, type );
+			}*/
+
+			if ( obj is not JsonElement jsonElement )
+			{
+				Log.Error( $"Arbitrary data '{key}' on '{this}' is not a JsonElement: {obj} (type: {obj.GetType()})" );
+				return null;
+			}
+
+			return JsonSerializer.Deserialize( jsonElement.GetRawText(), type, GameManager.JsonOptions );
+		}
+
+		return null;
+	}
+
 	/// <summary>
 	///  Get arbitrary data from this item. If the key doesn't exist, it will return the default value.
 	///  Use <see cref="SetArbitraryData"/> to store arbitrary data.
