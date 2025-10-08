@@ -1,7 +1,24 @@
 {
+  "IsSubgraph": false,
+  "Path": "shaders/iris.shdrgrph",
   "Model": "models/dev/plane.vmdl",
+  "Title": null,
   "Description": "",
+  "Category": null,
+  "Icon": null,
+  "AddToNodeLibrary": false,
   "BlendMode": "Masked",
+  "ShadingModel": "Lit",
+  "Domain": "Surface",
+  "PreviewSettings": {
+    "RenderBackfaces": false,
+    "EnableShadows": true,
+    "ShowGround": false,
+    "ShowSkybox": true,
+    "BackgroundColor": "0,0,0,1",
+    "Tint": "1,1,1,1"
+  },
+  "Version": 1,
   "nodes": [
     {
       "_class": "Result",
@@ -11,6 +28,7 @@
       "DefaultAmbientOcclusion": 0,
       "Identifier": "0",
       "Position": "792,-216",
+      "HandleOffsets": {},
       "Albedo": {
         "Identifier": "1",
         "Output": "Result"
@@ -23,26 +41,49 @@
     {
       "_class": "TextureSampler",
       "Image": "materials/cable/black_color.tga",
-      "Sampler": {},
+      "Sampler": {
+        "Filter": "Aniso",
+        "AddressU": "Wrap",
+        "AddressV": "Wrap"
+      },
       "UI": {
+        "Name": null,
+        "IsAttribute": false,
         "Default": "1,1,1,1",
+        "Extension": "Color",
+        "CustomExtension": null,
         "ShowExtension": true,
-        "SrgbRead": true
+        "Processor": "None",
+        "ColorSpace": "Srgb",
+        "ImageFormat": "DXT5",
+        "SrgbRead": true,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": null,
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
       },
       "Identifier": "1",
-      "Position": "-216,-300"
+      "Position": "-216,-300",
+      "HandleOffsets": {}
     },
     {
       "_class": "TextureCoord",
       "UseSecondaryCoord": false,
       "Tiling": "1,1",
       "Identifier": "2",
-      "Position": "-732,168"
+      "Position": "-732,168",
+      "HandleOffsets": {}
     },
     {
       "_class": "SplitVector",
       "Identifier": "3",
       "Position": "-504,-24",
+      "HandleOffsets": {},
       "Input": {
         "Identifier": "4",
         "Output": "Result"
@@ -51,12 +92,14 @@
     {
       "_class": "ScreenCoordinate",
       "Identifier": "4",
-      "Position": "-732,-24"
+      "Position": "-732,-24",
+      "HandleOffsets": {}
     },
     {
       "_class": "Distance",
       "Identifier": "5",
       "Position": "264,-60",
+      "HandleOffsets": {},
       "A": {
         "Identifier": "9",
         "Output": "XY"
@@ -72,6 +115,7 @@
       "DefaultB": 1,
       "Identifier": "6",
       "Position": "-300,-24",
+      "HandleOffsets": {},
       "A": {
         "Identifier": "3",
         "Output": "X"
@@ -88,9 +132,22 @@
       "Value": 0.39864045,
       "Name": "Progress",
       "IsAttribute": false,
-      "UI": {},
+      "UI": {
+        "Type": "Default",
+        "Step": 0,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": null,
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
       "Identifier": "7",
-      "Position": "228,120"
+      "Position": "228,120",
+      "HandleOffsets": {}
     },
     {
       "_class": "Float2",
@@ -99,9 +156,22 @@
       "Value": "0.5,0.5",
       "Name": "",
       "IsAttribute": false,
-      "UI": {},
+      "UI": {
+        "Type": "Default",
+        "Step": 0,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": null,
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
       "Identifier": "8",
-      "Position": "-96,-60"
+      "Position": "-96,-60",
+      "HandleOffsets": {}
     },
     {
       "_class": "CombineVector",
@@ -111,6 +181,7 @@
       "DefaultW": 0,
       "Identifier": "9",
       "Position": "12,168",
+      "HandleOffsets": {},
       "X": {
         "Identifier": "10",
         "Output": "X"
@@ -124,6 +195,7 @@
       "_class": "SplitVector",
       "Identifier": "10",
       "Position": "-504,168",
+      "HandleOffsets": {},
       "Input": {
         "Identifier": "2",
         "Output": "Result"
@@ -135,6 +207,7 @@
       "DefaultEdge": 0,
       "Identifier": "11",
       "Position": "528,-48",
+      "HandleOffsets": {},
       "Input": {
         "Identifier": "5",
         "Output": "Result"
@@ -146,8 +219,12 @@
     },
     {
       "_class": "SmoothStep",
+      "DefaultInput": 0,
+      "DefaultEdge1": 0,
+      "DefaultEdge2": 0,
       "Identifier": "12",
       "Position": "528,96",
+      "HandleOffsets": {},
       "Input": {
         "Identifier": "5",
         "Output": "Result"
@@ -167,6 +244,7 @@
       "DefaultB": 1,
       "Identifier": "13",
       "Position": "432,240",
+      "HandleOffsets": {},
       "A": {
         "Identifier": "7",
         "Output": "Result"
@@ -183,9 +261,22 @@
       "Value": 0.005,
       "Name": "",
       "IsAttribute": false,
-      "UI": {},
+      "UI": {
+        "Type": "Default",
+        "Step": 0,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": null,
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
       "Identifier": "14",
-      "Position": "192,300"
+      "Position": "192,300",
+      "HandleOffsets": {}
     }
   ]
 }
