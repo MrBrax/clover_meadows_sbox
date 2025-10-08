@@ -63,7 +63,7 @@ public abstract record ActionGraphLabelSource<T> : ILabelSource
 	protected ActionGraph? ActionGraph
 	{
 		get => Delegate.GetActionGraphInstance() is { Graph: var graph } ? graph : null;
-		set => Delegate = (ActionGraph<T>?)value;
+		set => Delegate = value?.CreateDelegate<T>().Delegate;
 	}
 
 	public void BuildAddContextMenu( global::Editor.Menu menu )
@@ -116,16 +116,16 @@ public abstract record ActionGraphLabelSource<T> : ILabelSource
 
 	protected T CreateGraph( string title )
 	{
-		var graph = ActionGraph.Create<T>( EditorNodeLibrary );
-		var inner = (ActionGraph)graph;
+		var deleg = ActionGraph.CreateDelegate<T>( EditorNodeLibrary );
+		var graph = deleg.Graph;
 
-		inner.Title = title;
-		inner.SourceLocation = StateMachine.GameObject.Scene.GetSourceLocation();
-		inner.SetParameters(
-			inner.Inputs.Values.Concat( InputDefinition.Target( typeof( GameObject ), StateMachine.GameObject ) ),
-			inner.Outputs.Values.ToArray() );
+		graph.Title = title;
+		graph.SourceLocation = StateMachine.GameObject.Scene.GetSourceLocation();
+		graph.SetParameters(
+			graph.Inputs.Values.Concat( InputDefinition.Target( typeof( GameObject ), StateMachine.GameObject ) ),
+			graph.Outputs.Values.ToArray() );
 
-		return graph;
+		return deleg.Delegate;
 	}
 }
 
