@@ -81,7 +81,7 @@ public class MonthControlWidget : DropdownControlWidget<int>
 	protected override void PaintControl()
 	{
 		var value = SerializedProperty.GetValue<int>();
-		var color = IsControlHovered ? Theme.Blue : Theme.ControlText;
+		var color = IsControlHovered ? Theme.Blue : Theme.TextControl;
 		var rect = LocalRect;
 
 		rect = rect.Shrink( 8, 0 );
