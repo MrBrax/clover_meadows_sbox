@@ -102,7 +102,7 @@ public partial class Chat
 		StateHasChanged();
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	public void AddMessage( string message, string playerId, string location )
 	{
 		var msg = new ChatMessage()
