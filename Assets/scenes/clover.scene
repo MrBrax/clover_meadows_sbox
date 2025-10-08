@@ -10,6 +10,7 @@
         {
           "__type": "Sandbox.SceneInformation",
           "__guid": "287819b3-2496-4cc3-9e09-6b549e9a1910",
+          "Changes": "",
           "Description": "",
           "SceneTags": "",
           "Title": "minimal"
@@ -264,6 +265,7 @@
           "__guid": "6bcba752-8450-49ec-b17a-cfa20ee2f5f9",
           "_SunRotation": "-0.01513444,0.08583164,0.1729874,0.9810603",
           "AmbientGradient": {
+            "blend": "Linear",
             "color": [
               {
                 "t": 0.15811966,
@@ -318,6 +320,7 @@
             "component_type": "DirectionalLight"
           },
           "SunlightGradient": {
+            "blend": "Linear",
             "color": [
               {
                 "t": 0.17948718,
@@ -345,23 +348,45 @@
           "SunPitchCurve": {
             "rangey": "10,40",
             "frames": [
-              {},
               {
-                "x": 0.5,
-                "y": 1
+                "x": 0,
+                "y": 0,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
               },
               {
-                "x": 1
+                "x": 0.5,
+                "y": 1,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
               }
             ]
           },
           "SunYawCurve": {
             "rangey": "20,320",
             "frames": [
-              {},
+              {
+                "x": 0,
+                "y": 0,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
+              },
               {
                 "x": 1,
-                "y": 1
+                "y": 1,
+                "in": 0,
+                "out": 0,
+                "mode": "Mirrored"
               }
             ]
           },
@@ -396,7 +421,7 @@
           "__type": "Sandbox.SkyBox2D",
           "__guid": "6b9c7009-5a8c-46e0-a390-54d1c618e5f6",
           "SkyIndirectLighting": true,
-          "SkyMaterial": "materials/skybox/light_test_default.vmat",
+          "SkyMaterial": "materials/sky/atmosphere_sky.vmat",
           "Tint": "1,1,1,1"
         }
       ]
@@ -405,7 +430,7 @@
       "__guid": "a0eb9f3a-4cc5-4084-8e66-2f29281786d4",
       "Flags": 0,
       "Name": "Sun",
-      "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
+      "Rotation": "-0.0890327,0.5887046,0.1201405,0.7943969",
       "Tags": "light,light_directional,sun",
       "Enabled": true,
       "Components": [
@@ -416,7 +441,7 @@
           "FogStrength": 1,
           "LightColor": "0.94419,0.97767,1,1",
           "Shadows": true,
-          "SkyColor": "0.2532,0.32006,0.35349,1"
+          "SkyColor": "0.0533,0.10459,0.13023,1"
         }
       ]
     }
