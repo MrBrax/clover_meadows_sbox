@@ -11,7 +11,14 @@
         "BackgroundColor": "0,0,0,1",
         "ClearFlags": "All",
         "FieldOfView": 60,
+        "FovAxis": "Horizontal",
         "IsMainCamera": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
         "Orthographic": false,
         "OrthographicHeight": 1204,
         "Priority": 1,
@@ -20,14 +27,16 @@
         "TargetEye": "None",
         "Viewport": "0,0,1,1",
         "ZFar": 5000,
-        "ZNear": 5
+        "ZNear": 0.3
       },
       {
         "__type": "Sandbox.Bloom",
         "__guid": "d73ef723-c888-41d4-802e-f797c79318be",
         "BloomColor": {
+          "blend": "Linear",
           "color": [
             {
+              "t": 0,
               "c": "1,1,1,1"
             },
             {
@@ -39,14 +48,27 @@
         },
         "BloomCurve": [
           {
-            "y": 0.5
+            "x": 0,
+            "y": 0.5,
+            "in": 0,
+            "out": 0,
+            "mode": "Mirrored"
           },
           {
             "x": 1,
-            "y": 1
+            "y": 1,
+            "in": 0,
+            "out": 0,
+            "mode": "Mirrored"
           }
         ],
         "Mode": "Additive",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
         "Strength": 0.1,
         "Threshold": 0.5,
         "ThresholdWidth": 0.5
@@ -54,29 +76,49 @@
       {
         "__type": "Sandbox.Tonemapping",
         "__guid": "9d76f362-7227-40eb-a189-69353c780c46",
-        "__version": 1,
+        "__version": 2,
         "AutoExposureEnabled": true,
         "ExposureBias": 2,
         "ExposureCompensation": 0,
         "ExposureMethod": "RGB",
         "MaximumExposure": 2,
         "MinimumExposure": 1,
-        "Mode": "Legacy",
+        "Mode": "HableFilmic",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
         "Rate": 1
       },
       {
         "__type": "Sandbox.Sharpen",
         "__guid": "0bffee5e-19f2-41c4-88f9-faefbcce6bf4",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
         "Scale": 0.2
       },
       {
         "__type": "Sandbox.AmbientOcclusion",
         "__guid": "0063d5a6-0e58-4ea0-9d93-a97cdef4af8f",
-        "__enabled": false,
-        "FalloffDistance": 1,
-        "Intensity": 8,
+        "__version": 1,
+        "DenoiseMode": "Temporal",
+        "FalloffRange": 0.75,
+        "Intensity": 0.15,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
         "Quality": "High",
-        "Radius": 32
+        "Radius": 128,
+        "ThinCompensation": 0
       },
       {
         "__type": "Clover.Components.IrisTransition",
@@ -86,11 +128,23 @@
           "component_id": "dc4e50ac-456c-47f8-838a-74bfaf89c458",
           "go": "c57a55e5-d342-4045-a3da-1926e89dcd32",
           "component_type": "ModelRenderer"
-        }
+        },
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
       },
       {
         "__type": "Sandbox.Highlight",
-        "__guid": "40c7b340-49f4-469d-81e8-bbe554688fb0"
+        "__guid": "40c7b340-49f4-469d-81e8-bbe554688fb0",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
       }
     ],
     "Children": [
@@ -107,8 +161,16 @@
             "__type": "Sandbox.ModelRenderer",
             "__guid": "dc4e50ac-456c-47f8-838a-74bfaf89c458",
             "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "MaterialGroup": null,
             "MaterialOverride": "materials/iris_transition.vmat",
             "Model": "models/dev/plane.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": false,
               "OverlayLayer": true,
