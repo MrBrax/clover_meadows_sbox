@@ -10,9 +10,19 @@
         {
           "__type": "Sandbox.SceneInformation",
           "__guid": "1943a29d-7e1b-4d3c-a76f-10ecc1b2b6b8",
+          "Author": null,
+          "Changes": null,
           "Description": "",
+          "Group": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "SceneTags": "",
-          "Title": "mainmenu"
+          "Title": "mainmenu",
+          "Version": null
         }
       ]
     },
@@ -27,14 +37,27 @@
           "__type": "Sandbox.ScreenPanel",
           "__guid": "d7bdce21-d7b5-49c7-9d5c-ab9721cca5b9",
           "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "Opacity": 1,
           "Scale": 1,
           "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
           "ZIndex": 100
         },
         {
           "__type": "Clover.Ui.MainMenu",
-          "__guid": "ac967635-868a-46a7-9425-9b2d198392b6"
+          "__guid": "ac967635-868a-46a7-9425-9b2d198392b6",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
       ]
     },
@@ -53,7 +76,14 @@
           "BackgroundColor": "0.33333,0.46275,0.52157,1",
           "ClearFlags": "All",
           "FieldOfView": 20,
+          "FovAxis": "Horizontal",
           "IsMainCamera": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "Orthographic": false,
           "OrthographicHeight": 1204,
           "Priority": 1,
@@ -72,7 +102,197 @@
           "FocalDistance": 268.95,
           "FocusRange": 500,
           "FrontBlur": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "QualityLevel": "High"
+        },
+        {
+          "__type": "Sandbox.Tonemapping",
+          "__guid": "c1b27e14-315a-4fce-8336-b8ec024006ab",
+          "__version": 2,
+          "AutoExposureEnabled": true,
+          "ExposureBias": 2,
+          "ExposureCompensation": 0,
+          "ExposureMethod": "RGB",
+          "MaximumExposure": 3.67,
+          "MinimumExposure": 1.55,
+          "Mode": "HableFilmic",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Rate": 1
+        },
+        {
+          "__type": "Sandbox.ColorGrading",
+          "__guid": "fcee165b-6d97-4549-aebc-9a594c76adbb",
+          "BlendFactor": 1,
+          "BlueCurve": {
+            "rangey": "0.02,1",
+            "frames": [
+              {
+                "x": 0,
+                "y": 0.05000005,
+                "in": -1,
+                "out": 1,
+                "mode": "Mirrored"
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "in": -1,
+                "out": 1,
+                "mode": "Mirrored"
+              }
+            ]
+          },
+          "ColorSpace": "RGB",
+          "ColorTempK": 6500,
+          "GradingMethod": "None",
+          "GreenCurve": [
+            {
+              "x": 0,
+              "y": 0.019999972,
+              "in": -1,
+              "out": 1,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "in": -1,
+              "out": 1,
+              "mode": "Mirrored"
+            }
+          ],
+          "HueCurve": [
+            {
+              "x": 0,
+              "y": 0.5,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            }
+          ],
+          "LookupTexture": {
+            "$compiler": "texture",
+            "$source": "gradientlinear",
+            "data": {
+              "Size": "128,128",
+              "IsHdr": false,
+              "Angle": 0,
+              "Scale": 0.63,
+              "Center": "0.3,0.5",
+              "Gradient": {
+                "blend": "Linear",
+                "color": [
+                  {
+                    "t": 0,
+                    "c": "1,1,1,1"
+                  },
+                  {
+                    "t": 1,
+                    "c": "0,0,0,1"
+                  }
+                ],
+                "alpha": null
+              },
+              "ConvertHeightToNormals": false,
+              "NormalScale": 1
+            },
+            "compiled": null
+          },
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "RedCurve": [
+            {
+              "x": 0,
+              "y": 0.019999972,
+              "in": -1,
+              "out": 1,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 0.48773006,
+              "y": 0.57099265,
+              "in": -0.9153386,
+              "out": 0.9153386,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "in": -1,
+              "out": 1,
+              "mode": "Mirrored"
+            }
+          ],
+          "SaturationCurve": [
+            {
+              "x": 0,
+              "y": 0.5,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            }
+          ],
+          "ValueCurve": [
+            {
+              "x": 0,
+              "y": 0.5,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "in": 0,
+              "out": 0,
+              "mode": "Mirrored"
+            }
+          ]
+        },
+        {
+          "__type": "Sandbox.AmbientOcclusion",
+          "__guid": "c2179cf4-0cef-483d-9d33-8d53d166abfe",
+          "__version": 1,
+          "DenoiseMode": "Temporal",
+          "FalloffRange": 0.75,
+          "Intensity": 0.15,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "Quality": "High",
+          "Radius": 128,
+          "ThinCompensation": 0
         }
       ]
     },
@@ -86,10 +306,21 @@
           "__type": "Sandbox.SoundscapeTrigger",
           "__guid": "e60aca0b-e61e-4e03-8748-e687afdaf1ce",
           "BoxSize": "50,50,50",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "Radius": 500,
           "Soundscape": "sounds/ambience/night.sndscape",
           "StayActiveOnExit": true,
-          "Type": "Point"
+          "TargetMixer": {
+            "Name": "unknown",
+            "Id": "00000000-0000-0000-0000-000000000000"
+          },
+          "Type": "Point",
+          "Volume": 1
         }
       ]
     },
@@ -104,6 +335,12 @@
         {
           "__type": "Sandbox.SkyBox2D",
           "__guid": "06a9bf82-5783-4548-a37d-fbbd4f05ed3b",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "SkyIndirectLighting": true,
           "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
           "Tint": "1,1,1,1"
@@ -120,7 +357,16 @@
           "__type": "Sandbox.ModelRenderer",
           "__guid": "08cbcc9b-5743-4e43-a2ae-8432f1ff5a97",
           "BodyGroups": 18446744073709551615,
+          "CreateAttachments": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
           "Model": "models/dev/plane.vmdl",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "RenderOptions": {
             "GameLayer": true,
             "OverlayLayer": false,
@@ -143,10 +389,21 @@
         {
           "__type": "Sandbox.SkinnedModelRenderer",
           "__guid": "a21288f6-bddc-44c3-baf0-b74d264321b0",
+          "AnimationGraph": null,
           "BodyGroups": 18446744073709551615,
+          "BoneMergeTarget": null,
+          "CreateAttachments": false,
           "CreateBoneObjects": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
           "Model": "models/player/epic/sk_pig_guy_plasticity.vmdl",
           "Morphs": {},
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "Parameters": {
             "bools": {},
             "ints": {},
@@ -154,6 +411,7 @@
             "vectors": {},
             "rotations": {}
           },
+          "PlaybackRate": 1,
           "RenderOptions": {
             "GameLayer": true,
             "OverlayLayer": false,
@@ -161,6 +419,9 @@
             "AfterUILayer": false
           },
           "RenderType": "On",
+          "Sequence": {
+            "Name": null
+          },
           "Tint": "1,1,1,1",
           "UseAnimGraph": true
         }
@@ -178,7 +439,16 @@
           "__type": "Sandbox.ModelRenderer",
           "__guid": "ecbf496a-f5b8-4677-921a-8ae46b73ab55",
           "BodyGroups": 18446744073709551615,
+          "CreateAttachments": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
           "Model": "models/island/world.vmdl",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "RenderOptions": {
             "GameLayer": true,
             "OverlayLayer": false,
@@ -202,7 +472,16 @@
           "__type": "Sandbox.ModelRenderer",
           "__guid": "8013f482-609c-4b53-8510-5b83af2703a1",
           "BodyGroups": 18446744073709551615,
+          "CreateAttachments": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
           "Model": "items/trees/tree_shared/tree_shared.vmdl",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "RenderOptions": {
             "GameLayer": true,
             "OverlayLayer": false,
@@ -226,7 +505,16 @@
           "__type": "Sandbox.ModelRenderer",
           "__guid": "d4940d9f-9377-4aa0-ac20-34ff2fa7f19e",
           "BodyGroups": 18446744073709551615,
+          "CreateAttachments": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
           "Model": "items/trees/tree_shared/tree_shared.vmdl",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "RenderOptions": {
             "GameLayer": true,
             "OverlayLayer": false,
@@ -250,7 +538,16 @@
           "__type": "Sandbox.ModelRenderer",
           "__guid": "8721a0f2-7c29-49ce-98cd-1bb31744fb1e",
           "BodyGroups": 18446744073709551615,
+          "CreateAttachments": false,
+          "MaterialGroup": null,
+          "MaterialOverride": null,
           "Model": "models/npc/vdog/vdog.vmdl",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "RenderOptions": {
             "GameLayer": true,
             "OverlayLayer": false,
