@@ -1,0 +1,13 @@
+{
+  "Title": "TweenManager",
+  "Type": "library",
+  "Org": "brax",
+  "Ident": "tweenmanager",
+  "Schema": 1,
+  "IncludeSourceFiles": false,
+  "Resources": null,
+  "PackageReferences": [],
+  "EditorReferences": null,
+  "IsWhitelistDisabled": false,
+  "Metadata": {}
+}
