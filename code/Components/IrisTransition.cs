@@ -2,10 +2,8 @@
 
 namespace Clover.Components;
 
-
 public sealed class IrisTransition : Component
 {
-	
 	[Property] public ModelRenderer IrisModel { get; set; }
 
 	public static float Progress = 1f;
@@ -13,6 +11,7 @@ public sealed class IrisTransition : Component
 	protected override void OnUpdate()
 	{
 		if ( !IrisModel.IsValid() ) return;
-		IrisModel.SceneObject.Attributes.Set( "prog", Progress );
+		IrisModel.Attributes.Set( "Progress", Progress );
+		IrisModel.Materials.GetOriginal( 0 ).Set( "Progress", Progress );
 	}
 }

@@ -74,12 +74,7 @@ PS
 {
 	#include "common/pixel.hlsl"
 	
-	SamplerState g_sSampler0 < Filter( ANISO ); AddressU( WRAP ); AddressV( WRAP ); >;
-	CreateInputTexture2D( Texture_ps_0, Srgb, 8, "None", "_color", ",0/,0/0", Default4( 1.00, 1.00, 1.00, 1.00 ) );
-	Texture2D g_tTexture_ps_0 < Channel( RGBA, Box( Texture_ps_0 ), Srgb ); OutputFormat( DXT5 ); SrgbRead( True ); >;
-	TextureAttribute( LightSim_DiffuseAlbedoTexture, g_tTexture_ps_0 )
-	TextureAttribute( RepresentativeTexture, g_tTexture_ps_0 )
-	float g_flProgress < UiGroup( ",0/,0/0" ); Default1( 0.39864045 ); Range1( 0, 1 ); >;
+	float g_flProgress < Attribute( "Progress" ); Default1( 0.040816326 ); >;
 	
 	float4 MainPs( PixelInput i ) : SV_Target0
 	{
@@ -95,7 +90,7 @@ PS
 		m.Emission = float3( 0, 0, 0 );
 		m.Transmission = 0;
 		
-		float4 l_0 = Tex2DS( g_tTexture_ps_0, g_sSampler0, i.vTextureCoords.xy );
+		float4 l_0 = float4( 0, 0, 0, 1 );
 		float l_1 = g_flProgress;
 		float l_2 = l_1 + 0.005;
 		float2 l_3 = i.vTextureCoords.xy * float2( 1, 1 );

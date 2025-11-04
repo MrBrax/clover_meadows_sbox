@@ -30,7 +30,7 @@
       "Position": "792,-216",
       "HandleOffsets": {},
       "Albedo": {
-        "Identifier": "1",
+        "Identifier": "15",
         "Output": "Result"
       },
       "Opacity": {
@@ -129,9 +129,9 @@
       "_class": "Float",
       "Min": 0,
       "Max": 1,
-      "Value": 0.39864045,
+      "Value": 0.040816326,
       "Name": "Progress",
-      "IsAttribute": false,
+      "IsAttribute": true,
       "UI": {
         "Type": "Default",
         "Step": 0,
@@ -276,6 +276,28 @@
       },
       "Identifier": "14",
       "Position": "192,300",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float4",
+      "Value": "0,0,0,1",
+      "Name": "",
+      "IsAttribute": false,
+      "UI": {
+        "Type": "Color",
+        "Step": 0,
+        "Priority": 0,
+        "PrimaryGroup": {
+          "Name": null,
+          "Priority": 0
+        },
+        "SecondaryGroup": {
+          "Name": null,
+          "Priority": 0
+        }
+      },
+      "Identifier": "15",
+      "Position": "324,-312",
       "HandleOffsets": {}
     }
   ]
