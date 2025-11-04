@@ -11,7 +11,7 @@ using Sandbox.UI;
 
 namespace Clover.Data;
 
-[GameResource( "Dialogue", "dlg", "dialogue", Icon = "chat" )]
+[AssetType( Name = "Dialogue", Extension = "dlg" )]
 public class Dialogue : GameResource
 {
 	/*public class DialogueAction

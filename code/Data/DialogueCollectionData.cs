@@ -3,7 +3,7 @@ using Clover.Player;
 
 namespace Clover.Data;
 
-[GameResource( "Dialogue Collection", "dcol", "Dialogue Collection", Icon = "question_answer" )]
+[AssetType( Name = "Dialogue Collection", Extension = "dcol" )]
 public class DialogueCollection : GameResource
 {
 	public struct DialogueCollectionEntry

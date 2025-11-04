@@ -1,6 +1,6 @@
 ﻿namespace Clover.Data;
 
-[GameResource( "World", "world", "world" )]
+[AssetType( Name = "World", Extension = "world" )]
 public class WorldData : GameResource
 {
 	[Property] public string Title { get; set; }

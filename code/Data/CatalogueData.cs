@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Clover.Data;
 
-[GameResource( "Catalogue", "cata", "Catalogue" )]
+[AssetType( Name = "Catalogue", Extension = "cata" )]
 public class CatalogueData : GameResource
 {
 	[Property] public string Name { get; set; } = "Catalogue";

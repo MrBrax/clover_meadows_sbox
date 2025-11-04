@@ -3,13 +3,13 @@ using Clover.Persistence;
 
 namespace Clover.Data;
 
-[GameResource( "Fruit Data", "fruit", "FruitData" )]
+[AssetType( Name = "Fruit Data", Extension = "fruit" )]
 public class FruitData : ItemData, IEdibleData
 {
 	[Property, Group( "Fruit" )] public GameObject InTreeScene { get; set; }
 
 	[Property, Group( "Food" )] public GameObject HoldScene { get; set; }
-	
+
 	[Property, Group( "Food" )] public IEdibleData.EdibleType Type { get; set; } = IEdibleData.EdibleType.Food;
 
 	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )

@@ -1,6 +1,6 @@
 ﻿namespace Clover.Data;
 
-[GameResource( "PlayingCardData", "pcard", "Playing Card", Icon = "cards" )]
+[AssetType( Name = "PlayingCardData", Extension = "pcard" )]
 public class PlayingCardData : GameResource
 {
 	public enum CardTypes

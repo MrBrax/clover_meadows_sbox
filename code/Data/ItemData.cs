@@ -8,7 +8,7 @@ using Sandbox.Utility;
 
 namespace Clover.Data;
 
-[GameResource( "Item", "item", "item", Icon = "weekend" )]
+[AssetType( Name = "Item", Extension = "item" )]
 [Category( "Clover/Items" )]
 [Icon( "weekend" )]
 // [JsonPolymorphic]

@@ -2,10 +2,9 @@
 
 namespace Clover.Data;
 
-[GameResource( "Fish Data", "fish", "Fish", Icon = "phishing" )]
+[AssetType( Name = "Fish Data", Extension = "fish" )]
 public class FishData : AnimalData
 {
-	
 	[Flags]
 	public enum FishLocation
 	{
@@ -13,7 +12,7 @@ public class FishData : AnimalData
 		Pond = 1 << 1,
 		River = 1 << 2,
 	}
-	
+
 	public enum FishSize
 	{
 		Tiny,
@@ -21,16 +20,15 @@ public class FishData : AnimalData
 		Medium,
 		Large,
 	}
-	
-	[Property] public RangedFloat Weight { get; set; } = new( 1, 1 );
-	
+
+	[Property] public RangedFloat Weight { get; set; } = new(1, 1);
+
 	[Property] public FishLocation Location { get; set; } = FishLocation.River;
 
 	[Property] public FishSize Size { get; set; } = FishSize.Small;
-	
+
 	public override string GetIcon()
 	{
 		return Icon ?? "ui/icons/default_fish.png";
 	}
-	
 }

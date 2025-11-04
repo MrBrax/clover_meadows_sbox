@@ -5,7 +5,7 @@ using Clover.Persistence;
 
 namespace Clover.Data;
 
-[GameResource( "Tool", "tool", "tool", Icon = "build" )]
+[AssetType( Name = "Tool", Extension = "tool" )]
 public sealed class ToolData : ItemData
 {
 	[Property, Group( "Tool" )] public GameObject CarryScene { get; set; }
