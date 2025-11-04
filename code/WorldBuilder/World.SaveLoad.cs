@@ -167,9 +167,11 @@ public sealed partial class World
 				Log.Info( $"Fetched package {package.Title}" );
 			}
 
-			var gameObject = Scene.CreateObject();
-			gameObject.SetPrefabSource( prefabPath );
-			gameObject.UpdateFromPrefab();
+			//var gameObject = Scene.CreateObject();
+			//gameObject.SetPrefabSource( prefabPath );
+			//gameObject.UpdateFromPrefab();
+
+			var gameObject = GameObject.GetPrefab( prefabPath ).Clone();
 
 			gameObject.WorldPosition = item.WPosition;
 			gameObject.WorldRotation = item.WAngles;
@@ -193,9 +195,12 @@ public sealed partial class World
 		foreach ( var worldObject in saveData.Objects )
 		{
 			Log.Info( $"Loading object {worldObject}" );
-			var gameObject = Scene.CreateObject();
-			gameObject.SetPrefabSource( worldObject.PrefabPath );
-			gameObject.UpdateFromPrefab();
+
+			// var gameObject = Scene.CreateObject();
+			// gameObject.SetPrefabSource( worldObject.PrefabPath );
+			// gameObject.UpdateFromPrefab();
+
+			var gameObject = GameObject.GetPrefab( worldObject.PrefabPath ).Clone();
 
 			if ( !gameObject.Components.TryGet<WorldObject>( out var worldObjectComponent ) )
 			{
