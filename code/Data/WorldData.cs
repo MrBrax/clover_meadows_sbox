@@ -14,7 +14,7 @@ public class WorldData : GameResource
 	[Property, Group( "Grid" )] public int Height { get; set; }
 
 
-	[Property] public float MaxItemAltitude = 0;
+	[Property] public float MaxItemAltitude { get; set; } = 0;
 
 	[Property] public bool DisableItemPlacement { get; set; }
 
