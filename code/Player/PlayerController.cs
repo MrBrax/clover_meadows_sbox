@@ -139,6 +139,8 @@ public class PlayerController : Component, IEquipChanged
 
 	protected override void OnFixedUpdate()
 	{
+		Model.LocalPosition = Vector3.Zero;
+
 		if ( IsProxy )
 		{
 			Model.Set( "holding",
