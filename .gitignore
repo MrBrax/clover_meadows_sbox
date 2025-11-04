@@ -29,3 +29,4 @@ Exports/
 clover_meadows.sln.DotSettings.user
 clovermeadows.sln.DotSettings.user
 clovermeadows.slnx
+*.shader_c
