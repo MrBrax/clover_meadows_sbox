@@ -234,7 +234,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		return world.IsValid() ? world : await LoadWorld( data );
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	public void RequestLoadWorld( string id )
 	{
 		var worldData = ResourceLibrary.GetAll<WorldData>().FirstOrDefault( w => w.ResourceName == id );

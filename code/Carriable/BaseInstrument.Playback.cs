@@ -363,7 +363,7 @@ public partial class BaseInstrument
 	}
 
 
-	[Authority]
+	[Rpc.Owner]
 	public void RequestTrackPlayback( BaseInstrument instrument, int trackIndex )
 	{
 		if ( instrument == this )

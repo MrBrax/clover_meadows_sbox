@@ -162,7 +162,7 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 		_spawnQueue.Remove( channel );
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	public void RequestSpawn( string playerId )
 	{
 		var caller = Rpc.Caller;

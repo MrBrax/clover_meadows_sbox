@@ -13,7 +13,7 @@ public class VehicleRider : Component
 	public BaseVehicle Vehicle { get; set; }
 	public SittableNode Seat { get; set; }
 
-	[Authority]
+	[Rpc.Owner]
 	public void OnEnterVehicle( BaseVehicle baseVehicle, SittableNode seat, int seatIndex )
 	{
 		Vehicle = baseVehicle;
@@ -21,7 +21,7 @@ public class VehicleRider : Component
 		Seat.Occupant = GameObject;
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	public void OnExitVehicle()
 	{
 		Vehicle = null;

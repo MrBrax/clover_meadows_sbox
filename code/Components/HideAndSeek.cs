@@ -85,7 +85,7 @@ public class HideAndSeek : Component, IInteract
 		SoundEx.Play( Leader.RoundStartSound );
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	public void SetSeeker( bool isSeeker )
 	{
 		IsSeeker = isSeeker;

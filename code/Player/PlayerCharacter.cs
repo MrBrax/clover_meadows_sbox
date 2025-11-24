@@ -157,7 +157,7 @@ public sealed partial class PlayerCharacter : Component
 		Gizmo.Draw.Arrow( WorldPosition + Vector3.Up * 16f, WorldPosition + Vector3.Up * 16 + Model.WorldRotation.Forward * 32f );
 	}*/
 
-	[Authority]
+	[Rpc.Owner]
 	public void TeleportTo( string entrance )
 	{
 		Log.Info( $"Teleporting to entrance: {entrance}" );
@@ -181,7 +181,7 @@ public sealed partial class PlayerCharacter : Component
 		}
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	public void TeleportTo( Vector3 pos, Rotation rot )
 	{
 		Log.Info( $"Teleporting to {pos} {rot}" );
@@ -193,7 +193,7 @@ public sealed partial class PlayerCharacter : Component
 		GetComponent<CharacterController>().Velocity = Vector3.Zero;
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	public void SetLayer( int layer )
 	{
 		WorldLayerObject.SetLayer( layer, true );
@@ -239,7 +239,7 @@ public sealed partial class PlayerCharacter : Component
 	{
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	public void StartCutscene( Vector3 target )
 	{
 		Log.Info( $"Starting cutscene to {target}" );
@@ -247,7 +247,7 @@ public sealed partial class PlayerCharacter : Component
 		InCutscene = true;
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	public void StartCutscene()
 	{
 		Log.Info( $"Starting cutscene (empty)" );
@@ -256,7 +256,7 @@ public sealed partial class PlayerCharacter : Component
 	}
 
 
-	[Authority]
+	[Rpc.Owner]
 	public void EndCutscene()
 	{
 		Log.Info( "Ending cutscene" );
@@ -277,13 +277,13 @@ public sealed partial class PlayerCharacter : Component
 		return Game.ActiveScene.GetAllComponents<PlayerCharacter>().FirstOrDefault( x => x.Network.Owner == channel );
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	public void Notify( Notifications.NotificationType type, string text, float duration = 5f )
 	{
 		Notifications.Instance.AddNotification( type, text, duration );
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	public static void NotifyAll( Notifications.NotificationType type, string text, float duration = 5f )
 	{
 		foreach ( var player in Game.ActiveScene.GetAllComponents<PlayerCharacter>() )

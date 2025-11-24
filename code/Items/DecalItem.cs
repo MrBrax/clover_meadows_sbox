@@ -78,7 +78,7 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 		Log.Info( $"Updated decal '{_decalData.Name}' with texture: {TexturePath}" );
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	private void RequestDecal()
 	{
 		Assert.True( Networking.IsHost );

@@ -34,7 +34,7 @@ public class Door : Component, IInteract
 
 	private SoundHandle _squeakSoundHandle;
 
-	[Authority]
+	[Rpc.Owner]
 	public void SetBusy( bool state )
 	{
 		_isBusy = state;
@@ -103,7 +103,7 @@ public class Door : Component, IInteract
 
 	}*/
 
-	[Authority]
+	[Rpc.Owner]
 	private void PlayerEnterRpc()
 	{
 		_ = PlayerEnter( PlayerCharacter.Get( Rpc.Caller ) );

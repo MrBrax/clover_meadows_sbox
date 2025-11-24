@@ -125,7 +125,7 @@ public class BaseVehicle : Component, IInteract
 	}
 
 
-	[Authority]
+	[Rpc.Owner]
 	private void EnterVehicle()
 	{
 		var caller = Rpc.Caller;
@@ -347,7 +347,7 @@ public class BaseVehicle : Component, IInteract
 		}
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	private void ExitVehicle()
 	{
 		var caller = Rpc.Caller;
@@ -494,7 +494,7 @@ public class BaseVehicle : Component, IInteract
 		}
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	private void InputRpc( Vector3 input )
 	{
 		ProxyInput = input;

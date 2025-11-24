@@ -1,4 +1,5 @@
 ﻿using System;
+using Braxnet.Persistence;
 using Clover.Data;
 using Clover.Inventory;
 using Clover.Persistence;
@@ -94,10 +95,10 @@ public class WorldObject : Component, IPickupable
 		WorldPosition = worldObject.Position + WorldLayerObject.World.WorldPosition;
 		WorldRotation = worldObject.Rotation;
 
-		foreach ( var persistent in Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndAncestors ) )
+		/*foreach ( var persistent in Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndAncestors ) )
 		{
 			persistent.OnLoad( worldObject.Item );
-		}
+		}*/
 
 		OnObjectLoadAction?.Invoke( worldObject.Item );
 

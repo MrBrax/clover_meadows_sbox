@@ -51,7 +51,7 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 		}
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	private void Brew()
 	{
 		if ( _hasCup ) return;
@@ -80,7 +80,7 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 		SoundEx.Play( CupSound, WorldPosition );
 	}
 
-	[Authority]
+	[Rpc.Owner]
 	private void TakeCupRpc()
 	{
 		_hasCup = false;
