@@ -2,34 +2,35 @@
 
 Layer0
 {
-	shader "shaders/toonshader.shader"
+	shader "shaders/complex.shader"
+
+	//---- Ambient Occlusion ----
+	g_flAmbientOcclusionDirectDiffuse "0.000"
+	TextureAmbientOcclusion "materials/default/default_ao.tga"
+
+	//---- Color ----
+	g_flModelTintAmount "1.000"
+	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
+	TextureColor "materials/shared/color-atlas-gradient-fixed.png"
+
+	//---- Fade ----
+	g_flFadeExponent "1.000"
 
 	//---- Fog ----
 	g_bFogEnabled "1"
 
-	//---- MToon Color ----
-	InputLitTexture "materials/shared/color-atlas-gradient-fixed.png"
-	LitColor "[1.000000 1.000000 1.000000 1.000000]"
-	LitIntensity "1.000"
-	ShadeColor "[0.968628 0.811765 0.858824 1.000000]"
+	//---- Metalness ----
+	g_flMetalness "0.000"
 
-	//---- MToon Emission ----
-	EmissionColor "[0.301961 0.301961 0.301961 1.000000]"
-	InputEmissionMap "materials/shared/color-atlas-gradient-fixed.png"
-	InputMatCap ""
-	matcapStrength "0.000"
+	//---- Normal ----
+	TextureNormal "materials/default/default_normal.tga"
 
-	//---- MToon Lighting ----
-	IndirectLightIntensity "0.000"
-	InputShadingGradeTexture ""
-	LightColorAttenuation "0.000"
-	ShadingGradeRate "0.100"
-	ShadingShift "0.000"
-	ShadingToony "0.900"
+	//---- Roughness ----
+	g_flRoughnessScaleFactor "1.000"
+	TextureRoughness "materials/default/default_rough.tga"
 
-	//---- MToon Rim ----
-	RimColor "[0.000000 0.000000 0.000000 1.000000]"
-	RimFresnelPower "1.000"
-	RimLift "0.000"
-	RimLightingMix "0.000"
+	//---- Texture Coordinates ----
+	g_vTexCoordOffset "[0.000 0.000]"
+	g_vTexCoordScale "[1.000 1.000]"
+	g_vTexCoordScrollSpeed "[0.000 0.000]"
 }
