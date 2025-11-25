@@ -77,7 +77,7 @@ public class BaseVehicle : Component, IInteract
 		return "Enter vehicle";
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	private void StartEngine()
 	{
 		IsOn = true;
@@ -103,7 +103,7 @@ public class BaseVehicle : Component, IInteract
 		}
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	private void StopEngine()
 	{
 		IsOn = false;
@@ -188,7 +188,7 @@ public class BaseVehicle : Component, IInteract
 		}
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	private void SitDown( SittableNode seat )
 	{
 		var player = PlayerCharacter.Local;
@@ -389,7 +389,7 @@ public class BaseVehicle : Component, IInteract
 		}
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	private void ExitVehicleRpc()
 	{
 		var player = PlayerCharacter.Local;

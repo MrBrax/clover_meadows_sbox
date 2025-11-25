@@ -147,7 +147,7 @@ public class HideAndSeek : Component, IInteract
 	private bool AreAllCaught => Scene.GetAllComponents<HideAndSeek>().All( x => x.IsSeeker );
 
 	// Broadcasted but only called on the host
-	[Broadcast]
+	[Rpc.Broadcast]
 	public void Catch( HideAndSeek target )
 	{
 		var catcher = PlayerCharacter.Get( Rpc.Caller );

@@ -18,7 +18,7 @@ public class Animation : Component, IInteract
 		StartAnimation();
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	private void StartAnimation()
 	{
 		Renderer.Set( AnimationName, true );

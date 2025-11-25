@@ -86,7 +86,7 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 		_hasCup = false;
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	private void SetCupEnabled( bool enabled )
 	{
 		Cup.Enabled = enabled;

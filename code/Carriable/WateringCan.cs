@@ -85,7 +85,7 @@ public sealed class WateringCan : BaseCarriable
 		Log.Info( "Item watered." );
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	public void StartEmitting()
 	{
 		if ( WaterParticles.IsValid() )
@@ -94,7 +94,7 @@ public sealed class WateringCan : BaseCarriable
 		}
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	public void StopEmitting()
 	{
 		if ( WaterParticles.IsValid() )

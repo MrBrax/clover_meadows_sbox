@@ -70,7 +70,7 @@ public sealed class WorldLayerObject : Component, IWorldEvent
 	/// <summary>
 	///  Visibility is based on render tags on the camera. This method adds or removes the tags based on the layer.
 	/// </summary>
-	[Broadcast]
+	[Rpc.Broadcast]
 	public void RebuildVisibility( int layer )
 	{
 		if ( Scene.IsEditor ) return;

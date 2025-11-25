@@ -248,7 +248,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		}
 	}
 
-	[Broadcast( NetPermission.HostOnly )]
+	[Rpc.Broadcast( NetFlags.HostOnly )]
 	public void OnWorldLoadedRpc( string id )
 	{
 		Log.Info( $"World loaded: {id}" );

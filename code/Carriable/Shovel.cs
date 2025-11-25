@@ -26,7 +26,7 @@ public class Shovel : BaseCarriable
 		}*/
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	public override void OnUseDownHost()
 	{
 		var pos = Player.GetAimingGridPosition();

@@ -57,7 +57,7 @@ public class Television : Component, IInteract
 		_videoPlayer?.Dispose();
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	public void PlayVideo( string url )
 	{
 		_videoPlayer.Play( FileSystem.Data, url );

@@ -112,7 +112,7 @@ public partial class BaseInstrument : BaseCarriable
 		return IsPlaying;
 	}
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	public void PlayNote( int octave, Note note, float volume = 1.0f )
 	{
 		var entry = Notes.FirstOrDefault( x => x.Octave == octave && x.Note == note );

@@ -108,7 +108,7 @@ public class DecalItem : Component, IPersistent, IPaintEvent
 	}
 
 
-	[Broadcast]
+	[Rpc.Broadcast]
 	public void RecieveDecal( string filename, Decals.DecalDataRpc decal )
 	{
 		Log.Info( $"Recieved decal '{filename}':" );
