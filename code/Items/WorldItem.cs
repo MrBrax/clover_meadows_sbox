@@ -147,7 +147,7 @@ public class WorldItem : Component, IPickupable
 		base.OnUpdate();
 
 		if ( Gizmo.Camera == null || !DebugWorldItem ) return;
-		if ( NodeLink.IsValid() && NodeLink.IsDroppedItem )
+		if ( NodeLink.IsValid() && NodeLink.PlacementType == World.ItemPlacementType.Dropped )
 		{
 			Gizmo.Draw.Text( $"Dropped: {NodeLink.GetName()}", new Transform( WorldPosition + Vector3.Up * 20 ) );
 		}

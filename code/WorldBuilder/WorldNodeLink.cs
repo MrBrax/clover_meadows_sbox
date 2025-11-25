@@ -13,8 +13,8 @@ namespace Clover;
 /// </summary>
 public class WorldNodeLink : IValid
 {
-	[JsonIgnore] public World World;
-	[JsonIgnore] public GameObject Node;
+	[JsonIgnore] public World World { get; set; }
+	[JsonIgnore] public GameObject Node { get; set; }
 
 	public Vector2Int GridPosition => World.WorldToItemGrid( Node.WorldPosition );
 
@@ -25,14 +25,14 @@ public class WorldNodeLink : IValid
 	public Rotation WorldRotation => Node.WorldRotation;
 
 	// public World.ItemPlacement GridPlacement;
-	public World.ItemPlacementType PlacementType;
+	public World.ItemPlacementType PlacementType { get; set; }
 
-	public Vector2Int Size;
+	public Vector2Int Size { get; set; }
 
-	public string ItemId;
-	public string PrefabPath;
+	public string ItemId { get; set; }
+	// public string PrefabPath;
 
-	public PlaceableNode PlacedOn;
+	public PlaceableNode PlacedOn { get; set; }
 
 	[Icon( "save" )] private PersistentItem Persistence { get; set; }
 
@@ -40,7 +40,7 @@ public class WorldNodeLink : IValid
 
 	public bool IsBeingPickedUp { get; set; }
 
-	public bool IsDroppedItem => PrefabPath == "items/misc/dropped_item/dropped_item.prefab";
+	// public bool IsDroppedItem => PrefabPath == "items/misc/dropped_item/dropped_item.prefab";
 
 	public bool IsValid => World != null && World.HasNodeLink( this );
 
@@ -61,7 +61,7 @@ public class WorldNodeLink : IValid
 			throw new Exception( $"Item data not found on {this} ({ItemId})" );
 		}
 
-		if ( IsDroppedItem )
+		if ( PlacementType == World.ItemPlacementType.Dropped )
 		{
 			return new List<Vector2Int> { global ? GridPosition : Vector2Int.Zero };
 		}
@@ -171,7 +171,7 @@ public class WorldNodeLink : IValid
 			WAngles = WorldRotation.Angles().SnapToGrid( 1 ),
 			// Placement = GridPlacement,
 			PlacementType = PlacementType,
-			PrefabPath = PrefabPath,
+			// PrefabPath = PrefabPath,
 			ItemId = ItemId,
 			Item = Persistence,
 		};
@@ -282,7 +282,7 @@ public class WorldNodeLink : IValid
 
 	public void OnNodeLoad( PersistentWorldItem persistentItem )
 	{
-		PrefabPath = persistentItem.PrefabPath;
+		// PrefabPath = persistentItem.PrefabPath;
 		ItemId = persistentItem.ItemId;
 
 		Persistence = persistentItem.Item;

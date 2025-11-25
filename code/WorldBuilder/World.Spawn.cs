@@ -270,7 +270,7 @@ public sealed partial class World
 		// nodeLink.GridRotation = rotation;
 
 		// nodeLink.GridPlacement = placement;
-		nodeLink.PrefabPath = nodeLink.GetPrefabPath();
+		// nodeLink.PrefabPath = nodeLink.GetPrefabPath();
 
 		// NODE LINK IS NOT ADDED TO WORLD YET, CAN'T DO IT HERE BECAUSE WE NEED TO CALCULATE SIZE FIRST
 		// AddNodeLinkToGridMap( nodeLink );
@@ -298,7 +298,7 @@ public sealed partial class World
 		var nodeLink = new WorldNodeLink( this, item );
 
 		// nodeLink.GridPlacement = placement;
-		nodeLink.PrefabPath = nodeLink.GetPrefabPath();
+		// nodeLink.PrefabPath = nodeLink.GetPrefabPath();
 
 		// NODE LINK IS NOT ADDED TO WORLD YET, CAN'T DO IT HERE BECAUSE WE NEED TO CALCULATE SIZE FIRST
 		// AddNodeLinkToGridMap( nodeLink );

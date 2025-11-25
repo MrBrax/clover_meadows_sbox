@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Clover.Data;
 using Clover.Items;
 using Clover.Persistence;
 
@@ -61,8 +62,8 @@ public sealed partial class World
 				continue;
 			}
 
-			var prefabPath = nodeLink.GetPrefabPath();
-			nodeLink.PrefabPath = prefabPath;
+			// var prefabPath = nodeLink.GetPrefabPath();
+			// nodeLink.PrefabPath = prefabPath;
 
 			var persistentItem = nodeLink.OnNodeSave();
 
@@ -143,17 +144,25 @@ public sealed partial class World
 
 		foreach ( var item in saveData.Items )
 		{
+			var itemData = ItemData.Get( item.ItemId );
+			if ( !itemData.IsValid() )
+			{
+				Log.Error( $"Item data for {item.ItemId} is not valid" );
+				continue;
+			}
+
 			var position = item.Position;
 			var rotation = item.Rotation;
-			var prefabPath = item.PrefabPath;
 
-			if ( string.IsNullOrEmpty( prefabPath ) )
+
+			/*if ( string.IsNullOrEmpty( prefabPath ) )
 			{
 				Log.Warning( $"Item {item} has no prefab path" );
 				continue;
 			}
+			*/
 
-			Log.Info( $"Loading item {item.PrefabPath}" );
+			Log.Info( $"Loading item {item.ItemId}" );
 
 			if ( !string.IsNullOrEmpty( item.Item.PackageIdent ) )
 			{
@@ -171,7 +180,15 @@ public sealed partial class World
 			//gameObject.SetPrefabSource( prefabPath );
 			//gameObject.UpdateFromPrefab();
 
-			var gameObject = GameObject.GetPrefab( prefabPath ).Clone();
+			var prefab = item.PlacementType == ItemPlacementType.Dropped ? itemData.DropScene : itemData.PlaceScene;
+
+			if ( !prefab.IsValid() )
+			{
+				Log.Error( $"Prefab for item {item.ItemId} is not valid" );
+				continue;
+			}
+
+			var gameObject = prefab.Clone();
 
 			gameObject.WorldPosition = item.WPosition;
 			gameObject.WorldRotation = item.WAngles;
