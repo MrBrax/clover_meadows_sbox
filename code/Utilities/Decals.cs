@@ -153,7 +153,7 @@ public class Decals
 
 	public static Color32[] GetPalette( string name )
 	{
-		var paletteTexture = Texture.Load( FileSystem.Mounted, $"materials/palettes/{name}.png" );
+		var paletteTexture = Texture.LoadFromFileSystem( $"materials/palettes/{name}.png", FileSystem.Mounted );
 		if ( !paletteTexture.IsValid() )
 		{
 			Log.Error( $"Failed to load palette {name}" );

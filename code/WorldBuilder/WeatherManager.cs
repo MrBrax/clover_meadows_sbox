@@ -388,34 +388,36 @@ public class WeatherManager : Component, IWorldEvent, ITimeEvent
 		{
 			if ( weather.RainLevel > 0 )
 			{
-				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/partly-cloudy-day-rain.png" );
+				return Texture.LoadFromFileSystem( "ui/icons/weather/partly-cloudy-day-rain.png", FileSystem.Mounted );
 			}
 
 			if ( weather.FogLevel > 0 )
 			{
-				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/fog-day.png" );
+				return Texture.LoadFromFileSystem( "ui/icons/weather/fog-day.png", FileSystem.Mounted );
 			}
 
-			return Texture.Load( FileSystem.Mounted, "ui/icons/weather/clear-day.png" );
+			return Texture.LoadFromFileSystem( "ui/icons/weather/clear-day.png", FileSystem.Mounted );
 		}
 		else
 		{
 			if ( weather.Rain && weather.Lightning )
 			{
-				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/thunderstorms-night-overcast-rain.png" );
+				return Texture.LoadFromFileSystem( "ui/icons/weather/thunderstorms-night-overcast-rain.png",
+					FileSystem.Mounted );
 			}
 
 			if ( weather.Rain )
 			{
-				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/partly-cloudy-night-rain.png" );
+				return Texture.LoadFromFileSystem( "ui/icons/weather/partly-cloudy-night-rain.png",
+					FileSystem.Mounted );
 			}
 
 			if ( weather.FogLevel > 0 )
 			{
-				return Texture.Load( FileSystem.Mounted, "ui/icons/weather/fog-night.png" );
+				return Texture.LoadFromFileSystem( "ui/icons/weather/fog-night.png", FileSystem.Mounted );
 			}
 
-			return Texture.Load( FileSystem.Mounted, "ui/icons/weather/clear-night.png" );
+			return Texture.LoadFromFileSystem( "ui/icons/weather/clear-night.png", FileSystem.Mounted );
 		}
 
 		/* if ( weather.RainLevel > 0 )
