@@ -51,7 +51,19 @@ public sealed class AreaTrigger : Component, Component.ITriggerListener
 
 	private async void Enter( PlayerCharacter player )
 	{
+		if ( !DestinationWorldData.IsValid() )
+		{
+			Log.Error( $"AreaTrigger: OnTriggerEnter: Invalid destination world data" );
+			return;
+		}
+
 		var w = await WorldManager.Instance.GetWorldOrLoad( DestinationWorldData );
+
+		if ( !w.IsValid() )
+		{
+			Log.Error( $"AreaTrigger: OnTriggerEnter: Failed to load world {DestinationWorldData.ResourceName}" );
+			return;
+		}
 
 		if ( player.InCutscene )
 		{
