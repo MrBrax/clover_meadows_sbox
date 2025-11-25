@@ -7,7 +7,9 @@
   "IsInside": false,
   "Width": 100,
   "Height": 100,
+  "MaxItemAltitude": 0,
+  "DisableItemPlacement": false,
+  "CanRotateCamera": false,
   "__references": [],
-  "IsValid": true,
   "__version": 0
 }
