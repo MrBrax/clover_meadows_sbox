@@ -1,30 +1,67 @@
 {
   "RootObject": {
     "__guid": "fca1b967-78c0-43b3-82ba-9701ac45ec2b",
+    "__version": 1,
     "Flags": 0,
     "Name": "island",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
     "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 1,
     "Components": [
       {
         "__type": "Clover.World",
         "__guid": "181dd86a-fc80-4432-a6f0-c7604e89f6f0",
-        "Data": "worlds/island/island.world"
+        "__enabled": true,
+        "Data": "worlds/island/island.world",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
       }
     ],
     "Children": [
       {
         "__guid": "424e9a5b-9dd5-4ceb-ad4a-4d16f3612af2",
+        "__version": 1,
         "Flags": 0,
         "Name": "Map",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "terrain,solid",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "14b6e515-9dc7-40cf-b5f2-b4850bd47ec1",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
             "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/island/world.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -37,8 +74,23 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "f8f61d3f-7eaa-499b-b428-1d9fcceb8bee",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "worlds/island/island_grass.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
             "Surface": "surfaces/grass.surface",
             "SurfaceVelocity": "0,0,0"
@@ -46,8 +98,23 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "53dea54b-1a34-4e7e-a03e-d3972c5803a0",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "worlds/island/island_cliff.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
             "Surface": "surfaces/concrete.surface",
             "SurfaceVelocity": "0,0,0"
@@ -55,8 +122,23 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "5d828e3c-ae29-48dc-8c33-a058376fa986",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "worlds/island/island_sidewalk.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
             "Surface": "surfaces/concrete.surface",
             "SurfaceVelocity": "0,0,0"
@@ -64,8 +146,23 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "d886ed27-f9a3-4362-a995-dfcb56ab1259",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "worlds/island/island_road.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
             "Surface": "surfaces/concrete.surface",
             "SurfaceVelocity": "0,0,0"
@@ -73,160 +170,342 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "de762af6-e87e-4526-acfe-8efa0d74342b",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "worlds/island/island_sand.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
             "Surface": "surfaces/sand.surface",
             "SurfaceVelocity": "0,0,0"
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "e1aced0c-48bc-4b75-8f9a-5fd165fa5e02",
+        "__version": 1,
         "Flags": 0,
         "Name": "Entrance",
         "Position": "1296,528.0001,-0.0000684095",
         "Rotation": "0,0,0.0000001509958,-1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldEntrance",
             "__guid": "a5caf789-5869-4fc1-9a97-2cf407fafde1",
+            "__enabled": true,
             "EntranceId": "player_house_exit",
             "ExitDoor": {
               "_type": "component",
-              "component_id": "f5173ffc-4e5f-47bb-a320-ee5f511a01c3",
+              "component_id": "c4fdbee5-3654-48df-ab24-a80724111fc3",
               "go": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
               "component_type": "Door"
-            }
+            },
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "23fc471c-773d-4337-93c4-9ba7772244ce"
+            "__guid": "23fc471c-773d-4337-93c4-9ba7772244ce",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "ea1777c4-b86f-4dd5-92dd-02ef686c3f46",
+        "__version": 1,
         "Flags": 0,
         "Name": "Entrance (1)",
         "Position": "1296,304,-0.0000684095",
         "Rotation": "0,0,0.0000001509958,-1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldEntrance",
             "__guid": "08530f11-08f1-45fa-b818-ff53f5d2b8e0",
+            "__enabled": true,
             "EntranceId": "shop_exit",
             "ExitDoor": {
               "_type": "component",
-              "component_id": "e750c937-225d-467f-b277-0debc011fb8b",
+              "component_id": "455280f3-a735-46ad-8c23-89c551f27b37",
               "go": "3cb765b7-d4ce-4bfb-9575-f21f6e9d8791",
               "component_type": "Door"
-            }
+            },
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "402fb2fc-407e-4d3b-9e45-bbaf89d1f0ac"
+            "__guid": "402fb2fc-407e-4d3b-9e45-bbaf89d1f0ac",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "7eabb8c4-08e8-4de0-b100-1cfaf1e6786f",
+        "__version": 1,
         "Flags": 0,
         "Name": "WorldPlayerSpawn",
         "Position": "1632,431.9995,-0.0002358654",
         "Rotation": "0,0,0.0000001509958,-1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldEntrance",
             "__guid": "221ee7ca-096a-45cd-b952-6fc4cd312f16",
-            "EntranceId": "spawn"
+            "__enabled": true,
+            "EntranceId": "spawn",
+            "ExitDoor": null,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "5ed6164e-5224-4b45-8d42-a94183800a33"
+            "__guid": "5ed6164e-5224-4b45-8d42-a94183800a33",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "ad737830-b14b-447c-bb77-01ba3a70d202",
+        "__version": 1,
         "Flags": 0,
         "Name": "HouseTrigger",
         "Position": "1232,528,16",
         "Rotation": "0,0,1,-0.00000004371139",
+        "Scale": "1,1,1",
         "Tags": "trigger",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.AreaTrigger",
             "__guid": "37f7a268-98c4-42b0-b862-eae43eadc3cc",
+            "__enabled": true,
             "DestinationEntranceId": "entry",
-            "DestinationWorldData": "worlds/player_house/player_house.world",
+            "DestinationWorldData": "worlds/player_house/player_house.cmworld",
             "NoWalk": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "UnloadPreviousWorld": false
           },
           {
             "__type": "Sandbox.BoxCollider",
             "__guid": "8404f1c7-43d4-49b2-8c70-d4fc0b31fcd7",
+            "__enabled": true,
             "Center": "0,0,0",
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Scale": "80,80,50",
             "Static": false,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "28d46897-f5af-41b6-b28d-5e28368ff23d"
+            "__guid": "28d46897-f5af-41b6-b28d-5e28368ff23d",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "cfa2e83d-e06c-4bda-b2ef-05bddc3c1fcc",
+        "__version": 1,
         "Flags": 0,
         "Name": "HouseTrigger (1)",
         "Position": "1232,304,16",
         "Rotation": "0,0,1,-0.00000004371139",
+        "Scale": "1,1,1",
         "Tags": "trigger",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.AreaTrigger",
             "__guid": "37fc18d6-c446-4b4c-9522-890b9165c4f7",
+            "__enabled": true,
             "DestinationEntranceId": "entry",
-            "DestinationWorldData": "worlds/shop/shop.world",
+            "DestinationWorldData": "worlds/shop/shop.cmworld",
             "NoWalk": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "UnloadPreviousWorld": false
           },
           {
             "__type": "Sandbox.BoxCollider",
             "__guid": "7c5405c4-d1d4-408d-aa67-2cf2a05c7a0e",
+            "__enabled": true,
             "Center": "0,0,0",
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Scale": "80,80,50",
             "Static": false,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "f07b0d4c-54e1-47fe-871f-050d0fb76b2e"
+            "__guid": "f07b0d4c-54e1-47fe-871f-050d0fb76b2e",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "32ef1c9c-cf9b-4008-ab05-1bb0d055c8b0",
+        "__version": 1,
         "Flags": 0,
         "Name": "player_house_exterior",
         "Position": "1216,528,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "0ce33ca5-669d-4a28-bac4-9051321221b8",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
             "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/player_house_exterior/player_house_exterior.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -239,26 +518,63 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "3ff6cb72-cf6b-41c5-9f7a-2b643b55c40e",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "models/player_house_exterior/player_house_exterior.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": false,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "baf8c252-bb06-4291-9d98-a944a237da0e",
+        "__version": 1,
         "Flags": 0,
         "Name": "player_house_exterior (1)",
         "Position": "1216,304,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "c9e8ed28-6abe-4ad6-b878-ce16f081f4f3",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
             "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/player_house_exterior/player_house_exterior.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -271,463 +587,1041 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "790268f2-7222-4b77-8808-41be402642d6",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "models/player_house_exterior/player_house_exterior.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": false,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "af03d12e-120b-4fc1-aec4-57665595e5f6",
+        "__version": 1,
         "Flags": 0,
         "Name": "Blocker",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "blocker",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "be2c9cb1-446a-43df-bdc8-3b39d6c65dd0",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "worlds/island/island_blocker.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
             "Surface": "surfaces/grass.surface",
             "SurfaceVelocity": "0,0,0"
           }
-        ]
+        ],
+        "Children": []
       },
       {
-        "__guid": "19ca3112-5fe7-414f-aca2-1b79e7bd29b1",
-        "Flags": 0,
-        "Name": "Scooter",
-        "Position": "1632,384,0.00009798329",
+        "__guid": "a115554a-5f49-4aa3-83d4-2a89545014cb",
+        "__version": 1,
         "__Prefab": "vehicles/scooter/scooter.prefab",
-        "__PrefabVariables": {}
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "19ca3112-5fe7-414f-aca2-1b79e7bd29b1": "a115554a-5f49-4aa3-83d4-2a89545014cb",
+          "843cf470-c5e3-4f93-91a4-d0cdae3d9bf6": "58ff028b-1f6d-48e9-9a63-c3a26d8d5c7e",
+          "e4872e07-4521-40b1-941e-3b9feefd8d78": "ddabf2d9-fd14-4768-b166-bbb811343d0b",
+          "901cc35c-8299-42d5-9bc8-453f216c00c3": "0c59390a-0ea1-4317-828b-8a0263cb6486",
+          "e92d0620-63e8-4e87-884d-cb5f6b991e07": "e5b41d35-d7b4-493e-acf6-5003d1758d52",
+          "318c5f84-912d-44cf-9ee6-3dc002cc5c5a": "fbe5f084-2ec8-4ffd-bbd3-f6d2664cfa97",
+          "d57765ec-7368-4155-96e6-a9828ada1ca0": "b4348876-bf31-4f1b-99d0-e5ba21117c03",
+          "67904784-2b8f-436b-b58d-787064b3cb1f": "c9cf11f3-ee02-47c7-84d4-5579d1280274",
+          "efc246b5-7b9a-48fe-b135-1a9e129918af": "282dce39-0c93-42c4-92ce-f01b6bef924b",
+          "609f7c26-0ed9-4130-b0c6-890d249f06cf": "d1fe33c0-b9db-44ee-acec-8dd6c9e736a7",
+          "9a1ef19c-05a9-49e3-99b9-5b7bf92101f7": "e49c57fc-ddc8-422f-a95f-aa1c729e6cd7",
+          "4c9526b2-22c1-4b6a-b131-5f1e0cea6df9": "071988b4-79a1-4416-9c6d-212afd937fbe",
+          "62c7954a-aeaa-41b0-9904-b57117b6ca90": "29a69c70-1ee4-428e-87d7-1f6282cfe092",
+          "66d85648-8349-46f7-ab41-a740fc06fbdf": "461a09a6-d257-41d5-a1f8-684fa250fe30",
+          "baed6ccd-d09e-4ab4-962f-0b54638b3465": "04efa1ba-7ab5-4ae6-9f52-6caa2d937c6c",
+          "42139e66-c195-4af0-a1dc-53d8d5c51ee9": "38535bfb-1577-4e68-ab44-8284862d87ca",
+          "17286d65-3dff-4d34-af83-92cca31a2df4": "24be66bc-62a2-496f-9d22-86daedbef41f"
+        }
       },
       {
         "__guid": "14d70389-53b7-4cc1-8ddf-04e6363bc978",
-        "Flags": 0,
-        "Name": "bridge",
-        "Position": "1472,2816,1.000304",
-        "Rotation": "-0.00000002107342,0.00000002107342,0.7071068,0.7071068",
-        "Enabled": true,
+        "__version": 1,
         "__Prefab": "buildings/bridge/bridge.prefab",
-        "__PrefabVariables": {}
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "928ac1a3-4981-4e83-b209-36f845f5f899"
+              },
+              "Property": "Position",
+              "Value": "1472,2816,1.000304"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "928ac1a3-4981-4e83-b209-36f845f5f899"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00000002107342,0.00000002107342,0.7071068,0.7071068"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "928ac1a3-4981-4e83-b209-36f845f5f899"
+              },
+              "Property": "NetworkInterpolation",
+              "Value": false
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "928ac1a3-4981-4e83-b209-36f845f5f899": "14d70389-53b7-4cc1-8ddf-04e6363bc978",
+          "f5528230-8d7a-4d5f-8454-d917a4ddc927": "bf12bc11-8bae-44ae-bb1c-7851c9bd0efb",
+          "9bf33519-c5a6-4b16-ade7-32cb82efff71": "1b183c60-d7aa-4f3f-bf43-d1495f27e626",
+          "3befb9a1-4482-495d-b882-2eaba47c253f": "fdaa0aaf-2999-4888-bba0-a038b96cc509",
+          "364cbc2c-27cd-4a2f-928c-efe271986225": "e3b3b29d-7e0d-4816-8fc2-e8684b4515c7",
+          "7b00efe5-1e2a-4a2e-addb-c3c9bbdc7d83": "99580afe-940a-42ae-ab9d-e4604d61cbbe",
+          "d6831583-52ea-425d-b943-3ef29e2fffcb": "c8efa8d4-ae21-4045-9a66-2a8e34cd443c"
+        }
       },
       {
-        "__guid": "58a6b6d5-b1b5-46b2-b70d-559b970e8f1d",
-        "Flags": 0,
-        "Name": "soccerball",
-        "Position": "1664,511.9997,12",
-        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000002384186",
+        "__guid": "a37ce06f-7166-4dc5-8027-540f9109b138",
+        "__version": 1,
         "__Prefab": "items/misc/soccerball/soccerball.prefab",
-        "__PrefabVariables": {}
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "794ad176-3a5e-4f69-b70a-aafa883588a7": "a37ce06f-7166-4dc5-8027-540f9109b138",
+          "67773bf3-dfd3-42c5-9d43-f74560998276": "8da13a43-99e0-44fc-99d1-6507811da184",
+          "d00d1ea6-2937-4864-9bf4-5cc843a2761f": "05cc8fe8-876c-4255-b2f7-304e7bebaf01",
+          "767ed163-3600-4bbb-b422-a2857e6abba4": "c5e3c535-8cff-40de-b8ca-5a769be44463",
+          "9cd63b19-47f7-43d3-8ee3-5e335fd50021": "bd463c21-2666-4dea-bbda-696aad977962",
+          "f85759c1-2438-494b-bbe6-20b4cb218fee": "1f27aa73-90ce-4466-b785-91a77407526f",
+          "c08780fd-04df-422c-94cb-72ecd42536c2": "5340e748-a0e3-48cf-904e-615991acce40",
+          "7f7b26e4-4af5-4fdd-ad7c-a72b472b33cc": "0db533fd-162e-4d9d-9ae2-f03f2f44cc12",
+          "3fd55fc0-8a1b-4262-98b1-615557aba0ff": "85215178-b8c7-459a-9fae-0b515d2a7340"
+        }
       },
       {
         "__guid": "b20a93da-4055-40d3-8822-cff373472cc6",
-        "Flags": 0,
-        "Name": "vdog",
-        "Position": "1792,704,0.00000655258",
-        "Tags": "npc",
+        "__version": 1,
         "__Prefab": "npc/vdog.prefab",
-        "__PrefabVariables": {}
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "6176b4be-a82d-46c5-8f59-415385718318"
+              },
+              "Property": "Position",
+              "Value": "1792,704,0.00000655258"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "6176b4be-a82d-46c5-8f59-415385718318"
+              },
+              "Property": "Enabled",
+              "Value": false
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "6176b4be-a82d-46c5-8f59-415385718318"
+              },
+              "Property": "NetworkInterpolation",
+              "Value": false
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "6176b4be-a82d-46c5-8f59-415385718318": "b20a93da-4055-40d3-8822-cff373472cc6",
+          "f3545bdc-0481-40d5-b86f-5a2cd0eef4e1": "45c4e457-806e-48f7-a9c9-f2fe4900fe5b",
+          "55b1e9aa-98bb-4e6f-acab-20aebba484fc": "e9b28305-b055-4234-b7f1-28c25395adc8",
+          "45fe79b7-ed72-4cd9-b900-1c09505e79a2": "f718f902-36bf-4f7a-909c-b27fc052326a",
+          "fe32a364-a912-4f1a-b095-04c444c34320": "7be599fc-5da2-4db4-90eb-18cc1c51bcb9",
+          "1fda5e55-d2ee-4e6c-a668-5568b053bee3": "023def4b-99e4-4740-ab83-12d204d10ec0",
+          "f9dd7ea9-1303-4aa5-a5f8-aa8ebe5031fb": "2e80a3ca-28bc-4899-92d1-c0ef5bbcd249",
+          "4c2d5364-940f-460f-b998-900ef64ee5f1": "e0a8e1b2-a6ac-43c9-b251-1bfcda867c1f",
+          "972f8ebc-c325-40ac-97fa-fea3a7e3f78b": "16afcff0-c70e-4b25-a6bb-aa45ca7b1b93",
+          "2e014716-1728-4d1b-8d0d-16ec5255c153": "39ccc3ee-29e5-444b-8f20-686fe7c7da56",
+          "9b1e13a6-7f08-4d7c-87e6-b74611d40e87": "a1ed11d8-c4e7-4f60-8ef9-de7be01f225d"
+        }
       },
       {
         "__guid": "700eadb7-971a-4a30-aa3a-c423dedd491c",
+        "__version": 1,
         "Flags": 0,
         "Name": "Water",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "water",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "edc1eab3-7fbb-4b7f-9b65-67e281baf9be",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "worlds/island/island_water.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "07563dca-2206-4501-99ca-de6bca486ac9",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn",
         "Position": "2752,1520,-16",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "45a9c22f-40e1-47a3-b5c9-9998a127b22a",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "9e36acfb-431b-489e-8445-247a3fe5b6c8",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (8)",
         "Position": "2640,2576,-16.00001",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "53a51d08-cb65-485f-9c68-d20c09612cb2",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "86b5252d-38b5-49b8-bc87-5d25e36bb87b",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (9)",
         "Position": "2416,2784,-15.99997",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "837955ac-39e5-4559-91eb-f473946f7ba1",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "5ff12b12-493e-49dd-a263-56503631f8e3",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (10)",
         "Position": "2080,2800,-15.99988",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "01caa712-5312-4014-9ba4-6dee662efcdf",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "81198083-65de-47be-b405-b787bc4d2244",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (11)",
         "Position": "1488,2800,-15.99988",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "c6867b6c-4b33-45ea-bedb-6db21aa71110",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "32d817a1-4c72-4ef7-94e8-dab5f8a9e0cc",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (12)",
         "Position": "1024,2800,-15.99988",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "9d53cabf-4755-49c6-ac91-7b40759ea83a",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "cf2b7223-9271-4810-b0f7-c7af3823b15d",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (13)",
         "Position": "400,2800,-15.99988",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "c12ceba2-a99b-4e80-a1d0-9085fcfdb80c",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "a13ad25d-e90e-4d09-bb7e-6b1bd1c28563",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (4)",
         "Position": "2544,1824,-16.00001",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "414a22b6-1aac-4e9e-9c59-46ed99e44013",
+            "__enabled": true,
             "Location": "Pond",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 144,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "a091a5e8-4c05-48c7-9bfc-061c9e5bfcaf",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (5)",
         "Position": "2496,2240,-15.99998",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "fd47a85c-57db-42e4-970d-e9886bc8b3df",
+            "__enabled": true,
             "Location": "Pond",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 144,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "7fda381a-5cd8-4de0-9913-fe67f1c70ae6",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (6)",
         "Position": "2848,1872,-15.99996",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "2ba4e1e2-ce05-41b8-9ecd-4f2e18afd8e3",
+            "__enabled": true,
             "Location": "Pond",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 144,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "fbdc12d7-756f-4c5a-b419-8a8f63d83eb8",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (7)",
         "Position": "2816,2288,-15.99996",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "cfe42b5e-d991-4078-9b0d-6aa9517a2e2a",
+            "__enabled": true,
             "Location": "Pond",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 144,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "3b75c554-3ddd-4846-b643-02c492eb800f",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (1)",
         "Position": "2944,1312,-15.99999",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "7ac15653-fa31-4fca-a67f-c3c32f05df73",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "32676739-c0dc-48ea-8204-02f294b3ffd2",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (2)",
         "Position": "3216,1280,-15.99992",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "152f9610-c0a9-4900-a129-9f2667f713c4",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "daebac30-cf5e-4252-a1a1-8ab81ce91509",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (3)",
         "Position": "3456,1296,-15.99986",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "8862dc93-42f9-4b3d-a778-4896447ec5b3",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "1717607a-b4aa-4aba-81a5-c6e20aaea002",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (14)",
         "Position": "3728,1280,-15.99984",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "e2ba2964-b3a9-49e8-8d84-969e05890ce6",
+            "__enabled": true,
             "Location": "River",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "7e7f60cf-cd12-4cc5-b3d2-8edc4ccc466e",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (15)",
         "Position": "3968,1056,-15.99983",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "a5288bc9-59d2-4c6d-9003-efcd44a2bd5c",
+            "__enabled": true,
             "Location": "Sea",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "7c2995fe-d909-4d2c-832c-fd78ae964638",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (16)",
         "Position": "3968,720,-15.99983",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "dacb2923-dda4-477b-b757-f841c44be09e",
+            "__enabled": true,
             "Location": "Sea",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "e95531b1-fd15-4111-ac7f-4984413e7f2d",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (17)",
         "Position": "3968,256,-15.99983",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "01c627e3-da40-4adf-85c0-12b093d8c1a3",
+            "__enabled": true,
             "Location": "Sea",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "6f7eeda5-5eaf-45d4-b787-722928830212",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (18)",
         "Position": "3968,1632,-15.99983",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "0e00b273-b3f2-43ce-9967-288b3acb9318",
+            "__enabled": true,
             "Location": "Sea",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "9a12ec3b-90b4-4acb-b635-2579bb20d630",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (19)",
         "Position": "3968,2128,-15.99983",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "2d3f6e13-b34e-4875-b75a-c9b521588762",
+            "__enabled": true,
             "Location": "Sea",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "7f5ecd21-953f-4ed6-aa17-c75805e6b789",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (20)",
         "Position": "3968,2672,-15.99983",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "253d8d09-b0c2-4681-90ee-2862a2282874",
+            "__enabled": true,
             "Location": "Sea",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "e849e649-872d-4bfa-96c8-c08b90c46a45",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (21)",
         "Position": "3968,3232,-15.99983",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "bbf6bd27-add3-4a17-b722-8f943503b3fe",
+            "__enabled": true,
             "Location": "Sea",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "dcb48710-dd42-4270-842e-d650b6b4502f",
+        "__version": 1,
         "Flags": 0,
         "Name": "FishSpawn (22)",
         "Position": "3968,3792,-15.99983",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.FishSpot",
             "__guid": "fba6bbbb-b82b-4b7b-bfb1-0a11b71f341c",
+            "__enabled": true,
             "Location": "Sea",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "SpawnRadius": 128,
             "SpecialFish": []
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "5eb2e882-7828-4bf0-a504-eec61e268881",
+        "__version": 1,
         "Flags": 0,
         "Name": "envmap",
         "Position": "1904,2112,-0.000005776402",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.EnvmapProbe",
             "__guid": "1479559f-018a-4fe6-b620-be0587d7f18a",
-            "Texture": "textures/cubemaps/default2.vtex",
+            "__enabled": true,
             "Bounds": {
               "Mins": "-2500,-2500,-512",
               "Maxs": "2500,2500,512"
@@ -737,92 +1631,238 @@
             "FrameInterval": 5,
             "MaxDistance": 512,
             "MultiBounce": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Projection": "Sphere",
             "RenderDynamically": true,
+            "Resolution": "Small",
+            "Texture": "textures/cubemaps/default2.vtex",
             "TintColor": "1,1,1,1",
             "UpdateStrategy": "OnEnabled",
             "ZFar": 4096,
             "ZNear": 16
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
-        "Flags": 0,
-        "Name": "door",
-        "Position": "1278,512,1.000275",
-        "Rotation": "-0.00000000000003422443,-0.00000002980232,0.000000462459,-0.9999999",
-        "Enabled": true,
-        "NetworkMode": 1,
+        "__version": 1,
         "__Prefab": "buildings/door/door.prefab",
-        "__PrefabVariables": {}
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "5d1e2171-813a-48bd-89c3-a4737df231b1"
+              },
+              "Property": "Position",
+              "Value": "1278,512,1.000275"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "5d1e2171-813a-48bd-89c3-a4737df231b1"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00000000000003422443,-0.00000002980232,0.000000462459,-0.9999999"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "5d1e2171-813a-48bd-89c3-a4737df231b1"
+              },
+              "Property": "NetworkInterpolation",
+              "Value": false
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "5d1e2171-813a-48bd-89c3-a4737df231b1": "be61e5f2-02c5-4f74-9dac-1de4c2767615",
+          "36e5568b-0b1c-4488-94bf-96e7d9cef619": "c4fdbee5-3654-48df-ab24-a80724111fc3",
+          "16f1f769-5dba-48aa-8d84-7c12ee21cb47": "87c24759-9d81-43eb-8085-f7be820e0ba3",
+          "55f4ccfd-16a7-4a21-a789-feb8bc9f10b7": "fd8d3bc2-9dd4-4e03-9c38-eeabb56ecf0b",
+          "e1025963-43dc-4cca-ac27-907aa6a1aa98": "e5cd13d6-c1b3-4c96-b24c-272bf8351561",
+          "f0170400-c766-477c-8510-5450ca2ba964": "cbdc8007-f0fd-455f-8262-0d91ec861af7",
+          "ae09a5a2-a7b2-4cbc-bf45-cb120bbbde4c": "b3efab90-fdbe-454b-aef2-dbe50ab59562"
+        }
       },
       {
         "__guid": "3cb765b7-d4ce-4bfb-9575-f21f6e9d8791",
-        "Flags": 0,
-        "Name": "door (1)",
-        "Position": "1278,288,1.000275",
-        "Rotation": "-0.00000000000003422443,-0.00000002980232,0.000000462459,-0.9999999",
-        "Enabled": true,
-        "NetworkMode": 1,
+        "__version": 1,
         "__Prefab": "buildings/door/door.prefab",
-        "__PrefabVariables": {}
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "5d1e2171-813a-48bd-89c3-a4737df231b1"
+              },
+              "Property": "Name",
+              "Value": "door (1)"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "5d1e2171-813a-48bd-89c3-a4737df231b1"
+              },
+              "Property": "Position",
+              "Value": "1278,288,1.000275"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "5d1e2171-813a-48bd-89c3-a4737df231b1"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00000000000003422443,-0.00000002980232,0.000000462459,-0.9999999"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "5d1e2171-813a-48bd-89c3-a4737df231b1"
+              },
+              "Property": "NetworkInterpolation",
+              "Value": false
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "5d1e2171-813a-48bd-89c3-a4737df231b1": "3cb765b7-d4ce-4bfb-9575-f21f6e9d8791",
+          "36e5568b-0b1c-4488-94bf-96e7d9cef619": "455280f3-a735-46ad-8c23-89c551f27b37",
+          "16f1f769-5dba-48aa-8d84-7c12ee21cb47": "f1fa3103-e67c-4f42-9256-bf5b269e53ad",
+          "55f4ccfd-16a7-4a21-a789-feb8bc9f10b7": "38b8c105-6cb8-4c44-a2d4-2cc6dd9bceb0",
+          "e1025963-43dc-4cca-ac27-907aa6a1aa98": "ed4abf8b-4513-4d72-a610-6904f9732ae0",
+          "f0170400-c766-477c-8510-5450ca2ba964": "357dad61-a0c5-4c6a-9f3d-262752cef5be",
+          "ae09a5a2-a7b2-4cbc-bf45-cb120bbbde4c": "be82147b-c5b0-4632-b3b8-797da2fcbefa"
+        }
       },
       {
         "__guid": "b718ccbd-a462-44da-8bf2-70aca573442d",
+        "__version": 1,
         "Flags": 0,
         "Name": "Ambi",
         "Position": "1479.035,534.7845,79.31152",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.SoundscapeTrigger",
             "__guid": "c7fb627b-3fcb-4349-a33c-ea3917562332",
+            "__enabled": true,
             "BoxSize": "50,50,50",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Radius": 500,
             "Soundscape": "sounds/ambience/night.sndscape",
             "StayActiveOnExit": true,
-            "Type": "Point"
+            "TargetMixer": {
+              "Name": "unknown",
+              "Id": "00000000-0000-0000-0000-000000000000"
+            },
+            "Type": "Point",
+            "Volume": 1
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "6b1fa830-e68f-4a78-8c2f-eb42ace37fe6",
+        "__version": 1,
         "Flags": 0,
         "Name": "NullCamera",
         "Position": "2009.879,19.66338,140.4214",
         "Rotation": "-0.1064796,0.0327677,0.9498171,0.2922937",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "CameraNode",
             "__guid": "e2892826-161f-461f-aec0-80b616993408",
+            "__enabled": true,
+            "DollyNode": null,
             "FieldOfView": 90,
             "FollowTargets": true,
             "HasPivotRotation": false,
             "Lerping": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Priority": -1,
             "ShouldSnapInstantly": false,
             "ShouldSyncWithPlayerCameraRotation": false,
             "Static": false
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "654c0f6a-b257-4e61-b0ba-d5e49dad3f83",
+        "__version": 1,
         "Flags": 0,
         "Name": "clover",
         "Position": "1615.999,271.9998,0.0556003",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.SkinnedModelRenderer",
             "__guid": "e241100b-9a6c-4d70-a642-5164a0be7cca",
+            "__enabled": true,
+            "AnimationGraph": null,
             "BodyGroups": 18446744073709551615,
+            "BoneMergeTarget": null,
             "CreateAttachments": false,
             "CreateBoneObjects": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/npc/vdog/clover.vmdl",
             "Morphs": {},
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Parameters": {
               "bools": {},
               "ints": {},
@@ -830,6 +1870,7 @@
               "vectors": {},
               "rotations": {}
             },
+            "PlaybackRate": 1,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -837,22 +1878,22 @@
               "AfterUILayer": false
             },
             "RenderType": "On",
+            "Sequence": {
+              "Name": null,
+              "Looping": true,
+              "Blending": false
+            },
             "Tint": "1,1,1,1",
             "UseAnimGraph": true
           }
-        ]
+        ],
+        "Children": []
       }
     ],
-    "__variables": [],
     "__properties": {
-      "FixedUpdateFrequency": 50,
-      "MaxFixedUpdates": 5,
-      "NetworkFrequency": 30,
       "NetworkInterpolation": true,
-      "PhysicsSubSteps": 1,
-      "ThreadedAnimation": true,
       "TimeScale": 1,
-      "UseFixedUpdate": true,
+      "WantsSystemScene": true,
       "Metadata": {},
       "NavMesh": {
         "Enabled": false,
@@ -866,13 +1907,14 @@
         "ExcludedBodies": "",
         "IncludedBodies": ""
       }
-    }
+    },
+    "__variables": []
   },
+  "ResourceVersion": 2,
   "ShowInMenu": false,
   "MenuPath": null,
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
-  "ResourceVersion": 1,
   "__references": [],
-  "__version": 1
+  "__version": 2
 }

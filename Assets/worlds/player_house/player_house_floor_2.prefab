@@ -1,28 +1,67 @@
 {
   "RootObject": {
     "__guid": "9b1cae4f-13ce-4e12-b22b-b2968a6f2a64",
+    "__version": 1,
     "Flags": 0,
     "Name": "player_house_floor_2",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
     "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 1,
     "Components": [
       {
         "__type": "Clover.World",
         "__guid": "dec42c94-ff70-4841-9faa-7d71bff4953f",
-        "Data": "worlds/player_house/player_house.world"
+        "__enabled": true,
+        "Data": "worlds/player_house/player_house.world",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
       }
     ],
     "Children": [
       {
         "__guid": "709a0c4e-9150-4acf-a1ca-0e18bf91ef8e",
+        "__version": 1,
         "Flags": 0,
         "Name": "Model",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "solid,terrain",
+        "Enabled": false,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "5e5a89d3-8241-46c8-89f3-c94bdc85fd7c",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/player_house/house_floor_2.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -35,182 +74,371 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "e0daec7f-4fc5-471d-9f26-cf20ab67ee98",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "models/player_house/house_floor_2.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "ab750cae-1285-469e-9352-779c93e502cc",
+        "__version": 1,
         "Flags": 0,
         "Name": "Point Light",
         "Position": "320,320,96.00002",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "light_point,light",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.PointLight",
             "__guid": "01b8ee28-979e-44c8-b4f5-988225d7415b",
+            "__enabled": true,
             "Attenuation": 1,
             "FogMode": "Enabled",
             "FogStrength": 1,
             "LightColor": "0.91373,0.98039,1,1",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Radius": 400,
             "Shadows": true
           },
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "021163c8-e704-424b-b6b8-ceeb98d7e0a3",
+            "__enabled": true,
             "BelongsToRooms": [
               "room1"
             ],
             "IsDarkness": false,
             "IsDoorway": false,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "0e89b2df-beac-4b95-866a-c10840e5ea4e"
+            "__guid": "0e89b2df-beac-4b95-866a-c10840e5ea4e",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "12111821-a03f-41df-a8b7-ba2419145fd1",
+        "__version": 1,
         "Flags": 0,
         "Name": "Point Light (1)",
         "Position": "480,320,64",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "light_point,light",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.PointLight",
             "__guid": "519da422-51e5-4ef9-b44b-10aa17f06c0e",
+            "__enabled": true,
             "Attenuation": 1,
             "FogMode": "Enabled",
             "FogStrength": 1,
             "LightColor": "0.91373,0.98039,1,1",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Radius": 400,
             "Shadows": true
           },
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "c5fa9bc4-5413-4187-95f8-8b9f09cd15c7",
+            "__enabled": true,
             "BelongsToRooms": [
               "entrance"
             ],
             "IsDarkness": false,
             "IsDoorway": false,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "7758281c-47a9-4bd6-9ffe-043a8f2d20fa"
+            "__guid": "7758281c-47a9-4bd6-9ffe-043a8f2d20fa",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "f88734aa-50ac-49fa-80bb-f44c691d96c0",
+        "__version": 1,
         "Flags": 0,
         "Name": "Entrance",
         "Position": "480,464,-56",
         "Rotation": "0,0,0.7071068,-0.7071068",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldEntrance",
             "__guid": "b17ae1b2-333f-4aca-b8b6-662a6dc69411",
-            "EntranceId": "entry"
+            "__enabled": true,
+            "EntranceId": "entry",
+            "ExitDoor": null,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "14161e64-6242-4e3b-9bad-a5a4281aa15b"
+            "__guid": "14161e64-6242-4e3b-9bad-a5a4281aa15b",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "c18b077f-564b-4d9d-9b5c-b99de6f7d166",
+        "__version": 1,
         "Flags": 0,
         "Name": "HouseTrigger",
         "Position": "480,496,-64",
         "Rotation": "0,0,0.7071067,0.7071068",
+        "Scale": "1,1,1",
         "Tags": "trigger",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.AreaTrigger",
             "__guid": "950e5c0a-111d-41be-a019-f34412e29a25",
+            "__enabled": true,
             "DestinationEntranceId": "exit_floor_2",
-            "DestinationWorldData": "worlds/player_house/player_house.world",
+            "DestinationWorldData": "worlds/player_house/player_house.cmworld",
             "NoWalk": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "UnloadPreviousWorld": true
           },
           {
             "__type": "Sandbox.BoxCollider",
             "__guid": "32652b18-3931-4d82-af6b-7fec3c363f0f",
+            "__enabled": true,
             "Center": "0,0,0",
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Scale": "21.13332,76.00003,50",
             "Static": false,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "363c6364-0e0c-4cdc-9d96-d381cb537bf0"
+            "__guid": "363c6364-0e0c-4cdc-9d96-d381cb537bf0",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "f6b4ec4e-7934-49a1-94ba-1435112add65",
+        "__version": 1,
         "Flags": 0,
         "Name": "Point Light (2)",
         "Position": "320,544,96.00008",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "light,light_point",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.PointLight",
             "__guid": "78ec0dc3-f715-4d65-a0b3-9d2bfe9cad94",
+            "__enabled": true,
             "Attenuation": 1,
             "FogMode": "Enabled",
             "FogStrength": 1,
             "LightColor": "0.91373,0.98039,1,1",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Radius": 400,
             "Shadows": true
           },
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "b51dc3de-d76c-488e-9ed9-359d615dd3c5",
+            "__enabled": true,
             "BelongsToRooms": [
               "room2"
             ],
             "IsDarkness": false,
             "IsDoorway": false,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "6ff01344-0b1f-46ad-9374-7e5f2bf0d8a6"
+            "__guid": "6ff01344-0b1f-46ad-9374-7e5f2bf0d8a6",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "19be8bfb-64e1-4757-9dc7-e3c1bf48e1e0",
+        "__version": 1,
         "Flags": 0,
         "Name": "interior_doorway",
         "Position": "352,432,0.00003731114",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "doorway",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "ada67bc8-c030-4ce3-8b5b-2d013efdd4e0",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/interior/interior_doorway.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -223,14 +451,31 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "cb6eb6a8-4bee-4e54-8fc4-621a71e0354e",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "models/interior/interior_doorway.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "dcfc1ed0-a8ee-4368-881e-7eea6f000fea",
+            "__enabled": true,
             "BelongsToRooms": [
               "room1",
               "room2"
@@ -238,27 +483,61 @@
             "IsDarkness": false,
             "IsDoorway": true,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "67cf0ed8-a352-446c-991f-df88c95d5a6f"
+            "__guid": "67cf0ed8-a352-446c-991f-df88c95d5a6f",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "07720f4e-4d03-47a1-afa7-a61db809adef",
+        "__version": 1,
         "Flags": 0,
         "Name": "interior_doorway_darkness (2)",
         "Position": "352,432,0.00006417682",
         "Rotation": "-0.00000002980232,0.00000000000001065814,0.9999999,0.00000005960464",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "d737dab2-82f8-4c0f-ada1-e23bc77e0a7c",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/interior/interior_doorway_darkness.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -271,33 +550,68 @@
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "f08298a2-ffa0-40fb-9cdd-b431fb33ba85",
+            "__enabled": true,
             "BelongsToRooms": [
               "room1"
             ],
             "IsDarkness": true,
             "IsDoorway": false,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "34b4cabd-e2ea-462a-a349-547d4a374aa9"
+            "__guid": "34b4cabd-e2ea-462a-a349-547d4a374aa9",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "63cfdcda-5d9e-4f73-8424-f098bed32f6f",
+        "__version": 1,
         "Flags": 0,
         "Name": "interior_doorway_darkness (1)",
         "Position": "352,432,0.00006417682",
         "Rotation": "-0.00000000000001646087,-0.00000002980232,0.0000002543118,-0.9999999",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "c04c6ba6-21e9-47c7-8022-62983e0b739f",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/interior/interior_doorway_darkness.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -310,36 +624,72 @@
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "11f8e727-27e1-4fc9-82c1-a7896f95e755",
+            "__enabled": true,
             "BelongsToRooms": [
               "room2"
             ],
             "IsDarkness": true,
             "IsDoorway": false,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "702e3542-3696-443e-b1da-488401fc4dc8"
+            "__guid": "702e3542-3696-443e-b1da-488401fc4dc8",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "57ec03f2-5b2e-4876-899b-86f4462d7f90",
+        "__version": 1,
         "Flags": 0,
         "Name": "room_1",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [],
         "Children": [
           {
             "__guid": "57c12ce3-33b1-4c7b-af69-09c515d28c33",
+            "__version": 1,
             "Flags": 0,
             "Name": "room1_trigger",
             "Position": "320,320,-0.0001259876",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Clover.WorldBuilder.RoomTrigger",
                 "__guid": "da39acf6-76b6-485f-a68b-abdc7fc0f2a3",
+                "__enabled": true,
                 "BodyGroupsToHide": [],
                 "InteriorManager": {
                   "_type": "component",
@@ -347,116 +697,245 @@
                   "go": "5b72d7f4-03cc-4f1c-bd51-3c651367094c",
                   "component_type": "InteriorManager"
                 },
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "PiecesToShow": [],
                 "RoomId": "room1"
               },
               {
                 "__type": "Sandbox.BoxCollider",
                 "__guid": "44930d43-6ebb-4256-b80d-0fe492f24bc1",
+                "__enabled": true,
                 "Center": "0,0,48",
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Scale": "192,192,96",
                 "Static": false,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "09bbfa23-8aaa-43c0-b672-6dd79894ea97"
+                "__guid": "09bbfa23-8aaa-43c0-b672-6dd79894ea97",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "9c618c25-7b53-4873-a7d5-7be20a44f09f",
+            "__version": 1,
             "Flags": 0,
             "Name": "room1_camera_pivot",
             "Position": "320,320,0.0001778322",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [],
             "Children": [
               {
                 "__guid": "f62c4b98-9aaa-4099-8aed-9225cdeb85a9",
+                "__version": 1,
                 "Flags": 0,
                 "Name": "room1_camera",
                 "Position": "240,0,191.9998",
                 "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
+                "Scale": "1,1,1",
+                "Tags": "",
                 "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkInterpolation": true,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
                 "Components": [
                   {
                     "__type": "CameraNode",
                     "__guid": "4fd9f10b-9d79-4e95-98d3-59abded6200a",
+                    "__enabled": true,
+                    "DollyNode": null,
                     "FieldOfView": 70,
                     "FollowTargets": true,
                     "HasPivotRotation": true,
                     "Lerping": true,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
                     "Priority": 0,
+                    "ShouldSnapInstantly": false,
                     "ShouldSyncWithPlayerCameraRotation": true,
                     "Static": true
                   }
-                ]
+                ],
+                "Children": []
               }
             ]
           },
           {
             "__guid": "14180958-848a-4c7f-b31e-15cad7a1b921",
+            "__version": 1,
             "Flags": 0,
             "Name": "room1_camera_trigger",
             "Position": "320,320,0.0001778322",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
             "Tags": "trigger",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.BoxCollider",
                 "__guid": "42126508-be85-4d38-9d39-59365f72d62f",
+                "__enabled": true,
                 "Center": "0,0,64",
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Scale": "192,224,128",
                 "Static": false,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.Camera.CameraTrigger",
                 "__guid": "5b736d1c-3d0a-429e-913b-802e670546fa",
+                "__enabled": true,
                 "Camera": {
                   "_type": "component",
                   "component_id": "4fd9f10b-9d79-4e95-98d3-59abded6200a",
                   "go": "f62c4b98-9aaa-4099-8aed-9225cdeb85a9",
                   "component_type": "CameraNode"
-                }
+                },
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "e4856f72-bf4d-45d2-8ce0-149784a6194a",
+            "__version": 1,
             "Flags": 0,
             "Name": "room1_camera",
             "Position": "560,320,192",
             "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "CameraNode",
                 "__guid": "fce41d4e-2cbd-4ad1-a206-acb2a5e05c33",
+                "__enabled": true,
+                "DollyNode": null,
                 "FieldOfView": 70,
                 "FollowTargets": true,
                 "HasPivotRotation": true,
                 "Lerping": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "Priority": 0,
+                "ShouldSnapInstantly": false,
                 "ShouldSyncWithPlayerCameraRotation": true,
                 "Static": true
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "5c05797e-5d67-491a-a275-09e51b019c03",
+            "__version": 1,
             "Flags": 0,
             "Name": "interior_floor_1",
             "Position": "320,320,0.00009608794",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "f4b6f753-60fc-480d-b49b-d172ecb24f14",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/interior/interior_floor_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -469,40 +948,92 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "7cb4443e-9dee-4ea9-980f-ebbbe401cb15",
+                "__enabled": true,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "models/interior/interior_floor_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldBuilder.InteriorPiece",
                 "__guid": "665fbe0e-9f6a-400b-963b-fc37ebe54845",
+                "__enabled": true,
                 "BelongsToRooms": [
                   "room1"
                 ],
                 "IsDarkness": false,
                 "IsDoorway": false,
                 "IsFloor": true,
-                "IsWall": false
+                "IsWall": false,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "7f19c25e-6f98-485e-bd4e-58730ca2eac0"
+                "__guid": "7f19c25e-6f98-485e-bd4e-58730ca2eac0",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "92b0f865-165c-4ce3-9dd8-1e8f71e5ee61",
+            "__version": 1,
             "Flags": 0,
             "Name": "interior_wall_1 (1)",
             "Position": "320,224,0.00005015552",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "c0e77015-66e1-4342-800c-7399c642c8bf",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/interior/interior_wall_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -515,41 +1046,92 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "e5da7356-f4ff-4dca-863b-9fe195c90723",
+                "__enabled": true,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "models/interior/interior_wall_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldBuilder.InteriorPiece",
                 "__guid": "fee82eee-5465-44dc-a3e5-be7b8f47936f",
+                "__enabled": true,
                 "BelongsToRooms": [
                   "room1"
                 ],
                 "IsDarkness": false,
                 "IsDoorway": false,
                 "IsFloor": false,
-                "IsWall": true
+                "IsWall": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "42c4a640-2881-4c6f-bdbf-7dccf1cc9213"
+                "__guid": "42c4a640-2881-4c6f-bdbf-7dccf1cc9213",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "407b2f24-3ee9-4cb1-9f2f-c388c8e81060",
+            "__version": 1,
             "Flags": 0,
             "Name": "interior_wall_1",
             "Position": "224,320,0.0000451624",
             "Rotation": "0,0,-0.7071067,0.7071068",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "7f9c874d-024e-4a28-8bed-aa5191f34921",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/interior/interior_wall_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -562,41 +1144,92 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "861aa61e-7b41-43ea-818d-9b6ef8713f18",
+                "__enabled": true,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "models/interior/interior_wall_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldBuilder.InteriorPiece",
                 "__guid": "d5aeed6c-0c7a-4882-8006-b813ac37108d",
+                "__enabled": true,
                 "BelongsToRooms": [
                   "room1"
                 ],
                 "IsDarkness": false,
                 "IsDoorway": false,
                 "IsFloor": false,
-                "IsWall": true
+                "IsWall": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "5382b3bd-48fa-48f7-87da-46ddcfbd2573"
+                "__guid": "5382b3bd-48fa-48f7-87da-46ddcfbd2573",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "0c4e240c-633a-4afa-b28c-98a293327328",
+            "__version": 1,
             "Flags": 0,
             "Name": "interior_wall_1_doorway_3",
             "Position": "320,416,0.0001042974",
             "Rotation": "0,0,1,0.0000001947072",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "f13d2fba-3ae6-4ca2-9d9d-0f5c3f88227b",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/interior/interior_wall_1_doorway_3.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -609,41 +1242,92 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "fdf2674b-c761-4012-8cda-f575c718de8e",
+                "__enabled": true,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "models/interior/interior_wall_1_doorway_3.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldBuilder.InteriorPiece",
                 "__guid": "6deeaa58-5653-49dc-a376-2334e81e8535",
+                "__enabled": true,
                 "BelongsToRooms": [
                   "room1"
                 ],
                 "IsDarkness": false,
                 "IsDoorway": false,
                 "IsFloor": false,
-                "IsWall": true
+                "IsWall": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "8efbca0e-0132-482d-9564-220c99aa5409"
+                "__guid": "8efbca0e-0132-482d-9564-220c99aa5409",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "ac88d25a-a16b-4e27-a1ba-27370c2e6280",
+            "__version": 1,
             "Flags": 0,
             "Name": "interior_wall_1_doorway_2",
             "Position": "416,320,0.00008832642",
             "Rotation": "0,0,0.7071067,0.7071068",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "5828bc8f-5d3d-417c-810c-2a29a01cce00",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/interior/interior_wall_1_doorway_2.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -656,48 +1340,111 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "3286013b-03f9-4216-afc0-8e4732694568",
+                "__enabled": true,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "models/interior/interior_wall_1_doorway_2.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldBuilder.InteriorPiece",
                 "__guid": "9ba1e6d0-2056-46a9-b201-626a23330a7a",
+                "__enabled": true,
                 "BelongsToRooms": [
                   "room1"
                 ],
                 "IsDarkness": false,
                 "IsDoorway": false,
                 "IsFloor": false,
-                "IsWall": true
+                "IsWall": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "343c5e68-0de2-4abc-9f7d-648d4a369b67"
+                "__guid": "343c5e68-0de2-4abc-9f7d-648d4a369b67",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           }
         ]
       },
       {
         "__guid": "91ea21d7-121a-45d6-89b9-93e809518a64",
+        "__version": 1,
         "Flags": 0,
         "Name": "room_2",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [],
         "Children": [
           {
             "__guid": "650130c7-4359-40a8-a33b-7743090c5908",
+            "__version": 1,
             "Flags": 0,
             "Name": "interior_floor_1 (1)",
             "Position": "320,544,0.00009608794",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "41a504ef-713c-4d79-9204-aa20621b3caa",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/interior/interior_floor_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -710,41 +1457,92 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "9176c5ed-86f6-4a00-a290-941405745298",
+                "__enabled": true,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "models/interior/interior_floor_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldBuilder.InteriorPiece",
                 "__guid": "3ec21f39-4e5c-42e9-856d-e634c8ce4d10",
+                "__enabled": true,
                 "BelongsToRooms": [
                   "room2"
                 ],
                 "IsDarkness": false,
                 "IsDoorway": false,
                 "IsFloor": true,
-                "IsWall": false
+                "IsWall": false,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "f5777e35-571b-4a08-85fa-c5bd302332d3"
+                "__guid": "f5777e35-571b-4a08-85fa-c5bd302332d3",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "8846a80f-57c2-4903-850c-1bd39486405d",
+            "__version": 1,
             "Flags": 0,
             "Name": "interior_wall_1 (4)",
             "Position": "224,544,0.0000578277",
             "Rotation": "0,0,-0.7071066,0.7071068",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "1737aa63-25e2-45cc-bb56-e5ce1911f067",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/interior/interior_wall_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -757,41 +1555,92 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "83dc1ff5-797f-4eae-af45-4cf1b1aa0ca0",
+                "__enabled": true,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "models/interior/interior_wall_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldBuilder.InteriorPiece",
                 "__guid": "811999df-77d8-4c43-a07e-6eecf5f74564",
+                "__enabled": true,
                 "BelongsToRooms": [
                   "room2"
                 ],
                 "IsDarkness": false,
                 "IsDoorway": false,
                 "IsFloor": false,
-                "IsWall": true
+                "IsWall": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "2f50a9dc-171a-4dd0-91e0-c5f34f708f1b"
+                "__guid": "2f50a9dc-171a-4dd0-91e0-c5f34f708f1b",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "761f0626-ba4c-4fa0-8698-aa88bcd19bcf",
+            "__version": 1,
             "Flags": 0,
             "Name": "interior_wall_1_doorway_1",
             "Position": "319.9998,448,0.00008654746",
             "Rotation": "-0.00000000000001024362,-0.00000002980232,0.0000002245095,-0.9999999",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "92595d17-c9b6-4dfa-891a-4eb41c552cc2",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/interior/interior_wall_1_doorway_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -804,41 +1653,92 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "d0d16a95-aa30-4b82-aafe-b6b80d0fe5a1",
+                "__enabled": true,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "models/interior/interior_wall_1_doorway_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldBuilder.InteriorPiece",
                 "__guid": "693af51a-026e-4dfc-a17e-5ca7b1fab9c6",
+                "__enabled": true,
                 "BelongsToRooms": [
                   "room2"
                 ],
                 "IsDarkness": false,
                 "IsDoorway": false,
                 "IsFloor": false,
-                "IsWall": true
+                "IsWall": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "c5b97975-1455-4e47-9690-84ca4bf668fb"
+                "__guid": "c5b97975-1455-4e47-9690-84ca4bf668fb",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "193af777-c10d-47d8-9652-1bbb343afe71",
+            "__version": 1,
             "Flags": 0,
             "Name": "interior_wall_1 (2)",
             "Position": "320,640,0.00006387572",
             "Rotation": "0,0,-0.9999999,0.0000001490116",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "0a1d7efd-ca42-4466-b46c-52bea1117f17",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/interior/interior_wall_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -851,41 +1751,92 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "1b0e7f87-939d-4aa1-a5cd-b5d3a609c568",
+                "__enabled": true,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "models/interior/interior_wall_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldBuilder.InteriorPiece",
                 "__guid": "b8e0ca0e-b086-40e9-87d7-0b8c0e01eeba",
+                "__enabled": true,
                 "BelongsToRooms": [
                   "room2"
                 ],
                 "IsDarkness": false,
                 "IsDoorway": false,
                 "IsFloor": false,
-                "IsWall": true
+                "IsWall": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "1c8bc8b5-3953-4ad5-84e2-886ca97e42fe"
+                "__guid": "1c8bc8b5-3953-4ad5-84e2-886ca97e42fe",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "dc618de1-13d0-4dd0-805c-82a28cce80a9",
+            "__version": 1,
             "Flags": 0,
             "Name": "interior_wall_1 (3)",
             "Position": "416,544,0.00006871914",
             "Rotation": "0,0,-0.7071069,-0.7071065",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "24f9ead7-fcd3-439d-938f-d3b18c3da99d",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/interior/interior_wall_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -898,118 +1849,237 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "2c9b62d7-5e23-4d3d-bb62-3f4394213d7b",
+                "__enabled": true,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "models/interior/interior_wall_1.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldBuilder.InteriorPiece",
                 "__guid": "f61b72d3-f4c6-4475-8b78-83e68e460840",
+                "__enabled": true,
                 "BelongsToRooms": [
                   "room2"
                 ],
                 "IsDarkness": false,
                 "IsDoorway": false,
                 "IsFloor": false,
-                "IsWall": true
+                "IsWall": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "6ad14b1c-1ebb-4f44-a30a-4804962e8955"
+                "__guid": "6ad14b1c-1ebb-4f44-a30a-4804962e8955",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "612963c8-fd84-424d-8d62-1d08977c7ec1",
+            "__version": 1,
             "Flags": 0,
             "Name": "room2_camera",
             "Position": "560,544,192",
             "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "CameraNode",
                 "__guid": "1d03ced4-fcb9-4661-bfd2-0fe1751f8379",
+                "__enabled": true,
+                "DollyNode": null,
                 "FieldOfView": 70,
                 "FollowTargets": true,
                 "HasPivotRotation": true,
                 "Lerping": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "Priority": 0,
+                "ShouldSnapInstantly": false,
                 "ShouldSyncWithPlayerCameraRotation": true,
                 "Static": true
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "84dad3b8-79ea-4cb2-91a8-2a112850b7b5",
+            "__version": 1,
             "Flags": 0,
             "Name": "room2_camera_trigger",
             "Position": "320,544,0.0001778322",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
             "Tags": "trigger",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.BoxCollider",
                 "__guid": "2d05679a-3f62-4052-b863-8ec4b26bd735",
+                "__enabled": true,
                 "Center": "0,0,64",
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Scale": "224,224,128",
                 "Static": false,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.Camera.CameraTrigger",
                 "__guid": "64d30dc3-0024-4535-bb23-802236955046",
+                "__enabled": true,
                 "Camera": {
                   "_type": "component",
                   "component_id": "e2003ae1-1bd3-4d72-8c83-33922cb8979b",
                   "go": "a2f22000-5c67-4e2f-8a8b-151f9291cd2f",
                   "component_type": "CameraNode"
-                }
+                },
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "0f54b742-efd9-43ac-be37-f4cdfb00d205",
+            "__version": 1,
             "Flags": 0,
             "Name": "room2_camera_pivot",
             "Position": "320,544,0.0001778322",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [],
             "Children": [
               {
                 "__guid": "a2f22000-5c67-4e2f-8a8b-151f9291cd2f",
+                "__version": 1,
                 "Flags": 0,
                 "Name": "room2_camera",
                 "Position": "240,0,191.9998",
                 "Rotation": "-0.3007058,-0.00000001314427,0.9537169,-0.00000004168829",
+                "Scale": "1,1,1",
+                "Tags": "",
                 "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkInterpolation": true,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
                 "Components": [
                   {
                     "__type": "CameraNode",
                     "__guid": "e2003ae1-1bd3-4d72-8c83-33922cb8979b",
+                    "__enabled": true,
+                    "DollyNode": null,
                     "FieldOfView": 70,
                     "FollowTargets": true,
                     "HasPivotRotation": true,
                     "Lerping": true,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
                     "Priority": 0,
+                    "ShouldSnapInstantly": false,
                     "ShouldSyncWithPlayerCameraRotation": true,
                     "Static": true
                   }
-                ]
+                ],
+                "Children": []
               }
             ]
           },
           {
             "__guid": "ed27c156-ac27-41e1-80db-28711f2d3d08",
+            "__version": 1,
             "Flags": 0,
             "Name": "room2_trigger",
             "Position": "320,544,-0.0001259876",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Clover.WorldBuilder.RoomTrigger",
                 "__guid": "baf68c54-bc4d-4ef0-a7ef-5f05faf6bafe",
+                "__enabled": true,
                 "BodyGroupsToHide": [],
                 "InteriorManager": {
                   "_type": "component",
@@ -1017,39 +2087,89 @@
                   "go": "5b72d7f4-03cc-4f1c-bd51-3c651367094c",
                   "component_type": "InteriorManager"
                 },
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "PiecesToShow": [],
                 "RoomId": "room2"
               },
               {
                 "__type": "Sandbox.BoxCollider",
                 "__guid": "c3acda7a-e9ef-47ee-9b6b-ff45286195cb",
+                "__enabled": true,
                 "Center": "0,0,48",
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Scale": "192,192,96",
                 "Static": false,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               },
               {
                 "__type": "Clover.WorldLayerObject",
-                "__guid": "6b27fcef-959f-49fa-8288-1a5f1fff7989"
+                "__guid": "6b27fcef-959f-49fa-8288-1a5f1fff7989",
+                "__enabled": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           }
         ]
       },
       {
         "__guid": "66cb3462-3827-4c7e-baa6-cd08d7e330be",
+        "__version": 1,
         "Flags": 0,
         "Name": "interior_stairs (1)",
         "Position": "479.9998,544,-128",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "stairs",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "a9a0fde2-dd47-40ea-8050-64c8d1a0e462",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/interior/interior_stairs.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -1062,44 +2182,90 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "f04af154-3131-4d3e-a083-fbc95e934aee",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "models/interior/interior_stairs.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "0016ebe6-11d4-473e-8588-f5833b964e55",
+            "__enabled": true,
             "BelongsToRooms": [
               "entrance"
             ],
             "IsDarkness": false,
             "IsDoorway": false,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "4cb43599-5b46-4942-bd6d-e5a4445a0938"
+            "__guid": "4cb43599-5b46-4942-bd6d-e5a4445a0938",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "eff2ac77-cb50-4439-ad0a-0c4bfd9073a4",
+        "__version": 1,
         "Flags": 0,
         "Name": "Box",
         "Position": "464,320,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.MeshComponent",
             "__guid": "2d280531-a52b-4e64-9879-b678b798c8b0",
+            "__enabled": true,
+            "ColliderFlags": 0,
             "Collision": "Mesh",
             "Color": "1,1,1,1",
+            "Elasticity": null,
+            "Friction": null,
             "HideInGame": false,
             "IsTrigger": false,
             "Mesh": {
-              "Topology": "H4sIAAAAAAAACk2MAQoAIAgDrSz7/4drBwoOjmKbczO7Ygg0hYuTHuB1hXgS/so\u002Bqi4vOdnOrb6NT15bJXy63JDz/\u002Bg6SXigAAAA",
+              "Topology": "H4sIAAAAAAAACk2MCQoAIQzE4qqr//9wJdiCA6WQOQawgcbVBwzgT+bJXi0gIkLeM68q69fXm7n1bsv1a6skN2tH394B6DpJeKAAAAA=",
+              "Position": "464,320,0",
+              "Rotation": "0,0,0,1",
               "Positions": [
                 "-16,-32,0",
                 "48,-32,0",
@@ -1145,43 +2311,86 @@
                 "materials/placeholder/floor.vmat"
               ]
             },
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RenderType": "On",
+            "RollingResistance": null,
             "SmoothingAngle": 40,
-            "Static": false,
+            "Static": true,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "19d22e7f-396d-4c62-bc60-e98c648c67f5",
+            "__enabled": true,
             "BelongsToRooms": [
               "entrance"
             ],
             "IsDarkness": false,
             "IsDoorway": false,
             "IsFloor": true,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "a18a9cb2-d78b-4a7b-a276-62c17b62e3be"
+            "__guid": "a18a9cb2-d78b-4a7b-a276-62c17b62e3be",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "2e7755b8-4c4f-43fc-b74b-e98a6feba625",
+        "__version": 1,
         "Flags": 0,
         "Name": "Box",
         "Position": "464,272,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.MeshComponent",
             "__guid": "866d7c4d-be82-46a7-bec2-57570c6240ed",
+            "__enabled": true,
+            "ColliderFlags": 0,
             "Collision": "Mesh",
             "Color": "1,1,1,1",
+            "Elasticity": null,
+            "Friction": null,
             "HideInGame": false,
             "IsTrigger": false,
             "Mesh": {
-              "Topology": "H4sIAAAAAAAACqWRyQ6CQBBE2REVEJeL683//0Ptl7xJ5uDBaCcVGKq6u6iZiqJ4BroAVQUaz\u002BvAKjAHDoFb4Bi4BB6Bl1XGe2lvXr0avtfOLTLt1ne49oOHjf1pVqpabSuPdtBv6Xd8751VOauWb9Qu9qMf7Un/krzBd2awcxZeJjNJ\u002Bxc9wHdqZ/le7STf6m2UZ\u002B/JfDkP5nzXa8r51\u002BJfubNrlus5u0P2sxsPKRu09MCjR0tPyhpvePzX2zdFntwHmXFmN883PLbm77wCAAA=",
+              "Topology": "H4sIAAAAAAAACqWRuQ7CQBBDX8gFAcLdcHb8/x+CLN5KKSiQmGYza3vG8Y7AE+j41Axo7AdgDmyAA3ADjsAFeAAvqwIqtdPq5eS+di4T7srvYO0XD0v1ZVapWm4rHu5Cv5X38b131sxZtXgjd6c+/LWa8i/FW/DODLbOipfRTMr+nR6Cd3I34r3cUbzV21o8e0/mm35hzne9vv6swTe7TnI9T94w+7M7Hko24UYTPPxwoylZx1s8/uvtl0qeeY9klj67c74BPLbm77wCAAA=",
+              "Position": "464,272,0",
+              "Rotation": "0,0,0,1",
               "Positions": [
                 "-16,16,64",
                 "48,16,64",
@@ -1243,7 +2452,7 @@
                 "0,-1,0",
                 "0,-1,0",
                 "1,0,0",
-                "0,1,0",
+                "0.0000001589457,1,0",
                 "1,0,0"
               ],
               "TextureVAxis": [
@@ -1255,7 +2464,7 @@
                 "0,0,-1"
               ],
               "TextureScale": [
-                "0.281,0.28125",
+                "0.2810001,0.28125",
                 "0.25,0.25",
                 "0.25,0.25",
                 "0.25,0.25",
@@ -1263,11 +2472,11 @@
                 "0.25,0.25"
               ],
               "TextureOffset": [
-                "1365.333,256",
+                "85.33275,0",
                 "0,0",
                 "0,0",
                 "0,0",
-                "0,0",
+                "127.9998,0",
                 "0,0"
               ],
               "MaterialIndex": [
@@ -1322,37 +2531,75 @@
                 "materials/placeholder/wall.vmat"
               ]
             },
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RenderType": "On",
+            "RollingResistance": null,
             "SmoothingAngle": 40,
-            "Static": false,
+            "Static": true,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "daa9f7d1-ca58-4583-a5fb-cddd67884cfc",
+            "__enabled": true,
             "BelongsToRooms": [
               "entrance"
             ],
             "IsDarkness": false,
             "IsDoorway": false,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "56e25848-f523-4a6c-b59c-4d886848877f"
+            "__guid": "56e25848-f523-4a6c-b59c-4d886848877f",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "aaf88d82-a5c9-407f-aff0-5950408e13e4",
+        "__version": 1,
         "Flags": 0,
         "Name": "entrance_trigger",
         "Position": "528,320,-0.0001130897",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.RoomTrigger",
             "__guid": "d342a622-b673-45bb-a747-0309849afd86",
+            "__enabled": true,
             "BodyGroupsToHide": [],
             "InteriorManager": {
               "_type": "component",
@@ -1360,6 +2607,12 @@
               "go": "5b72d7f4-03cc-4f1c-bd51-3c651367094c",
               "component_type": "InteriorManager"
             },
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "PiecesToShow": [
               null,
               null,
@@ -1370,30 +2623,73 @@
           {
             "__type": "Sandbox.BoxCollider",
             "__guid": "27c73b0f-1848-4d2d-bfe2-2f47199980c5",
+            "__enabled": true,
             "Center": "0,0,48",
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Scale": "160,320,96",
             "Static": false,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "abcbfbb6-5b66-441d-bcd1-9fdb6eeaabd9"
+            "__guid": "abcbfbb6-5b66-441d-bcd1-9fdb6eeaabd9",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "5b72d7f4-03cc-4f1c-bd51-3c651367094c",
+        "__version": 1,
         "Flags": 0,
         "Name": "InteriorManager",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.InteriorManager",
             "__guid": "48499a5d-70d4-46ee-a2ec-af9cda42246e",
+            "__enabled": true,
             "DefaultRoom": "room1",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Rooms": {
               "room1": {
+                "Wall": null,
+                "Floor": null,
                 "Triggers": [
                   {
                     "_type": "component",
@@ -1404,6 +2700,8 @@
                 ]
               },
               "room2": {
+                "Wall": null,
+                "Floor": null,
                 "Triggers": [
                   {
                     "_type": "component",
@@ -1417,24 +2715,51 @@
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "33ab5708-1278-4662-9b87-b9b76eac98bb"
+            "__guid": "33ab5708-1278-4662-9b87-b9b76eac98bb",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "90e3c38f-8910-47d6-9f86-ec979cba9076",
+        "__version": 1,
         "Flags": 0,
         "Name": "interior_doorway (1)",
         "Position": "432,320,0.00003731114",
         "Rotation": "0,0,-0.7071067,0.7071068",
+        "Scale": "1,1,1",
         "Tags": "doorway",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "d65910b9-bf4d-484b-a846-4d32dbd7ae98",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/interior/interior_doorway.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -1447,14 +2772,31 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "7932e538-f199-4d7c-8301-4f96a17ad59f",
+            "__enabled": true,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "models/interior/interior_doorway.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "3422b9d1-1c50-4cc6-9083-e96b9142b7f0",
+            "__enabled": true,
             "BelongsToRooms": [
               "room1",
               "entrance"
@@ -1462,27 +2804,61 @@
             "IsDarkness": false,
             "IsDoorway": true,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "1043fd63-aebf-44fb-9249-432bf44f678a"
+            "__guid": "1043fd63-aebf-44fb-9249-432bf44f678a",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "a701153d-9333-4710-a3ca-e9abd7cafda1",
+        "__version": 1,
         "Flags": 0,
         "Name": "interior_doorway_darkness (3)",
         "Position": "432,320,0.00005553482",
         "Rotation": "0.00000002107343,0.00000002107341,-0.707107,0.7071064",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "8b43b8ab-bb66-4628-84ce-ddf3d1b13994",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/interior/interior_doorway_darkness.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -1495,33 +2871,68 @@
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "4b616b44-e175-44f7-8550-569af31d47ab",
+            "__enabled": true,
             "BelongsToRooms": [
               "entrance"
             ],
             "IsDarkness": true,
             "IsDoorway": false,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "a43a625c-3335-4b93-9f24-85858833a6f7"
+            "__guid": "a43a625c-3335-4b93-9f24-85858833a6f7",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "1b4d76c0-8282-4a3d-8fc2-045586ec8f4d",
+        "__version": 1,
         "Flags": 0,
         "Name": "interior_doorway_darkness (4)",
         "Position": "431.9999,320,0.00005553482",
         "Rotation": "0.00000002107341,-0.00000002107343,-0.7071065,-0.7071069",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "6433a118-418a-49ab-82c0-f517db73a6e4",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "models/interior/interior_doorway_darkness.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -1534,31 +2945,40 @@
           {
             "__type": "Clover.WorldBuilder.InteriorPiece",
             "__guid": "9d4719ef-55cc-4a94-8591-767a748aaa54",
+            "__enabled": true,
             "BelongsToRooms": [
               "room1"
             ],
             "IsDarkness": true,
             "IsDoorway": false,
             "IsFloor": false,
-            "IsWall": false
+            "IsWall": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "26e0db24-6c0e-4583-b11c-6f6a0448f5ce"
+            "__guid": "26e0db24-6c0e-4583-b11c-6f6a0448f5ce",
+            "__enabled": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       }
     ],
-    "__variables": [],
     "__properties": {
-      "FixedUpdateFrequency": 50,
-      "MaxFixedUpdates": 5,
-      "NetworkFrequency": 30,
       "NetworkInterpolation": true,
-      "PhysicsSubSteps": 1,
-      "ThreadedAnimation": true,
       "TimeScale": 1,
-      "UseFixedUpdate": true,
+      "WantsSystemScene": true,
       "Metadata": {},
       "NavMesh": {
         "Enabled": false,
@@ -1572,13 +2992,14 @@
         "ExcludedBodies": "",
         "IncludedBodies": ""
       }
-    }
+    },
+    "__variables": []
   },
+  "ResourceVersion": 2,
   "ShowInMenu": false,
   "MenuPath": null,
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
-  "ResourceVersion": 1,
   "__references": [],
-  "__version": 1
+  "__version": 2
 }
