@@ -28,7 +28,7 @@ public class Footsteps : Component
 
 	private void OnEvent( SceneModel.FootstepEvent e )
 	{
-		if ( timeSinceStep < 0.2f )
+		if ( timeSinceStep < 0.1f )
 			return;
 
 		// Log.Info( "Footstep event" );
