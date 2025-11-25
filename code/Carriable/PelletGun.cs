@@ -67,7 +67,7 @@ public class PelletGun : BaseCarriable
 		// TODO: Hide the player model
 		Player.SetVisible( false );
 
-		Mouse.Visible = false;
+		Mouse.Visibility = MouseVisibility.Hidden;
 
 		// Hide the player model
 		// PlayerModel.Visible = false;
@@ -82,7 +82,7 @@ public class PelletGun : BaseCarriable
 		// TODO: Show the player model
 		Player.SetVisible( true );
 
-		Mouse.Visible = true;
+		Mouse.Visibility = MouseVisibility.Auto;
 	}
 
 	public override bool ShouldDisableMovement()
