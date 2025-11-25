@@ -46,7 +46,15 @@ MainMenu {
 
             &:hover {
                 background-color: #3ea1ed;
+                sound-in: "sounds/ui/button_hover.sound";
             }
+
+            &:active {
+                background-color: #0969b8;
+                sound-in: "sounds/ui/button_down.sound";
+                sound-out: "sounds/ui/button_up.sound";
+            }
+
         }
     }
 
@@ -82,6 +90,13 @@ MainMenu {
 
             &:hover {
                 background-color: #3ea1ed;
+                sound-in: "sounds/ui/button_hover.sound";
+            }
+
+            &:active {
+                background-color: #0969b8;
+                sound-in: "sounds/ui/button_down.sound";
+                sound-out: "sounds/ui/button_up.sound";
             }
         }
     }
