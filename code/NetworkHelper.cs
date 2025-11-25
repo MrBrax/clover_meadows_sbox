@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Clover.Player;
+using Sandbox.Network;
 
 namespace Clover;
 
@@ -37,7 +38,7 @@ public sealed class NetworkHelper : Component, Component.INetworkListener
 		{
 			LoadingScreen.Title = "Creating Lobby";
 			await Task.DelayRealtimeSeconds( 0.1f );
-			Networking.CreateLobby();
+			Networking.CreateLobby( new LobbyConfig() { } );
 		}
 	}
 
