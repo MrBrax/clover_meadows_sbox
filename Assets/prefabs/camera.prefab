@@ -1,15 +1,27 @@
 {
   "RootObject": {
     "__guid": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
+    "__version": 1,
     "Flags": 0,
     "Name": "camera",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
     "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 1,
     "Components": [
       {
         "__type": "Sandbox.CameraComponent",
         "__guid": "cf3cbf96-22b6-4be4-a5d0-672a96c17f9f",
+        "__enabled": true,
         "BackgroundColor": "0,0,0,1",
         "ClearFlags": "All",
+        "EnablePostProcessing": true,
         "FieldOfView": 60,
         "FovAxis": "Horizontal",
         "IsMainCamera": true,
@@ -21,9 +33,11 @@
         "OnComponentUpdate": null,
         "Orthographic": false,
         "OrthographicHeight": 1204,
+        "PostProcessAnchor": null,
         "Priority": 1,
         "RenderExcludeTags": "worldlayer_invisible,room_invisible,invisiblewall,invisible",
         "RenderTags": "",
+        "RenderTexture": null,
         "TargetEye": "None",
         "Viewport": "0,0,1,1",
         "ZFar": 5000,
@@ -32,36 +46,10 @@
       {
         "__type": "Sandbox.Bloom",
         "__guid": "d73ef723-c888-41d4-802e-f797c79318be",
-        "BloomColor": {
-          "blend": "Linear",
-          "color": [
-            {
-              "t": 0,
-              "c": "1,1,1,1"
-            },
-            {
-              "t": 1,
-              "c": "1,1,1,1"
-            }
-          ],
-          "alpha": []
-        },
-        "BloomCurve": [
-          {
-            "x": 0,
-            "y": 0.5,
-            "in": 0,
-            "out": 0,
-            "mode": "Mirrored"
-          },
-          {
-            "x": 1,
-            "y": 1,
-            "in": 0,
-            "out": 0,
-            "mode": "Mirrored"
-          }
-        ],
+        "__enabled": true,
+        "__version": 1,
+        "Filter": "Bilinear",
+        "Gamma": 2.2,
         "Mode": "Additive",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
@@ -69,21 +57,21 @@
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
-        "Strength": 0.1,
-        "Threshold": 0.5,
-        "ThresholdWidth": 0.5
+        "Strength": 0.4,
+        "Threshold": 1,
+        "Tint": "1,1,1,1"
       },
       {
         "__type": "Sandbox.Tonemapping",
         "__guid": "9d76f362-7227-40eb-a189-69353c780c46",
-        "__version": 2,
+        "__enabled": true,
+        "__version": 3,
         "AutoExposureEnabled": true,
-        "ExposureBias": 2,
-        "ExposureCompensation": 0,
+        "ExposureCompensation": 1,
         "ExposureMethod": "RGB",
-        "MaximumExposure": 2,
-        "MinimumExposure": 1,
-        "Mode": "HableFilmic",
+        "MaximumExposure": 1.7,
+        "MinimumExposure": 0.8,
+        "Mode": "AgX",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -95,34 +83,37 @@
       {
         "__type": "Sandbox.Sharpen",
         "__guid": "0bffee5e-19f2-41c4-88f9-faefbcce6bf4",
+        "__enabled": true,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
-        "Scale": 0.2
+        "Scale": 0.1,
+        "TexelSize": 1
       },
       {
         "__type": "Sandbox.AmbientOcclusion",
         "__guid": "0063d5a6-0e58-4ea0-9d93-a97cdef4af8f",
+        "__enabled": true,
         "__version": 1,
         "DenoiseMode": "Temporal",
-        "FalloffRange": 0.75,
-        "Intensity": 0.15,
+        "FalloffRange": 1,
+        "Intensity": 1,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
-        "Quality": "High",
         "Radius": 128,
-        "ThinCompensation": 0
+        "ThinCompensation": 5
       },
       {
         "__type": "Clover.Components.IrisTransition",
         "__guid": "3344a9b9-f013-4c1a-af86-584295440693",
+        "__enabled": true,
         "IrisModel": {
           "_type": "component",
           "component_id": "dc4e50ac-456c-47f8-838a-74bfaf89c458",
@@ -139,6 +130,7 @@
       {
         "__type": "Sandbox.Highlight",
         "__guid": "40c7b340-49f4-469d-81e8-bbe554688fb0",
+        "__enabled": true,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -150,20 +142,30 @@
     "Children": [
       {
         "__guid": "c57a55e5-d342-4045-a3da-1926e89dcd32",
+        "__version": 1,
         "Flags": 0,
         "Name": "Iris",
         "Position": "32,0,0",
         "Rotation": "0,-0.7071068,0,0.7071068",
         "Scale": "0.7,0.7,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "dc4e50ac-456c-47f8-838a-74bfaf89c458",
+            "__enabled": true,
             "BodyGroups": 18446744073709551615,
             "CreateAttachments": false,
+            "LodOverride": null,
             "MaterialGroup": null,
             "MaterialOverride": "materials/iris_transition.vmat",
+            "Materials": null,
             "Model": "models/dev/plane.vmdl",
             "OnComponentDestroy": null,
             "OnComponentDisabled": null,
@@ -180,19 +182,14 @@
             "RenderType": "Off",
             "Tint": "1,1,1,1"
           }
-        ]
+        ],
+        "Children": []
       }
     ],
-    "__variables": [],
     "__properties": {
-      "FixedUpdateFrequency": 50,
-      "MaxFixedUpdates": 5,
-      "NetworkFrequency": 30,
       "NetworkInterpolation": true,
-      "PhysicsSubSteps": 1,
-      "ThreadedAnimation": true,
       "TimeScale": 1,
-      "UseFixedUpdate": true,
+      "WantsSystemScene": true,
       "Metadata": {},
       "NavMesh": {
         "Enabled": false,
@@ -206,13 +203,14 @@
         "ExcludedBodies": "",
         "IncludedBodies": ""
       }
-    }
+    },
+    "__variables": []
   },
+  "ResourceVersion": 2,
   "ShowInMenu": false,
   "MenuPath": null,
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
-  "ResourceVersion": 1,
   "__references": [],
-  "__version": 1
+  "__version": 2
 }
