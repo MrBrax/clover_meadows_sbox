@@ -14,10 +14,10 @@ public class WorldManager : Component, Component.INetworkSpawn
 	public static World Island => Instance.GetWorld( "island" );
 
 	// [Property] public List<World> Worlds { get; set; } = new();
-	[Property, Sync, Change] public NetDictionary<int, World> Worlds { get; set; } = new();
+	[Property, Sync, Change, ReadOnly] public NetDictionary<int, World> Worlds { get; set; } = new();
 
-	[Property, JsonIgnore] public int ActiveWorldIndex { get; set; }
-	[Property, JsonIgnore] public World ActiveWorld => GetWorld( ActiveWorldIndex );
+	[Property, JsonIgnore, ReadOnly] public int ActiveWorldIndex { get; set; }
+	[Property, JsonIgnore, ReadOnly] public World ActiveWorld => !Scene.IsEditor ? GetWorld( ActiveWorldIndex ) : null;
 
 	[Property] public WorldData DefaultWorldData { get; set; }
 
