@@ -136,12 +136,12 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 
 	public virtual void OnSave( PersistentItem item )
 	{
-		item.SetArbitraryData( "Durability", Durability );
+		item.SetSaveData( "Durability", Durability );
 	}
 
 	public virtual void OnLoad( PersistentItem item )
 	{
-		if ( item.TryGetArbitraryData<int>( "Durability", out var durability ) )
+		if ( item.TryGetSaveData<int>( "Durability", out var durability ) )
 		{
 			Durability = durability;
 		}

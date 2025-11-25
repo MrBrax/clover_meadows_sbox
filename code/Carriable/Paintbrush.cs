@@ -121,7 +121,7 @@ public class Paintbrush : BaseCarriable
 
 			var newPItem = PersistentItem.Create( Data.ItemData.Get( "floor_decal" ) );
 
-			newPItem.SetArbitraryData( "TexturePath", CurrentTexturePath );
+			newPItem.SetSaveData( "TexturePath", CurrentTexturePath );
 
 			WorldNodeLink node;
 

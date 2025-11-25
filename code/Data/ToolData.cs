@@ -32,6 +32,6 @@ public sealed class ToolData : ItemData
 	public override void OnPersistentItemInitialize( PersistentItem persistentItem )
 	{
 		base.OnPersistentItemInitialize( persistentItem );
-		persistentItem.SetArbitraryData( "Durability", MaxDurability );
+		persistentItem.SetSaveData( "Durability", MaxDurability );
 	}
 }

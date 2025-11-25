@@ -52,11 +52,11 @@ public class Gift : Component, IInteract, IPersistent
 
 	public void OnSave( PersistentItem item )
 	{
-		item.SetArbitraryData( "Items", Items );
+		item.SetSaveData( "Items", Items );
 	}
 
 	public void OnLoad( PersistentItem item )
 	{
-		Items = item.GetArbitraryData<IList<PersistentItem>>( "Items" );
+		Items = item.GetSaveData<IList<PersistentItem>>( "Items" );
 	}
 }

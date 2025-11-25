@@ -145,7 +145,7 @@ public class GiftCarrier : Component, IShootable
 
 
 		var pItem = PersistentItem.Create( GiftItem );
-		pItem.SetArbitraryData( "Items", Items );
+		pItem.SetSaveData( "Items", Items );
 
 		var nodeLink = world.SpawnPlacedNode( pItem, gridPos, World.ItemRotation.North );
 	}

@@ -104,12 +104,12 @@ public class SnowmanPiece : DecalItem, IInteract, IPersistent
 	public override void OnSave( PersistentItem item )
 	{
 		base.OnSave( item );
-		item.SetArbitraryData( "PieceType", (int)PieceType );
+		item.SetSaveData( "PieceType", (int)PieceType );
 	}
 
 	public override void OnLoad( PersistentItem item )
 	{
 		base.OnLoad( item );
-		PieceType = (SnowmanPieceType)item.GetArbitraryData<int>( "PieceType" );
+		PieceType = (SnowmanPieceType)item.GetSaveData<int>( "PieceType" );
 	}
 }

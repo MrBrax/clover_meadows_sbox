@@ -14,12 +14,12 @@ public class BuriedItem : Component, IPersistent, IDiggable
 
 	public void OnSave( PersistentItem item )
 	{
-		item.SetArbitraryData( "Item", Item );
+		item.SetSaveData( "Item", Item );
 	}
 
 	public void OnLoad( PersistentItem item )
 	{
-		Item = item.GetArbitraryData<PersistentItem>( "Item" );
+		Item = item.GetSaveData<PersistentItem>( "Item" );
 	}
 
 	public void SetItem( PersistentItem item )

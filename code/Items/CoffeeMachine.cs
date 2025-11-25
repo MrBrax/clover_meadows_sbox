@@ -68,7 +68,7 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 		}
 
 		var carriedPersistentItem = PersistentItem.Create( "carried_edible:4023053997083351548", true );
-		carriedPersistentItem.SetArbitraryData( "EdibleData", ReceivedItem.GetIdentifier() );
+		carriedPersistentItem.SetSaveData( "EdibleData", ReceivedItem.GetIdentifier() );
 
 		var carriedEdible = carriedPersistentItem.SpawnCarriable();
 
@@ -153,12 +153,12 @@ public class CoffeeMachine : Component, IInteract, IPersistent
 
 	public void OnSave( PersistentItem item )
 	{
-		item.SetArbitraryData( "HasCup", _hasCup );
+		item.SetSaveData( "HasCup", _hasCup );
 	}
 
 	public void OnLoad( PersistentItem item )
 	{
-		_hasCup = item.GetArbitraryData<bool>( "HasCup" );
+		_hasCup = item.GetSaveData<bool>( "HasCup" );
 		SetCupEnabled( _hasCup );
 	}
 }

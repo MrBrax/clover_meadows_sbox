@@ -216,12 +216,12 @@ public class Tree : Component, IPersistent, IInteract
 
 	public void OnSave( PersistentItem item )
 	{
-		item.SetArbitraryData( "LastFruitDrop", LastFruitDrop );
+		item.SetSaveData( "LastFruitDrop", LastFruitDrop );
 	}
 
 	public void OnLoad( PersistentItem item )
 	{
-		LastFruitDrop = item.GetArbitraryData<DateTime>( "LastFruitDrop" );
+		LastFruitDrop = item.GetSaveData<DateTime>( "LastFruitDrop" );
 	}
 
 	protected override void DrawGizmos()

@@ -19,7 +19,7 @@ public class PersistentItem
 
 	/// <summary>
 	///  The backbone of the persistence system. This is where you can store any data you want about an item.
-	///  Don't access this directly, use <see cref="GetArbitraryData{T}"/> and <see cref="SetArbitraryData"/> instead.
+	///  Don't access this directly, use <see cref="GetSaveData{T}"/> and <see cref="SetSaveData"/> instead.
 	/// </summary>
 	[Property]
 	public Dictionary<string, object> ArbitraryData { get; set; } = new();
@@ -38,7 +38,7 @@ public class PersistentItem
 		ItemData?.OnPersistentItemInitialize( this );
 	}
 
-	public object GetArbitraryData( Type type, string key )
+	public object GetSaveData( Type type, string key )
 	{
 		// XLog.Info( this, "Keys: " + string.Join( ", ", ArbitraryData.Keys ) );
 		if ( ArbitraryData.TryGetValue( key, out var obj ) )
@@ -83,25 +83,25 @@ public class PersistentItem
 
 	/// <summary>
 	///  Get arbitrary data from this item. If the key doesn't exist, it will return the default value.
-	///  Use <see cref="SetArbitraryData"/> to store arbitrary data.
+	///  Use <see cref="SetSaveData"/> to store arbitrary data.
 	/// </summary>
 	/// <param name="key">Key to get the value from</param>
 	/// <param name="defaultValue">Value to return if the key doesn't exist</param>
-	/// <typeparam name="T">The same type as you saved with <see cref="SetArbitraryData"/></typeparam>
+	/// <typeparam name="T">The same type as you saved with <see cref="SetSaveData"/></typeparam>
 	/// <returns></returns>
-	public T GetArbitraryData<T>( string key, T defaultValue = default )
+	public T GetSaveData<T>( string key, T defaultValue = default )
 	{
-		return TryGetArbitraryData<T>( key, out var value ) ? value : defaultValue;
+		return TryGetSaveData<T>( key, out var value ) ? value : defaultValue;
 	}
 
 	/// <summary>
-	/// Same as <see cref="GetArbitraryData{T}"/> but returns false if the key doesn't exist.
+	/// Same as <see cref="GetSaveData{T}"/> but returns false if the key doesn't exist.
 	/// </summary>
 	/// <param name="key">Key to get the value from</param>
 	/// <param name="value">Value of the key</param>
-	/// <typeparam name="T">The same type as you saved with <see cref="SetArbitraryData"/></typeparam>
+	/// <typeparam name="T">The same type as you saved with <see cref="SetSaveData"/></typeparam>
 	/// <returns></returns>
-	public bool TryGetArbitraryData<T>( string key, out T value )
+	public bool TryGetSaveData<T>( string key, out T value )
 	{
 		if ( ArbitraryData.TryGetValue( key, out var obj ) )
 		{
@@ -141,7 +141,7 @@ public class PersistentItem
 	/// <param name="key">The key to store the data under</param>
 	/// <param name="value">Any serializable object</param>
 	[Icon( "description" )]
-	public void SetArbitraryData( string key, object value )
+	public void SetSaveData( string key, object value )
 	{
 		ArbitraryData[key] = value;
 	}
@@ -275,7 +275,7 @@ public class PersistentItem
 
 		if ( carriable == null ) throw new Exception( $"Carriable is null for {ItemId}" );
 
-		carriable.Durability = GetArbitraryData<int>( "Durability" );
+		carriable.Durability = GetSaveData<int>( "Durability" );
 
 		if ( carriable.GameObject.Components.TryGet<Persistent>( out var persistent ) )
 		{

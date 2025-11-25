@@ -199,7 +199,7 @@ public class WorldNodeLink : IValid
 					}
 
 					var value = property.GetValue( component );
-					Persistence.SetArbitraryData( property.Name, value );
+					Persistence.SetSaveData( property.Name, value );
 					// XLog.Info( this, $"Saving arbitrary data {property.Name} = {value}" );
 					keys.Add( property.Name );
 				}
@@ -229,7 +229,7 @@ public class WorldNodeLink : IValid
 			{
 				if ( property.HasAttribute<ArbitraryDataAttribute>() )
 				{
-					var value = Persistence.GetArbitraryData( property.PropertyType, property.Name );
+					var value = Persistence.GetSaveData( property.PropertyType, property.Name );
 					property.SetValue( component, value );
 					// XLog.Info( this, $"Set {property.Name} to {value} on {component}" );
 				}

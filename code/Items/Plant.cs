@@ -115,20 +115,20 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 
 	public void OnSave( PersistentItem item )
 	{
-		item.SetArbitraryData( "LastWatered", LastWatered );
-		item.SetArbitraryData( "LastProcess", LastProcess );
-		item.SetArbitraryData( "Growth", Growth );
-		item.SetArbitraryData( "Wilt", Wilt );
-		item.SetArbitraryData( "Water", Water );
+		item.SetSaveData( "LastWatered", LastWatered );
+		item.SetSaveData( "LastProcess", LastProcess );
+		item.SetSaveData( "Growth", Growth );
+		item.SetSaveData( "Wilt", Wilt );
+		item.SetSaveData( "Water", Water );
 	}
 
 	public void OnLoad( PersistentItem item )
 	{
-		LastWatered = item.GetArbitraryData<DateTime>( "LastWatered" );
-		LastProcess = item.GetArbitraryData<DateTime>( "LastProcess" );
-		Growth = item.GetArbitraryData<float>( "Growth" );
-		Wilt = item.GetArbitraryData<float>( "Wilt" );
-		Water = item.GetArbitraryData<float>( "Water" );
+		LastWatered = item.GetSaveData<DateTime>( "LastWatered" );
+		LastProcess = item.GetSaveData<DateTime>( "LastProcess" );
+		Growth = item.GetSaveData<float>( "Growth" );
+		Wilt = item.GetSaveData<float>( "Wilt" );
+		Water = item.GetSaveData<float>( "Water" );
 
 		UpdateVisuals();
 	}

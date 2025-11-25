@@ -61,12 +61,12 @@ public class Light : Component, IInteract, IPersistent
 
 	public void OnSave( PersistentItem item )
 	{
-		item.SetArbitraryData( "IsOn", IsOn );
+		item.SetSaveData( "IsOn", IsOn );
 	}
 
 	public void OnLoad( PersistentItem item )
 	{
-		IsOn = item.GetArbitraryData<bool>( "IsOn" );
+		IsOn = item.GetSaveData<bool>( "IsOn" );
 		UpdateState();
 	}
 }

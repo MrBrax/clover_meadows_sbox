@@ -192,12 +192,12 @@ public class SoccerGoal : Component, IInteract, Component.ITriggerListener, IPer
 
 	public void OnSave( PersistentItem item )
 	{
-		item.SetArbitraryData( "TeamColor", TeamColor );
+		item.SetSaveData( "TeamColor", TeamColor );
 	}
 
 	public void OnLoad( PersistentItem item )
 	{
-		TeamColor = item.GetArbitraryData<Team>( "TeamColor" );
+		TeamColor = item.GetSaveData<Team>( "TeamColor" );
 		UpdateModel();
 	}
 }
