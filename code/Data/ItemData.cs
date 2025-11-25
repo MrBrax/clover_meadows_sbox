@@ -92,7 +92,7 @@ public class ItemData : GameResource
 
 	public virtual Texture GetIconTexture()
 	{
-		return Texture.Load( FileSystem.Mounted, GetIcon() );
+		return Texture.LoadFromFileSystem( GetIcon(), FileSystem.Mounted );
 	}
 
 	/// <summary>
