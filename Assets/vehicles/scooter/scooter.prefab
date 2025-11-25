@@ -1,16 +1,24 @@
 {
   "RootObject": {
     "__guid": "19ca3112-5fe7-414f-aca2-1b79e7bd29b1",
+    "__version": 1,
     "Flags": 0,
     "Name": "scooter",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
     "Enabled": true,
     "NetworkMode": 1,
+    "NetworkInterpolation": true,
     "NetworkOrphaned": 1,
+    "NetworkTransmit": true,
     "OwnerTransfer": 2,
     "Components": [
       {
         "__type": "Clover.Vehicles.BaseVehicle",
         "__guid": "67904784-2b8f-436b-b58d-787064b3cb1f",
+        "__enabled": true,
         "EngineSound": "vehicles/scooter/engine.sound",
         "ExhaustParticles": {
           "_type": "gameobject",
@@ -18,12 +26,19 @@
         },
         "Gravity": "0,0,800",
         "Headlights": [],
+        "HornSound": null,
         "IdleSound": "vehicles/scooter/moped_idle.sound",
         "Model": {
           "_type": "gameobject",
           "go": "843cf470-c5e3-4f93-91a4-d0cdae3d9bf6"
         },
         "Occupants": {},
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
         "Seats": [
           {
             "_type": "component",
@@ -39,16 +54,24 @@
           }
         ],
         "StartEngineSound": "vehicles/scooter/kick.sound",
-        "Steering": 4
+        "Steering": 4,
+        "StopEngineSound": null
       },
       {
         "__type": "Sandbox.CharacterController",
         "__guid": "efc246b5-7b9a-48fe-b135-1a9e129918af",
+        "__enabled": true,
         "Acceleration": 3,
         "Bounciness": 0.3,
         "GroundAngle": 45,
         "Height": 64,
         "IgnoreLayers": "",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
         "Radius": 16,
         "StepHeight": 18,
         "UseCollisionRules": false
@@ -56,77 +79,175 @@
       {
         "__type": "Sandbox.HullCollider",
         "__guid": "609f7c26-0ed9-4130-b0c6-890d249f06cf",
+        "__enabled": true,
         "BoxSize": "50,50,50",
         "Center": "0,0,25",
+        "ColliderFlags": 0,
+        "Elasticity": null,
+        "Friction": null,
         "Height": 50,
         "IsTrigger": false,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OnObjectTriggerEnter": null,
+        "OnObjectTriggerExit": null,
+        "OnTriggerEnter": null,
+        "OnTriggerExit": null,
         "Points": [],
         "Radius": 25,
         "Radius2": 0,
+        "RollingResistance": null,
         "Slices": 16,
         "Static": false,
+        "Surface": null,
+        "SurfaceVelocity": "0,0,0",
         "Type": "Cylinder"
       },
       {
         "__type": "Clover.WorldLayerObject",
         "__guid": "9a1ef19c-05a9-49e3-99b9-5b7bf92101f7",
-        "Layer": 0
+        "__enabled": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
       },
       {
         "__type": "Clover.Items.WorldObject",
         "__guid": "4c9526b2-22c1-4b6a-b131-5f1e0cea6df9",
+        "__enabled": true,
+        "CanPickupFunc": null,
         "ObjectData": "vehicles/scooter/scooter.odata",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OnObjectLoadAction": null,
+        "OnObjectSaveAction": null,
         "Prefab": "vehicles/scooter/scooter.prefab"
       }
     ],
     "Children": [
       {
         "__guid": "843cf470-c5e3-4f93-91a4-d0cdae3d9bf6",
+        "__version": 1,
         "Flags": 0,
         "Name": "Model",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
         "NetworkMode": 1,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [],
         "Children": [
           {
             "__guid": "e4872e07-4521-40b1-941e-3b9feefd8d78",
+            "__version": 1,
             "Flags": 0,
             "Name": "Seat1",
             "Position": "-5.712124,0.00001264484,26.15299",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
             "NetworkMode": 1,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Clover.Components.SittableNode",
-                "__guid": "62c7954a-aeaa-41b0-9904-b57117b6ca90"
+                "__guid": "62c7954a-aeaa-41b0-9904-b57117b6ca90",
+                "__enabled": true,
+                "Occupant": null,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "901cc35c-8299-42d5-9bc8-453f216c00c3",
+            "__version": 1,
             "Flags": 0,
             "Name": "Seat2",
             "Position": "-21.23021,0.00001171989,32.3091",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
             "NetworkMode": 1,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Clover.Components.SittableNode",
-                "__guid": "66d85648-8349-46f7-ab41-a740fc06fbdf"
+                "__guid": "66d85648-8349-46f7-ab41-a740fc06fbdf",
+                "__enabled": true,
+                "Occupant": null,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "e92d0620-63e8-4e87-884d-cb5f6b991e07",
+            "__version": 1,
             "Flags": 0,
             "Name": "Object",
             "Position": "0,-3.331901,0",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "baed6ccd-d09e-4ab4-962f-0b54638b3465",
+                "__enabled": true,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "models/city_props/vehicles/scooter.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -136,50 +257,69 @@
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "318c5f84-912d-44cf-9ee6-3dc002cc5c5a",
+            "__version": 1,
             "Flags": 0,
             "Name": "Particles",
             "Position": "-33.02185,5.425832,11.68508",
             "Rotation": "0.1736482,0.000000007590403,0.9848077,-0.00000004304731",
+            "Scale": "1,1,1",
             "Tags": "particles",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkInterpolation": true,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ParticleEffect",
                 "__guid": "42139e66-c195-4af0-a1dc-53d8d5c51ee9",
-                "__version": 1,
+                "__enabled": true,
+                "__version": 3,
                 "Alpha": {
                   "Type": "Range",
+                  "Evaluation": "Life",
                   "Constants": "1,0,0,0"
                 },
                 "ApplyAlpha": true,
                 "ApplyColor": true,
                 "ApplyRotation": true,
                 "ApplyShape": true,
-                "Bounce": {
-                  "Constants": "1,0,0,0"
-                },
-                "Brightness": {
-                  "Constants": "1,0,0,0"
-                },
-                "Bumpiness": {},
+                "Bounce": 1,
+                "Brightness": 1,
+                "Bumpiness": 0,
                 "Collision": false,
+                "CollisionIgnore": null,
+                "CollisionPrefab": null,
+                "CollisionPrefabAlign": false,
+                "CollisionPrefabChance": 1,
+                "CollisionPrefabRotation": 0,
                 "CollisionRadius": 1,
-                "Damping": {},
-                "DieOnCollisionChance": {},
+                "ConstantMovement": {
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
+                },
+                "Damping": 0,
+                "DieOnCollisionChance": 0,
+                "FollowerPrefab": null,
+                "FollowerPrefabChance": 1,
+                "FollowerPrefabKill": true,
                 "Force": true,
                 "ForceDirection": "0,0,10",
-                "ForceScale": {
-                  "Constants": "1,0,0,0"
-                },
-                "Friction": {
-                  "Constants": "1,0,0,0"
-                },
+                "ForceScale": 1,
+                "ForceSpace": "World",
+                "Friction": 1,
                 "Gradient": {
+                  "Type": "Constant",
+                  "Evaluation": "Life",
                   "GradientA": {
+                    "blend": "Linear",
                     "color": [
                       {
                         "t": 0.5,
@@ -189,6 +329,7 @@
                     "alpha": []
                   },
                   "GradientB": {
+                    "blend": "Linear",
                     "color": [
                       {
                         "t": 0.5,
@@ -200,59 +341,62 @@
                   "ConstantA": "1,1,1,1",
                   "ConstantB": "1,1,1,1"
                 },
-                "Lifetime": {
-                  "Constants": "1,0,0,0"
+                "InitialVelocity": {
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
                 },
+                "Lifetime": 1,
+                "LocalSpace": 0,
                 "MaxParticles": 1000,
-                "OrbitalForce": {},
-                "OrbitalPull": {},
-                "PerParticleTimeScale": {
-                  "Constants": "1,0,0,0"
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnParticleCreated": null,
+                "OnParticleDestroyed": null,
+                "OrbitalForce": {
+                  "X": 0,
+                  "Y": 0,
+                  "Z": 0
                 },
-                "Pitch": {},
+                "OrbitalPull": 0,
+                "PerParticleTimeScale": 1,
+                "Pitch": 0,
                 "PreWarm": 0,
-                "PushStrength": {},
-                "Roll": {
-                  "Type": "Range",
-                  "Evaluation": "Particle",
-                  "Constants": "0,360,0,0"
-                },
+                "PushStrength": 0,
+                "Roll": 0,
                 "Scale": {
                   "Type": "Range",
-                  "CurveA": [
-                    {
-                      "in": -2.5641017,
-                      "out": 2.5641017
-                    },
-                    {
-                      "x": 0.48062593,
-                      "y": 0.7406417
-                    }
-                  ],
+                  "Evaluation": "Life",
                   "Constants": "0.5,15,0,0"
                 },
-                "SequenceId": {},
-                "SequenceSpeed": {
-                  "Constants": "1,0,0,0"
-                },
-                "SequenceTime": {
-                  "Constants": "1,0,0,0"
-                },
+                "SequenceId": 0,
+                "SequenceSpeed": 1,
+                "SequenceTime": 1,
                 "SheetSequence": false,
-                "Space": "World",
-                "StartDelay": {},
-                "StartVelocity": {
-                  "Constants": "23.867,0,0,0"
-                },
-                "Stretch": {},
+                "StartDelay": 0,
+                "StartVelocity": 23.867,
+                "Stretch": 0,
                 "TimeScale": 1,
+                "Timing": "GameTime",
                 "Tint": "1,1,1,1",
-                "Yaw": {}
+                "UsePrefabFeature": false,
+                "Yaw": {
+                  "Type": "Range",
+                  "Evaluation": "Seed",
+                  "Constants": "0,360,0,0"
+                }
               },
               {
                 "__type": "Sandbox.ParticleConeEmitter",
                 "__guid": "17286d65-3dff-4d34-af83-92cca31a2df4",
+                "__enabled": true,
                 "Burst": 0,
+                "CenterBias": 0,
+                "CenterBiasVelocity": 0,
                 "ConeAngle": 30,
                 "ConeFar": 50,
                 "ConeNear": 1,
@@ -261,13 +405,23 @@
                 "Duration": 1,
                 "InVolume": false,
                 "Loop": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "OnEdge": false,
                 "Rate": 10,
-                "RateOverDistance": 10
+                "RateOverDistance": 10,
+                "VelocityMultiplier": 1,
+                "VelocityRandom": 0
               },
               {
                 "__type": "Sandbox.ParticleSpriteRenderer",
                 "__guid": "d57765ec-7368-4155-96e6-a9828ada1ca0",
+                "__enabled": true,
+                "__version": 2,
                 "Additive": false,
                 "Alignment": "LookAtCamera",
                 "BlurAmount": 0.5,
@@ -279,7 +433,14 @@
                 "LeadingTrail": true,
                 "Lighting": false,
                 "MotionBlur": false,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "Opaque": false,
+                "PlaybackSpeed": 1,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -290,22 +451,64 @@
                 "Scale": 1,
                 "Shadows": false,
                 "SortMode": "Unsorted",
-                "Texture": "materials/particle/particle_smokegrenade.vtex"
+                "Sprite": {
+                  "$compiler": "embed",
+                  "$source": null,
+                  "data": {
+                    "Animations": [
+                      {
+                        "Name": "Default",
+                        "FrameRate": 15,
+                        "Origin": "0.5,0.5",
+                        "LoopMode": "Loop",
+                        "Frames": [
+                          {
+                            "Texture": "textures/particles/particle_noisesphere_color.vtex",
+                            "BroadcastMessages": []
+                          }
+                        ]
+                      }
+                    ],
+                    "__references": null
+                  },
+                  "compiled": null
+                },
+                "StartingAnimationName": "Default",
+                "TextureFilter": "Bilinear"
               }
-            ]
+            ],
+            "Children": []
           }
         ]
       }
     ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
     "__variables": []
   },
+  "ResourceVersion": 2,
   "ShowInMenu": false,
   "MenuPath": null,
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
-  "ResourceVersion": 1,
   "__references": [
     "svin.scooter#19812"
   ],
-  "__version": 1
+  "__version": 2
 }
