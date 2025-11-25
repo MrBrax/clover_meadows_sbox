@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ public class PersistentItem
 			}
 
 			// i don't even know why this started happening but apparently it sometimes doesn't need to deserialize
-			if ( obj.GetType() == type )
+			if ( obj.GetType() == type || obj.GetType().IsSubclassOf( type ) )
 			{
 				return obj;
 			}
@@ -75,7 +76,26 @@ public class PersistentItem
 				return null;
 			}
 
-			return JsonSerializer.Deserialize( jsonElement.GetRawText(), type, GameManager.JsonOptions );
+			object data;
+
+			try
+			{
+				data = JsonSerializer.Deserialize( jsonElement.GetRawText(), type, GameManager.JsonOptions );
+			}
+			catch ( Exception e )
+			{
+				Log.Error( $"GetSaveData - Failed to deserialize '{key}' on '{this}' to type {type}: {e.Message}" );
+				Log.Error( e );
+				return null;
+			}
+
+			if ( data is JsonElement jsonElement2 )
+			{
+				Log.Error( $"Deserialized {key} on {this} as {data} ({data?.GetType()})" );
+				return null;
+			}
+
+			return data;
 		}
 
 		return null;
@@ -116,6 +136,20 @@ public class PersistentItem
 			{
 				value = t;
 				return true;
+			} // Check if obj can be cast to T (handles base/derived class relationships)
+			else if ( (typeof(T).IsAssignableFrom( obj.GetType() ) ||
+			           obj.GetType().IsAssignableFrom( typeof(T) )) )
+			{
+				try
+				{
+					value = (T)Convert.ChangeType( obj, typeof(T) );
+					return true;
+				}
+				catch
+				{
+					// Fallback to normal deserialization if conversion fails
+					Log.Warning( $"Type conversion failed for {key}, falling back to deserialization" );
+				}
 			}
 
 			if ( obj is not JsonElement jsonElement )
@@ -143,8 +177,202 @@ public class PersistentItem
 	[Icon( "description" )]
 	public void SetSaveData( string key, object value )
 	{
+		if ( !ValidateKey( this, key ) )
+		{
+			return;
+		}
+
+		if ( !ValidateValue( this, value, key ) )
+		{
+			return;
+		}
+
 		ArbitraryData[key] = value;
 	}
+
+	public void SetSaveData<T>( string key, T value )
+	{
+		if ( !ValidateKey( this, key ) )
+		{
+			return;
+		}
+
+		if ( !ValidateValue( this, value, key ) )
+		{
+			return;
+		}
+
+		ArbitraryData[key] = value;
+	}
+
+	public static bool ValidateKey( PersistentItem itemCheck, string key )
+	{
+		if ( string.IsNullOrEmpty( key ) )
+		{
+			Log.Error( $"SetSaveData - Key cannot be null or empty on {itemCheck}" );
+			return false;
+		}
+
+		return true;
+	}
+
+	public static bool ValidateValue<T>( PersistentItem itemCheck, T value, string context )
+	{
+		if ( value is Vector3 vector3 )
+		{
+			if ( vector3.IsNaN || vector3.IsInfinity )
+			{
+				Log.Error(
+					$"SetSaveData - Value for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {vector3}" );
+				return false;
+			}
+		}
+
+		if ( value is float single )
+		{
+			if ( float.IsNaN( single ) || float.IsInfinity( single ) )
+			{
+				Log.Error(
+					$"SetSaveData - Value for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {single}" );
+				return false;
+			}
+		}
+
+		if ( value is double @double )
+		{
+			if ( double.IsNaN( @double ) || double.IsInfinity( @double ) )
+			{
+				Log.Error(
+					$"SetSaveData - Value for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {@double}" );
+				return false;
+			}
+		}
+
+		// lists and arrays
+		if ( value is IList list )
+		{
+			foreach ( var item in list )
+			{
+				if ( item is float f )
+				{
+					if ( float.IsNaN( f ) || float.IsInfinity( f ) )
+					{
+						Log.Error(
+							$"SetSaveData - List item for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {f}" );
+						return false;
+					}
+				}
+
+				if ( item is double d )
+				{
+					if ( double.IsNaN( d ) || double.IsInfinity( d ) )
+					{
+						Log.Error(
+							$"SetSaveData - List item for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {d}" );
+						return false;
+					}
+				}
+
+				if ( item is Vector3 v3 )
+				{
+					if ( v3.IsNaN || v3.IsInfinity )
+					{
+						Log.Error(
+							$"SetSaveData - List item for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {v3}" );
+						return false;
+					}
+				}
+			}
+		}
+
+		// dictionaries
+		if ( value is IDictionary dict )
+		{
+			// check keys
+			foreach ( var key in dict.Keys )
+			{
+				var item = dict[key];
+				if ( item is float f )
+				{
+					if ( float.IsNaN( f ) || float.IsInfinity( f ) )
+					{
+						Log.Error(
+							$"SetSaveData - Dictionary item for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {f}" );
+						return false;
+					}
+				}
+
+				if ( item is double d )
+				{
+					if ( double.IsNaN( d ) || double.IsInfinity( d ) )
+					{
+						Log.Error(
+							$"SetSaveData - Dictionary item for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {d}" );
+						return false;
+					}
+				}
+
+				if ( item is Vector3 v3 )
+				{
+					if ( v3.IsNaN || v3.IsInfinity )
+					{
+						Log.Error(
+							$"SetSaveData - Dictionary item for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {v3}" );
+						return false;
+					}
+				}
+			}
+
+			// check values
+			foreach ( var item in dict.Values )
+			{
+				if ( item is float f )
+				{
+					if ( float.IsNaN( f ) || float.IsInfinity( f ) )
+					{
+						Log.Error(
+							$"SetSaveData - Dictionary item for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {f}" );
+						return false;
+					}
+				}
+
+				if ( item is double d )
+				{
+					if ( double.IsNaN( d ) || double.IsInfinity( d ) )
+					{
+						Log.Error(
+							$"SetSaveData - Dictionary item for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {d}" );
+						return false;
+					}
+				}
+
+				if ( item is Vector3 v3 )
+				{
+					if ( v3.IsNaN || v3.IsInfinity )
+					{
+						Log.Error(
+							$"SetSaveData - Dictionary item for '{context}' on '{itemCheck}' cannot be NaN or Infinity: {v3}" );
+						return false;
+					}
+				}
+			}
+		}
+		/*var type = value.GetType();
+
+		// Check if the type is serializable by System.Text.Json
+		try
+		{
+			JsonSerializer.Serialize( value, type, BraxnetGame.JsonOptions );
+		}
+		catch ( Exception ex )
+		{
+			XLog.Warning( this, $"SetSaveData - Value of type {type} is not serializable: {ex.Message}" );
+			return false;
+		}*/
+
+		return true;
+	}
+
 
 	public virtual string GetName()
 	{
