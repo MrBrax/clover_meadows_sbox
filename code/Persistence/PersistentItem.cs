@@ -175,7 +175,7 @@ public class PersistentItem
 	/// <param name="key">The key to store the data under</param>
 	/// <param name="value">Any serializable object</param>
 	[Icon( "description" )]
-	public void SetSaveData( string key, object value )
+	public void SetSaveData( string key, object value, Type type = null )
 	{
 		if ( !ValidateKey( this, key ) )
 		{

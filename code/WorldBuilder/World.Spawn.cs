@@ -18,7 +18,7 @@ public sealed partial class World
 		var itemData = persistentItem.ItemData;
 		var nodeLink = SpawnPlacedNode( itemData, position, rotation );
 		nodeLink.SetPersistence( persistentItem );
-		nodeLink.RunLoadPersistence();
+		nodeLink.RunLoadPersistence( persistentItem );
 		return nodeLink;
 	}
 
@@ -32,7 +32,7 @@ public sealed partial class World
 		var itemData = persistentItem.ItemData;
 		var nodeLink = SpawnPlacedNode( itemData, position, rotation );
 		nodeLink.SetPersistence( persistentItem );
-		nodeLink.RunLoadPersistence();
+		nodeLink.RunLoadPersistence( persistentItem );
 		return nodeLink;
 	}
 
@@ -46,7 +46,7 @@ public sealed partial class World
 		var itemData = persistentItem.ItemData;
 		var nodeLink = SpawnDroppedNode( itemData, position, rotation );
 		nodeLink.SetPersistence( persistentItem );
-		nodeLink.RunLoadPersistence();
+		nodeLink.RunLoadPersistence( persistentItem );
 		return nodeLink;
 	}
 

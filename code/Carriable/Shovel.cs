@@ -161,7 +161,7 @@ public class Shovel : BaseCarriable
 		// TODO: check if hole has item in it
 	}
 
-	private void DigUpItem( Vector2Int pos, WorldNodeLink item )
+	/*private void DigUpItem( Vector2Int pos, WorldNodeLink item )
 	{
 		Log.Info( $"Dug up {item.ItemData.Name} at {pos}" );
 
@@ -190,7 +190,7 @@ public class Shovel : BaseCarriable
 		/*if ( dirt != null && dirt.ItemData?.ResourceName == "buried_item" )
 		{
 			Player.World.RemoveItem( dirt );
-		}*/
+		}#1#
 
 		if ( dirtQuery.Count > 0 )
 		{
@@ -201,7 +201,7 @@ public class Shovel : BaseCarriable
 		}
 
 		DigHole( pos );
-	}
+	}*/
 
 	/// <summary>
 	///  Normally you can only dig up items that are placed underground, but some items like flowers and tree stumps are placed on the floor.
@@ -256,7 +256,7 @@ public class Shovel : BaseCarriable
 	{
 		var gridPos = hole.GridPosition;
 
-		hole.RunSavePersistence();
+		// hole.RunSavePersistence();
 		// var item = hole.Persistence;
 
 		hole.Remove();

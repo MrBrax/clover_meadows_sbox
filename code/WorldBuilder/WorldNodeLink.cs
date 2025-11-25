@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using Braxnet.Persistence;
 using Clover.Components;
 using Clover.Data;
 using Clover.Items;
@@ -162,7 +161,7 @@ public class WorldNodeLink : IValid
 			persistent.OnSave( Persistence );
 		}*/
 
-		RunSavePersistence();
+		RunSavePersistence( Persistence );
 
 		return new PersistentWorldItem
 		{
@@ -178,7 +177,7 @@ public class WorldNodeLink : IValid
 		};
 	}
 
-	public void RunSavePersistence()
+	public void RunSavePersistence( PersistentItem item )
 	{
 		var components = Node.GetComponents<Component>();
 
@@ -190,19 +189,35 @@ public class WorldNodeLink : IValid
 
 			foreach ( var property in properties )
 			{
-				if ( property.HasAttribute<ArbitraryDataAttribute>() )
+				var saveDataAttribute = property.GetCustomAttribute<SaveDataAttribute>();
+				if ( saveDataAttribute == null )
 				{
-					if ( keys.Contains( property.Name ) )
-					{
-						Log.Error( $"Duplicate arbitrary data key {property.Name} on {component}" );
-						continue;
-					}
-
-					var value = property.GetValue( component );
-					Persistence.SetSaveData( property.Name, value );
-					// XLog.Info( this, $"Saving arbitrary data {property.Name} = {value}" );
-					keys.Add( property.Name );
+					// XLog.Debug( this, $"No save data attribute on {property.Name} on {component}" );
+					continue;
 				}
+
+				var keyName = !string.IsNullOrEmpty( saveDataAttribute.Key ) ? saveDataAttribute.Key : property.Name;
+
+				if ( keys.Contains( keyName ) )
+				{
+					Log.Error( $"Duplicate arbitrary data key {keyName} on {component}" );
+					continue;
+				}
+
+				var type = property.PropertyType;
+
+				var value = property.GetValue( component );
+
+				// XLog.Info( this,
+				// 	$"Saving arbitrary data {keyName} = {value}, type {type}/{value?.GetType()}" );
+
+				// Log.Info( $"Saving '{keyName}' = '{value}' on {component}" );
+
+				item.SetSaveData( keyName, value, type );
+				// XLog.Info( this, $"Saving arbitrary data {keyName} = {value}" );
+				keys.Add( keyName );
+
+				// Log.Info( $"Saved '{keyName}' = '{value}' on {component}" );
 			}
 		}
 
@@ -217,7 +232,7 @@ public class WorldNodeLink : IValid
 		}
 	}
 
-	public void RunLoadPersistence()
+	public void RunLoadPersistence( PersistentItem item )
 	{
 		var components = Node.GetComponents<Component>();
 
@@ -227,11 +242,29 @@ public class WorldNodeLink : IValid
 
 			foreach ( var property in properties )
 			{
-				if ( property.HasAttribute<ArbitraryDataAttribute>() )
+				var saveDataAttribute = property.GetCustomAttribute<SaveDataAttribute>();
+				if ( saveDataAttribute == null )
 				{
-					var value = Persistence.GetSaveData( property.PropertyType, property.Name );
-					property.SetValue( component, value );
-					// XLog.Info( this, $"Set {property.Name} to {value} on {component}" );
+					continue;
+				}
+
+				if ( !string.IsNullOrEmpty( saveDataAttribute.Key ) )
+				{
+					// first try using the key from the attribute
+					var keyData = item.GetSaveData( property.PropertyType, saveDataAttribute.Key );
+					if ( keyData != null )
+					{
+						property.SetValue( component, keyData );
+						continue;
+					}
+				}
+
+				// if that fails, try using the property name
+				// we do this to maintain backwards compatibility with old saves that don't have the key set
+				var propertyData = item.GetSaveData( property.PropertyType, property.Name );
+				if ( propertyData != null )
+				{
+					property.SetValue( component, propertyData );
 				}
 			}
 		}
