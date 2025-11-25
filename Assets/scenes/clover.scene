@@ -3,95 +3,207 @@
   "GameObjects": [
     {
       "__guid": "370ef2e6-9ab3-47b2-9d85-2e0b0ab771f0",
+      "__version": 1,
       "Flags": 0,
       "Name": "Scene Information",
+      "Position": "0,0,0",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Sandbox.SceneInformation",
           "__guid": "287819b3-2496-4cc3-9e09-6b549e9a1910",
+          "__enabled": true,
+          "Author": null,
           "Changes": "",
           "Description": "",
+          "Group": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "SceneTags": "",
-          "Title": "minimal"
+          "Title": "minimal",
+          "Version": null
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "24e70066-371c-4c2e-8ccf-d4da82d1aef9",
+      "__version": 1,
       "Flags": 0,
       "Name": "Dialogue",
+      "Position": "0,0,0",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Sandbox.ScreenPanel",
           "__guid": "2d53e91d-dea5-4e4a-96fd-adadeb8d3e43",
+          "__enabled": true,
           "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "Opacity": 1,
           "Scale": 1,
           "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
           "ZIndex": 100
         },
         {
           "__type": "Clover.Components.DialogueManager",
           "__guid": "b67517c1-1ce5-4afe-bfc5-0a00e6697212",
+          "__enabled": true,
           "DialogueWindow": {
             "_type": "component",
             "component_id": "93049725-79c4-48d3-82f1-a2f0575434ff",
             "go": "d500dd67-6bfc-481e-8fa0-8337c45a60e0",
             "component_type": "DialogueWindow"
-          }
+          },
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "3b77553c-7af8-47fe-b4ab-1db0324421ac",
+      "__version": 1,
       "Flags": 0,
       "Name": "CameraManager",
+      "Position": "0,0,0",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "CameraMan",
           "__guid": "9d7c9db8-307b-4cae-95ad-4b8a54527d3f",
+          "__enabled": true,
           "CameraPrefab": {
             "_type": "gameobject",
             "prefab": "prefabs/camera.prefab"
-          }
+          },
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "e96ab869-6df6-41f9-935b-da17e151c718",
+      "__version": 1,
       "Flags": 0,
       "Name": "WorldManager",
+      "Position": "0,0,0",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
       "NetworkMode": 1,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Clover.WorldManager",
           "__guid": "7effb95a-4f76-4128-8ab5-547848dfc5ab",
-          "DefaultWorldData": "worlds/island/island.world",
-          "Worlds": {}
+          "__enabled": true,
+          "ActiveWorldChanged": null,
+          "DefaultWorldData": "worlds/island/island.cmworld",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "WorldLoaded": null,
+          "Worlds": {},
+          "WorldUnload": null
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "99e24ccb-5a06-411e-a1f4-a4ff468472f7",
+      "__version": 1,
       "Flags": 0,
       "Name": "NodeManager",
       "Position": "-126.4292,-187.5311,115.5769",
-      "Enabled": true
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [],
+      "Children": []
     },
     {
       "__guid": "14b9d594-252d-4c6c-956d-775f3346b50d",
+      "__version": 1,
       "Flags": 0,
       "Name": "NetworkHelper",
       "Position": "1408,384,64",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Clover.NetworkHelper",
           "__guid": "d8e9c8f9-15b1-47d9-a81b-31f0b5031af2",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "PlayerPrefab": {
             "_type": "gameobject",
             "prefab": "prefabs/player.prefab"
@@ -99,105 +211,224 @@
           "SpawnPoints": [],
           "StartServer": true
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "fe6b0b57-43ce-47c3-80c4-0a4c8cb0a4e9",
+      "__version": 1,
       "Flags": 0,
       "Name": "Watermark",
       "Position": "1738.691,-144.6614,1454.264",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Sandbox.ScreenPanel",
           "__guid": "c0a9bdc9-aaff-480d-8433-966776d2cd17",
+          "__enabled": true,
           "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "Opacity": 1,
           "Scale": 1,
           "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
           "ZIndex": 100
         },
         {
           "__type": "Clover.Watermark",
-          "__guid": "042455b1-a242-46f4-93a9-57141aae9949"
+          "__guid": "042455b1-a242-46f4-93a9-57141aae9949",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "82da970a-8629-4a5f-a6a5-7ba40d61a155",
+      "__version": 1,
       "Flags": 0,
       "Name": "GameManager",
       "Position": "300.3214,304.458,962.4254",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
       "NetworkMode": 1,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Clover.GameManager",
           "__guid": "1ec5f9d8-9d73-4e49-8d28-8da7f5fac66f",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "PlayerPrefab": {
             "_type": "gameobject",
             "prefab": "prefabs/player.prefab"
           }
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "937ba646-68bc-43a6-9037-1f6032f825fd",
+      "__version": 1,
       "Flags": 0,
       "Name": "Debug",
       "Position": "300.3214,304.458,962.4254",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Sandbox.ScreenPanel",
           "__guid": "6a455d33-eae9-43b5-b891-2fcc47dac0c9",
+          "__enabled": true,
           "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "Opacity": 1,
           "Scale": 1,
           "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
           "ZIndex": 100
         },
         {
           "__type": "Clover.Ui.DebugWindow",
-          "__guid": "d49c6350-b94d-48e6-8173-9cbb976af6ad"
+          "__guid": "d49c6350-b94d-48e6-8173-9cbb976af6ad",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "d500dd67-6bfc-481e-8fa0-8337c45a60e0",
+      "__version": 1,
       "Flags": 0,
       "Name": "GameUi",
       "Position": "300.3214,304.458,962.4254",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Sandbox.ScreenPanel",
           "__guid": "19f1b096-d756-4f8a-adbe-bb2a71cfbef1",
+          "__enabled": true,
           "AutoScreenScale": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "Opacity": 1,
           "Scale": 1,
           "ScaleStrategy": "ConsistentHeight",
+          "TargetCamera": null,
           "ZIndex": 100
         },
         {
           "__type": "Clover.Ui.InventoryUi",
-          "__guid": "4181c135-f152-4510-b2ca-e93040af3219"
+          "__guid": "4181c135-f152-4510-b2ca-e93040af3219",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         },
         {
           "__type": "Clover.MainUi",
-          "__guid": "13915653-ee4b-4579-bda4-c285508c484b"
+          "__guid": "13915653-ee4b-4579-bda4-c285508c484b",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         },
         {
           "__type": "Clover.Ui.FishingUi",
-          "__guid": "5a07ecff-4800-4ef1-a4a6-9ea930e28d91"
+          "__guid": "5a07ecff-4800-4ef1-a4a6-9ea930e28d91",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         },
         {
           "__type": "Clover.Ui.Notifications",
-          "__guid": "a366d06f-efbf-4cf7-9391-44ebca7afae8"
+          "__guid": "a366d06f-efbf-4cf7-9391-44ebca7afae8",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         },
         {
           "__type": "Clover.Chat",
-          "__guid": "17147b21-9928-4c82-bf51-23e01e520f34"
+          "__guid": "17147b21-9928-4c82-bf51-23e01e520f34",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         },
         {
           "__type": "Clover.DialogueWindow",
@@ -206,63 +437,168 @@
           "Actions": {},
           "CurrentNodeList": [],
           "CurrentTargets": [],
-          "Data": {}
+          "Data": {},
+          "Dialogue": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         },
         {
           "__type": "Clover.Ui.PaintUi",
           "__guid": "1fbe1934-c822-482e-af8b-dafae885bad5",
-          "__enabled": false
+          "__enabled": false,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         },
         {
           "__type": "Clover.Ui.PaintbrushUi",
-          "__guid": "e533ce68-9df2-4b37-81df-4713a2181882"
+          "__guid": "e533ce68-9df2-4b37-81df-4713a2181882",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         },
         {
           "__type": "Clover.Ui.InventorySelectUi",
           "__guid": "4ddc71fe-a16e-4ce2-9ea2-753adc4c6c6e",
-          "__enabled": false
+          "__enabled": false,
+          "CanSelectItem": null,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "c9f785c2-5469-481d-8785-cd604d6a1cdd",
+      "__version": 1,
       "Flags": 0,
       "Name": "ParticleManager",
       "Position": "300.3214,304.458,962.4254",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Braxnet.ParticleManager",
           "__guid": "13b4cbe1-176c-491a-853b-19cd7877ab01",
+          "__enabled": true,
           "Confetti": {
             "_type": "gameobject",
             "prefab": "particles/confetti.prefab"
           },
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "Poof": {
             "_type": "gameobject",
             "prefab": "particles/poof.prefab"
           }
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "f1e9442f-52d4-4de1-9fb6-b3df6e944725",
-      "Flags": 0,
-      "Name": "WeatherManager",
-      "Enabled": true,
+      "__version": 1,
       "__Prefab": "prefabs/weather_manager.prefab",
-      "__PrefabVariables": {}
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f1e9442f-52d4-4de1-9fb6-b3df6e944725"
+            },
+            "Property": "Name",
+            "Value": "WeatherManager"
+          },
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "f1e9442f-52d4-4de1-9fb6-b3df6e944725"
+            },
+            "Property": "NetworkInterpolation",
+            "Value": false
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "f1e9442f-52d4-4de1-9fb6-b3df6e944725": "f1e9442f-52d4-4de1-9fb6-b3df6e944725",
+        "748ff583-4296-4da2-b3fa-7b032f6b16a8": "ebf14e31-2c49-4445-81ac-38c662af8f94",
+        "5c31dd0a-9e95-40d8-9c66-d1ba85ec27ed": "f8f553c9-c9e8-4da9-b6c8-f6810d47dbea",
+        "ef95e8c8-0f57-4e40-82bc-290d0ad8296f": "07c14147-0ae0-4137-9c3e-830dc0aedef4",
+        "03acf368-394c-4ae6-9ca4-7683006a3203": "28829ca6-0296-41a0-b15c-f1e9941b577c",
+        "d7fd85ec-1c4d-4250-823f-66b4b4ea9314": "c55a3c6c-8c97-465c-b4ec-04e41aac9a42",
+        "dd7451a4-0486-4f32-ad38-5b3960eedd9d": "d8da475b-5eb6-43f7-b53e-ec2a3777d107",
+        "6a142dbb-782d-47cb-8ca5-1357f703bac2": "d42cb893-562b-448c-b5ac-c3967045d7b6",
+        "6178113a-abce-4ccd-9b62-1161143aa330": "eb39935f-383d-423f-8746-0a537359a3f7",
+        "5c50f5fb-6b45-424f-b99e-7c855e122450": "92565035-6255-42d8-8e20-826e2fecb007",
+        "0827e2ab-e08f-4489-af05-10b6c1c63433": "28be9352-f970-4fca-bf9b-925c28020b19",
+        "9d72c890-e0cb-4820-964c-25771b3f2305": "cb98dc32-6a30-4c3e-b43c-625ccf446552",
+        "43456c06-da7e-43b2-b131-20907328df09": "317b7f2d-c26e-41f6-a01a-5fe31ebbe05d",
+        "c8d53daa-cd18-425b-829e-7e9accccd56a": "2a714d0f-afff-45a1-997f-662749f0c93a",
+        "66ca6879-d19e-4fbc-af0c-b00579b67306": "490ed326-82d3-4cb7-b0dc-1a15af7c11b5",
+        "c204340b-2a17-4d7d-af17-48a17ecee7ae": "cbd9b69f-5208-428d-8c58-482927ce4aa2",
+        "caed58e2-3692-4831-841c-b89801bfe662": "4016a25d-4070-4772-a36a-d9c7c7d372ef",
+        "eb6364ce-ede2-4dfa-87d3-d584e3c5a98d": "3202b217-1852-40ee-b862-21e6f12b4013",
+        "d8fae390-16f3-4e43-8933-81994f58286f": "93cce2c4-0850-40f7-bae3-7d3bb556495d",
+        "748b4fbb-5352-44ff-ae8b-bf76e44ebef3": "33791a07-65d6-4516-a71e-a405d34f7432",
+        "5587cfea-42ca-4963-94f1-1feb18c044ba": "1a85c34e-9a77-4977-8d31-a34c5ccc25ea",
+        "ea41ed15-8998-45d7-97bb-c0d7d6fcfe99": "6bd008d0-cfe6-45f2-b8c6-b4f302a16341",
+        "e0e9bc88-c334-42a6-adb8-56371f0faa5c": "716c81c2-d9d4-42e1-ba0e-02be27b69056",
+        "335f4de0-2ff3-4e1b-b1e1-404872719f20": "9416cc34-0222-4914-ad29-6b847366a67b",
+        "acc77397-1fad-41e1-a044-e364a86c1e99": "eef2c19f-7b4f-437c-895f-a09de0711367",
+        "73c23ba0-ddef-4cfe-aacd-f05d922b8612": "4531a544-df01-4d34-8fb0-c204abb23bfa",
+        "829c61ee-846a-4bc5-9208-998493777573": "e1b385a7-81f5-4b22-838d-656157aa9cc2",
+        "8b8c5d0a-4483-4af1-9d61-4cdafbe32cdb": "9a4d3be7-8f06-4e35-976c-e6c871f96424"
+      }
     },
     {
       "__guid": "a1555b1a-0a74-410e-b8e1-4b81ef74aaed",
+      "__version": 1,
       "Flags": 0,
       "Name": "TimeManager",
+      "Position": "0,0,0",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
       "NetworkMode": 1,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Clover.WorldBuilder.TimeManager",
           "__guid": "6bcba752-8450-49ec-b17a-cfa20ee2f5f9",
+          "__enabled": true,
           "_SunRotation": "-0.01513444,0.08583164,0.1729874,0.9810603",
           "AmbientGradient": {
             "blend": "Linear",
@@ -291,8 +627,14 @@
             "alpha": []
           },
           "HourChime": "sounds/chime/chime_hour.sound",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "OnNewHour": {
-            "__version": 8,
+            "__version": 9,
             "__guid": "90b51141-67b4-4edc-9ab8-8684a9a21209",
             "__changeId": 1,
             "UserData": {
@@ -307,6 +649,7 @@
             ],
             "Links": []
           },
+          "OnNewMinute": null,
           "SkyBox": {
             "_type": "component",
             "component_id": "6b9c7009-5a8c-46e0-a390-54d1c618e5f6",
@@ -392,69 +735,115 @@
           },
           "TimeOverride": -1
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "4e4e74a4-a6bc-4ce1-b854-488e66eb1e68",
+      "__version": 1,
       "Flags": 0,
       "Name": "Fader",
       "Position": "2583.411,1796.942,-114.3771",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Clover.Components.Fader",
           "__guid": "9d44cea2-d05a-48ab-b8e6-486945ab8deb",
+          "__enabled": true,
           "FadeFromBlackSound": "sounds/camera/camera_out.sound",
           "FadeTime": 1,
-          "FadeToBlackSound": "sounds/camera/camera_in.sound"
+          "FadeToBlackSound": "sounds/camera/camera_in.sound",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "ebdc1818-e9c0-4019-abeb-a9aff9509da4",
+      "__version": 1,
       "Flags": 0,
       "Name": "2D Skybox",
+      "Position": "0,0,0",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
       "Tags": "skybox",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Sandbox.SkyBox2D",
           "__guid": "6b9c7009-5a8c-46e0-a390-54d1c618e5f6",
+          "__enabled": true,
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "SkyIndirectLighting": true,
           "SkyMaterial": "materials/sky/atmosphere_sky.vmat",
           "Tint": "1,1,1,1"
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "__guid": "a0eb9f3a-4cc5-4084-8e66-2f29281786d4",
+      "__version": 1,
       "Flags": 0,
       "Name": "Sun",
+      "Position": "0,0,0",
       "Rotation": "-0.0890327,0.5887046,0.1201405,0.7943969",
+      "Scale": "1,1,1",
       "Tags": "light,light_directional,sun",
       "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkInterpolation": true,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
       "Components": [
         {
           "__type": "Sandbox.DirectionalLight",
           "__guid": "070eb5c8-4f9f-4915-8ca7-9c8cecf20950",
+          "__enabled": true,
           "FogMode": "Enabled",
           "FogStrength": 1,
           "LightColor": "0.94419,0.97767,1,1",
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
           "Shadows": true,
           "SkyColor": "0.0533,0.10459,0.13023,1"
         }
-      ]
+      ],
+      "Children": []
     }
   ],
   "SceneProperties": {
-    "FixedUpdateFrequency": 50,
-    "MaxFixedUpdates": 5,
-    "NetworkFrequency": 60,
     "NetworkInterpolation": true,
-    "PhysicsSubSteps": 1,
-    "ThreadedAnimation": true,
     "TimeScale": 1,
-    "UseFixedUpdate": true,
+    "WantsSystemScene": true,
     "Metadata": {
       "Title": "minimal"
     },
@@ -471,9 +860,9 @@
       "IncludedBodies": ""
     }
   },
-  "ResourceVersion": 2,
+  "ResourceVersion": 3,
   "Title": "minimal",
   "Description": null,
   "__references": [],
-  "__version": 2
+  "__version": 3
 }
