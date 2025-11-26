@@ -29,32 +29,8 @@ public sealed partial class World
 
 		var savedItems = new List<PersistentWorldItem>();
 
-		/*foreach ( var item in Items )
-		{
-			var position = item.Key;
-			foreach ( var itemEntry in item.Value )
-			{
-				var placement = itemEntry.Key;
-				var nodeLink = itemEntry.Value;
-
-				if ( !nodeLink.ShouldBeSaved() )
-				{
-					Log.Info( $"Skipping {nodeLink} at {position}" );
-					continue;
-				}
-
-				var prefabPath = nodeLink.GetPrefabPath();
-				nodeLink.PrefabPath = prefabPath;
-
-				var persistentItem = nodeLink.OnNodeSave();
-
-				savedItems.Add( persistentItem );
-			}
-		}*/
-
-		var items = WorldItems.ToList();
-
-		foreach ( var worldItem in items )
+		// Save world items (dropped/placed items, furniture, etc)
+		foreach ( var worldItem in WorldItems.ToList() )
 		{
 			if ( !worldItem.ShouldBeSaved() )
 			{
@@ -70,8 +46,8 @@ public sealed partial class World
 				PlacementType = worldItem.ItemPlacement,
 				// Position = worldItem.WorldPosition,
 				// Rotation = worldItem.WorldRotation,
-				WPosition = worldItem.GameObject.WorldPosition,
-				WAngles = worldItem.GameObject.WorldRotation.Angles(),
+				WPosition = worldItem.GetRelativeWorldPosition(),
+				WAngles = worldItem.GetRelativeWorldRotation(),
 				Item = persistentItem
 			};
 
@@ -159,9 +135,8 @@ public sealed partial class World
 				continue;
 			}
 
-			var position = persistentWorldItem.Position;
-			var rotation = persistentWorldItem.Rotation;
-
+			// var position = persistentWorldItem.Position;
+			// var rotation = persistentWorldItem.Rotation;
 
 			/*if ( string.IsNullOrEmpty( prefabPath ) )
 			{
@@ -200,8 +175,15 @@ public sealed partial class World
 
 			var gameObject = prefab.Clone();
 
-			gameObject.WorldPosition = persistentWorldItem.WPosition;
-			gameObject.WorldRotation = persistentWorldItem.WAngles;
+			// Set parent to this world
+			gameObject.Parent = GameObject;
+
+			// Set position and rotation
+			gameObject.LocalPosition = persistentWorldItem.WPosition;
+			gameObject.LocalRotation = persistentWorldItem.WAngles;
+
+			// gameObject.WorldPosition = persistentWorldItem.WPosition;
+			// gameObject.WorldRotation = persistentWorldItem.WAngles;
 
 			/*var nodeLink = new WorldNodeLink( this, gameObject )
 			{
@@ -221,7 +203,7 @@ public sealed partial class World
 
 			WorldItems.Add( worldItem );
 
-			gameObject.SetParent( GameObject ); // TODO: should items be parented to the world?
+			// gameObject.SetParent( GameObject ); // TODO: should items be parented to the world?
 
 			gameObject.NetworkSpawn();
 		}

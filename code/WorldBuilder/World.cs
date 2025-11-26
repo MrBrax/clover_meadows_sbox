@@ -358,4 +358,14 @@ public sealed partial class World : Component
 		// return _nodeLinkGridMap.ContainsValue( node );
 		return WorldItems.Contains( node );
 	}*/
+	public Vector3 GetRelativePosition( Vector3 worldPosition )
+	{
+		return worldPosition - WorldPosition;
+	}
+
+
+	public Rotation GetRelativeRotation( Rotation worldRotation )
+	{
+		return Rotation.Difference( worldRotation, WorldRotation );
+	}
 }

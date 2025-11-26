@@ -52,13 +52,25 @@ public class WorldObject : Component, IPickupable
 
 		if ( player.Inventory.PickUpItem( item ) )
 		{
-			GameObject.Destroy();
+			RemoveFromWorld();
 		}
 	}
 
 	public string GetPickupName()
 	{
 		return ObjectData?.Name ?? "Object";
+	}
+
+	protected override void OnFixedUpdate()
+	{
+		if ( Networking.IsHost )
+		{
+			if ( WorldPosition.z < -10000f )
+			{
+				Log.Warning( $"{this} fell out of the world." );
+				RemoveFromWorld();
+			}
+		}
 	}
 
 	public delegate void OnObjectSaveActionEvent( PersistentItem item );
@@ -79,8 +91,8 @@ public class WorldObject : Component, IPickupable
 
 		return new PersistentWorldObject()
 		{
-			Position = GameObject.WorldPosition - WorldLayerObject.World.WorldPosition,
-			Rotation = WorldRotation,
+			Position = GetRelativeWorldPosition(),
+			Rotation = GetRelativeWorldRotation(),
 			PrefabPath = Prefab,
 			ObjectId = ObjectData.ResourceName,
 			Item = persistence,
@@ -91,6 +103,7 @@ public class WorldObject : Component, IPickupable
 	{
 		ObjectData = ObjectData.Get( worldObject.ObjectId );
 		Prefab = worldObject.PrefabPath;
+
 		WorldPosition = worldObject.Position + WorldLayerObject.World.WorldPosition;
 		WorldRotation = worldObject.Rotation;
 
@@ -102,5 +115,47 @@ public class WorldObject : Component, IPickupable
 		OnObjectLoadAction?.Invoke( worldObject.Item );
 
 		GameObject.Name = ObjectData.Name;
+	}
+
+	public Vector3 GetRelativeWorldPosition()
+	{
+		if ( !WorldLayerObject.IsValid() || !WorldLayerObject.World.IsValid() )
+		{
+			Log.Error( $"WorldLayerObject or World is not valid for {this}" );
+			return WorldPosition;
+		}
+
+		return WorldLayerObject.World.GetRelativePosition( WorldPosition );
+	}
+
+	public Angles GetRelativeWorldRotation()
+	{
+		if ( !WorldLayerObject.IsValid() || !WorldLayerObject.World.IsValid() )
+		{
+			Log.Error( $"WorldLayerObject or World is not valid for {this}" );
+			return WorldRotation;
+		}
+
+		return WorldLayerObject.World.GetRelativeRotation( WorldRotation );
+	}
+
+	public void RemoveFromWorld()
+	{
+		if ( WorldLayerObject.IsValid() && WorldLayerObject.World.IsValid() )
+		{
+			WorldLayerObject.World.WorldObjects.Remove( this );
+		}
+
+		GameObject.Destroy();
+	}
+
+	protected override void OnDestroy()
+	{
+		if ( WorldLayerObject.IsValid() && WorldLayerObject.World.IsValid() &&
+		     WorldLayerObject.World.WorldObjects.Contains( this ) )
+		{
+			Log.Warning( $"WorldObject {this} was not removed from world before destruction. Removing now." );
+			WorldLayerObject.World.WorldObjects.Remove( this );
+		}
 	}
 }

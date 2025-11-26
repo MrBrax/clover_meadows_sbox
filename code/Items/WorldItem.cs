@@ -449,7 +449,6 @@ public class WorldItem : Component, IPickupable
 
 	public void CalculateSize()
 	{
-		throw new NotImplementedException();
 	}
 
 	public void RemoveFromWorld()
@@ -460,5 +459,37 @@ public class WorldItem : Component, IPickupable
 		}
 
 		GameObject.Destroy();
+	}
+
+	public Vector3 GetRelativeWorldPosition()
+	{
+		if ( !WorldLayerObject.IsValid() || !WorldLayerObject.World.IsValid() )
+		{
+			Log.Error( $"WorldLayerObject or World is not valid for {this}" );
+			return WorldPosition;
+		}
+
+		return WorldLayerObject.World.GetRelativePosition( WorldPosition );
+	}
+
+	public Angles GetRelativeWorldRotation()
+	{
+		if ( !WorldLayerObject.IsValid() || !WorldLayerObject.World.IsValid() )
+		{
+			Log.Error( $"WorldLayerObject or World is not valid for {this}" );
+			return WorldRotation;
+		}
+
+		return WorldLayerObject.World.GetRelativeRotation( WorldRotation );
+	}
+
+	protected override void OnDestroy()
+	{
+		if ( WorldLayerObject.IsValid() && WorldLayerObject.World.IsValid() &&
+		     WorldLayerObject.World.WorldItems.Contains( this ) )
+		{
+			Log.Warning( $"WorldItem {this} was not removed from world before destruction. Removing now." );
+			WorldLayerObject.World.WorldItems.Remove( this );
+		}
 	}
 }
