@@ -77,6 +77,9 @@ public class ItemData : GameResource
 	[Property, Group( "Shop" )] public GetPriceDelegate GetCustomSellPrice { get; set; }
 	[Property, Group( "Shop" )] public GetPriceDelegate GetCustomBuyPrice { get; set; }
 
+	[Property, Group( "Persistence" ), TargetType( typeof(PersistentItem) )]
+	public Type PersistentType { get; set; } = typeof(PersistentItem);
+
 
 	public static T GetById<T>( string id ) where T : ItemData
 	{

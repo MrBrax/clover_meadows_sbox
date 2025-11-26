@@ -62,7 +62,7 @@ public sealed partial class World
 				continue;
 			}
 
-			var persistentItem = worldItem.SavePersistence();
+			var persistentItem = PersistentItem.Create( worldItem.GameObject );
 
 			var persistentWorldItem = new PersistentWorldItem
 			{
@@ -216,6 +216,8 @@ public sealed partial class World
 				gameObject.Destroy();
 				continue;
 			}
+
+			worldItem.LoadPersistence( persistentWorldItem.Item );
 
 			WorldItems.Add( worldItem );
 

@@ -437,7 +437,7 @@ public class PersistentItem
 	// TODO: maybe less hardcoded and repeated code
 	public static PersistentItem Create( GameObject gameObject )
 	{
-		if ( !gameObject.IsValid() ) throw new Exception( "Item is null" );
+		/*if ( !gameObject.IsValid() ) throw new Exception( "Item is null" );
 
 		var persistentItem = new PersistentItem();
 
@@ -471,7 +471,57 @@ public class PersistentItem
 		{
 			nodeLink.OnNodeSave();
 			persistentItem = nodeLink.GetPersistence();
-		}*/
+		}#1#*/
+
+		if ( !gameObject.IsValid() )
+		{
+			throw new Exception( "PersistentItem Create: gameObject is invalid" );
+		}
+
+		var persistentItem = new PersistentItem();
+
+		if ( gameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+		{
+			var type = worldItem.PersistentItemType ?? worldItem.ItemData?.PersistentType;
+
+			// XLog.Debug( module: "PersistentItem",
+			// 	$"Creating persistent item for {gameObject} with type {type} (has WorldObject, WorldObjectType: {worldObject.PersistentItemType}, ItemDataType: {worldObject.ItemData?.PersistentType})" );
+
+			if ( type != null )
+			{
+				persistentItem = TypeLibrary.Create<PersistentItem>( type );
+			}
+			else
+			{
+				Log.Warning(
+					$"PersistentItemType is null for {gameObject} (ItemDataType: {worldItem.ItemData?.PersistentType}, WorldObjectType: {worldItem.PersistentItemType})" );
+			}
+
+			// persistentItem.Tags = worldObject.PersistentItemTags;
+
+			// XLog.Debug( module: "PersistentItem",
+			// 	$"Created persistent item of type {type} for {gameObject}" );
+
+			if ( worldItem.ItemData != null )
+			{
+				persistentItem.ItemId = worldItem.ItemData.Id;
+			}
+			else
+			{
+				Log.Error( $"ItemData is null for {gameObject}" );
+			}
+
+			worldItem.SavePersistence( persistentItem );
+
+			// XLog.Debug( module: "PersistentItem", $"Saved persistence for {gameObject}" );
+		}
+
+		// XLog.Debug( module: "PersistentItem", $"Calling OnSave for {gameObject} IPersistent" );
+		// foreach ( var persistent in gameObject.Components.GetAll<IPersistent>() )
+		// {
+		// 	XLog.Debug( module: "PersistentItem", $"Calling OnSave for {gameObject} {persistent}" );
+		// 	persistent.OnSave( persistentItem );
+		// }
 
 		return persistentItem;
 	}

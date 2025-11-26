@@ -175,6 +175,9 @@ public class WorldItem : Component, IPickupable
 
 	public bool IsBeingPickedUp { get; set; }
 
+	[Property, TargetType( typeof(PersistentItem) )]
+	public Type PersistentItemType { get; set; }
+
 	public bool CanPickup( PlayerCharacter player )
 	{
 		return CanPickupSimple &&
@@ -274,13 +277,169 @@ public class WorldItem : Component, IPickupable
 		return true; // TODO: add option to not save
 	}
 
-	public PersistentItem SavePersistence()
+	public void SavePersistence( PersistentItem item )
 	{
-		return PersistentItem.Create( GameObject );
+		var components = GetComponents<Component>();
+
+		var persistentInterfaceComponents = GetComponents<IPersistent>().ToList();
+
+		// foreach ( var persistentInterfaceComponent in persistentInterfaceComponents )
+		// {
+		// 	// XLog.Debug( this, $"Calling OnPreSave on {persistentInterfaceComponent}" );
+		// 	persistentInterfaceComponent.OnPreSave( item );
+		// }
+
+		var keys = new List<string>();
+
+		foreach ( var component in components )
+		{
+			var properties = TypeLibrary.GetPropertyDescriptions( component );
+
+			// XLog.Debug( this, $"Saving persistence for {component} on {this}" );
+
+			foreach ( var property in properties )
+			{
+				var saveDataAttribute = property.GetCustomAttribute<SaveDataAttribute>();
+				if ( saveDataAttribute == null )
+				{
+					// XLog.Debug( this, $"No save data attribute on {property.Name} on {component}" );
+					continue;
+				}
+
+				var keyName = !string.IsNullOrEmpty( saveDataAttribute.Key ) ? saveDataAttribute.Key : property.Name;
+
+				/*// clear the save data if the item is picked up and the attribute says to reset on pickup
+				if ( pickedUp )
+				{
+					if ( saveDataAttribute.ResetOnPickup )
+					{
+						// XLog.Debug( this, $"Resetting {property.Name} on {component}" );
+						item.ClearSaveData( keyName );
+						continue;
+					}
+				}*/
+
+				if ( keys.Contains( keyName ) )
+				{
+					Log.Error( $"Duplicate arbitrary data key {keyName} on {component}" );
+					continue;
+				}
+
+				var type = property.PropertyType;
+
+				var value = property.GetValue( component );
+
+				// XLog.Info( this,
+				// 	$"Saving arbitrary data {keyName} = {value}, type {type}/{value?.GetType()}" );
+
+				// XLog.Debug( this, $"Saving '{keyName}' = '{value}' on {component}" );
+
+				item.SetSaveData( keyName, value, type );
+				// XLog.Info( this, $"Saving arbitrary data {keyName} = {value}" );
+				keys.Add( keyName );
+
+				// XLog.Debug( this, $"Saved '{keyName}' = '{value}' on {component}" );
+			}
+		}
+
+		// XLog.Debug( this,
+		// 	$"Saved {keys.Count} arbitrary data keys, {item.SaveData.Count} total. Calling OnSave on IPersistent components on {this}" );
+
+
+		// XLog.Debug( this, $"Found {persistentInterfaceComponents.Count()} IPersistent components on {this}" );
+
+		foreach ( var persistentInterfaceComponent in persistentInterfaceComponents )
+		{
+			// XLog.Debug( this, $"Calling OnSave on {persistentInterfaceComponent}" );
+			persistentInterfaceComponent.OnSave( item );
+		}
+
+		// XLog.Debug( this, $"Calling SaveExtraPersistence on {this}" );
+		// SaveExtraPersistence( item );
 	}
 
-	public void LoadPersistence( PersistentItem persistentItem )
+	public void LoadPersistence( PersistentItem item )
 	{
+		var components = GetComponents<Component>();
+
+		var persistentInterfaceComponents = GetComponents<IPersistent>().ToList();
+
+		// foreach ( var persistentInterfaceComponent in persistentInterfaceComponents )
+		// {
+		// 	XLog.Debug( this, $"Calling OnPreLoad on {persistentInterfaceComponent}" );
+		// 	persistentInterfaceComponent.OnPreLoad( item );
+		// }
+
+		foreach ( var component in components )
+		{
+			var properties = TypeLibrary.GetPropertyDescriptions( component );
+
+			foreach ( var property in properties )
+			{
+				/*if ( property.HasAttribute<SaveDataAttribute>() )
+				{
+					var value = item.GetArbitraryData( property.PropertyType, property.Name );
+					property.SetValue( component, value );
+					// XLog.Info( this, $"Set {property.Name} to {value} on {component}" );
+				}*/
+
+				var saveDataAttribute = property.GetCustomAttribute<SaveDataAttribute>();
+				if ( saveDataAttribute == null )
+				{
+					continue;
+				}
+
+				// Log.Info( $"{this} {property.Name} identity = {property.Identity.ToString( "X" )}" );
+
+				if ( !string.IsNullOrEmpty( saveDataAttribute.OnLoadMethodName ) )
+				{
+					/*var method = component.GetType().GetMethod( saveDataAttribute.OnLoadMethodName );
+					if ( method != null )
+					{
+						method.Invoke( component,
+							new object[] { item.GetArbitraryData( property.PropertyType, property.Name ) } );
+						continue;
+					}
+					*/
+				}
+
+				if ( !string.IsNullOrEmpty( saveDataAttribute.Key ) )
+				{
+					// first try using the key from the attribute
+					var keyData = item.GetSaveData( property.PropertyType, saveDataAttribute.Key );
+					if ( keyData != null )
+					{
+						property.SetValue( component, keyData );
+						continue;
+					}
+				}
+
+				// if that fails, try using the property name
+				// we do this to maintain backwards compatibility with old saves that don't have the key set
+				var propertyData = item.GetSaveData( property.PropertyType, property.Name );
+				if ( propertyData != null )
+				{
+					property.SetValue( component, propertyData );
+				}
+			}
+		}
+
+		// if ( persistentInterfaceComponents.Count > 0 )
+		// 	XLog.Info( this, $"Found {persistentInterfaceComponents.Count()} IPersistent components on {this.GameObject.Name}" );
+
+		foreach ( var persistentInterfaceComponent in persistentInterfaceComponents )
+		{
+			// XLog.Info( this, $"Calling persistence OnLoad on {persistentInterfaceComponent} on {this.GameObject.Name}" );
+			persistentInterfaceComponent.OnLoad( item );
+		}
+
+		// LoadExtraPersistence( item, source );
+
+		if ( ItemData == null )
+		{
+			Log.Info( "Overriding item data with persistent item data" );
+			ItemData = ItemData.Get( item.ItemId );
+		}
 	}
 
 	public void SetItemData( ItemData itemData )
