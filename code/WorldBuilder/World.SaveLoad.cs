@@ -46,8 +46,8 @@ public sealed partial class World
 				PlacementType = worldItem.ItemPlacement,
 				// Position = worldItem.WorldPosition,
 				// Rotation = worldItem.WorldRotation,
-				WPosition = worldItem.GetRelativeWorldPosition(),
-				WAngles = worldItem.GetRelativeWorldRotation(),
+				WPosition = worldItem.LocalPosition,
+				WAngles = worldItem.LocalRotation,
 				Item = persistentItem
 			};
 
