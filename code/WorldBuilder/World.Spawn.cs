@@ -47,7 +47,7 @@ public sealed partial class World
 		return worldItem;
 	}
 
-	public WorldItem SpawnCustomItem( ItemData itemData, GameObject scene, Vector2Int position,
+	public WorldItem SpawnCustomItem( ItemData itemData, GameObject prefab, Vector2Int position,
 		ItemRotation rotation )
 	{
 		if ( IsOutsideGrid( position ) )
@@ -67,12 +67,12 @@ public sealed partial class World
 			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
 		}*/
 
-		if ( scene == null )
+		if ( prefab == null )
 		{
 			throw new Exception( $"Item {itemData.Name} has no scene" );
 		}
 
-		var gameObject = scene.Clone();
+		var gameObject = prefab.Clone();
 		if ( !gameObject.IsValid() )
 		{
 			throw new Exception( $"Failed to clone scene for {itemData.Name}" );
@@ -117,14 +117,14 @@ public sealed partial class World
 
 		var defaultDropScene = GameObject.GetPrefab( "items/misc/dropped_item/dropped_item.prefab" );
 
-		var scene = placementType switch
+		var spawnPrefab = placementType switch
 		{
 			ItemPlacementType.Placed => itemData.PlaceScene,
 			ItemPlacementType.Dropped => itemData.DropScene ?? defaultDropScene,
 			_ => throw new ArgumentOutOfRangeException( nameof(placementType), placementType, null )
 		};
 
-		if ( scene == null )
+		if ( !spawnPrefab.IsValid() )
 		{
 			throw new Exception( $"Item {(itemData.Name ?? itemData.ResourceName)} has no {placementType} scene" );
 		}
@@ -139,7 +139,7 @@ public sealed partial class World
 			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
 		}*/
 
-		var gameObject = scene.Clone();
+		var gameObject = spawnPrefab.Clone();
 
 		gameObject.WorldPosition = ItemGridToWorld( position );
 		gameObject.WorldRotation = GetRotation( rotation );
@@ -191,14 +191,14 @@ public sealed partial class World
 		var defaultDropScene =
 			GameObject.GetPrefab( "items/misc/dropped_item/dropped_item.prefab" );
 
-		var scene = placementType switch
+		var spawnPrefab = placementType switch
 		{
 			ItemPlacementType.Placed => itemData.PlaceScene,
 			ItemPlacementType.Dropped => itemData.DropScene ?? defaultDropScene,
 			_ => throw new ArgumentOutOfRangeException( nameof(placementType), placementType, null )
 		};
 
-		if ( scene == null )
+		if ( spawnPrefab == null )
 		{
 			throw new Exception( $"Item {(itemData.Name ?? itemData.ResourceName)} has no {placementType} scene" );
 		}
@@ -213,7 +213,7 @@ public sealed partial class World
 			throw new Exception( $"Cannot place item {itemData.Name} at {position} with placement {placement}" );
 		}*/
 
-		var gameObject = scene.Clone();
+		var gameObject = spawnPrefab.Clone();
 
 		gameObject.WorldPosition = position;
 		gameObject.WorldRotation = rotation;

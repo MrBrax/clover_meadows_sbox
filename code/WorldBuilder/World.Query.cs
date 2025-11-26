@@ -65,40 +65,6 @@ public sealed partial class World
 		return PlayersInWorld.Any( x => x.WorldPosition.Distance( worldPos ) < radius );
 	}
 
-	/*/// <summary>
-	///  Get a node link at a specific grid position and placement.
-	///  Use <see cref="WorldNodeLink.Node"/> to get the node.
-	/// </summary>
-	/// <param name="gridPos"></param>
-	/// <param name="placement"></param>
-	/// <returns></returns>
-	/// <exception cref="Exception"></exception>
-	/// <exception cref="ArgumentOutOfRangeException"></exception>
-	public WorldNodeLink GetItem( Vector2Int gridPos, ItemPlacement placement )
-	{
-		foreach ( var item in GetItems( gridPos ) )
-		{
-			if ( item.GridPlacement == placement )
-			{
-				return item;
-			}
-		}
-
-		return null;
-	}*/
-
-	/*public WorldNodeLink GetNodeLink( GameObject node )
-	{
-		// return _nodeLinkGridMap.Values.FirstOrDefault( x => x.Node == node );
-		return WorldItems.FirstOrDefault( x => x.Node == node );
-	}
-
-	public WorldNodeLink GetNodeLink<T>( Vector2Int gridPos ) where T : Component
-	{
-		return WorldItems.FirstOrDefault( x =>
-			x.WorldPosition == ItemGridToWorld( gridPos ) && x.Node.GetComponent<T>() != null );
-	}*/
-
 	[Obsolete]
 	public WorldItem GetWorldItem( GameObject node )
 	{

@@ -135,16 +135,6 @@ public sealed partial class World
 				continue;
 			}
 
-			// var position = persistentWorldItem.Position;
-			// var rotation = persistentWorldItem.Rotation;
-
-			/*if ( string.IsNullOrEmpty( prefabPath ) )
-			{
-				Log.Warning( $"Item {item} has no prefab path" );
-				continue;
-			}
-			*/
-
 			Log.Info( $"Loading item {persistentWorldItem.ItemId}" );
 
 			if ( !string.IsNullOrEmpty( persistentWorldItem.Item.PackageIdent ) )
@@ -158,10 +148,6 @@ public sealed partial class World
 
 				Log.Info( $"Fetched package {package.Title}" );
 			}
-
-			//var gameObject = Scene.CreateObject();
-			//gameObject.SetPrefabSource( prefabPath );
-			//gameObject.UpdateFromPrefab();
 
 			var prefab = persistentWorldItem.PlacementType == ItemPlacementType.Dropped
 				? itemData.DropScene
@@ -203,10 +189,6 @@ public sealed partial class World
 		foreach ( var worldObject in saveData.Objects )
 		{
 			Log.Info( $"Loading object {worldObject}" );
-
-			// var gameObject = Scene.CreateObject();
-			// gameObject.SetPrefabSource( worldObject.PrefabPath );
-			// gameObject.UpdateFromPrefab();
 
 			var gameObject = GameObject.GetPrefab( worldObject.PrefabPath ).Clone();
 

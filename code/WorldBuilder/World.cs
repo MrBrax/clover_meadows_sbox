@@ -7,6 +7,11 @@ using Clover.Player;
 
 namespace Clover;
 
+/// <summary>
+///  Represents a game world where players can interact with items and objects.
+///  A world component is added to a world prefab root, which is spawned into the scene by the WorldManager.
+///  Any saved items/objects in the world are children of the world prefab root.
+/// </summary>
 [Category( "Clover/World" )]
 [Icon( "world" )]
 public sealed partial class World : Component
@@ -227,29 +232,6 @@ public sealed partial class World : Component
 		return true;
 	}
 
-	/*public void RemoveItem( GameObject node )
-	{
-		// RemoveItem( item.GridPosition, item.Placement );
-		var nodeLink = GetNodeLink( node );
-		if ( nodeLink == null )
-		{
-			throw new Exception( $"Failed to find node link for {node}" );
-		}
-
-		// RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
-
-		nodeLink.DestroyNode();
-
-		WorldItems.Remove( nodeLink );
-
-		OnItemRemoved?.Invoke( nodeLink );
-	}*/
-
-	/*public void RemoveItem( WorldNodeLink nodeLink )
-	{
-		RemoveItem( nodeLink.Node );
-	}*/
-
 	public void Setup()
 	{
 		var layerObjects = GetComponentsInChildren<WorldLayerObject>( true );
@@ -337,32 +319,10 @@ public sealed partial class World : Component
 
 	[ConVar( "clover_show_grid" )] public static bool ShowGrid { get; set; }
 
-	/*[ConCmd( "clover_dump_items" )]
-	public static void CmdDumpItems()
-	{
-		var world = WorldManager.Instance.ActiveWorld;
-
-		foreach ( var entry in world.Items )
-		{
-			Log.Info( $"Items at {entry.Key}:" );
-
-			foreach ( var item in entry.Value )
-			{
-				Log.Info( $" - {item.Key}: {item.Value.GetName()}" );
-			}
-		}
-	}*/
-
-	/*public bool HasNodeLink( WorldNodeLink node )
-	{
-		// return _nodeLinkGridMap.ContainsValue( node );
-		return WorldItems.Contains( node );
-	}*/
 	public Vector3 GetRelativePosition( Vector3 worldPosition )
 	{
 		return worldPosition - WorldPosition;
 	}
-
 
 	public Rotation GetRelativeRotation( Rotation worldRotation )
 	{
