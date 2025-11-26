@@ -10,7 +10,7 @@ public class FoodData : ItemData, IEdibleData
 
 	[Property, Group( "Food" )] public IEdibleData.EdibleType Type { get; set; } = IEdibleData.EdibleType.Food;
 
-	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
+	public override IEnumerable<ItemAction> GetActions( InventorySlot slot )
 	{
 		yield return new ItemAction { Name = "Hold", Icon = "restaurant", Action = slot.HoldEdible };
 

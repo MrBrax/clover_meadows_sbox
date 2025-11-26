@@ -24,7 +24,7 @@ public sealed class ToolData : ItemData
 		return Icon ?? "ui/icons/default_tool.png";
 	}
 
-	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
+	public override IEnumerable<ItemAction> GetActions( InventorySlot slot )
 	{
 		yield return new ItemAction { Name = "Equip", Icon = "build", Action = slot.Equip };
 	}

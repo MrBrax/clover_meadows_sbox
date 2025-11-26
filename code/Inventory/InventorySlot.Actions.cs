@@ -8,7 +8,7 @@ using Clover.Ui;
 
 namespace Clover.Inventory;
 
-public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
+public sealed partial class InventorySlot
 {
 	public void Drop()
 	{

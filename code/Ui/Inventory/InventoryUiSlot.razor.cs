@@ -11,9 +11,9 @@ public partial class InventoryUiSlot
 	public Inventory.Inventory Inventory;
 	public int Index;
 
-	private InventorySlot<PersistentItem> _slot;
+	private InventorySlot _slot;
 
-	public InventorySlot<PersistentItem> Slot
+	public InventorySlot Slot
 	{
 		get => _slot;
 		set
@@ -27,9 +27,9 @@ public partial class InventoryUiSlot
 	protected override void OnDoubleClick( MousePanelEvent e )
 	{
 		base.OnDoubleClick( e );
-		
+
 		if ( Slot == null || !Slot.HasItem ) return;
-		
+
 		if ( Slot.GetItem().ItemData is ToolData toolData )
 		{
 			Slot.Equip();
@@ -88,7 +88,7 @@ public partial class InventoryUiSlot
 		{
 			s.RemoveClass( "moving-to" );
 		}
-		
+
 		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiEquip>() )
 		{
 			s.RemoveClass( "moving-to" );
@@ -103,7 +103,7 @@ public partial class InventoryUiSlot
 			DropOnSlot( slot );
 			return;
 		}
-		
+
 		var equip = FindRootPanel().Descendants.OfType<InventoryUiEquip>()
 			.FirstOrDefault( x => x.IsInside( e.ScreenPosition ) );
 
@@ -112,7 +112,6 @@ public partial class InventoryUiSlot
 			DropOnEquip( equip );
 			return;
 		}
-		
 	}
 
 	private void DropOnSlot( InventoryUiSlot slot )
@@ -129,9 +128,8 @@ public partial class InventoryUiSlot
 		}
 
 		Sound.Play( "sounds/ui/inventory_stop_drag.sound" );
-		
 	}
-	
+
 	private void DropOnEquip( InventoryUiEquip equip )
 	{
 		Log.Info( $"Dropped on {equip.Slot}" );
@@ -146,18 +144,18 @@ public partial class InventoryUiSlot
 		}
 
 		Sound.Play( "sounds/ui/inventory_stop_drag.sound" );
-		
 	}
 
 
 	private Panel _lastHovered;
+
 	protected override void OnDragSelect( SelectionEvent e )
 	{
 		if ( Slot == null || !Slot.HasItem ) return;
 
 		var slot = FindRootPanel().Descendants.OfType<InventoryUiSlot>()
 			.FirstOrDefault( x => x.IsInside( e.EndPoint ) );
-		
+
 		var equip = FindRootPanel().Descendants.OfType<InventoryUiEquip>()
 			.FirstOrDefault( x => x.IsInside( e.EndPoint ) );
 
@@ -169,7 +167,7 @@ public partial class InventoryUiSlot
 		{
 			s.RemoveClass( "moving-to" );
 		}
-		
+
 		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiEquip>() )
 		{
 			s.RemoveClass( "moving-to" );
@@ -177,14 +175,13 @@ public partial class InventoryUiSlot
 
 		slot?.AddClass( "moving-to" );
 		equip?.AddClass( "moving-to" );
-		
+
 		Panel currentHovered = slot != null ? slot : equip;
 		if ( _lastHovered != currentHovered )
 		{
 			Sound.Play( "sounds/ui/inventory_hover_drag.sound" );
 			_lastHovered = currentHovered;
 		}
-		
 	}
 
 	protected override void OnDrag( DragEvent e )
@@ -220,9 +217,9 @@ public partial class InventoryUiSlot
 		Log.Info( "Creating context menu" );
 		_contextMenu = new ContextMenu( this, Mouse.Position * ScaleFromScreen );
 		_contextMenu.Title = Slot.GetName();
-		
+
 		var item = Slot.GetItem();
-		
+
 		/*if ( item.ItemData is ToolData toolData )
 		{
 			_contextMenu.AddItem( "Equip", () =>
@@ -230,7 +227,7 @@ public partial class InventoryUiSlot
 				Slot.Equip();
 			} );
 		}*/
-		
+
 		foreach ( var action in item.ItemData.GetActions( Slot ) )
 		{
 			_contextMenu.AddItem( action.Name, action.Icon, () =>
@@ -239,7 +236,7 @@ public partial class InventoryUiSlot
 				_contextMenu.Delete();
 			} );
 		}
-		
+
 
 		if ( item.ItemData.PlaceScene != null && item.ItemData.CanPlace )
 		{
@@ -258,7 +255,7 @@ public partial class InventoryUiSlot
 				_contextMenu.Delete();
 			} );
 		}
-		
+
 		_contextMenu.AddItem( "Destroy", "delete", () =>
 		{
 			Slot.Destroy();

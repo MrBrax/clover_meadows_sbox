@@ -152,7 +152,7 @@ public class Dialogue : GameResource
 
 	[ActionGraphNode( "clover.dialogue.inventoryindexestoslots" )]
 	[Title( "Inventory Indexes To Slots" ), Group( "Dialogue" ), Icon( "chat" )]
-	public static List<InventorySlot<PersistentItem>> InventoryIndexesToSlots( InventoryContainer container,
+	public static List<InventorySlot> InventoryIndexesToSlots( InventoryContainer container,
 		int[] indexes )
 	{
 		return indexes.Select( container.GetSlotByIndex ).Where( slot => slot != null ).ToList();
@@ -191,7 +191,7 @@ public class Dialogue : GameResource
 
 	[ActionGraphNode( "clover.dialogue.getitemssellprice.slot" )]
 	[Title( "Get Items Sell Price (Slot)" ), Group( "Dialogue" ), Icon( "chat" )]
-	public static int GetItemsSellPrice( List<InventorySlot<PersistentItem>> slots )
+	public static int GetItemsSellPrice( List<InventorySlot> slots )
 	{
 		return slots.Sum( slot =>
 			slot.GetItem().ItemData.GetCustomSellPrice?.Invoke( TimeManager.Time ) ??

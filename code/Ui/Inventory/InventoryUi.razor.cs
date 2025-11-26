@@ -8,14 +8,13 @@ namespace Clover.Ui;
 
 public partial class InventoryUi : IInventoryEvent
 {
-	
 	public static InventoryUi Instance => Game.ActiveScene.GetAllComponents<InventoryUi>().FirstOrDefault();
-	
+
 	private Inventory.Inventory Inventory => PlayerCharacter.Local?.Inventory;
-	private IEnumerable<InventorySlot<PersistentItem>> Slots => Inventory?.Container.Slots;
+	private IEnumerable<InventorySlot> Slots => Inventory?.Container.Slots;
 
 	public bool Show;
-	
+
 	private Panel SlotContainer { get; set; }
 
 	protected override void OnEnabled()
@@ -24,7 +23,7 @@ public partial class InventoryUi : IInventoryEvent
 		UpdateInventory();
 		Panel.Style.Display = DisplayMode.None;
 	}
-	
+
 	private const int SlotsPerRow = 5;
 
 	private void UpdateInventory()
@@ -34,7 +33,7 @@ public partial class InventoryUi : IInventoryEvent
 			// Log.Error( "SlotContainer is null" );
 			return;
 		}
-		
+
 		SlotContainer.DeleteChildren();
 
 		if ( Inventory == null )
@@ -44,7 +43,7 @@ public partial class InventoryUi : IInventoryEvent
 		}
 
 		Panel row = null;
-		
+
 		foreach ( var entry in Inventory.Container.QuerySlots() )
 		{
 			var rowNumber = entry.Index / SlotsPerRow;
@@ -55,27 +54,25 @@ public partial class InventoryUi : IInventoryEvent
 				row.AddClass( "inventory-row" );
 				SlotContainer.AddChild( row );
 			}
-			
+
 			var slotButton = new InventoryUiSlot();
 			slotButton.Index = entry.Index;
 			slotButton.Slot = entry.HasSlot ? entry.Slot : null;
 			slotButton.Inventory = Inventory;
 			slotButton.AddClass( entry.HasSlot ? "has-item" : "empty" );
-			
+
 			// SlotContainer.AddChild( slotButton );
 			row.AddChild( slotButton );
-
 		}
-		
+
 		StateHasChanged();
-		
 	}
 
 	protected override void OnFixedUpdate()
 	{
 		base.OnFixedUpdate();
-		
-		if ( Input.Pressed( "Inventory") )
+
+		if ( Input.Pressed( "Inventory" ) )
 		{
 			Show = !Show;
 			Panel.Style.Display = Show ? DisplayMode.Flex : DisplayMode.None;
@@ -84,14 +81,14 @@ public partial class InventoryUi : IInventoryEvent
 			Sound.Play( "sounds/ui/inventory_toggle.sound" );
 		}
 	}
-	
+
 	public void Close()
 	{
 		Show = false;
 		Panel.Style.Display = DisplayMode.None;
 		StateHasChanged();
 	}
-	
+
 	protected override int BuildHash()
 	{
 		return HashCode.Combine( Show, Inventory );

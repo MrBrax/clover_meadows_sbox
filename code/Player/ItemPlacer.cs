@@ -41,7 +41,7 @@ public class ItemPlacer : Component, IWorldEvent
 	public bool IsMoving;
 	public int InventorySlotIndex;
 
-	public InventorySlot<PersistentItem> InventorySlot =>
+	public InventorySlot InventorySlot =>
 		Player.Inventory.Container.GetSlotByIndex( InventorySlotIndex );
 
 	private ItemData ItemData => InventorySlot.GetItem().ItemData;

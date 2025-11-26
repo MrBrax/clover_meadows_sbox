@@ -12,7 +12,7 @@ public partial class InventorySelectUi
 	private readonly HashSet<int> _selectedItemIndexes = new();
 	public int MaxItems { get; set; } = 1;
 
-	public delegate bool CanSelectItemDelegate( InventorySlot<PersistentItem> slot );
+	public delegate bool CanSelectItemDelegate( InventorySlot slot );
 
 	[Property] public CanSelectItemDelegate CanSelectItem { get; set; }
 

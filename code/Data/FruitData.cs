@@ -12,7 +12,7 @@ public class FruitData : ItemData, IEdibleData
 
 	[Property, Group( "Food" )] public IEdibleData.EdibleType Type { get; set; } = IEdibleData.EdibleType.Food;
 
-	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
+	public override IEnumerable<ItemAction> GetActions( InventorySlot slot )
 	{
 		// TODO: Add "Eat" action
 		/*yield return new ItemAction

@@ -8,7 +8,7 @@ public class SeedData : ItemData
 {
 	[Property, Group( "Seed" )] public ItemData SpawnedItemData { get; set; }
 
-	public override IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
+	public override IEnumerable<ItemAction> GetActions( InventorySlot slot )
 	{
 		yield return new ItemAction { Name = "Plant", Icon = "park", Action = slot.Plant };
 	}

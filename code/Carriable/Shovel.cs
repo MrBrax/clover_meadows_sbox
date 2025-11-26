@@ -254,7 +254,7 @@ public class Shovel : BaseCarriable
 		DigHole( pos );
 	}
 
-	public void BuryItem( InventorySlot<PersistentItem> slot, WorldItem hole )
+	public void BuryItem( InventorySlot slot, WorldItem hole )
 	{
 		var gridPos = hole.GridPosition;
 

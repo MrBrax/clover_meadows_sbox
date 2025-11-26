@@ -210,7 +210,7 @@ public class ItemData : GameResource
 		public Action Action;
 	}
 
-	public virtual IEnumerable<ItemAction> GetActions( InventorySlot<PersistentItem> slot )
+	public virtual IEnumerable<ItemAction> GetActions( InventorySlot slot )
 	{
 		// yield break;
 

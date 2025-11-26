@@ -5,18 +5,18 @@ using Sandbox.Diagnostics;
 
 namespace Clover.Inventory;
 
-public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
+public sealed partial class InventorySlot
 {
-
-
 	[JsonInclude] public int Index { get; set; } = -1;
 
-	[JsonInclude, JsonPropertyName( "_item" )] public TItem PersistentItem;
+	[JsonInclude, JsonPropertyName( "_item" )]
+	public PersistentItem PersistentItem;
 
 	/// <summary>
 	/// The amount of the item in the inventory slot. Not applicable for non-stackable items.
 	/// </summary>
-	[JsonInclude] public int Amount { get; private set; } = 1;
+	[JsonInclude]
+	public int Amount { get; private set; } = 1;
 
 	[JsonIgnore] public bool IsStackable => PersistentItem.IsStackable;
 	[JsonIgnore] public bool MaxStackReached => PersistentItem.StackSize <= Amount;
@@ -35,32 +35,39 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	[JsonIgnore] public bool HasItem => PersistentItem != null;
 
-	public void SetItem( TItem item )
+	public void SetItem( PersistentItem item )
 	{
 		PersistentItem = item;
 		InventoryContainer.OnChange();
 	}
 
-	public TItem GetItem()
+	public PersistentItem GetItem()
 	{
 		return PersistentItem;
 	}
 
-	public T GetItem<T>() where T : TItem
+	public T GetItem<T>() where T : PersistentItem
 	{
-		return (T)PersistentItem;
+		if ( PersistentItem is T typedItem )
+		{
+			return typedItem;
+		}
+
+		Log.Error( $"InventorySlot.GetItem<{typeof(T).Name}>: Item in slot is not of type {typeof(T).Name}" );
+
+		return null;
 	}
 
 	public string GetName()
 	{
 		return PersistentItem.GetName();
 	}
-	
+
 	public string GetIcon()
 	{
 		return PersistentItem.GetIcon();
 	}
-	
+
 	public Texture GetIconTexture()
 	{
 		return PersistentItem.GetIconTexture();
@@ -84,9 +91,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		InventoryContainer.OnChange();
 	}
 
-	public bool CanMergeWith( InventorySlot<TItem> other )
+	public bool CanMergeWith( InventorySlot other )
 	{
-
 		// abort if either item is null
 		if ( PersistentItem == null || other.PersistentItem == null )
 		{
@@ -118,7 +124,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// abort if stack can't hold the amount
 		if ( PersistentItem.StackSize < Amount + other.Amount )
 		{
-			Log.Info( $"CanMerge: Stack cannot hold the amount ({PersistentItem.StackSize} < {Amount + other.Amount})" );
+			Log.Info(
+				$"CanMerge: Stack cannot hold the amount ({PersistentItem.StackSize} < {Amount + other.Amount})" );
 			return false;
 		}
 
@@ -142,7 +149,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 	/// </summary>
 	/// <param name="other"></param>
 	/// <exception cref="Exception"></exception>
-	public void MergeWith( InventorySlot<TItem> other )
+	public void MergeWith( InventorySlot other )
 	{
 		// sanity check!
 		if ( other == null )
@@ -212,6 +219,4 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			Delete();
 		}
 	}
-
-	
 }

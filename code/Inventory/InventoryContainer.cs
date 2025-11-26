@@ -18,7 +18,7 @@ public sealed partial class InventoryContainer
 
 	[JsonInclude] public int MaxItems { get; set; } = 20;
 
-	[JsonInclude] public List<InventorySlot<PersistentItem>> Slots = new();
+	[JsonInclude] public List<InventorySlot> Slots = new();
 
 
 	// public delegate void InventoryChangedEventHandler();
@@ -35,7 +35,7 @@ public sealed partial class InventoryContainer
 		MaxItems = slots;
 	}
 
-	public InventorySlot<PersistentItem> GetSlotByIndex( int index )
+	public InventorySlot GetSlotByIndex( int index )
 	{
 		return Slots.FirstOrDefault( slot => slot.Index == index );
 	}
@@ -43,7 +43,7 @@ public sealed partial class InventoryContainer
 	public struct InventoryContainerEntry
 	{
 		public int Index;
-		public InventorySlot<PersistentItem> Slot;
+		public InventorySlot Slot;
 		public bool HasSlot => Slot != null;
 	}
 
@@ -83,9 +83,9 @@ public sealed partial class InventoryContainer
 		return -1;
 	}
 
-	public IEnumerable<InventorySlot<PersistentItem>> GetUsedSlots()
+	public IEnumerable<InventorySlot> GetUsedSlots()
 	{
-		return Slots.ToImmutableList();
+		return Slots.ToArray();
 	}
 
 	[JsonIgnore] public int FreeSlots => MaxItems - Slots.Count;
@@ -98,7 +98,7 @@ public sealed partial class InventoryContainer
 		Slots.Clear();
 	}
 
-	public void ImportSlot( InventorySlot<PersistentItem> slot )
+	public void ImportSlot( InventorySlot slot )
 	{
 		if ( Slots.Count >= MaxItems )
 		{
@@ -126,9 +126,9 @@ public sealed partial class InventoryContainer
 	/// <param name="item"></param>
 	/// <returns></returns>
 	/// <exception cref="InventoryFullException"></exception>
-	public InventorySlot<PersistentItem> AddItem( PersistentItem item, bool merge = false )
+	public InventorySlot AddItem( PersistentItem item, bool merge = false )
 	{
-		InventorySlot<PersistentItem> slot;
+		InventorySlot slot;
 
 		if ( !merge )
 		{
@@ -138,7 +138,7 @@ public sealed partial class InventoryContainer
 				throw new InventoryFullException( "Inventory is full." );
 			}
 
-			slot = new InventorySlot<PersistentItem>( this );
+			slot = new InventorySlot( this );
 			slot.Index = index;
 			slot.SetItem( item );
 
@@ -199,7 +199,7 @@ public sealed partial class InventoryContainer
 
 		if ( item.ItemData == null ) throw new Exception( "ItemData is null" );
 
-		var slot = new InventorySlot<PersistentItem>( this );
+		var slot = new InventorySlot( this );
 		slot.Index = index;
 		slot.SetItem( item );
 
@@ -289,7 +289,7 @@ public sealed partial class InventoryContainer
 		// SyncToPlayerList();
 	}
 
-	private static int SlotSortingFunc( InventorySlot<PersistentItem> a, InventorySlot<PersistentItem> b )
+	private static int SlotSortingFunc( InventorySlot a, InventorySlot b )
 	{
 		var itemA = a.GetItem();
 		var itemB = b.GetItem();
@@ -357,7 +357,7 @@ public sealed partial class InventoryContainer
 		Game.ActiveScene.RunEvent<IInventoryEvent>( x => x.OnInventoryChanged( this ) );
 	}
 
-	public void RemoveSlot( InventorySlot<PersistentItem> inventorySlot )
+	public void RemoveSlot( InventorySlot inventorySlot )
 	{
 		Slots.Remove( inventorySlot );
 		RecalculateIndexes();
@@ -508,18 +508,18 @@ public sealed partial class InventoryContainer
 		return Slots.Any( slot => slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) && slot.Amount >= quantity );
 	}
 
-	public InventorySlot<PersistentItem> GetSlotWithItem( ItemData item )
+	public InventorySlot GetSlotWithItem( ItemData item )
 	{
 		return Slots.FirstOrDefault( slot => slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) );
 	}
 
-	public InventorySlot<PersistentItem> GetSlotWithItem( ItemData item, int quantity )
+	public InventorySlot GetSlotWithItem( ItemData item, int quantity )
 	{
 		return Slots.FirstOrDefault( slot =>
 			slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) && slot.Amount >= quantity );
 	}
 
-	public IEnumerable<InventorySlot<PersistentItem>> GetSlotsWithItem( ItemData item )
+	public IEnumerable<InventorySlot> GetSlotsWithItem( ItemData item )
 	{
 		return Slots.Where( slot => slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) );
 	}
