@@ -11,6 +11,8 @@ public partial class InventoryUiSlot
 	[Parameter] public Inventory.Inventory Inventory;
 	[Parameter] public int Index;
 
+	// public override bool HasTooltip => true;
+
 	private InventorySlot _slot;
 
 	public InventorySlot Slot
@@ -22,6 +24,14 @@ public partial class InventoryUiSlot
 			StateHasChanged();
 			// UpdateSlot();
 		}
+	}
+
+	protected override void OnAfterTreeRender( bool firstTime )
+	{
+		base.OnAfterTreeRender( firstTime );
+		// Tooltip = Slot != null && Slot.HasItem ? Slot.GetItem().GetName() : null;
+		SetClass( "has-item", Slot != null && Slot.HasItem );
+		SetClass( "empty", Slot == null || !Slot.HasItem );
 	}
 
 	protected override void OnDoubleClick( MousePanelEvent e )
