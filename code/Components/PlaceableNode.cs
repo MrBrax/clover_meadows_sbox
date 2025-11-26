@@ -9,7 +9,7 @@
 /// </summary>
 public class PlaceableNode : Component
 {
-	public WorldNodeLink PlacedNodeLink { get; set; }
+	// public WorldNodeLink PlacedNodeLink { get; set; }
 
 	protected override void DrawGizmos()
 	{

@@ -37,7 +37,7 @@ public class BuriedItem : Component, IPersistent, IDiggable
 		return true;
 	}
 
-	public bool OnDig( PlayerCharacter player, WorldNodeLink item )
+	public bool OnDig( PlayerCharacter player, WorldItem item )
 	{
 		if ( Item == null )
 		{

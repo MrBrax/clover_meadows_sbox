@@ -28,7 +28,7 @@ public class Axe : BaseCarriable
 
 		var pos = Player.GetAimingGridPosition();
 
-		List<WorldNodeLink> worldItems;
+		List<WorldItem> worldItems;
 
 		try
 		{
@@ -50,7 +50,7 @@ public class Axe : BaseCarriable
 
 		foreach ( var floorItem in worldItems )
 		{
-			if ( floorItem.Node.Components.TryGet<Tree>( out var tree ) )
+			if ( floorItem.Components.TryGet<Tree>( out var tree ) )
 			{
 				if ( tree.IsFalling || tree.IsDroppingFruit )
 				{
@@ -72,12 +72,12 @@ public class Axe : BaseCarriable
 		Log.Info( "No floor item to interact with." );
 	}
 
-	private void HitItem( Vector2Int pos, WorldNodeLink floorItem )
+	private void HitItem( Vector2Int pos, WorldItem floorItem )
 	{
 		Log.Info( "Hitting item." );
 	}
 
-	private async void ChopTree( Vector2Int pos, WorldNodeLink nodeLink, Items.Tree tree )
+	private async void ChopTree( Vector2Int pos, WorldItem nodeLink, Items.Tree tree )
 	{
 		// Logger.Info( "Chopping tree." );
 		// GetNode<AudioStreamPlayer3D>( "TreeHit" ).Play();
@@ -116,7 +116,7 @@ public class Axe : BaseCarriable
 		// await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
 		await Task.DelayRealtimeSeconds( 1 );
 
-		nodeLink.Remove();
+		nodeLink.RemoveFromWorld();
 
 		// var stump = Loader.LoadResource<ItemData>( ResourceManager.Instance.GetItemPathByName( "item:tree_stump" ) );
 		// var stumpNode = World.SpawnNode( stump, pos, World.ItemRotation.North, World.ItemPlacement.Floor );

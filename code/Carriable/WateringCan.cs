@@ -55,7 +55,7 @@ public sealed class WateringCan : BaseCarriable
 			return;
 		}
 
-		var floorItem = worldItems.FirstOrDefault( x => x.Node.GetComponent<IWaterable>() != null );
+		var floorItem = worldItems.FirstOrDefault( x => x.GetComponent<IWaterable>() != null );
 
 		if ( floorItem != null )
 		{
@@ -66,12 +66,12 @@ public sealed class WateringCan : BaseCarriable
 		_ = PourWaterAsync();
 	}
 
-	private async void WaterItem( WorldNodeLink floorItem )
+	private async void WaterItem( WorldItem floorItem )
 	{
 		Log.Info( "Watering item." );
 		// (floorItem.Node as IWaterable)?.OnWater( this );
 
-		if ( !floorItem.Node.Components.TryGet<IWaterable>( out var waterable ) )
+		if ( !floorItem.Components.TryGet<IWaterable>( out var waterable ) )
 		{
 			Log.Warning( "Item is not waterable." );
 			return;

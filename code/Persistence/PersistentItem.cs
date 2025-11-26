@@ -466,12 +466,12 @@ public class PersistentItem
 			persistent2.OnSave( persistentItem );
 		}
 
-		var nodeLink = WorldManager.Instance.GetWorldNodeLink( gameObject );
+		/*var nodeLink = WorldManager.Instance.GetWorldNodeLink( gameObject );
 		if ( nodeLink != null )
 		{
 			nodeLink.OnNodeSave();
 			persistentItem = nodeLink.GetPersistence();
-		}
+		}*/
 
 		return persistentItem;
 	}

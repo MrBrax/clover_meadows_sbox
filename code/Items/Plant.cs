@@ -102,7 +102,7 @@ public class Plant : Component, IInteract, IWaterable, IDiggable, IPersistent
 		return Growth >= 1f;
 	}
 
-	public bool OnDig( PlayerCharacter player, WorldNodeLink item )
+	public bool OnDig( PlayerCharacter player, WorldItem item )
 	{
 		// TODO: give item
 		return false;

@@ -98,4 +98,16 @@ public sealed partial class World
 		return WorldItems.FirstOrDefault( x =>
 			x.WorldPosition == ItemGridToWorld( gridPos ) && x.Node.GetComponent<T>() != null );
 	}*/
+
+	[Obsolete]
+	public WorldItem GetWorldItem( GameObject node )
+	{
+		return WorldItems.FirstOrDefault( x => x.GameObject == node );
+	}
+
+	public WorldItem GetWorldItem<T>( Vector2Int gridPos ) where T : Component
+	{
+		return WorldItems.FirstOrDefault( x =>
+			x.WorldPosition == ItemGridToWorld( gridPos ) && x.GameObject.GetComponent<T>() != null );
+	}
 }

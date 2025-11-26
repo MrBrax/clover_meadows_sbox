@@ -57,12 +57,12 @@ public class Shovel : BaseCarriable
 
 			foreach ( var floorItem in worldItems )
 			{
-				if ( floorItem.Node.Components.TryGet<Hole>( out var hole ) )
+				if ( floorItem.Components.TryGet<Hole>( out var hole ) )
 				{
 					FillHole( pos );
 					break;
 				}
-				else if ( floorItem.Node.Components.TryGet<IDiggable>( out var diggable ) )
+				else if ( floorItem.Components.TryGet<IDiggable>( out var diggable ) )
 				{
 					DigUpFloorItem( pos, floorItem, diggable );
 					break;
@@ -105,11 +105,11 @@ public class Shovel : BaseCarriable
 		return surface.ResourceName == "grass" || surface.ResourceName == "dirt";
 	}
 
-	private void HitItem( Vector2Int pos, WorldNodeLink floorItem )
+	private void HitItem( Vector2Int pos, WorldItem floorItem )
 	{
 		if ( floorItem.ItemData.Name == "Tree stump" )
 		{
-			floorItem.Remove();
+			floorItem.RemoveFromWorld();
 			return;
 		}
 
@@ -135,16 +135,17 @@ public class Shovel : BaseCarriable
 	{
 		Log.Info( $"Filled hole at {pos}" );
 
-		var hole = Player.World.GetNodeLink<Hole>( pos );
+		var hole = Player.World.GetWorldItem<Hole>( pos );
 		if ( hole == null )
 		{
 			Log.Info( "No hole found." );
 			return;
 		}
 
-		if ( hole.Node.Components.TryGet<Hole>( out var holeItem ) )
+		if ( hole.Components.TryGet<Hole>( out var holeItem ) )
 		{
-			Player.World.RemoveItem( holeItem.GameObject );
+			// Player.World.RemoveItem( holeItem.GameObject );
+			holeItem.GetComponent<WorldItem>().RemoveFromWorld();
 
 			Player.SnapToGrid();
 			Player.ModelLookAt( Player.World.ItemGridToWorld( pos ) );
@@ -208,7 +209,7 @@ public class Shovel : BaseCarriable
 	/// </summary>
 	/// <param name="pos"></param>
 	/// <param name="item"></param>
-	private void DigUpFloorItem( Vector2Int pos, WorldNodeLink item, IDiggable diggable )
+	private void DigUpFloorItem( Vector2Int pos, WorldItem item, IDiggable diggable )
 	{
 		Log.Info( $"Dug up {item.ItemData.Name} at {pos}" );
 
@@ -247,19 +248,20 @@ public class Shovel : BaseCarriable
 			return;
 		}
 
-		Player.World.RemoveItem( item );
+		// Player.World.RemoveItem( item );
+		item.RemoveFromWorld();
 
 		DigHole( pos );
 	}
 
-	public void BuryItem( InventorySlot<PersistentItem> slot, WorldNodeLink hole )
+	public void BuryItem( InventorySlot<PersistentItem> slot, WorldItem hole )
 	{
 		var gridPos = hole.GridPosition;
 
 		// hole.RunSavePersistence();
 		// var item = hole.Persistence;
 
-		hole.Remove();
+		hole.RemoveFromWorld();
 
 		// main item
 		// Player.World.SpawnDroppedNode( slot.PersistentItem, gridPos, World.ItemRotation.North, World.ItemPlacement.Underground );
@@ -268,7 +270,7 @@ public class Shovel : BaseCarriable
 		var dirt = Player.World.SpawnPlacedItem( Data.ItemData.Get( "buried_item" ), gridPos,
 			World.ItemRotation.North );
 
-		var node = dirt.Node;
+		var node = dirt;
 
 		node.Components.Get<BuriedItem>().SetItem( slot.PersistentItem );
 	}

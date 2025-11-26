@@ -8,5 +8,5 @@ public interface IDiggable
 
 	// public bool GiveItemWhenDug();
 
-	bool OnDig( PlayerCharacter player, WorldNodeLink item );
+	bool OnDig( PlayerCharacter player, WorldItem item );
 }

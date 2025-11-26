@@ -87,7 +87,7 @@ public class Paintbrush : BaseCarriable
 			if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) || CurrentTexturePath == item.TexturePath )
 			{
 				Log.Info( $"Removing decal {item.TexturePath}" );
-				item.WorldItem.NodeLink.Remove();
+				item.WorldItem.RemoveFromWorld();
 			}
 			else
 			{
@@ -123,11 +123,11 @@ public class Paintbrush : BaseCarriable
 
 			newPItem.SetSaveData( "TexturePath", CurrentTexturePath );
 
-			WorldNodeLink node;
+			WorldItem worldItem;
 
 			try
 			{
-				node = Player.World.SpawnPlacedItem( newPItem, pos, playerRotation );
+				worldItem = Player.World.SpawnPlacedItem( newPItem, pos, playerRotation );
 			}
 			catch ( System.Exception e )
 			{
@@ -137,7 +137,7 @@ public class Paintbrush : BaseCarriable
 
 			SoundEx.Play( PaintSound, Player.WorldPosition );
 
-			ParticleManager.PoofAt( node.WorldPosition );
+			ParticleManager.PoofAt( worldItem.WorldPosition );
 
 			// fade in the decal
 			/* if ( node is Items.FloorDecal decal2 )

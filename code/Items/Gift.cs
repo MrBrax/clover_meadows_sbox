@@ -38,7 +38,7 @@ public class Gift : Component, IInteract, IPersistent
 			player.Inventory.PickUpItem( item );
 		}
 
-		WorldItem.NodeLink.Remove();
+		WorldItem.RemoveFromWorld();
 	}
 
 	public void FinishInteract( PlayerCharacter player )

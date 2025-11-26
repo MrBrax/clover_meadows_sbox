@@ -126,7 +126,7 @@ public class BaseCarriable : Component, IPersistent, IPickupable
 
 	public void OnPickup( PlayerCharacter player )
 	{
-		player.Inventory.PickUpItem( GetComponent<WorldItem>().NodeLink );
+		player.Inventory.PickUpItem( GetComponent<WorldItem>() );
 	}
 
 	public string GetPickupName()

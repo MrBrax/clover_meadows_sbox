@@ -292,4 +292,14 @@ public class WorldItem : Component, IPickupable
 	{
 		throw new NotImplementedException();
 	}
+
+	public void RemoveFromWorld()
+	{
+		if ( WorldLayerObject.IsValid() && WorldLayerObject.World.IsValid() )
+		{
+			WorldLayerObject.World.WorldItems.Remove( this );
+		}
+
+		GameObject.Destroy();
+	}
 }

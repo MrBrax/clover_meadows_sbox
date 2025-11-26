@@ -398,7 +398,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		var aimingGridPosition = InventoryContainer.Player.GetAimingGridPosition();
-		var floorItem = InventoryContainer.Player.World.GetNodeLink<Hole>( aimingGridPosition );
+		var floorItem = InventoryContainer.Player.World.GetWorldItem<Hole>( aimingGridPosition );
 		if ( floorItem == null )
 		{
 			Log.Warning( "No hole found" );
@@ -413,7 +413,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			return;
 		}
 
-		floorItem.Remove();
+		floorItem.RemoveFromWorld();
 
 		if ( spawnedItemData is PlantData plantData )
 		{
