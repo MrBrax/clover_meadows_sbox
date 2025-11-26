@@ -61,13 +61,15 @@ public class WorldObject : Component, IPickupable
 		return ObjectData?.Name ?? "Object";
 	}
 
+	public string GetName() => GetPickupName();
+
 	protected override void OnFixedUpdate()
 	{
 		if ( Networking.IsHost )
 		{
 			if ( WorldPosition.z < -10000f )
 			{
-				Log.Warning( $"{this} fell out of the world." );
+				Log.Warning( $"{GetName()} ({Id}, {GameObject.Name}) fell out of the world at {WorldPosition}." );
 				RemoveFromWorld();
 			}
 		}

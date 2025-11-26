@@ -182,16 +182,6 @@ public sealed partial class World
 			gameObject.LocalPosition = persistentWorldItem.WPosition;
 			gameObject.LocalRotation = persistentWorldItem.WAngles;
 
-			// gameObject.WorldPosition = persistentWorldItem.WPosition;
-			// gameObject.WorldRotation = persistentWorldItem.WAngles;
-
-			/*var nodeLink = new WorldNodeLink( this, gameObject )
-			{
-				ItemId = item.ItemId, PlacementType = item.PlacementType
-			};
-
-			nodeLink.OnNodeLoad( item );*/
-
 			if ( !gameObject.Components.TryGet<WorldItem>( out var worldItem ) )
 			{
 				Log.Error( $"No WorldItem component found on {gameObject}" );
