@@ -15,18 +15,18 @@ public partial class InventoryUi : IInventoryEvent
 
 	public bool Show;
 
-	private Panel SlotContainer { get; set; }
+	// private Panel SlotContainer { get; set; }
 
 	protected override void OnEnabled()
 	{
 		base.OnEnabled();
-		UpdateInventory();
+		// UpdateInventory();
 		Panel.Style.Display = DisplayMode.None;
 	}
 
 	private const int SlotsPerRow = 5;
 
-	private void UpdateInventory()
+	/*private void UpdateInventory()
 	{
 		if ( !SlotContainer.IsValid() )
 		{
@@ -66,7 +66,7 @@ public partial class InventoryUi : IInventoryEvent
 		}
 
 		StateHasChanged();
-	}
+	}*/
 
 	protected override void OnFixedUpdate()
 	{
@@ -76,7 +76,7 @@ public partial class InventoryUi : IInventoryEvent
 		{
 			Show = !Show;
 			Panel.Style.Display = Show ? DisplayMode.Flex : DisplayMode.None;
-			if ( Show ) UpdateInventory();
+			// if ( Show ) UpdateInventory();
 			StateHasChanged();
 			Sound.Play( "sounds/ui/inventory_toggle.sound" );
 		}
@@ -98,7 +98,7 @@ public partial class InventoryUi : IInventoryEvent
 	{
 		if ( container.Owner == Inventory?.GameObject )
 		{
-			UpdateInventory();
+			// UpdateInventory();
 		}
 	}
 }

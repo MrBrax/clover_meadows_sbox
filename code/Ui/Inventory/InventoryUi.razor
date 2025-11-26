@@ -15,7 +15,13 @@
 			<InventoryUiEquip Inventory=@Inventory Slot=@Equips.EquipSlot.Tool></InventoryUiEquip>
 			<InventoryUiCloverBalance/>
 		</div>
-		<div class="inventory-slots" @ref=" SlotContainer"></div>
+		<div class="inventory-slots">
+			@foreach ( var slot in Inventory.Container.QuerySlots() )
+			{
+				<InventoryUiSlot Inventory=@Inventory Index=@( slot.Index ) Slot=@slot.Slot @key=@(slot.Index)/>
+			}
+
+		</div>
 		@*<button @onclick=@( () => { Components.Get<PaintUi>( true ).Enabled = true; })>paint</button>*@
 	</div>
 </root>

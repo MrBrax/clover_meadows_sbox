@@ -8,8 +8,8 @@ namespace Clover.Ui;
 
 public partial class InventoryUiSlot
 {
-	public Inventory.Inventory Inventory;
-	public int Index;
+	[Parameter] public Inventory.Inventory Inventory;
+	[Parameter] public int Index;
 
 	private InventorySlot _slot;
 

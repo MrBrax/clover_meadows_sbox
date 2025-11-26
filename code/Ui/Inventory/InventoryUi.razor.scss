@@ -86,7 +86,9 @@ InventoryUi {
 
         flex-grow: 1;
 
-        flex-direction: column;
+        flex-direction: row;
+
+        flex-wrap: wrap;
 
         gap: 10px;
 
