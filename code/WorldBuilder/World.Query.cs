@@ -12,7 +12,7 @@ public sealed partial class World
 	/// </summary>
 	/// <param name="gridPos">The grid position to retrieve items from.</param>
 	/// <returns>An enumerable collection of WorldNodeLink items at the specified grid position.</returns>
-	public IEnumerable<WorldNodeLink> GetItems( Vector2Int gridPos, float radius = 16f )
+	public IEnumerable<WorldItem> GetItems( Vector2Int gridPos, float radius = 16f )
 	{
 		if ( !Networking.IsHost )
 		{
@@ -27,22 +27,22 @@ public sealed partial class World
 		// TODO: rework for new system
 		var w = ItemGridToWorld( gridPos );
 
-		return Items.Where( x => x.WorldPosition.Distance( w ) < radius );
+		return WorldItems.Where( x => x.WorldPosition.Distance( w ) < radius );
 	}
 
-	public IEnumerable<WorldNodeLink> GetItems( Vector3 worldPos, float radius = 16f )
+	public IEnumerable<WorldItem> GetItems( Vector3 worldPos, float radius = 16f )
 	{
 		if ( !Networking.IsHost )
 		{
 			throw new Exception( "Only the host can query the world" );
 		}
 
-		return Items.Where( x => x.WorldPosition.Distance( worldPos ) < radius );
+		return WorldItems.Where( x => x.WorldPosition.Distance( worldPos ) < radius );
 	}
 
 	public T GetItem<T>( Vector2Int gridPos, float radius = 16f ) where T : Component
 	{
-		return GetItems( gridPos, radius ).Select( x => x.Node.GetComponent<T>() ).FirstOrDefault();
+		return GetItems( gridPos, radius ).Select( x => x.GetComponent<T>() ).FirstOrDefault();
 	}
 
 	public bool IsPositionOccupied( Vector2Int gridPos )
@@ -57,7 +57,7 @@ public sealed partial class World
 
 	public bool IsPositionOccupied( Vector3 endPosition, GameObject ignoreMe, float f )
 	{
-		return Items.Any( x => x.Node != ignoreMe && x.WorldPosition.Distance( endPosition ) < f );
+		return WorldItems.Any( x => x.GameObject != ignoreMe && x.WorldPosition.Distance( endPosition ) < f );
 	}
 
 	public bool IsNearPlayer( Vector3 worldPos, float radius = 16f )
@@ -87,15 +87,15 @@ public sealed partial class World
 		return null;
 	}*/
 
-	public WorldNodeLink GetNodeLink( GameObject node )
+	/*public WorldNodeLink GetNodeLink( GameObject node )
 	{
 		// return _nodeLinkGridMap.Values.FirstOrDefault( x => x.Node == node );
-		return Items.FirstOrDefault( x => x.Node == node );
+		return WorldItems.FirstOrDefault( x => x.Node == node );
 	}
 
 	public WorldNodeLink GetNodeLink<T>( Vector2Int gridPos ) where T : Component
 	{
-		return Items.FirstOrDefault( x =>
+		return WorldItems.FirstOrDefault( x =>
 			x.WorldPosition == ItemGridToWorld( gridPos ) && x.Node.GetComponent<T>() != null );
-	}
+	}*/
 }

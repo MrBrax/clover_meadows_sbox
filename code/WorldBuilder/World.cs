@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 using Clover.Data;
+using Clover.Items;
 using Clover.Player;
 
 namespace Clover;
@@ -45,11 +46,11 @@ public sealed partial class World : Component
 	public string Title => Data.Title;
 
 
-	public delegate void OnItemAddedEvent( WorldNodeLink nodeLink );
+	public delegate void OnItemAddedEvent( WorldItem worldItem );
 
 	public event OnItemAddedEvent OnItemAdded;
 
-	public delegate void OnItemRemovedEvent( WorldNodeLink nodeLink );
+	public delegate void OnItemRemovedEvent( WorldItem worldItem );
 
 	public event OnItemRemovedEvent OnItemRemoved;
 
@@ -60,7 +61,9 @@ public sealed partial class World : Component
 
 	[Sync] private Dictionary<Vector2Int, float> TileHeights { get; set; } = new();
 
-	public HashSet<WorldNodeLink> Items { get; set; } = new();
+	// TODO: some kind of interface for both WorldItem and WorldObject?
+	public HashSet<WorldItem> WorldItems { get; set; } = new();
+	public HashSet<WorldObject> WorldObjects { get; set; } = new();
 
 
 	[Sync] public int Layer { get; set; }
@@ -224,7 +227,7 @@ public sealed partial class World : Component
 		return true;
 	}
 
-	public void RemoveItem( GameObject node )
+	/*public void RemoveItem( GameObject node )
 	{
 		// RemoveItem( item.GridPosition, item.Placement );
 		var nodeLink = GetNodeLink( node );
@@ -237,15 +240,15 @@ public sealed partial class World : Component
 
 		nodeLink.DestroyNode();
 
-		Items.Remove( nodeLink );
+		WorldItems.Remove( nodeLink );
 
 		OnItemRemoved?.Invoke( nodeLink );
-	}
+	}*/
 
-	public void RemoveItem( WorldNodeLink nodeLink )
+	/*public void RemoveItem( WorldNodeLink nodeLink )
 	{
 		RemoveItem( nodeLink.Node );
-	}
+	}*/
 
 	public void Setup()
 	{
@@ -302,7 +305,7 @@ public sealed partial class World : Component
 		Gizmo.Transform = new Transform( WorldPosition );
 		// Log.Info( WorldId + ": " + WorldPosition  );
 
-		foreach ( var item in Items )
+		foreach ( var item in WorldItems )
 		{
 			Gizmo.Draw.Text( $"{item.GridPosition} ({item.GetName()})",
 				new Transform( ItemGridToWorld( item.GridPosition ) ) );
@@ -350,9 +353,9 @@ public sealed partial class World : Component
 		}
 	}*/
 
-	public bool HasNodeLink( WorldNodeLink node )
+	/*public bool HasNodeLink( WorldNodeLink node )
 	{
 		// return _nodeLinkGridMap.ContainsValue( node );
-		return Items.Contains( node );
-	}
+		return WorldItems.Contains( node );
+	}*/
 }

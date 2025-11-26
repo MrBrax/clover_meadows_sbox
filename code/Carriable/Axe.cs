@@ -121,7 +121,7 @@ public class Axe : BaseCarriable
 		// var stump = Loader.LoadResource<ItemData>( ResourceManager.Instance.GetItemPathByName( "item:tree_stump" ) );
 		// var stumpNode = World.SpawnNode( stump, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
 
-		var stumpNode = tree.WorldItem.WorldLayerObject.World.SpawnPlacedNode( tree.StumpData, pos,
+		var stumpNode = tree.WorldItem.WorldLayerObject.World.SpawnPlacedItem( tree.StumpData, pos,
 			World.ItemRotation.North );
 	}
 }

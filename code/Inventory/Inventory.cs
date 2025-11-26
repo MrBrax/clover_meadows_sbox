@@ -35,25 +35,31 @@ public class Inventory : Component
 		return true;
 	}
 
-	public void PickUpItem( GameObject gameObject )
-	{
-		PickUpItem( WorldManager.Instance.ActiveWorld.GetNodeLink( gameObject ) );
-	}
 
-	public async void PickUpItem( WorldNodeLink nodeLink )
+	public async void PickUpItem( WorldItem worldItem )
 	{
-		if ( string.IsNullOrWhiteSpace( nodeLink.ItemId ) ) throw new System.Exception( "Item data is null" );
-
-		if ( nodeLink.IsBeingPickedUp )
+		if ( !worldItem.IsValid() )
 		{
-			Log.Warning( $"Item {nodeLink} is already being picked up" );
+			Log.Error( $"Item {worldItem} is not valid" );
 			return;
 		}
 
-		Log.Info( $"Picking up item {nodeLink.ItemId}" );
+		if ( !worldItem.ItemData.IsValid() )
+		{
+			Log.Error( $"Item data for {worldItem} is not valid" );
+			return;
+		}
+
+		if ( worldItem.IsBeingPickedUp )
+		{
+			Log.Warning( $"Item {worldItem} is already being picked up" );
+			return;
+		}
+
+		Log.Info( $"Picking up item {worldItem.ItemData}" );
 
 		// var inventoryItem = PersistentItem.Create( nodeLink );
-		var inventoryItem = PersistentItem.Create( nodeLink.Node );
+		var inventoryItem = PersistentItem.Create( worldItem.GameObject );
 
 		if ( inventoryItem == null )
 		{
@@ -66,22 +72,22 @@ public class Inventory : Component
 			return;
 		}
 
-		Log.Info( $"Picked up item {nodeLink.ItemId}" );
+		Log.Info( $"Picked up item {worldItem.ItemData}" );
 
 		Player.StartCutscene();
 		Player.CharacterController.Velocity = Vector3.Zero;
 
-		nodeLink.IsBeingPickedUp = true;
+		worldItem.IsBeingPickedUp = true;
 
 		// TODO: probably use tags instead
-		foreach ( var collider in nodeLink.Node.Components.GetAll<Collider>( FindMode.EverythingInSelfAndDescendants ) )
+		/*foreach ( var collider in worldItem.Node.Components.GetAll<Collider>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			collider.Enabled = false;
-		}
+		}*/
 
 		var tween = TweenManager.CreateTween();
-		tween.AddPosition( nodeLink.Node, Player.WorldPosition + Vector3.Up * 16f, 0.2f );
-		var scale = tween.AddScale( nodeLink.Node, Vector3.Zero, 0.3f );
+		tween.AddPosition( worldItem.GameObject, Player.WorldPosition + Vector3.Up * 16f, 0.2f );
+		var scale = tween.AddScale( worldItem.GameObject, Vector3.Zero, 0.3f );
 		scale.Parallel = true;
 
 		await tween.Wait();
@@ -91,7 +97,8 @@ public class Inventory : Component
 		Sound.Play( "sounds/interact/item_pickup.sound", WorldPosition );
 		Log.Info( WorldPosition );
 
-		nodeLink.Remove();
+		// worldItem.Remove();
+		worldItem.DestroyGameObject();
 
 		Player.EndCutscene();
 

@@ -417,7 +417,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		if ( spawnedItemData is PlantData plantData )
 		{
-			InventoryContainer.Player.World.SpawnCustomNode( plantData, plantData.PlantedScene, aimingGridPosition,
+			InventoryContainer.Player.World.SpawnCustomItem( plantData, plantData.PlantedScene, aimingGridPosition,
 				World.ItemRotation.North );
 		}
 		else

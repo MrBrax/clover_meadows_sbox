@@ -489,7 +489,7 @@ public class ItemPlacer : Component, IWorldEvent
 	{
 		try
 		{
-			Player.World.SpawnPlacedNode( InventorySlot.GetItem(), _ghost.WorldPosition, _ghost.WorldRotation );
+			Player.World.SpawnPlacedItem( InventorySlot.GetItem(), _ghost.WorldPosition, _ghost.WorldRotation );
 		}
 		catch ( Exception e )
 		{

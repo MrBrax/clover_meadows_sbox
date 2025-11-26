@@ -11,6 +11,7 @@ namespace Clover;
 ///  This class represents a link between a world and an item in the world.
 ///  All items placed on the grid in a world have one of these associated with them.
 /// </summary>
+/*
 public class WorldNodeLink : IValid
 {
 	[JsonIgnore] public World World { get; set; }
@@ -71,11 +72,11 @@ public class WorldNodeLink : IValid
 
 	public bool ShouldBeSaved()
 	{
-		/*// return true;
+		/#1#/ return true;
 		if ( Node is IWorldItem worldItem )
 		{
 			return worldItem.ShouldBeSaved();
-		}*/
+		}#1#
 
 		return true;
 	}
@@ -109,7 +110,7 @@ public class WorldNodeLink : IValid
 		};
 
 		return persistentItem;
-	}*/
+	}#1#
 
 	public void SetPersistence( PersistentItem persistentItem )
 	{
@@ -159,7 +160,7 @@ public class WorldNodeLink : IValid
 		foreach ( var persistent in Node.Components.GetAll<IPersistent>( FindMode.EverythingInSelfAndDescendants ) )
 		{
 			persistent.OnSave( Persistence );
-		}*/
+		}#1#
 
 		RunSavePersistence( Persistence );
 
@@ -360,3 +361,4 @@ public class WorldNodeLink : IValid
 		World.RemoveItem( this );
 	}
 }
+*/

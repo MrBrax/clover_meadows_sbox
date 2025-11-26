@@ -8,49 +8,46 @@ namespace Clover;
 
 public sealed partial class World
 {
-	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector2Int position, ItemRotation rotation )
+	public WorldItem SpawnPlacedItem( ItemData itemData, Vector2Int position, ItemRotation rotation )
 	{
 		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation );
 	}
 
-	public WorldNodeLink SpawnPlacedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation )
+	public WorldItem SpawnPlacedItem( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation )
 	{
 		var itemData = persistentItem.ItemData;
-		var nodeLink = SpawnPlacedNode( itemData, position, rotation );
-		nodeLink.SetPersistence( persistentItem );
-		nodeLink.RunLoadPersistence( persistentItem );
-		return nodeLink;
+		var worldItem = SpawnPlacedItem( itemData, position, rotation );
+		worldItem.LoadPersistence( persistentItem );
+		return worldItem;
 	}
 
-	public WorldNodeLink SpawnPlacedNode( ItemData itemData, Vector3 position, Rotation rotation )
+	public WorldItem SpawnPlacedItem( ItemData itemData, Vector3 position, Rotation rotation )
 	{
 		return SpawnNode( itemData, ItemPlacementType.Placed, position, rotation );
 	}
 
-	public WorldNodeLink SpawnPlacedNode( PersistentItem persistentItem, Vector3 position, Rotation rotation )
+	public WorldItem SpawnPlacedItem( PersistentItem persistentItem, Vector3 position, Rotation rotation )
 	{
 		var itemData = persistentItem.ItemData;
-		var nodeLink = SpawnPlacedNode( itemData, position, rotation );
-		nodeLink.SetPersistence( persistentItem );
-		nodeLink.RunLoadPersistence( persistentItem );
-		return nodeLink;
+		var worldItem = SpawnPlacedItem( itemData, position, rotation );
+		worldItem.LoadPersistence( persistentItem );
+		return worldItem;
 	}
 
-	public WorldNodeLink SpawnDroppedNode( ItemData itemData, Vector2Int position, ItemRotation rotation )
+	public WorldItem SpawnDroppedNode( ItemData itemData, Vector2Int position, ItemRotation rotation )
 	{
 		return SpawnNode( itemData, ItemPlacementType.Dropped, position, rotation );
 	}
 
-	public WorldNodeLink SpawnDroppedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation )
+	public WorldItem SpawnDroppedNode( PersistentItem persistentItem, Vector2Int position, ItemRotation rotation )
 	{
 		var itemData = persistentItem.ItemData;
-		var nodeLink = SpawnDroppedNode( itemData, position, rotation );
-		nodeLink.SetPersistence( persistentItem );
-		nodeLink.RunLoadPersistence( persistentItem );
-		return nodeLink;
+		var worldItem = SpawnDroppedNode( itemData, position, rotation );
+		worldItem.LoadPersistence( persistentItem );
+		return worldItem;
 	}
 
-	public WorldNodeLink SpawnCustomNode( ItemData itemData, GameObject scene, Vector2Int position,
+	public WorldItem SpawnCustomItem( ItemData itemData, GameObject scene, Vector2Int position,
 		ItemRotation rotation )
 	{
 		if ( IsOutsideGrid( position ) )
@@ -86,8 +83,8 @@ public sealed partial class World
 
 		var nodeLink = AddItem( position, rotation, gameObject );
 
-		nodeLink.ItemId = itemData.ResourceName;
-		nodeLink.PlacementType = ItemPlacementType.Placed;
+		nodeLink.SetItemData( itemData );
+		nodeLink.ItemPlacement = ItemPlacementType.Placed;
 
 		nodeLink.CalculateSize();
 
@@ -97,10 +94,12 @@ public sealed partial class World
 
 		gameObject.NetworkSpawn();
 
-		return nodeLink;
+		var worldItem = nodeLink.GetComponent<WorldItem>();
+
+		return worldItem;
 	}
 
-	private WorldNodeLink SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector2Int position,
+	private WorldItem SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector2Int position,
 		ItemRotation rotation )
 	{
 		Assert.NotNull( itemData, "Item data is null" );
@@ -116,9 +115,7 @@ public sealed partial class World
 		}*/
 
 
-		var defaultDropScene =
-			SceneUtility.GetPrefabScene(
-				ResourceLibrary.Get<PrefabFile>( "items/misc/dropped_item/dropped_item.prefab" ) );
+		var defaultDropScene = GameObject.GetPrefab( "items/misc/dropped_item/dropped_item.prefab" );
 
 		var scene = placementType switch
 		{
@@ -149,14 +146,14 @@ public sealed partial class World
 
 		var nodeLink = AddItem( position, rotation, gameObject );
 
-		nodeLink.ItemId = itemData.ResourceName;
-		nodeLink.PlacementType = ItemPlacementType.Placed;
+		nodeLink.SetItemData( itemData );
+		nodeLink.ItemPlacement = ItemPlacementType.Placed;
 
 		// replace itemdata with the one from the item, mainly for dropped items
-		if ( nodeLink.Node.Components.TryGet<WorldItem>( out var worldItem ) )
+		/*if ( nodeLink.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
 			worldItem.ItemData = itemData;
-		}
+		}*/
 
 		// nodeLink.CalculateSize();
 
@@ -166,7 +163,7 @@ public sealed partial class World
 
 		// AddNodeLinkToGridMap( nodeLink );
 
-		Items.Add( nodeLink );
+		WorldItems.Add( nodeLink );
 
 		// nodeLink.OnNodeAdded();
 
@@ -175,7 +172,7 @@ public sealed partial class World
 		return nodeLink;
 	}
 
-	private WorldNodeLink SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector3 position,
+	private WorldItem SpawnNode( ItemData itemData, ItemPlacementType placementType, Vector3 position,
 		Rotation rotation )
 	{
 		Assert.NotNull( itemData, "Item data is null" );
@@ -192,8 +189,7 @@ public sealed partial class World
 		*/
 
 		var defaultDropScene =
-			SceneUtility.GetPrefabScene(
-				ResourceLibrary.Get<PrefabFile>( "items/misc/dropped_item/dropped_item.prefab" ) );
+			GameObject.GetPrefab( "items/misc/dropped_item/dropped_item.prefab" );
 
 		var scene = placementType switch
 		{
@@ -224,14 +220,14 @@ public sealed partial class World
 
 		var nodeLink = AddItem( gameObject );
 
-		nodeLink.ItemId = itemData.ResourceName;
-		nodeLink.PlacementType = ItemPlacementType.Placed;
+		nodeLink.SetItemData( itemData );
+		nodeLink.ItemPlacement = ItemPlacementType.Placed;
 
 		// replace itemdata with the one from the item, mainly for dropped items
-		if ( nodeLink.Node.Components.TryGet<WorldItem>( out var worldItem ) )
+		/*if ( nodeLink.Components.TryGet<WorldItem>( out var worldItem ) )
 		{
 			worldItem.ItemData = itemData;
-		}
+		}*/
 
 		// nodeLink.CalculateSize();
 
@@ -257,14 +253,14 @@ public sealed partial class World
 	/// <param name="item"></param>
 	/// <returns></returns>
 	/// <exception cref="Exception"></exception>
-	public WorldNodeLink AddItem( Vector2Int position, ItemRotation rotation, GameObject item )
+	public WorldItem AddItem( Vector2Int position, ItemRotation rotation, GameObject item )
 	{
 		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
 
-		var nodeLink = new WorldNodeLink( this, item );
+		// var nodeLink = new WorldNodeLink( this, item );
 
 		// nodeLink.GridPosition = position;
 		// nodeLink.GridRotation = rotation;
@@ -277,25 +273,30 @@ public sealed partial class World
 
 		item.SetParent( GameObject ); // TODO: should items be parented to the world?
 
-		OnItemAdded?.Invoke( nodeLink );
+		// OnItemAdded?.Invoke( nodeLink );
 
-		nodeLink.OnNodeAdded();
+		// nodeLink.OnNodeAdded();
 
 		// UpdateTransform( nodeLink );
 
+		var worldItem = item.GetComponent<WorldItem>();
+		WorldItems.Add( worldItem );
+
 		Log.Info( $"Added item {item.Name} at {position} ({item.Id})" );
 
-		return nodeLink;
+		// return nodeLink;
+
+		return worldItem;
 	}
 
-	public WorldNodeLink AddItem( GameObject item )
+	public WorldItem AddItem( GameObject item )
 	{
 		/*if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
 		}*/
 
-		var nodeLink = new WorldNodeLink( this, item );
+		// var nodeLink = new WorldNodeLink( this, item );
 
 		// nodeLink.GridPlacement = placement;
 		// nodeLink.PrefabPath = nodeLink.GetPrefabPath();
@@ -305,11 +306,13 @@ public sealed partial class World
 
 		item.SetParent( GameObject ); // TODO: should items be parented to the world?
 
-		Items.Add( nodeLink );
+		// WorldItems.Add( nodeLink );
+		var nodeLink = item.GetComponent<WorldItem>();
+		WorldItems.Add( nodeLink );
 
-		OnItemAdded?.Invoke( nodeLink );
+		// OnItemAdded?.Invoke( nodeLink );
 
-		nodeLink.OnNodeAdded();
+		// nodeLink.OnNodeAdded();
 
 		// UpdateTransform( nodeLink );
 

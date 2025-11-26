@@ -4,6 +4,7 @@ using Clover.Components;
 using Clover.Data;
 using Clover.Interactable;
 using Clover.Inventory;
+using Clover.Persistence;
 using Clover.Player;
 
 namespace Clover.Items;
@@ -16,17 +17,21 @@ public class WorldItem : Component, IPickupable
 	[RequireComponent] public WorldLayerObject WorldLayerObject { get; set; }
 	[RequireComponent] public ItemHighlight ItemHighlight { get; set; }
 
-	public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World?.GetNodeLink( GameObject ) : null;
+	// public WorldNodeLink NodeLink => !Scene.IsEditor ? WorldLayerObject.World?.GetNodeLink( GameObject ) : null;
 
-	public Vector2Int GridPosition => NodeLink?.GridPosition ?? Vector2Int.Zero;
+	// public Vector2Int GridPosition => NodeLink?.GridPosition ?? Vector2Int.Zero;
 
-	public Vector2Int Size =>
-		!Scene.IsEditor ? NodeLink.Size : new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
+	// public Vector2Int Size =>
+	// 	!Scene.IsEditor ? NodeLink.Size : new Vector2Int( ItemData?.Width ?? 1, ItemData?.Height ?? 1 );
 
 	// public World.ItemPlacement GridPlacement => !Scene.IsEditor ? NodeLink.GridPlacement : World.ItemPlacement.Floor;
-	public World.ItemPlacementType GridPlacementType => NodeLink?.PlacementType ?? World.ItemPlacementType.Placed;
-	public World.ItemRotation GridRotation => NodeLink?.GridRotation ?? World.ItemRotation.North;
+	// public World.ItemPlacementType GridPlacementType => NodeLink?.PlacementType ?? World.ItemPlacementType.Placed;
+	// public World.ItemRotation GridRotation => NodeLink?.GridRotation ?? World.ItemRotation.North;
 
+	public Vector2Int GridPosition { get; set; }
+	public Vector2Int Size { get; set; }
+	public World.ItemPlacementType ItemPlacement { get; set; }
+	public World.ItemRotation ItemRotation { get; set; }
 
 	private string _prefab;
 
@@ -74,13 +79,13 @@ public class WorldItem : Component, IPickupable
 		// Log.Info( $"WorldItem {GameObject.Name} transform changed" );
 	}
 
-	public delegate void OnObjectSave( WorldNodeLink nodeLink );
+	/*public delegate void OnObjectSave( WorldNodeLink nodeLink );
 
 	[Property] public OnObjectSave OnItemSave { get; set; }
 
 	public delegate void OnObjectLoad( WorldNodeLink nodeLink );
 
-	[Property] public OnObjectLoad OnItemLoad { get; set; }
+	[Property] public OnObjectLoad OnItemLoad { get; set; }*/
 
 	protected override void DrawGizmos()
 	{
@@ -147,7 +152,7 @@ public class WorldItem : Component, IPickupable
 		base.OnUpdate();
 
 		if ( Gizmo.Camera == null || !DebugWorldItem ) return;
-		if ( NodeLink.IsValid() && NodeLink.PlacementType == World.ItemPlacementType.Dropped )
+		/*if ( NodeLink.IsValid() && NodeLink.PlacementType == World.ItemPlacementType.Dropped )
 		{
 			Gizmo.Draw.Text( $"Dropped: {NodeLink.GetName()}", new Transform( WorldPosition + Vector3.Up * 20 ) );
 		}
@@ -161,12 +166,14 @@ public class WorldItem : Component, IPickupable
 				Gizmo.Draw.Text( placeableNode.GameObject.Name, new Transform( placeableNode.WorldPosition ) );
 				Gizmo.Draw.Color = Color.White;
 			}
-		}
+		}*/
 	}
 
 	[ConVar( "clover_debug_worlditem" )] public static bool DebugWorldItem { get; set; }
 
 	[Property] public bool CanPickupSimple { get; set; }
+
+	public bool IsBeingPickedUp { get; set; }
 
 	public bool CanPickup( PlayerCharacter player )
 	{
@@ -203,7 +210,7 @@ public class WorldItem : Component, IPickupable
 	/// <param name="player"></param>
 	public void OnPickup( PlayerCharacter player )
 	{
-		player.Inventory.PickUpItem( NodeLink );
+		player.Inventory.PickUpItem( this );
 	}
 
 	public string GetPickupName()
@@ -255,5 +262,34 @@ public class WorldItem : Component, IPickupable
 	public void Show()
 	{
 		Tags.Remove( "invisible" );
+	}
+
+	public string GetName()
+	{
+		return ItemData.IsValid() ? ItemData.Name : GameObject.Name;
+	}
+
+	public bool ShouldBeSaved()
+	{
+		return true; // TODO: add option to not save
+	}
+
+	public PersistentItem SavePersistence()
+	{
+		return PersistentItem.Create( GameObject );
+	}
+
+	public void LoadPersistence( PersistentItem persistentItem )
+	{
+	}
+
+	public void SetItemData( ItemData itemData )
+	{
+		ItemData = itemData;
+	}
+
+	public void CalculateSize()
+	{
+		throw new NotImplementedException();
 	}
 }

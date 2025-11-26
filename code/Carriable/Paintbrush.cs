@@ -127,7 +127,7 @@ public class Paintbrush : BaseCarriable
 
 			try
 			{
-				node = Player.World.SpawnPlacedNode( newPItem, pos, playerRotation );
+				node = Player.World.SpawnPlacedItem( newPItem, pos, playerRotation );
 			}
 			catch ( System.Exception e )
 			{

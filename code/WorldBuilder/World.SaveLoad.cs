@@ -52,22 +52,30 @@ public sealed partial class World
 			}
 		}*/
 
-		var items = Items.ToList();
+		var items = WorldItems.ToList();
 
-		foreach ( var nodeLink in items )
+		foreach ( var worldItem in items )
 		{
-			if ( !nodeLink.ShouldBeSaved() )
+			if ( !worldItem.ShouldBeSaved() )
 			{
-				Log.Info( $"Skipping {nodeLink}" );
+				Log.Info( $"Skipping {worldItem}" );
 				continue;
 			}
 
-			// var prefabPath = nodeLink.GetPrefabPath();
-			// nodeLink.PrefabPath = prefabPath;
+			var persistentItem = worldItem.SavePersistence();
 
-			var persistentItem = nodeLink.OnNodeSave();
+			var persistentWorldItem = new PersistentWorldItem
+			{
+				ItemId = worldItem.ItemData.Id,
+				PlacementType = worldItem.ItemPlacement,
+				// Position = worldItem.WorldPosition,
+				// Rotation = worldItem.WorldRotation,
+				WPosition = worldItem.GameObject.WorldPosition,
+				WAngles = worldItem.GameObject.WorldRotation.Angles(),
+				Item = persistentItem
+			};
 
-			savedItems.Add( persistentItem );
+			savedItems.Add( persistentWorldItem );
 		}
 
 
@@ -142,17 +150,17 @@ public sealed partial class World
 
 		Log.Info( $"Loaded save data from {SaveFileName}" );
 
-		foreach ( var item in saveData.Items )
+		foreach ( var persistentWorldItem in saveData.Items )
 		{
-			var itemData = ItemData.Get( item.ItemId );
+			var itemData = ItemData.Get( persistentWorldItem.ItemId );
 			if ( !itemData.IsValid() )
 			{
-				Log.Error( $"Item data for {item.ItemId} is not valid" );
+				Log.Error( $"Item data for {persistentWorldItem.ItemId} is not valid" );
 				continue;
 			}
 
-			var position = item.Position;
-			var rotation = item.Rotation;
+			var position = persistentWorldItem.Position;
+			var rotation = persistentWorldItem.Rotation;
 
 
 			/*if ( string.IsNullOrEmpty( prefabPath ) )
@@ -162,14 +170,14 @@ public sealed partial class World
 			}
 			*/
 
-			Log.Info( $"Loading item {item.ItemId}" );
+			Log.Info( $"Loading item {persistentWorldItem.ItemId}" );
 
-			if ( !string.IsNullOrEmpty( item.Item.PackageIdent ) )
+			if ( !string.IsNullOrEmpty( persistentWorldItem.Item.PackageIdent ) )
 			{
-				var package = await Package.Fetch( item.Item.PackageIdent, false );
+				var package = await Package.Fetch( persistentWorldItem.Item.PackageIdent, false );
 				if ( package == null )
 				{
-					Log.Warning( $"Could not fetch package {item.Item.PackageIdent}" );
+					Log.Warning( $"Could not fetch package {persistentWorldItem.Item.PackageIdent}" );
 					continue;
 				}
 
@@ -180,27 +188,36 @@ public sealed partial class World
 			//gameObject.SetPrefabSource( prefabPath );
 			//gameObject.UpdateFromPrefab();
 
-			var prefab = item.PlacementType == ItemPlacementType.Dropped ? itemData.DropScene : itemData.PlaceScene;
+			var prefab = persistentWorldItem.PlacementType == ItemPlacementType.Dropped
+				? itemData.DropScene
+				: itemData.PlaceScene;
 
 			if ( !prefab.IsValid() )
 			{
-				Log.Error( $"Prefab for item {item.ItemId} is not valid" );
+				Log.Error( $"Prefab for item {persistentWorldItem.ItemId} is not valid" );
 				continue;
 			}
 
 			var gameObject = prefab.Clone();
 
-			gameObject.WorldPosition = item.WPosition;
-			gameObject.WorldRotation = item.WAngles;
+			gameObject.WorldPosition = persistentWorldItem.WPosition;
+			gameObject.WorldRotation = persistentWorldItem.WAngles;
 
-			var nodeLink = new WorldNodeLink( this, gameObject )
+			/*var nodeLink = new WorldNodeLink( this, gameObject )
 			{
 				ItemId = item.ItemId, PlacementType = item.PlacementType
 			};
 
-			nodeLink.OnNodeLoad( item );
+			nodeLink.OnNodeLoad( item );*/
 
-			Items.Add( nodeLink );
+			if ( !gameObject.Components.TryGet<WorldItem>( out var worldItem ) )
+			{
+				Log.Error( $"No WorldItem component found on {gameObject}" );
+				gameObject.Destroy();
+				continue;
+			}
+
+			WorldItems.Add( worldItem );
 
 			gameObject.SetParent( GameObject ); // TODO: should items be parented to the world?
 

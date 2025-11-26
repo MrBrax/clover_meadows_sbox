@@ -350,7 +350,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		}
 	}
 
-	public WorldNodeLink GetWorldNodeLink( GameObject gameObject )
+	/*public WorldNodeLink GetWorldNodeLink( GameObject gameObject )
 	{
 		foreach ( var world in Worlds.Values )
 		{
@@ -362,7 +362,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		}
 
 		return null;
-	}
+	}*/
 }
 
 public interface IWorldEvent
