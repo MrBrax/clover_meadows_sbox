@@ -48,6 +48,9 @@ public partial class InventoryUiSlot
 
 	private Panel Ghost;
 
+	/// <summary>
+	///  This has to be true to receive drag events, otherwise it just tries to scroll the panel.
+	/// </summary>
 	public override bool WantsDrag => true;
 
 	protected override void OnDragStart( DragEvent e )
@@ -56,6 +59,10 @@ public partial class InventoryUiSlot
 		Log.Info( "OnDragStart" );
 
 		AddClass( "dragging" );
+
+		// I make a "ghost" panel that follows the mouse cursor instead of dragging the actual panel, because
+		// dragging the actual panel causes all sorts of issues with layout. The ghost panel is added to the root panel,
+		// which means that the stylesheet for this panel does not apply to it, so the style has to be set manually.
 
 		Ghost = new Panel();
 		Ghost.Style.Position = PositionMode.Absolute;
@@ -94,6 +101,8 @@ public partial class InventoryUiSlot
 			Ghost.Delete();
 		}
 
+		// Clear all the "moving-to" classes from all slots and equips
+
 		foreach ( var s in FindRootPanel().Descendants.OfType<InventoryUiSlot>() )
 		{
 			s.RemoveClass( "moving-to" );
@@ -106,6 +115,7 @@ public partial class InventoryUiSlot
 
 		if ( Slot == null || !Slot.HasItem ) return;
 
+		// Check if we are over a slot or equip, IsInside is the only way to do this I think, but if there's a better way please tell me.
 		var slot = FindRootPanel().Descendants.OfType<InventoryUiSlot>()
 			.FirstOrDefault( x => x.IsInside( e.ScreenPosition ) );
 		if ( slot != null )
@@ -114,6 +124,7 @@ public partial class InventoryUiSlot
 			return;
 		}
 
+		// Check equips
 		var equip = FindRootPanel().Descendants.OfType<InventoryUiEquip>()
 			.FirstOrDefault( x => x.IsInside( e.ScreenPosition ) );
 
@@ -128,11 +139,11 @@ public partial class InventoryUiSlot
 	{
 		Log.Info( $"Dropped on slot #{slot.Index}" );
 
-		if ( Inventory.Id == slot.Inventory.Id )
+		if ( Inventory.Id == slot.Inventory.Id ) // Same inventory
 		{
 			Inventory.Container.MoveSlot( Slot.Index, slot.Index );
 		}
-		else
+		else // Different inventory, there are no storage containers yet, so this is not implemented
 		{
 			throw new NotImplementedException();
 		}
@@ -159,6 +170,7 @@ public partial class InventoryUiSlot
 
 	private Panel _lastHovered;
 
+	// This is called continuously while dragging, so we can use it to highlight the slot/equip we are hovering over
 	protected override void OnDragSelect( SelectionEvent e )
 	{
 		if ( Slot == null || !Slot.HasItem ) return;
@@ -194,6 +206,8 @@ public partial class InventoryUiSlot
 		}
 	}
 
+	// This is also called continuously while dragging, we use it to move the ghost panel.
+	// I don't know the difference between OnDrag and OnDragSelect, but both seem to be called.
 	protected override void OnDrag( DragEvent e )
 	{
 		if ( Slot == null || !Slot.HasItem ) return;
@@ -213,6 +227,8 @@ public partial class InventoryUiSlot
 
 	private ContextMenu _contextMenu;
 
+	// Custom context menu on right click, there's also Popup, but for easier styling I made my own ContextMenu class.
+	// The context menu shows different options depending on the item in the slot.
 	protected override void OnRightClick( MousePanelEvent e )
 	{
 		if ( Slot == null || !Slot.HasItem ) return;
