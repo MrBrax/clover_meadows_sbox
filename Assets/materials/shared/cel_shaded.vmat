@@ -1,0 +1,41 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "shaders/cel_shaded.shader"
+
+	//---- Ambient Occlusion ----
+	g_flAmbientOcclusionDirectDiffuse "0.000"
+	TextureAmbientOcclusion "materials/default/default_ao.tga"
+
+	//---- Cel ----
+	g_flDiffuseSteps "4.000"
+	g_flFlatAmbientStrength "0.120"
+	g_flRimPower "3.000"
+	g_flRimStrength "0.150"
+	g_flSpecularSteps "2.000"
+	g_flSpecularStrength "0.200"
+	g_vFlatAmbientColor "[1.000000 1.000000 1.000000]"
+	g_vRimTint "[1.000000 1.000000 1.000000]"
+
+	//---- Color ----
+	g_flTintColor "[1.000000 1.000000 1.000000]"
+	TextureColor "materials/default/default_color.tga"
+
+	//---- Fog ----
+	g_bFogEnabled "1"
+
+	//---- Metalness ----
+	TextureMetalness "materials/default/default_metal.tga"
+
+	//---- Normal ----
+	TextureNormal "materials/default/default_normal.tga"
+
+	//---- Roughness ----
+	TextureRoughness "materials/default/default_rough.tga"
+
+	//---- Texture Coordinates ----
+	g_vTexCoordOffset "[0.000 0.000]"
+	g_vTexCoordScale "[1.000 1.000]"
+	g_vTexCoordScrollSpeed "[0.000 0.000]"
+}
