@@ -1,30 +1,69 @@
 {
   "RootObject": {
     "__guid": "e631b962-245c-40ab-ba9b-ec604b6dfbbd",
+    "__version": 2,
     "Flags": 0,
     "Name": "shop",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
     "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkFlags": 0,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 1,
     "Components": [
       {
         "__type": "Clover.World",
         "__guid": "4ecfd064-5720-4f02-bf25-832dd695823f",
-        "Data": "worlds/shop/shop.world"
+        "__enabled": true,
+        "Flags": 0,
+        "Data": "worlds/shop/shop.world",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
       }
     ],
     "Children": [
       {
         "__guid": "80d83da8-211b-4148-877a-65b7fa084058",
+        "__version": 2,
         "Flags": 0,
         "Name": "shop_main",
         "Position": "256,192,0.00001439794",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "terrain",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.ModelRenderer",
             "__guid": "b9892183-d8c3-4a10-ac4d-400139993987",
+            "__enabled": true,
+            "Flags": 0,
             "BodyGroups": 18446744073709551615,
+            "CreateAttachments": false,
+            "LodOverride": null,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Materials": null,
             "Model": "worlds/shop/shop_main.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "RenderOptions": {
               "GameLayer": true,
               "OverlayLayer": false,
@@ -37,44 +76,101 @@
           {
             "__type": "Sandbox.ModelCollider",
             "__guid": "f510b25b-35c2-402b-b18e-836a7a6b4dba",
+            "__enabled": true,
+            "Flags": 0,
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": false,
             "Model": "worlds/shop/shop_main.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Static": true,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           }
         ],
         "Children": [
           {
             "__guid": "e86c408e-d312-452b-bad9-166bca2bb4e6",
+            "__version": 2,
             "Flags": 0,
             "Name": "Point Light",
             "Position": "192,0,15.99998",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
             "Tags": "light_point,light",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.PointLight",
                 "__guid": "eadec608-18bb-477c-9b2f-e59180d6741f",
+                "__enabled": true,
+                "Flags": 0,
                 "Attenuation": 2,
                 "FogMode": "Enabled",
                 "FogStrength": 1,
                 "LightColor": "14.91207,15.99148,16.32,1",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "Radius": 100,
                 "Shadows": true
               }
-            ]
+            ],
+            "Children": []
           },
           {
             "__guid": "44a00733-7bf8-4e98-865b-9c760442c4fd",
+            "__version": 2,
             "Flags": 0,
             "Name": "shop_counter",
+            "Position": "0,0,0",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
             "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "f46095fa-c54c-4bd6-8126-36e93094dfef",
+                "__enabled": true,
+                "Flags": 0,
                 "BodyGroups": 18446744073709551615,
+                "CreateAttachments": false,
+                "LodOverride": null,
+                "MaterialGroup": null,
+                "MaterialOverride": null,
+                "Materials": null,
                 "Model": "worlds/shop/shop_counter.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
                 "RenderOptions": {
                   "GameLayer": true,
                   "OverlayLayer": false,
@@ -87,207 +183,551 @@
               {
                 "__type": "Sandbox.ModelCollider",
                 "__guid": "add99de3-7c63-4a76-9e24-30a6df5cb030",
+                "__enabled": true,
+                "Flags": 0,
+                "ColliderFlags": 0,
+                "Elasticity": null,
+                "Friction": null,
                 "IsTrigger": false,
                 "Model": "worlds/shop/shop_counter.vmdl",
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "OnObjectTriggerEnter": null,
+                "OnObjectTriggerExit": null,
+                "OnTriggerEnter": null,
+                "OnTriggerExit": null,
+                "RollingResistance": null,
                 "Static": true,
+                "Surface": null,
                 "SurfaceVelocity": "0,0,0"
               }
-            ]
+            ],
+            "Children": []
           }
         ]
       },
       {
         "__guid": "b51223e1-0773-48bd-a3ed-85e48b29ee55",
+        "__version": 2,
         "Flags": 0,
         "Name": "Point Light",
         "Position": "96,128,96",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "light_point,light",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.PointLight",
             "__guid": "76813bff-c094-47a9-ad04-56afb724d7df",
+            "__enabled": true,
+            "Flags": 0,
             "Attenuation": 1,
             "FogMode": "Enabled",
             "FogStrength": 1,
             "LightColor": "0.91373,0.98039,1,1",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Radius": 400,
             "Shadows": true
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "e36422ed-aa73-4d24-9808-fd91f50bb73d",
+        "__version": 2,
         "Flags": 0,
         "Name": "Point Light (1)",
         "Position": "256,128,96",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "light_point,light",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.PointLight",
             "__guid": "77d17035-522a-4a87-99d6-c0df212992e5",
+            "__enabled": true,
+            "Flags": 0,
             "Attenuation": 1,
             "FogMode": "Enabled",
             "FogStrength": 1,
             "LightColor": "0.91373,0.98039,1,1",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Radius": 400,
             "Shadows": true
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "49c3323c-0890-4481-a065-2d33da2e9ba2",
+        "__version": 2,
         "Flags": 0,
         "Name": "Point Light (2)",
         "Position": "256,256,96",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "light_point,light",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Sandbox.PointLight",
             "__guid": "0ee9b917-5dcd-4ed4-b3f8-4fad46d2b3aa",
+            "__enabled": true,
+            "Flags": 0,
             "Attenuation": 1,
             "FogMode": "Enabled",
             "FogStrength": 1,
             "LightColor": "0.91373,0.98039,1,1",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "Radius": 400,
             "Shadows": true
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "18166db7-8085-4e5a-b828-49370c73b98b",
+        "__version": 2,
         "Flags": 0,
         "Name": "Entrance",
         "Position": "376,192,-10",
         "Rotation": "0,0,1,-0.00000004371139",
+        "Scale": "1,1,1",
         "Tags": "worldlayer_visible",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldEntrance",
             "__guid": "629300c7-6c34-45e6-8c65-9d28695155e3",
-            "EntranceId": "entry"
+            "__enabled": true,
+            "Flags": 0,
+            "EntranceId": "entry",
+            "ExitDoor": null,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "fcef52e9-d2f8-4cb0-8874-1ea318a11801"
+            "__guid": "fcef52e9-d2f8-4cb0-8874-1ea318a11801",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "1c6b916b-b0a9-4283-8f08-49b495b13ea4",
+        "__version": 2,
         "Flags": 0,
         "Name": "HouseTrigger",
         "Position": "392,192,4.000069",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
         "Tags": "trigger,worldlayer_visible",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.AreaTrigger",
             "__guid": "7831bfce-0ad4-419c-965d-6a0c9c4518f3",
+            "__enabled": true,
+            "Flags": 0,
             "DestinationEntranceId": "shop_exit",
             "DestinationWorldData": "worlds/island/island.world",
             "NoWalk": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "UnloadPreviousWorld": true
           },
           {
             "__type": "Sandbox.BoxCollider",
             "__guid": "206f2c58-4452-4c60-bca4-33452fc9170a",
+            "__enabled": true,
+            "Flags": 0,
             "Center": "0,0,0",
+            "ColliderFlags": 0,
+            "Elasticity": null,
+            "Friction": null,
             "IsTrigger": true,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnObjectTriggerEnter": null,
+            "OnObjectTriggerExit": null,
+            "OnTriggerEnter": null,
+            "OnTriggerExit": null,
+            "RollingResistance": null,
             "Scale": "21.13332,76.00003,50",
             "Static": false,
+            "Surface": null,
             "SurfaceVelocity": "0,0,0"
           },
           {
             "__type": "Clover.WorldLayerObject",
-            "__guid": "7a320214-ff01-46e1-9627-478101d0caf9"
+            "__guid": "7a320214-ff01-46e1-9627-478101d0caf9",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "b664a362-cc2c-4654-916b-49a642d2dbfd",
-        "Flags": 0,
-        "Name": "shop_display",
-        "Position": "64,192,-0.000004406023",
-        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
-        "Enabled": true,
+        "__version": 2,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
-        "__PrefabVariables": {
-          "Size": 1
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Position",
+              "Value": "64,192,-0.000004406023"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "7f08302e-fc03-4488-b0c2-2845fbfbf1a4": "b664a362-cc2c-4654-916b-49a642d2dbfd",
+          "745c344d-29f5-4e32-8da1-86f65149885e": "b60da624-0454-469f-92ac-49865ed5232f",
+          "412df943-d4e2-4f30-a0b2-9ed0dfeb995a": "89497533-2179-43c8-b84c-2926168bb1f9",
+          "07cf6a15-99ef-4ae3-8f8c-430d39f36fbb": "a54f9de8-1494-4b90-b745-8fcb460e0667",
+          "8e8c63fe-b4bf-4be4-9349-cbd1214864f6": "d9cc22ff-2e77-47a5-9cf1-7125aa50d376",
+          "5987670e-028e-43d2-8a17-5afaf668a20e": "6f279830-71e8-4a67-84f7-9465b86b24a4",
+          "db2b7c5b-a63d-4a4d-acbf-de674df4ac01": "095c7024-9320-4c89-a079-86317e062aeb",
+          "514bf6b8-c9c9-4dc1-8f26-f9c1037754a4": "b1f8989b-1c5f-407b-8b7c-a611d80a77d2"
         }
       },
       {
         "__guid": "daa05fcf-c2b3-494d-a4a3-f37dc453e630",
-        "Flags": 0,
-        "Name": "shop_display (3)",
-        "Position": "128,64,-0.0000001725211",
-        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
-        "Enabled": true,
+        "__version": 2,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
-        "__PrefabVariables": {
-          "Size": 1
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Name",
+              "Value": "shop_display (3)"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Position",
+              "Value": "128,64,-0.0000001725211"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "7f08302e-fc03-4488-b0c2-2845fbfbf1a4": "daa05fcf-c2b3-494d-a4a3-f37dc453e630",
+          "745c344d-29f5-4e32-8da1-86f65149885e": "679568b8-3d8e-410a-8883-d8f84c65fb26",
+          "412df943-d4e2-4f30-a0b2-9ed0dfeb995a": "aafe7568-1291-4017-8273-1949b3cd0f68",
+          "07cf6a15-99ef-4ae3-8f8c-430d39f36fbb": "b39b3939-6905-4863-8fc4-a134ad49d235",
+          "8e8c63fe-b4bf-4be4-9349-cbd1214864f6": "f271fcd1-be38-4104-a13f-05be3deaa20e",
+          "5987670e-028e-43d2-8a17-5afaf668a20e": "1ce7584f-59b7-44d0-b814-54a41ffa46bb",
+          "db2b7c5b-a63d-4a4d-acbf-de674df4ac01": "4952f18f-e0ed-410c-a289-cdcb8528c8a9",
+          "514bf6b8-c9c9-4dc1-8f26-f9c1037754a4": "e06ddce2-cf81-41ad-8c61-72424a846435"
         }
       },
       {
         "__guid": "b965aa8c-b7ab-4c1f-beec-c7024197316e",
-        "Flags": 0,
-        "Name": "shop_display (4)",
-        "Position": "128,128,-0.0000002689342",
-        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
-        "Enabled": true,
+        "__version": 2,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
-        "__PrefabVariables": {
-          "Size": 1
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Name",
+              "Value": "shop_display (4)"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Position",
+              "Value": "128,128,-0.0000002689342"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "7f08302e-fc03-4488-b0c2-2845fbfbf1a4": "b965aa8c-b7ab-4c1f-beec-c7024197316e",
+          "745c344d-29f5-4e32-8da1-86f65149885e": "0f4bb4a9-36bb-4c7d-b101-ad207a497f63",
+          "412df943-d4e2-4f30-a0b2-9ed0dfeb995a": "090e4225-901c-4001-9a9c-8a86dd540967",
+          "07cf6a15-99ef-4ae3-8f8c-430d39f36fbb": "ff649044-df0c-4e90-ad80-36cada284b11",
+          "8e8c63fe-b4bf-4be4-9349-cbd1214864f6": "4fc7ee42-76c1-4846-89d5-03ec40eaa153",
+          "5987670e-028e-43d2-8a17-5afaf668a20e": "18b2bc45-f0e8-40f9-9fee-140314985d43",
+          "db2b7c5b-a63d-4a4d-acbf-de674df4ac01": "2757a9b6-8641-455e-ae71-0fa5b713e2c6",
+          "514bf6b8-c9c9-4dc1-8f26-f9c1037754a4": "a7cd2389-bb5d-4585-9785-0719b2fe5093"
         }
       },
       {
         "__guid": "7c38a36a-7ade-4861-a119-ccf310e95b79",
-        "Flags": 0,
-        "Name": "shop_display (5)",
-        "Position": "128,192,-0.000000365416",
-        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
-        "Enabled": true,
+        "__version": 2,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
-        "__PrefabVariables": {
-          "Size": 1
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Name",
+              "Value": "shop_display (5)"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Position",
+              "Value": "128,192,-0.000000365416"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "7f08302e-fc03-4488-b0c2-2845fbfbf1a4": "7c38a36a-7ade-4861-a119-ccf310e95b79",
+          "745c344d-29f5-4e32-8da1-86f65149885e": "d35b719a-9bcb-46c1-8c77-9bb51dcb4636",
+          "412df943-d4e2-4f30-a0b2-9ed0dfeb995a": "e24afa5e-a3ef-4bcf-b6a0-6669caebc080",
+          "07cf6a15-99ef-4ae3-8f8c-430d39f36fbb": "83b20dc8-4cd5-4d90-85fa-ae27632b44a7",
+          "8e8c63fe-b4bf-4be4-9349-cbd1214864f6": "669b88f8-2c0a-4a4a-99db-a91b62e75b36",
+          "5987670e-028e-43d2-8a17-5afaf668a20e": "fc55e022-dcaa-44bd-866f-b10eee1ec09a",
+          "db2b7c5b-a63d-4a4d-acbf-de674df4ac01": "0639f663-518d-44f4-8eef-0237dafe6d12",
+          "514bf6b8-c9c9-4dc1-8f26-f9c1037754a4": "21f4fbf2-2a6b-4433-af92-458ef3b10536"
         }
       },
       {
         "__guid": "48205435-d897-40bc-8c65-b3380d408850",
-        "Flags": 0,
-        "Name": "shop_display (1)",
-        "Position": "64,128,-0.000002616266",
-        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
-        "Enabled": true,
+        "__version": 2,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
-        "__PrefabVariables": {
-          "Size": 1
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Name",
+              "Value": "shop_display (1)"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Position",
+              "Value": "64,128,-0.000002616266"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "7f08302e-fc03-4488-b0c2-2845fbfbf1a4": "48205435-d897-40bc-8c65-b3380d408850",
+          "745c344d-29f5-4e32-8da1-86f65149885e": "8a716a9f-a636-4685-aeee-bcf1b8901599",
+          "412df943-d4e2-4f30-a0b2-9ed0dfeb995a": "3210513f-5462-4ce4-b9ce-0241cd47849f",
+          "07cf6a15-99ef-4ae3-8f8c-430d39f36fbb": "0179ff49-1e47-4955-b4ec-41d70ae811be",
+          "8e8c63fe-b4bf-4be4-9349-cbd1214864f6": "e33416bd-935b-44ca-a104-8bb9c157b933",
+          "5987670e-028e-43d2-8a17-5afaf668a20e": "50b62d7a-7b6f-4bae-aa7f-a08686825d2d",
+          "db2b7c5b-a63d-4a4d-acbf-de674df4ac01": "efd49425-98b3-40bc-a768-b5565344102c",
+          "514bf6b8-c9c9-4dc1-8f26-f9c1037754a4": "101f3567-1f91-45d7-b5d4-a745c7b58b2d"
         }
       },
       {
         "__guid": "47e84f87-91d0-4a14-9701-aca88304b704",
-        "Flags": 0,
-        "Name": "shop_display (2)",
-        "Position": "64,64,0.000001008559",
-        "Rotation": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328",
-        "Enabled": true,
+        "__version": 2,
         "__Prefab": "items/misc/shop_display/shop_display.prefab",
-        "__PrefabVariables": {
-          "Size": 1
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Name",
+              "Value": "shop_display (2)"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Position",
+              "Value": "64,64,0.000001008559"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "7f08302e-fc03-4488-b0c2-2845fbfbf1a4": "47e84f87-91d0-4a14-9701-aca88304b704",
+          "745c344d-29f5-4e32-8da1-86f65149885e": "8be17a5f-d47a-4de4-aa8a-0776a5b1efe2",
+          "412df943-d4e2-4f30-a0b2-9ed0dfeb995a": "e890955f-0d93-4a4d-94e7-29f67621f69c",
+          "07cf6a15-99ef-4ae3-8f8c-430d39f36fbb": "1a709f76-935f-4ae7-aeec-654afa5f797d",
+          "8e8c63fe-b4bf-4be4-9349-cbd1214864f6": "9cd5914b-bf98-48ab-a5ce-c503119570e4",
+          "5987670e-028e-43d2-8a17-5afaf668a20e": "99915383-36c2-4e05-9fde-cb3dda1920db",
+          "db2b7c5b-a63d-4a4d-acbf-de674df4ac01": "a32270da-4ddc-4772-a929-d667029f555c",
+          "514bf6b8-c9c9-4dc1-8f26-f9c1037754a4": "1cab2dcb-6f6d-4714-8648-6434db17e5db"
         }
       },
       {
         "__guid": "a67590a1-22b4-4926-a4bb-e8a46fe85914",
+        "__version": 2,
         "Flags": 0,
         "Name": "ShopManager",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
         "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
         "Components": [
           {
             "__type": "Clover.WorldBuilder.ShopManager",
             "__guid": "3c8c1a9c-bf76-439a-a07e-f43da512327c",
+            "__enabled": true,
+            "Flags": 0,
             "BuyItemDialogue": "dialogue/shop/buy_item.dlg",
             "Catalogues": [
               "catalogues/furniture.cata"
@@ -295,72 +735,145 @@
             "Displays": [
               {
                 "_type": "component",
-                "component_id": "b3fa23c9-d6c7-48d3-9ec3-5b2a89e6822f",
+                "component_id": "89497533-2179-43c8-b84c-2926168bb1f9",
                 "go": "b664a362-cc2c-4654-916b-49a642d2dbfd",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "ac2d53db-fc47-4599-ab95-0ccdc9043be6",
+                "component_id": "3210513f-5462-4ce4-b9ce-0241cd47849f",
                 "go": "48205435-d897-40bc-8c65-b3380d408850",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "41426cc0-075d-45fb-9920-85c570d77b93",
+                "component_id": "e890955f-0d93-4a4d-94e7-29f67621f69c",
                 "go": "47e84f87-91d0-4a14-9701-aca88304b704",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "a5d3e9d3-9fcd-4187-a63c-24511d132970",
+                "component_id": "aafe7568-1291-4017-8273-1949b3cd0f68",
                 "go": "daa05fcf-c2b3-494d-a4a3-f37dc453e630",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "1e48e230-3eb0-4631-ba38-f06c22b55949",
+                "component_id": "090e4225-901c-4001-9a9c-8a86dd540967",
                 "go": "b965aa8c-b7ab-4c1f-beec-c7024197316e",
                 "component_type": "ShopDisplay"
               },
               {
                 "_type": "component",
-                "component_id": "e2e8e79a-4d89-43f9-b8eb-5614377788f8",
+                "component_id": "e24afa5e-a3ef-4bcf-b6a0-6669caebc080",
                 "go": "7c38a36a-7ade-4861-a119-ccf310e95b79",
                 "component_type": "ShopDisplay"
               }
             ],
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
             "ShopClerk": {
               "_type": "component",
-              "component_id": "93b4c06b-a9b3-46d2-923c-d62933cf27b0",
+              "component_id": "9296d272-b1bf-4957-b0fe-a6339207fd18",
               "go": "1618499e-9729-429e-a00a-d61ee2b7978d",
               "component_type": "ShopClerk"
             },
             "StoreId": "shop"
           }
-        ]
+        ],
+        "Children": []
       },
       {
         "__guid": "1618499e-9729-429e-a00a-d61ee2b7978d",
-        "Flags": 0,
-        "Name": "shop_clerk",
-        "Position": "183.4964,272.7962,0.9999924",
-        "Rotation": "-0.000000007713407,0.00000002878683,0.2588192,-0.9659257",
-        "Enabled": true,
+        "__version": 2,
         "__Prefab": "npc/shop_clerk/shop_clerk.prefab",
-        "__PrefabVariables": {}
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a243d461-cf82-4e35-bad5-6d69bb4e2924"
+              },
+              "Property": "Position",
+              "Value": "183.4964,272.7962,0.9999924"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a243d461-cf82-4e35-bad5-6d69bb4e2924"
+              },
+              "Property": "Rotation",
+              "Value": "-0.000000007713407,0.00000002878683,0.2588192,-0.9659257"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a243d461-cf82-4e35-bad5-6d69bb4e2924": "1618499e-9729-429e-a00a-d61ee2b7978d",
+          "c6513f3a-58d4-45cf-af6e-cd06288dff21": "722426ad-15b2-44cb-829d-861d4f06aa23",
+          "62f44e28-e4ed-4ffa-871e-84c093a3b6f4": "9296d272-b1bf-4957-b0fe-a6339207fd18",
+          "d7509849-178d-4d5a-bf6d-1661c39d1c99": "9a1d3b16-acde-42cd-af7b-386bccb40140",
+          "e1a5c343-7aad-46aa-bfbb-171516534c40": "f94dc6fc-dffe-450c-848c-e72a33a46231",
+          "66089c65-9d81-4937-a322-59e022ffdb3b": "bd4d35c9-cb47-4566-b904-920b902f7817",
+          "9ef53959-5bc1-4bfe-b189-583f59fc5266": "2602e7df-261f-479c-a34e-c6307fdc4424"
+        }
+      },
+      {
+        "__guid": "562f444e-e097-474c-91be-da5b5c14669e",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "env",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "Sandbox.IndirectLightVolume",
+            "__guid": "20fb3303-f971-40e2-930c-a153262fca4b",
+            "__enabled": true,
+            "Flags": 0,
+            "Bounds": {
+              "Mins": "22.17545,-20.30002,-46.48431",
+              "Maxs": "446.7866,387.1265,113.8185"
+            },
+            "Contrast": 1,
+            "DistanceTexture": "worlds/player_house/player_house_floor_2_prefab_data/ddgi/env_distance_4df48c66-3cec-48b8-a298-466746e26b73.vtex",
+            "InsideGeometry": "Deactivate",
+            "IrradianceTexture": "worlds/player_house/player_house_floor_2_prefab_data/ddgi/env_irradiance_4df48c66-3cec-48b8-a298-466746e26b73.vtex",
+            "MaxRelocationDistanceFraction": 0.75,
+            "MinSurfaceDistanceFraction": 0.75,
+            "NormalBias": 5,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "ProbeDensity": 12,
+            "RelocationRayCount": 48,
+            "RelocationTexture": "worlds/player_house/player_house_floor_2_prefab_data/ddgi/env_relocation_4df48c66-3cec-48b8-a298-466746e26b73.vtex"
+          }
+        ],
+        "Children": []
       }
     ],
-    "__variables": [],
     "__properties": {
-      "FixedUpdateFrequency": 50,
-      "MaxFixedUpdates": 5,
-      "NetworkFrequency": 30,
       "NetworkInterpolation": true,
-      "PhysicsSubSteps": 1,
-      "ThreadedAnimation": true,
       "TimeScale": 1,
-      "UseFixedUpdate": true,
+      "WantsSystemScene": true,
       "Metadata": {},
       "NavMesh": {
         "Enabled": false,
@@ -373,14 +886,16 @@
         "AgentMaxSlope": 40,
         "ExcludedBodies": "",
         "IncludedBodies": ""
-      }
-    }
+      },
+      "GameObjectSystems": []
+    },
+    "__variables": []
   },
+  "ResourceVersion": 2,
   "ShowInMenu": false,
   "MenuPath": null,
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
-  "ResourceVersion": 1,
   "__references": [],
-  "__version": 1
+  "__version": 2
 }
