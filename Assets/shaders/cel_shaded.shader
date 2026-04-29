@@ -52,8 +52,8 @@ PS
 
 	float g_flDiffuseSteps < Default( 4.0 ); Range( 2.0, 8.0 ); UiGroup( "Cel,10/10" ); >;
 	float g_flSpecularSteps < Default( 2.0 ); Range( 1.0, 6.0 ); UiGroup( "Cel,10/20" ); >;
-	float g_flIndirectDiffuseStrength < Default( 0.35 ); Range( 0.0, 2.0 ); UiGroup( "Cel,10/30" ); >;
-	float g_flIndirectSpecularStrength < Default( 0.15 ); Range( 0.0, 2.0 ); UiGroup( "Cel,10/40" ); >;
+	float g_flFlatAmbientStrength < Default( 0.12 ); Range( 0.0, 1.0 ); UiGroup( "Cel,10/30" ); >;
+	float3 g_vFlatAmbientColor < UiType( Color ); Default3( 1.0, 1.0, 1.0 ); UiGroup( "Cel,10/40" ); >;
 	float g_flSpecularStrength < Default( 0.2 ); Range( 0.0, 2.0 ); UiGroup( "Cel,10/50" ); >;
 	float g_flRimStrength < Default( 0.15 ); Range( 0.0, 2.0 ); UiGroup( "Cel,10/60" ); >;
 	float g_flRimPower < Default( 3.0 ); Range( 0.5, 8.0 ); UiGroup( "Cel,10/70" ); >;
@@ -127,14 +127,6 @@ PS
 		LightingTerms_t lightingTerms = InitLightingTerms();
 		CombinerInput combinerInput = ShadingModelStandard::MaterialToCombinerInput( m );
 
-		CalculateIndirectLighting( lightingTerms, combinerInput );
-
-		float3 vDiffuseAO = CalculateDiffuseAmbientOcclusion( combinerInput, lightingTerms );
-		lightingTerms.vIndirectDiffuse.rgb *= vDiffuseAO.rgb;
-
-		float3 vSpecularAO = CalculateSpecularAmbientOcclusion( combinerInput, lightingTerms );
-		lightingTerms.vIndirectSpecular.rgb *= vSpecularAO.rgb;
-
 		float3 viewDir = normalize( g_vCameraPositionWs - m.WorldPosition );
 		float3 directDiffuse = 0.0f;
 		float3 directSpecular = 0.0f;
@@ -160,12 +152,9 @@ PS
 			AccumulateCelDirectLight( directDiffuse, directSpecular, m.Normal, viewDir, light.Direction, light.Color, light.Attenuation, light.Visibility, m.Roughness, g_flDiffuseSteps, g_flSpecularSteps );
 		}
 
-		directDiffuse *= lerp( float3( 1.0, 1.0, 1.0 ), vDiffuseAO.rgb, combinerInput.flAmbientOcclusionDirectDiffuse );
-		directSpecular *= lerp( float3( 1.0, 1.0, 1.0 ), vSpecularAO.rgb, combinerInput.flAmbientOcclusionDirectSpecular );
-
 		directSpecular *= g_flSpecularStrength;
-		float3 indirectDiffuse = lightingTerms.vIndirectDiffuse.rgb * g_flIndirectDiffuseStrength;
-		float3 indirectSpecular = lightingTerms.vIndirectSpecular.rgb * g_flIndirectSpecularStrength;
+		float3 indirectDiffuse = g_vFlatAmbientColor * g_flFlatAmbientStrength;
+		float3 indirectSpecular = 0.0f;
 		float rim = pow( 1.0 - saturate( dot( m.Normal, viewDir ) ), g_flRimPower ) * g_flRimStrength;
 		float3 rimLighting = g_vRimTint * rim * ( 1.0 - saturate( max( directDiffuse.r, max( directDiffuse.g, directDiffuse.b ) ) ) );
 
