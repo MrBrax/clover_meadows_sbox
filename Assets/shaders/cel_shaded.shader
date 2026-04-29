@@ -46,10 +46,11 @@ PS
 {
 	#include "common/utils/Material.CommonInputs.hlsl"
 	#include "common/pixel.hlsl"
+	#include "common/classes/Light.hlsl"
 
 	RenderState( CullMode, F_RENDER_BACKFACES ? NONE : DEFAULT );
 
-	float g_flDiffuseSteps < Default( 4.0 ); Range( 1.0, 8.0 ); UiGroup( "Cel,10/10" ); >;
+	float g_flDiffuseSteps < Default( 4.0 ); Range( 2.0, 8.0 ); UiGroup( "Cel,10/10" ); >;
 	float g_flSpecularSteps < Default( 2.0 ); Range( 1.0, 6.0 ); UiGroup( "Cel,10/20" ); >;
 	float g_flIndirectDiffuseStrength < Default( 0.35 ); Range( 0.0, 2.0 ); UiGroup( "Cel,10/30" ); >;
 	float g_flIndirectSpecularStrength < Default( 0.15 ); Range( 0.0, 2.0 ); UiGroup( "Cel,10/40" ); >;
@@ -58,25 +59,57 @@ PS
 	float g_flRimPower < Default( 3.0 ); Range( 0.5, 8.0 ); UiGroup( "Cel,10/70" ); >;
 	float3 g_vRimTint < UiType( Color ); Default3( 1.0, 1.0, 1.0 ); UiGroup( "Cel,10/80" ); >;
 
-	float QuantizeBand( float value, float steps )
+	float QuantizeBand( float valueInput, float stepsInput )
 	{
-		value = max( value, 0.0 );
-		steps = max( steps, 1.0 );
+		float value = max( valueInput, 0.0 );
+		float steps = max( round( stepsInput ), 1.0 );
 
 		if ( steps <= 1.0 )
 			return value;
 
-		return round( value * steps ) / steps;
+		float whole = floor( value );
+		float fractional = saturate( value - whole );
+		float bands = steps - 1.0;
+		float scaled = fractional * bands;
+		float lower = floor( scaled );
+		float edge = scaled - lower;
+		float width = max( fwidth( scaled ), 0.0001 );
+
+		if ( fractional >= 1.0 )
+			return whole + 1.0;
+
+		return whole + ( ( lower + smoothstep( 0.5 - width, 0.5 + width, edge ) ) / bands );
 	}
 
-	float3 QuantizeLight( float3 lightColor, float steps )
+	void AccumulateCelDirectLight(
+		inout float3 diffuseLighting,
+		inout float3 specularLighting,
+		float3 normal,
+		float3 viewDir,
+		float3 lightDir,
+		float3 lightColor,
+		float attenuation,
+		float visibility,
+		float roughness,
+		float diffuseSteps,
+		float specularSteps )
 	{
-		float intensity = max( lightColor.r, max( lightColor.g, lightColor.b ) );
-		if ( intensity <= 0.0001 )
-			return 0.0f;
+		float lightMask = attenuation * visibility;
+		if ( lightMask <= 0.0 )
+			return;
 
-		float quantized = QuantizeBand( intensity, steps );
-		return lightColor * ( quantized / intensity );
+		float NdotL = saturate( dot( normal, lightDir ) );
+		if ( NdotL <= 0.0 )
+			return;
+
+		float diffuseBand = QuantizeBand( NdotL, diffuseSteps );
+		diffuseLighting += lightColor * lightMask * diffuseBand;
+
+		float specularPower = lerp( 128.0, 8.0, roughness );
+		float3 halfDir = normalize( lightDir + viewDir + 0.0001 );
+		float specularTerm = pow( saturate( dot( normal, halfDir ) ), specularPower ) * NdotL;
+		float specularBand = QuantizeBand( specularTerm, specularSteps );
+		specularLighting += lightColor * lightMask * specularBand;
 	}
 
 	float4 MainPs( PixelInput i ) : SV_Target0
@@ -94,25 +127,45 @@ PS
 		LightingTerms_t lightingTerms = InitLightingTerms();
 		CombinerInput combinerInput = ShadingModelStandard::MaterialToCombinerInput( m );
 
-		// Let the engine resolve clustered lights, sun direction, shadows, baked lighting,
-		// and indirect probes/envmaps first, then quantize the resulting lighting bands.
-		ComputeDirectLighting( lightingTerms, combinerInput );
 		CalculateIndirectLighting( lightingTerms, combinerInput );
 
 		float3 vDiffuseAO = CalculateDiffuseAmbientOcclusion( combinerInput, lightingTerms );
 		lightingTerms.vIndirectDiffuse.rgb *= vDiffuseAO.rgb;
-		lightingTerms.vDiffuse.rgb *= lerp( float3( 1.0, 1.0, 1.0 ), vDiffuseAO.rgb, combinerInput.flAmbientOcclusionDirectDiffuse );
 
 		float3 vSpecularAO = CalculateSpecularAmbientOcclusion( combinerInput, lightingTerms );
 		lightingTerms.vIndirectSpecular.rgb *= vSpecularAO.rgb;
-		lightingTerms.vSpecular.rgb *= lerp( float3( 1.0, 1.0, 1.0 ), vSpecularAO.rgb, combinerInput.flAmbientOcclusionDirectSpecular );
-
-		float3 directDiffuse = QuantizeLight( lightingTerms.vDiffuse.rgb, g_flDiffuseSteps );
-		float3 directSpecular = QuantizeLight( lightingTerms.vSpecular.rgb, g_flSpecularSteps ) * g_flSpecularStrength;
-		float3 indirectDiffuse = lightingTerms.vIndirectDiffuse.rgb * g_flIndirectDiffuseStrength;
-		float3 indirectSpecular = lightingTerms.vIndirectSpecular.rgb * g_flIndirectSpecularStrength;
 
 		float3 viewDir = normalize( g_vCameraPositionWs - m.WorldPosition );
+		float3 directDiffuse = 0.0f;
+		float3 directSpecular = 0.0f;
+
+		// Quantize from geometric light response first, then apply real shadow visibility.
+		// This keeps CSM edges from fighting the cel-band threshold.
+		if ( g_DirectionalLightEnabled )
+		{
+			float3 sunDir = -normalize( g_DirectionalLightDirection.xyz );
+			float3 sunColor = g_DirectionalLightColor.rgb;
+			float sunVisibility = DirectionalLightShadow::GetVisibility( m.WorldPosition, m.ScreenPosition.xy );
+			AccumulateCelDirectLight( directDiffuse, directSpecular, m.Normal, viewDir, sunDir, sunColor, 1.0, sunVisibility, m.Roughness, g_flDiffuseSteps, g_flSpecularSteps );
+		}
+
+		uint lightCount = Light::Count( m.ScreenPosition );
+		[loop]
+		for ( uint li = 0; li < lightCount; li++ )
+		{
+			Light light = Light::From( m.WorldPosition, m.ScreenPosition, li, m.LightmapUV );
+			if ( light.Attenuation <= 0.0 )
+				continue;
+
+			AccumulateCelDirectLight( directDiffuse, directSpecular, m.Normal, viewDir, light.Direction, light.Color, light.Attenuation, light.Visibility, m.Roughness, g_flDiffuseSteps, g_flSpecularSteps );
+		}
+
+		directDiffuse *= lerp( float3( 1.0, 1.0, 1.0 ), vDiffuseAO.rgb, combinerInput.flAmbientOcclusionDirectDiffuse );
+		directSpecular *= lerp( float3( 1.0, 1.0, 1.0 ), vSpecularAO.rgb, combinerInput.flAmbientOcclusionDirectSpecular );
+
+		directSpecular *= g_flSpecularStrength;
+		float3 indirectDiffuse = lightingTerms.vIndirectDiffuse.rgb * g_flIndirectDiffuseStrength;
+		float3 indirectSpecular = lightingTerms.vIndirectSpecular.rgb * g_flIndirectSpecularStrength;
 		float rim = pow( 1.0 - saturate( dot( m.Normal, viewDir ) ), g_flRimPower ) * g_flRimStrength;
 		float3 rimLighting = g_vRimTint * rim * ( 1.0 - saturate( max( directDiffuse.r, max( directDiffuse.g, directDiffuse.b ) ) ) );
 
