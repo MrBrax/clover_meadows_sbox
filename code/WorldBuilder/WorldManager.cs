@@ -171,7 +171,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		return Worlds.Values.Any( w => w.Data == data );
 	}
 
-	public async Task<World> LoadWorld( WorldData data )
+	public async Task<World> LoadWorld( WorldData data, bool showLoading )
 	{
 		Log.Info( $"Loading world: {data.ResourceName}" );
 
@@ -186,6 +186,13 @@ public class WorldManager : Component, Component.INetworkSpawn
 		{
 			Log.Error( $"Invalid prefab for world: {data.ResourceName}" );
 			return null;
+		}
+
+		if ( showLoading )
+		{
+			LoadingScreen.IsVisible = true;
+			LoadingScreen.Title = $"Loading {data.Title}...";
+			await Task.Delay( 100 ); // wait a frame to show the loading screen
 		}
 
 		var gameObject = data.Prefab.Clone();
@@ -210,7 +217,10 @@ public class WorldManager : Component, Component.INetworkSpawn
 
 		world.Setup();
 
-		await world.Load();
+		using ( Scene.BatchGroup() )
+		{
+			await world.Load();
+		}
 
 		Log.Info( $"Loaded world: {data.ResourceName}, now has {Worlds.Count} worlds." );
 
@@ -224,6 +234,11 @@ public class WorldManager : Component, Component.INetworkSpawn
 
 		await Task.Frame();
 
+		if ( showLoading )
+		{
+			LoadingScreen.IsVisible = false;
+		}
+
 		return world;
 	}
 
@@ -231,7 +246,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 	{
 		Assert.NotNull( data, "World data is null." );
 		var world = GetWorld( data.ResourceName );
-		return world.IsValid() ? world : await LoadWorld( data );
+		return world.IsValid() ? world : await LoadWorld( data, true );
 	}
 
 	[Rpc.Owner]
@@ -240,7 +255,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		var worldData = ResourceLibrary.GetAll<WorldData>().FirstOrDefault( w => w.ResourceName == id );
 		if ( worldData != null )
 		{
-			_ = LoadWorld( worldData );
+			_ = LoadWorld( worldData, true );
 		}
 		else
 		{
@@ -308,7 +323,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		var worldData = ResourceLibrary.GetAll<WorldData>().FirstOrDefault( w => w.ResourceName == id );
 		if ( worldData != null )
 		{
-			_ = worldManager.LoadWorld( worldData );
+			_ = worldManager.LoadWorld( worldData, true );
 		}
 		else
 		{
@@ -367,7 +382,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 
 public interface IWorldEvent
 {
-	void OnWorldLoaded( World world ) { }
-	void OnWorldUnloaded( World world ) { }
-	void OnWorldChanged( World world ) { }
+	void OnWorldLoaded( World world ) {}
+	void OnWorldUnloaded( World world ) {}
+	void OnWorldChanged( World world ) {}
 }

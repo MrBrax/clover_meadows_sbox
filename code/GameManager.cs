@@ -36,7 +36,7 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 
 		Log.Info( "GameManager is booting up" );
 
-		await WorldManager.Instance.LoadWorld( WorldManager.Instance.DefaultWorldData );
+		await WorldManager.Instance.LoadWorld( WorldManager.Instance.DefaultWorldData, true );
 
 		/*if ( !_spawnQueue.Contains( Connection.Local ) )
 		{
@@ -50,7 +50,10 @@ public class GameManager : Component, Component.INetworkListener, ISceneStartup
 	{
 		WriteIndented = true,
 		IncludeFields = true,
-		Converters = { new JsonStringEnumConverter() },
+		Converters =
+		{
+			new JsonStringEnumConverter()
+		},
 		DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 	};
 
