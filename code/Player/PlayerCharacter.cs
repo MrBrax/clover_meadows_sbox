@@ -35,13 +35,15 @@ public sealed partial class PlayerCharacter : Component
 	[Property] public SittableNode Seat { get; set; }
 
 	public Vector3 EnterPosition { get; set; }
+
+	[Property, ReadOnly]
 	public bool IsSitting => Seat.IsValid();
 
 	public World World => WorldLayerObject.World;
 
 	public Action<World> OnWorldChanged { get; set; }
 
-	[Sync] public bool InCutscene { get; set; }
+	[Property, Sync, ReadOnly] public bool InCutscene { get; set; }
 	public Vector3? CutsceneTarget { get; set; }
 
 	public string LastEntrance { get; set; }

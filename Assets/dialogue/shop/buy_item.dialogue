@@ -1,0 +1,21 @@
+{
+  "Nodes": [
+    {
+      "Id": "fef9ef81-dafe-4bea-b4c8-867012938e66",
+      "Text": "...",
+      "IsYou": false,
+      "Speaker": "NPC",
+      "Choices": [],
+      "ExitsDialogue": false,
+      "NextNodeId": null,
+      "CameraNodeId": null,
+      "ReturnValue": null,
+      "StartsNavigation": false,
+      "NavigationTarget": "0,0,0",
+      "NavigationLabel": "Go here",
+      "EditorPosition": "84,60"
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

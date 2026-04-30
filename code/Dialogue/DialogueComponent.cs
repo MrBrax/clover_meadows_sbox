@@ -202,6 +202,8 @@ public class DialogueComponent : SingletonComponent<DialogueComponent>
 			// CurrentNpc.ResetMouth();
 			// CurrentNpc.ClearLookAt();
 			// CurrentNpc.RpcNotifyDialogueEnded();
+			CurrentNpc?.EndInteraction(); // TODO: good place for this?
+			CurrentNpc?.OnDialogueEnd();
 			CurrentNpc = null;
 		}
 

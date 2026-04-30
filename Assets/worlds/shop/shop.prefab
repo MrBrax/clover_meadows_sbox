@@ -35,7 +35,7 @@
         "__version": 2,
         "Flags": 0,
         "Name": "shop_main",
-        "Position": "256,192,0.00001439794",
+        "Position": "256,192,1.43979396E-05",
         "Rotation": "0,0,0,1",
         "Scale": "1,1,1",
         "Tags": "terrain",
@@ -132,6 +132,8 @@
                 "OnComponentStart": null,
                 "OnComponentUpdate": null,
                 "Radius": 100,
+                "ShadowBias": 0.0005,
+                "ShadowHardness": 0,
                 "Shadows": true
               }
             ],
@@ -242,6 +244,8 @@
             "OnComponentStart": null,
             "OnComponentUpdate": null,
             "Radius": 400,
+            "ShadowBias": 0.0005,
+            "ShadowHardness": 0,
             "Shadows": true
           }
         ],
@@ -279,6 +283,8 @@
             "OnComponentStart": null,
             "OnComponentUpdate": null,
             "Radius": 400,
+            "ShadowBias": 0.0005,
+            "ShadowHardness": 0,
             "Shadows": true
           }
         ],
@@ -316,6 +322,8 @@
             "OnComponentStart": null,
             "OnComponentUpdate": null,
             "Radius": 400,
+            "ShadowBias": 0.0005,
+            "ShadowHardness": 0,
             "Shadows": true
           }
         ],
@@ -327,7 +335,7 @@
         "Flags": 0,
         "Name": "Entrance",
         "Position": "376,192,-10",
-        "Rotation": "0,0,1,-0.00000004371139",
+        "Rotation": "0,0,1,-4.37113883E-08",
         "Scale": "1,1,1",
         "Tags": "worldlayer_visible",
         "Enabled": true,
@@ -371,7 +379,7 @@
         "__version": 2,
         "Flags": 0,
         "Name": "HouseTrigger",
-        "Position": "392,192,4.000069",
+        "Position": "392,192,4.00006914",
         "Rotation": "0,0,0,1",
         "Scale": "1,1,1",
         "Tags": "trigger,worldlayer_visible",
@@ -419,7 +427,7 @@
             "OnTriggerEnter": null,
             "OnTriggerExit": null,
             "RollingResistance": null,
-            "Scale": "21.13332,76.00003,50",
+            "Scale": "21.1333199,76.0000305,50",
             "Static": false,
             "Surface": null,
             "SurfaceVelocity": "0,0,0"
@@ -453,7 +461,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Position",
-              "Value": "64,192,-0.000004406023"
+              "Value": "64,192,-4.40602298E-06"
             },
             {
               "Target": {
@@ -461,7 +469,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Rotation",
-              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+              "Value": "-2.98023206E-08,3.5527141E-15,0.999999881,3.94732815E-08"
             }
           ],
           "MovedObjects": []
@@ -499,7 +507,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Position",
-              "Value": "128,64,-0.0000001725211"
+              "Value": "128,64,-1.72521098E-07"
             },
             {
               "Target": {
@@ -507,7 +515,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Rotation",
-              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+              "Value": "-2.98023206E-08,3.5527141E-15,0.999999881,3.94732815E-08"
             }
           ],
           "MovedObjects": []
@@ -545,7 +553,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Position",
-              "Value": "128,128,-0.0000002689342"
+              "Value": "128,128,-2.68934201E-07"
             },
             {
               "Target": {
@@ -553,7 +561,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Rotation",
-              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+              "Value": "-2.98023206E-08,3.5527141E-15,0.999999881,3.94732815E-08"
             }
           ],
           "MovedObjects": []
@@ -591,7 +599,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Position",
-              "Value": "128,192,-0.000000365416"
+              "Value": "128,192,-3.65416014E-07"
             },
             {
               "Target": {
@@ -599,7 +607,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Rotation",
-              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+              "Value": "-2.98023206E-08,3.5527141E-15,0.999999881,3.94732815E-08"
             }
           ],
           "MovedObjects": []
@@ -637,7 +645,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Position",
-              "Value": "64,128,-0.000002616266"
+              "Value": "64,128,-2.6162661E-06"
             },
             {
               "Target": {
@@ -645,7 +653,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Rotation",
-              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+              "Value": "-2.98023206E-08,3.5527141E-15,0.999999881,3.94732815E-08"
             }
           ],
           "MovedObjects": []
@@ -683,7 +691,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Position",
-              "Value": "64,64,0.000001008559"
+              "Value": "64,64,1.00855902E-06"
             },
             {
               "Target": {
@@ -691,7 +699,7 @@
                 "IdValue": "7f08302e-fc03-4488-b0c2-2845fbfbf1a4"
               },
               "Property": "Rotation",
-              "Value": "-0.00000002980232,0.000000000000003552714,0.9999999,0.00000003947328"
+              "Value": "-2.98023206E-08,3.5527141E-15,0.999999881,3.94732815E-08"
             }
           ],
           "MovedObjects": []
@@ -801,7 +809,7 @@
                 "IdValue": "a243d461-cf82-4e35-bad5-6d69bb4e2924"
               },
               "Property": "Position",
-              "Value": "183.4964,272.7962,0.9999924"
+              "Value": "183.496399,272.796204,0.999992371"
             },
             {
               "Target": {
@@ -809,7 +817,39 @@
                 "IdValue": "a243d461-cf82-4e35-bad5-6d69bb4e2924"
               },
               "Property": "Rotation",
-              "Value": "-0.000000007713407,0.00000002878683,0.2588192,-0.9659257"
+              "Value": "-7.7134068E-09,2.87868307E-08,0.258819193,-0.965925694"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a243d461-cf82-4e35-bad5-6d69bb4e2924"
+              },
+              "Property": "NetworkMode",
+              "Value": 1
+            },
+            {
+              "Target": {
+                "Type": "Component",
+                "IdValue": "62f44e28-e4ed-4ffa-871e-84c093a3b6f4"
+              },
+              "Property": "DialogueCollection",
+              "Value": null
+            },
+            {
+              "Target": {
+                "Type": "Component",
+                "IdValue": "62f44e28-e4ed-4ffa-871e-84c093a3b6f4"
+              },
+              "Property": "DialogueData",
+              "Value": "dialogue/shop/buy_item.dialogue"
+            },
+            {
+              "Target": {
+                "Type": "Component",
+                "IdValue": "62f44e28-e4ed-4ffa-871e-84c093a3b6f4"
+              },
+              "Property": "DialogueType",
+              "Value": "Single"
             }
           ],
           "MovedObjects": []
@@ -846,15 +886,13 @@
             "__enabled": true,
             "Flags": 0,
             "Bounds": {
-              "Mins": "22.17545,-20.30002,-46.48431",
-              "Maxs": "446.7866,387.1265,113.8185"
+              "Mins": "22.1754494,-20.3000202,-46.4843102",
+              "Maxs": "446.786591,387.126495,113.818497"
             },
             "Contrast": 1,
             "DistanceTexture": "worlds/player_house/player_house_floor_2_prefab_data/ddgi/env_distance_4df48c66-3cec-48b8-a298-466746e26b73.vtex",
             "InsideGeometry": "Deactivate",
             "IrradianceTexture": "worlds/player_house/player_house_floor_2_prefab_data/ddgi/env_irradiance_4df48c66-3cec-48b8-a298-466746e26b73.vtex",
-            "MaxRelocationDistanceFraction": 0.75,
-            "MinSurfaceDistanceFraction": 0.75,
             "NormalBias": 5,
             "OnComponentDestroy": null,
             "OnComponentDisabled": null,
@@ -863,7 +901,6 @@
             "OnComponentStart": null,
             "OnComponentUpdate": null,
             "ProbeDensity": 12,
-            "RelocationRayCount": 48,
             "RelocationTexture": "worlds/player_house/player_house_floor_2_prefab_data/ddgi/env_relocation_4df48c66-3cec-48b8-a298-466746e26b73.vtex"
           }
         ],
@@ -879,15 +916,16 @@
         "Enabled": false,
         "IncludeStaticBodies": true,
         "IncludeKeyframedBodies": true,
-        "EditorAutoUpdate": true,
+        "EditorAutoUpdate": false,
         "AgentHeight": 64,
         "AgentRadius": 16,
         "AgentStepSize": 18,
         "AgentMaxSlope": 40,
         "ExcludedBodies": "",
-        "IncludedBodies": ""
-      },
-      "GameObjectSystems": []
+        "IncludedBodies": "",
+        "DeferGeneration": false,
+        "CustomBounds": false
+      }
     },
     "__variables": []
   },

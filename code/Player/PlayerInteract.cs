@@ -25,6 +25,7 @@ public class PlayerInteract : Component
 	[Property] public SoundEvent UseFailSound { get; set; }
 	[Property] public SoundEvent PickUpFailSound { get; set; }
 
+	[Property, ReadOnly]
 	public GameObject InteractionTarget { get; set; }
 
 	protected override void OnAwake()

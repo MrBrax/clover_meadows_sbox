@@ -21,6 +21,12 @@ public class BaseNpc : Component, IInteract
 		Interacting
 	}
 
+	public enum NpcDialogueType
+	{
+		Collection,
+		Single
+	}
+
 	[RequireComponent] public NavMeshAgent Agent { get; set; }
 
 	[Property] public string Name { get; set; }
@@ -34,7 +40,14 @@ public class BaseNpc : Component, IInteract
 
 	private const float WalkRadius = 256f;
 
-	[Property] public DialogueData DialogueCollection { get; set; }
+	[Property, Group( "Dialogue" )]
+	public NpcDialogueType DialogueType { get; set; } = NpcDialogueType.Collection;
+
+	[Property, ShowIf( nameof( DialogueType ), NpcDialogueType.Collection ), Group( "Dialogue" )]
+	public DialogueCollection DialogueCollection { get; set; }
+
+	[Property, ShowIf( nameof( DialogueType ), NpcDialogueType.Single ), Group( "Dialogue" )]
+	public DialogueData DialogueData { get; set; }
 
 	public void SetState( NpcState state )
 	{
@@ -183,12 +196,12 @@ public class BaseNpc : Component, IInteract
 
 	protected void DispatchDialogue()
 	{
-		if ( DialogueCollection == null )
+		/*if ( DialogueCollection == null )
 		{
 			Log.Error( "BaseNpc DispatchDialogue: No dialogue collection found" );
 			EndInteraction();
 			return;
-		}
+		}*/
 
 		/*Assert.NotNull( DialogueManager.Instance.DialogueWindow, "BaseNpc DispatchDialogue: No dialogue window found" );
 		Assert.NotNull( PlayerCharacter.Local, "BaseNpc DispatchDialogue: No player found" );
@@ -211,6 +224,28 @@ public class BaseNpc : Component, IInteract
 				return;
 			}
 		}*/
+
+		if ( DialogueType == NpcDialogueType.Single )
+		{
+			if ( !DialogueData.IsValid() )
+			{
+				Log.Error( "BaseNpc DispatchDialogue: No dialogue data found" );
+				EndInteraction();
+				return;
+			}
+
+			DialogueComponent.Instance.LoadDialogue( DialogueData );
+			DialogueComponent.Instance.SetNpc( this );
+
+		}
+
+	}
+
+	public virtual void OnDialogueEnd()
+	{
+		InteractionTarget = null;
+		PlayerCharacter.Local.PlayerInteract.InteractionTarget = null;
+		SetState( NpcState.Idle );
 	}
 
 	public string GetInteractName()
