@@ -21,6 +21,7 @@ public class DialogueData : GameResource
 	public override Bitmap RenderThumbnail( ThumbnailOptions options )
 	{
 		var bmp = new Bitmap( options.Width, options.Height );
+		bmp.Clear( Color.White );
 
 		int i = 0;
 		foreach ( var node in Nodes )
@@ -41,7 +42,7 @@ public class DialogueData : GameResource
 			bmp.DrawText( TextRendering.Scope.Default with
 			{
 				Text = text,
-				TextColor = Color.White,
+				TextColor = Color.Black,
 				FontSize = 14
 			}, textRect, TextFlag.LeftTop );
 			i++;
