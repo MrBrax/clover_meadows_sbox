@@ -1,6 +1,7 @@
 ﻿using System;
 using Clover.Components;
 using Clover.Data;
+using Clover.Dialogue;
 using Clover.Interactable;
 using Clover.Player;
 using Sandbox.Diagnostics;
@@ -33,7 +34,7 @@ public class BaseNpc : Component, IInteract
 
 	private const float WalkRadius = 256f;
 
-	[Property] public DialogueCollection DialogueCollection { get; set; }
+	[Property] public DialogueData DialogueCollection { get; set; }
 
 	public void SetState( NpcState state )
 	{
@@ -97,9 +98,9 @@ public class BaseNpc : Component, IInteract
 		}
 	}
 
-	public void LoadDialogue( Dialogue dialogue )
+	public void LoadDialogue( DialogueData dialogue )
 	{
-		var window = DialogueManager.Instance.DialogueWindow;
+		/*var window = DialogueManager.Instance.DialogueWindow;
 
 		if ( window == null )
 		{
@@ -109,7 +110,7 @@ public class BaseNpc : Component, IInteract
 
 		window.Enabled = true;
 
-		window.LoadDialogue( dialogue );
+		window.LoadDialogue( dialogue );*/
 	}
 
 	public Vector3? TargetPosition;
@@ -189,7 +190,7 @@ public class BaseNpc : Component, IInteract
 			return;
 		}
 
-		Assert.NotNull( DialogueManager.Instance.DialogueWindow, "BaseNpc DispatchDialogue: No dialogue window found" );
+		/*Assert.NotNull( DialogueManager.Instance.DialogueWindow, "BaseNpc DispatchDialogue: No dialogue window found" );
 		Assert.NotNull( PlayerCharacter.Local, "BaseNpc DispatchDialogue: No player found" );
 		Assert.NotNull( DialogueCollection.Entries, "BaseNpc DispatchDialogue: No dialogue entries found" );
 		Assert.True( DialogueCollection.Entries.Count > 0, "BaseNpc DispatchDialogue: No dialogue entries found" );
@@ -209,7 +210,7 @@ public class BaseNpc : Component, IInteract
 
 				return;
 			}
-		}
+		}*/
 	}
 
 	public string GetInteractName()

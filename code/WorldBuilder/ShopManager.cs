@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Clover.Components;
 using Clover.Data;
+using Clover.Dialogue;
 using Clover.Items;
 using Clover.Npc;
 using Clover.Persistence;
@@ -23,7 +24,7 @@ public class ShopManager : Component
 
 	[Property] public List<CatalogueData> Catalogues { get; set; }
 
-	[Property] public Dialogue BuyItemDialogue { get; set; }
+	[Property] public DialogueData BuyItemDialogue { get; set; }
 
 	private CatalogueData PickRandomCatalogue()
 	{
@@ -107,7 +108,10 @@ public class ShopManager : Component
 		if ( !FileSystem.Data.FileExists( GetStatePath() ) )
 		{
 			Log.Info( "Shop: No shop state found, generating new items." );
-			State = new ShopManagerState { Items = new List<ShopItem>(), LastGenerated = DateTime.MinValue };
+			State = new ShopManagerState
+			{
+				Items = new List<ShopItem>(), LastGenerated = DateTime.MinValue
+			};
 			GenerateItems();
 			SaveState();
 			LoadItems();
@@ -188,7 +192,7 @@ public class ShopManager : Component
 
 		CameraMan.Instance?.AddTarget( ShopClerk.GameObject );
 
-		var window = DialogueManager.Instance.DialogueWindow;
+		/*var window = DialogueManager.Instance.DialogueWindow;
 
 		window.SetData( "ItemName", item.ItemData.Name );
 		window.SetData( "ItemPrice", item.Price );
@@ -213,7 +217,7 @@ public class ShopManager : Component
 		{
 			ShopClerk.SetState( BaseNpc.NpcState.Idle );
 			CameraMan.Instance.RemoveTarget( ShopClerk.GameObject );
-		};
+		};*/
 	}
 
 	public bool BuyItem( PlayerCharacter player, ShopItem item )
