@@ -1,6 +1,3 @@
-// Copyright Braxnet 2025 unless specified otherwise
-// https://braxnet.online
-
 using System;
 using System.IO;
 using System.Text;

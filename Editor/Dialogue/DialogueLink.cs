@@ -1,6 +1,3 @@
-// Copyright Braxnet 2025 unless specified otherwise
-// https://braxnet.online
-
 namespace Clover.Dialogue
 {
 	// Marker type used to ensure dialogue plugs only connect to other dialogue plugs

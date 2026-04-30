@@ -1,5 +1,3 @@
-// Copyright Braxnet 2025 unless specified otherwise
-// https://braxnet.online
 using System;
 using Clover.Player;
 namespace Clover.Dialogue;

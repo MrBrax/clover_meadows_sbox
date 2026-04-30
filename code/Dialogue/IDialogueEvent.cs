@@ -1,6 +1,4 @@
-﻿// Copyright Braxnet 2026 unless specified otherwise
-// https://braxnet.online
-namespace Clover.Dialogue;
+﻿namespace Clover.Dialogue;
 
 public interface IDialogueEvent : ISceneEvent<IDialogueEvent>
 {
