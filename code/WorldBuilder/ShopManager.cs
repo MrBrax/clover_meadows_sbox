@@ -14,7 +14,7 @@ using Sandbox.Diagnostics;
 namespace Clover.WorldBuilder;
 
 [Category( "Clover/World" )]
-public class ShopManager : Component
+public class ShopManager : Component, IDialogueEvent
 {
 	[Property] public string StoreId { get; set; }
 
@@ -253,4 +253,10 @@ public class ShopManager : Component
 
 		return true;
 	}
+
+	public void OnDialogueEnd( DialogueData data, BaseDialogueNode node, Variant returnValue )
+	{
+		CameraMan.Instance?.RemoveTarget( ShopClerk.GameObject );
+	}
+
 }

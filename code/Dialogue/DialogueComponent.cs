@@ -89,6 +89,8 @@ public class DialogueComponent : SingletonComponent<DialogueComponent>
 		SetCurrentNode( CurrentDialogue.Nodes[0].Id );
 
 		Sound.Play( "sound/newcity/dialogue/dialogue.open.sound" );
+
+		IDialogueEvent.Post( x => x.OnDialogueStart( dialogue, CurrentNode ) );
 	}
 
 	public void SetCurrentNode( string nodeId )
@@ -222,6 +224,8 @@ public class DialogueComponent : SingletonComponent<DialogueComponent>
 			}
 
 		}
+
+		IDialogueEvent.Post( x => x.OnDialogueEnd( CurrentDialogue, CurrentNode, returnValueOverride ) );
 
 		CurrentDialogue = null;
 		CurrentNode = null;

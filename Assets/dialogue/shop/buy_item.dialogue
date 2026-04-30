@@ -9,6 +9,7 @@
         {
           "Text": "Yeah!",
           "OnSelected": null,
+          "OnSelectedDoo": null,
           "TargetNodeId": null,
           "ExitsDialogue": false,
           "ReturnValue": null
@@ -16,6 +17,7 @@
         {
           "Text": "No!",
           "OnSelected": null,
+          "OnSelectedDoo": null,
           "TargetNodeId": null,
           "ExitsDialogue": true,
           "ReturnValue": null
