@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Clover.Components;
 using Clover.Npc;
@@ -25,6 +26,9 @@ public class DialogueComponent : SingletonComponent<DialogueComponent>
 	[Property, ReadOnly]
 	private Dictionary<string, Variant> _dialogueVariables = new();
 
+	[Property, ReadOnly]
+	private Dictionary<string, Action> _dialogueActions = new();
+
 	public void SetDialogueVariable( string key, Variant value )
 	{
 		_dialogueVariables[key] = value;
@@ -50,6 +54,26 @@ public class DialogueComponent : SingletonComponent<DialogueComponent>
 		return new Dictionary<string, Variant>( _dialogueVariables );
 	}
 
+	public void SetDialogueAction( string key, Action action )
+	{
+		_dialogueActions[key] = action;
+	}
+
+	public void ClearDialogueAction( string key )
+	{
+		_dialogueActions.Remove( key );
+	}
+
+	public Action GetDialogueAction( string key )
+	{
+		return _dialogueActions.GetValueOrDefault( key );
+	}
+
+	public void ClearDialogueActions()
+	{
+		_dialogueActions.Clear();
+	}
+
 	public void LoadDialogue( DialogueData dialogue )
 	{
 		/*RootNode = dialogue.Nodes.FirstOrDefault();
@@ -64,6 +88,7 @@ public class DialogueComponent : SingletonComponent<DialogueComponent>
 		SetCurrentNode( RootNode.Id );*/
 
 		ClearDialogueVariables();
+		ClearDialogueActions();
 
 		if ( _dialogueFinishedTcs != null )
 		{

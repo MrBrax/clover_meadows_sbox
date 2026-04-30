@@ -225,6 +225,14 @@ public class ShopManager : Component, IDialogueEvent
 		DialogueComponent.Instance.SetDialogueVariable( "ItemPrice", item.Price );
 		DialogueComponent.Instance.SetDialogueVariable( "PlayerClovers", player.CloverBalanceController.GetBalance() );
 
+		DialogueComponent.Instance.SetDialogueAction( "BuyItem", () =>
+		{
+			if ( !BuyItem( player, item ) )
+				return;
+
+			Log.Info( "Item bought" );
+		} );
+
 	}
 
 	public bool BuyItem( PlayerCharacter player, ShopItem item )
