@@ -1,7 +1,7 @@
 {
   "RootObject": {
     "__guid": "f1e9442f-52d4-4de1-9fb6-b3df6e944725",
-    "__version": 1,
+    "__version": 2,
     "Flags": 0,
     "Name": "weather_manager",
     "Position": "0,0,0",
@@ -10,7 +10,7 @@
     "Tags": "",
     "Enabled": true,
     "NetworkMode": 2,
-    "NetworkInterpolation": true,
+    "NetworkFlags": 0,
     "NetworkOrphaned": 0,
     "NetworkTransmit": true,
     "OwnerTransfer": 1,
@@ -19,6 +19,7 @@
         "__type": "Clover.WorldBuilder.WeatherManager",
         "__guid": "748ff583-4296-4da2-b3fa-7b032f6b16a8",
         "__enabled": true,
+        "Flags": 0,
         "FogComponent": {
           "_type": "component",
           "component_id": "9d72c890-e0cb-4820-964c-25771b3f2305",
@@ -54,7 +55,7 @@
     "Children": [
       {
         "__guid": "5c31dd0a-9e95-40d8-9c66-d1ba85ec27ed",
-        "__version": 1,
+        "__version": 2,
         "Flags": 0,
         "Name": "Rain",
         "Position": "0,0,0",
@@ -63,7 +64,7 @@
         "Tags": "",
         "Enabled": true,
         "NetworkMode": 2,
-        "NetworkInterpolation": true,
+        "NetworkFlags": 0,
         "NetworkOrphaned": 0,
         "NetworkTransmit": true,
         "OwnerTransfer": 1,
@@ -72,6 +73,7 @@
             "__type": "Clover.WorldBuilder.Weather.Rain",
             "__guid": "ef95e8c8-0f57-4e40-82bc-290d0ad8296f",
             "__enabled": true,
+            "Flags": 0,
             "Emitter": {
               "_type": "component",
               "component_id": "d7fd85ec-1c4d-4250-823f-66b4b4ea9314",
@@ -95,7 +97,7 @@
         "Children": [
           {
             "__guid": "03acf368-394c-4ae6-9ca4-7683006a3203",
-            "__version": 1,
+            "__version": 2,
             "Flags": 0,
             "Name": "Particle",
             "Position": "0,0,256",
@@ -104,7 +106,7 @@
             "Tags": "particles",
             "Enabled": true,
             "NetworkMode": 2,
-            "NetworkInterpolation": true,
+            "NetworkFlags": 0,
             "NetworkOrphaned": 0,
             "NetworkTransmit": true,
             "OwnerTransfer": 1,
@@ -113,6 +115,7 @@
                 "__type": "Sandbox.ParticleBoxEmitter",
                 "__guid": "d7fd85ec-1c4d-4250-823f-66b4b4ea9314",
                 "__enabled": true,
+                "Flags": 0,
                 "Burst": 0,
                 "Delay": 0,
                 "DestroyOnEnd": false,
@@ -125,7 +128,7 @@
                 "OnComponentStart": null,
                 "OnComponentUpdate": null,
                 "OnEdge": false,
-                "Rate": 300,
+                "Rate": 400,
                 "RateOverDistance": 0,
                 "Size": "512,512,10"
               },
@@ -133,6 +136,7 @@
                 "__type": "Sandbox.ParticleSpriteRenderer",
                 "__guid": "dd7451a4-0486-4f32-ad38-5b3960eedd9d",
                 "__enabled": true,
+                "Flags": 0,
                 "__version": 2,
                 "Additive": false,
                 "Alignment": "Particle",
@@ -192,6 +196,7 @@
                 "__type": "Sandbox.ParticleEffect",
                 "__guid": "6a142dbb-782d-47cb-8ca5-1357f703bac2",
                 "__enabled": true,
+                "Flags": 0,
                 "__version": 3,
                 "Alpha": {
                   "Type": "Range",
@@ -201,7 +206,7 @@
                 "ApplyAlpha": true,
                 "ApplyColor": false,
                 "ApplyRotation": false,
-                "ApplyShape": false,
+                "ApplyShape": true,
                 "Bounce": 0,
                 "Brightness": 1,
                 "Bumpiness": 0,
@@ -227,38 +232,17 @@
                 "ForceScale": 1,
                 "ForceSpace": "World",
                 "Friction": 1,
-                "Gradient": {
-                  "Type": "Constant",
-                  "Evaluation": "Life",
-                  "GradientA": {
-                    "blend": "Linear",
-                    "color": [
-                      {
-                        "t": 0.5,
-                        "c": "1,1,1,1"
-                      }
-                    ],
-                    "alpha": []
-                  },
-                  "GradientB": {
-                    "blend": "Linear",
-                    "color": [
-                      {
-                        "t": 0.5,
-                        "c": "1,1,1,1"
-                      }
-                    ],
-                    "alpha": []
-                  },
-                  "ConstantA": "1,1,1,1",
-                  "ConstantB": "1,1,1,1"
-                },
+                "Gradient": "1,1,1,1",
                 "InitialVelocity": {
                   "X": 0,
                   "Y": 0,
-                  "Z": 0
+                  "Z": {
+                    "Type": "Range",
+                    "Evaluation": "Seed",
+                    "Constants": "-300,-700,0,0"
+                  }
                 },
-                "Lifetime": 2,
+                "Lifetime": 1,
                 "LocalSpace": 0,
                 "MaxParticles": 1000,
                 "OnComponentDestroy": null,
@@ -280,11 +264,16 @@
                 "PreWarm": 0,
                 "PushStrength": 0,
                 "Roll": 0,
-                "Scale": 1,
+                "Scale": {
+                  "Type": "Range",
+                  "Evaluation": "Seed",
+                  "Constants": "2,5,0,0"
+                },
                 "SequenceId": 0,
                 "SequenceSpeed": 1,
                 "SequenceTime": 1,
                 "SheetSequence": false,
+                "SnapToFrame": false,
                 "StartDelay": 0,
                 "StartVelocity": 0,
                 "Stretch": 0,
@@ -299,7 +288,7 @@
           },
           {
             "__guid": "6178113a-abce-4ccd-9b62-1161143aa330",
-            "__version": 1,
+            "__version": 2,
             "Flags": 0,
             "Name": "Sound",
             "Position": "0,0,64",
@@ -308,7 +297,7 @@
             "Tags": "",
             "Enabled": true,
             "NetworkMode": 2,
-            "NetworkInterpolation": true,
+            "NetworkFlags": 0,
             "NetworkOrphaned": 0,
             "NetworkTransmit": true,
             "OwnerTransfer": 1,
@@ -317,6 +306,7 @@
                 "__type": "Sandbox.SoundPointComponent",
                 "__guid": "5c50f5fb-6b45-424f-b99e-7c855e122450",
                 "__enabled": true,
+                "Flags": 0,
                 "Distance": 512,
                 "DistanceAttenuation": false,
                 "DistanceAttenuationOverride": true,
@@ -369,7 +359,7 @@
       },
       {
         "__guid": "0827e2ab-e08f-4489-af05-10b6c1c63433",
-        "__version": 1,
+        "__version": 2,
         "Flags": 0,
         "Name": "Fog",
         "Position": "0,0,0",
@@ -378,7 +368,7 @@
         "Tags": "",
         "Enabled": true,
         "NetworkMode": 2,
-        "NetworkInterpolation": true,
+        "NetworkFlags": 0,
         "NetworkOrphaned": 0,
         "NetworkTransmit": true,
         "OwnerTransfer": 1,
@@ -387,6 +377,7 @@
             "__type": "Clover.WorldBuilder.Weather.Fog",
             "__guid": "9d72c890-e0cb-4820-964c-25771b3f2305",
             "__enabled": true,
+            "Flags": 0,
             "Effect": {
               "_type": "component",
               "component_id": "eb6364ce-ede2-4dfa-87d3-d584e3c5a98d",
@@ -416,7 +407,7 @@
         "Children": [
           {
             "__guid": "43456c06-da7e-43b2-b131-20907328df09",
-            "__version": 1,
+            "__version": 2,
             "Flags": 0,
             "Name": "Particle",
             "Position": "0,0,0",
@@ -425,7 +416,7 @@
             "Tags": "particles",
             "Enabled": false,
             "NetworkMode": 2,
-            "NetworkInterpolation": true,
+            "NetworkFlags": 0,
             "NetworkOrphaned": 0,
             "NetworkTransmit": true,
             "OwnerTransfer": 1,
@@ -434,6 +425,7 @@
                 "__type": "Sandbox.ParticleBoxEmitter",
                 "__guid": "c8d53daa-cd18-425b-829e-7e9accccd56a",
                 "__enabled": true,
+                "Flags": 0,
                 "Burst": 0,
                 "Delay": 0,
                 "DestroyOnEnd": false,
@@ -454,6 +446,7 @@
                 "__type": "Sandbox.ParticleSpriteRenderer",
                 "__guid": "66ca6879-d19e-4fbc-af0c-b00579b67306",
                 "__enabled": true,
+                "Flags": 0,
                 "__version": 2,
                 "Additive": false,
                 "Alignment": "LookAtCamera",
@@ -496,7 +489,7 @@
                         "LoopMode": "Loop",
                         "Frames": [
                           {
-                            "Texture": "materials/particle/base_sprite.vtex",
+                            "Texture": null,
                             "BroadcastMessages": []
                           }
                         ]
@@ -513,6 +506,7 @@
                 "__type": "Sandbox.ParticleEffect",
                 "__guid": "c204340b-2a17-4d7d-af17-48a17ecee7ae",
                 "__enabled": true,
+                "Flags": 0,
                 "__version": 3,
                 "Alpha": {
                   "Type": "Curve",
@@ -579,32 +573,7 @@
                 "ForceScale": 1,
                 "ForceSpace": "World",
                 "Friction": 1,
-                "Gradient": {
-                  "Type": "Constant",
-                  "Evaluation": "Life",
-                  "GradientA": {
-                    "blend": "Linear",
-                    "color": [
-                      {
-                        "t": 0.5,
-                        "c": "1,1,1,1"
-                      }
-                    ],
-                    "alpha": []
-                  },
-                  "GradientB": {
-                    "blend": "Linear",
-                    "color": [
-                      {
-                        "t": 0.5,
-                        "c": "1,1,1,1"
-                      }
-                    ],
-                    "alpha": []
-                  },
-                  "ConstantA": "1,1,1,1",
-                  "ConstantB": "1,1,1,1"
-                },
+                "Gradient": "1,1,1,1",
                 "InitialVelocity": {
                   "X": 0,
                   "Y": 0,
@@ -645,6 +614,7 @@
                 "SequenceSpeed": 1,
                 "SequenceTime": 1,
                 "SheetSequence": false,
+                "SnapToFrame": false,
                 "StartDelay": 0,
                 "StartVelocity": 1,
                 "Stretch": 0,
@@ -714,7 +684,7 @@
           },
           {
             "__guid": "caed58e2-3692-4831-841c-b89801bfe662",
-            "__version": 1,
+            "__version": 2,
             "Flags": 0,
             "Name": "Effect",
             "Position": "0,0,0",
@@ -723,7 +693,7 @@
             "Tags": "",
             "Enabled": true,
             "NetworkMode": 2,
-            "NetworkInterpolation": true,
+            "NetworkFlags": 0,
             "NetworkOrphaned": 0,
             "NetworkTransmit": true,
             "OwnerTransfer": 1,
@@ -732,6 +702,7 @@
                 "__type": "Sandbox.GradientFog",
                 "__guid": "eb6364ce-ede2-4dfa-87d3-d584e3c5a98d",
                 "__enabled": true,
+                "Flags": 0,
                 "Color": "1,1,1,1",
                 "EndDistance": 1024,
                 "FalloffExponent": 1,
@@ -750,7 +721,7 @@
           },
           {
             "__guid": "d8fae390-16f3-4e43-8933-81994f58286f",
-            "__version": 1,
+            "__version": 2,
             "Flags": 0,
             "Name": "Volume",
             "Position": "0,0,0",
@@ -759,7 +730,7 @@
             "Tags": "",
             "Enabled": true,
             "NetworkMode": 2,
-            "NetworkInterpolation": true,
+            "NetworkFlags": 0,
             "NetworkOrphaned": 0,
             "NetworkTransmit": true,
             "OwnerTransfer": 1,
@@ -768,6 +739,7 @@
                 "__type": "Sandbox.VolumetricFogVolume",
                 "__guid": "748b4fbb-5352-44ff-ae8b-bf76e44ebef3",
                 "__enabled": true,
+                "Flags": 0,
                 "Bounds": {
                   "Mins": "-250,-250,-32",
                   "Maxs": "250,250,150"
@@ -788,7 +760,7 @@
       },
       {
         "__guid": "5587cfea-42ca-4963-94f1-1feb18c044ba",
-        "__version": 1,
+        "__version": 2,
         "Flags": 0,
         "Name": "Wind",
         "Position": "0,0,0",
@@ -797,7 +769,7 @@
         "Tags": "",
         "Enabled": true,
         "NetworkMode": 2,
-        "NetworkInterpolation": true,
+        "NetworkFlags": 0,
         "NetworkOrphaned": 0,
         "NetworkTransmit": true,
         "OwnerTransfer": 1,
@@ -806,6 +778,7 @@
             "__type": "Clover.WorldBuilder.Weather.Wind",
             "__guid": "ea41ed15-8998-45d7-97bb-c0d7d6fcfe99",
             "__enabled": true,
+            "Flags": 0,
             "OnComponentDestroy": null,
             "OnComponentDisabled": null,
             "OnComponentEnabled": null,
@@ -823,7 +796,7 @@
         "Children": [
           {
             "__guid": "e0e9bc88-c334-42a6-adb8-56371f0faa5c",
-            "__version": 1,
+            "__version": 2,
             "Flags": 0,
             "Name": "Sound",
             "Position": "0,0,64",
@@ -832,7 +805,7 @@
             "Tags": "",
             "Enabled": true,
             "NetworkMode": 2,
-            "NetworkInterpolation": true,
+            "NetworkFlags": 0,
             "NetworkOrphaned": 0,
             "NetworkTransmit": true,
             "OwnerTransfer": 1,
@@ -841,6 +814,7 @@
                 "__type": "Sandbox.SoundPointComponent",
                 "__guid": "335f4de0-2ff3-4e1b-b1e1-404872719f20",
                 "__enabled": true,
+                "Flags": 0,
                 "Distance": 512,
                 "DistanceAttenuation": false,
                 "DistanceAttenuationOverride": true,
@@ -893,7 +867,7 @@
       },
       {
         "__guid": "acc77397-1fad-41e1-a044-e364a86c1e99",
-        "__version": 1,
+        "__version": 2,
         "Flags": 0,
         "Name": "Lightning",
         "Position": "0,0,0",
@@ -902,7 +876,7 @@
         "Tags": "",
         "Enabled": true,
         "NetworkMode": 2,
-        "NetworkInterpolation": true,
+        "NetworkFlags": 0,
         "NetworkOrphaned": 0,
         "NetworkTransmit": true,
         "OwnerTransfer": 1,
@@ -911,6 +885,7 @@
             "__type": "Clover.WorldBuilder.Weather.Lightning",
             "__guid": "73c23ba0-ddef-4cfe-aacd-f05d922b8612",
             "__enabled": true,
+            "Flags": 0,
             "LightningLight": {
               "_type": "component",
               "component_id": "8b8c5d0a-4483-4af1-9d61-4cdafbe32cdb",
@@ -929,16 +904,16 @@
         "Children": [
           {
             "__guid": "829c61ee-846a-4bc5-9208-998493777573",
-            "__version": 1,
+            "__version": 2,
             "Flags": 0,
             "Name": "LightningLight",
             "Position": "0,0,158.6241",
-            "Rotation": "0.1830127,0.6830127,0.1830127,0.6830127",
+            "Rotation": "0.183012694,0.683012724,0.183012694,0.683012724",
             "Scale": "1,1,1",
             "Tags": "light_directional,light",
             "Enabled": true,
             "NetworkMode": 2,
-            "NetworkInterpolation": true,
+            "NetworkFlags": 0,
             "NetworkOrphaned": 0,
             "NetworkTransmit": true,
             "OwnerTransfer": 1,
@@ -947,6 +922,7 @@
                 "__type": "Sandbox.DirectionalLight",
                 "__guid": "8b8c5d0a-4483-4af1-9d61-4cdafbe32cdb",
                 "__enabled": false,
+                "Flags": 0,
                 "FogMode": "Enabled",
                 "FogStrength": 1,
                 "LightColor": "9.1373,9.7987,10,1",
@@ -956,8 +932,13 @@
                 "OnComponentFixedUpdate": null,
                 "OnComponentStart": null,
                 "OnComponentUpdate": null,
+                "ShadowBias": 0.0005,
+                "ShadowCascadeCount": 4,
+                "ShadowCascadeSplitRatio": 0.91,
+                "ShadowHardness": 0,
                 "Shadows": true,
-                "SkyColor": "1,1,1,1"
+                "SkyColor": "1,1,1,1",
+                "Visualizer": {}
               }
             ],
             "Children": []
@@ -974,13 +955,15 @@
         "Enabled": false,
         "IncludeStaticBodies": true,
         "IncludeKeyframedBodies": true,
-        "EditorAutoUpdate": true,
+        "EditorAutoUpdate": false,
         "AgentHeight": 64,
         "AgentRadius": 16,
         "AgentStepSize": 18,
         "AgentMaxSlope": 40,
         "ExcludedBodies": "",
-        "IncludedBodies": ""
+        "IncludedBodies": "",
+        "DeferGeneration": false,
+        "CustomBounds": false
       }
     },
     "__variables": []
