@@ -6,7 +6,7 @@ public class DialogueData : GameResource
 	// [Property] public string Name { get; set; } = "";
 	// [Property] public string Description { get; set; } = "";
 
-	[Property, WideMode, InlineEditor] public List<BaseDialogueNode> Nodes { get; set; } = new();
+	[Property, Hide] public List<BaseDialogueNode> Nodes { get; set; } = new();
 
 	/*public DialogueNode GetNodeById( string id )
 	{

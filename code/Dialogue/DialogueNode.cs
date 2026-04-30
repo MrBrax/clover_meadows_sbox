@@ -1,10 +1,10 @@
 // Copyright Braxnet 2025 unless specified otherwise
 // https://braxnet.online
 using System;
+using Clover.Player;
 namespace Clover.Dialogue;
 
-[AssetType( Name = "Base Dialogue Node", Extension = "dgnode" )]
-public class BaseDialogueNode : GameResource
+public class BaseDialogueNode
 {
 	public string Id { get; set; } = Guid.NewGuid().ToString();
 
@@ -75,6 +75,13 @@ public class BaseDialogueNode : GameResource
 	{
 		return $"{Id}: {Text.Truncate( 30 )}";
 	}
+
+	// TODO: can't seem to pass multiple arguments to Doo, investigate further
+	// [Doo.ArgumentHint<BaseDialogueNode>( "node" )]
+	// [Doo.ArgumentHint<PlayerCharacter>( "player" )]
+	// [Doo.ArgumentHint( Name = "node", Hint = typeof( BaseDialogueNode ) )]
+	// [Doo.ArgumentHint( Name = "player", Hint = typeof( PlayerCharacter ) )]
+	// public Doo OnNodeEnter { get; set; }
 
 	public void OnNodeEntered()
 	{
