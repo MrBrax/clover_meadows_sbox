@@ -105,8 +105,14 @@ public partial class DialoguePanel
 
 		var text = CurrentNode.Text;
 
-		// replace variables in the text
+		// replace hardcoded variables in the text
 		text = text.Replace( "%PLAYERNAME%", PlayerCharacter.Local?.PlayerName ?? "Player" );
+
+		// replace variable values in the text
+		foreach ( var variable in DialogueComponent.Instance.GetAllDialogueVariables() )
+		{
+			text = text.Replace( $"%{variable.Key}%", variable.Value.ToString() );
+		}
 
 		return text;
 	}

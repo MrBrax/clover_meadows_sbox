@@ -2,10 +2,25 @@
   "Nodes": [
     {
       "Id": "fef9ef81-dafe-4bea-b4c8-867012938e66",
-      "Text": "...",
+      "Text": "Do you want to buy that %ItemName% for %ItemPrice% clovers?",
       "IsYou": false,
       "Speaker": "NPC",
-      "Choices": [],
+      "Choices": [
+        {
+          "Text": "Yeah!",
+          "OnSelected": null,
+          "TargetNodeId": null,
+          "ExitsDialogue": false,
+          "ReturnValue": null
+        },
+        {
+          "Text": "No!",
+          "OnSelected": null,
+          "TargetNodeId": null,
+          "ExitsDialogue": true,
+          "ReturnValue": null
+        }
+      ],
       "ExitsDialogue": false,
       "NextNodeId": null,
       "CameraNodeId": null,
@@ -13,7 +28,7 @@
       "StartsNavigation": false,
       "NavigationTarget": "0,0,0",
       "NavigationLabel": "Go here",
-      "EditorPosition": "84,60"
+      "EditorPosition": "-84,48"
     }
   ],
   "__references": [],

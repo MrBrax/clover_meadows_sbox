@@ -22,6 +22,34 @@ public class DialogueComponent : SingletonComponent<DialogueComponent>
 	private TaskCompletionSource<Variant> _dialogueFinishedTcs;
 	private Variant _dialogueReturnValue;
 
+	[Property, ReadOnly]
+	private Dictionary<string, Variant> _dialogueVariables = new();
+
+	public void SetDialogueVariable( string key, Variant value )
+	{
+		_dialogueVariables[key] = value;
+	}
+
+	public void ClearDialogueVariable( string key )
+	{
+		_dialogueVariables.Remove( key );
+	}
+
+	public Variant GetDialogueVariable( string key )
+	{
+		return _dialogueVariables.GetValueOrDefault( key );
+	}
+
+	public void ClearDialogueVariables()
+	{
+		_dialogueVariables.Clear();
+	}
+
+	public Dictionary<string, Variant> GetAllDialogueVariables()
+	{
+		return new Dictionary<string, Variant>( _dialogueVariables );
+	}
+
 	public void LoadDialogue( DialogueData dialogue )
 	{
 		/*RootNode = dialogue.Nodes.FirstOrDefault();
@@ -34,6 +62,8 @@ public class DialogueComponent : SingletonComponent<DialogueComponent>
 		Log.Info( $"Loaded dialogue {dialogue.ResourcePath} with root node ID {RootNode.Id}." );
 
 		SetCurrentNode( RootNode.Id );*/
+
+		ClearDialogueVariables();
 
 		if ( _dialogueFinishedTcs != null )
 		{

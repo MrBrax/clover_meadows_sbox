@@ -1,0 +1,21 @@
+{
+  "Nodes": [
+    {
+      "Id": "e7ddb84d-ac8c-40b1-8b5b-55d5252fa3df",
+      "Text": "What's up?",
+      "IsYou": false,
+      "Speaker": "V-Dog",
+      "Choices": [],
+      "ExitsDialogue": false,
+      "NextNodeId": null,
+      "CameraNodeId": null,
+      "ReturnValue": null,
+      "StartsNavigation": false,
+      "NavigationTarget": "0,0,0",
+      "NavigationLabel": "Go here",
+      "EditorPosition": "0,0"
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

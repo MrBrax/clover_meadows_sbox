@@ -736,7 +736,7 @@
             "__guid": "3c8c1a9c-bf76-439a-a07e-f43da512327c",
             "__enabled": true,
             "Flags": 0,
-            "BuyItemDialogue": "dialogue/shop/buy_item.dlg",
+            "BuyItemDialogue": "dialogue/shop/buy_item.dialogue",
             "Catalogues": [
               "catalogues/furniture.cata"
             ],
@@ -841,7 +841,7 @@
                 "IdValue": "62f44e28-e4ed-4ffa-871e-84c093a3b6f4"
               },
               "Property": "DialogueData",
-              "Value": "dialogue/shop/buy_item.dialogue"
+              "Value": "dialogue/shop/shop.dialogue"
             },
             {
               "Target": {

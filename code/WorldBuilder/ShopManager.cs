@@ -218,6 +218,13 @@ public class ShopManager : Component
 			ShopClerk.SetState( BaseNpc.NpcState.Idle );
 			CameraMan.Instance.RemoveTarget( ShopClerk.GameObject );
 		};*/
+
+		DialogueComponent.Instance.LoadDialogue( BuyItemDialogue );
+		DialogueComponent.Instance.SetNpc( ShopClerk );
+		DialogueComponent.Instance.SetDialogueVariable( "ItemName", item.ItemData.Name );
+		DialogueComponent.Instance.SetDialogueVariable( "ItemPrice", item.Price );
+		DialogueComponent.Instance.SetDialogueVariable( "PlayerClovers", player.CloverBalanceController.GetBalance() );
+
 	}
 
 	public bool BuyItem( PlayerCharacter player, ShopItem item )
