@@ -1,0 +1,165 @@
+DialoguePanel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    .dialogue-container {
+        position: absolute;
+        bottom: 120px;
+        left: 0;
+        right: 0;
+        
+        align-items: center;
+        justify-content: center;
+        
+        .dialogue-box {
+           
+            //  background-color: rgba(0, 0, 0, 0.9);
+            /*background-image: linear-gradient(135deg, 
+                rgba(15, 51, 81, 0.98) 0%,
+                rgba(0, 0, 0, 0.99) 100%);*/
+
+            background-color: rgba(0, 0, 0, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            
+            padding: 30px;
+            
+            width: 1200px;
+            
+            min-height: 200px;
+            
+            gap: 20px;
+            
+            font-family: Manrope;
+            font-size: 20px;
+            color: white;
+            
+            pointer-events: all;
+            
+            opacity: 1;
+            
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            
+            &:intro {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            
+            &:outro {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            
+            .dialogue-speaker {
+                font-size: 26px;
+                font-family: Onest;
+                font-weight: bold;
+                margin-bottom: 10px;
+                
+                align-items: center;
+                gap: 8px;
+                
+                .dialogue-speaker-icon {
+                    opacity: 0.3;
+                }
+            }
+            
+            .dialogue-text {
+                line-height: 22px;
+            }
+            
+            .dialogue-box-column {
+                flex-direction: column;
+                
+                &.expand {
+                    flex-grow: 1;
+                }
+            }
+            
+            .dialogue-choices {
+                flex-direction: column;
+                flex-shrink: 0;
+                gap: 5px;
+                
+                min-width: 270px;
+                
+                justify-content: flex-end;
+                align-items: flex-end;
+                
+                .dialogue-choice-button {
+                    
+                    flex-shrink: 0;
+                    
+                    // background-color: #007bff;
+                    // background-image: linear-gradient(135deg, 
+                    //         rgba(76, 124, 197, 0.3) 0%, 
+                    //         rgba(92, 143, 214, 0.9) 100%);
+
+                    background-color: rgba(0, 86, 179, 0.2);
+                    border: 0.1px solid rgba(255, 255, 255, 0.02);
+                    
+                    color: white;
+                    
+                    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
+                    
+                    font-family: Manrope;
+                    font-size: 18px;
+                    
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    
+                    min-width: 200px;
+                    
+                    align-items: center;
+                    gap: 10px;
+                    
+                    Icon {
+                        flex-shrink: 0;
+                    }
+                    
+                    span {
+                        flex-shrink: 0;
+                    }
+                    
+                    &:hover {
+                        background-color: #0056b3;
+                        border-color: rgba(255, 255, 255, 0.1);
+                        sound-in: "ui.button.over";
+                    }
+                    
+                    &:active {
+                        background-color: #004080;
+                        sound-in: "ui.button.press";
+                    }
+                }
+
+                .dialogue-advance-button {
+                    
+                    color: #aaa;
+                    
+                    font-size: 50px;
+                    
+                    &:hover {
+                        color: #777;
+                        cursor: pointer;
+
+                        sound-in: "ui.button.over";
+                    }
+                    
+                    &:active {
+                        color: #555;
+                        sound-in: "ui.button.press";
+                    }
+                    
+                }
+            }
+            
+        }
+        
+    }
+}

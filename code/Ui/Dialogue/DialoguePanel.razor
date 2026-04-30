@@ -1,0 +1,77 @@
+@namespace Clover.Ui
+@using System
+@using System.Collections.Generic
+@using System.Linq
+@using Sandbox
+@using Sandbox.UI
+@inherits PanelComponent
+
+@if ( CurrentNode == null )
+{
+	<div class="dialogue-container dialogue-container-hidden"></div>
+	return;
+}
+
+<root>
+	<div class="dialogue-container">
+		<div class="dialogue-box">
+			<div class="dialogue-box-column expand">
+				<div class="dialogue-speaker">
+					@*<Icon MaterialIcon="emoji_emotions" class="dialogue-speaker-icon"/>*@
+					@if ( CurrentNode != null )
+					{
+						<span>@SpeakerName</span>
+					}
+				</div>
+				<div class="dialogue-text">
+					@if ( CurrentNode != null )
+					{
+						@Text
+					}
+				</div>
+			</div>
+			<div class="dialogue-box-column dialogue-choices">
+				@if ( CurrentNode.Choices.Count > 0 && !_isTyping )
+				{
+					@foreach ( var choice in CurrentNode.Choices )
+					{
+						<button class="dialogue-choice-button" @onclick=@( () => SelectChoice( choice ) )>
+							<Icon AutoIcon="mdi:chat-outline"/>
+							<span>@choice.Text</span>
+						</button>
+					}
+				}
+				else if ( !CurrentNode.ExitsDialogue && !IsFinalDialogueNode )
+				{
+					@if ( _isTyping )
+					{
+						<button class="dialogue-advance-button">
+							<Icon MaterialIcon="double_arrow"/>
+						</button>
+					}
+					else
+					{
+						<button class="dialogue-advance-button" @onclick=@( () => AdvanceDialogue() )>
+							<Icon MaterialIcon="arrow_circle_right"/>
+						</button>
+					}
+				}
+				else
+				{
+					@if ( _isTyping )
+					{
+						<button class="dialogue-advance-button">
+							<Icon MaterialIcon="double_arrow"/>
+						</button>
+					}
+					else
+					{
+						<button class="dialogue-advance-button" @onclick=@( () => ExitDialogue() )>
+							<Icon MaterialIcon="done"/>
+						</button>
+					}
+				}
+			</div>
+		</div>
+	</div>
+</root>
