@@ -195,7 +195,9 @@ public class WorldManager : Component, Component.INetworkSpawn
 			await Task.Delay( 100 ); // wait a frame to show the loading screen
 		}
 
-		var gameObject = data.Prefab.Clone();
+		var worldPosition = new Vector3( new Vector3( 0, 0, index * WorldOffset ) );
+
+		var gameObject = data.Prefab.Clone( worldPosition, Rotation.Identity );
 
 		// gameObject.BreakFromPrefab();
 
@@ -203,7 +205,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 		world.Data = data; // already set
 		world.Layer = index;
 
-		gameObject.WorldPosition = new Vector3( new Vector3( 0, 0, index * WorldOffset ) );
+		gameObject.WorldPosition = worldPosition;
 		gameObject.Transform.ClearInterpolation();
 		gameObject.SetParent( GameObject );
 
