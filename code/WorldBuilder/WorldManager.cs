@@ -190,7 +190,7 @@ public class WorldManager : Component, Component.INetworkSpawn
 
 		if ( showLoading )
 		{
-			LoadingScreen.IsVisible = true;
+			LoadingScreen.IsVisible = false; // loading screen doesn't look good here, investigate later
 			LoadingScreen.Title = $"Loading {data.Title}...";
 			await Task.Delay( 100 ); // wait a frame to show the loading screen
 		}
